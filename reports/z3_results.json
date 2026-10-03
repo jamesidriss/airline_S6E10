@@ -4,5 +4,65 @@
     "exp_id": "z3_cat_d6",
     "family": "cat",
     "oof_auc": 0.960938
+  },
+  {
+    "name": "cat_d10",
+    "exp_id": "z3_cat_d10",
+    "family": "cat",
+    "oof_auc": 0.961056
+  },
+  {
+    "name": "cat_d8_s2",
+    "exp_id": "z3_cat_d8_s2",
+    "family": "cat",
+    "oof_auc": 0.960954
+  },
+  {
+    "name": "cat_core3",
+    "exp_id": "z3_cat_core3",
+    "family": "cat",
+    "oof_auc": 0.960895
+  },
+  {
+    "name": "cat_ogs",
+    "exp_id": "z3_cat_ogs",
+    "family": "cat",
+    "oof_auc": 0.960864
+  },
+  {
+    "name": "cat_f10",
+    "exp_id": "z3_cat_f10",
+    "family": "cat",
+    "oof_auc": 0.961072
+  },
+  {
+    "name": "xt_f10",
+    "exp_id": "z3_xt_f10",
+    "family": "lgbm",
+    "oof_auc": 0.961242
+  },
+  {
+    "name": "xt_f10_s2",
+    "exp_id": "z3_xt_f10_s2",
+    "family": "lgbm",
+    "oof_auc": 0.961163
+  },
+  {
+    "name": "rm_bs256_e6",
+    "exp_id": "z3_rm_bs256_e6",
+    "family": "realmlp",
+    "oof_auc": 0.960862
+  },
+  {
+    "name": "rm_bs1024_e8",
+    "exp_id": "z3_rm_bs1024_e8",
+    "family": "realmlp",
+    "oof_auc": 0.960877
+  },
+  {
+    "name": "rm_bs256_e10",
+    "exp_id": "z3_rm_bs256_e10",
+    "family": "realmlp",
+    "oof_auc": 0.960739
   }
 ]

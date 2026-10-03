@@ -14,6 +14,9 @@ performance. Compute cost is secondary; scientific soundness is not.
 2. **Never fit to the public leaderboard.** S6E9's runner-up measured
    Δprivate ≈ +16.7e-5 − 0.88·Δpublic (r = −0.97) after tilting to the public board.
    The public LB is a *measurement*, not an objective.
+   **Measured noise floor:** submission #2 gained +0.000165 OOF over #1 and moved the board by
+   −0.00001. Paired public-LB noise is ≈ **±0.0002** (public split = 59,969 rows ⇒ standalone
+   AUC SE ≈ 0.0015; paired SE ≈ 0.0002 at ρ ≈ 0.995). **Only submit on an OOF gain ≳ +0.0003.**
 3. **Never spend a submission without a reason.** 10/day is a budget, not a target. Default
    0–3/day. `src/submission/kaggle_io.py` tracks usage and hard-refuses past the cap.
 4. **Never commit secrets or bulk data.** `.gitignore` excludes `kaggle.json`, `.env`,
