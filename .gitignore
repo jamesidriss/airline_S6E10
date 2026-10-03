@@ -24,11 +24,19 @@ __pycache__/
 .ipynb_checkpoints/
 
 # ---- heavy artifacts ----
-artifacts/
-models/
-predictions/
-cache/
-features/
+#
+# CRITICAL: every directory pattern here is ANCHORED with a leading slash.
+# An unanchored `features/` or `models/` matches at ANY depth, which silently excluded
+# src/features/ and src/models/ from the repository -- i.e. the whole feature-engineering and
+# model layer was never committed and the repo could not reproduce the solution.
+# Anchoring means "only at the repository root". `artifacts/features/` is still covered by the
+# `artifacts/` rule. scripts/audit_untracked.py is the regression guard for this.
+/artifacts/
+/models/
+/predictions/
+/cache/
+/features/
+data/cache/
 *.npy
 *.npz
 *.pkl
@@ -42,6 +50,8 @@ features/
 !experiments/**
 !reports/**
 !submissions/manifest.csv
+!submissions/kaggle_submissions.csv
+!submissions/*.csv
 !STATUS.md
 !research/**
 

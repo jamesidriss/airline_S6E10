@@ -314,6 +314,47 @@ def test_verify_kaggle_facts_never_persists_non_json_bodies():
     assert scrubbed["i"] == 1, "scrub must not damage non-string content"
 
 
+def test_no_source_files_missing_from_git():
+    """Regression test for a silent, competition-level defect.
+
+    An unanchored ``features/`` rule in .gitignore (intended for ``artifacts/features/``) matched
+    ``src/features/`` at any depth, so the entire feature-engineering and model layer was never
+    committed and the published repository could not reproduce the solution. Rules 2.8.b requires
+    the winning model's code to be deliverable, so this must be impossible to reintroduce.
+    """
+    import subprocess
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    tracked = set(subprocess.run(["git", "ls-files"], cwd=root, capture_output=True,
+                                 text=True).stdout.split())
+    missing = []
+    for sd in ("src", "scripts", "configs", "tests"):
+        d = root / sd
+        if not d.exists():
+            continue
+        for p in sorted(d.rglob("*")):
+            if p.is_file() and "__pycache__" not in p.parts:
+                rel = p.relative_to(root).as_posix()
+                if rel not in tracked:
+                    missing.append(rel)
+    assert not missing, f"source files present but untracked: {missing}"
+
+    # and no dangerous unanchored directory rule may reappear
+    sys.path.insert(0, str(root))
+    from scripts.audit_untracked import INTENTIONAL_ANY_DEPTH
+
+    risky = []
+    for line in (root / ".gitignore").read_text(encoding="utf-8").splitlines():
+        s = line.strip()
+        if not s or s.startswith(("#", "!")):
+            continue
+        if s.endswith("/") and not s.startswith("/") and s.count("/") == 1 and "*" not in s \
+                and s not in INTENTIONAL_ANY_DEPTH:
+            risky.append(s)
+    assert not risky, f"risky unanchored .gitignore rules: {risky}"
+
+
 def test_secret_scan_detectors_are_self_exempt_and_working():
     """The scanner must detect a planted secret and must not flag itself."""
     from scripts.secret_scan import SELF_EXEMPT, scan_text

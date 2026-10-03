@@ -140,6 +140,8 @@ def scan_history() -> list[Finding]:
         for f in files:
             if f.split("/")[0] in SKIP_DIRS:
                 continue
+            if f in SELF_EXEMPT:
+                continue
             if Path(f).suffix.lower() not in TEXT_SUFFIXES and Path(f).name not in (".env",):
                 continue
             h = subprocess.run(["git", "rev-parse", f"{rev}:{f}"], cwd=ROOT, capture_output=True,
