@@ -54,6 +54,20 @@ scripts/                 runners (run_views, run_models, run_batch, make_submiss
 tests/run_tests.py       15 tests, dependency-free runner
 ```
 
+## Danger zone: `extra_trees` is an interaction, not a free win
+`extra_trees=True` is our largest single-model lever (+2.3e-4) **but only on a rich feature
+view**, verified on the independent `shadow` folds:
+
+| view | n_feat | deterministic | extra_trees | Δ |
+|---|---|---|---|---|
+| `full` | 285 | 0.960868 | **0.961143** | **+0.000275** |
+| `raw_ext` | 75 | 0.960067 | 0.958506 | −0.001561 |
+| `raw` | 21 | 0.958959 | 0.953388 | −0.005571 |
+
+Randomly chosen features *and* thresholds need many candidate columns to land on a good split.
+**Never apply the flag to a minimal view.** Every `extra_trees` member in the ensemble is on a
+rich view; a future refactor that trims features must re-check this.
+
 ## Feature-block provenance discipline
 | prefix | meaning | fold-safe? |
 |---|---|---|

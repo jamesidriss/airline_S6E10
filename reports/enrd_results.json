@@ -1,0 +1,18 @@
+[
+  {
+    "view": "full_enrich",
+    "scheme": "primary",
+    "model": "lgbm",
+    "oof_auc": 0.960962,
+    "fold_aucs": [
+      0.960912,
+      0.961093,
+      0.96099,
+      0.960301,
+      0.961615
+    ],
+    "n_features": 379,
+    "teacher_auc": null,
+    "exp_id": "enrd_lgbm_full_enrich_primary"
+  }
+]

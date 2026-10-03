@@ -31,12 +31,17 @@ _Last updated: 2026-10-03 21:10 UTC._
 ## 3. Current results
 
 ### Submissions
-| # | File | Members | OOF AUC | Public LB |
-|---|---|---|---|---|
-| 1 | `v1_equal4` | 4 (xgb, cat, lgbm, realmlp) | 0.961273 | 0.960930 |
-| 2 | `v2_equal34` | 34, quality-weighted logit | 0.961438 | 0.960920 |
+| # | File | Members | OOF AUC | Public LB | Rank |
+|---|---|---|---|---|---|
+| 1 | `v1_equal4` | 4 (xgb, cat, lgbm, realmlp) | 0.961273 | 0.960930 | 114 |
+| 2 | `v2_equal34` | 34, quality-weighted logit | 0.961438 | 0.960920 | — |
+| 3 | `v3_final` | 59, equal-logit (**finalist candidate**) | **0.961509** | 0.960980 | 144 |
 
-**Submissions used today: 2 / 10.**
+**Submissions used today: 3 / 10.**
+
+All three land within 0.00006 of each other on the board despite a 0.00024 spread in OOF — a
+direct confirmation of the ±0.0002 noise floor. The leaderboard has moved from 0.96158 to 0.96165
+over the day; rank 100 is 0.96123, rank 25 is 0.96152.
 
 ### The LB-resolution calibration result (most important operational fact)
 Submission #2 gained **+0.000165 OOF** over #1 and moved the board by **−0.00001**.
@@ -133,12 +138,43 @@ it is the most likely way to silently break this solution later.
    one `Baggage handling` zero. Encoded as explicit `na_*` masks; the standalone effect is not
    separable because the ratings are massively redundant (leave-one-out on `Online boarding`
    costs only 0.0006).
-10. **The original survey's own p(x) is learnable to AUC 0.9949 with duplicate-free grouped folds**
+10. **Raising RealMLP's internal averaging budget works the same way**: `n_ens` 8 → 32 gives
+    0.960820 → **0.961017** (+0.0002). Same mechanism, and the only other lever of that size.
+11. **The `enrich` block is an `extra_trees` artifact, not new signal — verified in both
+    directions.** Adding 94 label-free candidate columns (route spread/profile, more digit and
+    token decompositions, rating differences, extra aggregates) to the `full` view:
+
+    | model | `full` | `full_enrich` | Δ | folds + | bootstrap95 |
+    |---|---|---|---|---|---|
+    | `extra_trees=True` | 0.961092 | **0.961158** | **+0.000066** | **5/5** | [+0.000001, +0.000140] |
+    | deterministic | 0.961092 | 0.960982 | **−0.000110** | 1/5 | [−0.000207, −0.000005] |
+
+    A deterministic tree finds *no* extra signal in the new columns (it is hurt by their variance)
+    while random splits gain from having more candidate columns. Both effects are significant, in
+    opposite directions — exactly the predicted interaction, and direct evidence that the columns
+    carry no label information. Ensemble marginal value: **−0.000001** (the 23 existing
+    `extra_trees` members already absorb it). Block rejected.
+12. **The original survey's own p(x) is learnable to AUC 0.9949 with duplicate-free grouped folds**
     (0.994876 grouped vs 0.994855 stratified — the naive 0.9948 was *not* duplicate inflation).
     On the synthetic data the best model reaches 0.9612. Since i.i.d. label noise cannot lower an
     AUC without changing the ordering, the synthetic generator's p(x) is genuinely weaker than the
     real survey's. **This is evidence about the problem, not a proven bound: 0.9615 is the current
     system plateau only.**
+14. **The whole mechanism story closes: original *rows* teach the wrong function.** Measured
+    directly — `full` view with `extra_trees`, appending the 129,859 leak-audited original rows to
+    the training set:
+    | original-row sample weight | OOF AUC | Δ vs excluded |
+    |---|---|---|
+    | 0.0 (excluded) | **0.961078** | — |
+    | 0.3 | 0.960493 | −0.000585 |
+    | 1.0 | 0.959975 | −0.001103 |
+    The harm is **monotonic in weight**, exactly as the p-mismatch story predicts. Together with
+    discovery 2 this gives one coherent account: the original rows carry a different, far sharper
+    conditional than the synthetic labels, so training on them biases the model — but their
+    *conditional target statistics* still transfer, because they encode feature-level structure
+    (`Online boarding = 0` rows are far more satisfied) that survives even when the overall
+    dependence is much weaker.
+    **Original data: use it as knowledge, never as rows — now measured, not assumed.**
 
 ## 6. Rejected hypotheses — do not re-spend
 
@@ -152,7 +188,8 @@ it is the most likely way to silently break this solution later.
 | `extra_trees` on a **minimal** view (`raw`, `raw_ext`) | −0.0056 / −0.0016 on shadow folds | rejected |
 | `id` digit / modulo / batch features | AUC ≈ 0.500 | rejected |
 | RealMLP `batch_size` 256 vs 4096 (hypothesis: closes a 3.5e-4 gap) | +0.00004 — not the gap | rejected |
-| Appending original rows as training data | −0.00038 (field, replicated reasoning) | not attempted |
+| **`enrich` block (94 extra label-free columns)** | **+6.6e-5 for extra_trees but −11.0e-5 for a deterministic tree; ensemble marginal −1e-6** | **rejected — artifact, not signal** |
+| Appending original rows as training data | **−0.000585 at weight 0.3, −0.001103 at weight 1.0** (monotonic) | measured and rejected |
 | TabM as a member | 0.960693 standalone; +0.000003 marginal | weak; diversity only |
 | GPT-2 BPE token keys | +0.000025 | kept (cheap, non-negative) |
 | Blend-geometry search (prob / logit / rank / LR / greedy) | spread ≤ 3e-5 | no gain available |
