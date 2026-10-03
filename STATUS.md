@@ -27,14 +27,48 @@ _Last updated: 2026-10-03, after submission #1._
 ## Current results
 
 ### Champion & submissions
-| What | OOF AUC (primary 5-fold) | Public LB |
-|---|---|---|
-| best single (`xgb/full`) | 0.960946 | — |
-| **4-family equal-logit blend (`blend_v1_equal4`)** | **0.961273** | **0.960930** |
-| CV → LB gap | | **−0.000343** |
+| # | File | Members | OOF AUC | Public LB | LB − OOF |
+|---|---|---|---|---|---|
+| 1 | `v1_equal4` | 4 (xgb, cat, lgbm, realmlp) | 0.961273 | 0.960930 | −0.000343 |
+| 2 | `v2_equal34` | 34, quality-weighted logit | **0.961438** | 0.960920 | −0.000518 |
 
-The gap matches the field's independently measured calibration (`LB ≈ OOF − 0.00035`).
-**Our CV is trustworthy; we do not need to recalibrate it.**
+### ⚠ The most important calibration result
+Submission #2 gained **+0.000165 OOF** over #1 and moved the public LB by **−0.00001**.
+Test-prediction Spearman between the two files is **0.9954** — and the *OOF* Spearman is also
+0.9954, i.e. OOF and test orderings move together, so the CV is a faithful guide.
+
+Consequence: **paired public-LB noise is ≈ ±0.0002.** To resolve a real improvement on the board
+we need OOF gains ≳ +0.0003. Smaller OOF improvements are real but invisible on the public split
+(59,969 rows ⇒ standalone AUC SE ≈ 0.0015; paired SE ≈ 0.0002 when ρ ≈ 0.995).
+
+**Therefore: stop hill-climbing the public LB, and stop spending submissions on sub-0.0003 OOF
+deltas.** Keep raising honest OOF; spend submissions only on ≥ +0.0003 steps and on the two final
+selections.
+
+### The two levers that actually moved single-model AUC
+| Lever | Effect on a single model | Members |
+|---|---|---|
+| **`extra_trees=True` in LightGBM** | **+2.3e-4** (0.960833 → 0.961175) | 12 |
+| **10-fold instead of 5-fold** | **+1.1e-4** (0.961136 → 0.961242) | 2 |
+| leaves 255 / colsample 0.5 / max_bin 63 | +0.1e-4 … +1.2e-4 | 4 |
+| RealMLP seed bag | ±0.9e-4 spread across seeds | 4 |
+| CatBoost depth 6 vs 8 | +0.3e-4 | 1 |
+
+`extra_trees` is not used anywhere in the public S6E10 field. It is predicted by our
+i.i.d.-label-noise diagnosis: random splits decorrelate trees so averaging cancels more of the
+per-row noise while keeping the p(x) component. The 10-fold gain is additive and additionally
+decorrelates the member (its fold models see different 90 % subsets).
+
+### Blend schemes (34 members, primary 5-fold)
+| scheme | OOF AUC | note |
+|---|---|---|
+| equal over all | 0.961434 | zero selection freedom |
+| quality-softmax (T = 2e-4) | 0.961438 | zero fitted parameters |
+| family-balanced | 0.961407 | **worse** — upweights the weak cat/xgb members |
+| **nested logit-LR stack** | **0.961466** | honest: coefficients fitted on 4 folds, scored on the 5th |
+
+The nested-LR stack beats fixed weights by only 3e-5, which is inside the fold noise, so the
+robust choice remains a fixed-weight blend.
 
 ### Feature-view ablation ladder (LGBM, primary folds)
 | View | Blocks | n_feat | OOF AUC | Δ vs raw |
@@ -112,25 +146,43 @@ geometry to gain here. The gain came from **member breadth** (+0.00033).
 | Pseudo-labelling | reported harmful by the field | not attempted |
 
 ## Kaggle submissions used today
-**1 / 10** — `v1_equal4.csv`, public **0.960930**, ref 56788249.
+**2 / 10** — `v1_equal4.csv` (0.960930), `v2_equal34.csv` (0.960920).
 
 ## Top active hypotheses (ranked)
-1. **Member breadth.** The field's best published OOF (0.961647) is a 25–28-member stack. Our
-   4-member blend gains +0.00033 over the best single; more members should add more. In progress:
-   a 40-entry zoo (family × view × structure × seed × fold-count).
-2. **10-fold members** for decorrelation from the 5-fold ones (prior season: +0.0001 per model).
-3. **`base_margin` residual boosting** from a strong model's logit (prior season: +6e-6…+5e-4;
+1. **More 10-fold random-split LightGBM members.** 10-fold gave +1.1e-4 *and* decorrelates the
+   member, so it is the only lever that improves a member twice over. Only 2 exist so far.
+2. **RealMLP batch size.** Our RealMLP (0.96082) is 3.5e-4 below the field's best (0.96117);
+   their recipe uses `batch_size=256` where we used 4096, a 16× difference in gradient steps per
+   epoch. RealMLP members currently contribute +1.3…1.7e-5 each in the marginal analysis, so
+   fixing this is the cheapest way to add decorrelated strength.
+3. **CatBoost breadth** — only 2 members; it is the one genuinely different algorithm family
+   left (XGBoost is near-duplicate with LightGBM at logit-corr 0.998).
+4. **`base_margin` residual boosting** from a strong model's logit (prior season +6e-6…+5e-4;
    untested in S6E10).
-4. **Auxiliary-task predicted class probabilities** for 4 key ratings (field: +0.00005).
-5. Equal-weight averaging of *all* admissible members vs gated greedy selection — the former has
-   zero selection freedom and is therefore safer against OOF overfitting.
+5. **Auxiliary-task predicted class probabilities** for 4 key ratings (field: +0.00005).
+6. **Shadow-fold confirmation** of the final stack before locking a finalist.
+
+## Rejected — do not re-spend
+| Idea | Measured |
+|---|---|
+| Exact-row lookup into the original dataset | +0.000038 |
+| Fold-safe TE on duplicate feature keys | AUC 0.8677 standalone; −0.00005 in the model |
+| Target encoding on top of route-profile means | −0.00005 |
+| Original-only teacher on top of `external` stats | +0.000035 |
+| Original conditional surfaces on top of `external` | +0.000009 |
+| `id` digit / modulo / batch features | AUC ≈ 0.500 |
+| Blend-geometry search (prob/logit/rank/LR/greedy) | spread ≤ 3e-5 |
+| Family-balanced weighting | −0.00003 |
+| Kaggle-like GOSS with bagging | invalid combination; dropped |
+| Public-LB hill climbing | ±0.0002 paired noise; wasted submission |
+| sklearn `ExtraTreesClassifier` (1000 trees) | too slow, marginal value — dropped for LightGBM `extra_trees` |
 
 ## Immediate next experiments
-- [ ] Run the 40-member zoo (`scripts/run_zoo.py --save-test`)
-- [ ] Gated stack + equal-weight-all comparison (`scripts/stack.py`)
-- [ ] `base_margin` and auxiliary-task probes (`scripts/probe_new_signals.py`)
-- [ ] Submission #2 only if the stack clears the gate by a real margin
-- [ ] Shadow-fold confirmation before any finalist is locked
+- [ ] Finish zoo 3 (CatBoost breadth, RealMLP batch sweep, 10-fold XT)
+- [ ] If the stack clears **+0.0003 OOF** over 0.961438 → submission #3
+- [ ] `base_margin` + auxiliary-task probes
+- [ ] Shadow-fold confirmation of the finalist
+- [ ] Reproduce the finalist from clean code, then choose the 2 final submissions by robustness
 
 ## Git
-`main` @ see `git log -1`. Repo: <https://github.com/jamesidriss/airline_S6E10>
+`main` — see `git log -1`. Repo: <https://github.com/jamesidriss/airline_S6E10>

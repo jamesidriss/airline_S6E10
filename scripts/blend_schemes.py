@@ -106,17 +106,19 @@ def main() -> None:
         print("nested stack failed:", exc)
 
     best = max(res, key=lambda k: res[k]["oof_auc"])
-    print(f"\nbest scheme: {best} = {res[best]['oof_auc']:.6f}")
+    best_w = max(schemes, key=lambda k: res[k]["oof_auc"])
+    print(f"\nbest scoring scheme: {best} = {res[best]['oof_auc']:.6f}")
+    print(f"best fixed-weight scheme: {best_w} = {res[best_w]['oof_auc']:.6f}")
     save_json(res, REPORTS / f"blend_schemes{('_' + args.name) if args.name else ''}.json")
 
     if args.build and T is not None and args.name:
         from scipy.special import expit
 
-        w = schemes[best]
+        w = schemes[best_w]
         store.save(f"blend_{args.name}", expit(M @ w), expit(T @ w), fold_scheme=args.folds,
-                   meta={"family": "blend", "featureset": best, "auc": res[best]["oof_auc"],
+                   meta={"family": "blend", "featureset": best_w, "auc": res[best_w]["oof_auc"],
                          "members": names})
-        print(f"saved blend_{args.name}")
+        print(f"saved blend_{args.name} using scheme {best_w}")
 
 
 if __name__ == "__main__":
