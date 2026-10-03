@@ -34,14 +34,34 @@ def main() -> None:
     ap.add_argument("--tag", default="view")
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--save-test", action="store_true")
-    ap.add_argument("--params", default="{}")
+    ap.add_argument("--params", default="{}", help="extra params as a JSON object; "
+                                                 "prefer --params-file or the named flags below "
+                                                 "to avoid shell-quoting problems")
+    ap.add_argument("--params-file", default="", help="read --params from this JSON file")
+    ap.add_argument("--extra-trees", action="store_true",
+                    help="LightGBM extra_trees=True (extremely randomised splits)")
+    ap.add_argument("--num-leaves", type=int, default=0)
+    ap.add_argument("--learning-rate", type=float, default=0.0)
     args = ap.parse_args()
+
+    raw_params = args.params
+    if args.params_file:
+        raw_params = Path(args.params_file).read_text(encoding="utf-8")
+    extra = json.loads(raw_params) if raw_params.strip() else {}
+    if args.extra_trees:
+        extra["extra_trees"] = True
+    if args.num_leaves:
+        extra["num_leaves"] = args.num_leaves
+    if args.learning_rate:
+        extra["learning_rate"] = args.learning_rate
+    if extra:
+        print(f"[params] {extra}")
 
     tr, te = load_cached_parquet()
     y = tr[TARGET].values.astype("int8")
     ntr, nte = len(tr), len(te)
     dh = f"tr{ntr}-te{nte}"
-    extra = json.loads(args.params)
+
     summary = []
     cache_path = REPORTS / f"{args.tag}_results.json"
     if cache_path.exists():

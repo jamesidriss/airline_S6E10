@@ -1,0 +1,68 @@
+[
+  {
+    "name": "xt_sh_s1",
+    "exp_id": "z4_xt_sh_s1",
+    "scheme": "shadow",
+    "oof_auc": 0.961143
+  },
+  {
+    "name": "xt_sh_s2",
+    "exp_id": "z4_xt_sh_s2",
+    "scheme": "shadow",
+    "oof_auc": 0.961099
+  },
+  {
+    "name": "xt_sh_s3",
+    "exp_id": "z4_xt_sh_s3",
+    "scheme": "shadow",
+    "oof_auc": 0.961077
+  },
+  {
+    "name": "xt_sh_s4",
+    "exp_id": "z4_xt_sh_s4",
+    "scheme": "shadow",
+    "oof_auc": 0.961051
+  },
+  {
+    "name": "xt_sh_s5",
+    "exp_id": "z4_xt_sh_s5",
+    "scheme": "shadow",
+    "oof_auc": 0.961126
+  },
+  {
+    "name": "lgb_sh_s1",
+    "exp_id": "z4_lgb_sh_s1",
+    "scheme": "shadow",
+    "oof_auc": 0.960868
+  },
+  {
+    "name": "lgb_sh_s2",
+    "exp_id": "z4_lgb_sh_s2",
+    "scheme": "shadow",
+    "oof_auc": 0.960855
+  },
+  {
+    "name": "xgb_sh_s1",
+    "exp_id": "z4_xgb_sh_s1",
+    "scheme": "shadow",
+    "oof_auc": 0.960844
+  },
+  {
+    "name": "xt_f10_s3",
+    "exp_id": "z4_xt_f10_s3",
+    "scheme": "block10",
+    "oof_auc": 0.961196
+  },
+  {
+    "name": "xt_f10_s4",
+    "exp_id": "z4_xt_f10_s4",
+    "scheme": "block10",
+    "oof_auc": 0.96126
+  },
+  {
+    "name": "xt_sh_f10",
+    "exp_id": "z4_xt_sh_f10",
+    "scheme": "block10",
+    "oof_auc": 0.961183
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "view": "full",
+    "scheme": "primary",
+    "model": "lgbm",
+    "oof_auc": 0.961084,
+    "fold_aucs": [
+      0.961103,
+      0.961303,
+      0.961049,
+      0.960256,
+      0.961748
+    ],
+    "n_features": 285,
+    "teacher_auc": null,
+    "exp_id": "abl_lgbm_full_primary"
+  },
+  {
+    "view": "full_ogm",
+    "scheme": "primary",
+    "model": "lgbm",
+    "oof_auc": 0.960951,
+    "fold_aucs": [
+      0.960825,
+      0.961137,
+      0.961093,
+      0.960157,
+      0.961569
+    ],
+    "n_features": 473,
+    "teacher_auc": null,
+    "exp_id": "abl_lgbm_full_ogm_primary"
+  },
+  {
+    "view": "full_ogm_ogs",
+    "scheme": "primary",
+    "model": "lgbm",
+    "oof_auc": 0.961123,
+    "fold_aucs": [
+      0.960965,
+      0.961265,
+      0.961217,
+      0.960445,
+      0.961766
+    ],
+    "n_features": 641,
+    "teacher_auc": null,
+    "exp_id": "abl_lgbm_full_ogm_ogs_primary"
+  },
+  {
+    "view": "full_ogsurf",
+    "scheme": "primary",
+    "model": "lgbm",
+    "oof_auc": 0.961144,
+    "fold_aucs": [
+      0.961079,
+      0.961233,
+      0.961256,
+      0.960495,
+      0.961689
+    ],
+    "n_features": 405,
+    "teacher_auc": null,
+    "exp_id": "abl_lgbm_full_ogsurf_primary"
+  }
+]
