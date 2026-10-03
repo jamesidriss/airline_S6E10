@@ -184,14 +184,15 @@ def test_oof_coverage_and_store_integrity():
 
 
 def test_submission_preflight_rejects_bad_input():
+    """The pre-flight gate must refuse anything malformed, and must not leave litter behind."""
     from src.submission.make import build
-    from sklearn.metrics import roc_auc_score
 
-    good = np.full(len(pd.read_csv(TEST_CSV, usecols=[ID_COL])), 0.5)
+    n = len(pd.read_csv(TEST_CSV, usecols=[ID_COL]))
+    good = np.full(n, 0.5)
     p = build(good, "pytest_ok", notes="pytest artifact", oof_auc=0.5)
     assert p.exists()
     try:
-        build(np.full(len(good) - 1, 0.5), "pytest_bad")
+        build(np.full(n - 1, 0.5), "pytest_bad")
         raise AssertionError("pre-flight failed to reject a wrong-length prediction")
     except ValueError as exc:
         assert "REJECTED" in str(exc)
@@ -202,6 +203,17 @@ def test_submission_preflight_rejects_bad_input():
         raise AssertionError("pre-flight failed to reject NaN")
     except ValueError as exc:
         assert "REJECTED" in str(exc)
+    # clean up: a test must not leave files in submissions/
+    p.unlink(missing_ok=True)
+    (p.parent / "pytest_bad.csv").unlink(missing_ok=True)
+    (p.parent / "pytest_nan.csv").unlink(missing_ok=True)
+    import pandas as _pd
+
+    man = p.parent / "manifest.csv"
+    if man.exists():
+        df = _pd.read_csv(man)
+        df = df[~df["name"].astype(str).str.startswith("pytest")]
+        df.to_csv(man, index=False)
 
 
 def test_transforms_are_invertible_shape_wise():
