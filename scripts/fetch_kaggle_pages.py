@@ -1,14 +1,43 @@
 """Fetch official competition pages (overview / rules / data) from Kaggle's internal API.
 
+SECURITY CONTRACT
+-----------------
 Read-only, public competition metadata. Never prints credentials.
+Only JSON API responses are persisted (competition page markdown). Every byte of remote content
+still passes through `scrub` before it reaches disk, so a future endpoint change cannot
+reintroduce a credential -- see scripts/verify_kaggle_facts.py for the full contract.
 Output: research/raw/kaggle_pages.json + research/raw/kaggle_pages.md
 """
 
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
+
+_SECRET_PATTERNS = [
+    re.compile(r"AIza[0-9A-Za-z_-]{35}"),
+    re.compile(r"ya29\.[0-9A-Za-z_-]{20,}"),
+    re.compile(r"\b(?:AKIA|ASIA)[0-9A-Z]{16}\b"),
+    re.compile(r"\bgh[pousr]_[A-Za-z0-9]{20,}\b"),
+    re.compile(r"github_pat_[A-Za-z0-9_]{30,}"),
+    re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"),
+    re.compile(r"(?i)(?:bearer\s+)[A-Za-z0-9._~+/=-]{20,}"),
+]
+
+
+def scrub(value):
+    """Recursively drop secret-shaped substrings from anything on its way to disk."""
+    if isinstance(value, str):
+        for pat in _SECRET_PATTERNS:
+            value = pat.sub("[REDACTED]", value)
+        return value
+    if isinstance(value, dict):
+        return {k: scrub(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [scrub(v) for v in value]
+    return value
 
 SLUG = "playground-series-s6e10"
 COMP_ID = 125224
@@ -56,11 +85,12 @@ def main() -> None:
         except Exception as exc:  # noqa: BLE001
             facts[name] = {"error": repr(exc)}
 
-    (OUTDIR / "kaggle_pages.json").write_text(json.dumps(facts, indent=2, default=str), encoding="utf-8")
-
+    facts = scrub(facts)
     md = ["# Kaggle official pages: " + SLUG, ""]
-    for name, p in facts["pages"].items():
-        md += [f"## page: {name} (id={p['id']})", "", p["content"], ""]
+    for name, p in facts.get("pages", {}).items():
+        md += [f"## page: {name} (id={p['id']})", "", p.get("content", ""), ""]
+    md = scrub(md)
+    (OUTDIR / "kaggle_pages.json").write_text(json.dumps(facts, indent=2, default=str), encoding="utf-8")
     (OUTDIR / "kaggle_pages.md").write_text("\n".join(md), encoding="utf-8")
 
     print("pages:", list(facts["pages"]))

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -246,3 +247,80 @@ def test_original_overlap_audit_is_small():
     aud = S.original_leak_audit(S.load_original(), comb, feats)
     assert aud["n_original_rows_exactly_matching_a_competition_row"] <= 1000, aud
     print(aud)
+
+
+# ======================================================================================
+# security
+# ======================================================================================
+def test_no_secret_shaped_material_in_repository():
+    """Regression test for the credential that GitHub secret scanning found.
+
+    Kaggle's frontend HTML embeds a public Google API key. A previous version of
+    scripts/verify_kaggle_facts.py persisted raw response bodies, which copied that key into
+    research/raw/kaggle_facts.json and into git history. This test fails if any secret-shaped
+    string reappears anywhere in the tracked working tree, or in any file we persist from a
+    remote call.
+
+    Values are never printed: the assertion reports detector name, path and line only.
+    """
+    import re
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(root))
+    from scripts.secret_scan import SELF_EXEMPT, scan_tree
+
+    findings = [f for f in scan_tree() if f["severity"] == "HIGH"]
+    if findings:
+        locs = ", ".join(f"{f['detector']} at {f['path']}:{f['where']}" for f in findings)
+        raise AssertionError(f"secret-shaped material present in the tree -> {locs}")
+
+    # and specifically: the persisted Kaggle facts file must be JSON-only and scrubbed
+    facts = root / "research" / "raw" / "kaggle_facts.json"
+    if facts.exists():
+        text = facts.read_text(encoding="utf-8")
+        assert "AIza" not in text, "google-api-key shape present in kaggle_facts.json"
+        assert "<!DOCTYPE" not in text and "<script" not in text, \
+            "raw HTML was persisted into kaggle_facts.json"
+        data = json.loads(text)
+        for name, entry in data.items():
+            if isinstance(entry, dict) and entry.get("persisted") is False:
+                assert "body" not in entry, f"{name} persisted a body it declared it would not"
+
+
+def test_verify_kaggle_facts_never_persists_non_json_bodies():
+    """A non-JSON response must yield metadata only: status, content type, length, class."""
+    import scripts.verify_kaggle_facts as V
+
+    class FakeResp:
+        def __init__(self, status, ctype, text):
+            self.status_code, self.headers, self.text = status, {"Content-Type": ctype}, text
+
+        def json(self):
+            raise ValueError("not json")
+
+    html = "<!DOCTYPE html><script>window.kaggleStackdriverConfig={'apiKey':'AIza" + "x" * 35 + "'}</script>"
+    r = FakeResp(200, "text/html", html)
+    meta = {"status": r.status_code, "content_type": r.headers["Content-Type"],
+            "body_len": len(r.text),
+            "classification": V.classify_error(r.status_code, r.headers["Content-Type"])}
+    assert meta["classification"] == "ok"
+    # the classification must never leak body content
+    assert "AIza" not in meta["classification"]
+
+    # scrub must remove credential shapes from anything
+    scrubbed = V.scrub({"k": html, "n": [html], "i": 1})
+    assert "AIza" not in json.dumps(scrubbed)
+    assert scrubbed["i"] == 1, "scrub must not damage non-string content"
+
+
+def test_secret_scan_detectors_are_self_exempt_and_working():
+    """The scanner must detect a planted secret and must not flag itself."""
+    from scripts.secret_scan import SELF_EXEMPT, scan_text
+
+    planted = "config api_key: 'AIza" + "A" * 35 + "'"
+    hits = scan_text(planted, "fake.py", "")
+    assert any(h["detector"] == "google_api_key" for h in hits)
+    assert "scripts/secret_scan.py" in SELF_EXEMPT
+    root = Path(__file__).resolve().parents[1]
+    assert (root / "scripts" / "secret_scan.py").exists()
