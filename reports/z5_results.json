@@ -1,0 +1,44 @@
+[
+  {
+    "name": "tabm_e25",
+    "exp_id": "z5_tabm_e25",
+    "model": "tabm",
+    "view": "full",
+    "oof_auc": 0.960693
+  },
+  {
+    "name": "tabm_e25_s2",
+    "exp_id": "z5_tabm_e25_s2",
+    "model": "tabm",
+    "view": "full",
+    "oof_auc": 0.96063
+  },
+  {
+    "name": "tabm_e40_core3",
+    "exp_id": "z5_tabm_e40_core3",
+    "model": "tabm",
+    "view": "core3",
+    "oof_auc": 0.960191
+  },
+  {
+    "name": "rm_ens32",
+    "exp_id": "z5_rm_ens32",
+    "model": "realmlp",
+    "view": "full",
+    "oof_auc": 0.961017
+  },
+  {
+    "name": "rm_ens32_s2",
+    "exp_id": "z5_rm_ens32_s2",
+    "model": "realmlp",
+    "view": "full",
+    "oof_auc": 0.960977
+  },
+  {
+    "name": "rm_ens16_ogs",
+    "exp_id": "z5_rm_ens16_ogs",
+    "model": "realmlp",
+    "view": "full_ogsurf",
+    "oof_auc": 0.960969
+  }
+]
