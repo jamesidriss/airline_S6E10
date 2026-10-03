@@ -51,6 +51,8 @@ def main() -> None:
     for k, v in idx.items():
         if k in excl or not v.get("meta", {}).get("auc"):
             continue
+        if v.get("meta", {}).get("family") in ("blend", "stack"):
+            continue  # a derived prediction must never be a member of its own stack
         if v.get("fold_scheme", "primary") not in (None, args.folds):
             continue
         o = store.load_oof(k).astype("float64")

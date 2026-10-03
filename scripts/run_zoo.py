@@ -187,7 +187,7 @@ def main() -> None:
         vb.build_static()
         vbs[v] = vb
         print(f"[zoo] built view {v}: static {vb.static_tr.shape}", flush=True)
-    for s in sorted({x for n, f, v, sc, p, sd in ZOO if not args.only or n in args.only.split(",")}):
+    for s in sorted({sc for n, f, v, sc, p, sd in ZOO if not args.only or n in args.only.split(",")}):
         folds_by_scheme[s] = get_scheme(s, y, tr[ID_COL]).folds
 
     def run_one(name, family, view, scheme, params, seed):

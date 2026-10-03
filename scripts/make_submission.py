@@ -89,7 +89,7 @@ def main() -> None:
 
     test_prob = expit(test_blend)
 
-    store.save(f"blend_{args.name}", oof_blend, test_prob, fold_scheme=args.folds,
+    store.save(f"blend_{args.name}", expit(oof_blend), test_prob, fold_scheme=args.folds,
                meta={"family": "blend", "featureset": kind, "auc": round(auc, 6),
                      "members": ids, "weights": wts.tolist()})
     if not args.dry_run:

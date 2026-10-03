@@ -1,0 +1,92 @@
+[
+  {
+    "name": "lgbm_d127",
+    "exp_id": "zoo_lgbm_d127",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 1,
+    "oof_auc": 0.960833
+  },
+  {
+    "name": "lgbm_d63",
+    "exp_id": "zoo_lgbm_d63",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 2,
+    "oof_auc": 0.96083
+  },
+  {
+    "name": "lgbm_d255",
+    "exp_id": "zoo_lgbm_d255",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 3,
+    "oof_auc": 0.960955
+  },
+  {
+    "name": "lgbm_bin63",
+    "exp_id": "zoo_lgbm_bin63",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 4,
+    "oof_auc": 0.960901
+  },
+  {
+    "name": "lgbm_xt",
+    "exp_id": "zoo_lgbm_xt",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 5,
+    "oof_auc": 0.961175
+  },
+  {
+    "name": "lgbm_lowcs",
+    "exp_id": "zoo_lgbm_lowcs",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 7,
+    "oof_auc": 0.960934
+  },
+  {
+    "name": "xgb_d6",
+    "exp_id": "zoo_xgb_d6",
+    "family": "xgb",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 8,
+    "oof_auc": 0.960888
+  },
+  {
+    "name": "xgb_d4",
+    "exp_id": "zoo_xgb_d4",
+    "family": "xgb",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 9,
+    "oof_auc": 0.960775
+  },
+  {
+    "name": "xgb_d10",
+    "exp_id": "zoo_xgb_d10",
+    "family": "xgb",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 10,
+    "oof_auc": 0.960905
+  },
+  {
+    "name": "xgb_bin512",
+    "exp_id": "zoo_xgb_bin512",
+    "family": "xgb",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 11,
+    "oof_auc": 0.960898
+  }
+]

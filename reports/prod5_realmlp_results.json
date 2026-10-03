@@ -38,5 +38,45 @@
     ],
     "exp_id": "prod5_realmlp_full_primary_s7_e6",
     "dur_s": 324
+  },
+  {
+    "key": "realmlp|full|primary|123|e6|ns8|tw1",
+    "model": "realmlp",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 123,
+    "epochs": 6,
+    "ens": 8,
+    "twin": true,
+    "oof_auc": 0.960804,
+    "fold_aucs": [
+      0.960829,
+      0.960948,
+      0.961021,
+      0.960253,
+      0.961411
+    ],
+    "exp_id": "prod5_realmlp_full_primary_s123_e6",
+    "dur_s": 326
+  },
+  {
+    "key": "realmlp|full|primary|2024|e6|ns8|tw1",
+    "model": "realmlp",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 2024,
+    "epochs": 6,
+    "ens": 8,
+    "twin": true,
+    "oof_auc": 0.960789,
+    "fold_aucs": [
+      0.960828,
+      0.960903,
+      0.961022,
+      0.9602,
+      0.961448
+    ],
+    "exp_id": "prod5_realmlp_full_primary_s2024_e6",
+    "dur_s": 323
   }
 ]
