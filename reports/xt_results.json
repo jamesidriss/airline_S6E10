@@ -1,0 +1,128 @@
+[
+  {
+    "name": "xt_d127_s1",
+    "exp_id": "xt_xt_d127_s1",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 1,
+    "oof_auc": 0.961136
+  },
+  {
+    "name": "xt_d127_s2",
+    "exp_id": "xt_xt_d127_s2",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 2,
+    "oof_auc": 0.961189
+  },
+  {
+    "name": "xt_d63",
+    "exp_id": "xt_xt_d63",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 3,
+    "oof_auc": 0.961104
+  },
+  {
+    "name": "xt_d255",
+    "exp_id": "xt_xt_d255",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 4,
+    "oof_auc": 0.961125
+  },
+  {
+    "name": "xt_d127_cs05",
+    "exp_id": "xt_xt_d127_cs05",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 5,
+    "oof_auc": 0.961118
+  },
+  {
+    "name": "xt_d127_mcs100",
+    "exp_id": "xt_xt_d127_mcs100",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 6,
+    "oof_auc": 0.961166
+  },
+  {
+    "name": "xt_d127_ss06",
+    "exp_id": "xt_xt_d127_ss06",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 7,
+    "oof_auc": 0.961155
+  },
+  {
+    "name": "xt_d127_bin63",
+    "exp_id": "xt_xt_d127_bin63",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 8,
+    "oof_auc": 0.961119
+  },
+  {
+    "name": "xt_d63_lr015",
+    "exp_id": "xt_xt_d63_lr015",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 9,
+    "oof_auc": 0.961168
+  },
+  {
+    "name": "xt_ogs",
+    "exp_id": "xt_xt_ogs",
+    "family": "lgbm",
+    "view": "full_ogsurf",
+    "scheme": "primary",
+    "seed": 10,
+    "oof_auc": 0.961109
+  },
+  {
+    "name": "xt_core3",
+    "exp_id": "xt_xt_core3",
+    "family": "lgbm",
+    "view": "core3",
+    "scheme": "primary",
+    "seed": 11,
+    "oof_auc": 0.960998
+  },
+  {
+    "name": "xt_f10",
+    "exp_id": "xt_xt_f10",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "block10",
+    "seed": 1,
+    "oof_auc": 0.961242
+  },
+  {
+    "name": "xgb_lossguide",
+    "exp_id": "xt_xgb_lossguide",
+    "family": "xgb",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 12,
+    "oof_auc": 0.960907
+  },
+  {
+    "name": "xgb_bynode",
+    "exp_id": "xt_xgb_bynode",
+    "family": "xgb",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 13,
+    "oof_auc": 0.960937
+  }
+]

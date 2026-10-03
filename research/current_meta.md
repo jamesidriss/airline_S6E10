@@ -197,7 +197,39 @@ Their top feature importances: `orig_pred` (46 % of gain), `Online boarding_om`,
 | core3 | 0.960879 |
 | **full** | **0.960904** |
 | full, xgb / cat / realmlp | 0.960946 / 0.960909 / 0.960820 |
-| **equal-logit blend of 4** | **0.961273** → **public LB 0.960930** |
+| 4-family equal-logit blend | 0.961273 → **public LB 0.960930** (gap −0.000343) |
 
 Our early-stopping convention is *stricter* than the field's (an inner 10 % split carved from the
 FIT rows, never the evaluation fold), so our OOF is not inflated by checkpoint selection.
+
+---
+
+## 7. New mechanism discovered here: randomised-split GBDTs (VERIFIED, ours)
+
+**`extra_trees=True` in LightGBM is worth ≈ +2.3e-4 AUC over a fully grown deterministic
+LightGBM on the identical feature view**, and it is the single strongest model we have built.
+
+Measured on the `full` view, primary 5-fold, identical everything else:
+
+| config | OOF AUC |
+|---|---|
+| lgbm 127 leaves, lr 0.02 (deterministic) | 0.960833 |
+| lgbm 63 leaves, lr 0.03 | 0.960830 |
+| lgbm 255 leaves, lr 0.02 | 0.960955 |
+| lgbm max_bin 63 | 0.960901 |
+| lgbm colsample 0.5 / subsample 0.6 | 0.960934 |
+| **lgbm 127 leaves + `extra_trees=True`** | **0.961175** |
+| lgbm 127 leaves + `extra_trees=True`, seed 1 | 0.961136 |
+| lgbm 127 leaves + `extra_trees=True`, seed 2 | 0.961189 |
+
+**Why this is the expected result and not a fluke.** Section 4.1 established that labels are
+i.i.d. Bernoulli(p(x)). A deterministic GBDT greedily grows splits until the *training* labels
+in each leaf are nearly pure, i.e. it fits the per-row noise draw as much as p(x). Extremely
+randomised trees take random features and random thresholds, so each tree is a much weaker
+learner whose errors are far less correlated; averaging many of them cancels more of the
+independent noise while preserving the p(x) component. The same argument predicts that seed
+bags and fold-count bags help, which we also measure.
+
+**Nothing in the public S6E10 field uses this** — the field's feature views are shared almost
+verbatim across notebooks, and `extra_trees` does not appear in any of the audited ladders.
+It is cheap (one LightGBM flag) and it is the largest single-model gain we have measured.
