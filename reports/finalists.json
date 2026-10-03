@@ -1,0 +1,45 @@
+{
+  "equal_all": {
+    "oof_auc": 0.961509,
+    "fold_aucs": [
+      0.961501,
+      0.96165,
+      0.961512,
+      0.960794,
+      0.962121
+    ],
+    "n_members": 59,
+    "max_family_concentration": 0.01695,
+    "families": {
+      "lgbm": 9,
+      "xgb": 8,
+      "cat": 7,
+      "realmlp": 10,
+      "lgbm_xt": 23,
+      "tabm": 2
+    }
+  },
+  "family_balanced": {
+    "oof_auc": 0.961502,
+    "fold_aucs": [
+      0.961479,
+      0.961658,
+      0.961513,
+      0.960791,
+      0.962143
+    ],
+    "n_members": 59,
+    "max_family_concentration": 0.08333,
+    "families": {
+      "lgbm": 9,
+      "xgb": 8,
+      "cat": 7,
+      "realmlp": 10,
+      "lgbm_xt": 23,
+      "tabm": 2
+    }
+  },
+  "test_spearman_between_candidates": 0.9996850091363866,
+  "submissions_used_today": 3,
+  "submissions_remaining": 7
+}

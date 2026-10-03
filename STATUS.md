@@ -197,6 +197,7 @@ it is the most likely way to silently break this solution later.
 | Pseudo-labelling | reported harmful by the field | not attempted |
 | GOSS with bagging parameters | invalid LightGBM combination | dropped |
 | sklearn `ExtraTreesClassifier` (1000 trees) | too slow, marginal value | dropped |
+| `base_margin` residual boosting on the teacher logit | probe returned AUC 0.163 — the init/predict score spaces were mismatched, so the number is meaningless | **untested, not rejected** (low priority: the duplicate-key result implies little learnable residual) |
 | Public-LB hill climbing | ±0.0002 paired noise | wasted submission |
 
 ## 7. Software quality
@@ -213,19 +214,52 @@ exact-overlap audit on the original rows.
 The submission builder has a hard pre-flight gate (column order, row count, id equality,
 finite, in-range) which has already rejected one bad artefact (an out-of-range logit blend).
 
+### Finalist selection
+Two candidates were built and compared:
+| candidate | OOF AUC | max single-family weight | role |
+|---|---|---|---|
+| **`equal_all` (59 members, equal weight)** | **0.961509** | 0.017 | **the finalist** |
+| `family_balanced` (equal weight per family) | 0.961502 | 0.083 | structural hedge |
+
+Their test predictions are **rank-identical (Spearman 0.999685)**, so banking both would add no
+diversity — the honest conclusion is that **one finalist is correct**, and it is
+`submissions/v3_final.csv` (already submitted, public 0.960980).
+
+Blend vs its own best single member: **+0.000247, positive in 5/5 folds, +24.7 units against a
+fold SE of 2.04, bootstrap95 [+0.000192, +0.000322]** — the ensemble gain is real and large
+relative to its uncertainty.
+
 ## 8. Current state and next steps
 
-- **Champion**: 59-member equal-logit blend, OOF **0.961509** (primary 5-fold).
-- **Submitted**: 0.961438 → LB 0.960920. Improvement since then is +0.00007 OOF, **below the
-  ±0.0002 LB noise floor, so no submission #3 is justified yet.**
+- **Champion / finalist**: 59-member equal-logit blend, OOF **0.961509** (primary 5-fold),
+  submitted as `v3_final` → public 0.960980, rank 144.
+- **Honest position**: rank 1 is 0.96165; rank 100 is 0.96123. The gap is ≈ 5e-4 of OOF-equivalent
+  and we have not been able to attribute it to any mechanism — see the plateau note below.
+- **Submission budget**: 7 remaining today; plan ≤ 3/day. Two final selections are allowed at the
+  deadline; one is the right choice here.
+- **Plateau note**: 0.9615 is the **current system plateau, not a proven ceiling.** Evidence that
+  the synthetic p(x) is weaker than the real survey's (0.9949 vs 0.9612) explains why the ceiling
+  feels close, but it is an inference about the generator, not a bound on what is achievable.
+  Concretely still open: an architecture genuinely decorrelated from the GBDT/RealMLP pool
+  (every family tried — LightGBM, XGBoost, CatBoost, RealMLP, TabM — has logit-correlation
+  0.995–0.999 with the others), and a representation richer in a way that helps *deterministic*
+  trees, since the `enrich` experiment showed added columns only help random splits.
 - **Next**:
-  1. Reproduce the finalist from clean code end-to-end.
-  2. Push diversity only where it is orthogonal — the families we have are saturated; a genuinely
-     different architecture is the only lever left.
-  3. Re-check the final-submission selection rules near the deadline and pick 2 finalists by
-     robustness and complementary methodology, not by the two highest public scores.
-- **Submission budget**: 8 remaining today; plan ≤ 3/day.
+  1. Re-check the final-submission selection rules on the competition Rules page near the deadline.
+  2. Re-run `scripts/reproduce_finalist.py` from clean to confirm the submission is byte-reproducible.
+  3. Continue probing for a genuinely decorrelated family; do **not** re-tune existing families.
 
-## 9. Git
+## 9. Reproducing the submission
+
+```powershell
+.\.venv\Scripts\python.exe scripts\download_data.py            # idempotent
+.\.venv\Scripts\python.exe scripts\reproduce_finalist.py --name v3_final
+```
+This verifies data hashes, runs the 15 unit tests and the 14-check leakage audit, retrains any
+missing member (idempotent), rebuilds the equal-logit blend, and writes
+`submissions/v3_final.csv` through the pre-flight gate. The manifest with member list, weights,
+prediction hashes and git commit lands in `reports/finalist_v3_final.json`.
+
+## 10. Git
 
 `main` — see `git log -1`. Repo: <https://github.com/jamesidriss/airline_S6E10>
