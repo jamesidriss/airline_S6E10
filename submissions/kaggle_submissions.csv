@@ -1,0 +1,2 @@
+ts,file,description,ref,status,publicScore,privateScore
+2026-10-03T03:14:36.689328+00:00,v1_equal4.csv,v1_equal4 | exp=blend_v1_equal4 | OOF(primary5)=0.961273 | equal-logit blend of xgb+cat+lgbm+realmlp on full view (raw+cat twins+route-profile counts+orig-data TE+GPT2 tokens+orig teacher) | honest inner early stopping,56788249,submitted,0.96093,

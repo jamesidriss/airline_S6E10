@@ -1,0 +1,168 @@
+{
+  "S13": {
+    "cols": [
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Cleanliness"
+    ],
+    "test_coverage": 0.53774,
+    "auc_te": {
+      "1.0": 0.867676,
+      "10.0": 0.866226,
+      "50.0": 0.865669
+    },
+    "frac_exactly_one_match_in_fit": 0.10989
+  },
+  "S13+M4": {
+    "cols": [
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Cleanliness",
+      "Gender",
+      "Customer Type",
+      "Type of Travel",
+      "Class"
+    ],
+    "test_coverage": 0.38056,
+    "auc_te": {
+      "1.0": 0.817773,
+      "10.0": 0.817593,
+      "50.0": 0.817532
+    },
+    "frac_exactly_one_match_in_fit": 0.13023
+  },
+  "S13+M4+age": {
+    "cols": [
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Cleanliness",
+      "Gender",
+      "Customer Type",
+      "Type of Travel",
+      "Class",
+      "Age"
+    ],
+    "test_coverage": 0.09351,
+    "auc_te": {
+      "1.0": 0.630303,
+      "10.0": 0.630314,
+      "50.0": 0.630315
+    },
+    "frac_exactly_one_match_in_fit": 0.08254
+  },
+  "S13+M4+age+fd_bin": {
+    "cols": [
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Cleanliness",
+      "Gender",
+      "Customer Type",
+      "Type of Travel",
+      "Class",
+      "Age",
+      "_fd_bin250"
+    ],
+    "test_coverage": 0.09351,
+    "auc_te": {
+      "1.0": 0.630303,
+      "10.0": 0.630314,
+      "50.0": 0.630315
+    },
+    "frac_exactly_one_match_in_fit": 0.08254
+  },
+  "S13+M4+age+fd": {
+    "cols": [
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Cleanliness",
+      "Gender",
+      "Customer Type",
+      "Type of Travel",
+      "Class",
+      "Age",
+      "Flight Distance"
+    ],
+    "test_coverage": 8e-05,
+    "auc_te": {
+      "1.0": 0.500146,
+      "10.0": 0.500146,
+      "50.0": 0.500146
+    },
+    "frac_exactly_one_match_in_fit": 0.00015
+  },
+  "S13[9 strongest]+M4+age": {
+    "cols": [
+      "Online boarding",
+      "Inflight entertainment",
+      "Seat comfort",
+      "Inflight wifi service",
+      "Checkin service",
+      "Cleanliness",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Gender",
+      "Customer Type",
+      "Type of Travel",
+      "Class",
+      "Age"
+    ],
+    "test_coverage": 0.28483,
+    "auc_te": {
+      "1.0": 0.773286,
+      "10.0": 0.773414,
+      "50.0": 0.77339
+    },
+    "frac_exactly_one_match_in_fit": 0.12931
+  }
+}

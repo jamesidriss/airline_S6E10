@@ -1,0 +1,5 @@
+name,created,oof_auc,n_rows,pred_sha256_16,members,git,notes
+pytest_ok,2026-10-03T02:10:49.294037+00:00,0.5,299844,469048eb2dd51855,,358b2238289c349c1e859496ef96a90aea4f36c5,pytest artifact
+pytest_ok,2026-10-03T02:11:41.358560+00:00,0.5,299844,469048eb2dd51855,,358b2238289c349c1e859496ef96a90aea4f36c5,pytest artifact
+pytest_ok,2026-10-03T02:12:53.497720+00:00,0.5,299844,469048eb2dd51855,,358b2238289c349c1e859496ef96a90aea4f36c5,pytest artifact
+v1_equal4,2026-10-03T03:14:27.930042+00:00,0.961273,299844,21d560f76309cde3,prod5_xgb_full_primary;prod5_cat_full_primary;prod5_lgbm_full_primary;prod5_realmlp_full_primary_s1_e6,358b2238289c349c1e859496ef96a90aea4f36c5,"exp=blend_v1_equal4; kind=equal_logit; oof=0.961273; members=prod5_xgb_full_primary,prod5_cat_full_primary,prod5_lgbm_full_primary,prod5_realmlp_full_primary_s1_e6"

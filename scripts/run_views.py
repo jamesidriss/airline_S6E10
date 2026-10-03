@@ -50,7 +50,10 @@ def main() -> None:
     for scheme in args.folds.split(","):
         folds = get_scheme(scheme, y, tr[ID_COL]).folds
         for view in args.views.split(","):
-            if any(s.get("view") == view and s.get("scheme") == scheme for s in summary):
+            pending = [m for m in args.models.split(",")
+                       if not any(s.get("view") == view and s.get("scheme") == scheme
+                                  and s.get("model") == m for s in summary)]
+            if not pending:
                 print(f"skip {view}/{scheme} (cached)")
                 continue
             t0 = time.time()

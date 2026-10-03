@@ -1,0 +1,22 @@
+[
+  {
+    "key": "realmlp|full|primary|1|e6|ns8|tw1",
+    "model": "realmlp",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 1,
+    "epochs": 6,
+    "ens": 8,
+    "twin": true,
+    "oof_auc": 0.960811,
+    "fold_aucs": [
+      0.96073,
+      0.960919,
+      0.96111,
+      0.960182,
+      0.961434
+    ],
+    "exp_id": "nn_realmlp_full_primary_s1_e6",
+    "dur_s": 329
+  }
+]

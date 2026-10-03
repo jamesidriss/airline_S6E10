@@ -1,0 +1,26 @@
+{
+  "members": [
+    "prod5_xgb_full_primary",
+    "prod5_cat_full_primary",
+    "prod5_lgbm_full_primary",
+    "prod5_realmlp_full_primary_s1_e6"
+  ],
+  "kind": "equal_logit",
+  "weights": [
+    0.25,
+    0.25,
+    0.25,
+    0.25
+  ],
+  "oof_auc": 0.9612733442469547,
+  "fold_aucs": [
+    0.9612301981893725,
+    0.9613985573054971,
+    0.9613683091079531,
+    0.9605318544447894,
+    0.9618690858804906
+  ],
+  "rank_twin_auc": 0.9612714761563204,
+  "submissions_used_today": 0,
+  "remaining": 10
+}

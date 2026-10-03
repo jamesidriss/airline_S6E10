@@ -7,10 +7,12 @@ credentials.json
 
 # ---- data (large, reproducible via scripts/download_data.py) ----
 data/raw/
+data/original/
 data/*.csv
 data/*.parquet
 data/*.zip
 !data/README.md
+!data/MANIFEST.md
 
 # ---- python env ----
 .venv/
