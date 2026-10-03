@@ -176,6 +176,24 @@ it is the most likely way to silently break this solution later.
     dependence is much weaker.
     **Original data: use it as knowledge, never as rows — now measured, not assumed.**
 
+15. **Community notebook audit: the current leaderboard-leading technique does not survive an
+    honest test.** `kozykappa/S6E10 | Local-Reliability Residual Blend` reports public LB 0.96152
+    — above ours — by (a) consuming a *shared external OOF library* (`najiama/s6e10-oof`) plus four
+    other notebooks, and (b) post-processing it: measure each model's local ROC-AUC inside
+    equal-frequency score regions, then gate a correction by that reliability. The correction is
+    fitted and then evaluated on the same OOF vector, so its number is not adoptable.
+    We extracted the underlying question and tested it ourselves under nested validation
+    (`scripts/local_reliability_gate.py`): region weights for a fold are computed only from the
+    *other* folds' rows, so no gate is ever fitted on the rows it scores.
+    | bin count | 5 | 10 | 20 | 40 |
+    |---|---|---|---|---|
+    | Δ vs equal weighting | −0.000000 | −0.000000 | −0.000000 | −0.000000 |
+    **No member beats the equal-weight blend in any score region** — its local-AUC gain is negative
+    in every bin (e.g. −0.0137 and −0.0065 mean gain for two sampled members). An oracle control
+    (a member equal to `y`) was correctly detected at +0.434, so the machinery is not silently
+    broken. Region gating is a fitting artefact; **rejected with evidence, and we keep our own
+    reproducible models rather than importing someone else's OOF.**
+
 ## 6. Rejected hypotheses — do not re-spend
 
 | Idea | Measured | Verdict |
@@ -198,6 +216,7 @@ it is the most likely way to silently break this solution later.
 | GOSS with bagging parameters | invalid LightGBM combination | dropped |
 | sklearn `ExtraTreesClassifier` (1000 trees) | too slow, marginal value | dropped |
 | `base_margin` residual boosting on the teacher logit | probe returned AUC 0.163 — the init/predict score spaces were mismatched, so the number is meaningless | **untested, not rejected** (low priority: the duplicate-key result implies little learnable residual) |
+| **Region-local reliability gating** (a public notebook's 0.96152 technique, tested honestly) | **delta 0.000000 at 5/10/20/40 bins; no member beats the equal-weight blend in *any* region** | **rejected — see below** |
 | Public-LB hill climbing | ±0.0002 paired noise | wasted submission |
 
 ## 7. Software quality

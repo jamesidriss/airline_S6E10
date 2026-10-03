@@ -233,3 +233,65 @@ bags and fold-count bags help, which we also measure.
 **Nothing in the public S6E10 field uses this** — the field's feature views are shared almost
 verbatim across notebooks, and `extra_trees` does not appear in any of the audited ladders.
 It is cheap (one LightGBM flag) and it is the largest single-model gain we have measured.
+
+### 7a. The flag is conditional on feature dimensionality — do not generalise it
+Measured on the independent `shadow` folds (seed 777001), same code path:
+
+| view | n_feat | deterministic | `extra_trees=True` | Δ | verdict |
+|---|---|---|---|---|---|
+| `full` | 285 | 0.960868 | **0.961143** | **+0.000275** | reproduced |
+| `raw_ext` | 75 | 0.960067 | 0.958506 | −0.001561 | not reproduced |
+| `raw` | 21 | 0.958959 | 0.953388 | −0.005571 | not reproduced (catastrophic) |
+
+Randomly chosen features *and* thresholds need many candidate columns to land on a good split.
+The flag is safe on our ensemble (every `extra_trees` member uses a rich view) and unsafe on a
+minimal one.
+
+---
+
+## 8. Community notebook audit — the leaderboard-leading technique, tested honestly
+
+`kozykappa/S6E10 | Local-Reliability Residual Blend` (`scriptVersionId=354946502`, public LB
+**0.96152**, above ours) does **not train anything**. It reads a shared external OOF library
+(`najiama/s6e10-oof`) plus four other notebooks, then post-processes them:
+
+1. split the OOF into equal-frequency score regions,
+2. measure each model's **local** ROC-AUC inside each region,
+3. residualise the "aux carrier" against rank/logit summaries of the public ensemble,
+4. apply the correction gated on local reliability and on disagreement.
+
+**Audit verdict: not adoptable.** The correction is fitted and then evaluated on the same OOF
+vector, so the reported number is optimistic by construction; and the inputs are another team's
+predictions rather than our own, whose folds and preprocessing we cannot verify. This is exactly
+the "never blend an unexplained prediction CSV just because it scores well" case.
+
+**But the underlying question is legitimate, so we tested it ourselves**
+(`scripts/local_reliability_gate.py`), with region weights for each fold computed only from the
+*other* folds' rows:
+
+| bin count | 5 | 10 | 20 | 40 |
+|---|---|---|---|---|
+| Δ vs equal weighting | −0.000000 | −0.000000 | −0.000000 | −0.000000 |
+
+**No member beats the equal-weight blend in any score region**; per-bin local-AUC gains are
+negative (two sampled members: −0.0137 and −0.0065 mean gain). An oracle control — a "member"
+defined as `y` itself — is correctly detected at +0.434, so the machinery is not silently broken
+and the zero is a real finding. **Region-local reliability gating is rejected with evidence.**
+
+---
+
+## 9. Original-data measurement that closes the mechanism story
+
+Appending the 129,859 leak-audited original rows to training (`full` view, `extra_trees`):
+
+| original-row sample weight | OOF AUC | Δ |
+|---|---|---|
+| 0.0 (excluded) | **0.961078** | — |
+| 0.3 | 0.960493 | −0.000585 |
+| 1.0 | 0.959975 | −0.001103 |
+
+Monotone in weight. Since the original survey's p(x) is learnable to 0.9949 while the synthetic
+labels only support 0.9612, the original rows teach a *different, sharper* function and bias the
+model — yet their **conditional target statistics** are worth +0.001015, because those encode
+feature-level structure that survives even when the overall dependence is much weaker.
+**Use external data as knowledge, never as rows — measured, not assumed.**
