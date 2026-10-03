@@ -1,0 +1,1905 @@
+{
+  "profiles": {
+    "Age": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 75
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 75
+      }
+    },
+    "Flight Distance": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 3474
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 3317
+      }
+    },
+    "Inflight wifi service": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      }
+    },
+    "Departure/Arrival time convenient": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      }
+    },
+    "Ease of Online booking": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      }
+    },
+    "Gate location": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      }
+    },
+    "Food and drink": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      }
+    },
+    "Online boarding": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      }
+    },
+    "Seat comfort": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      }
+    },
+    "Inflight entertainment": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      }
+    },
+    "On-board service": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      }
+    },
+    "Leg room service": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      }
+    },
+    "Baggage handling": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 5
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 5
+      }
+    },
+    "Checkin service": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      }
+    },
+    "Cleanliness": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 6
+      }
+    },
+    "Departure Delay in Minutes": {
+      "train": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 167
+      },
+      "test": {
+        "dtype": "int64",
+        "n_null": 0,
+        "n_unique": 135
+      }
+    },
+    "Arrival Delay in Minutes": {
+      "train": {
+        "dtype": "float64",
+        "n_null": 292,
+        "n_unique": 169,
+        "min": 0.0,
+        "max": 491.0,
+        "mean": 1.1342803173836014,
+        "std": 5.74930354281316,
+        "all_integer": true,
+        "n_decimals_max": 1
+      },
+      "test": {
+        "dtype": "float64",
+        "n_null": 130,
+        "n_unique": 129,
+        "min": 0.0,
+        "max": 471.0,
+        "mean": 1.120161220363413,
+        "std": 5.552891752941926,
+        "all_integer": true,
+        "n_decimals_max": 1
+      }
+    },
+    "Gender": {
+      "train": {
+        "dtype": "str",
+        "n_null": 0,
+        "n_unique": 2
+      },
+      "test": {
+        "dtype": "str",
+        "n_null": 0,
+        "n_unique": 2
+      }
+    },
+    "Customer Type": {
+      "train": {
+        "dtype": "str",
+        "n_null": 0,
+        "n_unique": 2
+      },
+      "test": {
+        "dtype": "str",
+        "n_null": 0,
+        "n_unique": 2
+      }
+    },
+    "Type of Travel": {
+      "train": {
+        "dtype": "str",
+        "n_null": 0,
+        "n_unique": 2
+      },
+      "test": {
+        "dtype": "str",
+        "n_null": 0,
+        "n_unique": 2
+      }
+    },
+    "Class": {
+      "train": {
+        "dtype": "str",
+        "n_null": 0,
+        "n_unique": 3
+      },
+      "test": {
+        "dtype": "str",
+        "n_null": 0,
+        "n_unique": 3
+      }
+    }
+  },
+  "value_reuse": {
+    "Age": {
+      "n_train_vals": 75,
+      "n_test_vals": 75,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Flight Distance": {
+      "n_train_vals": 3474,
+      "n_test_vals": 3317,
+      "test_vals_unseen_in_train": 47,
+      "frac_test_rows_unseen_value": 0.00020343912167660518
+    },
+    "Inflight wifi service": {
+      "n_train_vals": 6,
+      "n_test_vals": 6,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Departure/Arrival time convenient": {
+      "n_train_vals": 6,
+      "n_test_vals": 6,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Ease of Online booking": {
+      "n_train_vals": 6,
+      "n_test_vals": 6,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Gate location": {
+      "n_train_vals": 6,
+      "n_test_vals": 6,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Food and drink": {
+      "n_train_vals": 6,
+      "n_test_vals": 6,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Online boarding": {
+      "n_train_vals": 6,
+      "n_test_vals": 6,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Seat comfort": {
+      "n_train_vals": 6,
+      "n_test_vals": 6,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Inflight entertainment": {
+      "n_train_vals": 6,
+      "n_test_vals": 6,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "On-board service": {
+      "n_train_vals": 6,
+      "n_test_vals": 6,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Leg room service": {
+      "n_train_vals": 6,
+      "n_test_vals": 6,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Baggage handling": {
+      "n_train_vals": 5,
+      "n_test_vals": 5,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Checkin service": {
+      "n_train_vals": 6,
+      "n_test_vals": 6,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Cleanliness": {
+      "n_train_vals": 6,
+      "n_test_vals": 6,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Departure Delay in Minutes": {
+      "n_train_vals": 167,
+      "n_test_vals": 135,
+      "test_vals_unseen_in_train": 19,
+      "frac_test_rows_unseen_value": 7.337148650631662e-05
+    },
+    "Arrival Delay in Minutes": {
+      "n_train_vals": 168,
+      "n_test_vals": 128,
+      "test_vals_unseen_in_train": 11,
+      "frac_test_rows_unseen_value": 4.0020810821627246e-05
+    },
+    "Gender": {
+      "n_train_vals": 2,
+      "n_test_vals": 2,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Customer Type": {
+      "n_train_vals": 2,
+      "n_test_vals": 2,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Type of Travel": {
+      "n_train_vals": 2,
+      "n_test_vals": 2,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    },
+    "Class": {
+      "n_train_vals": 3,
+      "n_test_vals": 3,
+      "test_vals_unseen_in_train": 0,
+      "frac_test_rows_unseen_value": 0.0
+    }
+  },
+  "survey_value_counts": {
+    "Inflight wifi service": [
+      {
+        "Inflight wifi service": 0,
+        "train": 13102,
+        "test": 5682,
+        "train_frac": 0.01873,
+        "test_frac": 0.01895,
+        "diff": 0.00022
+      },
+      {
+        "Inflight wifi service": 1,
+        "train": 107739,
+        "test": 46303,
+        "train_frac": 0.15399,
+        "test_frac": 0.15442,
+        "diff": 0.00043
+      },
+      {
+        "Inflight wifi service": 2,
+        "train": 186870,
+        "test": 80086,
+        "train_frac": 0.2671,
+        "test_frac": 0.26709,
+        "diff": -1e-05
+      },
+      {
+        "Inflight wifi service": 3,
+        "train": 184436,
+        "test": 78914,
+        "train_frac": 0.26362,
+        "test_frac": 0.26318,
+        "diff": -0.00044
+      },
+      {
+        "Inflight wifi service": 4,
+        "train": 128136,
+        "test": 54969,
+        "train_frac": 0.18315,
+        "test_frac": 0.18333,
+        "diff": 0.00018
+      },
+      {
+        "Inflight wifi service": 5,
+        "train": 79352,
+        "test": 33890,
+        "train_frac": 0.11342,
+        "test_frac": 0.11303,
+        "diff": -0.00039
+      }
+    ],
+    "Departure/Arrival time convenient": [
+      {
+        "Departure/Arrival time convenient": 0,
+        "train": 25751,
+        "test": 10889,
+        "train_frac": 0.03681,
+        "test_frac": 0.03632,
+        "diff": -0.00049
+      },
+      {
+        "Departure/Arrival time convenient": 1,
+        "train": 95072,
+        "test": 41163,
+        "train_frac": 0.13589,
+        "test_frac": 0.13728,
+        "diff": 0.00139
+      },
+      {
+        "Departure/Arrival time convenient": 2,
+        "train": 118709,
+        "test": 51020,
+        "train_frac": 0.16967,
+        "test_frac": 0.17016,
+        "diff": 0.00049
+      },
+      {
+        "Departure/Arrival time convenient": 3,
+        "train": 121640,
+        "test": 52143,
+        "train_frac": 0.17386,
+        "test_frac": 0.1739,
+        "diff": 4e-05
+      },
+      {
+        "Departure/Arrival time convenient": 4,
+        "train": 181530,
+        "test": 77790,
+        "train_frac": 0.25946,
+        "test_frac": 0.25943,
+        "diff": -3e-05
+      },
+      {
+        "Departure/Arrival time convenient": 5,
+        "train": 156933,
+        "test": 66839,
+        "train_frac": 0.22431,
+        "test_frac": 0.22291,
+        "diff": -0.0014
+      }
+    ],
+    "Ease of Online booking": [
+      {
+        "Ease of Online booking": 0,
+        "train": 16073,
+        "test": 6797,
+        "train_frac": 0.02297,
+        "test_frac": 0.02267,
+        "diff": -0.0003
+      },
+      {
+        "Ease of Online booking": 1,
+        "train": 110934,
+        "test": 47696,
+        "train_frac": 0.15856,
+        "test_frac": 0.15907,
+        "diff": 0.00051
+      },
+      {
+        "Ease of Online booking": 2,
+        "train": 174868,
+        "test": 75116,
+        "train_frac": 0.24994,
+        "test_frac": 0.25052,
+        "diff": 0.00058
+      },
+      {
+        "Ease of Online booking": 3,
+        "train": 175267,
+        "test": 74922,
+        "train_frac": 0.25051,
+        "test_frac": 0.24987,
+        "diff": -0.00064
+      },
+      {
+        "Ease of Online booking": 4,
+        "train": 130695,
+        "test": 55929,
+        "train_frac": 0.1868,
+        "test_frac": 0.18653,
+        "diff": -0.00027
+      },
+      {
+        "Ease of Online booking": 5,
+        "train": 91798,
+        "test": 39384,
+        "train_frac": 0.13121,
+        "test_frac": 0.13135,
+        "diff": 0.00014
+      }
+    ],
+    "Gate location": [
+      {
+        "Gate location": 0,
+        "train": 1455,
+        "test": 617,
+        "train_frac": 0.00208,
+        "test_frac": 0.00206,
+        "diff": -2e-05
+      },
+      {
+        "Gate location": 1,
+        "train": 104611,
+        "test": 44962,
+        "train_frac": 0.14952,
+        "test_frac": 0.14995,
+        "diff": 0.00043
+      },
+      {
+        "Gate location": 2,
+        "train": 130300,
+        "test": 55756,
+        "train_frac": 0.18624,
+        "test_frac": 0.18595,
+        "diff": -0.00029
+      },
+      {
+        "Gate location": 3,
+        "train": 202277,
+        "test": 86659,
+        "train_frac": 0.28912,
+        "test_frac": 0.28901,
+        "diff": -0.00011
+      },
+      {
+        "Gate location": 4,
+        "train": 168488,
+        "test": 72236,
+        "train_frac": 0.24082,
+        "test_frac": 0.24091,
+        "diff": 9e-05
+      },
+      {
+        "Gate location": 5,
+        "train": 92504,
+        "test": 39614,
+        "train_frac": 0.13222,
+        "test_frac": 0.13212,
+        "diff": -0.0001
+      }
+    ],
+    "Food and drink": [
+      {
+        "Food and drink": 0,
+        "train": 1014,
+        "test": 493,
+        "train_frac": 0.00145,
+        "test_frac": 0.00164,
+        "diff": 0.00019
+      },
+      {
+        "Food and drink": 1,
+        "train": 70923,
+        "test": 30243,
+        "train_frac": 0.10137,
+        "test_frac": 0.10086,
+        "diff": -0.00051
+      },
+      {
+        "Food and drink": 2,
+        "train": 148893,
+        "test": 63478,
+        "train_frac": 0.21282,
+        "test_frac": 0.2117,
+        "diff": -0.00112
+      },
+      {
+        "Food and drink": 3,
+        "train": 154557,
+        "test": 66016,
+        "train_frac": 0.22091,
+        "test_frac": 0.22017,
+        "diff": -0.00074
+      },
+      {
+        "Food and drink": 4,
+        "train": 168861,
+        "test": 72817,
+        "train_frac": 0.24136,
+        "test_frac": 0.24285,
+        "diff": 0.00149
+      },
+      {
+        "Food and drink": 5,
+        "train": 155387,
+        "test": 66797,
+        "train_frac": 0.2221,
+        "test_frac": 0.22277,
+        "diff": 0.00067
+      }
+    ],
+    "Online boarding": [
+      {
+        "Online boarding": 0,
+        "train": 9147,
+        "test": 3809,
+        "train_frac": 0.01307,
+        "test_frac": 0.0127,
+        "diff": -0.00037
+      },
+      {
+        "Online boarding": 1,
+        "train": 57588,
+        "test": 24531,
+        "train_frac": 0.08231,
+        "test_frac": 0.08181,
+        "diff": -0.0005
+      },
+      {
+        "Online boarding": 2,
+        "train": 119297,
+        "test": 51463,
+        "train_frac": 0.17051,
+        "test_frac": 0.17163,
+        "diff": 0.00112
+      },
+      {
+        "Online boarding": 3,
+        "train": 149783,
+        "test": 64034,
+        "train_frac": 0.21409,
+        "test_frac": 0.21356,
+        "diff": -0.00053
+      },
+      {
+        "Online boarding": 4,
+        "train": 210950,
+        "test": 90407,
+        "train_frac": 0.30151,
+        "test_frac": 0.30151,
+        "diff": 0.0
+      },
+      {
+        "Online boarding": 5,
+        "train": 152870,
+        "test": 65600,
+        "train_frac": 0.2185,
+        "test_frac": 0.21878,
+        "diff": 0.00028
+      }
+    ],
+    "Seat comfort": [
+      {
+        "Seat comfort": 0,
+        "train": 838,
+        "test": 399,
+        "train_frac": 0.0012,
+        "test_frac": 0.00133,
+        "diff": 0.00013
+      },
+      {
+        "Seat comfort": 1,
+        "train": 63130,
+        "test": 26892,
+        "train_frac": 0.09023,
+        "test_frac": 0.08969,
+        "diff": -0.00054
+      },
+      {
+        "Seat comfort": 2,
+        "train": 92471,
+        "test": 39635,
+        "train_frac": 0.13217,
+        "test_frac": 0.13219,
+        "diff": 2e-05
+      },
+      {
+        "Seat comfort": 3,
+        "train": 120182,
+        "test": 51289,
+        "train_frac": 0.17178,
+        "test_frac": 0.17105,
+        "diff": -0.00073
+      },
+      {
+        "Seat comfort": 4,
+        "train": 226726,
+        "test": 97095,
+        "train_frac": 0.32406,
+        "test_frac": 0.32382,
+        "diff": -0.00024
+      },
+      {
+        "Seat comfort": 5,
+        "train": 196288,
+        "test": 84534,
+        "train_frac": 0.28056,
+        "test_frac": 0.28193,
+        "diff": 0.00137
+      }
+    ],
+    "Inflight entertainment": [
+      {
+        "Inflight entertainment": 0,
+        "train": 1020,
+        "test": 417,
+        "train_frac": 0.00146,
+        "test_frac": 0.00139,
+        "diff": -7e-05
+      },
+      {
+        "Inflight entertainment": 1,
+        "train": 70131,
+        "test": 30141,
+        "train_frac": 0.10024,
+        "test_frac": 0.10052,
+        "diff": 0.00028
+      },
+      {
+        "Inflight entertainment": 2,
+        "train": 113341,
+        "test": 48564,
+        "train_frac": 0.162,
+        "test_frac": 0.16196,
+        "diff": -4e-05
+      },
+      {
+        "Inflight entertainment": 3,
+        "train": 122977,
+        "test": 52281,
+        "train_frac": 0.17577,
+        "test_frac": 0.17436,
+        "diff": -0.00141
+      },
+      {
+        "Inflight entertainment": 4,
+        "train": 210098,
+        "test": 90054,
+        "train_frac": 0.3003,
+        "test_frac": 0.30034,
+        "diff": 4e-05
+      },
+      {
+        "Inflight entertainment": 5,
+        "train": 182068,
+        "test": 78387,
+        "train_frac": 0.26023,
+        "test_frac": 0.26143,
+        "diff": 0.0012
+      }
+    ],
+    "On-board service": [
+      {
+        "On-board service": 0,
+        "train": 801,
+        "test": 359,
+        "train_frac": 0.00114,
+        "test_frac": 0.0012,
+        "diff": 6e-05
+      },
+      {
+        "On-board service": 1,
+        "train": 61164,
+        "test": 26558,
+        "train_frac": 0.08742,
+        "test_frac": 0.08857,
+        "diff": 0.00115
+      },
+      {
+        "On-board service": 2,
+        "train": 87014,
+        "test": 37580,
+        "train_frac": 0.12437,
+        "test_frac": 0.12533,
+        "diff": 0.00096
+      },
+      {
+        "On-board service": 3,
+        "train": 150812,
+        "test": 64242,
+        "train_frac": 0.21556,
+        "test_frac": 0.21425,
+        "diff": -0.00131
+      },
+      {
+        "On-board service": 4,
+        "train": 225949,
+        "test": 96523,
+        "train_frac": 0.32295,
+        "test_frac": 0.32191,
+        "diff": -0.00104
+      },
+      {
+        "On-board service": 5,
+        "train": 173895,
+        "test": 74582,
+        "train_frac": 0.24855,
+        "test_frac": 0.24874,
+        "diff": 0.00019
+      }
+    ],
+    "Leg room service": [
+      {
+        "Leg room service": 0,
+        "train": 1693,
+        "test": 730,
+        "train_frac": 0.00242,
+        "test_frac": 0.00243,
+        "diff": 1e-05
+      },
+      {
+        "Leg room service": 1,
+        "train": 53094,
+        "test": 23088,
+        "train_frac": 0.07589,
+        "test_frac": 0.077,
+        "diff": 0.00111
+      },
+      {
+        "Leg room service": 2,
+        "train": 126775,
+        "test": 54200,
+        "train_frac": 0.1812,
+        "test_frac": 0.18076,
+        "diff": -0.00044
+      },
+      {
+        "Leg room service": 3,
+        "train": 131580,
+        "test": 56668,
+        "train_frac": 0.18807,
+        "test_frac": 0.18899,
+        "diff": 0.00092
+      },
+      {
+        "Leg room service": 4,
+        "train": 204124,
+        "test": 87250,
+        "train_frac": 0.29176,
+        "test_frac": 0.29098,
+        "diff": -0.00078
+      },
+      {
+        "Leg room service": 5,
+        "train": 182369,
+        "test": 77908,
+        "train_frac": 0.26066,
+        "test_frac": 0.25983,
+        "diff": -0.00083
+      }
+    ],
+    "Baggage handling": [
+      {
+        "Baggage handling": 1,
+        "train": 30460,
+        "test": 13216,
+        "train_frac": 0.04354,
+        "test_frac": 0.04408,
+        "diff": 0.00054
+      },
+      {
+        "Baggage handling": 2,
+        "train": 58532,
+        "test": 25359,
+        "train_frac": 0.08366,
+        "test_frac": 0.08457,
+        "diff": 0.00091
+      },
+      {
+        "Baggage handling": 3,
+        "train": 130348,
+        "test": 55812,
+        "train_frac": 0.18631,
+        "test_frac": 0.18614,
+        "diff": -0.00017
+      },
+      {
+        "Baggage handling": 4,
+        "train": 277622,
+        "test": 118525,
+        "train_frac": 0.39681,
+        "test_frac": 0.39529,
+        "diff": -0.00152
+      },
+      {
+        "Baggage handling": 5,
+        "train": 202673,
+        "test": 86932,
+        "train_frac": 0.28968,
+        "test_frac": 0.28992,
+        "diff": 0.00024
+      }
+    ],
+    "Checkin service": [
+      {
+        "Checkin service": 0,
+        "train": 929,
+        "test": 381,
+        "train_frac": 0.00133,
+        "test_frac": 0.00127,
+        "diff": -6e-05
+      },
+      {
+        "Checkin service": 1,
+        "train": 66468,
+        "test": 28509,
+        "train_frac": 0.095,
+        "test_frac": 0.09508,
+        "diff": 8e-05
+      },
+      {
+        "Checkin service": 2,
+        "train": 74919,
+        "test": 32050,
+        "train_frac": 0.10708,
+        "test_frac": 0.10689,
+        "diff": -0.00019
+      },
+      {
+        "Checkin service": 3,
+        "train": 200177,
+        "test": 85482,
+        "train_frac": 0.28612,
+        "test_frac": 0.28509,
+        "diff": -0.00103
+      },
+      {
+        "Checkin service": 4,
+        "train": 209592,
+        "test": 90205,
+        "train_frac": 0.29957,
+        "test_frac": 0.30084,
+        "diff": 0.00127
+      },
+      {
+        "Checkin service": 5,
+        "train": 147550,
+        "test": 63217,
+        "train_frac": 0.2109,
+        "test_frac": 0.21083,
+        "diff": -7e-05
+      }
+    ],
+    "Cleanliness": [
+      {
+        "Cleanliness": 0,
+        "train": 945,
+        "test": 455,
+        "train_frac": 0.00135,
+        "test_frac": 0.00152,
+        "diff": 0.00017
+      },
+      {
+        "Cleanliness": 1,
+        "train": 72518,
+        "test": 30885,
+        "train_frac": 0.10365,
+        "test_frac": 0.103,
+        "diff": -0.00065
+      },
+      {
+        "Cleanliness": 2,
+        "train": 102596,
+        "test": 43794,
+        "train_frac": 0.14664,
+        "test_frac": 0.14606,
+        "diff": -0.00058
+      },
+      {
+        "Cleanliness": 3,
+        "train": 169931,
+        "test": 72324,
+        "train_frac": 0.24289,
+        "test_frac": 0.24121,
+        "diff": -0.00168
+      },
+      {
+        "Cleanliness": 4,
+        "train": 190681,
+        "test": 82362,
+        "train_frac": 0.27254,
+        "test_frac": 0.27468,
+        "diff": 0.00214
+      },
+      {
+        "Cleanliness": 5,
+        "train": 162964,
+        "test": 70024,
+        "train_frac": 0.23293,
+        "test_frac": 0.23353,
+        "diff": 0.0006
+      }
+    ],
+    "Gender": [
+      {
+        "Gender": "Female",
+        "train": 347952,
+        "test": 149583,
+        "train_frac": 0.49733,
+        "test_frac": 0.49887,
+        "diff": 0.00154
+      },
+      {
+        "Gender": "Male",
+        "train": 351683,
+        "test": 150261,
+        "train_frac": 0.50267,
+        "test_frac": 0.50113,
+        "diff": -0.00154
+      }
+    ],
+    "Customer Type": [
+      {
+        "Customer Type": "Loyal Customer",
+        "train": 576990,
+        "test": 247708,
+        "train_frac": 0.8247,
+        "test_frac": 0.82612,
+        "diff": 0.00142
+      },
+      {
+        "Customer Type": "disloyal Customer",
+        "train": 122645,
+        "test": 52136,
+        "train_frac": 0.1753,
+        "test_frac": 0.17388,
+        "diff": -0.00142
+      }
+    ],
+    "Type of Travel": [
+      {
+        "Type of Travel": "Business travel",
+        "train": 497441,
+        "test": 213141,
+        "train_frac": 0.711,
+        "test_frac": 0.71084,
+        "diff": -0.00016
+      },
+      {
+        "Type of Travel": "Personal Travel",
+        "train": 202194,
+        "test": 86703,
+        "train_frac": 0.289,
+        "test_frac": 0.28916,
+        "diff": 0.00016
+      }
+    ],
+    "Class": [
+      {
+        "Class": "Business",
+        "train": 342212,
+        "test": 146626,
+        "train_frac": 0.48913,
+        "test_frac": 0.48901,
+        "diff": -0.00012
+      },
+      {
+        "Class": "Eco",
+        "train": 327404,
+        "test": 140220,
+        "train_frac": 0.46796,
+        "test_frac": 0.46764,
+        "diff": -0.00032
+      },
+      {
+        "Class": "Eco Plus",
+        "train": 30019,
+        "test": 12998,
+        "train_frac": 0.04291,
+        "test_frac": 0.04335,
+        "diff": 0.00044
+      }
+    ]
+  },
+  "integer_columns": {
+    "Arrival Delay in Minutes": {
+      "n_unique": 169,
+      "min": 0.0,
+      "max": 491.0,
+      "top10_share": 0.9586554809299587,
+      "top1_share": 0.9157380570049318
+    }
+  },
+  "target_rate_surfaces": {
+    "Inflight wifi service": [
+      {
+        "Inflight wifi service": 5,
+        "pos_rate": 0.9503604193971167,
+        "n": 79352
+      },
+      {
+        "Inflight wifi service": 0,
+        "pos_rate": 0.887345443443749,
+        "n": 13102
+      },
+      {
+        "Inflight wifi service": 4,
+        "pos_rate": 0.622213897733658,
+        "n": 128136
+      },
+      {
+        "Inflight wifi service": 1,
+        "pos_rate": 0.3906663325258263,
+        "n": 107739
+      },
+      {
+        "Inflight wifi service": 3,
+        "pos_rate": 0.27623132143399337,
+        "n": 184436
+      },
+      {
+        "Inflight wifi service": 2,
+        "pos_rate": 0.27042864023117674,
+        "n": 186870
+      }
+    ],
+    "Departure/Arrival time convenient": [
+      {
+        "Departure/Arrival time convenient": 1,
+        "pos_rate": 0.5060480477953551,
+        "n": 95072
+      },
+      {
+        "Departure/Arrival time convenient": 0,
+        "pos_rate": 0.47765135334550113,
+        "n": 25751
+      },
+      {
+        "Departure/Arrival time convenient": 2,
+        "pos_rate": 0.45315014025895256,
+        "n": 118709
+      },
+      {
+        "Departure/Arrival time convenient": 3,
+        "pos_rate": 0.44885728378822753,
+        "n": 121640
+      },
+      {
+        "Departure/Arrival time convenient": 5,
+        "pos_rate": 0.4373458737168091,
+        "n": 156933
+      },
+      {
+        "Departure/Arrival time convenient": 4,
+        "pos_rate": 0.4015975320883601,
+        "n": 181530
+      }
+    ],
+    "Ease of Online booking": [
+      {
+        "Ease of Online booking": 5,
+        "pos_rate": 0.7543192662149503,
+        "n": 91798
+      },
+      {
+        "Ease of Online booking": 0,
+        "pos_rate": 0.7075841473278168,
+        "n": 16073
+      },
+      {
+        "Ease of Online booking": 4,
+        "pos_rate": 0.5564252649297984,
+        "n": 130695
+      },
+      {
+        "Ease of Online booking": 1,
+        "pos_rate": 0.4145888546342871,
+        "n": 110934
+      },
+      {
+        "Ease of Online booking": 3,
+        "pos_rate": 0.3203626467047419,
+        "n": 175267
+      },
+      {
+        "Ease of Online booking": 2,
+        "pos_rate": 0.31371091337465973,
+        "n": 174868
+      }
+    ],
+    "Gate location": [
+      {
+        "Gate location": 5,
+        "pos_rate": 0.6248162241632794,
+        "n": 92504
+      },
+      {
+        "Gate location": 0,
+        "pos_rate": 0.5429553264604811,
+        "n": 1455
+      },
+      {
+        "Gate location": 1,
+        "pos_rate": 0.5143914119930026,
+        "n": 104611
+      },
+      {
+        "Gate location": 2,
+        "pos_rate": 0.4647429009976976,
+        "n": 130300
+      },
+      {
+        "Gate location": 4,
+        "pos_rate": 0.41051588243673137,
+        "n": 168488
+      },
+      {
+        "Gate location": 3,
+        "pos_rate": 0.33724546043297066,
+        "n": 202277
+      }
+    ],
+    "Food and drink": [
+      {
+        "Food and drink": 5,
+        "pos_rate": 0.5654977572126368,
+        "n": 155387
+      },
+      {
+        "Food and drink": 4,
+        "pos_rate": 0.5253551737819864,
+        "n": 168861
+      },
+      {
+        "Food and drink": 3,
+        "pos_rate": 0.4065619803697018,
+        "n": 154557
+      },
+      {
+        "Food and drink": 2,
+        "pos_rate": 0.3935174924274479,
+        "n": 148893
+      },
+      {
+        "Food and drink": 0,
+        "pos_rate": 0.21893491124260356,
+        "n": 1014
+      },
+      {
+        "Food and drink": 1,
+        "pos_rate": 0.17067805930375196,
+        "n": 70923
+      }
+    ],
+    "Online boarding": [
+      {
+        "Online boarding": 5,
+        "pos_rate": 0.8751095702230653,
+        "n": 152870
+      },
+      {
+        "Online boarding": 4,
+        "pos_rate": 0.6419151457691397,
+        "n": 210950
+      },
+      {
+        "Online boarding": 0,
+        "pos_rate": 0.6204219962829343,
+        "n": 9147
+      },
+      {
+        "Online boarding": 3,
+        "pos_rate": 0.12837237870786405,
+        "n": 149783
+      },
+      {
+        "Online boarding": 1,
+        "pos_rate": 0.10528235048968534,
+        "n": 57588
+      },
+      {
+        "Online boarding": 2,
+        "pos_rate": 0.08535839124202621,
+        "n": 119297
+      }
+    ],
+    "Seat comfort": [
+      {
+        "Seat comfort": 5,
+        "pos_rate": 0.6711057222041082,
+        "n": 196288
+      },
+      {
+        "Seat comfort": 4,
+        "pos_rate": 0.5706006368921076,
+        "n": 226726
+      },
+      {
+        "Seat comfort": 3,
+        "pos_rate": 0.1848696144181325,
+        "n": 120182
+      },
+      {
+        "Seat comfort": 0,
+        "pos_rate": 0.18377088305489261,
+        "n": 838
+      },
+      {
+        "Seat comfort": 1,
+        "pos_rate": 0.17362585141770948,
+        "n": 63130
+      },
+      {
+        "Seat comfort": 2,
+        "pos_rate": 0.1720106844307945,
+        "n": 92471
+      }
+    ],
+    "Inflight entertainment": [
+      {
+        "Inflight entertainment": 5,
+        "pos_rate": 0.6710899224465584,
+        "n": 182068
+      },
+      {
+        "Inflight entertainment": 4,
+        "pos_rate": 0.6195442127007397,
+        "n": 210098
+      },
+      {
+        "Inflight entertainment": 3,
+        "pos_rate": 0.23868690893419095,
+        "n": 122977
+      },
+      {
+        "Inflight entertainment": 2,
+        "pos_rate": 0.17302653055822695,
+        "n": 113341
+      },
+      {
+        "Inflight entertainment": 0,
+        "pos_rate": 0.14019607843137255,
+        "n": 1020
+      },
+      {
+        "Inflight entertainment": 1,
+        "pos_rate": 0.12666295931898874,
+        "n": 70131
+      }
+    ],
+    "On-board service": [
+      {
+        "On-board service": 5,
+        "pos_rate": 0.656603122573967,
+        "n": 173895
+      },
+      {
+        "On-board service": 4,
+        "pos_rate": 0.5412814396169047,
+        "n": 225949
+      },
+      {
+        "On-board service": 3,
+        "pos_rate": 0.2909848022703764,
+        "n": 150812
+      },
+      {
+        "On-board service": 2,
+        "pos_rate": 0.22044728434504793,
+        "n": 87014
+      },
+      {
+        "On-board service": 1,
+        "pos_rate": 0.1744980707605781,
+        "n": 61164
+      },
+      {
+        "On-board service": 0,
+        "pos_rate": 0.14731585518102372,
+        "n": 801
+      }
+    ],
+    "Leg room service": [
+      {
+        "Leg room service": 5,
+        "pos_rate": 0.615093574017514,
+        "n": 182369
+      },
+      {
+        "Leg room service": 4,
+        "pos_rate": 0.593673453391076,
+        "n": 204124
+      },
+      {
+        "Leg room service": 0,
+        "pos_rate": 0.26993502658003543,
+        "n": 1693
+      },
+      {
+        "Leg room service": 3,
+        "pos_rate": 0.2663778689770482,
+        "n": 131580
+      },
+      {
+        "Leg room service": 2,
+        "pos_rate": 0.24813251824097812,
+        "n": 126775
+      },
+      {
+        "Leg room service": 1,
+        "pos_rate": 0.188684220439221,
+        "n": 53094
+      }
+    ],
+    "Baggage handling": [
+      {
+        "Baggage handling": 5,
+        "pos_rate": 0.6095878582741657,
+        "n": 202673
+      },
+      {
+        "Baggage handling": 4,
+        "pos_rate": 0.48264186555820504,
+        "n": 277622
+      },
+      {
+        "Baggage handling": 1,
+        "pos_rate": 0.30843729481286936,
+        "n": 30460
+      },
+      {
+        "Baggage handling": 2,
+        "pos_rate": 0.2650686803799631,
+        "n": 58532
+      },
+      {
+        "Baggage handling": 3,
+        "pos_rate": 0.21396569184030442,
+        "n": 130348
+      }
+    ],
+    "Checkin service": [
+      {
+        "Checkin service": 5,
+        "pos_rate": 0.6103083700440529,
+        "n": 147550
+      },
+      {
+        "Checkin service": 4,
+        "pos_rate": 0.47031852360777127,
+        "n": 209592
+      },
+      {
+        "Checkin service": 3,
+        "pos_rate": 0.46036757469639367,
+        "n": 200177
+      },
+      {
+        "Checkin service": 2,
+        "pos_rate": 0.21555279702078245,
+        "n": 74919
+      },
+      {
+        "Checkin service": 1,
+        "pos_rate": 0.1992387314196305,
+        "n": 66468
+      },
+      {
+        "Checkin service": 0,
+        "pos_rate": 0.17868675995694294,
+        "n": 929
+      }
+    ],
+    "Cleanliness": [
+      {
+        "Cleanliness": 5,
+        "pos_rate": 0.6304766696939201,
+        "n": 162964
+      },
+      {
+        "Cleanliness": 4,
+        "pos_rate": 0.545151326036679,
+        "n": 190681
+      },
+      {
+        "Cleanliness": 3,
+        "pos_rate": 0.43729513743813664,
+        "n": 169931
+      },
+      {
+        "Cleanliness": 2,
+        "pos_rate": 0.17492884712854304,
+        "n": 102596
+      },
+      {
+        "Cleanliness": 0,
+        "pos_rate": 0.16825396825396827,
+        "n": 945
+      },
+      {
+        "Cleanliness": 1,
+        "pos_rate": 0.15483052483521334,
+        "n": 72518
+      }
+    ],
+    "Gender": [
+      {
+        "Gender": "Male",
+        "pos_rate": 0.4490919379099928,
+        "n": 351683
+      },
+      {
+        "Gender": "Female",
+        "pos_rate": 0.4379943210557778,
+        "n": 347952
+      }
+    ],
+    "Customer Type": [
+      {
+        "Customer Type": "Loyal Customer",
+        "pos_rate": 0.49514549645574446,
+        "n": 576990
+      },
+      {
+        "Customer Type": "disloyal Customer",
+        "pos_rate": 0.20094581923437563,
+        "n": 122645
+      }
+    ],
+    "Type of Travel": [
+      {
+        "Type of Travel": "Business travel",
+        "pos_rate": 0.584336634897405,
+        "n": 497441
+      },
+      {
+        "Type of Travel": "Personal Travel",
+        "pos_rate": 0.09726302461991948,
+        "n": 202194
+      }
+    ],
+    "Class": [
+      {
+        "Class": "Business",
+        "pos_rate": 0.7253106261615607,
+        "n": 342212
+      },
+      {
+        "Class": "Eco Plus",
+        "pos_rate": 0.24217995269662548,
+        "n": 30019
+      },
+      {
+        "Class": "Eco",
+        "pos_rate": 0.16755751304199093,
+        "n": 327404
+      }
+    ]
+  },
+  "marginal_ks": [
+    {
+      "col": "Age",
+      "ks": 0.0011609640177400182,
+      "p": 0.9395164962381721,
+      "mean_train": 39.00192814824873,
+      "mean_test": 38.99303637891704,
+      "std_train": 13.800933115422232,
+      "std_test": 13.785892231867724
+    },
+    {
+      "col": "Flight Distance",
+      "ks": 0.0009453639298210859,
+      "p": 0.9918600202079209,
+      "mean_train": 1353.7787017516275,
+      "mean_test": 1353.3689218393565,
+      "std_train": 954.4218839757231,
+      "std_test": 953.5460235951152
+    },
+    {
+      "col": "Inflight wifi service",
+      "ks": 0.0006534263721022782,
+      "p": 0.9999909190870666,
+      "mean_train": 2.7787217620616462,
+      "mean_test": 2.7765871586558344,
+      "std_train": 1.2804181446755225,
+      "std_test": 1.2809563740312866
+    },
+    {
+      "col": "Departure/Arrival time convenient",
+      "ks": 0.0014233359977998683,
+      "p": 0.7882108830039836,
+      "mean_train": 3.156210023798123,
+      "mean_test": 3.1515954963247554,
+      "std_train": 1.4753887275860973,
+      "std_test": 1.4745252408437055
+    },
+    {
+      "col": "Ease of Online booking",
+      "ks": 0.0007797890974972632,
+      "p": 0.9995469390546894,
+      "mean_train": 2.813239760732382,
+      "mean_test": 2.8125625325169086,
+      "std_train": 1.329548994847327,
+      "std_test": 1.329510417074115
+    },
+    {
+      "col": "Gate location",
+      "ks": 0.00040713799474770274,
+      "p": 0.9999999999999939,
+      "mean_train": 3.013734304315822,
+      "mean_test": 3.0131168207467884,
+      "std_train": 1.2540135610020384,
+      "std_test": 1.2543828148248828
+    },
+    {
+      "col": "Food and drink",
+      "ks": 0.002169037252104933,
+      "p": 0.2763960128088315,
+      "mean_train": 3.2656442287764333,
+      "mean_test": 3.270033750883793,
+      "std_train": 1.3002010824412509,
+      "std_test": 1.300373919227198
+    },
+    {
+      "col": "Online boarding",
+      "ks": 0.0008696360947468701,
+      "p": 0.9973140193748927,
+      "mean_train": 3.3641555954176106,
+      "mean_test": 3.3657068342204615,
+      "std_train": 1.2885373290815123,
+      "std_test": 1.2868977809882627
+    },
+    {
+      "col": "Seat comfort",
+      "ks": 0.0013688824507038788,
+      "p": 0.8259125374311185,
+      "mean_train": 3.5689495236802045,
+      "mean_test": 3.572120836168141,
+      "std_train": 1.275332069749229,
+      "std_test": 1.275582502480446
+    },
+    {
+      "col": "Inflight entertainment",
+      "ks": 0.0012326973891867987,
+      "p": 0.9068460449566892,
+      "mean_train": 3.4539095385450986,
+      "mean_test": 3.4560071237043264,
+      "std_train": 1.3081563409100232,
+      "std_test": 1.3094530385640355
+    },
+    {
+      "col": "On-board service",
+      "ks": 0.002163678058054591,
+      "p": 0.2790821964412449,
+      "mean_train": 3.517404074981955,
+      "mean_test": 3.513313589733328,
+      "std_train": 1.238472949035907,
+      "std_test": 1.2424822990863857
+    },
+    {
+      "col": "Leg room service",
+      "ks": 0.0016078157130829385,
+      "p": 0.6491369895707498,
+      "mean_train": 3.4728465557040455,
+      "mean_test": 3.4685769933698856,
+      "std_train": 1.2717542655969865,
+      "std_test": 1.2733445092941524
+    },
+    {
+      "col": "Baggage handling",
+      "ks": 0.0014524783395654661,
+      "p": 0.7671485190093762,
+      "mean_train": 3.8054428380512695,
+      "mean_test": 3.8024105868384894,
+      "std_train": 1.079173730546435,
+      "std_test": 1.0825901807882816
+    },
+    {
+      "col": "Checkin service",
+      "ks": 0.0012037062095666684,
+      "p": 0.9209695548890025,
+      "mean_train": 3.4202905800881886,
+      "mean_test": 3.4216459225463907,
+      "std_train": 1.2106034413687725,
+      "std_test": 1.2103838149186315
+    },
+    {
+      "col": "Cleanliness",
+      "ks": 0.0027468967614925344,
+      "p": 0.08406197376376712,
+      "mean_train": 3.380401209201941,
+      "mean_test": 3.3851369378743614,
+      "std_train": 1.2778694815316038,
+      "std_test": 1.2775831706828076
+    },
+    {
+      "col": "Departure Delay in Minutes",
+      "ks": 0.0006690134054196939,
+      "p": 0.999983317454443,
+      "mean_train": 1.1762090232764226,
+      "mean_test": 1.1565647470017744,
+      "std_train": 5.982182434306738,
+      "std_test": 5.77062558324862
+    },
+    {
+      "col": "Arrival Delay in Minutes",
+      "ks": 0.00040239952724052674,
+      "p": 0.9999999999999973,
+      "mean_train": 1.1342803173836014,
+      "mean_test": 1.120161220363413,
+      "std_train": 5.749299432308303,
+      "std_test": 5.552882489283264
+    },
+    {
+      "col": "Gender",
+      "ks": NaN,
+      "p": NaN,
+      "mean_train": NaN,
+      "mean_test": NaN,
+      "std_train": NaN,
+      "std_test": NaN
+    },
+    {
+      "col": "Customer Type",
+      "ks": NaN,
+      "p": NaN,
+      "mean_train": NaN,
+      "mean_test": NaN,
+      "std_train": NaN,
+      "std_test": NaN
+    },
+    {
+      "col": "Type of Travel",
+      "ks": NaN,
+      "p": NaN,
+      "mean_train": NaN,
+      "mean_test": NaN,
+      "std_train": NaN,
+      "std_test": NaN
+    },
+    {
+      "col": "Class",
+      "ks": NaN,
+      "p": NaN,
+      "mean_train": NaN,
+      "mean_test": NaN,
+      "std_train": NaN,
+      "std_test": NaN
+    }
+  ],
+  "id_bin_posrate": [
+    {
+      "id": "(-699.634, 34981.7]",
+      "mean": "0.44045509118975473",
+      "size": "34982"
+    },
+    {
+      "id": "(34981.7, 69963.4]",
+      "mean": "0.44311360128065863",
+      "size": "34982"
+    },
+    {
+      "id": "(69963.4, 104945.1]",
+      "mean": "0.4417414670401921",
+      "size": "34982"
+    },
+    {
+      "id": "(104945.1, 139926.8]",
+      "mean": "0.44567050684657383",
+      "size": "34981"
+    },
+    {
+      "id": "(139926.8, 174908.5]",
+      "mean": "0.4417128809101824",
+      "size": "34982"
+    },
+    {
+      "id": "(174908.5, 209890.2]",
+      "mean": "0.44374249614087247",
+      "size": "34982"
+    },
+    {
+      "id": "(209890.2, 244871.9]",
+      "mean": "0.4463565935793717",
+      "size": "34981"
+    },
+    {
+      "id": "(244871.9, 279853.6]",
+      "mean": "0.441341261220056",
+      "size": "34982"
+    },
+    {
+      "id": "(279853.6, 314835.3]",
+      "mean": "0.44239894803041563",
+      "size": "34982"
+    },
+    {
+      "id": "(314835.3, 349817.0]",
+      "mean": "0.4497455834429135",
+      "size": "34982"
+    },
+    {
+      "id": "(349817.0, 384798.7]",
+      "mean": "0.44604213716017266",
+      "size": "34981"
+    },
+    {
+      "id": "(384798.7, 419780.4]",
+      "mean": "0.44534331942141675",
+      "size": "34982"
+    },
+    {
+      "id": "(419780.4, 454762.1]",
+      "mean": "0.4453719055514265",
+      "size": "34982"
+    },
+    {
+      "id": "(454762.1, 489743.8]",
+      "mean": "0.44189702981618595",
+      "size": "34981"
+    },
+    {
+      "id": "(489743.8, 524725.5]",
+      "mean": "0.4445714939111543",
+      "size": "34982"
+    },
+    {
+      "id": "(524725.5, 559707.2]",
+      "mean": "0.44125550283002685",
+      "size": "34982"
+    },
+    {
+      "id": "(559707.2, 594688.9]",
+      "mean": "0.4430976815985821",
+      "size": "34981"
+    },
+    {
+      "id": "(594688.9, 629670.6]",
+      "mean": "0.44154136413012407",
+      "size": "34982"
+    },
+    {
+      "id": "(629670.6, 664652.3]",
+      "mean": "0.44002629923960895",
+      "size": "34982"
+    },
+    {
+      "id": "(664652.3, 699634.0]",
+      "mean": "0.44602938654165",
+      "size": "34982"
+    }
+  ],
+  "id_target_corr": 0.00012483485514024848,
+  "id_feature_screen": {
+    "id_mod2": 0.5007478474341857,
+    "id_mod3": 0.5009737482336758,
+    "id_mod5": 0.5007690477478545,
+    "id_mod7": 0.5009235291407589,
+    "id_mod10": 0.5004569338632776,
+    "id_mod100": 0.5000135216749109,
+    "id_div1e4": 0.5000779912175146,
+    "id_div1e5": 0.5001927072547219,
+    "id_div1e3": 0.5000725971700604,
+    "id_units": 0.5004569338632776,
+    "id_tens": 0.500032174260796,
+    "id_hund": 0.5000220126882136
+  },
+  "adversarial_auc_no_id": 0.500273749016205,
+  "adversarial_auc_with_id": 0.9999928235969752
+}

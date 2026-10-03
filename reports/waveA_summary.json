@@ -1,0 +1,44 @@
+[
+  {
+    "exp_id": "waveA_lgbm_numeric+cat_primary",
+    "family": "lgbm",
+    "fs": "numeric+cat",
+    "scheme": "primary",
+    "oof_auc": 0.958968,
+    "fold_aucs": [
+      0.958898,
+      0.959144,
+      0.959128,
+      0.958155,
+      0.959519
+    ]
+  },
+  {
+    "exp_id": "waveA_xgb_numeric+cat_primary",
+    "family": "xgb",
+    "fs": "numeric+cat",
+    "scheme": "primary",
+    "oof_auc": 0.957476,
+    "fold_aucs": [
+      0.957252,
+      0.95759,
+      0.957357,
+      0.957124,
+      0.958067
+    ]
+  },
+  {
+    "exp_id": "waveA_cat_numeric+cat_primary",
+    "family": "cat",
+    "fs": "numeric+cat",
+    "scheme": "primary",
+    "oof_auc": 0.958809,
+    "fold_aucs": [
+      0.958814,
+      0.959008,
+      0.958793,
+      0.958196,
+      0.959247
+    ]
+  }
+]

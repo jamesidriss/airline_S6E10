@@ -1,0 +1,2386 @@
+{
+  "synthetic_rows": 999479,
+  "candidates": {
+    "arseniyshutko__binary-aviation-satisfaction-129k/data.csv": {
+      "shape": [
+        129880,
+        22
+      ],
+      "raw_cols": [
+        "Gender",
+        "Customer Type",
+        "Age",
+        "Type of Travel",
+        "Class",
+        "Flight Distance",
+        "Inflight wifi service",
+        "Departure/Arrival time convenient",
+        "Ease of Online booking",
+        "Gate location",
+        "Food and drink",
+        "Online boarding",
+        "Seat comfort",
+        "Inflight entertainment",
+        "On-board service",
+        "Leg room service",
+        "Baggage handling",
+        "Checkin service",
+        "Cleanliness",
+        "Departure Delay in Minutes",
+        "Arrival Delay in Minutes",
+        "satisfaction"
+      ],
+      "sha256_16": null,
+      "missing_vs_syn": [],
+      "n_common_cols": 21,
+      "support": {
+        "Age": {
+          "n_orig_vals": 75,
+          "n_syn_vals": 75,
+          "n_inter": 75,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Flight Distance": {
+          "n_orig_vals": 3821,
+          "n_syn_vals": 3521,
+          "n_inter": 3518,
+          "orig_vals_not_in_syn": [
+            "1001",
+            "1003",
+            "1019",
+            "103",
+            "1030",
+            "1051",
+            "1054",
+            "107",
+            "1070",
+            "1094",
+            "1100",
+            "111",
+            "1115",
+            "1122",
+            "1125"
+          ],
+          "syn_vals_not_in_orig": [
+            "1424",
+            "1433",
+            "477"
+          ],
+          "frac_syn_rows_covered_by_orig_support": 0.9999949973936421
+        },
+        "Inflight wifi service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Departure/Arrival time convenient": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Ease of Online booking": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Gate location": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Food and drink": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Online boarding": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Seat comfort": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Inflight entertainment": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "On-board service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Leg room service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Baggage handling": {
+          "n_orig_vals": 5,
+          "n_syn_vals": 5,
+          "n_inter": 5,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Checkin service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Cleanliness": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Departure Delay in Minutes": {
+          "n_orig_vals": 466,
+          "n_syn_vals": 186,
+          "n_inter": 186,
+          "orig_vals_not_in_syn": [
+            "100",
+            "1017",
+            "102",
+            "103",
+            "105",
+            "106",
+            "107",
+            "108",
+            "110",
+            "111",
+            "1128",
+            "114",
+            "115",
+            "116",
+            "117"
+          ],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Arrival Delay in Minutes": {
+          "n_orig_vals": 472,
+          "n_syn_vals": 179,
+          "n_inter": 179,
+          "orig_vals_not_in_syn": [
+            "100.0",
+            "101.0",
+            "1011.0",
+            "104.0",
+            "105.0",
+            "106.0",
+            "107.0",
+            "108.0",
+            "109.0",
+            "110.0",
+            "111.0",
+            "1115.0",
+            "112.0",
+            "115.0",
+            "117.0"
+          ],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 0.9995777800233921
+        },
+        "Gender": {
+          "n_orig_vals": 2,
+          "n_syn_vals": 2,
+          "n_inter": 2,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Customer Type": {
+          "n_orig_vals": 2,
+          "n_syn_vals": 2,
+          "n_inter": 2,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Type of Travel": {
+          "n_orig_vals": 2,
+          "n_syn_vals": 2,
+          "n_inter": 2,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Class": {
+          "n_orig_vals": 3,
+          "n_syn_vals": 3,
+          "n_inter": 3,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        }
+      },
+      "label_counts": {
+        "False": 73452,
+        "True": 56428
+      },
+      "marginals": {
+        "Age": {
+          "ks": 0.03528,
+          "mean_orig": 39.428,
+          "mean_syn": 38.9993,
+          "std_orig": 15.1194,
+          "std_syn": 13.7964
+        },
+        "Flight Distance": {
+          "ks": 0.21658,
+          "mean_orig": 1190.3164,
+          "mean_syn": 1353.6558,
+          "std_orig": 997.4525,
+          "std_syn": 954.1597
+        },
+        "Inflight wifi service": {
+          "ks": 0.02915,
+          "mean_orig": 2.7287,
+          "mean_syn": 2.7781,
+          "std_orig": 1.3293,
+          "std_syn": 1.2806
+        },
+        "Departure/Arrival time convenient": {
+          "ks": 0.02791,
+          "mean_orig": 3.0576,
+          "mean_syn": 3.1548,
+          "std_orig": 1.5267,
+          "std_syn": 1.4751
+        },
+        "Ease of Online booking": {
+          "ks": 0.03066,
+          "mean_orig": 2.7569,
+          "mean_syn": 2.813,
+          "std_orig": 1.4017,
+          "std_syn": 1.3295
+        },
+        "Gate location": {
+          "ks": 0.01851,
+          "mean_orig": 2.9769,
+          "mean_syn": 3.0135,
+          "std_orig": 1.2785,
+          "std_syn": 1.2541
+        },
+        "Food and drink": {
+          "ks": 0.02187,
+          "mean_orig": 3.2048,
+          "mean_syn": 3.267,
+          "std_orig": 1.3299,
+          "std_syn": 1.3003
+        },
+        "Online boarding": {
+          "ks": 0.03069,
+          "mean_orig": 3.2526,
+          "mean_syn": 3.3646,
+          "std_orig": 1.3507,
+          "std_syn": 1.288
+        },
+        "Seat comfort": {
+          "ks": 0.04356,
+          "mean_orig": 3.4414,
+          "mean_syn": 3.5699,
+          "std_orig": 1.3193,
+          "std_syn": 1.2754
+        },
+        "Inflight entertainment": {
+          "ks": 0.03476,
+          "mean_orig": 3.3581,
+          "mean_syn": 3.4545,
+          "std_orig": 1.334,
+          "std_syn": 1.3085
+        },
+        "On-board service": {
+          "ks": 0.04619,
+          "mean_orig": 3.383,
+          "mean_syn": 3.5162,
+          "std_orig": 1.2871,
+          "std_syn": 1.2397
+        },
+        "Leg room service": {
+          "ks": 0.03769,
+          "mean_orig": 3.3509,
+          "mean_syn": 3.4716,
+          "std_orig": 1.3163,
+          "std_syn": 1.2722
+        },
+        "Baggage handling": {
+          "ks": 0.06524,
+          "mean_orig": 3.6321,
+          "mean_syn": 3.8045,
+          "std_orig": 1.18,
+          "std_syn": 1.0802
+        },
+        "Checkin service": {
+          "ks": 0.04464,
+          "mean_orig": 3.3063,
+          "mean_syn": 3.4207,
+          "std_orig": 1.2662,
+          "std_syn": 1.2105
+        },
+        "Cleanliness": {
+          "ks": 0.03245,
+          "mean_orig": 3.2863,
+          "mean_syn": 3.3818,
+          "std_orig": 1.3137,
+          "std_syn": 1.2778
+        },
+        "Departure Delay in Minutes": {
+          "ks": 0.34321,
+          "mean_orig": 14.7137,
+          "mean_syn": 1.1703,
+          "std_orig": 38.0711,
+          "std_syn": 5.9195
+        },
+        "Arrival Delay in Minutes": {
+          "ks": 0.35386,
+          "mean_orig": 15.0911,
+          "mean_syn": 1.13,
+          "std_orig": 38.4657,
+          "std_syn": 5.6911
+        },
+        "Gender": {
+          "tvd": 0.00959,
+          "orig_vals": [
+            "Female",
+            "Male"
+          ],
+          "syn_vals": [
+            "Female",
+            "Male"
+          ]
+        },
+        "Customer Type": {
+          "tvd": 0.00822,
+          "orig_vals": [
+            "Loyal Customer",
+            "disloyal Customer"
+          ],
+          "syn_vals": [
+            "Loyal Customer",
+            "disloyal Customer"
+          ]
+        },
+        "Type of Travel": {
+          "tvd": 0.02037,
+          "orig_vals": [
+            "Business travel",
+            "Personal Travel"
+          ],
+          "syn_vals": [
+            "Business travel",
+            "Personal Travel"
+          ]
+        },
+        "Class": {
+          "tvd": 0.02942,
+          "orig_vals": [
+            "Business",
+            "Eco",
+            "Eco Plus"
+          ],
+          "syn_vals": [
+            "Business",
+            "Eco",
+            "Eco Plus"
+          ]
+        }
+      },
+      "exact_full_row_match_frac_synth": 2.1e-05,
+      "n_exact_matches": 21,
+      "exact_match_frac[survey14]": 0.270998,
+      "exact_match_frac[all_but_delay]": 6.5e-05,
+      "exact_match_frac[all_but_dist_age]": 0.178176
+    },
+    "binaryjoker__airline-passenger-satisfaction/airline_passenger_satisfaction.csv": {
+      "shape": [
+        129880,
+        24
+      ],
+      "raw_cols": [
+        "Unnamed: 0",
+        "Gender",
+        "customer_type",
+        "age",
+        "type_of_travel",
+        "customer_class",
+        "flight_distance",
+        "inflight_wifi_service",
+        "departure_arrival_time_convenient",
+        "ease_of_online_booking",
+        "gate_location",
+        "food_and_drink",
+        "online_boarding",
+        "seat_comfort",
+        "inflight_entertainment",
+        "onboard_service",
+        "leg_room_service",
+        "baggage_handling",
+        "checkin_service",
+        "inflight_service",
+        "cleanliness",
+        "departure_delay_in_minutes",
+        "arrival_delay_in_minutes",
+        "satisfaction"
+      ],
+      "sha256_16": null,
+      "missing_vs_syn": [
+        "Flight Distance",
+        "Inflight wifi service",
+        "Departure/Arrival time convenient",
+        "Ease of Online booking",
+        "Gate location",
+        "Food and drink",
+        "Online boarding",
+        "Seat comfort",
+        "Inflight entertainment",
+        "On-board service",
+        "Leg room service",
+        "Baggage handling",
+        "Checkin service",
+        "Cleanliness",
+        "Departure Delay in Minutes",
+        "Arrival Delay in Minutes",
+        "Customer Type",
+        "Type of Travel",
+        "Class"
+      ],
+      "n_common_cols": 2
+    },
+    "mysarahmadbhat__airline-passenger-satisfaction/airline_passenger_satisfaction.csv": {
+      "shape": [
+        129880,
+        24
+      ],
+      "raw_cols": [
+        "ID",
+        "Gender",
+        "Age",
+        "Customer Type",
+        "Type of Travel",
+        "Class",
+        "Flight Distance",
+        "Departure Delay",
+        "Arrival Delay",
+        "Departure and Arrival Time Convenience",
+        "Ease of Online Booking",
+        "Check-in Service",
+        "Online Boarding",
+        "Gate Location",
+        "On-board Service",
+        "Seat Comfort",
+        "Leg Room Service",
+        "Cleanliness",
+        "Food and Drink",
+        "In-flight Service",
+        "In-flight Wifi Service",
+        "In-flight Entertainment",
+        "Baggage Handling",
+        "Satisfaction"
+      ],
+      "sha256_16": null,
+      "missing_vs_syn": [
+        "Inflight wifi service",
+        "Departure/Arrival time convenient",
+        "Ease of Online booking",
+        "Food and drink",
+        "Online boarding",
+        "Seat comfort",
+        "Inflight entertainment",
+        "On-board service",
+        "Leg room service",
+        "Baggage handling",
+        "Checkin service",
+        "Departure Delay in Minutes",
+        "Arrival Delay in Minutes"
+      ],
+      "n_common_cols": 8
+    },
+    "mysarahmadbhat__airline-passenger-satisfaction/data_dictionary.csv": {
+      "shape": [
+        24,
+        2
+      ],
+      "raw_cols": [
+        "Field",
+        "Description"
+      ],
+      "sha256_16": null,
+      "missing_vs_syn": [
+        "Age",
+        "Flight Distance",
+        "Inflight wifi service",
+        "Departure/Arrival time convenient",
+        "Ease of Online booking",
+        "Gate location",
+        "Food and drink",
+        "Online boarding",
+        "Seat comfort",
+        "Inflight entertainment",
+        "On-board service",
+        "Leg room service",
+        "Baggage handling",
+        "Checkin service",
+        "Cleanliness",
+        "Departure Delay in Minutes",
+        "Arrival Delay in Minutes",
+        "Gender",
+        "Customer Type",
+        "Type of Travel",
+        "Class"
+      ],
+      "n_common_cols": 0
+    },
+    "nilanjansamanta1210__airline-passenger-satisfaction/airline_passenger_satisfaction.csv": {
+      "shape": [
+        129880,
+        24
+      ],
+      "raw_cols": [
+        "ID",
+        "Gender",
+        "Age",
+        "Customer Type",
+        "Type of Travel",
+        "Class",
+        "Flight Distance",
+        "Departure Delay",
+        "Arrival Delay",
+        "Departure and Arrival Time Convenience",
+        "Ease of Online Booking",
+        "Check-in Service",
+        "Online Boarding",
+        "Gate Location",
+        "On-board Service",
+        "Seat Comfort",
+        "Leg Room Service",
+        "Cleanliness",
+        "Food and Drink",
+        "In-flight Service",
+        "In-flight Wifi Service",
+        "In-flight Entertainment",
+        "Baggage Handling",
+        "Satisfaction"
+      ],
+      "sha256_16": null,
+      "missing_vs_syn": [
+        "Inflight wifi service",
+        "Departure/Arrival time convenient",
+        "Ease of Online booking",
+        "Food and drink",
+        "Online boarding",
+        "Seat comfort",
+        "Inflight entertainment",
+        "On-board service",
+        "Leg room service",
+        "Baggage handling",
+        "Checkin service",
+        "Departure Delay in Minutes",
+        "Arrival Delay in Minutes"
+      ],
+      "n_common_cols": 8
+    },
+    "raminhuseyn__airline-customer-satisfaction/Airline_customer_satisfaction.csv": {
+      "shape": [
+        129880,
+        22
+      ],
+      "raw_cols": [
+        "satisfaction",
+        "Customer Type",
+        "Age",
+        "Type of Travel",
+        "Class",
+        "Flight Distance",
+        "Seat comfort",
+        "Departure/Arrival time convenient",
+        "Food and drink",
+        "Gate location",
+        "Inflight wifi service",
+        "Inflight entertainment",
+        "Online support",
+        "Ease of Online booking",
+        "On-board service",
+        "Leg room service",
+        "Baggage handling",
+        "Checkin service",
+        "Cleanliness",
+        "Online boarding",
+        "Departure Delay in Minutes",
+        "Arrival Delay in Minutes"
+      ],
+      "sha256_16": null,
+      "missing_vs_syn": [
+        "Gender"
+      ],
+      "n_common_cols": 20,
+      "support": {
+        "Age": {
+          "n_orig_vals": 75,
+          "n_syn_vals": 75,
+          "n_inter": 75,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Flight Distance": {
+          "n_orig_vals": 5398,
+          "n_syn_vals": 3521,
+          "n_inter": 3490,
+          "orig_vals_not_in_syn": [
+            "1001",
+            "1002",
+            "1003",
+            "1019",
+            "103",
+            "1030",
+            "104",
+            "105",
+            "1051",
+            "1054",
+            "1057",
+            "1058",
+            "107",
+            "1070",
+            "1093"
+          ],
+          "syn_vals_not_in_orig": [
+            "150",
+            "151",
+            "152",
+            "156",
+            "157",
+            "158",
+            "159",
+            "160",
+            "162",
+            "164",
+            "166",
+            "169",
+            "170",
+            "173",
+            "174"
+          ],
+          "frac_syn_rows_covered_by_orig_support": 0.9959268779033876
+        },
+        "Inflight wifi service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Departure/Arrival time convenient": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Ease of Online booking": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Gate location": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Food and drink": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Online boarding": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Seat comfort": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Inflight entertainment": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "On-board service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Leg room service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Baggage handling": {
+          "n_orig_vals": 5,
+          "n_syn_vals": 5,
+          "n_inter": 5,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Checkin service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Cleanliness": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Departure Delay in Minutes": {
+          "n_orig_vals": 466,
+          "n_syn_vals": 186,
+          "n_inter": 186,
+          "orig_vals_not_in_syn": [
+            "100",
+            "1017",
+            "102",
+            "103",
+            "105",
+            "106",
+            "107",
+            "108",
+            "110",
+            "111",
+            "1128",
+            "114",
+            "115",
+            "116",
+            "117"
+          ],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Arrival Delay in Minutes": {
+          "n_orig_vals": 472,
+          "n_syn_vals": 179,
+          "n_inter": 179,
+          "orig_vals_not_in_syn": [
+            "100.0",
+            "101.0",
+            "1011.0",
+            "104.0",
+            "105.0",
+            "106.0",
+            "107.0",
+            "108.0",
+            "109.0",
+            "110.0",
+            "111.0",
+            "1115.0",
+            "112.0",
+            "115.0",
+            "117.0"
+          ],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 0.9995777800233921
+        },
+        "Customer Type": {
+          "n_orig_vals": 2,
+          "n_syn_vals": 2,
+          "n_inter": 2,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Type of Travel": {
+          "n_orig_vals": 2,
+          "n_syn_vals": 2,
+          "n_inter": 2,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Class": {
+          "n_orig_vals": 3,
+          "n_syn_vals": 3,
+          "n_inter": 3,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        }
+      },
+      "label_counts": {
+        "satisfied": 71087,
+        "dissatisfied": 58793
+      },
+      "marginals": {
+        "Age": {
+          "ks": 0.03528,
+          "mean_orig": 39.428,
+          "mean_syn": 38.9993,
+          "std_orig": 15.1194,
+          "std_syn": 13.7964
+        },
+        "Flight Distance": {
+          "ks": 0.39329,
+          "mean_orig": 1981.4091,
+          "mean_syn": 1353.6558,
+          "std_orig": 1027.1156,
+          "std_syn": 954.1597
+        },
+        "Inflight wifi service": {
+          "ks": 0.16847,
+          "mean_orig": 3.2491,
+          "mean_syn": 2.7781,
+          "std_orig": 1.3188,
+          "std_syn": 1.2806
+        },
+        "Departure/Arrival time convenient": {
+          "ks": 0.04902,
+          "mean_orig": 2.9906,
+          "mean_syn": 3.1548,
+          "std_orig": 1.5272,
+          "std_syn": 1.4751
+        },
+        "Ease of Online booking": {
+          "ks": 0.25222,
+          "mean_orig": 3.4721,
+          "mean_syn": 2.813,
+          "std_orig": 1.3056,
+          "std_syn": 1.3295
+        },
+        "Gate location": {
+          "ks": 0.02465,
+          "mean_orig": 2.9904,
+          "mean_syn": 3.0135,
+          "std_orig": 1.306,
+          "std_syn": 1.2541
+        },
+        "Food and drink": {
+          "ks": 0.10532,
+          "mean_orig": 2.852,
+          "mean_syn": 3.267,
+          "std_orig": 1.4437,
+          "std_syn": 1.3003
+        },
+        "Online boarding": {
+          "ks": 0.02324,
+          "mean_orig": 3.3526,
+          "mean_syn": 3.3646,
+          "std_orig": 1.2987,
+          "std_syn": 1.288
+        },
+        "Seat comfort": {
+          "ks": 0.24905,
+          "mean_orig": 2.8386,
+          "mean_syn": 3.5699,
+          "std_orig": 1.393,
+          "std_syn": 1.2754
+        },
+        "Inflight entertainment": {
+          "ks": 0.03091,
+          "mean_orig": 3.3835,
+          "mean_syn": 3.4545,
+          "std_orig": 1.3461,
+          "std_syn": 1.3085
+        },
+        "On-board service": {
+          "ks": 0.02081,
+          "mean_orig": 3.4651,
+          "mean_syn": 3.5162,
+          "std_orig": 1.2708,
+          "std_syn": 1.2397
+        },
+        "Leg room service": {
+          "ks": 0.01846,
+          "mean_orig": 3.4859,
+          "mean_syn": 3.4716,
+          "std_orig": 1.2922,
+          "std_syn": 1.2722
+        },
+        "Baggage handling": {
+          "ks": 0.03945,
+          "mean_orig": 3.6957,
+          "mean_syn": 3.8045,
+          "std_orig": 1.1565,
+          "std_syn": 1.0802
+        },
+        "Checkin service": {
+          "ks": 0.03421,
+          "mean_orig": 3.3408,
+          "mean_syn": 3.4207,
+          "std_orig": 1.2606,
+          "std_syn": 1.2105
+        },
+        "Cleanliness": {
+          "ks": 0.14593,
+          "mean_orig": 3.7058,
+          "mean_syn": 3.3818,
+          "std_orig": 1.1518,
+          "std_syn": 1.2778
+        },
+        "Departure Delay in Minutes": {
+          "ks": 0.34321,
+          "mean_orig": 14.7137,
+          "mean_syn": 1.1703,
+          "std_orig": 38.0711,
+          "std_syn": 5.9195
+        },
+        "Arrival Delay in Minutes": {
+          "ks": 0.35386,
+          "mean_orig": 15.0911,
+          "mean_syn": 1.13,
+          "std_orig": 38.4657,
+          "std_syn": 5.6911
+        },
+        "Customer Type": {
+          "tvd": 0.00822,
+          "orig_vals": [
+            "Loyal Customer",
+            "disloyal Customer"
+          ],
+          "syn_vals": [
+            "Loyal Customer",
+            "disloyal Customer"
+          ]
+        },
+        "Type of Travel": {
+          "tvd": 0.02037,
+          "orig_vals": [
+            "Business travel",
+            "Personal Travel"
+          ],
+          "syn_vals": [
+            "Business travel",
+            "Personal Travel"
+          ]
+        },
+        "Class": {
+          "tvd": 0.02942,
+          "orig_vals": [
+            "Business",
+            "Eco",
+            "Eco Plus"
+          ],
+          "syn_vals": [
+            "Business",
+            "Eco",
+            "Eco Plus"
+          ]
+        }
+      },
+      "exact_full_row_match_frac_synth": 2e-06,
+      "n_exact_matches": 2,
+      "exact_match_frac[survey14]": 0.025488,
+      "exact_match_frac[all_but_delay]": 2e-06,
+      "exact_match_frac[all_but_dist_age]": 0.013557
+    },
+    "teejmahal20__airline-passenger-satisfaction/test.csv": {
+      "shape": [
+        25976,
+        25
+      ],
+      "raw_cols": [
+        "Unnamed: 0",
+        "id",
+        "Gender",
+        "Customer Type",
+        "Age",
+        "Type of Travel",
+        "Class",
+        "Flight Distance",
+        "Inflight wifi service",
+        "Departure/Arrival time convenient",
+        "Ease of Online booking",
+        "Gate location",
+        "Food and drink",
+        "Online boarding",
+        "Seat comfort",
+        "Inflight entertainment",
+        "On-board service",
+        "Leg room service",
+        "Baggage handling",
+        "Checkin service",
+        "Inflight service",
+        "Cleanliness",
+        "Departure Delay in Minutes",
+        "Arrival Delay in Minutes",
+        "satisfaction"
+      ],
+      "sha256_16": null,
+      "missing_vs_syn": [],
+      "n_common_cols": 21,
+      "support": {
+        "Age": {
+          "n_orig_vals": 75,
+          "n_syn_vals": 75,
+          "n_inter": 75,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Flight Distance": {
+          "n_orig_vals": 3281,
+          "n_syn_vals": 3521,
+          "n_inter": 3104,
+          "orig_vals_not_in_syn": [
+            "1003",
+            "1030",
+            "1051",
+            "107",
+            "1100",
+            "111",
+            "1151",
+            "117",
+            "123",
+            "126",
+            "1280",
+            "1301",
+            "132",
+            "133",
+            "136"
+          ],
+          "syn_vals_not_in_orig": [
+            "1006",
+            "1018",
+            "1049",
+            "1063",
+            "1077",
+            "1078",
+            "1103",
+            "1106",
+            "1108",
+            "1110",
+            "1114",
+            "1116",
+            "1128",
+            "1137",
+            "1141"
+          ],
+          "frac_syn_rows_covered_by_orig_support": 0.9828220502882001
+        },
+        "Inflight wifi service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Departure/Arrival time convenient": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Ease of Online booking": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Gate location": {
+          "n_orig_vals": 5,
+          "n_syn_vals": 6,
+          "n_inter": 5,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [
+            "0"
+          ],
+          "frac_syn_rows_covered_by_orig_support": 0.997926919925281
+        },
+        "Food and drink": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Online boarding": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Seat comfort": {
+          "n_orig_vals": 5,
+          "n_syn_vals": 6,
+          "n_inter": 5,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [
+            "0"
+          ],
+          "frac_syn_rows_covered_by_orig_support": 0.9987623551870525
+        },
+        "Inflight entertainment": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "On-board service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Leg room service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Baggage handling": {
+          "n_orig_vals": 5,
+          "n_syn_vals": 5,
+          "n_inter": 5,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Checkin service": {
+          "n_orig_vals": 5,
+          "n_syn_vals": 6,
+          "n_inter": 5,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [
+            "0"
+          ],
+          "frac_syn_rows_covered_by_orig_support": 0.9986893171342269
+        },
+        "Cleanliness": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Departure Delay in Minutes": {
+          "n_orig_vals": 313,
+          "n_syn_vals": 186,
+          "n_inter": 178,
+          "orig_vals_not_in_syn": [
+            "100",
+            "102",
+            "103",
+            "105",
+            "106",
+            "107",
+            "108",
+            "110",
+            "111",
+            "1128",
+            "114",
+            "115",
+            "116",
+            "117",
+            "120"
+          ],
+          "syn_vals_not_in_orig": [
+            "173",
+            "176",
+            "215",
+            "231",
+            "242",
+            "452",
+            "472",
+            "480"
+          ],
+          "frac_syn_rows_covered_by_orig_support": 0.9999889942660126
+        },
+        "Arrival Delay in Minutes": {
+          "n_orig_vals": 320,
+          "n_syn_vals": 179,
+          "n_inter": 173,
+          "orig_vals_not_in_syn": [
+            "100.0",
+            "101.0",
+            "104.0",
+            "105.0",
+            "106.0",
+            "107.0",
+            "108.0",
+            "109.0",
+            "110.0",
+            "111.0",
+            "1115.0",
+            "112.0",
+            "115.0",
+            "117.0",
+            "119.0"
+          ],
+          "syn_vals_not_in_orig": [
+            "206.0",
+            "353.0",
+            "393.0",
+            "440.0",
+            "446.0",
+            "471.0"
+          ],
+          "frac_syn_rows_covered_by_orig_support": 0.9995717768957627
+        },
+        "Gender": {
+          "n_orig_vals": 2,
+          "n_syn_vals": 2,
+          "n_inter": 2,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Customer Type": {
+          "n_orig_vals": 2,
+          "n_syn_vals": 2,
+          "n_inter": 2,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Type of Travel": {
+          "n_orig_vals": 2,
+          "n_syn_vals": 2,
+          "n_inter": 2,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Class": {
+          "n_orig_vals": 3,
+          "n_syn_vals": 3,
+          "n_inter": 3,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        }
+      },
+      "label_counts": {
+        "neutral or dissatisfied": 14573,
+        "satisfied": 11403
+      },
+      "marginals": {
+        "Age": {
+          "ks": 0.03761,
+          "mean_orig": 39.621,
+          "mean_syn": 38.9993,
+          "std_orig": 15.1357,
+          "std_syn": 13.7964
+        },
+        "Flight Distance": {
+          "ks": 0.21263,
+          "mean_orig": 1193.7885,
+          "mean_syn": 1353.6558,
+          "std_orig": 998.684,
+          "std_syn": 954.1597
+        },
+        "Inflight wifi service": {
+          "ks": 0.03116,
+          "mean_orig": 2.7247,
+          "mean_syn": 2.7781,
+          "std_orig": 1.3354,
+          "std_syn": 1.2806
+        },
+        "Departure/Arrival time convenient": {
+          "ks": 0.03076,
+          "mean_orig": 3.0468,
+          "mean_syn": 3.1548,
+          "std_orig": 1.5334,
+          "std_syn": 1.4751
+        },
+        "Ease of Online booking": {
+          "ks": 0.0323,
+          "mean_orig": 2.7568,
+          "mean_syn": 2.813,
+          "std_orig": 1.413,
+          "std_syn": 1.3295
+        },
+        "Gate location": {
+          "ks": 0.01884,
+          "mean_orig": 2.9771,
+          "mean_syn": 3.0135,
+          "std_orig": 1.2821,
+          "std_syn": 1.2541
+        },
+        "Food and drink": {
+          "ks": 0.02197,
+          "mean_orig": 3.2154,
+          "mean_syn": 3.267,
+          "std_orig": 1.3315,
+          "std_syn": 1.3003
+        },
+        "Online boarding": {
+          "ks": 0.02887,
+          "mean_orig": 3.2617,
+          "mean_syn": 3.3646,
+          "std_orig": 1.3555,
+          "std_syn": 1.288
+        },
+        "Seat comfort": {
+          "ks": 0.03986,
+          "mean_orig": 3.4492,
+          "mean_syn": 3.5699,
+          "std_orig": 1.3201,
+          "std_syn": 1.2754
+        },
+        "Inflight entertainment": {
+          "ks": 0.03353,
+          "mean_orig": 3.3578,
+          "mean_syn": 3.4545,
+          "std_orig": 1.3383,
+          "std_syn": 1.3085
+        },
+        "On-board service": {
+          "ks": 0.04461,
+          "mean_orig": 3.3857,
+          "mean_syn": 3.5162,
+          "std_orig": 1.2821,
+          "std_syn": 1.2397
+        },
+        "Leg room service": {
+          "ks": 0.03858,
+          "mean_orig": 3.3502,
+          "mean_syn": 3.4716,
+          "std_orig": 1.3189,
+          "std_syn": 1.2722
+        },
+        "Baggage handling": {
+          "ks": 0.06534,
+          "mean_orig": 3.6332,
+          "mean_syn": 3.8045,
+          "std_orig": 1.1765,
+          "std_syn": 1.0802
+        },
+        "Checkin service": {
+          "ks": 0.04406,
+          "mean_orig": 3.3142,
+          "mean_syn": 3.4207,
+          "std_orig": 1.2693,
+          "std_syn": 1.2105
+        },
+        "Cleanliness": {
+          "ks": 0.03332,
+          "mean_orig": 3.2862,
+          "mean_syn": 3.3818,
+          "std_orig": 1.3193,
+          "std_syn": 1.2778
+        },
+        "Departure Delay in Minutes": {
+          "ks": 0.34257,
+          "mean_orig": 14.3061,
+          "mean_syn": 1.1703,
+          "std_orig": 37.4232,
+          "std_syn": 5.9195
+        },
+        "Arrival Delay in Minutes": {
+          "ks": 0.35209,
+          "mean_orig": 14.7409,
+          "mean_syn": 1.13,
+          "std_orig": 37.5175,
+          "std_syn": 5.6911
+        },
+        "Gender": {
+          "tvd": 0.00929,
+          "orig_vals": [
+            "Female",
+            "Male"
+          ],
+          "syn_vals": [
+            "Female",
+            "Male"
+          ]
+        },
+        "Customer Type": {
+          "tvd": 0.00988,
+          "orig_vals": [
+            "Loyal Customer",
+            "disloyal Customer"
+          ],
+          "syn_vals": [
+            "Loyal Customer",
+            "disloyal Customer"
+          ]
+        },
+        "Type of Travel": {
+          "tvd": 0.01654,
+          "orig_vals": [
+            "Business travel",
+            "Personal Travel"
+          ],
+          "syn_vals": [
+            "Business travel",
+            "Personal Travel"
+          ]
+        },
+        "Class": {
+          "tvd": 0.03076,
+          "orig_vals": [
+            "Business",
+            "Eco",
+            "Eco Plus"
+          ],
+          "syn_vals": [
+            "Business",
+            "Eco",
+            "Eco Plus"
+          ]
+        }
+      },
+      "exact_full_row_match_frac_synth": 5e-06,
+      "n_exact_matches": 5,
+      "exact_match_frac[survey14]": 0.130055,
+      "exact_match_frac[all_but_delay]": 1.1e-05,
+      "exact_match_frac[all_but_dist_age]": 0.066228
+    },
+    "teejmahal20__airline-passenger-satisfaction/train.csv": {
+      "shape": [
+        103904,
+        25
+      ],
+      "raw_cols": [
+        "Unnamed: 0",
+        "id",
+        "Gender",
+        "Customer Type",
+        "Age",
+        "Type of Travel",
+        "Class",
+        "Flight Distance",
+        "Inflight wifi service",
+        "Departure/Arrival time convenient",
+        "Ease of Online booking",
+        "Gate location",
+        "Food and drink",
+        "Online boarding",
+        "Seat comfort",
+        "Inflight entertainment",
+        "On-board service",
+        "Leg room service",
+        "Baggage handling",
+        "Checkin service",
+        "Inflight service",
+        "Cleanliness",
+        "Departure Delay in Minutes",
+        "Arrival Delay in Minutes",
+        "satisfaction"
+      ],
+      "sha256_16": null,
+      "missing_vs_syn": [],
+      "n_common_cols": 21,
+      "support": {
+        "Age": {
+          "n_orig_vals": 75,
+          "n_syn_vals": 75,
+          "n_inter": 75,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Flight Distance": {
+          "n_orig_vals": 3802,
+          "n_syn_vals": 3521,
+          "n_inter": 3514,
+          "orig_vals_not_in_syn": [
+            "1001",
+            "1019",
+            "103",
+            "1030",
+            "1054",
+            "107",
+            "1070",
+            "1094",
+            "1100",
+            "111",
+            "1115",
+            "1122",
+            "1125",
+            "1150",
+            "1152"
+          ],
+          "syn_vals_not_in_orig": [
+            "1213",
+            "1253",
+            "1395",
+            "1424",
+            "1433",
+            "1441",
+            "477"
+          ],
+          "frac_syn_rows_covered_by_orig_support": 0.9999799895745684
+        },
+        "Inflight wifi service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Departure/Arrival time convenient": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Ease of Online booking": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Gate location": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Food and drink": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Online boarding": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Seat comfort": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Inflight entertainment": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "On-board service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Leg room service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Baggage handling": {
+          "n_orig_vals": 5,
+          "n_syn_vals": 5,
+          "n_inter": 5,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Checkin service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Cleanliness": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Departure Delay in Minutes": {
+          "n_orig_vals": 446,
+          "n_syn_vals": 186,
+          "n_inter": 185,
+          "orig_vals_not_in_syn": [
+            "100",
+            "1017",
+            "102",
+            "103",
+            "105",
+            "106",
+            "107",
+            "108",
+            "110",
+            "111",
+            "114",
+            "115",
+            "116",
+            "117",
+            "120"
+          ],
+          "syn_vals_not_in_orig": [
+            "489"
+          ],
+          "frac_syn_rows_covered_by_orig_support": 0.9999989994787284
+        },
+        "Arrival Delay in Minutes": {
+          "n_orig_vals": 455,
+          "n_syn_vals": 179,
+          "n_inter": 178,
+          "orig_vals_not_in_syn": [
+            "100.0",
+            "101.0",
+            "1011.0",
+            "104.0",
+            "105.0",
+            "106.0",
+            "107.0",
+            "108.0",
+            "109.0",
+            "110.0",
+            "111.0",
+            "112.0",
+            "115.0",
+            "117.0",
+            "119.0"
+          ],
+          "syn_vals_not_in_orig": [
+            "491.0"
+          ],
+          "frac_syn_rows_covered_by_orig_support": 0.9995767795021206
+        },
+        "Gender": {
+          "n_orig_vals": 2,
+          "n_syn_vals": 2,
+          "n_inter": 2,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Customer Type": {
+          "n_orig_vals": 2,
+          "n_syn_vals": 2,
+          "n_inter": 2,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Type of Travel": {
+          "n_orig_vals": 2,
+          "n_syn_vals": 2,
+          "n_inter": 2,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Class": {
+          "n_orig_vals": 3,
+          "n_syn_vals": 3,
+          "n_inter": 3,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        }
+      },
+      "label_counts": {
+        "neutral or dissatisfied": 58879,
+        "satisfied": 45025
+      },
+      "marginals": {
+        "Age": {
+          "ks": 0.03477,
+          "mean_orig": 39.3797,
+          "mean_syn": 38.9993,
+          "std_orig": 15.115,
+          "std_syn": 13.7964
+        },
+        "Flight Distance": {
+          "ks": 0.21756,
+          "mean_orig": 1189.4484,
+          "mean_syn": 1353.6558,
+          "std_orig": 997.1473,
+          "std_syn": 954.1597
+        },
+        "Inflight wifi service": {
+          "ks": 0.02864,
+          "mean_orig": 2.7297,
+          "mean_syn": 2.7781,
+          "std_orig": 1.3278,
+          "std_syn": 1.2806
+        },
+        "Departure/Arrival time convenient": {
+          "ks": 0.0272,
+          "mean_orig": 3.0603,
+          "mean_syn": 3.1548,
+          "std_orig": 1.5251,
+          "std_syn": 1.4751
+        },
+        "Ease of Online booking": {
+          "ks": 0.03025,
+          "mean_orig": 2.7569,
+          "mean_syn": 2.813,
+          "std_orig": 1.3989,
+          "std_syn": 1.3295
+        },
+        "Gate location": {
+          "ks": 0.01843,
+          "mean_orig": 2.9769,
+          "mean_syn": 3.0135,
+          "std_orig": 1.2776,
+          "std_syn": 1.2541
+        },
+        "Food and drink": {
+          "ks": 0.02185,
+          "mean_orig": 3.2021,
+          "mean_syn": 3.267,
+          "std_orig": 1.3295,
+          "std_syn": 1.3003
+        },
+        "Online boarding": {
+          "ks": 0.03115,
+          "mean_orig": 3.2504,
+          "mean_syn": 3.3646,
+          "std_orig": 1.3495,
+          "std_syn": 1.288
+        },
+        "Seat comfort": {
+          "ks": 0.04449,
+          "mean_orig": 3.4394,
+          "mean_syn": 3.5699,
+          "std_orig": 1.3191,
+          "std_syn": 1.2754
+        },
+        "Inflight entertainment": {
+          "ks": 0.03507,
+          "mean_orig": 3.3582,
+          "mean_syn": 3.4545,
+          "std_orig": 1.333,
+          "std_syn": 1.3085
+        },
+        "On-board service": {
+          "ks": 0.04658,
+          "mean_orig": 3.3824,
+          "mean_syn": 3.5162,
+          "std_orig": 1.2884,
+          "std_syn": 1.2397
+        },
+        "Leg room service": {
+          "ks": 0.03746,
+          "mean_orig": 3.3511,
+          "mean_syn": 3.4716,
+          "std_orig": 1.3156,
+          "std_syn": 1.2722
+        },
+        "Baggage handling": {
+          "ks": 0.06521,
+          "mean_orig": 3.6318,
+          "mean_syn": 3.8045,
+          "std_orig": 1.1809,
+          "std_syn": 1.0802
+        },
+        "Checkin service": {
+          "ks": 0.04479,
+          "mean_orig": 3.3043,
+          "mean_syn": 3.4207,
+          "std_orig": 1.2654,
+          "std_syn": 1.2105
+        },
+        "Cleanliness": {
+          "ks": 0.03223,
+          "mean_orig": 3.2864,
+          "mean_syn": 3.3818,
+          "std_orig": 1.3123,
+          "std_syn": 1.2778
+        },
+        "Departure Delay in Minutes": {
+          "ks": 0.34338,
+          "mean_orig": 14.8156,
+          "mean_syn": 1.1703,
+          "std_orig": 38.2309,
+          "std_syn": 5.9195
+        },
+        "Arrival Delay in Minutes": {
+          "ks": 0.35431,
+          "mean_orig": 15.1787,
+          "mean_syn": 1.13,
+          "std_orig": 38.6987,
+          "std_syn": 5.6911
+        },
+        "Gender": {
+          "tvd": 0.00966,
+          "orig_vals": [
+            "Female",
+            "Male"
+          ],
+          "syn_vals": [
+            "Female",
+            "Male"
+          ]
+        },
+        "Customer Type": {
+          "tvd": 0.00781,
+          "orig_vals": [
+            "Loyal Customer",
+            "disloyal Customer"
+          ],
+          "syn_vals": [
+            "Loyal Customer",
+            "disloyal Customer"
+          ]
+        },
+        "Type of Travel": {
+          "tvd": 0.02133,
+          "orig_vals": [
+            "Business travel",
+            "Personal Travel"
+          ],
+          "syn_vals": [
+            "Business travel",
+            "Personal Travel"
+          ]
+        },
+        "Class": {
+          "tvd": 0.02908,
+          "orig_vals": [
+            "Business",
+            "Eco",
+            "Eco Plus"
+          ],
+          "syn_vals": [
+            "Business",
+            "Eco",
+            "Eco Plus"
+          ]
+        }
+      },
+      "exact_full_row_match_frac_synth": 1.6e-05,
+      "n_exact_matches": 16,
+      "exact_match_frac[survey14]": 0.251588,
+      "exact_match_frac[all_but_delay]": 5.4e-05,
+      "exact_match_frac[all_but_dist_age]": 0.162147
+    },
+    "yakhyojon__customer-satisfaction-in-airline/Invistico_Airline.csv": {
+      "shape": [
+        129880,
+        22
+      ],
+      "raw_cols": [
+        "satisfaction",
+        "Customer Type",
+        "Age",
+        "Type of Travel",
+        "Class",
+        "Flight Distance",
+        "Seat comfort",
+        "Departure/Arrival time convenient",
+        "Food and drink",
+        "Gate location",
+        "Inflight wifi service",
+        "Inflight entertainment",
+        "Online support",
+        "Ease of Online booking",
+        "On-board service",
+        "Leg room service",
+        "Baggage handling",
+        "Checkin service",
+        "Cleanliness",
+        "Online boarding",
+        "Departure Delay in Minutes",
+        "Arrival Delay in Minutes"
+      ],
+      "sha256_16": null,
+      "missing_vs_syn": [
+        "Gender"
+      ],
+      "n_common_cols": 20,
+      "support": {
+        "Age": {
+          "n_orig_vals": 75,
+          "n_syn_vals": 75,
+          "n_inter": 75,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Flight Distance": {
+          "n_orig_vals": 5398,
+          "n_syn_vals": 3521,
+          "n_inter": 3490,
+          "orig_vals_not_in_syn": [
+            "1001",
+            "1002",
+            "1003",
+            "1019",
+            "103",
+            "1030",
+            "104",
+            "105",
+            "1051",
+            "1054",
+            "1057",
+            "1058",
+            "107",
+            "1070",
+            "1093"
+          ],
+          "syn_vals_not_in_orig": [
+            "150",
+            "151",
+            "152",
+            "156",
+            "157",
+            "158",
+            "159",
+            "160",
+            "162",
+            "164",
+            "166",
+            "169",
+            "170",
+            "173",
+            "174"
+          ],
+          "frac_syn_rows_covered_by_orig_support": 0.9959268779033876
+        },
+        "Inflight wifi service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Departure/Arrival time convenient": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Ease of Online booking": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Gate location": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Food and drink": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Online boarding": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Seat comfort": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Inflight entertainment": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "On-board service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Leg room service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Baggage handling": {
+          "n_orig_vals": 5,
+          "n_syn_vals": 5,
+          "n_inter": 5,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Checkin service": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Cleanliness": {
+          "n_orig_vals": 6,
+          "n_syn_vals": 6,
+          "n_inter": 6,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Departure Delay in Minutes": {
+          "n_orig_vals": 466,
+          "n_syn_vals": 186,
+          "n_inter": 186,
+          "orig_vals_not_in_syn": [
+            "100",
+            "1017",
+            "102",
+            "103",
+            "105",
+            "106",
+            "107",
+            "108",
+            "110",
+            "111",
+            "1128",
+            "114",
+            "115",
+            "116",
+            "117"
+          ],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Arrival Delay in Minutes": {
+          "n_orig_vals": 472,
+          "n_syn_vals": 179,
+          "n_inter": 179,
+          "orig_vals_not_in_syn": [
+            "100.0",
+            "101.0",
+            "1011.0",
+            "104.0",
+            "105.0",
+            "106.0",
+            "107.0",
+            "108.0",
+            "109.0",
+            "110.0",
+            "111.0",
+            "1115.0",
+            "112.0",
+            "115.0",
+            "117.0"
+          ],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 0.9995777800233921
+        },
+        "Customer Type": {
+          "n_orig_vals": 2,
+          "n_syn_vals": 2,
+          "n_inter": 2,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Type of Travel": {
+          "n_orig_vals": 2,
+          "n_syn_vals": 2,
+          "n_inter": 2,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        },
+        "Class": {
+          "n_orig_vals": 3,
+          "n_syn_vals": 3,
+          "n_inter": 3,
+          "orig_vals_not_in_syn": [],
+          "syn_vals_not_in_orig": [],
+          "frac_syn_rows_covered_by_orig_support": 1.0
+        }
+      },
+      "label_counts": {
+        "satisfied": 71087,
+        "dissatisfied": 58793
+      },
+      "marginals": {
+        "Age": {
+          "ks": 0.03528,
+          "mean_orig": 39.428,
+          "mean_syn": 38.9993,
+          "std_orig": 15.1194,
+          "std_syn": 13.7964
+        },
+        "Flight Distance": {
+          "ks": 0.39329,
+          "mean_orig": 1981.4091,
+          "mean_syn": 1353.6558,
+          "std_orig": 1027.1156,
+          "std_syn": 954.1597
+        },
+        "Inflight wifi service": {
+          "ks": 0.16847,
+          "mean_orig": 3.2491,
+          "mean_syn": 2.7781,
+          "std_orig": 1.3188,
+          "std_syn": 1.2806
+        },
+        "Departure/Arrival time convenient": {
+          "ks": 0.04902,
+          "mean_orig": 2.9906,
+          "mean_syn": 3.1548,
+          "std_orig": 1.5272,
+          "std_syn": 1.4751
+        },
+        "Ease of Online booking": {
+          "ks": 0.25222,
+          "mean_orig": 3.4721,
+          "mean_syn": 2.813,
+          "std_orig": 1.3056,
+          "std_syn": 1.3295
+        },
+        "Gate location": {
+          "ks": 0.02465,
+          "mean_orig": 2.9904,
+          "mean_syn": 3.0135,
+          "std_orig": 1.306,
+          "std_syn": 1.2541
+        },
+        "Food and drink": {
+          "ks": 0.10532,
+          "mean_orig": 2.852,
+          "mean_syn": 3.267,
+          "std_orig": 1.4437,
+          "std_syn": 1.3003
+        },
+        "Online boarding": {
+          "ks": 0.02324,
+          "mean_orig": 3.3526,
+          "mean_syn": 3.3646,
+          "std_orig": 1.2987,
+          "std_syn": 1.288
+        },
+        "Seat comfort": {
+          "ks": 0.24905,
+          "mean_orig": 2.8386,
+          "mean_syn": 3.5699,
+          "std_orig": 1.393,
+          "std_syn": 1.2754
+        },
+        "Inflight entertainment": {
+          "ks": 0.03091,
+          "mean_orig": 3.3835,
+          "mean_syn": 3.4545,
+          "std_orig": 1.3461,
+          "std_syn": 1.3085
+        },
+        "On-board service": {
+          "ks": 0.02081,
+          "mean_orig": 3.4651,
+          "mean_syn": 3.5162,
+          "std_orig": 1.2708,
+          "std_syn": 1.2397
+        },
+        "Leg room service": {
+          "ks": 0.01846,
+          "mean_orig": 3.4859,
+          "mean_syn": 3.4716,
+          "std_orig": 1.2922,
+          "std_syn": 1.2722
+        },
+        "Baggage handling": {
+          "ks": 0.03945,
+          "mean_orig": 3.6957,
+          "mean_syn": 3.8045,
+          "std_orig": 1.1565,
+          "std_syn": 1.0802
+        },
+        "Checkin service": {
+          "ks": 0.03421,
+          "mean_orig": 3.3408,
+          "mean_syn": 3.4207,
+          "std_orig": 1.2606,
+          "std_syn": 1.2105
+        },
+        "Cleanliness": {
+          "ks": 0.14593,
+          "mean_orig": 3.7058,
+          "mean_syn": 3.3818,
+          "std_orig": 1.1518,
+          "std_syn": 1.2778
+        },
+        "Departure Delay in Minutes": {
+          "ks": 0.34321,
+          "mean_orig": 14.7137,
+          "mean_syn": 1.1703,
+          "std_orig": 38.0711,
+          "std_syn": 5.9195
+        },
+        "Arrival Delay in Minutes": {
+          "ks": 0.35386,
+          "mean_orig": 15.0911,
+          "mean_syn": 1.13,
+          "std_orig": 38.4657,
+          "std_syn": 5.6911
+        },
+        "Customer Type": {
+          "tvd": 0.00822,
+          "orig_vals": [
+            "Loyal Customer",
+            "disloyal Customer"
+          ],
+          "syn_vals": [
+            "Loyal Customer",
+            "disloyal Customer"
+          ]
+        },
+        "Type of Travel": {
+          "tvd": 0.02037,
+          "orig_vals": [
+            "Business travel",
+            "Personal Travel"
+          ],
+          "syn_vals": [
+            "Business travel",
+            "Personal Travel"
+          ]
+        },
+        "Class": {
+          "tvd": 0.02942,
+          "orig_vals": [
+            "Business",
+            "Eco",
+            "Eco Plus"
+          ],
+          "syn_vals": [
+            "Business",
+            "Eco",
+            "Eco Plus"
+          ]
+        }
+      },
+      "exact_full_row_match_frac_synth": 2e-06,
+      "n_exact_matches": 2,
+      "exact_match_frac[survey14]": 0.025488,
+      "exact_match_frac[all_but_delay]": 2e-06,
+      "exact_match_frac[all_but_dist_age]": 0.013557
+    }
+  }
+}

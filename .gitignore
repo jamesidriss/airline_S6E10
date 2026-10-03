@@ -1,0 +1,48 @@
+# ---- secrets (never commit) ----
+kaggle.json
+.env
+*.env
+credentials.json
+!research/raw/kaggle_facts.json
+
+# ---- data (large, reproducible via scripts/download_data.py) ----
+data/raw/
+data/*.csv
+data/*.parquet
+data/*.zip
+!data/README.md
+
+# ---- python env ----
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ---- heavy artifacts ----
+artifacts/
+models/
+predictions/
+cache/
+features/
+*.npy
+*.npz
+*.pkl
+*.pt
+*.pth
+*.joblib
+*.parquet
+*.log
+
+# ---- keep ledgers / reports / submissions ----
+!experiments/**
+!reports/**
+!submissions/manifest.csv
+!STATUS.md
+!research/**
+
+# ---- misc ----
+Thumbs.db
+.DS_Store

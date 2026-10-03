@@ -1,0 +1,59 @@
+{
+  "original_lgbm_auc": 0.9947959098061342,
+  "original_lgbm_auc_survey_only": 0.9904147425744906,
+  "lookups": {
+    "survey13": {
+      "frac_synth_with_match": 0.41119,
+      "frac_synth_unique_match": 0.13976,
+      "auc_of_lut_on_synthetic_train_labels": 0.50021,
+      "n_unique_keys": 97867,
+      "label_agreement_on_unique_matches": 0.89983,
+      "auc_on_unique_matches_only": 0.88415,
+      "n_unique_matches_in_train": 97719
+    },
+    "survey13+meta4": {
+      "frac_synth_with_match": 0.271,
+      "frac_synth_unique_match": 0.09069,
+      "auc_of_lut_on_synthetic_train_labels": 0.49982,
+      "n_unique_keys": 110518,
+      "label_agreement_on_unique_matches": 0.91536,
+      "auc_on_unique_matches_only": 0.91286,
+      "n_unique_matches_in_train": 63232
+    },
+    "survey13+meta4+age+dist": {
+      "frac_synth_with_match": 7e-05,
+      "frac_synth_unique_match": 7e-05,
+      "auc_of_lut_on_synthetic_train_labels": 0.50002,
+      "n_unique_keys": 129880
+    }
+  },
+  "orig_te_aucs": {
+    "origTE__Age": 0.68531,
+    "origTE__Flight Distance": 0.727,
+    "origTE__Inflight wifi service": 0.73519,
+    "origTE__Departure/Arrival time convenient": 0.53554,
+    "origTE__Ease of Online booking": 0.66554,
+    "origTE__Gate location": 0.60391,
+    "origTE__Food and drink": 0.62067,
+    "origTE__Online boarding": 0.85254,
+    "origTE__Seat comfort": 0.73024,
+    "origTE__Inflight entertainment": 0.7444,
+    "origTE__On-board service": 0.69913,
+    "origTE__Leg room service": 0.6878,
+    "origTE__Baggage handling": 0.66188,
+    "origTE__Checkin service": 0.63549,
+    "origTE__Cleanliness": 0.68939,
+    "origTE__Departure Delay in Minutes": 0.50901,
+    "origTE__Arrival Delay in Minutes": 0.51711,
+    "origTE__Gender": 0.50562,
+    "origTE__Customer Type": 0.58616,
+    "origTE__Type of Travel": 0.70275,
+    "origTE__Class": 0.7822,
+    "origTE__survey13": 0.70374,
+    "origTE__meta4": 0.84075,
+    "origTE__Class_x_OB": 0.90253,
+    "origTE__ToT_x_CT": 0.79945,
+    "origTE__Class_OB_SC": 0.91298
+  },
+  "origTE_combo_auc": 0.934226
+}

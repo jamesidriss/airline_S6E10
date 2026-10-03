@@ -1,0 +1,114 @@
+[
+  {
+    "view": "raw",
+    "scheme": "primary",
+    "model": "lgbm",
+    "oof_auc": 0.959029,
+    "fold_aucs": [
+      0.95911,
+      0.959208,
+      0.958932,
+      0.958254,
+      0.959672
+    ],
+    "n_features": 21,
+    "teacher_auc": null,
+    "exp_id": "view_lgbm_raw_primary"
+  },
+  {
+    "view": "raw_ext",
+    "scheme": "primary",
+    "model": "lgbm",
+    "oof_auc": 0.960044,
+    "fold_aucs": [
+      0.960012,
+      0.960153,
+      0.960255,
+      0.959292,
+      0.960518
+    ],
+    "n_features": 75,
+    "teacher_auc": null,
+    "exp_id": "view_lgbm_raw_ext_primary"
+  },
+  {
+    "view": "raw_trans",
+    "scheme": "primary",
+    "model": "lgbm",
+    "oof_auc": 0.960484,
+    "fold_aucs": [
+      0.960572,
+      0.960553,
+      0.960616,
+      0.959893,
+      0.960858
+    ],
+    "n_features": 148,
+    "teacher_auc": null,
+    "exp_id": "view_lgbm_raw_trans_primary"
+  },
+  {
+    "view": "raw_teacher",
+    "scheme": "primary",
+    "model": "lgbm",
+    "oof_auc": 0.959064,
+    "fold_aucs": [
+      0.959205,
+      0.959125,
+      0.959024,
+      0.958148,
+      0.959866
+    ],
+    "n_features": 23,
+    "teacher_auc": 0.9550409602155728,
+    "exp_id": "view_lgbm_raw_teacher_primary"
+  },
+  {
+    "view": "core3",
+    "scheme": "primary",
+    "model": "lgbm",
+    "oof_auc": 0.960879,
+    "fold_aucs": [
+      0.96071,
+      0.96097,
+      0.961055,
+      0.960259,
+      0.961457
+    ],
+    "n_features": 225,
+    "teacher_auc": 0.9550409602155728,
+    "exp_id": "view_lgbm_core3_primary"
+  },
+  {
+    "view": "core3_te",
+    "scheme": "primary",
+    "model": "lgbm",
+    "oof_auc": 0.960827,
+    "fold_aucs": [
+      0.960847,
+      0.960852,
+      0.960685,
+      0.96014,
+      0.961697
+    ],
+    "n_features": 273,
+    "teacher_auc": 0.9550409602155728,
+    "exp_id": "view_lgbm_core3_te_primary"
+  },
+  {
+    "view": "full",
+    "scheme": "primary",
+    "model": "lgbm",
+    "oof_auc": 0.960904,
+    "fold_aucs": [
+      0.960904,
+      0.960992,
+      0.960929,
+      0.960143,
+      0.961608
+    ],
+    "n_features": 285,
+    "teacher_auc": 0.9550409602155728,
+    "exp_id": "view_lgbm_full_primary"
+  }
+]
