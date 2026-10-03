@@ -66,12 +66,13 @@ def main() -> None:
                 params = dict(extra)
                 oof = np.zeros(ntr)
                 test = np.zeros(nte)
+                iters = []
                 set_seed(args.seed)
                 for k in sorted(set(folds.tolist())):
                     fit = np.where(folds != k)[0]
                     val = np.where(folds == k)[0]
                     Xf, Xa, names = vb.assemble(fit, y, val, np.arange(ntr, ntr + nte))
-                    Xtr_f, Xval, Xtest = Xf, Xa["val"], Xa["test"]
+                    Xtr_f, Xval = Xf, Xa["val"]
                     es_tr, es_idx = _inner_es_split(fit, y, args.seed + k)
                     pos_of = {v: i for i, v in enumerate(fit)}
                     es_local = np.array([pos_of[v] for v in es_idx])
@@ -79,18 +80,32 @@ def main() -> None:
                     esX, esY = Xtr_f[es_local], y[es_idx]
                     fitX, fitY = Xtr_f[tr_local], y[es_tr]
                     if mdl == "lgbm":
-                        o = _fit_lgbm_es(fitX, fitY, Xval, params, args.seed, esX, esY)
-                        pr_te = _fit_full_predict_lgbm(fitX, fitY, Xtest, params, args.seed)
+                        o, it = _fit_lgbm_es(fitX, fitY, Xval, params, args.seed, esX, esY)
                     elif mdl == "xgb":
-                        o = _fit_xgb_es(fitX, fitY, Xval, params, args.seed, esX, esY)
-                        pr_te = _fit_full_predict_xgb(fitX, fitY, Xtest, params, args.seed)
+                        o, it = _fit_xgb_es(fitX, fitY, Xval, params, args.seed, esX, esY)
                     elif mdl == "cat":
-                        o = _fit_cat_es(fitX, fitY, Xval, params, args.seed, esX, esY)
-                        pr_te = _fit_full_predict_cat(fitX, fitY, Xtest, params, args.seed)
+                        o, it = _fit_cat_es(fitX, fitY, Xval, params, args.seed, esX, esY)
                     else:
                         raise ValueError(mdl)
+                    iters.append(it)
                     oof[val] = o
-                    test += pr_te / 5.0
+                # second pass: refit on ALL fold-fit rows at the median CV iteration count, so the
+                # test prediction uses 11% more data per fold and never consults a held-out label.
+                n_it = int(np.median(iters)) if iters else 800
+                print(f"  [{mdl}/{view}] median best_iter={n_it} per-fold={iters}", flush=True)
+                set_seed(args.seed)
+                for k in sorted(set(folds.tolist())):
+                    fit = np.where(folds != k)[0]
+                    val = np.where(folds == k)[0]
+                    Xf, Xa, _ = vb.assemble(fit, y, val, np.arange(ntr, ntr + nte))
+                    Xtest = Xa["test"]
+                    if mdl == "lgbm":
+                        pr_te = _fit_full_predict_lgbm(Xf, y[fit], Xtest, params, args.seed, n_it)
+                    elif mdl == "xgb":
+                        pr_te = _fit_full_predict_xgb(Xf, y[fit], Xtest, params, args.seed, n_it)
+                    elif mdl == "cat":
+                        pr_te = _fit_full_predict_cat(Xf, y[fit], Xtest, params, args.seed, n_it)
+                    test += pr_te / len(set(folds.tolist()))
                 auc = float(gbdt.roc_auc_score(y, oof))
                 fa = fold_auc(y, oof, folds)
                 print(f"  ==> {mdl}/{view}/{scheme} OOF AUC = {auc:.6f}  folds={[round(x,6) for x in fa]}", flush=True)
@@ -133,6 +148,7 @@ def _inner_es_split(fit: np.ndarray, y: np.ndarray, seed: int, frac: float = 0.1
 
 
 def _fit_lgbm_es(X, y, Xv, params, seed, es_X=None, es_y=None):
+    """Returns (oof_pred_on_Xv, best_iteration, es_set_indices)."""
     import lightgbm as lgb
     p = dict(objective="binary", metric="auc", n_estimators=6000, learning_rate=0.02,
              num_leaves=127, min_child_samples=40, colsample_bytree=0.8, subsample=0.8,
@@ -143,7 +159,7 @@ def _fit_lgbm_es(X, y, Xv, params, seed, es_X=None, es_y=None):
     dv = lgb.Dataset(es_X, label=es_y, reference=ds)
     m = lgb.train(p, ds, num_boost_round=p["n_estimators"], valid_sets=[dv],
                   callbacks=[lgb.early_stopping(300, verbose=False)])
-    return m.predict(Xv, num_iteration=m.best_iteration)
+    return m.predict(Xv, num_iteration=m.best_iteration), int(m.best_iteration)
 
 
 def _fit_xgb_es(X, y, Xv, params, seed, es_X=None, es_y=None):
@@ -155,7 +171,8 @@ def _fit_xgb_es(X, y, Xv, params, seed, es_X=None, es_y=None):
     p.update(params)
     m = xgb.XGBClassifier(**p)
     m.fit(X, y, eval_set=[(es_X, es_y)], verbose=False)
-    return m.predict_proba(Xv)[:, 1]
+    it = int(getattr(m, "best_iteration", 0) or p["n_estimators"])
+    return m.predict_proba(Xv)[:, 1], it
 
 
 def _fit_cat_es(X, y, Xv, params, seed, es_X=None, es_y=None):
@@ -165,36 +182,49 @@ def _fit_cat_es(X, y, Xv, params, seed, es_X=None, es_y=None):
     p.update(params)
     m = CatBoostClassifier(**p)
     m.fit(X, y, eval_set=(es_X, es_y), early_stopping_rounds=300, verbose=0)
-    return m.predict_proba(Xv)[:, 1]
+    return m.predict_proba(Xv)[:, 1], int(m.get_best_iteration())
 
 
-def _fit_full_predict_lgbm(X, y, Xt, params, seed):
+# --------------------------------------------------------------------------------------
+# Test-prediction models.
+#
+# These are deliberately stronger than a naive "reuse the early-stopped model": the iteration
+# count is fixed to the median best_iteration found by cross-validation (so no evaluation label
+# is consulted), and the model is refitted on ALL of the fold's training rows rather than the
+# 90% subset that early stopping consumed. Strictly more data, same capacity schedule.
+# This improves the test predictions only; it cannot and does not touch the reported OOF.
+# --------------------------------------------------------------------------------------
+def _fit_full_predict_lgbm(X, y, Xt, params, seed, n_estimators=None):
     import lightgbm as lgb
     p = dict(objective="binary", n_estimators=1200, learning_rate=0.02, num_leaves=127,
              colsample_bytree=0.8, subsample=0.8, subsample_freq=1, verbose=-1,
              n_jobs=8, random_state=seed)
-    p.update(params)
+    p.update({k: v for k, v in params.items() if k != "n_estimators"})
+    p["n_estimators"] = int(n_estimators or params.get("n_estimators", 1200))
     m = lgb.LGBMClassifier(**p)
     m.fit(X, y)
     return m.predict_proba(Xt)[:, 1]
 
 
-def _fit_full_predict_xgb(X, y, Xt, params, seed):
+def _fit_full_predict_xgb(X, y, Xt, params, seed, n_estimators=None):
     import xgboost as xgb
     p = dict(objective="binary:logistic", eval_metric="auc", n_estimators=1500, learning_rate=0.03,
              max_depth=8, min_child_weight=8, subsample=0.8, colsample_bytree=0.8, reg_lambda=2.0,
              max_bin=256, tree_method="hist", device="cuda", n_jobs=8, random_state=seed)
-    p.update(params)
+    p.update({k: v for k, v in params.items() if k != "n_estimators"})
+    p["n_estimators"] = int(n_estimators or params.get("n_estimators", 1500))
+    p.pop("early_stopping_rounds", None)
     m = xgb.XGBClassifier(**p)
     m.fit(X, y, verbose=False)
     return m.predict_proba(Xt)[:, 1]
 
 
-def _fit_full_predict_cat(X, y, Xt, params, seed):
+def _fit_full_predict_cat(X, y, Xt, params, seed, n_estimators=None):
     from catboost import CatBoostClassifier
     p = dict(iterations=1800, learning_rate=0.05, depth=8, l2_leaf_reg=3.0, random_seed=seed,
              thread_count=8, verbose=0, allow_writing_files=False)
-    p.update(params)
+    p.update({k: v for k, v in params.items() if k != "iterations"})
+    p["iterations"] = int(n_estimators or params.get("iterations", 1800))
     m = CatBoostClassifier(**p)
     m.fit(X, y, verbose=0)
     return m.predict_proba(Xt)[:, 1]

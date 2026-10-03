@@ -18,5 +18,25 @@
     ],
     "exp_id": "prod5_realmlp_full_primary_s1_e6",
     "dur_s": 325
+  },
+  {
+    "key": "realmlp|full|primary|7|e6|ns8|tw1",
+    "model": "realmlp",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 7,
+    "epochs": 6,
+    "ens": 8,
+    "twin": true,
+    "oof_auc": 0.960881,
+    "fold_aucs": [
+      0.960797,
+      0.960996,
+      0.961143,
+      0.960247,
+      0.96144
+    ],
+    "exp_id": "prod5_realmlp_full_primary_s7_e6",
+    "dur_s": 324
   }
 ]
