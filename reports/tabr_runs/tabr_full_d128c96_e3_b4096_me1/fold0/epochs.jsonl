@@ -1,1 +1,0 @@
-{"event": "epoch", "epoch": 0, "epoch_seconds": 1.6, "cumulative_seconds": 1.6, "val_loss": null, "val_accuracy": null, "val_auc_inner": null, "peak_vram_allocated_gb": 10.116, "peak_vram_reserved_gb": 14.225, "host_rss_gb": 10.007}

@@ -73,8 +73,6 @@ def _epoch_now(module) -> int:
 def _on_validation_epoch_end(self) -> None:
     """Append one record per validation epoch, then flush the per-batch scratch buffers."""
     try:
-        from sklearn.metrics import roc_auc_score
-
         import torch
     except Exception:  # noqa: BLE001
         return
@@ -82,9 +80,19 @@ def _on_validation_epoch_end(self) -> None:
     now = time.time()
     ep = _epoch_now(self)
 
-    def _f(x):
+    # Lightning aggregates the logged scalars into trainer.callback_metrics. Reading
+    # self.val_accuracy instead returns the torchmetrics Metric OBJECT, not a float, which is why
+    # an earlier version of this recorder logged null accuracy/loss for every epoch.
+    cb = {}
+    try:
+        cb = dict(getattr(self.trainer, "callback_metrics", {}) or {})
+    except Exception:  # noqa: BLE001
+        cb = {}
+
+    def _f(key):
+        v = cb.get(key)
         try:
-            return float(x)
+            return None if v is None else float(v)
         except Exception:  # noqa: BLE001
             return None
 
@@ -92,8 +100,8 @@ def _on_validation_epoch_end(self) -> None:
         "epoch": ep,
         "epoch_seconds": None if _SCRATCH["last"] is None else round(now - _SCRATCH["last"], 1),
         "cumulative_seconds": None if _SCRATCH["t0"] is None else round(now - _SCRATCH["t0"], 1),
-        "val_loss": _f(getattr(self, "val_loss", None)),
-        "val_accuracy": _f(getattr(self, "val_accuracy", None)),
+        "val_loss": _f("val_loss"),
+        "val_accuracy": _f("val_accuracy"),
     }
 
     # Lightning runs a validation pass over the eval set BEFORE the first training step. Firing at
@@ -108,6 +116,8 @@ def _on_validation_epoch_end(self) -> None:
     rec["kind"] = "sanity_check" if pre_training else "epoch"
 
     # inner-validation ROC-AUC from the predictions this epoch produced
+    from sklearn.metrics import roc_auc_score
+
     y_true = _SCRATCH["y_true"]
     y_prob = _SCRATCH["y_prob"]
     if len(y_true) > 100 and len(set(y_true)) > 1:
@@ -117,6 +127,7 @@ def _on_validation_epoch_end(self) -> None:
             rec["val_auc_inner"] = None
     else:
         rec["val_auc_inner"] = None
+    rec["inner_val_rows_scored"] = len(y_true)
 
     try:
         rec["peak_vram_allocated_gb"] = round(torch.cuda.max_memory_allocated() / 2**30, 3)
@@ -161,15 +172,18 @@ def _validation_step(self, batch, batch_idx):
     out = _ORIGINAL_VALIDATION_STEP(self, batch, batch_idx)
     try:
         with torch.no_grad():
-            y = batch[1] if isinstance(batch, (list, tuple)) and len(batch) > 1 else None
-            if y is None:
-                y = getattr(self, "_y_batch", None)
+            # TabrDataset.__getitem__ returns {"indices": idx}, so the collated batch is a DICT and
+            # the labels live under "Y" -- an earlier version looked for batch[1], which is why
+            # val_auc_inner was always null.
+            y = batch["Y"] if isinstance(batch, dict) and "Y" in batch else None
             logits = out[0] if isinstance(out, (list, tuple)) else out
             if y is not None and logits is not None and torch.is_tensor(logits):
                 yb = y.detach().reshape(-1).cpu().numpy()
-                probs = (torch.sigmoid(logits).detach().reshape(-1).cpu().numpy()
-                         if logits.shape[-1] == 1
-                         else torch.softmax(logits, dim=-1)[:, 1].detach().cpu().numpy())
+                lg = logits.detach()
+                if lg.dim() == 2 and lg.shape[-1] == 2:
+                    probs = torch.softmax(lg, dim=-1)[:, 1].reshape(-1).cpu().numpy()
+                else:
+                    probs = torch.sigmoid(lg.reshape(-1)).cpu().numpy()
                 _SCRATCH["y_true"].extend(int(v) for v in yb)
                 _SCRATCH["y_prob"].extend(float(v) for v in probs)
     except Exception:  # noqa: BLE001
