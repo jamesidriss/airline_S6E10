@@ -1,0 +1,54 @@
+{
+  "teacher": "xt_single",
+  "mode": "cross_fitted",
+  "view": "full",
+  "teacher_auc": 0.5,
+  "control_auc": 0.9605374984866173,
+  "residual_auc": 0.9608962007054621,
+  "delta_vs_control": 0.0003587022188448197,
+  "fold_aucs": [
+    0.9609232471786215,
+    0.9609800395476807,
+    0.9608545553421719,
+    0.9601876015824988,
+    0.9615699764499523
+  ],
+  "corr_with_teacher": NaN,
+  "per_fold": [
+    {
+      "fold": 0,
+      "teacher_auc_val": 0.9608145746446513,
+      "teacher_auc_fit_nested": 0.4997114471737984,
+      "residual_auc": 0.9609232471786215,
+      "best_iter": 2000
+    },
+    {
+      "fold": 1,
+      "teacher_auc_val": 0.9609950072073838,
+      "teacher_auc_fit_nested": 0.5002505133955658,
+      "residual_auc": 0.9609800395476807,
+      "best_iter": 2000
+    },
+    {
+      "fold": 2,
+      "teacher_auc_val": 0.9607703675330568,
+      "teacher_auc_fit_nested": 0.5012085149816976,
+      "residual_auc": 0.9608545553421719,
+      "best_iter": 2000
+    },
+    {
+      "fold": 3,
+      "teacher_auc_val": 0.9600765095644036,
+      "teacher_auc_fit_nested": 0.5008697769406554,
+      "residual_auc": 0.9601876015824988,
+      "best_iter": 2000
+    },
+    {
+      "fold": 4,
+      "teacher_auc_val": 0.9615240315783666,
+      "teacher_auc_fit_nested": 0.49960518970055046,
+      "residual_auc": 0.9615699764499523,
+      "best_iter": 2000
+    }
+  ]
+}

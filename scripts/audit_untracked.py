@@ -24,7 +24,7 @@ ARTIFACT_HINTS = ("artifacts", "data/raw", "data/original", ".venv", "__pycache_
 # Directory patterns that are INTENTIONALLY matched at any depth: build/env caches, which can
 # legitimately appear under a package directory and never correspond to source we need.
 INTENTIONAL_ANY_DEPTH = {".venv/", "venv/", "__pycache__/", ".pytest_cache/",
-                         ".ipynb_checkpoints/"}
+                         ".ipynb_checkpoints/", "lightning_logs/"}
 
 
 def git_ls_files() -> set[str]:

@@ -1,0 +1,54 @@
+{
+  "teacher": "external",
+  "mode": "label_free",
+  "view": "full",
+  "teacher_auc": 0.9550409602155728,
+  "control_auc": 0.9605374984866173,
+  "residual_auc": 0.9603403555937109,
+  "delta_vs_control": -0.00019714289290639897,
+  "fold_aucs": [
+    0.960530286679959,
+    0.9604826003488773,
+    0.9603135891451973,
+    0.9594312580008081,
+    0.960985306640064
+  ],
+  "corr_with_teacher": 0.9910130669267156,
+  "per_fold": [
+    {
+      "fold": 0,
+      "teacher_auc_val": 0.9552084654456277,
+      "teacher_auc_fit_nested": 0.954998997283767,
+      "residual_auc": 0.960530286679959,
+      "best_iter": 2000
+    },
+    {
+      "fold": 1,
+      "teacher_auc_val": 0.9551145188903953,
+      "teacher_auc_fit_nested": 0.9550231177093753,
+      "residual_auc": 0.9604826003488773,
+      "best_iter": 2000
+    },
+    {
+      "fold": 2,
+      "teacher_auc_val": 0.9547737738017521,
+      "teacher_auc_fit_nested": 0.9551078309376615,
+      "residual_auc": 0.9603135891451973,
+      "best_iter": 2000
+    },
+    {
+      "fold": 3,
+      "teacher_auc_val": 0.9545913242544259,
+      "teacher_auc_fit_nested": 0.9551537106055825,
+      "residual_auc": 0.9594312580008081,
+      "best_iter": 2000
+    },
+    {
+      "fold": 4,
+      "teacher_auc_val": 0.9555205126247062,
+      "teacher_auc_fit_nested": 0.9549213816629305,
+      "residual_auc": 0.960985306640064,
+      "best_iter": 2000
+    }
+  ]
+}

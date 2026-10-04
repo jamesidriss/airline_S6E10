@@ -1,0 +1,7 @@
+{
+  "n": 20000,
+  "max_abs_prob_error": 2.2989843353713477e-13,
+  "max_abs_raw_margin_error": 2.3817880467902341e-07,
+  "rank_corr_with_expected": 0.9999999999999999,
+  "passes": true
+}
