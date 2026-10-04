@@ -1,0 +1,97 @@
+{
+  "exp_id": "tabr_full_d128c48_e10_b4096_me1",
+  "view": "full",
+  "scheme": "primary",
+  "seed": 1,
+  "params": {
+    "d_main": 128,
+    "d_multiplier": 2.0,
+    "encoder_n_blocks": 0,
+    "predictor_n_blocks": 1,
+    "mixer_normalization": "auto",
+    "context_dropout": 0.38920071545944357,
+    "dropout0": 0.38852797479169876,
+    "dropout1": 0.0,
+    "normalization": "LayerNorm",
+    "activation": "ReLU",
+    "eval_batch_size": 4096,
+    "patience": 4,
+    "n_epochs": 10,
+    "context_size": 48,
+    "freeze_contexts_after_n_epochs": null,
+    "num_embeddings": {
+      "type": "PBLDEmbeddings",
+      "n_frequencies": 8,
+      "d_embedding": 4,
+      "frequency_scale": 0.1
+    },
+    "tfms": [
+      "median_center",
+      "robust_scale",
+      "smooth_clip"
+    ],
+    "optimizer": {
+      "type": "AdamW",
+      "lr": 0.0003121273641315169,
+      "weight_decay": 1.2260352006404615e-06,
+      "betas": [
+        0.9,
+        0.95
+      ]
+    },
+    "add_scaling_layer": true,
+    "scale_lr_factor": 96,
+    "ls_eps": 0.1,
+    "batch_size": 4096,
+    "random_state": 1,
+    "n_cv": 1,
+    "n_refit": 0,
+    "verbosity": 0,
+    "memory_efficient": true,
+    "candidate_encoding_batch_size": null
+  },
+  "view_hash": "937a375d70633fd4",
+  "fold_hash": "ca7c28ad414eef05",
+  "cfg_hash": "3325009674407852",
+  "args": {
+    "view": "full",
+    "folds": "primary",
+    "only_fold": 0,
+    "context": 48,
+    "d_main": 128,
+    "epochs": 10,
+    "patience": 4,
+    "batch": 4096,
+    "cand_bs": 0,
+    "query_chunk": 128,
+    "memory_efficient": true,
+    "lr": null,
+    "subsample": 0,
+    "seed": 1,
+    "tag": "tabr",
+    "save_test": false
+  },
+  "retrieval_check": {
+    "n_db": 4000,
+    "n_q": 64,
+    "dim": 32,
+    "n": 8,
+    "indices_identical": true,
+    "mean_index_overlap": 1.0,
+    "max_distance_error": 1.257798903964158e-05,
+    "max_relative_distance_error": 2.556296487504344e-07,
+    "max_self_consistency_error": 1.257798903964158e-05,
+    "passes": true
+  },
+  "faiss_gpu_mode": "shim",
+  "shim_active": true,
+  "static_feature_count": 237,
+  "n_train": 699635,
+  "n_test": 299844,
+  "protocol": {
+    "early_stopping_source": "inner split carved from the OUTER-FIT rows (_inner_es_split, 10%)",
+    "outer_validation_used_for": "scoring only, once, after training",
+    "n_refit": 0,
+    "n_refit_note": "sklearn_base.py:443-454 -> alg_interface_ = cv_alg_interface_, no refit on train+val"
+  }
+}

@@ -1,0 +1,1 @@
+{"event": "epoch", "epoch": 0, "epoch_seconds": 1.3, "cumulative_seconds": 1.3, "val_loss": 0.6282825469970703, "val_accuracy": 0.629150390625, "global_step": 0, "pre_training_sanity_check": true, "kind": "sanity_check", "val_auc_inner": null, "inner_val_rows_scored": 8192, "peak_vram_allocated_gb": 10.116, "peak_vram_reserved_gb": 14.225, "host_rss_gb": 10.001}
