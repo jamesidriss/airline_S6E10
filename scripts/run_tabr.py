@@ -51,7 +51,8 @@ from src.common import ID_COL, REPORTS, TARGET, load_cached_parquet, save_json, 
 from src.features.view import ViewBuilder  # noqa: E402
 from src.models.realmlp import _twin_frame  # noqa: E402
 from src.models.tabr_epochlog import (auc_curve, install_epoch_recorder, records,  # noqa: E402
-                                      reset_records)
+                                      reset_records, set_epoch_sink)
+from src.models.tabr_retrieval import enable_tf32_process_wide  # noqa: E402
 from src.models.tabr_retrieval import (find_torch_index, install_faiss_gpu_shim,  # noqa: E402
                                        set_query_chunk, shim_is_installed,
                                        verify_matches_reference)
@@ -202,7 +203,17 @@ def build_params(args) -> dict:
              d_main=args.d_main, patience=args.patience, random_state=args.seed,
              n_cv=1, n_refit=0, verbosity=0)
     p["memory_efficient"] = bool(args.memory_efficient)
-    p["candidate_encoding_batch_size"] = args.cand_bs if args.memory_efficient else None
+    # cand_bs == 0 means "encode the whole candidate database in one call" (pytabkit's None).
+    #
+    # This is the difference between ~40 min/epoch and a workable run. With grad DISABLED for
+    # candidate encoding (memory_efficient=True), encoding all ~503k rows at once costs only
+    # 503k x d_main x 4 B (~258 MB at d_main=128) and is exact. Splitting it into 256-row chunks
+    # instead costs ~1969 separate GPU launches PER TRAINING STEP, i.e. ~242k launches per epoch,
+    # which dominated everything else.
+    if p["memory_efficient"]:
+        p["candidate_encoding_batch_size"] = None if args.cand_bs <= 0 else int(args.cand_bs)
+    else:
+        p["candidate_encoding_batch_size"] = None
     return p
 
 
@@ -216,7 +227,9 @@ def main() -> None:
     ap.add_argument("--epochs", type=int, default=30)
     ap.add_argument("--patience", type=int, default=6)
     ap.add_argument("--batch", type=int, default=4096)
-    ap.add_argument("--cand-bs", type=int, default=256)
+    ap.add_argument("--cand-bs", type=int, default=0,
+                    help="0 = encode the whole candidate database in one call (recommended); "
+                         "a positive value chunks it, costing one GPU launch per chunk per step")
     ap.add_argument("--query-chunk", type=int, default=128)
     ap.add_argument("--no-memory-efficient", dest="memory_efficient", action="store_false",
                     help="reproduce the old (autograd-over-the-whole-database) behaviour; "
@@ -282,7 +295,10 @@ def main() -> None:
     import torch
     from pytabkit import RealTabR_D_Classifier
 
+    # TF32 for encoder/predictor, full fp32 strictly inside the retrieval search.
+    prec = enable_tf32_process_wide()
     installed = install_epoch_recorder()
+    print(f"  float32 matmul precision (encoder/predictor): {prec}", flush=True)
     print(f"  epoch recorder installed: {installed}", flush=True)
 
     oof = np.full(ntr, np.nan)
@@ -315,6 +331,9 @@ def main() -> None:
         inner_tr, inner_es = _inner_es_split(fit, y_int, args.seed + k)
 
         elog = EpochLog(fdir / "epochs.jsonl")
+        # flush every epoch record the moment it is produced, so a kill mid-epoch still leaves
+        # the learning curve on disk
+        set_epoch_sink(lambda rec: elog.write({"event": "epoch", **rec}))
         reset_records()
         t_fold0 = time.time()
         torch.cuda.empty_cache()
@@ -461,8 +480,6 @@ def main() -> None:
         # per-epoch inner-validation learning curve, written BEFORE the summary so a kill after
         # this point still leaves the evidence that justified the epoch budget
         eps = records()
-        for r in eps:
-            elog.write({"event": "epoch", **r})
         if eps:
             atomic_write_json(fdir / "learning_curve.json",
                               {"fold": int(k), "epochs": eps, "auc_curve": auc_curve(),
@@ -471,6 +488,7 @@ def main() -> None:
                                        "involved, so this curve is safe for epoch selection"})
         elog.write({"event": "fold_finished", **metrics})
         elog.close()
+        clear_epoch_sink()
         # ---- persist immediately, before anything else can fail ----
         np.save(fdir / "oof.npy", p.astype("float32"))
         if args.save_test:

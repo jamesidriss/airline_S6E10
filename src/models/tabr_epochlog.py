@@ -46,6 +46,22 @@ _SCRATCH: dict = {"epoch": None, "t0": None, "last": None, "y_true": [], "y_pred
 
 _INSTALLED = False
 
+# Optional per-epoch sink, set by the runner so each record is flushed to disk IMMEDIATELY rather
+# than buffered until the fold finishes. Without it, a run killed at epoch 20 leaves an empty log --
+# exactly the failure mode this module exists to prevent.
+_EPOCH_SINK = None
+
+
+def set_epoch_sink(fn) -> None:
+    """Register a callable invoked with each epoch record as it is produced."""
+    global _EPOCH_SINK
+    _EPOCH_SINK = fn
+
+
+def clear_epoch_sink() -> None:
+    global _EPOCH_SINK
+    _EPOCH_SINK = None
+
 
 def _epoch_now(module) -> int:
     try:
@@ -104,6 +120,11 @@ def _on_validation_epoch_end(self) -> None:
         pass
 
     EPOCH_RECORDS.append(rec)
+    if _EPOCH_SINK is not None:
+        try:
+            _EPOCH_SINK(rec)
+        except Exception:  # noqa: BLE001
+            pass
     _SCRATCH["y_true"].clear()
     _SCRATCH["y_prob"].clear()
     _SCRATCH["y_pred"].clear()

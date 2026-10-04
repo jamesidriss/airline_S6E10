@@ -73,6 +73,30 @@ def full_fp32_matmul():
         torch.set_float32_matmul_precision(prev_prec)
 
 
+@contextlib.contextmanager
+def allow_tf32_matmul():
+    """Temporarily ALLOW TF32 (or the ambient setting) for non-retrieval matmuls.
+
+    Retrieval is the one place where full fp32 matters: TF32's 10 mantissa bits reorder near-tied
+    candidates, so `full_fp32_matmul` guards it and this is the complement used everywhere else.
+
+    The encoder / predictor / retrieval search cannot all be the same precision. Retrieval needs
+    exact ordering; the encoder is bandwidth- and kernel-launch-bound and gains a great deal from
+    TF32 tensor cores. Measured on this GPU, forcing fp32 everywhere made TabR roughly 40x slower
+    for no accuracy benefit in the parts that do not feed the top-k.
+    """
+    prev = torch.backends.cuda.matmul.allow_tf32
+    prev_prec = torch.get_float32_matmul_precision()
+    if torch.cuda.is_available():
+        torch.backends.cuda.matmul.allow_tf32 = True
+        torch.set_float32_matmul_precision("high")
+    try:
+        yield
+    finally:
+        torch.backends.cuda.matmul.allow_tf32 = prev
+        torch.set_float32_matmul_precision(prev_prec)
+
+
 class TorchExactL2Index:
     """Drop-in replacement for a faiss exact-L2 index, computed with chunked torch matmuls."""
 
@@ -163,6 +187,20 @@ def _make_gpu_index_flat_l2(_resources, d, cfg=None) -> "TorchExactL2Index":
     dev_id = getattr(cfg, "device", 0) or 0
     return TorchExactL2Index(d_main=d, device=torch.device(f"cuda:{dev_id}"),
                              query_chunk=_SHIM_QUERY_CHUNK)
+
+
+def enable_tf32_process_wide() -> bool:
+    """Enable TF32 for the whole process; retrieval re-disables it via `full_fp32_matmul`.
+
+    This is the intended split: the encoder and predictor are bandwidth- and launch-bound and gain
+    a great deal from TF32 tensor cores, while the top-k search must stay in full fp32 or near-tied
+    candidates get reordered. Returns the resulting precision string, or None on a CPU-only build.
+    """
+    if not torch.cuda.is_available():
+        return None
+    torch.backends.cuda.matmul.allow_tf32 = True
+    torch.set_float32_matmul_precision("high")
+    return torch.get_float32_matmul_precision()
 
 
 def install_faiss_gpu_shim(query_chunk: int = 256) -> str:
