@@ -157,25 +157,29 @@ def test_static_view_is_narrower_than_assembled_view():
 
 
 def test_width_assertion_accepts_real_frames_and_rejects_static():
-    """The runner's width guard must accept assemble() output and reject static-width validation."""
+    """The runner's width guard must accept assemble() output and reject static-width validation.
+
+    Widths are compared AFTER the categorical-twin encoding, so the contract is
+    ``n_assembled_names + n_twins == train_width`` and every other block must match it.
+    """
     from scripts.run_tabr import assert_consistent_widths
 
-    names = [f"c{i}" for i in range(289)]
-    assert_consistent_widths(names, 289, 289, 289)          # the real assembled case
+    names, twins, w = 285, 4, 289
+    assert_consistent_widths(names, twins, w, w, w, w)         # the real assembled case
 
-    for bad in ((237, 289), (289, 237), (289, 289, 237)):
+    bad_cases = [
+        (names, twins, 237, 237, 237, 237),   # static width everywhere -- twin count lies
+        (names, twins, w, 237, w, None),      # validation fell back to the static block
+        (names, twins, w, w, 237, None),      # inner-ES mismatch
+        (names, twins, w, w, w, 237),         # test mismatch
+        (names, 0, w, w, w, w),              # twins not accounted for
+    ]
+    for case in bad_cases:
         try:
-            assert_consistent_widths(names, *bad)
+            assert_consistent_widths(*case)
         except AssertionError:
             continue
-        raise AssertionError(f"width guard accepted mismatched widths {bad}")
-
-    try:
-        assert_consistent_widths(names, 237, 237)           # names disagree with width
-    except AssertionError:
-        pass
-    else:
-        raise AssertionError("width guard accepted a name list that disagrees with the width")
+        raise AssertionError(f"width guard accepted mismatched widths {case}")
     print("  [width guard] accepts assemble() output, rejects static-width mismatches")
 
 

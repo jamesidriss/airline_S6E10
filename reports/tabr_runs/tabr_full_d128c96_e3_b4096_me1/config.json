@@ -85,7 +85,7 @@
   },
   "faiss_gpu_mode": "shim",
   "shim_active": true,
-  "n_features": 237,
+  "static_feature_count": 237,
   "n_train": 699635,
   "n_test": 299844,
   "protocol": {

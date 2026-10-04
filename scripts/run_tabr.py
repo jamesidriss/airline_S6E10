@@ -50,6 +50,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.common import ID_COL, REPORTS, TARGET, load_cached_parquet, save_json, set_seed  # noqa: E402
 from src.features.view import ViewBuilder  # noqa: E402
 from src.models.realmlp import _twin_frame  # noqa: E402
+from src.models.tabr_epochlog import (auc_curve, install_epoch_recorder, records,  # noqa: E402
+                                      reset_records)
 from src.models.tabr_retrieval import (find_torch_index, install_faiss_gpu_shim,  # noqa: E402
                                        set_query_chunk, shim_is_installed,
                                        verify_matches_reference)
@@ -173,19 +175,25 @@ def assert_effective_retrieval_width(index, params) -> int:
     return int(index.dim)
 
 
-def assert_consistent_widths(names, train_w, val_w, test_w=None) -> None:
-    """Train / validation / test must all come from the SAME assemble() call and agree in width.
+def assert_consistent_widths(n_names, n_twins, train_w, val_w, es_w, test_w=None) -> None:
+    """train / inner-ES / outer-val / test must all come from the SAME assemble() call.
 
     Regression guard for the second wiring bug: validation features were once read from
     ``vb.static_tr[val]`` (the static block only, 237 columns) while training used the assembled
-    fold-safe view (289 columns), which raised a pandas shape error at predict time.
+    fold-safe view, which raised a pandas shape error at predict time.
+
+    Widths are compared AFTER the categorical-twin encoding, because ``_twin_frame`` adds one
+    column per TWIN_CAP (assembled 285 -> 289). ``n_names + n_twins`` must therefore equal the
+    train width exactly -- that also pins the twin count rather than trusting it.
     """
-    if train_w != val_w:
-        raise AssertionError(f"train width {train_w} != validation width {val_w}")
-    if test_w is not None and train_w != test_w:
-        raise AssertionError(f"train width {train_w} != test width {test_w}")
-    if len(names) != train_w:
-        raise AssertionError(f"feature names ({len(names)}) != train width ({train_w})")
+    if n_names + n_twins != train_w:
+        raise AssertionError(
+            f"assembled names ({n_names}) + twins ({n_twins}) != train width ({train_w})")
+    for label, w in (("inner-ES", es_w), ("validation", val_w), ("test", test_w)):
+        if w is None:
+            continue
+        if w != train_w:
+            raise AssertionError(f"{label} width {w} != train width {train_w}")
 
 
 def build_params(args) -> dict:
@@ -274,6 +282,9 @@ def main() -> None:
     import torch
     from pytabkit import RealTabR_D_Classifier
 
+    installed = install_epoch_recorder()
+    print(f"  epoch recorder installed: {installed}", flush=True)
+
     oof = np.full(ntr, np.nan)
     testp = np.zeros(nte) if args.save_test else None
     diag = []
@@ -304,6 +315,7 @@ def main() -> None:
         inner_tr, inner_es = _inner_es_split(fit, y_int, args.seed + k)
 
         elog = EpochLog(fdir / "epochs.jsonl")
+        reset_records()
         t_fold0 = time.time()
         torch.cuda.empty_cache()
         torch.cuda.reset_peak_memory_stats()
@@ -330,13 +342,22 @@ def main() -> None:
         tr_d = _twin_frame(Xtr, names)
         del Xtr
         es_d = _twin_frame(Xf[es_local], names)
+        val_d = _twin_frame(Xout["val"], names)
+        te_d = _twin_frame(Xout["test"], names) if args.save_test else None
         import gc
 
-        # train / validation / test widths must agree and match the name list
-        assert_consistent_widths(names, tr_d.shape[1], es_d.shape[1], Xout["val"].shape[1])
+        # train / inner-ES / outer-val / test must all come from this ONE assemble() call and agree
+        # in width AFTER the categorical-twin encoding (_twin_frame adds one column per TWIN_CAP,
+        # so the assembled 285 becomes 289).
+        n_twin = int((tr_d.dtypes.astype(str) == "category").sum())
+        assert tr_d.shape[1] == len(names) + n_twin, (
+            f"train width {tr_d.shape[1]} != assembled {len(names)} + twins {n_twin}")
+        assert_consistent_widths(len(names), n_twin, tr_d.shape[1], es_d.shape[1], val_d.shape[1],
+                                 None if te_d is None else te_d.shape[1])
         gc.collect()
-        print(f"  fold{k}: train={tr_d.shape} es={es_d.shape} val={Xout['val'].shape} "
-              f"static_width={len(vb.static_names)} rss={rss_gb()}GB", flush=True)
+        print(f"  fold{k}: train={tr_d.shape} es={es_d.shape} val={val_d.shape} "
+              f"assembled={len(names)} static={len(vb.static_names)} rss={rss_gb()}GB",
+              flush=True)
 
         # ---- fit ----
         n_attempts, oom_events = 0, []
@@ -386,13 +407,13 @@ def main() -> None:
 
         # ---- score the outer validation block exactly once ----
         t_inf0 = time.time()
-        p = model.predict_proba(_twin_frame(Xout["val"], names))[:, 1]
+        p = model.predict_proba(val_d)[:, 1]
         t_inf = time.time() - t_inf0
         auc = float(roc_auc_score(y[val], p))
 
         if args.save_test:
             t_tinf0 = time.time()
-            tpred = model.predict_proba(_twin_frame(Xout["test"], names))[:, 1]
+            tpred = model.predict_proba(te_d)[:, 1]
             t_tinf = time.time() - t_tinf0
             testp += tpred / len(ks)
         else:
@@ -429,11 +450,27 @@ def main() -> None:
             "pred_min": float(np.min(p)), "pred_max": float(np.max(p)),
             "oom_events": oom_events, "n_fit_attempts": n_attempts,
             "epochs_cap": int(params["n_epochs"]), "patience": int(params["patience"]),
+            "n_epochs_recorded": len(records()),
+            "inner_auc_curve": auc_curve(),
+            "val_metric_name": params.get("val_metric_name", "class_error"),
+            "es_monitors": "val_accuracy (pytabkit maps the default 'class_error' to accuracy, "
+                           "which is a weaker proxy for ROC-AUC than the curve we select on)",
+            "early_stopping_split": "inner 10% of the outer-FIT rows",
             "ckpt_dir": "checkpoints/",
         }
+        # per-epoch inner-validation learning curve, written BEFORE the summary so a kill after
+        # this point still leaves the evidence that justified the epoch budget
+        eps = records()
+        for r in eps:
+            elog.write({"event": "epoch", **r})
+        if eps:
+            atomic_write_json(fdir / "learning_curve.json",
+                              {"fold": int(k), "epochs": eps, "auc_curve": auc_curve(),
+                               "note": "all values are from the INNER early-stopping split carved "
+                                       "out of the outer-FIT rows; no outer-validation target is "
+                                       "involved, so this curve is safe for epoch selection"})
         elog.write({"event": "fold_finished", **metrics})
         elog.close()
-
         # ---- persist immediately, before anything else can fail ----
         np.save(fdir / "oof.npy", p.astype("float32"))
         if args.save_test:
@@ -452,7 +489,7 @@ def main() -> None:
               f"k={metrics['actual_k']}  d={metrics['retrieval_dimensionality']}  "
               f"nan={metrics['pred_nan']}  oom={len(oom_events)}", flush=True)
 
-        del model, tr_d, es_d, Xf, Xout
+        del model, tr_d, es_d, val_d, te_d, Xf, Xout
         torch.cuda.empty_cache()
         gc.collect()
 
