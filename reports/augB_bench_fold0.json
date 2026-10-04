@@ -1,0 +1,176 @@
+{
+  "results": [
+    {
+      "exp_id": "augB_interp_r1.0_w1.0_fold0",
+      "method": "interp",
+      "ratio": 1.0,
+      "aug_weight": 1.0,
+      "fold": 0,
+      "scheme": "primary",
+      "view": "full",
+      "git_commit": "388f2b4c2e17",
+      "seed": 1,
+      "n_original_rows": 503739,
+      "n_augmented_rows": 503739,
+      "n_val_rows": 139927,
+      "n_features": 285,
+      "augmentation": {
+        "n_orig": 503739,
+        "n_aug": 503739,
+        "ratio": 1.0,
+        "mode": "interp",
+        "alpha_lo": 0.35,
+        "alpha_hi": 0.65,
+        "ks": [
+          1,
+          2,
+          4
+        ],
+        "seed": 1,
+        "n_categorical": 25,
+        "n_integer_like": 259,
+        "n_continuous": 1,
+        "same_class_guaranteed": true,
+        "note": "categorical values inherited from a parent, never interpolated numerically"
+      },
+      "alpha": [
+        0.35,
+        0.65
+      ],
+      "ks": "1,2,4",
+      "target_rule": "inherit the source row's hard label (no teacher, no soft targets)",
+      "row_weights": {
+        "original": 1.0,
+        "augmented": 1.0
+      },
+      "schema_hash": "2d4dbd76095d6fce",
+      "model_hash": "6bb9dd7772f26e5d",
+      "aug_data_hash": "f922e6657f36b443",
+      "aug_label_hash": "bc8d9237608d1ad8",
+      "baseline_auc": 0.9611027137958863,
+      "baseline_auc_matched_objective": 0.9611027137958863,
+      "augmented_auc": 0.9611748088522504,
+      "delta": 7.209505636407432e-05,
+      "delta_vs_binary_baseline": 7.209505636407432e-05,
+      "teacher": {
+        "fitted": true,
+        "seconds": 50.6,
+        "auc_on_augmented_rows": 0.9584303801540499,
+        "inherited_label_auc_on_augmented_rows": 1.0,
+        "teacher_minus_inherited": -0.04156961984595009
+      },
+      "baseline_best_iter": 1073,
+      "augmented_best_iter": 1319,
+      "runtime_seconds": {
+        "baseline": 41.8,
+        "augment_build": 42.9,
+        "augmented_fit": 99.1
+      },
+      "corr_vs_baseline_logit": 0.9985468044403599,
+      "spearman_vs_baseline": 0.9892476560397793,
+      "corr_vs_finalist_logit": 0.9987574611237154,
+      "blend_gain": {
+        "finalist_auc": 0.9615006829477477,
+        "gains_by_weight": {
+          "0.02": 2.198327883506934e-06,
+          "0.05": 4.763233434013081e-06,
+          "0.1": 7.591561716924211e-06,
+          "0.2": 5.65406993213724e-06
+        },
+        "best_gain": 7.591561716924211e-06
+      },
+      "audit": {
+        "duplicate_rate_estimate": 0.0,
+        "non_finite_rows": 0,
+        "off_support_categorical_values": 0
+      },
+      "verdict": "weak positive -- worth one more fold, not a promotion"
+    },
+    {
+      "exp_id": "augB_donor_r1.0_w1.0_fold0",
+      "method": "donor",
+      "ratio": 1.0,
+      "aug_weight": 1.0,
+      "fold": 0,
+      "scheme": "primary",
+      "view": "full",
+      "git_commit": "388f2b4c2e17",
+      "seed": 1,
+      "n_original_rows": 503739,
+      "n_augmented_rows": 503739,
+      "n_val_rows": 139927,
+      "n_features": 285,
+      "augmentation": {
+        "n_orig": 503739,
+        "n_aug": 503739,
+        "ratio": 1.0,
+        "mode": "donor",
+        "alpha_lo": 0.35,
+        "alpha_hi": 0.65,
+        "ks": [
+          1,
+          2,
+          4
+        ],
+        "seed": 1,
+        "n_categorical": 25,
+        "n_integer_like": 259,
+        "n_continuous": 1,
+        "same_class_guaranteed": true,
+        "note": "categorical values inherited from a parent, never interpolated numerically"
+      },
+      "alpha": [
+        0.35,
+        0.65
+      ],
+      "ks": "1,2,4",
+      "target_rule": "inherit the source row's hard label (no teacher, no soft targets)",
+      "row_weights": {
+        "original": 1.0,
+        "augmented": 1.0
+      },
+      "schema_hash": "2d4dbd76095d6fce",
+      "model_hash": "6bb9dd7772f26e5d",
+      "aug_data_hash": "b8f37ae52725a0f3",
+      "aug_label_hash": "bc8d9237608d1ad8",
+      "baseline_auc": 0.9611027137958863,
+      "baseline_auc_matched_objective": 0.9611027137958863,
+      "augmented_auc": 0.9611272683951229,
+      "delta": 2.4554599236559227e-05,
+      "delta_vs_binary_baseline": 2.4554599236559227e-05,
+      "teacher": {
+        "fitted": true,
+        "seconds": 86.3,
+        "auc_on_augmented_rows": 0.9753842956709977,
+        "inherited_label_auc_on_augmented_rows": 1.0,
+        "teacher_minus_inherited": -0.024615704329002286
+      },
+      "baseline_best_iter": 1073,
+      "augmented_best_iter": 2262,
+      "runtime_seconds": {
+        "baseline": 45.7,
+        "augment_build": 42.7,
+        "augmented_fit": 215.0
+      },
+      "corr_vs_baseline_logit": 0.9990947597677724,
+      "spearman_vs_baseline": 0.9930460305231991,
+      "corr_vs_finalist_logit": 0.9988078447066681,
+      "blend_gain": {
+        "finalist_auc": 0.9615006829477477,
+        "gains_by_weight": {
+          "0.02": 3.787865758830833e-07,
+          "0.05": 4.820449761577805e-07,
+          "0.1": -1.8395101163415362e-06,
+          "0.2": -1.2306890702862283e-05
+        },
+        "best_gain": 4.820449761577805e-07
+      },
+      "audit": {
+        "duplicate_rate_estimate": 0.0,
+        "non_finite_rows": 0,
+        "off_support_categorical_values": 0
+      },
+      "verdict": "noise -- do not escalate"
+    }
+  ]
+}
