@@ -48,11 +48,11 @@
     "n_refit": 0,
     "verbosity": 0,
     "memory_efficient": true,
-    "candidate_encoding_batch_size": 256
+    "candidate_encoding_batch_size": null
   },
   "view_hash": "937a375d70633fd4",
   "fold_hash": "ca7c28ad414eef05",
-  "cfg_hash": "2f53987a6de979e0",
+  "cfg_hash": "f004934878b22c56",
   "args": {
     "view": "full",
     "folds": "primary",
@@ -62,7 +62,7 @@
     "epochs": 3,
     "patience": 99,
     "batch": 4096,
-    "cand_bs": 256,
+    "cand_bs": 0,
     "query_chunk": 128,
     "memory_efficient": true,
     "lr": null,

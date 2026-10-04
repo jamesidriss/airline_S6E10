@@ -96,6 +96,17 @@ def _on_validation_epoch_end(self) -> None:
         "val_accuracy": _f(getattr(self, "val_accuracy", None)),
     }
 
+    # Lightning runs a validation pass over the eval set BEFORE the first training step. Firing at
+    # that point produced a 1.6-second "epoch 0" with every metric null, which is indistinguishable
+    # from a real epoch unless it is labelled. global_step == 0 identifies it unambiguously.
+    try:
+        rec["global_step"] = int(self.global_step)
+    except Exception:  # noqa: BLE001
+        rec["global_step"] = None
+    pre_training = rec["global_step"] == 0
+    rec["pre_training_sanity_check"] = pre_training
+    rec["kind"] = "sanity_check" if pre_training else "epoch"
+
     # inner-validation ROC-AUC from the predictions this epoch produced
     y_true = _SCRATCH["y_true"]
     y_prob = _SCRATCH["y_prob"]
@@ -211,5 +222,12 @@ def records() -> list:
 
 
 def auc_curve() -> list:
+    """[(epoch, auc)] for real training epochs only -- sanity checks are excluded."""
     return [(r["epoch"], r.get("val_auc_inner")) for r in EPOCH_RECORDS
-            if r.get("val_auc_inner") is not None]
+            if r.get("val_auc_inner") is not None and not r.get("pre_training_sanity_check")]
+
+
+def epoch_times() -> list:
+    """Per-epoch wall-clock seconds for real training epochs only."""
+    return [(r["epoch"], r.get("epoch_seconds")) for r in EPOCH_RECORDS
+            if not r.get("pre_training_sanity_check") and r.get("epoch_seconds") is not None]

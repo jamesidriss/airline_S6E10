@@ -1,6 +1,6 @@
 # STATUS — Kaggle Playground S6E10 (Airline Satisfaction)
 
-_Last updated: 2026-10-03 21:10 UTC._
+_Last updated: 2026-10-04._
 
 ## 1. Verified competition facts
 
@@ -230,6 +230,66 @@ it is the most likely way to silently break this solution later.
 | `base_margin` residual boosting on the teacher logit | probe returned AUC 0.163 — the init/predict score spaces were mismatched, so the number is meaningless | **untested, not rejected** (low priority: the duplicate-key result implies little learnable residual) |
 | **Region-local reliability gating** (a public notebook's 0.96152 technique, tested honestly) | **delta 0.000000 at 5/10/20/40 bins; no member beats the equal-weight blend in *any* region** | **rejected — see below** |
 | Public-LB hill climbing | ±0.0002 paired noise | wasted submission |
+
+## 6b. TabR (Phase 4) — the orthogonal-family attempt
+
+**Why.** Every model in the pool is a GBDT or an MLP and they sit at logit-correlation 0.995-0.999
+with the finalist, so new near-clones buy ~1e-6..5e-6 each. TabR is retrieval-based: it retrieves
+the k nearest training rows in a *learned* embedding space and classifies from a
+parameter-efficient ensemble of heads conditioned on that context. No axis-aligned partitioning
+(GBDTs), no single global parametric function (MLPs) — an explicitly local, retrieval-based decision
+rule, which is the strongest available candidate for decorrelated errors. The success criterion is
+**marginal ensemble value, not standalone AUC**.
+
+**Infrastructure that had to be built first.** aiss-cpu is the only CPython 3.11 wheel for
+Windows and has neither GpuIndexFlatConfig nor GpuIndexFlatL2, while pytabkit's TabrModel
+requires the GPU symbol; a CPU IndexFlatL2 over 503k x 128 per batch step is not viable. So
+src/models/tabr_retrieval.py implements TorchExactL2Index (chunked torch matmuls, GPU-native,
+exact squared-L2) behind the identical faiss API, and install_faiss_gpu_shim() supplies the two
+missing symbols so **pytabkit's own code path runs unchanged** rather than being monkey-patched.
+
+Retrieval is validated, not assumed: exact agreement with an independent **float64** reference
+(relative error 2.4e-07), top-k neighbour-**set** overlap exact (4800/4800) on a 600k x 265 problem,
+memory bounded by the query chunk (222 MiB peak vs a 586 MiB full distance matrix), 
+eset()
+provably preventing cross-batch contamination, and **no label parameter anywhere** in the retrieval
+path — the mechanical fold-safety guarantee.
+
+**Four bugs found; the earlier TabR results are invalid, not negative.**
+
+1. **memory_efficient=False was catastrophic.** 	abr.py:281-283 reads
+   with torch.set_grad_enabled(torch.is_grad_enabled() and not self.memory_efficient). With the
+   flag false, autograd stayed ENABLED while all ~503k candidate rows were encoded on *every*
+   training step, building a full autograd graph over the entire retrieval database each time. That
+   is both the host-RAM exhaustion (silent death, no Python traceback, pagefile peak 10.1 GB) and
+   essentially all of the ~9 min/epoch cost. memory_efficient=True encodes candidates under
+   
+o_grad and recomputes gradients only for the retrieved context rows.
+2. **--d-main was never wired into the params dict** — the run labelled itself d128 while
+   pytabkit's default d_main=265 was actually in force. A ledger that disagrees with the trained
+   model is worse than a crash. Now asserted at two levels, including the live retrieval index's
+   dim, which proves the width retrieval actually used.
+3. **Validation/test features were read from b.static_tr[val]** (237 static columns) while
+   training used the assembled fold-safe view — a pandas shape error at predict time. Measured gap:
+   static 237 vs assembled 285. All of {inner-train, inner-ES, outer-val, test} now come from a
+   single ssemble() call over the outer-FIT block, which is also the only fold-safe ordering.
+4. **OOM recovery could not actually shrink the retrieval query chunk** — the shim factory closed
+   over query_chunk at install time. Two-part fix, plus a subtlety our own test caught: the
+   factory was a *nested* function, so _SHIM_QUERY_CHUNK (assigned in the enclosing scope) became
+   a function-local there and it silently closed over that local instead of the module global.
+
+**Also learned.** pytabkit wires Lightning's logger to DummyLogger, so *all* epoch metrics are
+discarded: there was no learning curve at all, and a run dying at epoch 20 would leave no evidence.
+src/models/tabr_epochlog.py attaches an on_validation_epoch_end hook (TabrLightning does not
+define it, so nothing is shadowed) and flushes each epoch to disk immediately. Separately, pytabkit
+early-stops on **al_accuracy**, not AUC — fold-safe, but a weaker proxy for our metric than the
+inner-ES AUC curve we now persist.
+
+**Verdict: still open.** The corrected pipeline is verified end to end
+(	rain=(503739, 289) es=(55969, 289) val=(139927, 289) assembled=285 static=237 rss=4.43GB) and
+TabR is computationally viable, but wall-clock per epoch remains the open question and no fold-0
+AUC has been measured yet. Predeclared gate on fold 0: **< 0.959301 stop**, 0.959301-0.9603 continue
+only if unusually decorrelated, >= 0.9603 promising, >= 0.9610 very strong.
 
 ## 7. Software quality
 
