@@ -14,9 +14,10 @@ sys.path.insert(0, str(ROOT))
 def main() -> int:
     import tests.test_pipeline as T
     import tests.test_tabr_retrieval as TR
+    import tests.test_no_undefined_names as TN
     import tests.test_tabr_wiring as TW
 
-    fns = [(mod.__name__, getattr(mod, n)) for mod in (T, TR, TW)
+    fns = [(mod.__name__, getattr(mod, n)) for mod in (T, TR, TW, TN)
            for n in sorted(dir(mod)) if n.startswith("test_")]
     ok = fail = 0
     for modname, fn in fns:

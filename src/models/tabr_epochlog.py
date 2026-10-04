@@ -172,10 +172,14 @@ def _validation_step(self, batch, batch_idx):
     out = _ORIGINAL_VALIDATION_STEP(self, batch, batch_idx)
     try:
         with torch.no_grad():
-            # TabrDataset.__getitem__ returns {"indices": idx}, so the collated batch is a DICT and
-            # the labels live under "Y" -- an earlier version looked for batch[1], which is why
-            # val_auc_inner was always null.
-            y = batch["Y"] if isinstance(batch, dict) and "Y" in batch else None
+            # TabrDataset.__getitem__ returns {"indices": idx} and NOTHING else, so the collated
+            # batch carries no features and no labels -- two earlier attempts to read batch["Y"] or
+            # batch[1] both found nothing. validation_step obtains the labels by calling
+            # get_Xy("val", batch["indices"]) (tabr.py:549), so we do the same. It is a cheap gather
+            # of one batch and it runs under no_grad.
+            y = None
+            if isinstance(batch, dict) and "indices" in batch:
+                _xv, y = self.get_Xy("val", batch["indices"])
             logits = out[0] if isinstance(out, (list, tuple)) else out
             if y is not None and logits is not None and torch.is_tensor(logits):
                 yb = y.detach().reshape(-1).cpu().numpy()

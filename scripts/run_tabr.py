@@ -51,7 +51,7 @@ from src.common import ID_COL, REPORTS, TARGET, load_cached_parquet, save_json, 
 from src.features.view import ViewBuilder  # noqa: E402
 from src.models.realmlp import _twin_frame  # noqa: E402
 from src.models.tabr_epochlog import (auc_curve, install_epoch_recorder, records,  # noqa: E402
-                                      reset_records, set_epoch_sink)
+                                      clear_epoch_sink, reset_records, set_epoch_sink)
 from src.models.tabr_retrieval import enable_tf32_process_wide  # noqa: E402
 from src.models.tabr_retrieval import (find_torch_index, install_faiss_gpu_shim,  # noqa: E402
                                        set_query_chunk, shim_is_installed,
@@ -477,19 +477,11 @@ def main() -> None:
             "early_stopping_split": "inner 10% of the outer-FIT rows",
             "ckpt_dir": "checkpoints/",
         }
-        # per-epoch inner-validation learning curve, written BEFORE the summary so a kill after
-        # this point still leaves the evidence that justified the epoch budget
-        eps = records()
-        if eps:
-            atomic_write_json(fdir / "learning_curve.json",
-                              {"fold": int(k), "epochs": eps, "auc_curve": auc_curve(),
-                               "note": "all values are from the INNER early-stopping split carved "
-                                       "out of the outer-FIT rows; no outer-validation target is "
-                                       "involved, so this curve is safe for epoch selection"})
-        elog.write({"event": "fold_finished", **metrics})
-        elog.close()
-        clear_epoch_sink()
-        # ---- persist immediately, before anything else can fail ----
+        # ---- PREDICTION FIRST ----
+        # Persisting the prediction and the completion marker must not depend on anything that can
+        # raise. A missing import in a logging call previously threw NameError AFTER a completed
+        # 10-epoch fit and destroyed the prediction, so persistence now happens first and the
+        # diagnostics that are nice-to-have are wrapped so they cannot block it.
         np.save(fdir / "oof.npy", p.astype("float32"))
         if args.save_test:
             np.save(fdir / "test.npy", tpred.astype("float32"))
@@ -498,6 +490,27 @@ def main() -> None:
                     "val_idx_sha": h([int(v) for v in val]),
                     "completed": time.strftime("%F %T")}
         atomic_write_json(fdir / "fold_complete.json", complete)
+
+        # ---- then the learning curve and epoch log, defensively ----
+        try:
+            eps = records()
+            if eps:
+                atomic_write_json(
+                    fdir / "learning_curve.json",
+                    {"fold": int(k), "epochs": eps, "auc_curve": auc_curve(),
+                     "note": "all values are from the INNER early-stopping split carved out of the "
+                             "outer-FIT rows; no outer-validation target is involved, so this "
+                             "curve is safe for epoch selection"})
+            elog.write({"event": "fold_finished", **metrics})
+        except Exception as exc:  # noqa: BLE001
+            print(f"          warn: could not write epoch diagnostics: {type(exc).__name__}: {exc}",
+                  flush=True)
+        finally:
+            try:
+                elog.close()
+                clear_epoch_sink()
+            except Exception:  # noqa: BLE001
+                pass
 
         oof[val] = p
         diag.append(metrics)
