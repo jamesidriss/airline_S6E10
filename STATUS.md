@@ -156,10 +156,22 @@ it is the most likely way to silently break this solution later.
     `extra_trees` members already absorb it). Block rejected.
 12. **The original survey's own p(x) is learnable to AUC 0.9949 with duplicate-free grouped folds**
     (0.994876 grouped vs 0.994855 stratified — the naive 0.9948 was *not* duplicate inflation).
-    On the synthetic data the best model reaches 0.9612. Since i.i.d. label noise cannot lower an
-    AUC without changing the ordering, the synthetic generator's p(x) is genuinely weaker than the
-    real survey's. **This is evidence about the problem, not a proven bound: 0.9615 is the current
-    system plateau only.**
+    On the synthetic data the best model reaches 0.9612.
+
+    > **SCIENTIFIC CORRECTION (2026-10-04).** An earlier version of this note reasoned that
+    > because i.i.d. label noise cannot lower an AUC *without changing the ordering of p(x)*,
+    > the 0.9949-vs-0.9612 gap implied the synthetic generator learned a weaker p(x), and treated
+    > 0.9615 as close to a ceiling. **That inference is wrong.** If labels were drawn as
+    > Bernoulli(p(x)) samples, extra label noise reduces the *observed* AUC while leaving the
+    > ordering of p(x) intact. So the gap is equally consistent with "p_syn = p_orig, plus a lot
+    > of label noise" — in which case the *ordering* is fully recoverable and better
+    > probability estimation should still pay.
+    >
+    > **0.9615 is therefore only the current modelling plateau.** Noise reduction and better
+    > probability estimation are high-priority unexplored directions, and are pursued from here
+    > (see the soft-target / denoising campaign below). The one thing the 0.9949 number *does*
+    > still establish is unaffected: original **rows** teach the wrong conditional, which
+    > discovery 14 measures directly and monotonically.
 14. **The whole mechanism story closes: original *rows* teach the wrong function.** Measured
     directly — `full` view with `extra_trees`, appending the 129,859 leak-audited original rows to
     the training set:

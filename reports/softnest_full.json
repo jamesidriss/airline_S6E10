@@ -1,0 +1,113 @@
+{
+  "rows": [
+    {
+      "lam": 0.0,
+      "oof_auc": 0.961134,
+      "delta_vs_lambda0": null,
+      "fold_aucs": [
+        0.961072,
+        0.961343,
+        0.961164,
+        0.960265,
+        0.961845
+      ],
+      "median_iter": 576
+    },
+    {
+      "lam": 0.05,
+      "oof_auc": 0.961093,
+      "delta_vs_lambda0": -4.1e-05,
+      "fold_aucs": [
+        0.961198,
+        0.961254,
+        0.961014,
+        0.960335,
+        0.961718
+      ],
+      "median_iter": 674
+    },
+    {
+      "lam": 0.1,
+      "oof_auc": 0.961152,
+      "delta_vs_lambda0": 1.9e-05,
+      "fold_aucs": [
+        0.961202,
+        0.961315,
+        0.961095,
+        0.960425,
+        0.961799
+      ],
+      "median_iter": 552
+    },
+    {
+      "lam": 0.2,
+      "oof_auc": 0.961109,
+      "delta_vs_lambda0": -2.5e-05,
+      "fold_aucs": [
+        0.9611,
+        0.961342,
+        0.96109,
+        0.960318,
+        0.961746
+      ],
+      "median_iter": 559
+    },
+    {
+      "lam": 0.35,
+      "oof_auc": 0.961129,
+      "delta_vs_lambda0": -5e-06,
+      "fold_aucs": [
+        0.96106,
+        0.961384,
+        0.961227,
+        0.960331,
+        0.961707
+      ],
+      "median_iter": 1154
+    },
+    {
+      "lam": 0.5,
+      "oof_auc": 0.961103,
+      "delta_vs_lambda0": -3.1e-05,
+      "fold_aucs": [
+        0.96089,
+        0.961373,
+        0.961207,
+        0.960366,
+        0.961724
+      ],
+      "median_iter": 1528
+    }
+  ],
+  "teacher_stats": [
+    {
+      "mode": "strong",
+      "teacher_auc_fit": 0.9608914024464181,
+      "fold": 0
+    },
+    {
+      "mode": "strong",
+      "teacher_auc_fit": 0.9609011933299323,
+      "fold": 1
+    },
+    {
+      "mode": "strong",
+      "teacher_auc_fit": 0.9608589024387463,
+      "fold": 2
+    },
+    {
+      "mode": "strong",
+      "teacher_auc_fit": 0.9610449917326072,
+      "fold": 3
+    },
+    {
+      "mode": "strong",
+      "teacher_auc_fit": 0.9606335220360828,
+      "fold": 4
+    }
+  ],
+  "best_lambda": 0.1,
+  "best_auc": 0.961152,
+  "view": "full",
+  "scheme": "primary"
+}

@@ -1,0 +1,154 @@
+{
+  "model": "lgbm",
+  "view": "full",
+  "cal": "logit",
+  "scheme": "primary",
+  "extra_trees": true,
+  "rows": [
+    {
+      "lam": 0.0,
+      "oof_auc": 0.961105,
+      "delta_vs_lambda0": null,
+      "fold_aucs": [
+        0.961103,
+        0.961317,
+        0.961127,
+        0.960249,
+        0.96178
+      ],
+      "median_iter": 935
+    },
+    {
+      "lam": 0.02,
+      "oof_auc": 0.961109,
+      "delta_vs_lambda0": 4e-06,
+      "fold_aucs": [
+        0.961152,
+        0.961375,
+        0.961166,
+        0.960311,
+        0.961635
+      ],
+      "median_iter": 887
+    },
+    {
+      "lam": 0.05,
+      "oof_auc": 0.961055,
+      "delta_vs_lambda0": -5.1e-05,
+      "fold_aucs": [
+        0.961082,
+        0.961245,
+        0.960995,
+        0.960284,
+        0.9617
+      ],
+      "median_iter": 758
+    },
+    {
+      "lam": 0.1,
+      "oof_auc": 0.960998,
+      "delta_vs_lambda0": -0.000107,
+      "fold_aucs": [
+        0.960997,
+        0.961111,
+        0.960933,
+        0.96029,
+        0.961719
+      ],
+      "median_iter": 775
+    },
+    {
+      "lam": 0.2,
+      "oof_auc": 0.960682,
+      "delta_vs_lambda0": -0.000423,
+      "fold_aucs": [
+        0.960699,
+        0.96074,
+        0.960555,
+        0.96014,
+        0.961314
+      ],
+      "median_iter": 1268
+    },
+    {
+      "lam": 0.35,
+      "oof_auc": 0.959912,
+      "delta_vs_lambda0": -0.001193,
+      "fold_aucs": [
+        0.959947,
+        0.959919,
+        0.959744,
+        0.959351,
+        0.960633
+      ],
+      "median_iter": 1139
+    },
+    {
+      "lam": 0.5,
+      "oof_auc": 0.959051,
+      "delta_vs_lambda0": -0.002055,
+      "fold_aucs": [
+        0.959027,
+        0.95902,
+        0.95895,
+        0.9586,
+        0.9597
+      ],
+      "median_iter": 1358
+    }
+  ],
+  "calibration_diagnostics": [
+    {
+      "fold": 0,
+      "cal": "logit",
+      "n_fit": 559708,
+      "support_ok": true,
+      "teacher_auc_on_fit": 0.954999,
+      "calibrated_auc_on_fit": 0.954999,
+      "coef": 0.4327365052367801,
+      "intercept": -0.4808454595334312
+    },
+    {
+      "fold": 1,
+      "cal": "logit",
+      "n_fit": 559708,
+      "support_ok": true,
+      "teacher_auc_on_fit": 0.955023,
+      "calibrated_auc_on_fit": 0.955023,
+      "coef": 0.43254168351059813,
+      "intercept": -0.4801764151344949
+    },
+    {
+      "fold": 2,
+      "cal": "logit",
+      "n_fit": 559708,
+      "support_ok": true,
+      "teacher_auc_on_fit": 0.955108,
+      "calibrated_auc_on_fit": 0.955108,
+      "coef": 0.43291828888285383,
+      "intercept": -0.4786654673117312
+    },
+    {
+      "fold": 3,
+      "cal": "logit",
+      "n_fit": 559708,
+      "support_ok": true,
+      "teacher_auc_on_fit": 0.955154,
+      "calibrated_auc_on_fit": 0.955154,
+      "coef": 0.43325631653601193,
+      "intercept": -0.47826145585482566
+    },
+    {
+      "fold": 4,
+      "cal": "logit",
+      "n_fit": 559708,
+      "support_ok": true,
+      "teacher_auc_on_fit": 0.954921,
+      "calibrated_auc_on_fit": 0.954921,
+      "coef": 0.4320371101368049,
+      "intercept": -0.47854713337300053
+    }
+  ],
+  "best_lambda": 0.02,
+  "best_auc": 0.961109
+}

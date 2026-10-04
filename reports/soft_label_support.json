@@ -1,0 +1,41 @@
+{
+  "catboost_CrossEntropy": {
+    "supported": true,
+    "mean_pred": 0.462425437854536,
+    "mean_soft_target": 0.46241363883018494,
+    "tracked": true
+  },
+  "catboost_Logloss": {
+    "supported": false,
+    "error_type": "CatBoostError"
+  },
+  "xgboost_binary_logistic_cpu": {
+    "supported": false,
+    "error_type": "ValueError"
+  },
+  "xgboost_custom_softbce": {
+    "supported": false,
+    "error_type": "TypeError"
+  },
+  "lightgbm_binary_soft": {
+    "supported": false,
+    "error_type": "ValueError"
+  },
+  "lightgbm_cross_entropy_binary_y": {
+    "supported": true,
+    "mean_pred": 0.46241361961377436,
+    "mean_soft_target": 0.46241363883018494,
+    "tracked": true,
+    "note": "y is fractional here; mean prediction tracks the soft target"
+  },
+  "lightgbm_custom_fobj": {
+    "supported": false,
+    "error_type": "TypeError"
+  },
+  "torch_bce_soft": {
+    "supported": true,
+    "mean_pred": 0.46241360902786255,
+    "mean_soft_target": 0.46241363883018494,
+    "tracked": true
+  }
+}
