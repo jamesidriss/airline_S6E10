@@ -338,10 +338,27 @@ untouched outer-validation rows, 3 seeds per point so model variance is separabl
 | 0.75 | 419,781 | 0.960956 | 0.000133 | 753 |
 | 1.00 | 559,708 | **0.961212** | 0.000108 | 879 |
 
-Gain per doubling of data: **+7.0e-5, +6.8e-5, +5.2e-5**. The curve is close to linear in log(n) and
-barely decelerates, and the final doubling's +5.2e-5 is roughly **5x the seed-to-seed standard
-deviation**, so it is real signal rather than sampling noise. Extrapolating, one more doubling
-(~1.1M rows) would be worth about +5e-5 -- a sixth of the entire rank-1-to-rank-45 spread.
+Gain per doubling of data: **+70.2e-5, +67.5e-5** (0.125->0.25 and 0.25->0.50), and **+51.6e-5** for
+0.50->1.00. The two half-steps are smaller, as expected for sub-doublings: +26.1e-5 for 1.5x and
++25.6e-5 for 1.333x.
+
+> **CORRECTION (2026-10-04).** These per-doubling figures were initially written into this file and
+> the ledger **10x too small** (+7.0/+6.8/+5.2e-5). The measurement was always correct -- the script
+> printed +51.6e-5 -- and the error was a hand-transcription slip when copying the numbers across.
+> Corrected figures are recomputed directly from 
+eports/lcurve_fold0.json and re-appended to the
+> append-only ledger as lcurve_fold0_CORRECTION. The corrected conclusion is **stronger**, not
+> weaker: a genuine doubling of unique in-distribution rows is worth ~+5e-4 to +7e-4.
+
+Fitted scaling law (five points, order of magnitude only -- **not** a Bayes ceiling):
+
+- **AUC ~ a + b*n^(-1/5)**, R^2 = **0.99894** (best of the residual forms tried)
+- AUC linear in log2(n): slope **+62.9e-5 per doubling**, R^2 = 0.99539, residuals <= +-7.7e-5
+
+Extrapolated value of more effective data: **1.5x -> +3.7e-4, 2x -> +6.3e-4**. The entire
+rank-1-to-rank-45 spread is ~3e-4, so a genuine doubling of training support would be worth about
+**twice the whole competitive gap** -- an order of magnitude more than any ensemble-level gain
+measured in this campaign (the 59-member blend buys +2.5e-4 over the best single model).
 
 **This overturns the campaign's self-assessment.** We had been treating ourselves as
 representation-limited and had stopped looking for gains. The evidence says the scarce resource is
@@ -352,6 +369,12 @@ still *effective training signal per leaf*, which implies two things that have N
   different conditional, not more of this one);
 - continued **variance reduction by averaging**, though note this is partly spent: the 59-member
   blend already captures +2.5e-4 over the best single model.
+
+**Important caveat.** The learning curve proves that *unique genuine* training signal still pays. It
+does **not** prove that synthetic augmentation delivers the same benefit -- duplicating rows, or
+interpolating between neighbours, creates no new information. Whether augmentation tracks the real
+learning curve is exactly the hypothesis now under test, and a null result there is itself
+informative: it would mean the limit is unique information, not sample count.
 
 This is a directional diagnostic, **not** a Bayes ceiling and not claimed as one.
 
