@@ -43,11 +43,20 @@ from src.models.realmlp import TWIN_CAPS
 EPS = 1e-6
 
 # Columns whose values are categories: inherit from a parent, never interpolate.
+# These names are the ACTUAL competition schema -- verified against the cached parquet dtypes,
+# because inventing plausible names ("WiFi service", "In-flight entertainment") silently sends a
+# real column down the default integer path.
 CATEGORICAL = ["Gender", "Customer Type", "Type of Travel", "Class"]
 # Columns that are integers in the survey instrument: interpolate then round back to integers.
-INTEGER_LIKE = ["Flight Distance", "Departure Delay in Minutes", "Arrival Delay in Minutes",
-                "Inflight entertainment", "Online boarding", "Seat comfort", "Food and drink",
-                "WiFi service", "In-flight entertainment", "Baggage handling"]
+# The 0-5 rating scales are ordinal, not continuous, so a fractional rating would be meaningless.
+INTEGER_LIKE = [
+    "Flight Distance",
+    "Departure Delay in Minutes", "Arrival Delay in Minutes",
+    "Inflight wifi service", "Departure/Arrival time convenient", "Ease of Online booking",
+    "Gate location", "Food and drink", "Online boarding", "Seat comfort",
+    "Inflight entertainment", "On-board service", "Leg room service", "Baggage handling",
+    "Checkin service", "Cleanliness",
+]
 # Genuinely continuous measures.
 CONTINUOUS = ["Age"]
 

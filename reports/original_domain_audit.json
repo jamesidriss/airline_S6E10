@@ -1,0 +1,168 @@
+{
+  "n_comp": 699635,
+  "n_orig": 129880,
+  "numeric_cols": [
+    "Age",
+    "Flight Distance",
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes"
+  ],
+  "categorical_cols": [
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class"
+  ],
+  "missing_values": {
+    "competition": 292,
+    "original": 393,
+    "fraction_competition": 2.4550616518949587e-05,
+    "fraction_original": 0.0001779923549339662
+  },
+  "domain_classifier_auc": 0.7224649415788226,
+  "nn_dist_original_to_comp": 3.211543083190918,
+  "nn_dist_comp_to_comp": 0.8930046558380127,
+  "nn_index_rows": 349817,
+  "nn_query_rows_comp": 20000,
+  "nn_query_rows_orig": 20000,
+  "nn_dist_ratio": 3.5963339805603027,
+  "numeric_marginals": {
+    "Age": {
+      "mean_quantile_gap_in_sd": 0.0801,
+      "frac_orig_outside_comp_p01_p99": 0.0309
+    },
+    "Flight Distance": {
+      "mean_quantile_gap_in_sd": 0.1756,
+      "frac_orig_outside_comp_p01_p99": 0.0517
+    },
+    "Inflight wifi service": {
+      "mean_quantile_gap_in_sd": 0.1233,
+      "frac_orig_outside_comp_p01_p99": 0.0
+    },
+    "Departure/Arrival time convenient": {
+      "mean_quantile_gap_in_sd": 0.107,
+      "frac_orig_outside_comp_p01_p99": 0.0
+    },
+    "Ease of Online booking": {
+      "mean_quantile_gap_in_sd": 0.0396,
+      "frac_orig_outside_comp_p01_p99": 0.0
+    },
+    "Gate location": {
+      "mean_quantile_gap_in_sd": 0.042,
+      "frac_orig_outside_comp_p01_p99": 0.0
+    },
+    "Food and drink": {
+      "mean_quantile_gap_in_sd": 0.0,
+      "frac_orig_outside_comp_p01_p99": 0.001
+    },
+    "Online boarding": {
+      "mean_quantile_gap_in_sd": 0.0817,
+      "frac_orig_outside_comp_p01_p99": 0.0
+    },
+    "Seat comfort": {
+      "mean_quantile_gap_in_sd": 0.1238,
+      "frac_orig_outside_comp_p01_p99": 0.0
+    },
+    "Inflight entertainment": {
+      "mean_quantile_gap_in_sd": 0.0805,
+      "frac_orig_outside_comp_p01_p99": 0.0001
+    },
+    "On-board service": {
+      "mean_quantile_gap_in_sd": 0.1275,
+      "frac_orig_outside_comp_p01_p99": 0.0
+    },
+    "Leg room service": {
+      "mean_quantile_gap_in_sd": 0.1242,
+      "frac_orig_outside_comp_p01_p99": 0.0046
+    },
+    "Baggage handling": {
+      "mean_quantile_gap_in_sd": 0.1463,
+      "frac_orig_outside_comp_p01_p99": 0.0
+    },
+    "Checkin service": {
+      "mean_quantile_gap_in_sd": 0.1304,
+      "frac_orig_outside_comp_p01_p99": 0.0
+    },
+    "Cleanliness": {
+      "mean_quantile_gap_in_sd": 0.0412,
+      "frac_orig_outside_comp_p01_p99": 0.0001
+    },
+    "Departure Delay in Minutes": {
+      "mean_quantile_gap_in_sd": 1.6452,
+      "frac_orig_outside_comp_p01_p99": 0.1393
+    },
+    "Arrival Delay in Minutes": {
+      "mean_quantile_gap_in_sd": NaN,
+      "frac_orig_outside_comp_p01_p99": 0.0
+    }
+  },
+  "categorical_marginals": {
+    "Gender": {
+      "total_variation": 0.0101,
+      "levels_comp": {
+        "Female": 0.4973,
+        "Male": 0.5027
+      },
+      "levels_orig": {
+        "Female": 0.5074,
+        "Male": 0.4926
+      }
+    },
+    "Customer Type": {
+      "total_variation": 0.0078,
+      "levels_comp": {
+        "Loyal Customer": 0.8247,
+        "disloyal Customer": 0.1753
+      },
+      "levels_orig": {
+        "Loyal Customer": 0.8169,
+        "disloyal Customer": 0.1831
+      }
+    },
+    "Type of Travel": {
+      "total_variation": 0.0204,
+      "levels_comp": {
+        "Business travel": 0.711,
+        "Personal Travel": 0.289
+      },
+      "levels_orig": {
+        "Business travel": 0.6906,
+        "Personal Travel": 0.3094
+      }
+    },
+    "Class": {
+      "total_variation": 0.0296,
+      "levels_comp": {
+        "Business": 0.4891,
+        "Eco": 0.468,
+        "Eco Plus": 0.0429
+      },
+      "levels_orig": {
+        "Business": 0.4786,
+        "Eco": 0.4489,
+        "Eco Plus": 0.0725
+      }
+    }
+  },
+  "max_categorical_tv": 0.0296,
+  "interpretation": [
+    "p(x) differs moderately (domain AUC 0.722) -- a shift exists but the domains overlap substantially.",
+    "Original rows sit 3.60x further from the competition set than competition rows sit from each other; >1 means they occupy sparser regions of the same support.",
+    "Largest categorical frequency shift (total variation) = 0.030.",
+    "Known from the campaign: the original-data TEACHER reaches ~0.9550 on competition labels against ~0.9612 for an in-domain model.",
+    "If p(x) is close while the conditional is materially worse, then original rows are usable as X and unusable as labelled examples -- which is precisely the Family C hypothesis, and a reason re-appending original labels could not help."
+  ]
+}
