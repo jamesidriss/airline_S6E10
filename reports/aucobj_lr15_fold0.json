@@ -1,0 +1,38 @@
+{
+  "fold": 0,
+  "scheme": "primary",
+  "view": "full",
+  "n_features": 285,
+  "n_train": 503739,
+  "n_neg_per_pos": 4,
+  "pairwise_lr": 0.15,
+  "pairwise_rounds": 15000,
+  "seed": 1,
+  "git_commit": "2746e45f9c20",
+  "results": [
+    {
+      "arm": "pairwise",
+      "auc": 0.9595557291400307,
+      "best_iter": 14999,
+      "seconds": 1222.4,
+      "corr_finalist_logit": 0.9954032925223902,
+      "spearman_finalist": 0.9755969522058249,
+      "blend_gain": {
+        "finalist_auc": 0.9615006829477477,
+        "gains_by_weight": {
+          "0.02": -1.3699534055500173e-05,
+          "0.05": -3.56631544782271e-05,
+          "0.1": -7.744059268000036e-05,
+          "0.2": -0.00017936635935944523,
+          "0.3": -0.0003073399369295515
+        },
+        "best_gain": -1.3699534055500173e-05,
+        "best_weight": "0.02"
+      },
+      "n_nan": 0,
+      "n_inf": 0
+    }
+  ],
+  "objective_verification": "reports/auc_objective_verification.json",
+  "protocol": "identical features, seed and inner early-stopping holdout across arms; the only difference is the training objective. Early stopping uses the inner holdout carved from the outer-FIT rows; the outer fold is scored once."
+}

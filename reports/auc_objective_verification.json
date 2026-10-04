@@ -1,0 +1,31 @@
+{
+  "gradient_vs_finite_difference": {
+    "n": 400,
+    "n_pairs": 572,
+    "max_abs_error": 3.14334669404559e-12,
+    "max_rel_error": 1.285894868943674e-10,
+    "passes": true
+  },
+  "hessian_positive": {
+    "min": 1e-06,
+    "passes": true
+  },
+  "gradient_step_improves_auc": {
+    "auc_before": 0.5,
+    "auc_after": 0.9747001320565867,
+    "loss_before": 0.6931471805599454,
+    "loss_after": 0.07229855033801275,
+    "auc_delta": 0.4747001320565867,
+    "passes": true
+  },
+  "verdict": {
+    "custom_pairwise_auc_surrogate_safe": true,
+    "lightgbm_lambdarank_applicable": false,
+    "xgboost_rank_pairwise_available": true,
+    "approved_arms": [
+      "custom_pairwise_auc",
+      "xgb_rank_pairwise"
+    ]
+  },
+  "all_passed": true
+}

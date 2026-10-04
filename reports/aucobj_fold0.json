@@ -1,0 +1,66 @@
+{
+  "fold": 0,
+  "scheme": "primary",
+  "view": "full",
+  "n_features": 285,
+  "n_train": 503739,
+  "n_neg_per_pos": 4,
+  "pairwise_lr": 0.05,
+  "seed": 1,
+  "git_commit": "2746e45f9c20",
+  "results": [
+    {
+      "arm": "binary",
+      "auc": 0.9611027137958863,
+      "best_iter": 1073,
+      "seconds": 66.5,
+      "corr_finalist_logit": 0.9916972603377532,
+      "spearman_finalist": 0.992141586975287,
+      "blend_gain": {
+        "finalist_auc": 0.9615006829477477,
+        "gains_by_weight": {
+          "0.02": 6.311385081225751e-09,
+          "0.05": 2.8866827150864083e-08,
+          "0.1": 6.549355424656511e-08,
+          "0.2": 2.534900589434841e-08,
+          "0.3": -1.8468561557849483e-07
+        },
+        "best_gain": 6.549355424656511e-08,
+        "best_weight": "0.1"
+      },
+      "n_nan": 0,
+      "n_inf": 0
+    },
+    {
+      "arm": "pairwise",
+      "auc": 0.9563393393385191,
+      "best_iter": 4000,
+      "seconds": 292.3,
+      "corr_finalist_logit": 0.9857679283644956,
+      "spearman_finalist": 0.9135240561645007,
+      "blend_gain": {
+        "finalist_auc": 0.9615006829477477,
+        "gains_by_weight": {
+          "0.02": -1.297858763049664e-05,
+          "0.05": -3.6383273180451425e-05,
+          "0.1": -8.71288793256042e-05,
+          "0.2": -0.0002349237241787705,
+          "0.3": -0.00045216553371929535
+        },
+        "best_gain": -1.297858763049664e-05,
+        "best_weight": "0.02"
+      },
+      "n_nan": 0,
+      "n_inf": 0,
+      "delta_vs_binary": -0.0047633744573671866,
+      "delta_e5": -476.3
+    },
+    {
+      "arm": "xgb_rank",
+      "error": "TypeError",
+      "msg": "EarlyStopping.__init__() got an unexpected keyword argument 'verbose_eval'"
+    }
+  ],
+  "objective_verification": "reports/auc_objective_verification.json",
+  "protocol": "identical features, seed and inner early-stopping holdout across arms; the only difference is the training objective. Early stopping uses the inner holdout carved from the outer-FIT rows; the outer fold is scored once."
+}
