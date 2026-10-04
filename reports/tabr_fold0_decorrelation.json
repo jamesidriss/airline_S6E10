@@ -1,6 +1,6 @@
 {
   "tabr_fold": 0,
-  "tabr_auc": 0.9602821634696687,
+  "tabr_auc": 0.9603290302640273,
   "gate": {
     "stop": 0.959301,
     "weak_top": 0.9603,
@@ -11,30 +11,30 @@
     "finalist_v3": {
       "member": "blend_v3_final",
       "auc": 0.9615006829477477,
-      "pearson_prob": 0.9984281234539049,
-      "pearson_logit": 0.9950061607439387,
-      "spearman": 0.9764742238748008
+      "pearson_prob": 0.9986834864025439,
+      "pearson_logit": 0.995018761713881,
+      "spearman": 0.9772670230635794
     },
     "xt_lightgbm": {
       "member": "z4_xt_f10_s4",
       "auc": 0.9613008581815983,
-      "pearson_prob": 0.9979140454191482,
-      "pearson_logit": 0.993771743709802,
-      "spearman": 0.9699820834824887
+      "pearson_prob": 0.9981588122716453,
+      "pearson_logit": 0.9937919627821575,
+      "spearman": 0.9709998175138901
     },
     "realmlp": {
       "member": "prod5_realmlp_full_primary_s7_e6",
       "auc": 0.9607970755532526,
-      "pearson_prob": 0.9980751318471428,
-      "pearson_logit": 0.9943394977286738,
-      "spearman": 0.9715048786131132
+      "pearson_prob": 0.9981678457269241,
+      "pearson_logit": 0.9941686118753076,
+      "spearman": 0.9690975098765894
     },
     "tabm": {
       "member": "z5_tabm_e25",
       "auc": 0.9608220036623334,
-      "pearson_prob": 0.9977435967270818,
-      "pearson_logit": 0.9940309739601568,
-      "spearman": 0.9750018426341336
+      "pearson_prob": 0.9979701541998643,
+      "pearson_logit": 0.9939625127333751,
+      "spearman": 0.9761122822762045
     }
   },
   "existing_family_logit_corr_range": [
@@ -47,24 +47,24 @@
   ],
   "finalist_auc": 0.9615006829477477,
   "fixed_weight_diagnostics": {
-    "w=0.02_logit": 0.9614990791316549,
-    "w=0.02_prob": 0.9614971220849229,
-    "w=0.05_logit": 0.9614967716478474,
-    "w=0.05_prob": 0.9614909388932886,
-    "w=0.1_logit": 0.961491226733839,
-    "w=0.1_prob": 0.961476796734548
+    "w=0.02_logit": 0.9614994278098196,
+    "w=0.02_prob": 0.9614973885081495,
+    "w=0.05_logit": 0.9614972877329173,
+    "w=0.05_prob": 0.961492101533211,
+    "w=0.1_logit": 0.9614922098614123,
+    "w=0.1_prob": 0.9614782397655167
   },
   "best_diagnostic": {
     "name": "w=0.02_logit",
-    "auc": 0.9614990791316549,
-    "delta": -1.6038160928211198e-06
+    "auc": 0.9614994278098196,
+    "delta": -1.255137928146688e-06
   },
   "verdict": "BORDERLINE: run the 5-fold only if compute is cheap; do not treat as promising",
   "reasons": [
-    "fold AUC 0.960282 clears the predeclared stop line 0.959301",
-    "TabR vs finalist logit corr 0.99501; existing-family logit corr spans 0.99577..0.99908",
+    "fold AUC 0.960329 clears the predeclared stop line 0.959301",
+    "TabR vs finalist logit corr 0.99502; existing-family logit corr spans 0.99577..0.99908",
     "TabR is MORE decorrelated from the finalist than any existing pair is -- genuinely different errors, which is the point of running it",
-    "best fixed-weight diagnostic moves the finalist by -0.000002",
+    "best fixed-weight diagnostic moves the finalist by -0.000001",
     "NO fixed small weight improves the finalist"
   ]
 }

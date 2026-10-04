@@ -1,0 +1,97 @@
+{
+  "fold": 0,
+  "scheme": "primary",
+  "view": "full",
+  "n_knn_columns": 12,
+  "knn_columns": [
+    "disp_16",
+    "disp_256",
+    "disp_64",
+    "dist_16",
+    "dist_256",
+    "dist_64",
+    "te_16",
+    "te_256",
+    "te_64",
+    "te_unw_16",
+    "te_unw_256",
+    "te_unw_64"
+  ],
+  "knn_build_seconds": 28.9,
+  "knn_diagnostics": {
+    "inner_folds": 5,
+    "retrieval_stats": {
+      "n_database": 503739,
+      "d_main": 16,
+      "device": "cuda",
+      "query_chunk": 256,
+      "dtype": "torch.float32",
+      "actual_k": 256,
+      "last_result_shape": [
+        663,
+        256
+      ],
+      "total_queries_searched": 139927,
+      "total_rows_added": 503739,
+      "searches_per_epoch_estimate": null
+    },
+    "n_pool": 503739,
+    "n_es": 55969,
+    "n_val": 139927,
+    "n_test": 0,
+    "names": [
+      "disp_16",
+      "disp_256",
+      "disp_64",
+      "dist_16",
+      "dist_256",
+      "dist_64",
+      "te_16",
+      "te_256",
+      "te_64",
+      "te_unw_16",
+      "te_unw_256",
+      "te_unw_64"
+    ],
+    "metric_space": [
+      "num:Inflight wifi service",
+      "num:Departure/Arrival time convenient",
+      "num:Ease of Online booking",
+      "num:Gate location",
+      "num:Food and drink",
+      "num:Online boarding",
+      "num:Seat comfort",
+      "num:Inflight entertainment",
+      "num:On-board service",
+      "num:Leg room service",
+      "num:Baggage handling",
+      "num:Checkin service",
+      "num:Cleanliness",
+      "num:Age",
+      "num:Flight Distance",
+      "num:Departure Delay in Minutes"
+    ]
+  },
+  "standalone_auc_of_te": {
+    "te_16": 0.9437449401055962,
+    "te_64": 0.9467555106700877,
+    "te_256": 0.946725093414812
+  },
+  "results": {
+    "base": {
+      "auc": 0.9611027137958863,
+      "best_iter": 1073,
+      "seconds": 73.0,
+      "n_features": 285
+    },
+    "plus_knn": {
+      "auc": 0.9609530723018089,
+      "best_iter": 1207,
+      "seconds": 70.4,
+      "n_features": 297
+    }
+  },
+  "delta": -0.00014964149407736826,
+  "model": "lgbm extra_trees (champion single-model configuration)",
+  "protocol": "identical fold, seed and inner early-stopping holdout; only the view differs. The kNN database contains only outer-FIT rows, fit rows are encoded by an inner cross-fit that excludes them, and inner-ES/val/test rows are encoded against the full outer-FIT-minus-ES database."
+}

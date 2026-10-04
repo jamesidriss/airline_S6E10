@@ -285,11 +285,75 @@ define it, so nothing is shadowed) and flushes each epoch to disk immediately. S
 early-stops on **al_accuracy**, not AUC — fold-safe, but a weaker proxy for our metric than the
 inner-ES AUC curve we now persist.
 
-**Verdict: still open.** The corrected pipeline is verified end to end
-(	rain=(503739, 289) es=(55969, 289) val=(139927, 289) assembled=285 static=237 rss=4.43GB) and
-TabR is computationally viable, but wall-clock per epoch remains the open question and no fold-0
-AUC has been measured yet. Predeclared gate on fold 0: **< 0.959301 stop**, 0.959301-0.9603 continue
-only if unusually decorrelated, >= 0.9603 promising, >= 0.9610 very strong.
+**Verdict: REJECTED for the ensemble. Stopped.** Measured at two context sizes on the immutable
+primary fold 0:
+
+| ctx | fold-0 AUC | train | logit corr vs finalist | Spearman |
+|---|---|---|---|---|
+| 32 | 0.960282 | 550 s | 0.99501 | 0.97647 |
+| 48 | **0.960329** | 1355 s | 0.99502 | 0.97727 |
+
+TabR **did** achieve what it was chosen for -- it is the most decorrelated model in the pool, sitting
+just below the 0.99577 floor of the existing pairs' logit correlation, with the lowest Spearman ever
+measured here. But at both context sizes **every predeclared fixed blend weight was negative**
+(2% -> -1e-6, 5% -> -3e-6, 10% -> -8e-6), and 50% more neighbours bought only +4.7e-5 for 2.46x the
+compute without improving decorrelation at all. Its 1.2e-3 standalone deficit is simply larger than
+its decorrelation is worth. Tuning further would cost hours per fold on a family whose marginal value
+is measurably zero.
+
+## 6b. k-NN target encoding -- rejected
+
+The cheapest genuinely-local estimator available, reusing the validated GPU exact-L2 retrieval:
+distance-weighted neighbour target mean at k in {16, 64, 256}, plus unweighted mean, mean neighbour
+distance, and neighbour-label dispersion. Metric space = the 21 raw survey variables (standardised
+numerics + one-hot categoricals, so no fabricated ordering of Class); retrieval fp32/exact and
+validated against a float64 reference. Fold discipline: the database is outer-FIT rows only, every
+fit row is encoded by a 5-fold inner cross-fit that excludes it, inner-ES/val/test rows are encoded
+against the full outer-FIT-minus-ES database. Built in **29 seconds** against TabR's 22 minutes.
+
+Result on fold 0, champion configuration, identical rows and seed -- only the view differs:
+
+| | n_feat | AUC |
+|---|---|---|
+| base | 285 | 0.961103 |
+| + kNN block | 297 | 0.960953 (**-1.5e-4**) |
+
+A pure k-NN with no model at all reaches 0.9468 on this fold, so the neighbourhood metric is
+genuinely informative and the protocol is sound -- the block is simply **redundant** with what the
+285-feature view already extracts, and it displaces better features under colsample_bytree. It is
+*more* correlated with the champion than TabR was (Spearman 0.989 vs 0.977), i.e. the opposite of
+what this campaign needed.
+
+## 6c. Learning curve -- the campaign is still DATA-limited, not representation-limited
+
+This is the most strategically important measurement taken. Champion configuration (LightGBM +
+extra_trees on ull), retrained on stratified subsamples of the outer-FIT rows, scored on the same
+untouched outer-validation rows, 3 seeds per point so model variance is separable from noise:
+
+| fraction | n train | AUC | +/- seed std | best iter |
+|---|---|---|---|---|
+| 0.125 | 69,963 | 0.959318 | 0.000139 | 377 |
+| 0.25 | 139,927 | 0.960020 | 0.000060 | 395 |
+| 0.50 | 279,854 | 0.960696 | 0.000204 | 525 |
+| 0.75 | 419,781 | 0.960956 | 0.000133 | 753 |
+| 1.00 | 559,708 | **0.961212** | 0.000108 | 879 |
+
+Gain per doubling of data: **+7.0e-5, +6.8e-5, +5.2e-5**. The curve is close to linear in log(n) and
+barely decelerates, and the final doubling's +5.2e-5 is roughly **5x the seed-to-seed standard
+deviation**, so it is real signal rather than sampling noise. Extrapolating, one more doubling
+(~1.1M rows) would be worth about +5e-5 -- a sixth of the entire rank-1-to-rank-45 spread.
+
+**This overturns the campaign's self-assessment.** We had been treating ourselves as
+representation-limited and had stopped looking for gains. The evidence says the scarce resource is
+still *effective training signal per leaf*, which implies two things that have NOT been tried here:
+
+- **in-distribution data augmentation**, which manufactures exactly the resource that is scarce
+  (appending the original 129,880 rows does not count -- measured harmful, because they are a
+  different conditional, not more of this one);
+- continued **variance reduction by averaging**, though note this is partly spent: the 59-member
+  blend already captures +2.5e-4 over the best single model.
+
+This is a directional diagnostic, **not** a Bayes ceiling and not claimed as one.
 
 ## 7. Software quality
 

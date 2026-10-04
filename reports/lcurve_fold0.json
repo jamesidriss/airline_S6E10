@@ -1,0 +1,88 @@
+{
+  "fold": 0,
+  "scheme": "primary",
+  "view": "full",
+  "model": "lgbm extra_trees (champion single-model configuration)",
+  "rows": [
+    {
+      "frac": 0.125,
+      "n_train_rows": 69963,
+      "n_seeds": 3,
+      "auc_mean": 0.9593178490319781,
+      "auc_std": 0.00013850975331225138,
+      "aucs": [
+        0.959336,
+        0.959447,
+        0.959171
+      ],
+      "best_iter_mean": 376.6666666666667,
+      "seconds_mean": 5.8
+    },
+    {
+      "frac": 0.25,
+      "n_train_rows": 139927,
+      "n_seeds": 3,
+      "auc_mean": 0.9600203469677311,
+      "auc_std": 5.966918248344459e-05,
+      "aucs": [
+        0.95997,
+        0.960004,
+        0.960086
+      ],
+      "best_iter_mean": 395.3333333333333,
+      "seconds_mean": 11.9
+    },
+    {
+      "frac": 0.5,
+      "n_train_rows": 279854,
+      "n_seeds": 3,
+      "auc_mean": 0.9606955784089503,
+      "auc_std": 0.00020409383708545052,
+      "aucs": [
+        0.960929,
+        0.960605,
+        0.960552
+      ],
+      "best_iter_mean": 525.3333333333334,
+      "seconds_mean": 22.3
+    },
+    {
+      "frac": 0.75,
+      "n_train_rows": 419781,
+      "n_seeds": 3,
+      "auc_mean": 0.9609562902805276,
+      "auc_std": 0.00013256946706334877,
+      "aucs": [
+        0.961059,
+        0.960807,
+        0.961004
+      ],
+      "best_iter_mean": 753.0,
+      "seconds_mean": 38.9
+    },
+    {
+      "frac": 1.0,
+      "n_train_rows": 559708,
+      "n_seeds": 3,
+      "auc_mean": 0.961211902897765,
+      "auc_std": 0.00010783299786207225,
+      "aucs": [
+        0.961151,
+        0.961336,
+        0.961148
+      ],
+      "best_iter_mean": 879.3333333333334,
+      "seconds_mean": 51.0
+    }
+  ],
+  "gain_50_to_100": 0.0005163244888147789,
+  "auc_span": 0.0018940538657868933,
+  "interpretation": [
+    "last data doubling (50%->100%) buys +51.6e-5",
+    "  0.125 -> 0.25: +70.2e-5",
+    "  0.25 -> 0.5: +67.5e-5",
+    "  0.5 -> 0.75: +26.1e-5",
+    "VERDICT: still clearly climbing -> VARIANCE-limited. More averaging, more seeds and bagging should pay, and are cheap."
+  ],
+  "protocol": "subsample drawn only from outer-FIT rows, stratified; early-stopping holdout carved from the subsample; outer-validation rows fixed, never sampled, scored once per seed; seeds differ only in model/bagging/feature randomness"
+}
