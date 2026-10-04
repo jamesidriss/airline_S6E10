@@ -91,6 +91,54 @@ def build_params(args):
     return p
 
 
+def nans_in(a: np.ndarray) -> dict:
+    a = np.asarray(a, dtype="float64")
+    return {"n_nan": int(np.isnan(a).sum()), "n_inf": int(np.isinf(a).sum())}
+
+
+def fit_one_fold(tr_d, y_sub, es_d, y_es, params, args, faiss_mode):
+    """Fit TabR on one outer fold and return the gate metrics.
+
+    Gate metrics recorded here (see the TABR GATE in the campaign notes): validation AUC,
+    training seconds, inference seconds, peak VRAM, retrieval query count, the k actually used,
+    retrieval dimensionality, whether the GPU faiss shim was in play, NaN/Inf counts, and any
+    OOM/retry.
+    """
+    import torch
+    from pytabkit import RealTabR_D_Classifier
+
+    torch.cuda.empty_cache()
+    torch.cuda.reset_peak_memory_stats()
+    n_attempts, oom_events = 0, []
+
+    while True:
+        n_attempts += 1
+        try:
+            m = RealTabR_D_Classifier(device="cuda", **params)
+            t_train0 = time.time()
+            m.fit(tr_d, y_sub, X_val=es_d, y_val=y_es)
+            t_train = time.time() - t_train0
+            break
+        except torch.cuda.OutOfMemoryError as exc:
+            torch.cuda.empty_cache()
+            oom_events.append({"attempt": n_attempts, "error": type(exc).__name__,
+                               "message": str(exc)[:200]})
+            # only retry with a smaller candidate-encoding batch; anything else would invalidate
+            # the run against the other folds
+            if "candidate_encoding_batch_size" not in params and n_attempts >= 2:
+                raise
+            params["candidate_encoding_batch_size"] = max(
+                16, int(params.get("candidate_encoding_batch_size", args.cand_bs)) // 2)
+            params["memory_efficient"] = True
+            print(f"          OOM -> retry with candidate_encoding_batch_size="
+                  f"{params['candidate_encoding_batch_size']}, memory_efficient=True", flush=True)
+            if n_attempts > 4:
+                raise
+
+    return m, {"train_seconds": round(t_train, 1), "oom_events": oom_events,
+               "n_fit_attempts": n_attempts}
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--view", default="full")
@@ -128,7 +176,6 @@ def main() -> None:
         ks = [args.only_fold]
 
     params = build_params(args)
-    from pytabkit import RealTabR_D_Classifier
 
     # hard gate: never train on a retrieval implementation we have not verified
     rc = verify_matches_reference(device="cuda")
@@ -158,28 +205,75 @@ def main() -> None:
             tr_d = tr_d.iloc[sel].reset_index(drop=True)
             y_sub = y_sub[sel]
 
-        # score the outer validation block with the same fitted model
-        # Exact k-NN retrieval on the GPU. faiss-cpu (the only wheel for CPython 3.11 on Windows) has no
-        # GPU index symbols, and a CPU IndexFlatL2 over 560k x 265 per batch step is not viable, so
-        # we make pytabkit's own faiss-GPU branch resolve to a torch exact-L2 index. Verified
-        # against a float64 brute-force reference (see src/models/tabr_retrieval.py).
-        m = RealTabR_D_Classifier(device="cuda", **params)
-        m.fit(tr_d, y_sub, X_val=es_d, y_val=y_int[inner_es])
-        sidx = find_torch_index(m)
-        print(f"          retrieval index: {sidx.stats() if sidx else 'NOT FOUND'}",
-              flush=True)
+        # Exact k-NN retrieval on the GPU. faiss-cpu (the only wheel for CPython 3.11 on Windows)
+        # has no GPU index symbols, and a CPU IndexFlatL2 over 560k x 265 per batch step is not
+        # viable, so we make pytabkit's own faiss-GPU branch resolve to a torch exact-L2 index.
+        # Verified against a float64 brute-force reference (src/models/tabr_retrieval.py).
+        m, fitmeta = fit_one_fold(tr_d, y_sub, es_d, y_int[inner_es], params, args, faiss_mode)
 
-        p = m.predict_proba(_twin_frame(vb.static_tr[val], names))[:, 1]
+        import torch
+        sidx = find_torch_index()
+        istats = sidx.stats() if sidx else {}
+
+        t_inf0 = time.time()
+        val_frame = _twin_frame(vb.static_tr[val], names)
+        p = m.predict_proba(val_frame)[:, 1]
+        t_inf = time.time() - t_inf0
+
         if not smoke:
             oof[val] = p
             if args.save_test:
+                t_inf0 = time.time()
                 testp += m.predict_proba(_twin_frame(vb.static_te, names))[:, 1] / len(ks)
+                fitmeta["test_inference_seconds"] = round(time.time() - t_inf0, 1)
+
         a = float(roc_auc_score(y[val], p))
-        diag.append({"fold": int(k), "auc": a, "seconds": round(time.time() - t0, 1)})
-        print(f"  fold{k}: AUC={a:.6f}  ({time.time()-t0:.0f}s)", flush=True)
+        rec = {
+            "fold": int(k),
+            "auc_val": round(a, 6),
+            "train_seconds": fitmeta["train_seconds"],
+            "inference_seconds": round(t_inf, 1),
+            "total_seconds": round(time.time() - t0, 1),
+            "n_train_rows": int(len(tr_d)),
+            "n_val_rows": int(len(val)),
+            "n_features": int(tr_d.shape[1]),
+            "n_categorical_twins": int((tr_d.dtypes.astype(str) == "category").sum()),
+            "peak_vram_allocated_gb": round(torch.cuda.max_memory_allocated() / 2**30, 3),
+            "peak_vram_reserved_gb": round(torch.cuda.max_memory_reserved() / 2**30, 3),
+            "retrieval_queries": istats.get("total_queries_searched"),
+            "retrieval_rows_added": istats.get("total_rows_added"),
+            "retrieval_db_rows": istats.get("n_database"),
+            "actual_k": istats.get("actual_k"),
+            "retrieval_dimensionality": istats.get("d_main"),
+            "retrieval_device": istats.get("device"),
+            "retrieval_dtype": istats.get("dtype"),
+            "retrieval_last_shape": istats.get("last_result_shape"),
+            "faiss_gpu_shim_used": faiss_mode == "shim",
+            "pred_nan": nans_in(p)["n_nan"],
+            "pred_inf": nans_in(p)["n_inf"],
+            "pred_min": float(np.min(p)),
+            "pred_max": float(np.max(p)),
+            "oom_events": fitmeta["oom_events"],
+            "n_fit_attempts": fitmeta["n_fit_attempts"],
+            "context_size_requested": int(params["context_size"]),
+            "batch_size": int(params["batch_size"]),
+            "n_epochs_cap": int(params["n_epochs"]),
+            "patience": int(params["patience"]),
+        }
+        diag.append(rec)
+        print(f"  fold{k}: AUC={a:.6f}  train={rec['train_seconds']}s  "
+              f"infer={rec['inference_seconds']}s  peakVRAM={rec['peak_vram_allocated_gb']}GB  "
+              f"queries={rec['retrieval_queries']}  k={rec['actual_k']}  "
+              f"d={rec['retrieval_dimensionality']}  nan={rec['pred_nan']}  "
+              f"oom={len(rec['oom_events'])}", flush=True)
 
     if smoke:
-        print("\nsmoke test complete (single fold, subsampled train).")
+        print("\nsmoke test complete (single fold).")
+        save_json({"exp_id": f"{args.tag}_smoke_{args.view}_fold{args.only_fold}",
+                   "gate_metrics": diag, "retrieval_check": rc, "faiss_gpu_mode": faiss_mode,
+                   "params": params},
+                  REPORTS / f"{args.tag}_smoke_{args.view}_fold{args.only_fold}.json")
+        print("wrote", REPORTS / f"{args.tag}_smoke_{args.view}_fold{args.only_fold}.json")
         return
 
     auc = float(roc_auc_score(y, oof))
@@ -199,7 +293,8 @@ def main() -> None:
                      "context": args.context, "epochs": args.epochs, "params": params})
     save_json({"exp_id": eid, "auc": auc, "fold_aucs": fa, "per_fold": diag,
                "corr_with_finalist": corr(oof, v3), "spearman_with_finalist": spearman(oof, v3),
-               "params": params, "view": args.view, "scheme": args.folds},
+               "params": params, "view": args.view, "scheme": args.folds,
+               "gate_metrics": diag, "retrieval_check": rc, "faiss_gpu_mode": faiss_mode},
               REPORTS / f"{eid}.json")
     print("\nwrote", REPORTS / f"{eid}.json")
 

@@ -40,6 +40,15 @@ import torch
 # wrapper (which does not expose the inner TabrModel) can still report retrieval statistics.
 INSTALLED_INDICES: list = []
 
+# Set once install_faiss_gpu_shim() substitutes our symbols, so a repeat call can report honestly
+# instead of mistaking its own shim for a native faiss GPU build.
+_SHIM_INSTALLED = False
+
+
+def shim_is_installed() -> bool:
+    """True if the faiss GPU symbols currently resolve to our torch implementation."""
+    return _SHIM_INSTALLED
+
 
 @contextlib.contextmanager
 def full_fp32_matmul():
@@ -75,6 +84,8 @@ class TorchExactL2Index:
         self._key_sqnorm: torch.Tensor | None = None
         self.n_searches = 0
         self.n_added = 0
+        self.last_n = None            # k actually requested by the last search
+        self.last_result_shape = None # (n_queries, k) actually returned
         INSTALLED_INDICES.append(self)
 
     # --- faiss API ---------------------------------------------------------------
@@ -120,15 +131,20 @@ class TorchExactL2Index:
                 out_i.append(idx)
                 del d
         self.n_searches += q.shape[0]
-        return torch.cat(out_d, dim=0), torch.cat(out_i, dim=0)
+        out_d_t, out_i_t = torch.cat(out_d, dim=0), torch.cat(out_i, dim=0)
+        self.last_n = int(n)
+        self.last_result_shape = tuple(int(v) for v in out_i_t.shape)
+        return out_d_t, out_i_t
 
     # --- diagnostics --------------------------------------------------------------
     def stats(self) -> dict:
         return {"n_database": int(self._keys.shape[0]) if self._keys is not None else 0,
                 "d_main": self.dim, "device": str(self.device),
                 "query_chunk": self.query_chunk, "dtype": str(self.dtype),
+                "actual_k": self.last_n, "last_result_shape": self.last_result_shape,
                 "total_queries_searched": self.n_searches,
-                "total_rows_added": self.n_added}
+                "total_rows_added": self.n_added,
+                "searches_per_epoch_estimate": None}
 
 
 def install_faiss_gpu_shim(query_chunk: int = 256) -> str:
@@ -146,10 +162,16 @@ def install_faiss_gpu_shim(query_chunk: int = 256) -> str:
     logic (fragile across versions), we supply the two missing symbols with compatible stand-ins,
     so pytabkit's own code path runs unchanged and simply lands on a torch implementation.
 
-    Returns ``"real-gpu-build"`` if a genuine faiss GPU build is already present, else ``"shim"``.
+    Returns ``"real-gpu-build"`` if a genuine faiss GPU build is already present, ``"shim"`` if we
+    installed ours, and ``"shim-already-installed"`` on a repeat call. The distinction matters: the
+    mode is recorded in the experiment's gate metrics, so a shim must never be able to masquerade
+    as a native faiss GPU build.
     """
     import faiss
 
+    global _SHIM_INSTALLED
+    if _SHIM_INSTALLED:
+        return "shim-already-installed"
     if hasattr(faiss, "GpuIndexFlatConfig") and hasattr(faiss, "GpuIndexFlatL2"):
         return "real-gpu-build"
 
@@ -170,6 +192,7 @@ def install_faiss_gpu_shim(query_chunk: int = 256) -> str:
     faiss.GpuIndexFlatConfig = _GpuIndexFlatConfig
     faiss.StandardGpuResources = _StandardGpuResources
     faiss.GpuIndexFlatL2 = _GpuIndexFlatL2
+    _SHIM_INSTALLED = True
     return "shim"
 
 

@@ -13,17 +13,19 @@ sys.path.insert(0, str(ROOT))
 
 def main() -> int:
     import tests.test_pipeline as T
+    import tests.test_tabr_retrieval as TR
 
-    fns = [getattr(T, n) for n in sorted(dir(T)) if n.startswith("test_")]
+    fns = [(mod.__name__, getattr(mod, n)) for mod in (T, TR)
+           for n in sorted(dir(mod)) if n.startswith("test_")]
     ok = fail = 0
-    for fn in fns:
+    for modname, fn in fns:
         t0 = time.time()
         try:
             fn()
-            print(f"  PASS  {fn.__name__}  ({time.time()-t0:.1f}s)")
+            print(f"  PASS  {modname}.{fn.__name__}  ({time.time()-t0:.1f}s)")
             ok += 1
         except Exception:  # noqa: BLE001
-            print(f"  FAIL  {fn.__name__}")
+            print(f"  FAIL  {modname}.{fn.__name__}")
             traceback.print_exc()
             fail += 1
     print(f"\n{ok} passed, {fail} failed")
