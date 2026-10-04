@@ -44,6 +44,10 @@ INSTALLED_INDICES: list = []
 # instead of mistaking its own shim for a native faiss GPU build.
 _SHIM_INSTALLED = False
 
+# Query chunk the shim's factory will hand to new indexes; mutable so OOM recovery can shrink it
+# without reinstalling (see set_query_chunk).
+_SHIM_QUERY_CHUNK = 256
+
 
 def shim_is_installed() -> bool:
     """True if the faiss GPU symbols currently resolve to our torch implementation."""
@@ -147,6 +151,20 @@ class TorchExactL2Index:
                 "searches_per_epoch_estimate": None}
 
 
+def _make_gpu_index_flat_l2(_resources, d, cfg=None) -> "TorchExactL2Index":
+    """Factory pytabkit calls in place of ``faiss.GpuIndexFlatL2``.
+
+    Defined at MODULE level on purpose. When this lived inside ``install_faiss_gpu_shim``, the name
+    ``_SHIM_QUERY_CHUNK`` was assigned in the enclosing function and therefore became a *local*
+    there, so this factory silently closed over that local instead of the module global. Reconfiguring
+    the chunk through ``set_query_chunk`` then had no effect on newly created indexes -- precisely the
+    OOM-recovery failure this code exists to prevent.
+    """
+    dev_id = getattr(cfg, "device", 0) or 0
+    return TorchExactL2Index(d_main=d, device=torch.device(f"cuda:{dev_id}"),
+                             query_chunk=_SHIM_QUERY_CHUNK)
+
+
 def install_faiss_gpu_shim(query_chunk: int = 256) -> str:
     """Make ``faiss.GpuIndexFlatL2`` resolve to our GPU exact-L2 index. Call before building TabR.
 
@@ -166,14 +184,22 @@ def install_faiss_gpu_shim(query_chunk: int = 256) -> str:
     installed ours, and ``"shim-already-installed"`` on a repeat call. The distinction matters: the
     mode is recorded in the experiment's gate metrics, so a shim must never be able to masquerade
     as a native faiss GPU build.
+
+    ``query_chunk`` is honoured on EVERY call, not just the first. The factory closes over the
+    chunk, so a repeat call that merely reported "already installed" would silently leave the old,
+    larger distance-matrix allocation in force -- exactly the failure mode OOM recovery must not
+    have. Repeat calls therefore reconfigure the live indexes too.
     """
     import faiss
 
-    global _SHIM_INSTALLED
+    global _SHIM_INSTALLED, _SHIM_QUERY_CHUNK
+    want = int(query_chunk)
     if _SHIM_INSTALLED:
+        set_query_chunk(want)
         return "shim-already-installed"
     if hasattr(faiss, "GpuIndexFlatConfig") and hasattr(faiss, "GpuIndexFlatL2"):
         return "real-gpu-build"
+    _SHIM_QUERY_CHUNK = want
 
     class _GpuIndexFlatConfig:
         """Stand-in: pytabkit only reads and writes ``.device``."""
@@ -184,16 +210,33 @@ def install_faiss_gpu_shim(query_chunk: int = 256) -> str:
     class _StandardGpuResources:
         """Stand-in: handed to the index factory and otherwise unused."""
 
-    def _GpuIndexFlatL2(_resources, d, cfg=None):
-        dev_id = getattr(cfg, "device", 0) or 0
-        return TorchExactL2Index(d_main=d, device=torch.device(f"cuda:{dev_id}"),
-                                 query_chunk=query_chunk)
-
     faiss.GpuIndexFlatConfig = _GpuIndexFlatConfig
     faiss.StandardGpuResources = _StandardGpuResources
-    faiss.GpuIndexFlatL2 = _GpuIndexFlatL2
+    faiss.GpuIndexFlatL2 = _make_gpu_index_flat_l2
     _SHIM_INSTALLED = True
     return "shim"
+
+
+def set_query_chunk(n: int) -> int:
+    """Update the query chunk on every live index, and return the value now in force.
+
+    Needed for deterministic OOM recovery: the shim's factory closes over ``query_chunk`` at
+    install time, so after the first install a second ``install_faiss_gpu_shim()`` call is a no-op.
+    Shrinking the chunk lowers the transient distance-matrix spike from
+    ``chunk x n_database x 4`` bytes, which is the first thing to reduce under memory pressure.
+    Returns the minimum value across live indexes, since the index actually used by a running fit
+    is the most recently created one.
+    """
+    global _SHIM_QUERY_CHUNK
+    n = int(n)
+    _SHIM_QUERY_CHUNK = n
+    for idx in INSTALLED_INDICES:
+        idx.query_chunk = n
+    return n
+
+
+def current_query_chunk() -> int:
+    return _SHIM_QUERY_CHUNK
 
 
 def find_torch_index(model=None):
