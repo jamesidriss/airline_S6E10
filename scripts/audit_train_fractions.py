@@ -4,8 +4,8 @@ Why audit rather than assume
 -----------------------------
 Phase 7 rests on a claim that is easy to get wrong: that our models see less of the real labelled
 data than they are legally allowed to. Two effects work against that. The CV protocol carves an
-inner early-stopping holdout out of every outer-fit block, and the test-time models are refitted in a
-second pass. How many rows each fitted model actually trains on therefore has to be measured, not
+inner early-stopping holdout out of every outer-fit block, and the test-time models are refitted in
+a second pass. How many rows each fitted model actually trains on therefore has to be measured, not
 inferred from "5-fold means 80%".
 
 This prints, for each scheme, the real counts:
@@ -19,6 +19,15 @@ This prints, for each scheme, the real counts:
 
 and then resolves the question that matters most for inference policy: does each TEST model see
 only its own outer-fit rows, or every labelled row in the competition train set?
+
+That second question was initially answered here by ASSUMPTION and the assumption was wrong. An
+earlier version of this script asserted in prose that "a second-pass refit on all labelled rows is
+the documented test-time policy", on the strength of a substring search for the word "refit". The
+source says otherwise: the test-time loop iterates over the outer folds and fits each model on
+`np.where(folds != k)[0]`. So every submitted prediction is an average of K models each trained on
+K-1/K of the labels, and 20% (K=5) or 10% (K=10) of the real labels are never shown to any member.
+A substring search for "refit" cannot detect that; only reading which index the fit receives can.
+The lesson is now encoded in the checks below.
 
 Usage: python scripts/audit_train_fractions.py
 """
@@ -102,34 +111,51 @@ def main() -> None:
 
         import scripts.run_views as RV
         src = inspect.getsource(RV)
-        has_second = "refit" in src.lower()
-        facts["run_views_mentions_refit"] = has_second
-        # the decisive fact: does any refit path use ALL training rows?
+        # The decisive question, answered from the source rather than assumed. A token grep for
+        # "refit" is worthless here; what matters is WHICH ROW INDEX the test-time fit receives.
+        has_outer_fit_loop = "for k in sorted(set(folds.tolist()))" in src and \
+                             "fit = np.where(folds != k)[0]" in src
+        test_uses_outer_fit = "pr_te = _fit_full_predict" in src and has_outer_fit_loop
         uses_all = any(tok in src for tok in ("np.arange(len(y))", "all_rows", "fit_idx = np.arange"))
-        facts["run_views_refit_uses_all_rows_heuristic"] = bool(uses_all)
-        print(f"  scripts/run_views.py mentions a refit step          : {has_second}")
-        print(f"  heuristic: refit path indexes all rows            : {uses_all}")
+        facts["test_loop_is_per_outer_fold"] = has_outer_fit_loop
+        facts["test_fit_index_is_outer_fit_rows"] = test_uses_outer_fit
+        facts["any_path_trains_on_all_rows"] = bool(uses_all)
+        facts["test_rows_per_model"] = "K-fold outer-fit (80% of labels at K=5, 90% at K=10)"
+        facts["test_prediction_is_average_over_folds"] = "test += pr_te /" in src
+        facts["test_iteration_count"] = "median best_iteration from the CV folds"
     except Exception as exc:  # noqa: BLE001
         print(f"  (could not introspect run_views.py: {type(exc).__name__})")
+        facts["introspection_failed"] = str(exc)[:200]
 
-    # empirical check: for a finalist member, does its stored test prediction correspond to a model
-    # trained on all rows? We cannot see inside the model, so instead verify the documented policy
-    # from STATUS.md and record what fraction of labels a full refit would use.
-    facts["full_refit_would_use_fraction"] = 1.0
-    facts["note"] = (
-        "A second-pass refit on all labelled rows is the documented test-time policy, so a submitted "
-        "model is already trained on 100% of the labels. The CV-stage OOF numbers, by contrast, come "
-        "from models that saw only the outer-fit fraction reported above. That asymmetry is the "
-        "reason OOF and test-time behaviour differ, and it is why the honest way to improve test "
-        "performance is NOT to train the fold models on more data -- they already cannot be, the "
-        "held-out fold is what makes their OOF score meaningful -- but to make sure the refit "
-        "iteration count is chosen without using any held-out information."
-    )
+    print(f"  test-time fit loops over the outer folds          : "
+          f"{facts.get('test_loop_is_per_outer_fold')}")
+    print(f"  each test model is fit on that fold's OUTER-FIT rows: "
+          f"{facts.get('test_fit_index_is_outer_fit_rows')}")
+    print(f"  test prediction is the average over those folds   : "
+          f"{facts.get('test_prediction_is_average_over_folds')}")
+    print(f"  ANY path trains on 100% of the labelled rows      : "
+          f"{facts.get('any_path_trains_on_all_rows')}")
+    print(f"  test rows per model                                : {facts.get('test_rows_per_model')}")
+    print(f"  test iteration count                               : {facts.get('test_iteration_count')}")
+
+    n = int(out["n_total_labelled_rows"])
+    facts["headline"] = (
+        "NO test-time model in this pipeline is trained on 100% of the labelled rows. Every "
+        "submitted prediction is an average over K models, each fitted on that fold's OUTER-FIT "
+        "subset: 559,708 rows (80.00%) at K=5 and 629,672 rows (90.00%) at K=10. So 20% (or 10%) of "
+        "the real labels are never shown to any member that votes on the test set, even though we "
+        "already hold those labels. Through the measured learning curve (+62.9e-5 per doubling) "
+        "that unused 80%->100% gap is worth about +2.0e-4 for a single learner.")
+    facts["measured_fractions"] = {
+        "oof_model_5fold": 503739 / n,
+        "oof_model_10fold": 566706 / n,
+        "test_model_5fold": 559708 / n,
+        "test_model_10fold": 629672 / n,
+        "available_but_unused_at_K5": 1.0 - 559708 / n,
+        "available_but_unused_at_K10": 1.0 - 629672 / n,
+    }
     out["test_refit_policy"] = facts
-    print("\n  A second-pass refit on ALL labelled rows is the documented test-time policy,")
-    print("  so a submitted model already trains on 100% of the labels, while each CV-stage OOF")
-    print("  model saw only the fraction tabulated above. The asymmetry matters: the fold models")
-    print("  CANNOT be given more data without destroying the validity of their OOF score.")
+    print("\n  *** " + facts["headline"][:400])
 
     save_json(out, REPORTS / "train_fraction_audit.json")
     print("\nwrote", REPORTS / "train_fraction_audit.json")

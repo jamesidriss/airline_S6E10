@@ -445,17 +445,48 @@ Projected through our own measured learning curve (**+62.9e-5 per doubling**):
 
 This is larger than anything else measured in the campaign and it is grounded in our own data.
 
-**The asymmetry that matters.** A second-pass refit on all labelled rows is the documented
-test-time policy, so a *submitted* model already trains on 100% of the labels, while each CV-stage
-OOF model saw only 72%. The fold models **cannot** be given more data without destroying the
-validity of their OOF score -- the held-out fold is exactly what makes that score meaningful. The
-honest improvement is therefore twofold and both halves are validated the same way:
+**The asymmetry that matters — and it is larger than we thought.** An earlier reading of this file
+asserted that "a second-pass refit on all labelled rows is the documented test-time policy, so a
+submitted model already trains on 100% of the labels." **That was wrong**, and it was wrong because
+it was inferred from a substring search for the word "refit" rather than from reading which row
+index the test-time fit actually receives. `scripts/run_views.py` does the second pass like this:
 
-1. **policy-level** -- recover the inner-ES holdout in the fold models (72% -> 80%) using a
-   leakage-safe fixed iteration count, so the OOF number measures a model that is actually as
-   well-fed as the refit; and
-2. **inference-level** -- choose the refit's iteration count by the *same* validated rule rather
-   than by copying a count measured at a different training size.
+```python
+n_it = int(np.median(iters))                    # median best_iteration from the CV folds
+for k in sorted(set(folds.tolist())):
+    fit = np.where(folds != k)[0]                # <-- the fold's OUTER-FIT rows, 80% of labels
+    Xf, Xa, _ = vb.assemble(fit, y, val, np.arange(ntr, ntr + nte))
+    pr_te = _fit_full_predict_lgbm(Xf, y[fit], Xtest, params, args.seed, n_it)
+    test += pr_te / len(set(folds.tolist()))     # average over the K folds
+```
+
+| pipeline stage | rows per model | % of 699,635 labels |
+|---|---|---|
+| CV-stage OOF model (K=5, inner-ES protocol) | 503,739 | **72.00%** |
+| CV-stage OOF model (K=10, inner-ES protocol) | 566,706 | **81.00%** |
+| **test-time model (K=5)** | 559,708 | **80.00%** |
+| **test-time model (K=10)** | 629,672 | **90.00%** |
+| test-time model on 100% of labels | — | **not implemented anywhere** |
+
+**No code path in this repository trains a test model on 100% of the labelled rows.** Every
+submitted prediction is an average over K models, each fitted on K−1/K of the labels, so **20%
+(K=5) or 10% (K=10) of the real labels are never shown to any member that votes on the test set** —
+even though we already hold those labels and the fold protocol exists only to produce OOF
+predictions, which test-time inference does not need.
+
+Two separable, independently valuable consequences:
+
+1. **Fold models (measurable now).** Recovering the inner-ES holdout takes a fold model from 72% to
+   80% of the labels under a leakage-safe fixed iteration count. This *is* measurable, honestly,
+   because the held-out fold stays untouched. Predicted ≈ **+9.5e-5**. Validated by
+   `scripts/run_fullfit.py`.
+2. **Test-time models (larger, and not directly measurable).** A full-data refit takes a test model
+   from 80% to 100%. Predicted ≈ **+2.0e-4** for a single learner (0.322 doublings × 62.9e-5). This
+   cannot be measured by any cross-validation, because a model that has seen all the labels cannot
+   be scored on labels it has seen. It must be justified by (a) the measured learning-curve law,
+   whose R^2 is 0.99894 across five points, and (b) the fresh 72%→80% measurement from point 1 as
+   an out-of-sample validation of that law. It is reported as a **cross-validated training-policy
+   gain, never as fabricated OOF.**
 
 ### Iteration-count scaling with training size
 `scripts/iteration_scaling.py`. The learning curve gives five (n, best_iter) points. **Do not fit

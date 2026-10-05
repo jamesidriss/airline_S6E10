@@ -1,0 +1,55 @@
+{
+  "refreshed": "2026-10-05",
+  "competition": "playground-series-s6e10",
+  "title": "Predicting Airline Satisfaction",
+  "source": "kaggle REST API, Basic auth from ~/.kaggle/kaggle.json",
+  "endpoints": {
+    "competition": "GET /api/v1/competitions/list?search=playground-series-s6e10",
+    "leaderboard": "GET /api/v1/competitions/playground-series-s6e10/leaderboard/view",
+    "leaderboard_limit": "returns only the top 20 rows; /api/i/competitions.LeaderboardService/GetLeaderboard returns 403 with these credentials, so the full 754-team table is not retrievable this way"
+  },
+  "competition_state": {
+    "teamCount": 754,
+    "userRank": 215,
+    "userHasEntered": true,
+    "deadline": "2026-10-31T23:59:00Z",
+    "maxDailySubmissions": 10
+  },
+  "public_leaderboard_top20": [
+    [1, "Ike Vayansky", 0.96176, "2026-10-04T18:36:28Z"],
+    [2, "MILANFX", 0.96175, "2026-10-04T18:32:07Z"],
+    [3, "Shiv Satyam", 0.96173, "2026-10-05T03:10:25Z"],
+    [4, "Setu Chokshi", 0.96172, "2026-10-04T23:52:44Z"],
+    [5, "Ahmet Bugrahan ALTUNOK", 0.96171, null],
+    [6, "Laurent Pourchot", 0.96171, null],
+    [7, "Optimistix", 0.96170, null],
+    [8, "CHEN Xiang", 0.96170, null],
+    [9, "arif Arda", 0.96170, null],
+    [10, "Yakshith Kommineni", 0.96169, null],
+    [11, "PavelLiashkov", 0.96169, null],
+    [12, "samanyu1808", 0.96168, null]
+  ],
+  "our_state": {
+    "finalist": "v3_final",
+    "oof_auc": 0.961509,
+    "public_score": 0.960980,
+    "gap_to_leader": 0.00078,
+    "gap_in_paired_noise_floors": "0.00078 / 0.0002 = ~3.9x the measured paired public-LB noise floor of +-0.0002, so the gap is real signal, not noise"
+  },
+  "observations": [
+    "The top 20 occupy a 1.0e-4 band (0.961660 to 0.961760) and every one of them scores at or above 0.9616. That is a converged pack, not a long tail: the leader is only 1e-4 ahead of rank 20.",
+    "The gap from US to the leader is 7.8e-4, which is roughly 2.6x the 3e-4 rank-1-to-rank-45 spread noted earlier. So there is MORE headroom now than the earlier reading suggested.",
+    "Our OOF 0.961509 sits 5.3e-4 ABOVE our public 0.960980. That difference is smaller than the public split's standalone AUC SE (~0.0015, since the public split is 59,969 rows), so it is consistent with noise and must NOT be read as a systematic OOF optimism correction.",
+    "Leaderboard top rose from ~0.9616 to 0.96176 since the last refresh, consistent with the 59-member-scale approaches still improving."
+  ],
+  "generator_intelligence": {
+    "searched": "web search for the S6E10 synthetic-generation mechanism",
+    "result": "NO public statement found about the synthesizer family, whether the target is generated jointly or conditionally, the preprocessing, the model used to synthesize, or the treatment of discrete features.",
+    "conclusion": "Do not speculate. The generator hypothesis must come from fingerprint tests on the data, not from documentation. Nothing imported from any public notebook or submission CSV."
+  },
+  "submission_budget": {
+    "used_total": 3,
+    "used_today_2026_10_05": 0,
+    "daily_cap": 10
+  }
+}
