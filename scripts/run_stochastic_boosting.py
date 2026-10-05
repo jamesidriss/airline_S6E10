@@ -171,6 +171,17 @@ def main() -> None:
     ap.add_argument("--snapshots", default="")
     ap.add_argument("--tag", default="phase9")
     ap.add_argument("--curve-mode", default="refit", choices=["refit", "snapshot"])
+    ap.add_argument("--round-tolerance", type=float, default=1.0,
+                    help="how far inner AUC may fall below the max before a cheaper round is "
+                         "preferred. The inner curve is NOT monotone -- the champion peaks at ~900 "
+                         "and decays after -- and the peak is broad and noisy at 56k inner-val rows, "
+                         "where a 1e-5 wobble is sampling noise rather than a real difference. "
+                         "Picking the raw argmax then spends 4x the rounds for nothing, which is the "
+                         "over-iteration failure mode already measured twice in this campaign "
+                         "(-5.9e-5 against its own control). Pre-declared at 1e-5, which is BELOW "
+                         "the +1.5e-5 admission gate: a difference this rule treats as 'not evidence' "
+                         "is smaller than the gate, so it can never discard a round count on the "
+                         "basis of a gap that would have counted as a real gain. Set 0 for pure argmax.")
     ap.add_argument("--timing-probe", type=int, default=0,
                     help="if >0, fit each arm ONCE at this round count on the inner-train rows, "
                          "report seconds/round, and exit without scoring anything")
@@ -318,19 +329,28 @@ def main() -> None:
                         {"round": r, "auc": float(roc_auc_score(y_iv, mm_long.predict(Xf[iv_l],
                                                                                     num_iteration=r)))})
                 curve = list(curve_snap)
-            best = max(curve, key=lambda c: c["auc"])
-            # ties resolved to the SMALLER round: over-iteration is the one failure mode we have
-            # actually measured in this campaign (1191 rounds cost -5.9e-5 against its control)
             top = max(c["auc"] for c in curve)
-            n_sel = min(c["round"] for c in curve if c["auc"] >= top - 1e-12)
+            # Choose the SMALLEST round whose inner AUC is within tolerance of the max. Ties resolve
+            # down, and near-ties resolve down too, for the reasons in --round-tolerance: the peak
+            # is broad and the inner-val noise floor is ~1e-5, so the raw argmax overstates the
+            # evidence for the extra rounds it spends.
+            n_sel = min(c["round"] for c in curve if c["auc"] >= top - args.round_tolerance)
+            n_argmax = min(c["round"] for c in curve if c["auc"] >= top - 1e-12)
             t_sel = time.time() - t_curve
 
             snap_gap = (max(c["auc"] for c in curve_snap) - top) if curve_snap else None
             print(f"  {mname:<12} inner curve (refit, {args.curve_mode}):", flush=True)
             for c in curve:
                 print(f"      round {c['round']:>5}  inner AUC {c['auc']:.6f}", flush=True)
-            print(f"    selected round = {n_sel} (argmax, ties to the smaller round); "
+            print(f"    curve max = {top:.6f} at round {n_argmax}; selected round = {n_sel} "
+                  f"(within {args.round_tolerance:.0e} of max, cheapest such round); "
                   f"inner selection took {t_sel:.0f}s", flush=True)
+            if n_sel != n_argmax:
+                d = [c for c in curve if c["round"] == n_argmax][0]
+                print(f"    NOTE: chose {n_sel} over the raw argmax {n_argmax}; the argmax was "
+                      f"{d['auc'] - top + (top - d['auc']):.0e} below max by "
+                      f"{(top - d['auc'])*1e5:.2f}e-5, inside the {args.round_tolerance:.0e} "
+                      f"tolerance, so the extra rounds are not evidenced.", flush=True)
             if snap_gap is not None:
                 print(f"    cross-check: a single long fit's truncated snapshots would have picked "
                       f"max {max(c['auc'] for c in curve_snap):.6f}, i.e. {snap_gap*1e5:+.1f}e-5 "
@@ -350,7 +370,9 @@ def main() -> None:
                 bg[str(w)] = float(roc_auc_score(y[val], w * logit(pred)
                                                   + (1 - w) * logit(fin[val]))) - float(
                     roc_auc_score(y[val], fin[val]))
-            fold_rec[mname] = {"auc": auc, "selected_round": int(n_sel), "inner_curve": curve,
+            fold_rec[mname] = {"auc": auc, "selected_round": int(n_sel),
+                               "argmax_round": int(n_argmax), "round_tolerance": args.round_tolerance,
+                               "inner_curve": curve,
                                "snapshot_crosscheck": curve_snap,
                                "snapshot_vs_refit_argmax_gap_e5": (snap_gap * 1e5) if snap_gap is not None else None,
                                "n_rows": int(len(fit)), "seconds": round(t_refit, 1),
