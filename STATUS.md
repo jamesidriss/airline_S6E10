@@ -661,6 +661,108 @@ while being strictly worse ordered on the same rows. Decorrelation is necessary 
 member and demonstrably not sufficient, and this is the cleanest available demonstration of the
 distinction.
 
+### PHASE 7 RESULT 5 -- pseudo-labelled evaluation rows: REJECTED, and badly (`scripts/run_pseudo_label.py`)
+
+The one thing the rejected Phase 5 augmentation work did not cover. Phase 5 rejected *synthetic*
+rows; pseudo-labels add **real covariate rows from the actual evaluation distribution**, so they are
+on-manifold by construction and the mechanism that sank Phase 5 does not apply.
+
+Held-out fold k plays the role of the unlabelled test set: M0 is fitted on outer-fit only, predicts
+fold k's covariates (never seeing a fold-k label), pseudo-labels are attached to the most confident
+fraction, and fold k is then scored **once** with its true labels. **Row-count-matched control:** a
+`dup` arm adding the same number of *duplicated outer-fit rows with their true labels*, so
+`pseudo − dup` isolates the information rather than the row count.
+
+| frac | fold | `pseudo` AUC | `dup` AUC | pseudo − ctl | **pseudo − dup** |
+|---|---|---|---|---|---|
+| 0.25 | 0 | 0.959690 | 0.961251 | −160.9e-5 | **−156.1e-5** |
+| 0.50 | 0 | 0.958879 | 0.961240 | −242.0e-5 | **−236.1e-5** |
+| 0.25 | 1 | 0.959851 | 0.961339 | −154.6e-5 | **−148.9e-5** |
+| 0.50 | 1 | 0.958855 | 0.961231 | −254.1e-5 | **−237.5e-5** |
+
+Means: **pseudo − dup = −152.5e-5** (frac 0.25) and **−236.8e-5** (frac 0.50), **0/2 folds positive in
+both**. Every finalist blend weight is negative too.
+
+This is the **largest negative effect measured in this campaign**, ~30× worse than its own
+row-count-matched duplicate control. Three things make it a strong result rather than a shrug:
+
+1. **The control works.** `dup` costs only −4.7e-5 to −16.6e-5, consistent with Phase 5's duplicate
+   control (−6.4e-5). So the 35k–70k extra rows are *not* what hurts.
+2. **Clean dose–response.** Damage nearly doubles (−157.7e-5 → −248.1e-5 against the control) when the
+   number of pseudo-labelled rows doubles. That is the signature of a causal mechanism, not a
+   coincidence.
+3. **The mechanism is identifiable.** Selecting by *most confident* `|p − 0.5|` deliberately picks
+   the rows the model is most sure about, including the ones it is most wrong about. The pseudo-
+   positive rate (0.279–0.329) is well above the base rate, so the added block is systematically
+   skewed toward one class. Training on it lets the model reproduce its own confident errors. Classic
+   confirmation bias, now quantified at ~1.5e-3 to 2.5e-3 of AUC.
+
+Note this is a **different verdict from Phase 5 with a different mechanism**, and that distinction
+matters: Phase 5 failed because interpolated rows are off-manifold; this fails because a model's own
+labels carry no information it did not already have, and selecting for confidence actively concentrates
+its errors. Together they make the "unique information" conclusion considerably stronger.
+
+### PHASE 7 RESULT 6 -- structural probes (`scripts/structural_probes.py`)
+
+Four cheap probes run because the LB gap is real (below) and every measured gain is single-digit e-5.
+
+**A — train↔test duplicate rows: none.** The campaign had verified only 21 matches against the
+*original* dataset, never competition-train against competition-test. Result: **0 distinct-reduced
+matches**, and, more striking, **all 699,635 train rows are distinct feature vectors** — the
+generator emitted no exact duplicates anywhere, and no test row exactly matches a train row. No
+lookup feature is available. (This also made the cleanest form of Probe D impossible.)
+
+**B — train/test covariate shift: none, confirmed properly.** A LightGBM domain classifier on the 21
+raw columns, balanced 299,844 vs 299,844, 3-fold cross-fitted: **AUC 0.500620** (folds 0.500372 /
+0.500709 / 0.500777). Early stopping fires at iteration 1 because nothing improves after the first
+tree — the domains are genuinely indistinguishable. This is a stronger version of the previously
+recorded "essentially zero".
+
+**C — `id` is uninformative, confirmed.** AUC of raw id against the label **0.500073**; within ten
+contiguous id blocks, mean |AUC − 0.5| = **0.0019**. The fold protocol is not optimistic through id.
+
+**D — where the signal actually lives.** Probe A showed no duplicates, so label consistency was
+measured in coarse buckets over the 11 columns that dominate the model (Class, Type of Travel, and the
+nine service ratings): 161,248 buckets, 61,460 with ≥2 rows.
+
+| quantity | value |
+|---|---|
+| **leave-one-out bucket-only AUC (11 raw columns)** | **0.933454** |
+| fraction of buckets that are label-pure | **68.8%** |
+| campaign's full model OOF AUC | 0.961509 |
+| **total added by 285 features + 59-member blend** | **+0.028055** |
+| within-bucket MSD observed / binomial-corrected expected | 0.05522 / 0.05013 (excess +0.00509) |
+
+This is a useful calibration and mildly deflating: **0.9335 of AUC comes free from 11 columns and a
+lookup table**, and the entire accumulated modelling effort of this campaign — 285 engineered
+features, a 59-member blend, five rejected augmentation families — buys the remaining **+0.028**.
+The residual +0.00509 excess over binomial says p(y|x) does still vary inside a coarse bucket, which
+is expected and not a ceiling claim.
+
+Two harness bugs were caught *by the assertions and sanity checks added alongside them*, both worth
+recording: an indexing error produced a bucket-only AUC of **0.404** (impossible for a bucket-mean
+predictor — a bucket-mean AUC below 0.5 is a reliable smell), and the finite-sample binomial
+expectation was wrong by a factor of n (5.19 vs an observed 0.055), which a first pass reported as an
+"excess" of −5.13.
+
+### Is the leaderboard gap real? Yes — and a first hand estimate got it backwards
+`scripts/analyse_lb_noise.py`. The ±0.0002 paired noise floor in `AGENTS.md` is correct but narrow:
+it governs whether to send a *near-identical* submission, and it is the wrong instrument for asking
+whether we differ from a *different* solution.
+
+A first pass, done by hand, put the single-estimate SE at 0.0025–0.0036 and concluded the 7.8e-4 gap
+might be only ~0.2σ — i.e. noise. **Hanley–McNeil says SE is 0.00099–0.00124, about three times
+smaller**, so the gap is **z = 3.1 at ρ=0.995 and z = 4.4 at ρ=0.99**, and clears 2σ even between two
+*uncorrelated* predictions. The hand figure was a loose binomial approximation, and acting on it
+would have produced a confidently wrong strategy. Recorded because the error would otherwise have
+been invisible.
+
+The consequence is uncomfortable and should govern how compute is spent: the gap is genuine, we are
+really behind, and **every gain measurable in this campaign is single-digit e-5.** The top twenty
+occupy a 1.0e-4 band while sitting 7.8e-4 above us, so they are a converged pack at a common higher
+level — beating one means beating that common level, not out-scoring a spread field. More GBDT-family
+polish will not close it; something structurally different would be needed.
+
 ## 7. Software quality
 
 15/15 tests in `tests/run_tests.py` pass, including four automated leakage audits:

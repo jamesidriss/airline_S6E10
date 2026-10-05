@@ -164,11 +164,17 @@ def main() -> None:
     save_json(out, REPORTS / f"submission_{args.name}.json")
 
     if not args.dry_run:
-        import pandas as pd
-        sub = pd.DataFrame({"id": ids, "satisfaction": test_blend})
-        path = Path("submissions") / f"{args.name}.csv"
-        sub.to_csv(path, index=False)
-        print(f"\n  wrote {path}")
+        # Reuse the established builder rather than hand-writing the CSV, so the pre-flight gate
+        # (column order, row count against BOTH sample and test, id equality, finiteness, range)
+        # and the manifest row are identical to every other submission in this campaign. A bespoke
+        # writer here would be one more thing that could silently differ from the validated path.
+        from src.submission.make import build
+        build(test_blend, name=args.name,
+              notes=(f"exp=blend_{args.name}; kind=equal_logit; members=v3_final's 59 with "
+                     f"{len(used)} refit on 100pct of labels; OOF shown is v3_final's and is "
+                     f"UNCHANGED -- this candidate's evidence is a cross-validated training-policy "
+                     f"gain, not an OOF gain"),
+              oof_auc=round(auc, 6), members=[m["exp_id"] for m in members])
 
     print("\nwrote", REPORTS / f"submission_{args.name}.json")
     print("  NOTE: the OOF above is v3_final's, unchanged. v4's case is a cross-validated "

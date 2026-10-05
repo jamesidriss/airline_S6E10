@@ -1,0 +1,156 @@
+{
+  "results": [
+    {
+      "fold": 0,
+      "frac": 0.25,
+      "n_add": 34981,
+      "pseudo_positive_rate": 0.2858980589462851,
+      "ctl": {
+        "auc": 0.961298820121512,
+        "iter": 797
+      },
+      "pseudo": {
+        "auc": 0.9596902495898728,
+        "iter": 737,
+        "seconds": 34.0,
+        "delta_vs_ctl": -0.0016085705316392085,
+        "delta_vs_dup": -0.0015611654071644443,
+        "finalist_blend_gains": {
+          "0.05": -3.1522058078214954e-05,
+          "0.1": -8.447292428392927e-05,
+          "0.2": -0.00023792194253469123,
+          "0.3": -0.0004313365141144221,
+          "0.5": -0.0008572056097529979
+        },
+        "logit_corr_vs_ctl": 0.9934855553470092
+      },
+      "dup": {
+        "auc": 0.9612514149970373,
+        "iter": 582,
+        "seconds": 53.4,
+        "delta_vs_ctl": -4.740512447476419e-05
+      }
+    },
+    {
+      "fold": 0,
+      "frac": 0.5,
+      "n_add": 69963,
+      "pseudo_positive_rate": 0.3207552563497849,
+      "ctl": {
+        "auc": 0.961298820121512,
+        "iter": 797
+      },
+      "pseudo": {
+        "auc": 0.9588788231469212,
+        "iter": 547,
+        "seconds": 41.0,
+        "delta_vs_ctl": -0.0024199969745908323,
+        "delta_vs_dup": -0.002360784593495757,
+        "finalist_blend_gains": {
+          "0.05": -4.043311315871101e-05,
+          "0.1": -0.00011455257218528914,
+          "0.2": -0.00034315611663182644,
+          "0.3": -0.0006363677591749717,
+          "0.5": -0.00127525603727352
+        },
+        "logit_corr_vs_ctl": 0.9908595127967554
+      },
+      "dup": {
+        "auc": 0.961239607740417,
+        "iter": 772,
+        "seconds": 37.7,
+        "delta_vs_ctl": -5.9212381095075095e-05
+      }
+    },
+    {
+      "fold": 1,
+      "frac": 0.25,
+      "n_add": 34981,
+      "pseudo_positive_rate": 0.27920871330150654,
+      "ctl": {
+        "auc": 0.9613964768314239,
+        "iter": 731
+      },
+      "pseudo": {
+        "auc": 0.9598507824730033,
+        "iter": 591,
+        "seconds": 30.3,
+        "delta_vs_ctl": -0.0015456943584206684,
+        "delta_vs_dup": -0.0014885278806574531,
+        "finalist_blend_gains": {
+          "0.05": -5.0645182738673356e-05,
+          "0.1": -0.00011622770993746645,
+          "0.2": -0.0002772260672586624,
+          "0.3": -0.0004649475698227379,
+          "0.5": -0.0008677394764694535
+        },
+        "logit_corr_vs_ctl": 0.9945970925240774
+      },
+      "dup": {
+        "auc": 0.9613393103536607,
+        "iter": 757,
+        "seconds": 34.7,
+        "delta_vs_ctl": -5.716647776321526e-05
+      }
+    },
+    {
+      "fold": 1,
+      "frac": 0.5,
+      "n_add": 69963,
+      "pseudo_positive_rate": 0.3286737275417006,
+      "ctl": {
+        "auc": 0.9613964768314239,
+        "iter": 731
+      },
+      "pseudo": {
+        "auc": 0.9588554366205599,
+        "iter": 508,
+        "seconds": 29.9,
+        "delta_vs_ctl": -0.0025410402108639873,
+        "delta_vs_dup": -0.002375243767971824,
+        "finalist_blend_gains": {
+          "0.05": -7.00587331776692e-05,
+          "0.1": -0.00016945858630856847,
+          "0.2": -0.0004317185458391215,
+          "0.3": -0.0007454508907247526,
+          "0.5": -0.0014059335358946878
+        },
+        "logit_corr_vs_ctl": 0.9912758924067413
+      },
+      "dup": {
+        "auc": 0.9612306803885318,
+        "iter": 740,
+        "seconds": 48.4,
+        "delta_vs_ctl": -0.00016579644289216322
+      }
+    }
+  ],
+  "summary": {
+    "0.25": {
+      "mean_pseudo_minus_dup": -0.0015248466439109487,
+      "mean_pseudo_minus_ctl": -0.0015771324450299384,
+      "folds_positive_vs_dup": 0,
+      "n_folds": 2
+    },
+    "0.5": {
+      "mean_pseudo_minus_dup": -0.0023680141807337907,
+      "mean_pseudo_minus_ctl": -0.00248051859272741,
+      "folds_positive_vs_dup": 0,
+      "n_folds": 2
+    }
+  },
+  "view": "full",
+  "scheme": "primary",
+  "folds": [
+    0,
+    1
+  ],
+  "fracs": [
+    0.25,
+    0.5
+  ],
+  "seed": 4,
+  "mechanism_under_test": "are on-manifold rows from the evaluation distribution, carrying model-derived hard labels, worth more than the same number of duplicated rows",
+  "honesty": "fold k plays the role of the unlabelled test set; its labels are used only for the single final scoring step, and the pseudo-labels come from a model that never saw them",
+  "git_commit": "6543002556c5"
+}

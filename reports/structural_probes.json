@@ -1,0 +1,91 @@
+{
+  "probe_a_train_test_duplicates": {
+    "exact_test_rows_matching_label_pure_train": 0,
+    "exact_match_rate": 0.0,
+    "rounded_test_rows_matching_label_pure_train": 0,
+    "rounded_match_rate": 0.0,
+    "n_train": 699635,
+    "n_test": 299844,
+    "key_columns": [
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Cleanliness",
+      "Gender",
+      "Customer Type",
+      "Type of Travel",
+      "Class",
+      "Age",
+      "Flight Distance",
+      "Departure Delay in Minutes",
+      "Arrival Delay in Minutes"
+    ],
+    "exploitable": false
+  },
+  "probe_b_covariate_shift": {
+    "domain_auc_folds": [
+      0.5003724118576317,
+      0.5007094099445178,
+      0.500776993763415
+    ],
+    "domain_auc": 0.5006196051885216,
+    "pool_size": 599688,
+    "balanced": true,
+    "verdict": "shift negligible"
+  },
+  "probe_c_id": {
+    "auc_raw_id": 0.5000725368375143,
+    "within_block_aucs": [
+      0.5025998417041441,
+      0.5002899259917264,
+      0.5015401594463735,
+      0.4951044587360807,
+      0.5043243686652853,
+      0.49951307779256965,
+      0.4983807552780942,
+      0.4997503173903691,
+      0.5009229588082998,
+      0.5022189367434944
+    ],
+    "mean_abs_within_block": 0.0019147582162209798
+  },
+  "probe_d_noise_floor": {
+    "bucket_columns": [
+      "Class",
+      "Type of Travel",
+      "Inflight wifi service",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Cleanliness"
+    ],
+    "n_buckets": 161248,
+    "n_multi_buckets": 61460,
+    "n_rows_used": 599847,
+    "observed_within_bucket_msd": 0.05521879493043357,
+    "naive_binomial_msd": 0.05521879493043357,
+    "corrected_binomial_msd": 5.185219183420712,
+    "excess_msd": -5.130000388490279,
+    "bucket_size_mean": 9.75995769606248,
+    "bucket_size_median": 3.0,
+    "label_pure_bucket_fraction": 0.6883176049463066,
+    "leave_one_out_bucket_only_auc": 0.9334544233260504,
+    "full_model_oof_auc": 0.961509,
+    "caveat": "coarse buckets, so the variance excess over-states the residual noise: covariate variation inside a bucket inflates it. The leave-one-out bucket-only AUC needs no variance algebra and is the cleaner statement. Not a Bayes-ceiling claim."
+  },
+  "seconds": 3.0,
+  "git_commit": "6543002556c5"
+}
