@@ -1,0 +1,90 @@
+{
+  "base": "blend_v3_final",
+  "base_oof_auc": 0.9615085785798723,
+  "n_features": 21,
+  "feature_names": [
+    "num:Inflight wifi service",
+    "num:Departure/Arrival time convenient",
+    "num:Ease of Online booking",
+    "num:Gate location",
+    "num:Food and drink",
+    "num:Online boarding",
+    "num:Seat comfort",
+    "num:Inflight entertainment",
+    "num:On-board service",
+    "num:Leg room service",
+    "num:Baggage handling",
+    "num:Checkin service",
+    "num:Cleanliness",
+    "num:Age",
+    "num:Flight Distance",
+    "num:Departure Delay in Minutes",
+    "num:Arrival Delay in Minutes",
+    "cat:Gender",
+    "cat:Customer Type",
+    "cat:Type of Travel",
+    "cat:Class"
+  ],
+  "n_bins": 32,
+  "alpha": 1.0,
+  "arms": [
+    {
+      "arm": "gen_plain",
+      "mode": "plain",
+      "topk": null,
+      "standalone_auc": 0.9308725694745726,
+      "standalone_minus_half": 0.43087256947457264,
+      "blend_gains": {
+        "0.005": -1.8167843799377081e-06,
+        "0.01": -3.842977903567579e-06,
+        "0.02": -8.657827950120378e-06,
+        "0.05": -2.9129234407898608e-05,
+        "0.1": -8.222602174001725e-05,
+        "0.2": -0.00024901215420902734
+      },
+      "best_weight": 0.005,
+      "best_gain": -1.8167843799377081e-06,
+      "logit_corr_with_finalist": 0.8700359485292275,
+      "spearman_with_finalist": 0.8082122295176597
+    },
+    {
+      "arm": "gen_weighted",
+      "mode": "weighted",
+      "topk": null,
+      "standalone_auc": 0.9305946944546842,
+      "standalone_minus_half": 0.43059469445468423,
+      "blend_gains": {
+        "0.005": -1.766475529074718e-06,
+        "0.01": -3.747583117941211e-06,
+        "0.02": -8.435055259714552e-06,
+        "0.05": -2.8385742761649624e-05,
+        "0.1": -8.008682781635024e-05,
+        "0.2": -0.00024394482458356403
+      },
+      "best_weight": 0.005,
+      "best_gain": -1.766475529074718e-06,
+      "logit_corr_with_finalist": 0.8749919958856827,
+      "spearman_with_finalist": 0.8057598099432214
+    },
+    {
+      "arm": "gen_top8",
+      "mode": "topk",
+      "topk": 8,
+      "standalone_auc": 0.9120397820779023,
+      "standalone_minus_half": 0.41203978207790226,
+      "blend_gains": {
+        "0.005": -1.9855400319457317e-06,
+        "0.01": -4.2748990056740155e-06,
+        "0.02": -9.944295955688354e-06,
+        "0.05": -3.5252420835019116e-05,
+        "0.1": -0.00010359870819953709,
+        "0.2": -0.00032595912784016967
+      },
+      "best_weight": 0.005,
+      "best_gain": -1.9855400319457317e-06,
+      "logit_corr_with_finalist": 0.8249262925409799,
+      "spearman_with_finalist": 0.7525267862197137
+    }
+  ],
+  "git_commit": "45dc5d8faa0a"
+}

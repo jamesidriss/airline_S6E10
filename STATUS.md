@@ -605,6 +605,62 @@ small systematic cross-group rank bias in the finalist, and it is too small to a
 bugs were found and fixed on the way (G0 initially omitted the base column entirely; group one-hot
 blocks were not subset per fold, which surfaced as a reshape error rather than a wrong number).
 
+### PHASE 7 RESULT 3 -- row bagging is NOT redundant (`scripts/run_bagging_test.py`)
+
+Not generic tuning: a stated mechanism. `subsample=0.8, subsample_freq=1` means every tree sees only
+80% of rows, while `extra_trees=True` already randomises features *and* thresholds. If that
+double-randomisation already regularises enough, the bagging is redundant and is discarding 20% of
+real labels per tree.
+
+| `subsample` | fold 0 (iter) | fold 1 (iter) | mean delta | positive |
+|---|---|---|---|---|
+| 0.8 (control) | 0.961299 (797) | 0.961396 (731) | — | — |
+| 0.9 | 0.961327 (860) | 0.961208 (**1082**) | **−8.0e-5** | 1/2, signs flip |
+| 1.0 | 0.961269 (457) | 0.961342 (757) | −4.2e-5 | 0/2 |
+
+**Hypothesis refuted in both directions.** Removing bagging does not help monotonically, so
+`extra_trees` and `subsample` are not redundant; `colsample_bytree` was left untouched because the
+mechanism that would justify touching it was not established.
+
+**The diagnostic is worth more than the verdict.** Look at the iteration counts: changing *only*
+`subsample` from 0.8 to 0.9 moved the early-stopped count 797→860 on fold 0 (harmless) but
+**731→1082 on fold 1, which cost −18.8e-5**. A single 55,969-row holdout cannot reliably locate a
+flat optimum, and **over-iteration is the dominant failure mode in this setup**. That is why the
+full-data iteration policy measures the count on **three** independent 5% holdouts and takes the
+median, rather than trusting one argmax.
+
+Cross-check of the harnesses: after the index-space fixes, this script's control arm reproduces
+fold-0 AUC 0.961299 at iter 797 and fold-1 0.961396 at iter 731, matching `run_fullfit.py`'s
+independently written controls exactly.
+
+### PHASE 7 RESULT 4 -- class-conditional GENERATIVE score: CLOSED (`scripts/run_generative_probe.py`)
+
+The last genuinely orthogonal direction available: estimate p(x|y) instead of p(y|x). Binned
+class-conditional log-likelihood ratios over the 21 raw columns, three arms (plain / discriminatively
+weighted / top-8), fully nested on the primary folds.
+
+| arm | standalone AUC | best blend gain | logit corr with finalist |
+|---|---|---|---|
+| `gen_plain` | **0.930873** | **−0.2e-5** | 0.87004 |
+| `gen_weighted` | 0.930595 | −0.2e-5 | 0.87499 |
+| `gen_top8` | 0.912040 | −0.2e-5 | 0.82493 |
+
+The predeclared kill rule was "standalone very weak **and** marginal gain ~0". Neither half held, and
+the outcome is a *stronger* kill than the rule anticipated:
+
+- The standalone score is **not weak** — 0.9309 from 21 raw columns is a respectable classifier.
+- It is the **most decorrelated thing produced in this campaign** (logit corr 0.87, against ~0.99 for
+  every previously rejected member). Decorrelation was not the problem.
+- Yet **every blend weight is negative, and monotonically worsening**: −0.2e-5 at w=0.005 down to
+  −24.9e-5 at w=0.2.
+
+**Mechanism.** Naive Bayes cannot represent the interactions that actually drive this target — `Class`
+× `Type of Travel`, and the survey ratings conditioned on one another. Its errors therefore lie
+*inside* the GBDT's error set rather than beside it: decorrelated in the logit-correlation sense
+while being strictly worse ordered on the same rows. Decorrelation is necessary for a useful blend
+member and demonstrably not sufficient, and this is the cleanest available demonstration of the
+distinction.
+
 ## 7. Software quality
 
 15/15 tests in `tests/run_tests.py` pass, including four automated leakage audits:

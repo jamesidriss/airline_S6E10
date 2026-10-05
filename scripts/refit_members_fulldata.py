@@ -27,14 +27,20 @@ data term is not.
 
 Iteration policy, predeclared
 -----------------------------
-Over-iteration is the failure mode, not under-iteration: on fold 0, 811 and 863 rounds were
-indistinguishable while 1191 rounds cost -5.9e-5 against the control. So the count is measured as
-close to the final size as possible rather than extrapolated far:
+Over-iteration is the failure mode, not under-iteration, and it is worse than a single bad draw
+suggests. On fold 0, 811 and 863 rounds were indistinguishable while 1191 rounds cost -5.9e-5
+against the control. The bagging experiment then showed the argmax is genuinely noisy: changing only
+`subsample` from 0.8 to 0.9 moved the early-stopped count from 797 to 860 on fold 0 (harmless,
++2.8e-5) but from 731 to 1082 on fold 1, which cost **-18.8e-5**. A single 55,969-row holdout is not
+enough to locate a flat optimum.
 
-  1. stratified 5% holdout from all rows, used ONLY to measure the iteration count
-  2. early-stopped fit on the other 95%  -> best_iter
-  3. correct by (1.00/0.95)^0.7527 = 1.0387 to cover the short remaining gap
-  4. final fit on 100% of rows at that fixed count, no early stopping
+So the count is both stabilised and extrapolated as little as possible:
+
+  1. three independent stratified 5% holdouts from all rows, used ONLY to measure the count
+  2. early-stopped fits on the other 95% -> three best_iter values
+  3. take the MEDIAN of the three, which discards a single wild estimate like the 1082 above
+  4. correct by (1.00/0.95)^0.7527 = 1.0387 to cover the short remaining gap
+  5. final fit on 100% of rows at that fixed count, no early stopping
 
 The exponent is measured (`scripts/iteration_scaling.py`, R^2 = 0.98371, reproduces the observed 504k
 count to 2.3%). At 1.039x the policy is nearly insensitive to it.
@@ -79,6 +85,7 @@ TEST_REFIT_DEFAULTS = {"objective": "binary", "n_estimators": 1200, "learning_ra
 SIZE_EXPONENT = 0.7527
 ES_FRACTION = 0.05
 MAX_ROUNDS = 4000
+N_ITER_SPLITS = 3           # independent 5pct holdouts used to stabilise the iteration count
 
 
 def logit(p):
@@ -144,8 +151,8 @@ def main() -> None:
            "why_no_oof": ("trained on every labelled row, so it cannot be scored on labels it has "
                           "seen; reported as a cross-validated training-policy gain, never as OOF"),
            "iteration_policy": {
-               "measure": f"early stop on a {args.es_frac:.0%} stratified holdout, fit on the rest",
-               "correct": f"x (1.00/{1-args.es_frac:.2f})^{SIZE_EXPONENT} = "
+               "measure": f"early stop on {N_ITER_SPLITS} independent {args.es_frac:.0%} stratified holdouts, fit on the rest",
+               "correct": f"median of the {N_ITER_SPLITS}, then x (1.00/{1-args.es_frac:.2f})^{SIZE_EXPONENT} = "
                           f"{(1.0/(1-args.es_frac))**SIZE_EXPONENT:.4f}",
                "final": "fit on 100% of rows at that fixed count, no early stopping",
                "size_exponent": SIZE_EXPONENT,
@@ -178,19 +185,27 @@ def main() -> None:
         cfg_key = (view, json.dumps(m.get("params"), sort_keys=True))
         if cfg_key not in iter_cache:
             t0 = time.time()
-            p = lgbm_params(m.get("params"), 0)
-            p["n_estimators"] = MAX_ROUNDS
-            ds = lgb.Dataset(Xf[fit_rows], label=y[fit_rows])
-            dv = lgb.Dataset(Xf[es_rows], label=y[es_rows], reference=ds)
-            mm = lgb.train(p, ds, num_boost_round=MAX_ROUNDS, valid_sets=[dv],
-                           callbacks=[lgb.early_stopping(300, verbose=False)])
-            meas = int(mm.best_iteration or MAX_ROUNDS)
-            iter_cache[cfg_key] = (meas, int(round(meas * (1.0 / (1 - args.es_frac))
-                                                    ** SIZE_EXPONENT)))
-            print(f"    iteration for {view} {json.dumps(m.get('params'))[:70]}: measured {meas} "
-                  f"at {len(fit_rows):,} rows -> {iter_cache[cfg_key][1]} for {n_all:,} "
-                  f"({time.time()-t0:.0f}s)", flush=True)
-        meas, n_iter = iter_cache[cfg_key]
+            # THREE independent 5% holdouts. A single one cannot reliably locate a flat optimum:
+            # the bagging experiment saw the early-stopped count jump 731 -> 1082 on fold 1 purely
+            # from `subsample` 0.8 -> 0.9, and the 1082 fit cost -18.8e-5. The median discards
+            # exactly that kind of wild draw.
+            meas_list = []
+            for sp in range(N_ITER_SPLITS):
+                fr_, er_ = es_holdout(y_int, args.es_frac, 1000 * (sp + 1))
+                p = lgbm_params(m.get("params"), 0)
+                p["n_estimators"] = MAX_ROUNDS
+                ds = lgb.Dataset(Xf[fr_], label=y[fr_])
+                dv = lgb.Dataset(Xf[er_], label=y[er_], reference=ds)
+                mm = lgb.train(p, ds, num_boost_round=MAX_ROUNDS, valid_sets=[dv],
+                               callbacks=[lgb.early_stopping(300, verbose=False)])
+                meas_list.append(int(mm.best_iteration or MAX_ROUNDS))
+            med = int(np.median(meas_list))
+            iter_cache[cfg_key] = (meas_list, med,
+                                   int(round(med * (1.0 / (1 - args.es_frac)) ** SIZE_EXPONENT)))
+            print(f"    iteration for {view} {json.dumps(m.get('params'))[:66]}: "
+                  f"{meas_list} at {len(fit_rows):,} rows -> median {med} -> "
+                  f"{iter_cache[cfg_key][2]} for {n_all:,} ({time.time()-t0:.0f}s)", flush=True)
+        meas_list, med, n_iter = iter_cache[cfg_key]
 
         seed = int(m.get("seed", 1) or 1)
         t0 = time.time()
@@ -208,7 +223,7 @@ def main() -> None:
         entry = {"exp_id": m["exp_id"], "family": m["family"], "view": view,
                  "seed": seed, "params": m.get("params"), "n_features": int(nfeat),
                  "n_train_rows": int(n_all), "train_fraction": 1.0,
-                 "iterations": n_iter, "iterations_measured_at_95pct": meas,
+                 "iterations": n_iter, "iterations_measured_at_95pct": med, "iterations_measured_splits": meas_list,
                  "path": str(path), "seconds": round(dt, 1),
                  "vs_member_spearman": spearman(pred, old),
                  "vs_member_logit_corr": corr(logit(pred), logit(old)),

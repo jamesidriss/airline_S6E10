@@ -53,7 +53,8 @@ from sklearn.metrics import roc_auc_score
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.common import RAW21, REPORTS, TARGET, load_cached_parquet, save_json  # noqa: E402
+from src.common import REPORTS, TARGET, load_cached_parquet, save_json  # noqa: E402
+from src.features.view import RAW21  # noqa: E402
 from src.submission import store  # noqa: E402
 from src.validation.compare import corr, spearman  # noqa: E402
 from src.validation.folds import get_scheme  # noqa: E402
@@ -61,6 +62,8 @@ from src.validation.folds import get_scheme  # noqa: E402
 N_BINS = 32
 ALPHA = 1.0          # Laplace smoothing
 TOPK = 8
+# META4: Gender, Customer Type, Type of Travel, Class. Everything else in RAW21 is numeric.
+CAT_COLS = ["Gender", "Customer Type", "Type of Travel", "Class"]
 
 
 def logit(p):
@@ -69,10 +72,15 @@ def logit(p):
 
 
 def build_matrices(df):
-    """Numeric (log1p for skewed counts) + categorical codes. RAW21 only, by design."""
-    num_cols = [c for c in RAW21 if c not in ("Gender", "Customer Type", "Type of Travel", "Class")]
+    """Numeric + categorical codes over the 21 raw columns only, by design.
+
+    The probe is meant to ask whether the GENERATIVE direction carries information, so it is
+    deliberately restricted to the raw columns. Feeding it the 285-column engineered view would
+    confound "generative vs discriminative" with "more features".
+    """
+    num_cols = [c for c in RAW21 if c not in CAT_COLS]
     Xn = np.column_stack([df[c].to_numpy(dtype="float64") for c in num_cols])
-    cat_cols = [c for c in ("Gender", "Customer Type", "Type of Travel", "Class") if c in RAW21]
+    cat_cols = [c for c in CAT_COLS if c in RAW21]
     cats = []
     for c in cat_cols:
         v = df[c].to_numpy()
