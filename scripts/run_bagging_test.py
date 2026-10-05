@@ -93,16 +93,24 @@ def main() -> None:
         val = np.where(folds == k)[0]
         Xf, Xa, names = vb.assemble(fit, y_int, val, None, inner_seed=k)
         Xv = Xa["val"]
-        # _inner_es_split returns GLOBAL row indices, but Xf is indexed by position WITHIN `fit`.
-        # Mixing the two index spaces reads the wrong rows -- the failure mode that produced a fake
-        # -483e-5 result in run_fullfit.py -- so the mapping is made explicit here.
-        es_rows_global, _unused = _inner_es_split(fit, y_int, args.seed + k)
+        # _inner_es_split returns (train_rows, es_rows) as GLOBAL row indices, but Xf is indexed by
+        # position WITHIN `fit`. There are therefore TWO index spaces in play and both must be
+        # carried: the LOCAL one to slice the assembled feature matrix, and the GLOBAL one to slice
+        # the label vector. Conflating them trains on correctly-shaped but mismatched
+        # feature/label pairs, which shows up only as a nonsense AUC -- an earlier version of this
+        # file did exactly that and reported -586e-5 as if it were a bagging result.
+        # The (train, es) return order also matters: the FIRST value is the training rows.
+        tr_rows_global, es_rows_global = _inner_es_split(fit, y_int, args.seed + k)
         pos = {int(v): i for i, v in enumerate(fit)}
-        es_rows = np.array([pos[int(v)] for v in es_rows_global])
-        tr_rows = np.setdiff1d(np.arange(len(fit)), es_rows)
-        assert len(tr_rows) + len(es_rows) == len(fit) and not (set(tr_rows) & set(es_rows))
+        tr_local = np.array([pos[int(v)] for v in tr_rows_global])
+        es_local = np.array([pos[int(v)] for v in es_rows_global])
+        assert len(tr_local) + len(es_local) == len(fit) and not (set(tr_local) & set(es_local))
+        assert 0.05 < len(es_local) / len(fit) < 0.15, (
+            f"ES holdout is {len(es_local)}/{len(fit)} = {len(es_local)/len(fit):.1%}, expected "
+            f"~10%; the (train, es) return order or the index mapping is wrong")
+        assert set(tr_rows_global.tolist()).isdisjoint(val.tolist()), "fit/eval overlap"
         print(f"\n{'='*92}\nfold {k}   rows={len(fit):,}   features={len(names)}"
-              f"   fit={len(tr_rows):,} ({len(tr_rows)/len(y):.1%} of labels)\n{'='*92}", flush=True)
+              f"   fit={len(tr_local):,} ({len(tr_local)/len(y):.1%} of labels)\n{'='*92}", flush=True)
 
         ctrl_auc, preds = None, {}
         for v in vals:
@@ -111,8 +119,8 @@ def main() -> None:
                      bagging_seed=args.seed + k + 1, feature_fraction_seed=args.seed + k + 2)
             set_seed(args.seed + k)
             t0 = time.time()
-            ds = lgb.Dataset(Xf[tr_rows], label=y[tr_rows])
-            dv = lgb.Dataset(Xf[es_rows], label=y[es_rows], reference=ds)
+            ds = lgb.Dataset(Xf[tr_local], label=y[tr_rows_global])
+            dv = lgb.Dataset(Xf[es_local], label=y[es_rows_global], reference=ds)
             m = lgb.train(p, ds, num_boost_round=ROUNDS, valid_sets=[dv],
                           callbacks=[lgb.early_stopping(300, verbose=False)])
             it = int(m.best_iteration or ROUNDS)

@@ -16,8 +16,9 @@ def main() -> int:
     import tests.test_tabr_retrieval as TR
     import tests.test_no_undefined_names as TN
     import tests.test_tabr_wiring as TW
+    import tests.test_index_space as TI
 
-    fns = [(mod.__name__, getattr(mod, n)) for mod in (T, TR, TW, TN)
+    fns = [(mod.__name__, getattr(mod, n)) for mod in (T, TR, TW, TN, TI)
            for n in sorted(dir(mod)) if n.startswith("test_")]
     ok = fail = 0
     for modname, fn in fns:
