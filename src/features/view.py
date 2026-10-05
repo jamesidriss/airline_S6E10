@@ -49,6 +49,17 @@ VIEWS: dict[str, list[str]] = {
     "full_enrich": ["raw", "cat", "trans", "token", "external", "teacher", "te", "enrich"],
     "full_enrich_note": ["raw", "cat", "trans", "token", "external", "teacher", "te"],
     "core3_enrich": ["raw", "cat", "trans", "external", "teacher", "enrich"],
+    # ---- Phase 8A: te_all21, and the swap view that replaces the old `te` rather than stacking ----
+    # `full_te21`  = full + te_all21  (old `te` KEPT)
+    # `full_all21te` = full with the old `te` REMOVED and te_all21 in its place
+    # Both are needed. Two redundant TE systems can inflate variance and, under
+    # extra_trees + colsample_bytree=0.8, consume the same random 80% of split candidates, which can
+    # make a genuinely useful block look harmful. The swap view is what separates "more TE columns"
+    # from "TE columns competing with each other".
+    "full_te21": ["raw", "cat", "trans", "token", "external", "teacher", "te", "te_all21"],
+    "full_all21te": ["raw", "cat", "trans", "token", "external", "teacher", "te_all21"],
+    "core3_te21": ["raw", "cat", "trans", "external", "teacher", "te", "te_all21"],
+    "core3_all21te": ["raw", "cat", "trans", "external", "teacher", "te_all21"],
 }
 
 _CACHE = ROOT / "artifacts" / "cache"
@@ -219,8 +230,34 @@ class ViewBuilder:
             outs[nm] = Xa
         return Xfit, outs, fnames, anames
 
+    def build_te_all21(self, fit_idx: np.ndarray, apply_sets: dict[str, np.ndarray],
+                       y: np.ndarray, inner_seed: int = 0, smooth="auto"):
+        """Phase 8A: exact-value target encoding of all 21 raw columns.
+
+        Kept as a SEPARATE block from `te` so the two can be stacked or swapped without touching the
+        existing implementation -- `core3_te` / `full` keep using `te` exactly as before, which is
+        what makes the ablation clean.
+
+        Fold-safety mirrors `build_te`: the fit rows are encoded by an inner cross-fit that excludes
+        each row's own label (exactly, verified in tests/test_te_all21.py), and every apply set is
+        encoded by a table fitted on ALL fit rows. The apply rows' labels are never read.
+        """
+        from src.features.te_all21 import All21TargetEncoder, build_all21_codes
+
+        codes, _names = build_all21_codes(self.comb)
+
+        yfit = y[fit_idx].astype("float64")
+        Xfit = All21TargetEncoder(smooth=smooth, cv=5, seed=inner_seed).fit_rows(codes, y, fit_idx)
+
+        outs = {}
+        for nm, idx in apply_sets.items():
+            outs[nm] = All21TargetEncoder(smooth=smooth, cv=5,
+                                          seed=inner_seed).apply(codes, y, fit_idx, idx)
+        return Xfit, outs, [f"te_all21[{i}]" for i in range(codes.shape[1])], None
+
     def assemble(self, fit_idx: np.ndarray, y: np.ndarray, val_idx: np.ndarray,
-                 test_idx: np.ndarray | None = None, inner_seed: int = 0):
+                 test_idx: np.ndarray | None = None, inner_seed: int = 0,
+                 te_all21_smooth="auto"):
         Xf = self.static_tr[fit_idx]
         pieces_f, pieces_a, names_f, names_a = [], {}, [], []
         apply_sets = {"val": val_idx}
@@ -236,11 +273,22 @@ class ViewBuilder:
         else:
             names_f = list(self.static_names)
             names_a = []
+        if "te_all21" in self.blocks:
+            # stacked ON TOP of any existing `te` block. The swap view `full_all21te` omits `te`
+            # entirely, which is the comparison that separates "more TE columns" from "redundant TE
+            # systems competing for the same colsample_bytree slots".
+            Xf_21, outs21, fn21, _ = self.build_te_all21(fit_idx, apply_sets, y, inner_seed,
+                                                          smooth=te_all21_smooth)
+            Xf = np.column_stack([Xf, Xf_21])
+            names_f = list(names_f) + list(fn21)
+            for k, v in outs21.items():
+                pieces_a[k] = (np.column_stack([pieces_a[k], v]) if k in pieces_a else v)
+            names_a = list(names_a) + list(fn21)
         Xa = {"val": self.static_tr[val_idx]}
         for k, v in pieces_a.items():
             Xa[k] = np.column_stack([self.static_tr[val_idx] if k == "val" else self.static_te, v])
         if test_idx is not None:
-            if "te" in self.blocks:
+            if pieces_a:
                 Xa["test"] = np.column_stack([self.static_te, pieces_a["test"]])
             else:
                 Xa["test"] = self.static_te

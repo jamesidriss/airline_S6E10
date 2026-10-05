@@ -1,0 +1,31 @@
+﻿
+====================================================================================================
+fold 0   outer-fit=559,708   train=503,739 (72.0% of labels)   eval=139,927
+====================================================================================================
+    [cache] view full: (699635, 237)
+  base         full            xt=True  nfeat= 285 iter=  797  AUC=0.961299  (37s)
+    [cache] view full_te21: (699635, 237)
+  stack        full_te21       xt=True  nfeat= 306 iter=  530  AUC=0.961296  (29s)
+    [cache] view full_all21te: (699635, 237)
+  replace      full_all21te    xt=True  nfeat= 258 iter=  556  AUC=0.961166  (27s)
+  det_base     full            xt=False nfeat= 285 iter=  458  AUC=0.960979  (29s)
+  det_stack    full_te21       xt=False nfeat= 306 iter=  574  AUC=0.960918  (36s)
+  det_replace  full_all21te    xt=False nfeat= 258 iter=  670  AUC=0.960888  (52s)
+
+  arm            n_feat   iter         AUC  delta vs ctrl   logit corr   spearman  blend@0.2
+  ------------------------------------------------------------------------------------------------
+  base              285    797    0.961299      (control)                              +0.7e
+  stack             306    530    0.961296          -0.3e      0.99903    0.99212      +0.3e
+  replace           258    556    0.961166         -13.3e      0.99840    0.98841      -0.5e
+  det_base          285    458    0.960979      (control)                              -3.6e
+  det_stack         306    574    0.960918          -6.2e      0.99910    0.99094      -4.2e
+  det_replace       258    670    0.960888          -9.2e      0.99829    0.98468      -2.6e
+
+====================================================================================================
+FOLD 0 INTERPRETATION (the section 8 decision table)
+====================================================================================================
+  extra_trees=True   :  stack -0.3e-5    replace -13.3e-5
+  deterministic      :  stack -6.2e-5    replace -9.2e-5
+  VERDICT: REJECT -- neither model type gains.
+
+wrote C:\Users\James\airline_S6E10\reports\te_all21.json
