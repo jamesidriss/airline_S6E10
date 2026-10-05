@@ -983,6 +983,107 @@ behind the closed original-row append and the Phase 1–2 external-teacher resul
 monotonically harmful). The duplicate control also loses (−105.4e-5), which confirms the loss is not
 a row-count effect.
 
+## 6h. PHASE 9 -- STOCHASTIC TREE CONSTRUCTION: CAPABILITY PROBES (`scripts/probe_dart_rf.py`)
+
+Phase 8 is closed. Phase 9 asks a different question: not what features to add, but how the trees
+themselves are built. The motivation is the only mechanism still standing -- randomisation plus
+averaging helps (`extra_trees` +2.3e-4, RealMLP 8→32 members +2.0e-4, 5→10 folds +1.0e-4, 59-member
+averaging +2.5e-4) -- and member proliferation is saturated, so the randomness has to come from
+elsewhere. LightGBM 4.7.0 offers two construction modes never measured here: `dart` and `rf`.
+
+Everything below was **measured on a 90k-row subsample of the raw 21 columns**, deliberately
+separate from the champion view and from any eval fold, so it informs design without touching
+validation. Numbers are inner-validation AUC on 30k held-out rows.
+
+| arm | mode | `extra_trees` | inner AUC | note |
+|---|---|---|---|---|
+| G0 | GBDT | yes | 0.952463 | reference |
+| D1 | DART drop .05 | yes | 0.952167 | |
+| D2 | DART drop .10 | yes | 0.952238 | |
+| D3 | **DART drop .05** | **no** | **0.956984** | **+4.82e-3 over D1** |
+| R1 | RF bag .8 | no | 0.953159 | |
+| R2 | RF bag .8 | yes | — | degenerate, stopped at 36 trees |
+| R3 | RF bag 1.0 / freq 0 | no | 0.953204 | invalid, see below |
+
+### Finding 1 -- DART has NO early stopping. Confirmed, and the warning was justified
+LightGBM emits `"Early stopping is not available in dart mode"` and `best_iteration` comes back
+`None`. The `early_stopping` callback is a **silent no-op**: training runs to `num_boost_round` with
+no round selection whatsoever. Anything that reported a DART "best iteration" from a standard
+callback was reporting a fiction. The fixed-round inner-selection protocol is mandatory, not
+stylistic.
+
+### Finding 2 -- under DART, `extra_trees` is CATASTROPHIC, the inverse of the champion finding
+D3 − D1 = **+4.82e-3**. Everywhere else in this campaign `extra_trees` is the single largest lever
+(+2.3e-4). Under DART it is catastrophic. Plausible mechanism: DART repeatedly drops already-added
+trees and renormalises the survivors, so the damage from dropping is proportional to how much signal
+each tree carries. `extra_trees` trees are individually much weaker (random thresholds), so a fixed
+drop rate removes a disproportionate share of the signal while the renormalisation spreads what
+remains thinner. This is a **hypothesis from one subsample**, not a measured mechanism — it is
+exactly what the fold-level `extra_trees` control arm exists to test.
+
+This inverted the planned matrix. The brief led with DART **+** `extra_trees`; running those first
+would have spent hours confirming a large deficit, so the arms that can win are the ones run, and
+`ctl_det` (GBDT **without** `extra_trees`) was added as the matched control — without it, a
+D3-vs-champion delta confounds DART with the removal of `extra_trees`.
+
+### Finding 3 -- CORRECTION: I predicted LightGBM would refuse RF without bagging. It does not.
+R3 (`bagging_fraction=1.0, bagging_freq=0`) trained 144 trees without complaint. So LightGBM 4.7.0
+RF mode does **not** require bagging, and R3 had no row subsampling at all — it was not a random
+forest. R3 is dropped as invalid, and the harness now sets bagging explicitly rather than relying on
+a default it does not get for free.
+
+### Finding 4 -- my earlier "RF callback is usable" reading was an artifact
+RF stopped at 174 trees while the snapshot grid began at 100, so the measurement loop broke after
+**one** point and "callback agrees with the argmax" was never actually tested. Retracted as untested.
+
+### The control caught a wrong champion config in this very harness — record kept
+The first fold-0 launch set the champion parameters from `src/models/gbdt.py:27-31`
+(`learning_rate=0.03`, `num_leaves=63`) on the reasoning that a module's defaults must be the
+champion's. `ctl_es` returned **0.961170 @ 432 rounds** against the expected **0.961299 @ 797**, and
+the run was stopped. Cause: `gbdt.py` holds the **family's generic defaults**, which the champion
+**overrides**. The authoritative values are `scripts/run_fullfit.py:72-75`, which states it
+reproduces `run_views.py::_fit_lgbm_es` bit-for-bit and which produced the recorded 0.9612988:
+**lr 0.02, num_leaves 127, `extra_trees=True`**, with `n_estimators=6000` and
+`early_stopping(300)` (also not the 4000/200 in `gbdt.py`).
+
+Two independent signals agreed — the AUC shortfall of 12.9e-5 *and* the iteration count, since lr
+0.02 naturally runs to roughly twice the rounds of lr 0.03 — so the control was believed over my
+reading of the source. The failed launch's log is kept. Lesson recorded because it will recur:
+**"the model module's defaults" and "the champion's parameters" are different objects in this repo,
+and only the second is a valid baseline.** Had I skipped `ctl_es` and compared only against a
+historical number, this would have surfaced as a mysterious uniform deficit across all seven arms.
+
+## 6i. DART round selection MUST use refits, not truncated snapshots (`scripts/probe_dart_truncation.py`)
+
+Because DART drops trees and renormalises on a schedule that depends on the full round count, an
+r-round model need not be the r-round prefix of an N-round one. Measured, same seed, paired:
+
+| arm | r=200 | 400 | 700 | 1100 | 1600 | worst |
+|---|---|---|---|---|---|---|
+| GBDT `extra_trees` | 0.00e-5 | 0.00e-5 | 0.00e-5 | 0.00e-5 | 0.00e-5 | **0.00e-5** |
+| DART drop .05 | −23.2e-5 | −15.2e-5 | −2.7e-5 | +5.1e-5 | 0.00e-5 | **23.2e-5** |
+| DART drop .10 | −34.4e-5 | −30.5e-5 | −0.6e-5 | −4.1e-5 | 0.00e-5 | **34.4e-5** |
+
+The GBDT row is the **measurement control**: GBDT boosting is strictly additive, so truncation must
+be exact there, and it is — to the last bit. The DART errors are an order of magnitude above the
++1.5e-5 admission gate and systematically signed (truncation *under*-states early, over-states
+late). Selecting rounds from a truncated curve would optimise a different objective from the model
+deployed. `run_stochastic_boosting.py` therefore **refuses** `--curve-mode snapshot` for any DART
+arm unless this probe's verdict says it is safe, and the verdict is `false`.
+
+### Second correction from the same probe: the DART curve TURNS OVER
+DART drop .05 refit curve: 0.956081 (200) → 0.956847 (400) → **0.956969 (700)** → 0.956799 (1100) →
+0.956538 (1600). My earlier reading — "all DART arms still climbing at 900" — was taken from the
+**+`extra_trees`** arms and does not apply to the −`extra_trees` arm, which peaks near 700 and
+degrades after. An unbounded grid would have spent its compute in the over-iterated region and could
+have selected a tail point. The grid was shortened, then widened once timing allowed.
+
+### Third correction: my compute projection was 55x too high
+Extrapolating from probe scale put one DART arm at ~4 hours. The real timing probe measured
+**0.058 s/round** at 504k rows × 285 features — the full 8,900-round grid costs ~9 minutes. At 60k
+rows fixed overhead dominated and LightGBM could not fill 8 threads. Cheap compute meant the round
+grid could be widened to `[500, 900, 1500, 2400, 3600]` rather than trimmed to a compromise.
+
 ## 7. Software quality
 
 `tests/run_tests.py`: **55/55 pass**, including the four original leakage audits

@@ -61,17 +61,24 @@ from src.validation.compare import corr, spearman  # noqa: E402
 from src.validation.folds import get_scheme  # noqa: E402
 from scripts.run_views import _inner_es_split  # noqa: E402
 
-# The champion structural parameters, copied from src/models/gbdt.py:27-31 so that the matched
-# control is the champion and not an approximation of it. Only the tree-construction mode varies
-# between arms; leaves, min_child_samples, colsample, subsample, lambda, max_bin and learning rate
-# are held at the champion's values. Getting these wrong would make the control unable to reproduce
-# the known baseline, which is the only check that the harness is wired correctly.
-CHAMPION = {"objective": "binary", "metric": "auc", "learning_rate": 0.03, "num_leaves": 63,
+# The champion structural parameters. SOURCE OF TRUTH: scripts/run_fullfit.py:72-75, which states in
+# its own comment that it reproduces scripts/run_views.py::_fit_lgbm_es bit-for-bit, and which
+# produced the recorded fold-0 control of 0.9612988 (reports/fullfit_primary.json).
+#
+# I first took these from src/models/gbdt.py:27-31 (learning_rate 0.03, num_leaves 63) on the
+# reasoning that the module's defaults must be the champion's. That was WRONG: gbdt.py holds the
+# family's generic defaults, and the champion overrides them. The matched control caught it
+# immediately -- ctl_es returned 0.961170 at 432 rounds against an expected 0.961299 at 797, and the
+# iteration count is itself the tell, since lr 0.02 naturally runs to roughly twice the rounds of
+# lr 0.03. Two independent signals agreed, so the control was trusted over my reading of the source.
+# The lesson is that "the model's default parameters" and "the champion's parameters" are different
+# objects in this repo, and only the second one is a valid baseline.
+CHAMPION = {"objective": "binary", "metric": "auc", "learning_rate": 0.02, "num_leaves": 127,
             "min_child_samples": 40, "colsample_bytree": 0.8, "subsample": 0.8,
             "subsample_freq": 1, "reg_lambda": 1.0, "max_bin": 255, "verbose": -1, "n_jobs": 8}
 
-ES_ROUNDS = 4000      # src/models/gbdt.py: n_estimators
-ES_PATIENCE = 200     # src/models/gbdt.py: lgb.early_stopping(200)
+ES_ROUNDS = 6000      # run_views.py::_fit_lgbm_es: n_estimators
+ES_PATIENCE = 300     # run_views.py::_fit_lgbm_es: lgb.early_stopping(300)
 
 # Round grid, pre-declared from an INDEPENDENT probe (scripts/probe_dart_truncation.py: 90k-row
 # subsample, raw 21 columns, different seed) rather than from anything measured on an eval fold.
@@ -273,6 +280,8 @@ def main() -> None:
                 m = lgb.train(dict(params), ds, num_boost_round=ES_ROUNDS, valid_sets=[dv],
                               callbacks=[lgb.early_stopping(ES_PATIENCE, verbose=False)])
                 it = int(m.best_iteration or ES_ROUNDS)
+                # predict at `it` explicitly rather than relying on best_iteration being applied
+                # automatically, so this matches run_fullfit.py's control call exactly
                 pred = m.predict(Xv, num_iteration=it)
                 auc = float(roc_auc_score(y[val], pred))
                 print(f"  {mname:<12} ESTABLISHED protocol: {len(tr_l):,} train rows, ES on "
