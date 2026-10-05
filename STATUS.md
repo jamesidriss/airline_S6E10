@@ -378,6 +378,107 @@ informative: it would mean the limit is unique information, not sample count.
 
 This is a directional diagnostic, **not** a Bayes ceiling and not claimed as one.
 
+## 6d. CORRECTION -- the Phase 6 pairwise explanation was mathematically wrong
+
+The **empirical result** of Phase 6 was never in doubt and is unchanged:
+
+| arm | AUC | corr logit vs pool | Spearman |
+|---|---|---|---|
+| binary matched control | 0.961103 | -- | -- |
+| pairwise lr 0.05 / 4000 rounds | 0.956339 | 0.98577 | 0.91352 |
+| pairwise lr 0.15 / 15000 rounds | 0.959556 | 0.99540 | 0.97560 |
+
+The spectacular apparent decorrelation at 4000 rounds was largely an **undertraining artefact**: as
+training progressed the AUC rose *and* the correlation moved back toward the existing pool. The
+tested custom pure-pairwise LightGBM branch is **rejected**.
+
+The **mechanistic explanation** recorded with it was wrong on both halves:
+
+- ❌ "pairwise loss is invariant to any monotone rescaling" — **false**. The pairwise logistic loss
+  `log(1 + exp(-(s_pos - s_neg)))` depends *explicitly* on pairwise score **differences**. It is
+  invariant only to a **global additive shift**, because a shift cancels in the difference.
+  Multiplying scores, or applying a non-linear monotone map, generally *changes* the loss.
+- ❌ "ROC-AUC depends on score separation" — **false as stated**. ROC-AUC **is** invariant to any
+  strictly increasing transformation of the score; what decides it is the induced **ordering**,
+  which such a transform preserves.
+- ❌ "pairwise loss has no incentive to separate positives from negatives" — **false**. It maximises
+  exactly a pos-versus-neg margin and encourages separation directly.
+
+**What we do not know.** We have *no demonstrated explanation* for the branch's inferiority.
+Candidate causes, none isolated experimentally: optimisation mismatch between a margin loss and
+diagonal-Hessian tree boosting; the diagonal-Hessian approximation ignoring pair coupling; pair
+sampling at only 4 negatives per positive, held fixed across boosting iterations; differing
+regularisation behaviour; statistical efficiency (BCE uses every row every iteration, the pairwise
+loss only sampled pairs); and pair-sampling noise. These are **hypotheses, not findings**, and no
+mechanism may be attributed to this result.
+
+**Scope correction.** The earlier wording implied the AUC-objective axis was closed, which
+overstates what was tested. Accurate scope: **the tested custom pure-pairwise LightGBM branch is
+rejected.** XGBoost's native `rank:pairwise` and other AUC surrogates remain technically untested;
+current evidence makes them **low priority**, but does not exclude them.
+
+Recorded append-only in `experiments/ledger.jsonl` as `auc_objective_fold0_CORRECTION` via
+`scripts/log_auc_correction.py`. Git history was **not** rewritten.
+
+## 6e. PHASE 7 -- audit: our models train on 72% of the labels, not 80%
+
+`scripts/audit_train_fractions.py` measures the **actual** row counts rather than assuming them
+from "5-fold means 80%". The inner early-stopping holdout removes a further 8 percentage points on
+top of the outer-fit carve:
+
+| scheme | K | outer-fit rows | % of all labels | inner-ES rows | **ACTUAL model-fit rows** | **% of labels** |
+|---|---|---|---|---|---|---|
+| `primary` | 5 | 559,708 | 80.00% | 55,969 | **503,739** | **72.00%** |
+| `block10` | 10 | 629,672 | 90.00% | 62,966 | **566,706** | **81.00%** |
+| `shadow` | 5 | 559,708 | 80.00% | 55,969 | **503,739** | **72.00%** |
+
+Total labelled competition rows: **699,635**. Every CV-stage OOF model in the 5-fold protocol sees
+**72%**, not 80%.
+
+Projected through our own measured learning curve (**+62.9e-5 per doubling**):
+
+| transition | doublings | projected gain |
+|---|---|---|
+| 72% -> 80% (recover the inner-ES holdout) | 0.152 | **~ +9.5e-5** |
+| 72% -> 90% | 0.322 | **~ +2.0e-4** |
+| 72% -> 100% | 0.474 | **~ +3.0e-4** |
+
+This is larger than anything else measured in the campaign and it is grounded in our own data.
+
+**The asymmetry that matters.** A second-pass refit on all labelled rows is the documented
+test-time policy, so a *submitted* model already trains on 100% of the labels, while each CV-stage
+OOF model saw only 72%. The fold models **cannot** be given more data without destroying the
+validity of their OOF score -- the held-out fold is exactly what makes that score meaningful. The
+honest improvement is therefore twofold and both halves are validated the same way:
+
+1. **policy-level** -- recover the inner-ES holdout in the fold models (72% -> 80%) using a
+   leakage-safe fixed iteration count, so the OOF number measures a model that is actually as
+   well-fed as the refit; and
+2. **inference-level** -- choose the refit's iteration count by the *same* validated rule rather
+   than by copying a count measured at a different training size.
+
+### Iteration-count scaling with training size
+`scripts/iteration_scaling.py`. The learning curve gives five (n, best_iter) points. **Do not fit
+them blindly**: the smallest point is off-trend (377 rounds at 63k rows, then only 395 at 126k), so
+an all-points power law **extrapolates backwards** -- it predicts *fewer* rounds at 560k than were
+actually observed at 504k.
+
+Predeclared choice: OLS of `log(best_iter)` on `log(n)` over the **three largest** points,
+`best_iter = 0.0459 * n^0.7527`, R^2(loglog) = 0.98371. It passes the one available check --
+reproducing the observed 504k count to within 2.3% (predicts 900 vs observed 879) -- as do the
+4-point fit (0.982) and the 5-point fit (0.918).
+
+| training set | rows | size correction vs control | implied iterations |
+|---|---|---|---|
+| current inner-ES (control) | 503,739 | 1.000 | 879 |
+| 5-fold full outer-fit | 559,708 | 1.083 | 952 |
+| 10-fold full outer-fit | 629,672 | 1.183 | 1040 |
+| full refit on all labels | 699,635 | 1.281 | 1126 |
+
+**Caveat, stated plainly:** five points spanning under one order of magnitude is a weak law. It is
+used only to *correct* an iteration count that is also measured directly by an inner CV, never as
+the sole source of that count.
+
 ## 7. Software quality
 
 15/15 tests in `tests/run_tests.py` pass, including four automated leakage audits:

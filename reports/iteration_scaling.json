@@ -1,0 +1,83 @@
+{
+  "source": "C:\\Users\\James\\airline_S6E10\\reports\\lcurve_fold0.json",
+  "es_fraction": 0.1,
+  "points": [
+    {
+      "frac": 0.125,
+      "n_sub": 69963,
+      "n_fit": 62966.700000000004,
+      "best_iter": 376.6666666666667,
+      "auc": 0.9593178490319781
+    },
+    {
+      "frac": 0.25,
+      "n_sub": 139927,
+      "n_fit": 125934.3,
+      "best_iter": 395.3333333333333,
+      "auc": 0.9600203469677311
+    },
+    {
+      "frac": 0.5,
+      "n_sub": 279854,
+      "n_fit": 251868.6,
+      "best_iter": 525.3333333333334,
+      "auc": 0.9606955784089503
+    },
+    {
+      "frac": 0.75,
+      "n_sub": 419781,
+      "n_fit": 377802.9,
+      "best_iter": 753.0,
+      "auc": 0.9609562902805276
+    },
+    {
+      "frac": 1.0,
+      "n_sub": 559708,
+      "n_fit": 503737.2,
+      "best_iter": 879.3333333333334,
+      "auc": 0.961211902897765
+    }
+  ],
+  "candidate_fits": {
+    "exp_upper5": {
+      "k_points": 5,
+      "exponent": 0.42453673774898165,
+      "coefficient": 3.062190153158587,
+      "r2_loglog": 0.8976915481464091,
+      "predicted_at_504k": 806.915222829084,
+      "observed_at_504k": 879.3333333333334,
+      "backward_check_ratio_pred_over_obs": 0.9176443019284503
+    },
+    "exp_upper4": {
+      "k_points": 4,
+      "exponent": 0.5904895727103271,
+      "coefficient": 0.3708982372222303,
+      "r2_loglog": 0.9729911872257155,
+      "predicted_at_504k": 863.6697389254437,
+      "observed_at_504k": 879.3333333333334,
+      "backward_check_ratio_pred_over_obs": 0.9821869661775325
+    },
+    "exp_upper3": {
+      "k_points": 3,
+      "exponent": 0.7526790912364854,
+      "coefficient": 0.04592727382492342,
+      "r2_loglog": 0.9837111564590353,
+      "predicted_at_504k": 899.5008495522546,
+      "observed_at_504k": 879.3333333333334,
+      "backward_check_ratio_pred_over_obs": 1.0229350070723138
+    }
+  },
+  "chosen": "exp_upper3",
+  "chosen_exponent": 0.7526790912364854,
+  "rationale": "the smallest point is off-trend, so an all-points fit extrapolates backwards (predicts fewer rounds at 560k than observed at 504k); the policy only extrapolates upward, so the three largest points govern",
+  "size_corrections_vs_control": {
+    "n_ctrl": 503739,
+    "n_full_5fold": 559708,
+    "n_full_10fold": 629672,
+    "n_all_labelled": 699635,
+    "factor_to_5fold_full": 1.0825289970407188,
+    "factor_to_10fold_full": 1.1828814794648588,
+    "factor_to_all_labelled": 1.2805061802218407
+  },
+  "caveat": "five points spanning <1 order of magnitude, so this is a weak law. It is used only to correct an iteration count that is ALSO measured directly by an inner CV, never as the sole source of the iteration count."
+}

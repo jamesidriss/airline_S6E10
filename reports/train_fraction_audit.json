@@ -1,0 +1,253 @@
+{
+  "n_total_labelled_rows": 699635,
+  "schemes": [
+    {
+      "scheme": "primary",
+      "n_folds": 5,
+      "n_total_labelled": 699635,
+      "mean_outer_fit_rows": 559708.0,
+      "mean_outer_fit_fraction": 0.8,
+      "mean_model_fit_rows": 503739.0,
+      "mean_model_fit_fraction": 0.7200025727700873,
+      "mean_inner_es_rows": 55969.0,
+      "n_ensemble_members": 1,
+      "per_fold": [
+        {
+          "fold": 0,
+          "n_total": 699635,
+          "n_outer_fit": 559708,
+          "n_inner_es": 55969,
+          "n_model_fit": 503739,
+          "n_eval": 139927,
+          "frac_outer_fit": 0.8,
+          "frac_model_fit": 0.7200025727700873
+        },
+        {
+          "fold": 1,
+          "n_total": 699635,
+          "n_outer_fit": 559708,
+          "n_inner_es": 55969,
+          "n_model_fit": 503739,
+          "n_eval": 139927,
+          "frac_outer_fit": 0.8,
+          "frac_model_fit": 0.7200025727700873
+        },
+        {
+          "fold": 2,
+          "n_total": 699635,
+          "n_outer_fit": 559708,
+          "n_inner_es": 55969,
+          "n_model_fit": 503739,
+          "n_eval": 139927,
+          "frac_outer_fit": 0.8,
+          "frac_model_fit": 0.7200025727700873
+        },
+        {
+          "fold": 3,
+          "n_total": 699635,
+          "n_outer_fit": 559708,
+          "n_inner_es": 55969,
+          "n_model_fit": 503739,
+          "n_eval": 139927,
+          "frac_outer_fit": 0.8,
+          "frac_model_fit": 0.7200025727700873
+        },
+        {
+          "fold": 4,
+          "n_total": 699635,
+          "n_outer_fit": 559708,
+          "n_inner_es": 55969,
+          "n_model_fit": 503739,
+          "n_eval": 139927,
+          "frac_outer_fit": 0.8,
+          "frac_model_fit": 0.7200025727700873
+        }
+      ],
+      "interpretation": "one primary model trains on 559708 rows (80.0% of all labels) before the inner holdout, and on 503739 rows (72.0%) after it"
+    },
+    {
+      "scheme": "block10",
+      "n_folds": 10,
+      "n_total_labelled": 699635,
+      "mean_outer_fit_rows": 629671.5,
+      "mean_outer_fit_fraction": 0.9,
+      "mean_model_fit_rows": 566705.5,
+      "mean_model_fit_fraction": 0.8100016437142225,
+      "mean_inner_es_rows": 62966.0,
+      "n_ensemble_members": 1,
+      "per_fold": [
+        {
+          "fold": 0,
+          "n_total": 699635,
+          "n_outer_fit": 629671,
+          "n_inner_es": 62966,
+          "n_model_fit": 566705,
+          "n_eval": 69964,
+          "frac_outer_fit": 0.8999992853416424,
+          "frac_model_fit": 0.8100009290558648
+        },
+        {
+          "fold": 1,
+          "n_total": 699635,
+          "n_outer_fit": 629671,
+          "n_inner_es": 62966,
+          "n_model_fit": 566705,
+          "n_eval": 69964,
+          "frac_outer_fit": 0.8999992853416424,
+          "frac_model_fit": 0.8100009290558648
+        },
+        {
+          "fold": 2,
+          "n_total": 699635,
+          "n_outer_fit": 629671,
+          "n_inner_es": 62966,
+          "n_model_fit": 566705,
+          "n_eval": 69964,
+          "frac_outer_fit": 0.8999992853416424,
+          "frac_model_fit": 0.8100009290558648
+        },
+        {
+          "fold": 3,
+          "n_total": 699635,
+          "n_outer_fit": 629671,
+          "n_inner_es": 62966,
+          "n_model_fit": 566705,
+          "n_eval": 69964,
+          "frac_outer_fit": 0.8999992853416424,
+          "frac_model_fit": 0.8100009290558648
+        },
+        {
+          "fold": 4,
+          "n_total": 699635,
+          "n_outer_fit": 629671,
+          "n_inner_es": 62966,
+          "n_model_fit": 566705,
+          "n_eval": 69964,
+          "frac_outer_fit": 0.8999992853416424,
+          "frac_model_fit": 0.8100009290558648
+        },
+        {
+          "fold": 5,
+          "n_total": 699635,
+          "n_outer_fit": 629672,
+          "n_inner_es": 62966,
+          "n_model_fit": 566706,
+          "n_eval": 69963,
+          "frac_outer_fit": 0.9000007146583576,
+          "frac_model_fit": 0.81000235837258
+        },
+        {
+          "fold": 6,
+          "n_total": 699635,
+          "n_outer_fit": 629672,
+          "n_inner_es": 62966,
+          "n_model_fit": 566706,
+          "n_eval": 69963,
+          "frac_outer_fit": 0.9000007146583576,
+          "frac_model_fit": 0.81000235837258
+        },
+        {
+          "fold": 7,
+          "n_total": 699635,
+          "n_outer_fit": 629672,
+          "n_inner_es": 62966,
+          "n_model_fit": 566706,
+          "n_eval": 69963,
+          "frac_outer_fit": 0.9000007146583576,
+          "frac_model_fit": 0.81000235837258
+        },
+        {
+          "fold": 8,
+          "n_total": 699635,
+          "n_outer_fit": 629672,
+          "n_inner_es": 62966,
+          "n_model_fit": 566706,
+          "n_eval": 69963,
+          "frac_outer_fit": 0.9000007146583576,
+          "frac_model_fit": 0.81000235837258
+        },
+        {
+          "fold": 9,
+          "n_total": 699635,
+          "n_outer_fit": 629672,
+          "n_inner_es": 62966,
+          "n_model_fit": 566706,
+          "n_eval": 69963,
+          "frac_outer_fit": 0.9000007146583576,
+          "frac_model_fit": 0.81000235837258
+        }
+      ],
+      "interpretation": "one block10 model trains on 629672 rows (90.0% of all labels) before the inner holdout, and on 566706 rows (81.0%) after it"
+    },
+    {
+      "scheme": "shadow",
+      "n_folds": 5,
+      "n_total_labelled": 699635,
+      "mean_outer_fit_rows": 559708.0,
+      "mean_outer_fit_fraction": 0.8,
+      "mean_model_fit_rows": 503739.0,
+      "mean_model_fit_fraction": 0.7200025727700873,
+      "mean_inner_es_rows": 55969.0,
+      "n_ensemble_members": 1,
+      "per_fold": [
+        {
+          "fold": 0,
+          "n_total": 699635,
+          "n_outer_fit": 559708,
+          "n_inner_es": 55969,
+          "n_model_fit": 503739,
+          "n_eval": 139927,
+          "frac_outer_fit": 0.8,
+          "frac_model_fit": 0.7200025727700873
+        },
+        {
+          "fold": 1,
+          "n_total": 699635,
+          "n_outer_fit": 559708,
+          "n_inner_es": 55969,
+          "n_model_fit": 503739,
+          "n_eval": 139927,
+          "frac_outer_fit": 0.8,
+          "frac_model_fit": 0.7200025727700873
+        },
+        {
+          "fold": 2,
+          "n_total": 699635,
+          "n_outer_fit": 559708,
+          "n_inner_es": 55969,
+          "n_model_fit": 503739,
+          "n_eval": 139927,
+          "frac_outer_fit": 0.8,
+          "frac_model_fit": 0.7200025727700873
+        },
+        {
+          "fold": 3,
+          "n_total": 699635,
+          "n_outer_fit": 559708,
+          "n_inner_es": 55969,
+          "n_model_fit": 503739,
+          "n_eval": 139927,
+          "frac_outer_fit": 0.8,
+          "frac_model_fit": 0.7200025727700873
+        },
+        {
+          "fold": 4,
+          "n_total": 699635,
+          "n_outer_fit": 559708,
+          "n_inner_es": 55969,
+          "n_model_fit": 503739,
+          "n_eval": 139927,
+          "frac_outer_fit": 0.8,
+          "frac_model_fit": 0.7200025727700873
+        }
+      ],
+      "interpretation": "one shadow model trains on 559708 rows (80.0% of all labels) before the inner holdout, and on 503739 rows (72.0%) after it"
+    }
+  ],
+  "test_refit_policy": {
+    "run_views_mentions_refit": true,
+    "run_views_refit_uses_all_rows_heuristic": false,
+    "full_refit_would_use_fraction": 1.0,
+    "note": "A second-pass refit on all labelled rows is the documented test-time policy, so a submitted model is already trained on 100% of the labels. The CV-stage OOF numbers, by contrast, come from models that saw only the outer-fit fraction reported above. That asymmetry is the reason OOF and test-time behaviour differ, and it is why the honest way to improve test performance is NOT to train the fold models on more data -- they already cannot be, the held-out fold is what makes their OOF score meaningful -- but to make sure the refit iteration count is chosen without using any held-out information."
+  }
+}
