@@ -825,9 +825,29 @@ relative to its uncertainty.
 ## 8. Current state and next steps
 
 - **Champion / finalist**: 59-member equal-logit blend, OOF **0.961509** (primary 5-fold), submitted
-  as `v3_final`, public 0.960980, **rank 215 of 754** (refreshed 2026-10-05).
-- **Submission budget**: 0 used today, 10/day cap, 3 used in total. Two final selections are allowed
+  as `v3_final`, public **0.960980**, **rank 215 of 759** (refreshed 2026-10-05).
+- **Second finalist (`v4_fulldata`, ref 56845975)**: public **0.961000**, i.e. **+2e-5** over v3.
+  Chosen on **methodology**, not score — see below for why +2e-5 must not be called a win.
+- **Submission budget**: 1 used today, 10/day cap, 4 used in total. Two final selections are allowed
   at the deadline.
+- **What v4 actually tells us.** v4 keeps v3's 59 members, weights and OOF, but refits 32 of the
+  LightGBM members on **100% of the labels** instead of that fold's outer-fit subset, with the
+  iteration count set to the median of three independent 5% early-stopping holdouts.
+  - It is **not** statistically distinguishable from v3: +2e-5 against a **±2e-4** paired floor, and a
+    single observation that size is what the noise produces by itself. Reporting it as proof that the
+    policy helps would be the same error as reading the 7.8e-4 leaderboard gap as noise — in the
+    opposite direction.
+  - What it *does* support: **sign and magnitude both match the cross-validated prediction**, which
+    was low-single-digit e-5 after discounting the learning-curve extrapolation. So the fold-level
+    training-fraction finding **transferred to the real test set instead of reversing**, which is a
+    genuine sanity check on the audit, the leakage-safe protocol, the iteration policy and the
+    full-data feature verification — any of which could easily have produced a large *negative* delta.
+  - It also **bounds** the mechanism: training on 100% of the labels cannot be worth much more than
+    +2e-5 here, whatever the fold arithmetic suggested. The +20.2e-5 raw extrapolation was rightly
+    discounted, and the **realised** rate of the learning-curve law at the top of the range is now
+    measured end-to-end at roughly **+2e-5 per full 20-point data step**, not +20e-5.
+  - Rank did not move (215), the expected consequence of a gain this small against a top-20 band only
+    1.0e-4 wide.
 - **The gap is real and it is large.** Leader 0.961760, our public 0.960980, gap **7.8e-4**. That is
   **z = 3.1-4.4** even after allowing for correlation between two *different* solutions, and it clears
   2 sigma even between uncorrelated predictions (Hanley-McNeil SE ~ 0.0011 on the 59,969-row public
@@ -849,7 +869,9 @@ relative to its uncertainty.
   2. Re-check the final-submission selection rules on the competition Rules page near the deadline.
   3. Re-run `scripts/reproduce_finalist.py` from clean to confirm the submission is byte-reproducible.
   4. Do **not** re-tune the GBDT families. Every honest axis measured this session came back at or
-     below +3e-5, and the evidence says that is the size of the remaining surface.
+     below +3e-5, and the evidence says that is the size of the remaining surface. The v4 board
+     result closes the question from the other end: the one mechanism that *was* mechanistically
+     sound delivered +2e-5 in practice, so that is the realistic scale of anything still available.
 
 ## 9. Reproducing the submission
 
