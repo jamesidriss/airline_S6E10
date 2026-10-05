@@ -1,0 +1,10 @@
+﻿    [cache] view full: (699635, 237)
+
+========================================================================================================
+fold 0   outer-fit=559,708   eval=139,927   features=285
+========================================================================================================
+  ctl_fixed    300 rounds in    10.8s  = 0.036s/round   -> full grid (5300 rounds) ~ 0.05 h
+  dart005      300 rounds in    17.4s  = 0.058s/round   -> full grid (5800 rounds) ~ 0.09 h
+  rf           300 rounds in    11.3s  = 0.038s/round   -> full grid (5300 rounds) ~ 0.06 h
+
+  inner-train rows used: 503,739   features: 285

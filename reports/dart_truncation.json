@@ -1,0 +1,156 @@
+{
+  "rounds": [
+    200,
+    400,
+    700,
+    1100,
+    1600
+  ],
+  "gate_e5": 1.5,
+  "arms": {
+    "gbdt_xt": {
+      "extra_params": {
+        "extra_trees": true
+      },
+      "rows": [
+        {
+          "round": 200,
+          "truncated": 0.9515587199074076,
+          "refit": 0.9515587199074076,
+          "gap_e5": 0.0
+        },
+        {
+          "round": 400,
+          "truncated": 0.9520336574074074,
+          "refit": 0.9520336574074074,
+          "gap_e5": 0.0
+        },
+        {
+          "round": 700,
+          "truncated": 0.9518477407407406,
+          "refit": 0.9518477407407406,
+          "gap_e5": 0.0
+        },
+        {
+          "round": 1100,
+          "truncated": 0.9514278819444444,
+          "refit": 0.9514278819444444,
+          "gap_e5": 0.0
+        },
+        {
+          "round": 1600,
+          "truncated": 0.9508276921296296,
+          "refit": 0.9508276921296296,
+          "gap_e5": 0.0
+        }
+      ],
+      "worst_gap_e5": 0.0,
+      "argmax_truncated": 400,
+      "argmax_refit": 400,
+      "selected_truncated": 400,
+      "selected_refit": 400,
+      "seconds_long_fit": 2.4,
+      "warnings": [],
+      "verdict": "SNAPSHOT SAFE"
+    },
+    "dart005_noxt": {
+      "extra_params": {
+        "boosting_type": "dart",
+        "drop_rate": 0.05,
+        "skip_drop": 0.5
+      },
+      "rows": [
+        {
+          "round": 200,
+          "truncated": 0.9558491944444445,
+          "refit": 0.9560807083333334,
+          "gap_e5": -23.151388888886792
+        },
+        {
+          "round": 400,
+          "truncated": 0.9566946805555556,
+          "refit": 0.9568471018518518,
+          "gap_e5": -15.242129629622347
+        },
+        {
+          "round": 700,
+          "truncated": 0.9569421203703703,
+          "refit": 0.9569688333333333,
+          "gap_e5": -2.671296296297143
+        },
+        {
+          "round": 1100,
+          "truncated": 0.9568498379629629,
+          "refit": 0.9567993101851852,
+          "gap_e5": 5.052777777769801
+        },
+        {
+          "round": 1600,
+          "truncated": 0.9565379768518518,
+          "refit": 0.9565379768518518,
+          "gap_e5": 0.0
+        }
+      ],
+      "worst_gap_e5": 23.151388888886792,
+      "argmax_truncated": 700,
+      "argmax_refit": 700,
+      "selected_truncated": 700,
+      "selected_refit": 700,
+      "seconds_long_fit": 22.1,
+      "warnings": [],
+      "verdict": "SNAPSHOT UNSAFE -> use refit mode"
+    },
+    "dart010_noxt": {
+      "extra_params": {
+        "boosting_type": "dart",
+        "drop_rate": 0.1,
+        "skip_drop": 0.5
+      },
+      "rows": [
+        {
+          "round": 200,
+          "truncated": 0.9553913101851853,
+          "refit": 0.9557352824074073,
+          "gap_e5": -34.39722222220443
+        },
+        {
+          "round": 400,
+          "truncated": 0.9563579212962963,
+          "refit": 0.9566631296296297,
+          "gap_e5": -30.52083333334732
+        },
+        {
+          "round": 700,
+          "truncated": 0.9566860185185184,
+          "refit": 0.956691800925926,
+          "gap_e5": -0.5782407407561863
+        },
+        {
+          "round": 1100,
+          "truncated": 0.9565875231481481,
+          "refit": 0.956628425925926,
+          "gap_e5": -4.090277777790696
+        },
+        {
+          "round": 1600,
+          "truncated": 0.9562809675925926,
+          "refit": 0.9562809675925926,
+          "gap_e5": 0.0
+        }
+      ],
+      "worst_gap_e5": 34.39722222220443,
+      "argmax_truncated": 700,
+      "argmax_refit": 700,
+      "selected_truncated": 700,
+      "selected_refit": 700,
+      "seconds_long_fit": 27.3,
+      "warnings": [],
+      "verdict": "SNAPSHOT UNSAFE -> use refit mode"
+    }
+  },
+  "summary": {
+    "dart_worst_gap_e5": 34.39722222220443,
+    "gbdt_worst_gap_e5": 0.0,
+    "snapshot_mode_safe_for_dart": false
+  }
+}

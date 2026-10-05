@@ -73,12 +73,22 @@ CHAMPION = {"objective": "binary", "metric": "auc", "learning_rate": 0.03, "num_
 ES_ROUNDS = 4000      # src/models/gbdt.py: n_estimators
 ES_PATIENCE = 200     # src/models/gbdt.py: lgb.early_stopping(200)
 
-# Round grid. Extended well past the champion's ~797 because the capability probe measured every DART
-# arm still CLIMBING at round 900 (+25e-5 over its last 200 rounds). A grid topping out near 900 would
-# have selected the boundary and silently mis-measured DART as saturating. The same grid is used for
-# every arm so the comparison stays matched; GBDT simply selects at the low end and DART at the high
-# end, which is itself the finding.
-SNAPSHOTS = [400, 800, 1200, 1800, 2600, 3600]
+# Round grid, pre-declared from an INDEPENDENT probe (scripts/probe_dart_truncation.py: 90k-row
+# subsample, raw 21 columns, different seed) rather than from anything measured on an eval fold.
+# That probe's refit curve for DART-without-extra_trees peaked near 700 and then TURNED OVER --
+# 0.956969 at 700, 0.956799 at 1100, 0.956538 at 1600 -- so an unbounded or high-tail-weighted grid
+# would spend most of its compute in the over-iterated region and could select a tail point. This
+# was a correction to my own first reading of the capability probe, where I took "still climbing at
+# 900" from the +extra_trees arms and wrongly assumed it applied to the -extra_trees arm too.
+# The real run has ~8.4x the rows and a lower learning rate, both of which push the peak later, so
+# the grid brackets the champion's ~797 and extends to 3600 to be sure the peak is enclosed.
+#
+# Width is set by the measured timing probe (reports/p9_timing.json): DART runs at 0.058 s/round at
+# real scale, so the whole 8900-round grid costs ~9 minutes. That measurement also CORRECTED a
+# projection from probe scale that had put one DART arm at ~4 hours -- 55x too high, because at
+# 60k rows fixed overhead dominated and LightGBM could not fill 8 threads. Cheap compute means the
+# grid can be wide, and a wide grid is the honest choice when the peak's location is uncertain.
+SNAPSHOTS = [500, 900, 1500, 2400, 3600]
 
 MODES = {
     # --- controls. `ctl_es` is the ESTABLISHED protocol and exists only to prove the harness is
@@ -154,6 +164,9 @@ def main() -> None:
     ap.add_argument("--snapshots", default="")
     ap.add_argument("--tag", default="phase9")
     ap.add_argument("--curve-mode", default="refit", choices=["refit", "snapshot"])
+    ap.add_argument("--timing-probe", type=int, default=0,
+                    help="if >0, fit each arm ONCE at this round count on the inner-train rows, "
+                         "report seconds/round, and exit without scoring anything")
     args = ap.parse_args()
 
     snaps = ([int(x) for x in args.snapshots.split(",")] if args.snapshots
@@ -208,6 +221,40 @@ def main() -> None:
 
         print(f"\n{'='*104}\nfold {k}   outer-fit={len(fit):,}   eval={len(val):,}   "
               f"features={Xf.shape[1]}\n{'='*104}", flush=True)
+
+        # ---- timing probe: one fit per arm, no scoring, no selection --------------------
+        # Required before committing to a multi-hour run. The round count is extrapolated
+        # linearly from here, so the report states the measured seconds/round and the projected
+        # total for the full snapshot grid rather than a guess.
+        if args.timing_probe:
+            tr, yv = y_int, None
+            itr_g, iv_g = inner_split(fit, tr, args.inner_frac, args.seed + k + 500)
+            itr_l = np.array([pos[int(v)] for v in itr_g])
+            proj = {}
+            for mname in modes:
+                if mname == "ctl_es":
+                    continue
+                t0 = time.time()
+                fit_fixed(Xf[itr_l], y[itr_g], build_params(MODES[mname], args.seed + k),
+                          args.timing_probe)
+                dt = time.time() - t0
+                per = dt / args.timing_probe
+                need = sum(snaps) + (min(snaps) if MODES[mname]["boosting"] == "dart" else 0)
+                proj[mname] = {"seconds": round(dt, 1), "sec_per_round": round(per, 3),
+                               "projected_full_grid_seconds": round(per * need),
+                               "projected_full_grid_hours": round(per * need / 3600, 2),
+                               "grid_rounds_sum": int(need)}
+                print(f"  {mname:<12} {args.timing_probe} rounds in {dt:7.1f}s  = "
+                      f"{per:.3f}s/round   -> full grid ({need} rounds) ~ "
+                      f"{per*need/3600:.2f} h", flush=True)
+            print(f"\n  inner-train rows used: {len(itr_l):,}   features: {Xf.shape[1]}")
+            save_json({"tag": args.tag, "timing_probe_rounds": args.timing_probe,
+                       "scheme": args.scheme, "view": args.view, "folds": {str(k): proj},
+                       "note": "projections are linear in rounds from a single measured fit and "
+                               "will understate cost for DART, whose per-round normalisation "
+                               "overhead grows with the tree count"},
+                      REPORTS / f"{args.tag}_timing.json")
+            return
         fold_rec = {}
         for mname in modes:
             mode = MODES[mname]

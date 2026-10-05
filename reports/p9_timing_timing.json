@@ -1,0 +1,32 @@
+{
+  "tag": "p9_timing",
+  "timing_probe_rounds": 300,
+  "scheme": "primary",
+  "view": "full",
+  "folds": {
+    "0": {
+      "ctl_fixed": {
+        "seconds": 10.8,
+        "sec_per_round": 0.036,
+        "projected_full_grid_seconds": 191,
+        "projected_full_grid_hours": 0.05,
+        "grid_rounds_sum": 5300
+      },
+      "dart005": {
+        "seconds": 17.4,
+        "sec_per_round": 0.058,
+        "projected_full_grid_seconds": 337,
+        "projected_full_grid_hours": 0.09,
+        "grid_rounds_sum": 5800
+      },
+      "rf": {
+        "seconds": 11.3,
+        "sec_per_round": 0.038,
+        "projected_full_grid_seconds": 200,
+        "projected_full_grid_hours": 0.06,
+        "grid_rounds_sum": 5300
+      }
+    }
+  },
+  "note": "projections are linear in rounds from a single measured fit and will understate cost for DART, whose per-round normalisation overhead grows with the tree count"
+}

@@ -1,0 +1,44 @@
+﻿truncation probe: inner-train=60,000  inner-val=30,000  features=21  rounds=[200, 400, 700, 1100, 1600]
+same seed for every fit, so the comparison is paired.
+
+====================================================================================================
+gbdt_xt   {"extra_trees": true}
+====================================================================================================
+  round   200   truncated=0.951559   refit=0.951559   gap=   +0.00e-5
+  round   400   truncated=0.952034   refit=0.952034   gap=   +0.00e-5
+  round   700   truncated=0.951848   refit=0.951848   gap=   +0.00e-5
+  round  1100   truncated=0.951428   refit=0.951428   gap=   +0.00e-5
+  round  1600   truncated=0.950828   refit=0.950828   gap=   +0.00e-5
+  worst |gap| = 0.00e-5   argmax round: truncated=400 refit=400   selected: truncated=400 refit=400
+  long fit 1600 rounds took 2s; warnings=[]
+  VERDICT: SNAPSHOT SAFE   (gate 1.5e-5)
+
+====================================================================================================
+dart005_noxt   {"boosting_type": "dart", "drop_rate": 0.05, "skip_drop": 0.5}
+====================================================================================================
+  round   200   truncated=0.955849   refit=0.956081   gap=  -23.15e-5
+  round   400   truncated=0.956695   refit=0.956847   gap=  -15.24e-5
+  round   700   truncated=0.956942   refit=0.956969   gap=   -2.67e-5
+  round  1100   truncated=0.956850   refit=0.956799   gap=   +5.05e-5
+  round  1600   truncated=0.956538   refit=0.956538   gap=   +0.00e-5
+  worst |gap| = 23.15e-5   argmax round: truncated=700 refit=700   selected: truncated=700 refit=700
+  long fit 1600 rounds took 22s; warnings=[]
+  VERDICT: SNAPSHOT UNSAFE -> use refit mode   (gate 1.5e-5)
+
+====================================================================================================
+dart010_noxt   {"boosting_type": "dart", "drop_rate": 0.1, "skip_drop": 0.5}
+====================================================================================================
+  round   200   truncated=0.955391   refit=0.955735   gap=  -34.40e-5
+  round   400   truncated=0.956358   refit=0.956663   gap=  -30.52e-5
+  round   700   truncated=0.956686   refit=0.956692   gap=   -0.58e-5
+  round  1100   truncated=0.956588   refit=0.956628   gap=   -4.09e-5
+  round  1600   truncated=0.956281   refit=0.956281   gap=   +0.00e-5
+  worst |gap| = 34.40e-5   argmax round: truncated=700 refit=700   selected: truncated=700 refit=700
+  long fit 1600 rounds took 27s; warnings=[]
+  VERDICT: SNAPSHOT UNSAFE -> use refit mode   (gate 1.5e-5)
+
+====================================================================================================
+SUMMARY   DART worst truncation error = 34.40e-5   GBDT control = 0.00e-5   gate = 1.5e-5
+If the GBDT control is large the measurement is broken, because GBDT boosting is strictly
+additive and truncation must be exact there.
+wrote C:\Users\James\airline_S6E10\reports\dart_truncation.json
