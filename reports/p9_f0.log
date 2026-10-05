@@ -1,1 +1,26 @@
 ﻿    [cache] view full: (699635, 237)
+
+========================================================================================================
+fold 0   outer-fit=559,708   eval=139,927   features=285
+========================================================================================================
+  ctl_es       ESTABLISHED protocol: 503,739 train rows, ES on 55,969, iter=797  AUC=0.961299  (57s)
+  ctl_fixed    inner curve (refit, refit):
+      round   500  inner AUC 0.961362
+      round   900  inner AUC 0.961410
+      round  1500  inner AUC 0.961246
+      round  2400  inner AUC 0.960955
+      round  3600  inner AUC 0.960626
+    selected round = 900 (argmax, ties to the smaller round); inner selection took 539s
+    cross-check: a single long fit's truncated snapshots would have picked max 0.961410, i.e. +0.0e-5 (agrees)
+    REFIT on all 559,708 outer-fit rows at 900 rounds -> AUC=0.961352  (48s)
+    blend gains vs v3: w=0.01:+0.12, w=0.02:+0.22, w=0.03:+0.32, w=0.05:+0.53, w=0.075:+0.74, w=0.1:+0.95
+  ctl_det      inner curve (refit, refit):
+      round   500  inner AUC 0.961214
+      round   900  inner AUC 0.961302
+      round  1500  inner AUC 0.961222
+      round  2400  inner AUC 0.961035
+      round  3600  inner AUC 0.960692
+    selected round = 900 (argmax, ties to the smaller round); inner selection took 549s
+    cross-check: a single long fit's truncated snapshots would have picked max 0.961302, i.e. +0.0e-5 (agrees)
+    REFIT on all 559,708 outer-fit rows at 900 rounds -> AUC=0.960904  (35s)
+    blend gains vs v3: w=0.01:-0.05, w=0.02:-0.13, w=0.03:-0.22, w=0.05:-0.42, w=0.075:-0.75, w=0.1:-1.10

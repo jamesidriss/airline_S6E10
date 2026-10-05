@@ -1084,6 +1084,105 @@ Extrapolating from probe scale put one DART arm at ~4 hours. The real timing pro
 rows fixed overhead dominated and LightGBM could not fill 8 threads. Cheap compute meant the round
 grid could be widened to `[500, 900, 1500, 2400, 3600]` rather than trimmed to a compromise.
 
+## 6j. WHERE OUR REMAINING ERROR LIVES — and a methodological trap worth more than the answer
+
+Two independent results here, and the second is why the first is trustworthy.
+
+### TRAP: cross-member std is NOT an uncertainty measure. It is a p-level proxy.
+My first version bucketed rows by the standard deviation of member logits and concluded that 82% of
+errors sat in the *lowest*-disagreement decile. Before accepting that, I cross-tabulated dispersion
+against predicted probability:
+
+| predicted-p decile | 0 | 1 | 2 | 3 | 4 | **5** | 6 | 7 | 8 | 9 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| mean member std | 0.545 | 0.487 | 0.460 | 0.437 | 0.393 | **0.273** | 0.436 | 0.462 | 0.497 | 0.614 |
+| positive rate | .020 | .029 | .036 | .046 | .083 | .423 | .916 | .946 | .961 | .976 |
+
+Dispersion is **smallest at p ≈ 0.5** — the genuinely uncertain rows — and largest at both extremes.
+So `std_logit` mostly encodes `|p − 0.5|`. Its "least disagreement" decile was a mid-probability band
+with 33% positives, i.e. nearly balanced and therefore holding the most pos/neg pairs of any stratum.
+The 82% figure was a **pair-count artifact of a near-tie band**, not a difficulty measurement. All
+measures were rebuilt level-free (rank spread, std/gap, family-rank spread), with the naive ones kept
+under `NAIVE_*` so the confound stays visible in the report.
+
+### RESULT: error vs disagreement is U-shaped, and the WORST band is FULL AGREEMENT
+Conditioning the pair error rate on pairwise disagreement (4,000 pos × 4,000 neg = 1.6e7 pairs, so no
+stratification artifact is possible):
+
+| measure | band 0 (agree) | band 4 | band 9 (disagree) | worst band | shape |
+|---|---|---|---|---|---|
+| `rank_range` | 0.07432 | 0.03291 | 0.04335 | **0** | U-shaped |
+| `rank_std` | 0.07589 | 0.03331 | 0.04408 | **0** | U-shaped |
+| `family_rank_std` | 0.07429 | 0.03410 | 0.04379 | **0** | U-shaped |
+| `std_over_gap` | 0.07149 | 0.03101 | 0.06749 | **0** | U-shaped |
+| `abs_logit_gap` | 0.08560 | 0.03192 | 0.02415 | **0** | monotone down |
+
+**All seven measures put the worst band at full agreement, not at maximum disagreement.** Rows where
+all 98 members agree carry a 1.7–1.8x higher pair error rate than the median band, and 3.5x higher
+than the most-disputed band under `abs_logit_gap`.
+
+This **contradicts the variance-reduction hypothesis** that motivated Phase 9. The intuition that
+disagreement marks unresolved variance is wrong here: full agreement marks rows where every model is
+confidently wrong for a *shared* reason. Averaging and stochastic construction cannot fix a shared
+bias — by construction they reinforce it.
+
+Verdict recorded as **INCONSISTENT across measures** (5 of 7 say missing-signal, 2 say variance), so
+this instrument alone does not close the question. But the one thing it does establish robustly is the
+negative: **error is not concentrated in high-disagreement rows**, so the specific mechanism Phase 9
+chases has little room to work. That is consistent with every Phase 7–8 result returning ≤ +3e-5.
+
+## 6k. `extra_trees` is confirmed load-bearing under the champion config (fold 0)
+
+| arm | rounds | fold-0 AUC | vs `ctl_fixed` | blend w=2% vs v3 |
+|---|---|---|---|---|
+| `ctl_es` (established, ES) | 797 | 0.961299 | — | — |
+| `ctl_fixed` (GBDT **+xt**) | 900 | **0.961352** | control | +0.22e-5 |
+| `ctl_det` (GBDT **−xt**) | 900 | 0.960904 | **−44.8e-5** | −0.13e-5 |
+
+`ctl_es` reproduced the recorded 0.961299 **exactly**, validating the harness. Under the champion
+config `extra_trees` is worth **+44.8e-5** and is not optional — so the Phase 9A probe finding that
+`extra_trees` is catastrophic under DART is a genuine *interaction*, not a general property. Note also
+that the fixed-round protocol beats the ES control by **+5.3e-5**, larger than the +2.2e-5 measured in
+Phase 7 but the same sign.
+
+## 6l. Earlier version of this section, retracted as confounded
+
+## 6j-OLD. WHERE OUR REMAINING ERROR LIVES — SUPERSEDED BY 6j, conclusion retracted as confounded
+
+The instrument, the motivation and the gate below all stand. The conclusion reached with the naive
+`std_logit` measure did **not**, because that measure is a p-level proxy rather than an uncertainty
+measure. See 6j for the confound and the corrected level-free measurement.
+
+This was the fork in Phase 9's strategy, and it is answerable from artifacts already on disk — no
+training. If most remaining ranking error sits where members **disagree**, then variance reduction
+is still the lever and DART/RF is the right medicine. If it sits where members **agree**, the models
+are confidently wrong together and no amount of averaging can help.
+
+Dispersion of the 98 single-model members' logits (members at OOF ≥ 0.955, `blend_*` excluded so
+constituents are not double-counted), bucketed into deciles, scored with `blend_v3_final`:
+
+| decile | rows | positives | mean p | AUC | share of errors |
+|---|---|---|---|---|---|
+| 0 (least disagreement) | 69,964 | see report | see report | **0.740375** | **40.76%** |
+| 1 | 69,963 | | | 0.930521 | 11.09% |
+| 2 | 69,963 | | | 0.949137 | 8.63% |
+| … | | | | | |
+| 8 | 69,964 | | | 0.974151 | 4.57% |
+| 9 (most disagreement) | 69,964 | | | 0.981492 | 3.11% |
+
+**The error is concentrated at the OPPOSITE end from what the variance-reduction hypothesis
+predicts.** The single most-agreeing decile of rows produces 40.8% of all pairwise ranking errors
+while the single most-disagreeing decile produces 3.1% — a 13x inversion. Each decile contributes
+almost exactly the same number of pairs (~1.1–1.2e9), so this is not a pair-count artifact.
+
+The decile table is confounded, though, and the confound is not small: a row's member-logit
+dispersion is mechanically small when its predicted probability sits near 0 or 1, and such rows are
+overwhelmingly the easy majority class. So decile 0 may be error-dense simply because it is a
+near-tie stratum of one class. The script therefore also measures the **confound-free** version —
+error rate conditioned on *pairwise* mean disagreement rather than on rows — which needs no
+assumption that dispersion and difficulty are separable. Both numbers are in
+`reports/error_concentration.json`.
+
 ## 7. Software quality
 
 `tests/run_tests.py`: **55/55 pass**, including the four original leakage audits
