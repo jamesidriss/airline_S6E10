@@ -1,0 +1,110 @@
+﻿probe matrix: 21 columns, of which 4 categoricals encoded as ordinal codes: ['Gender', 'Customer Type', 'Type of Travel', 'Class']
+probe data: inner-train=60,000  inner-val=30,000  features=21
+LightGBM capabilities come from the installed build; nothing here is assumed.
+
+----------------------------------------------------------------------------------------------
+G0  GBDT extra_trees  (reference)
+----------------------------------------------------------------------------------------------
+  params: {"extra_trees": true}
+  trained in 0.8s   trees=378   best_iteration reported = 378
+    round   inner AUC  delta vs prev
+      100    0.950601               
+      200    0.951948      +134.7e-5
+      300    0.952463       +51.6e-5
+  argmax at round 300 (0.952463); callback said 378; AUC there = 0.9526080624999999
+  callback loses +14.5e-5 against the measured optimum -> callback_usable=True
+
+----------------------------------------------------------------------------------------------
+D1  DART drop 0.05 skip 0.5 + extra_trees
+----------------------------------------------------------------------------------------------
+  params: {"boosting_type": "dart", "extra_trees": true, "drop_rate": 0.05, "skip_drop": 0.5}
+  trained in 12.3s   trees=900   best_iteration reported = 0
+    round   inner AUC  delta vs prev
+      100    0.949344               
+      200    0.950037       +69.3e-5
+      300    0.950668       +63.1e-5
+      500    0.951672      +100.4e-5
+      700    0.951900       +22.8e-5
+      900    0.952167       +26.7e-5
+  argmax at round 900 (0.952167); callback said 0; AUC there = None
+  callback loses -95216.7e-5 against the measured optimum -> callback_usable=False
+  warnings: ['Early stopping is not available in dart mode']
+
+----------------------------------------------------------------------------------------------
+D2  DART drop 0.10 skip 0.5 + extra_trees
+----------------------------------------------------------------------------------------------
+  params: {"boosting_type": "dart", "extra_trees": true, "drop_rate": 0.1, "skip_drop": 0.5}
+  trained in 16.6s   trees=900   best_iteration reported = 0
+    round   inner AUC  delta vs prev
+      100    0.948669               
+      200    0.949598       +92.8e-5
+      300    0.950213       +61.6e-5
+      500    0.951418      +120.4e-5
+      700    0.951988       +57.0e-5
+      900    0.952238       +25.0e-5
+  argmax at round 900 (0.952238); callback said 0; AUC there = None
+  callback loses -95223.8e-5 against the measured optimum -> callback_usable=False
+  warnings: ['Early stopping is not available in dart mode']
+
+----------------------------------------------------------------------------------------------
+D3  DART drop 0.05 skip 0.5, NO extra_trees (the extra_trees control)
+----------------------------------------------------------------------------------------------
+  params: {"boosting_type": "dart", "drop_rate": 0.05, "skip_drop": 0.5}
+  trained in 10.3s   trees=900   best_iteration reported = 0
+    round   inner AUC  delta vs prev
+      100    0.955189               
+      200    0.956145       +95.6e-5
+      300    0.956485       +34.1e-5
+      500    0.956637       +15.2e-5
+      700    0.956934       +29.7e-5
+      900    0.956984        +5.0e-5
+  argmax at round 900 (0.956984); callback said 0; AUC there = None
+  callback loses -95698.4e-5 against the measured optimum -> callback_usable=False
+  warnings: ['Early stopping is not available in dart mode']
+
+----------------------------------------------------------------------------------------------
+R1  RF bagging .8 freq 1, ordinary thresholds
+----------------------------------------------------------------------------------------------
+  params: {"boosting_type": "rf", "bagging_fraction": 0.8, "bagging_freq": 1, "feature_fraction": 0.8}
+  trained in 0.5s   trees=174   best_iteration reported = 174
+    round   inner AUC  delta vs prev
+      100    0.953159               
+  argmax at round 100 (0.953159); callback said 174; AUC there = 0.9532840648148149
+  callback loses +12.5e-5 against the measured optimum -> callback_usable=True
+
+----------------------------------------------------------------------------------------------
+R2  RF bagging .8 freq 1 + extra_trees
+----------------------------------------------------------------------------------------------
+  params: {"boosting_type": "rf", "extra_trees": true, "bagging_fraction": 0.8, "bagging_freq": 1, "feature_fraction": 0.8}
+
+----------------------------------------------------------------------------------------------
+R3  RF bagging 1.0 freq 0 (should be REJECTED by LightGBM)
+----------------------------------------------------------------------------------------------
+  params: {"boosting_type": "rf", "bagging_fraction": 1.0, "bagging_freq": 0}
+  trained in 0.4s   trees=144   best_iteration reported = 144
+    round   inner AUC  delta vs prev
+      100    0.953204               
+  argmax at round 100 (0.953204); callback said 144; AUC there = 0.9533228611111111
+  callback loses +11.9e-5 against the measured optimum -> callback_usable=True
+
+==============================================================================================
+SUMMARY
+==============================================================================================
+  probe                                                 trains  trees best_iter  argmax  usable
+  G0  GBDT extra_trees  (reference)                        yes    378       378     300    True
+  D1  DART drop 0.05 skip 0.5 + extra_trees                yes    900      None     900   False
+  D2  DART drop 0.10 skip 0.5 + extra_trees                yes    900      None     900   False
+  D3  DART drop 0.05 skip 0.5, NO extra_trees (the e       yes    900      None     900   False
+  R1  RF bagging .8 freq 1, ordinary thresholds            yes    174       174     100    True
+  R2  RF bagging .8 freq 1 + extra_trees                   yes     36        36       -    None
+  R3  RF bagging 1.0 freq 0 (should be REJECTED by L       yes    144       144     100    True
+
+  DECISIONS THE PROBE FORCES ON THE HARNESS:
+  * DART trains. The callback's round selection DISAGREES with the measured
+    argmax for 3 of 3 configs, so the fixed-round inner-selection protocol is
+    MANDATORY, not optional: ['D1', 'D2', 'D3']
+  * DART prediction at a given num_iteration is the ensemble surviving the final
+    dropout pass, so snapshots of the curve are required, not just a best_iteration.
+  * RF trains under bagging_fraction<1 with bagging_freq>0 (0 config(s) correctly refused by LightGBM).
+
+wrote C:\Users\James\airline_S6E10\reports\dart_rf_capability.json

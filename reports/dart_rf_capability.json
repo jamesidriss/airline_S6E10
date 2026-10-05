@@ -1,0 +1,257 @@
+{
+  "lightgbm_version": "4.7.0",
+  "snapshots": [
+    100,
+    200,
+    300,
+    500,
+    700,
+    900,
+    1200
+  ],
+  "probes": [
+    {
+      "name": "G0  GBDT extra_trees  (reference)",
+      "extra_params": {
+        "extra_trees": true
+      },
+      "n_estimators_cap": 700,
+      "used_callback": true,
+      "warnings": [],
+      "trains": true,
+      "seconds": 0.8,
+      "best_iteration": 378,
+      "num_trees": 378,
+      "curve": [
+        {
+          "round": 100,
+          "auc": 0.9506008217592592
+        },
+        {
+          "round": 200,
+          "auc": 0.9519475162037037
+        },
+        {
+          "round": 300,
+          "auc": 0.9524633055555555
+        }
+      ],
+      "auc_argmax": 0.9524633055555555,
+      "round_of_argmax": 300,
+      "auc_at_reported_best": 0.9526080624999999,
+      "callback_usable": true
+    },
+    {
+      "name": "D1  DART drop 0.05 skip 0.5 + extra_trees",
+      "extra_params": {
+        "boosting_type": "dart",
+        "extra_trees": true,
+        "drop_rate": 0.05,
+        "skip_drop": 0.5
+      },
+      "n_estimators_cap": 900,
+      "used_callback": true,
+      "warnings": [
+        "Early stopping is not available in dart mode"
+      ],
+      "trains": true,
+      "seconds": 12.3,
+      "best_iteration": null,
+      "num_trees": 900,
+      "curve": [
+        {
+          "round": 100,
+          "auc": 0.9493439652777779
+        },
+        {
+          "round": 200,
+          "auc": 0.9500374537037037
+        },
+        {
+          "round": 300,
+          "auc": 0.9506683819444446
+        },
+        {
+          "round": 500,
+          "auc": 0.9516720995370371
+        },
+        {
+          "round": 700,
+          "auc": 0.951899787037037
+        },
+        {
+          "round": 900,
+          "auc": 0.952166835648148
+        }
+      ],
+      "auc_argmax": 0.952166835648148,
+      "round_of_argmax": 900,
+      "auc_at_reported_best": null,
+      "callback_usable": false
+    },
+    {
+      "name": "D2  DART drop 0.10 skip 0.5 + extra_trees",
+      "extra_params": {
+        "boosting_type": "dart",
+        "extra_trees": true,
+        "drop_rate": 0.1,
+        "skip_drop": 0.5
+      },
+      "n_estimators_cap": 900,
+      "used_callback": true,
+      "warnings": [
+        "Early stopping is not available in dart mode"
+      ],
+      "trains": true,
+      "seconds": 16.6,
+      "best_iteration": null,
+      "num_trees": 900,
+      "curve": [
+        {
+          "round": 100,
+          "auc": 0.9486691643518518
+        },
+        {
+          "round": 200,
+          "auc": 0.9495975949074075
+        },
+        {
+          "round": 300,
+          "auc": 0.9502134328703704
+        },
+        {
+          "round": 500,
+          "auc": 0.951417914351852
+        },
+        {
+          "round": 700,
+          "auc": 0.951987523148148
+        },
+        {
+          "round": 900,
+          "auc": 0.9522375069444443
+        }
+      ],
+      "auc_argmax": 0.9522375069444443,
+      "round_of_argmax": 900,
+      "auc_at_reported_best": null,
+      "callback_usable": false
+    },
+    {
+      "name": "D3  DART drop 0.05 skip 0.5, NO extra_trees (the extra_trees control)",
+      "extra_params": {
+        "boosting_type": "dart",
+        "drop_rate": 0.05,
+        "skip_drop": 0.5
+      },
+      "n_estimators_cap": 900,
+      "used_callback": true,
+      "warnings": [
+        "Early stopping is not available in dart mode"
+      ],
+      "trains": true,
+      "seconds": 10.3,
+      "best_iteration": null,
+      "num_trees": 900,
+      "curve": [
+        {
+          "round": 100,
+          "auc": 0.9551885486111111
+        },
+        {
+          "round": 200,
+          "auc": 0.9561446597222223
+        },
+        {
+          "round": 300,
+          "auc": 0.9564851620370369
+        },
+        {
+          "round": 500,
+          "auc": 0.9566368333333334
+        },
+        {
+          "round": 700,
+          "auc": 0.9569337962962963
+        },
+        {
+          "round": 900,
+          "auc": 0.9569841435185185
+        }
+      ],
+      "auc_argmax": 0.9569841435185185,
+      "round_of_argmax": 900,
+      "auc_at_reported_best": null,
+      "callback_usable": false
+    },
+    {
+      "name": "R1  RF bagging .8 freq 1, ordinary thresholds",
+      "extra_params": {
+        "boosting_type": "rf",
+        "bagging_fraction": 0.8,
+        "bagging_freq": 1,
+        "feature_fraction": 0.8
+      },
+      "n_estimators_cap": 700,
+      "used_callback": true,
+      "warnings": [],
+      "trains": true,
+      "seconds": 0.5,
+      "best_iteration": 174,
+      "num_trees": 174,
+      "curve": [
+        {
+          "round": 100,
+          "auc": 0.9531587175925926
+        }
+      ],
+      "auc_argmax": 0.9531587175925926,
+      "round_of_argmax": 100,
+      "auc_at_reported_best": 0.9532840648148149,
+      "callback_usable": true
+    },
+    {
+      "name": "R2  RF bagging .8 freq 1 + extra_trees",
+      "extra_params": {
+        "boosting_type": "rf",
+        "extra_trees": true,
+        "bagging_fraction": 0.8,
+        "bagging_freq": 1,
+        "feature_fraction": 0.8
+      },
+      "n_estimators_cap": 700,
+      "used_callback": true,
+      "warnings": [],
+      "trains": true,
+      "seconds": 0.2,
+      "best_iteration": 36,
+      "num_trees": 36,
+      "curve": []
+    },
+    {
+      "name": "R3  RF bagging 1.0 freq 0 (should be REJECTED by LightGBM)",
+      "extra_params": {
+        "boosting_type": "rf",
+        "bagging_fraction": 1.0,
+        "bagging_freq": 0
+      },
+      "n_estimators_cap": 700,
+      "used_callback": true,
+      "warnings": [],
+      "trains": true,
+      "seconds": 0.4,
+      "best_iteration": 144,
+      "num_trees": 144,
+      "curve": [
+        {
+          "round": 100,
+          "auc": 0.9532040347222221
+        }
+      ],
+      "auc_argmax": 0.9532040347222221,
+      "round_of_argmax": 100,
+      "auc_at_reported_best": 0.9533228611111111,
+      "callback_usable": true
+    }
+  ]
+}
