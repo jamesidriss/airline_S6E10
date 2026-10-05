@@ -29,8 +29,9 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from scripts.run_stochastic_boosting import (CHAMPION, ES_PATIENCE, ES_ROUNDS,  # noqa: E402
-                                             MODES, SNAPSHOTS, build_params, inner_split)
+from scripts.run_stochastic_boosting import (CHAMPION, DART_SNAPSHOTS,  # noqa: E402
+                                             ES_PATIENCE, ES_ROUNDS, MODES, SNAPSHOTS,
+                                             build_params, inner_split, mode_snapshots)
 
 FAILS: list[str] = []
 N = 0
@@ -192,6 +193,30 @@ def test_champion_matches_recorded_control() -> None:
               abs(rec - 0.961299) < 5e-6, str(rec))
 
 
+def test_dart_grid_is_shorter_and_brackets_the_peak() -> None:
+    print("\nper-mode round grid")
+    dart = [m for m, v in MODES.items() if v["boosting"] == "dart"]
+    check("DART arms exist", len(dart) > 0, str(dart))
+    for m in dart:
+        g = mode_snapshots(m, list(SNAPSHOTS))
+        check(f"{m}: uses the shorter DART grid", g == DART_SNAPSHOTS, str(g))
+    for m, v in MODES.items():
+        if v["boosting"] != "dart":
+            check(f"{m}: uses the default grid", mode_snapshots(m, list(SNAPSHOTS)) == list(SNAPSHOTS))
+    check("DART grid is strictly increasing",
+          DART_SNAPSHOTS == sorted(set(DART_SNAPSHOTS)), str(DART_SNAPSHOTS))
+    # the probe measured DART peaking near 700 and decaying after; the grid must still contain a
+    # point above that, because more rows and a lower learning rate push the real peak later
+    check("DART grid brackets the probe's ~700 peak",
+          any(r <= 700 for r in DART_SNAPSHOTS) and any(r > 700 for r in DART_SNAPSHOTS),
+          str(DART_SNAPSHOTS))
+    check("DART grid stops well short of the wasteful 3600 tail",
+          max(DART_SNAPSHOTS) <= 1700, str(DART_SNAPSHOTS))
+    check("DART grid total cost is below the GBDT grid's",
+          sum(DART_SNAPSHOTS) < sum(SNAPSHOTS),
+          f"{sum(DART_SNAPSHOTS)} vs {sum(SNAPSHOTS)}")
+
+
 def test_rf_sets_bagging_explicitly() -> None:
     print("\nRF configuration")
     rf_modes = [m for m, v in MODES.items() if v["boosting"] == "rf"]
@@ -233,7 +258,8 @@ def main() -> int:
     for fn in (test_round_rule_never_overfits, test_round_tolerance_bounded,
                test_snapshot_refused_for_dart, test_inner_split_is_inside_outer_fit,
                test_inner_split_is_deterministic_and_stratified, test_fit_eval_disjoint,
-               test_champion_matches_recorded_control, test_rf_sets_bagging_explicitly,
+               test_champion_matches_recorded_control, test_dart_grid_is_shorter_and_brackets_the_peak,
+               test_rf_sets_bagging_explicitly,
                test_build_params_does_not_leak_unknown_keys):
         fn()
     print("\n" + "=" * 78)

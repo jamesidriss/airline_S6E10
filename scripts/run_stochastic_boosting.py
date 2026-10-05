@@ -126,6 +126,24 @@ def logit(p):
     return np.log(p / (1 - p))
 
 
+# DART gets a SHORTER grid than GBDT, pre-declared from the probe evidence rather than from any
+# eval-fold observation. Two independent reasons, both measured before this run:
+#   1. the truncation probe's refit curve for DART peaked near 700 and then decayed, so a grid
+#      reaching 3600 would spend most of its compute in the over-iterated region;
+#   2. DART's per-round cost grows with tree count (measured 2.62x from 300 to 1500 rounds), so the
+#      upper grid points are disproportionately expensive.
+# The grid still brackets where the peak is expected at real scale (more rows and a lower learning
+# rate both push it later than the probe's 700).
+DART_SNAPSHOTS = [400, 700, 1100, 1700]
+
+
+def mode_snapshots(mode: str, default: list[int]) -> list[int]:
+    """Round grid for one arm: DART arms use the shorter pre-declared grid."""
+    if MODES[mode]["boosting"] == "dart":
+        return list(DART_SNAPSHOTS)
+    return list(default)
+
+
 def build_params(mode: dict, seed: int) -> dict:
     p = dict(CHAMPION)
     b = mode["boosting"]
@@ -266,26 +284,31 @@ def main() -> None:
                       f"{per:.3f}s/round   -> full grid ({need} rounds) ~ "
                       f"{per*need/3600:.2f} h", flush=True)
             print(f"\n  inner-train rows used: {len(itr_l):,}   features: {Xf.shape[1]}")
-            # Extrapolation is quadratic in rounds for DART and linear for GBDT. This is measured,
-            # not assumed: DART cost per round rose from 0.058 s at 300 rounds to 0.152 s at 1500
-            # rounds on identical data, a 2.62x increase, because each new tree re-normalises the
-            # surviving ensemble. GBDT's s/round was flat to within noise and its inner curve decays
-            # after ~900, so it is treated as linear. A single-rounds linear projection understated
-            # a full DART grid by ~2.6x.
-            def cost(rounds: int, per300: float, dart: bool) -> float:
+            # Extrapolation is super-linear for DART and linear for GBDT. Measured, not assumed:
+            # DART cost per round rose from 0.058 s at 300 rounds to 0.152 s at 1500 rounds on
+            # identical data (2.62x), because each new tree re-normalises the surviving ensemble.
+            # GBDT's s/round is flat and its curve decays after ~900, so GBDT is linear.
+            #
+            # The anchor must be the TOTAL cost of the probe fit at the probe's own round count. An
+            # earlier version re-expressed the average s/round as if it were the cost at 300 rounds
+            # and then scaled from 300, which understated a 3600-round DART fit by ~10x. The fit is
+            # anchored at (args.timing_probe, measured_seconds) and scaled from there.
+            anchor_r = args.timing_probe
+
+            def cost(rounds: int, anchor_s: float, dart: bool) -> float:
                 if dart:
-                    # measured anchor at 300 rounds, scaling as r^1.5 which fits 300->1500 closely
-                    return per300 * (rounds / 300.0) ** 1.5
-                return per300 * (rounds / 300.0)
+                    return anchor_s * (rounds / anchor_r) ** 1.5
+                return anchor_s * (rounds / anchor_r)
 
             for mname, pj in proj.items():
-                per300 = pj["sec_per_round"] * args.timing_probe / 300.0
                 dart = MODES[mname]["boosting"] == "dart"
-                pj["extrapolation"] = ("quadratic-ish (r^1.5, anchored on measured 300 vs 1500)"
-                                       if dart else "linear (s/round measured flat)")
+                grid = mode_snapshots(mname, snaps)
+                sel = grid[len(grid) // 2]
+                pj["grid_used"] = grid
+                pj["extrapolation"] = (f"r^1.5 from the measured {anchor_r}-round fit"
+                                       if dart else f"linear from the measured {anchor_r}-round fit")
                 pj["projected_full_grid_seconds"] = round(
-                    sum(cost(r, per300, dart) for r in snaps) + cost(snaps[len(snaps) // 2],
-                                                                     per300, dart))
+                    sum(cost(r, pj["seconds"], dart) for r in grid) + cost(sel, pj["seconds"], dart))
                 pj["projected_full_grid_hours"] = round(
                     pj["projected_full_grid_seconds"] / 3600.0, 2)
             save_json({"tag": args.tag, "timing_probe_rounds": args.timing_probe,
@@ -335,21 +358,22 @@ def main() -> None:
             y_itr = y[itr_g]
             y_iv = y[iv_g]
 
+            arm_snaps = mode_snapshots(mname, snaps)
             curve, curve_snap = [], []
             t_curve = time.time()
             if args.curve_mode == "refit":
-                for r in snaps:
+                for r in arm_snaps:
                     mm = fit_fixed(Xf[itr_l], y_itr, params, r)
                     curve.append({"round": r, "auc": float(roc_auc_score(y_iv, mm.predict(Xf[iv_l])))})
                 # cross-check: what a single long fit's truncated snapshots would have said
-                mm_long = fit_fixed(Xf[itr_l], y_itr, params, max(snaps))
-                for r in snaps:
+                mm_long = fit_fixed(Xf[itr_l], y_itr, params, max(arm_snaps))
+                for r in arm_snaps:
                     curve_snap.append(
                         {"round": r, "auc": float(roc_auc_score(y_iv, mm_long.predict(Xf[iv_l],
                                                                                     num_iteration=r)))})
             else:
-                mm_long = fit_fixed(Xf[itr_l], y_itr, params, max(snaps))
-                for r in snaps:
+                mm_long = fit_fixed(Xf[itr_l], y_itr, params, max(arm_snaps))
+                for r in arm_snaps:
                     curve_snap.append(
                         {"round": r, "auc": float(roc_auc_score(y_iv, mm_long.predict(Xf[iv_l],
                                                                                     num_iteration=r)))})
@@ -397,7 +421,7 @@ def main() -> None:
                     roc_auc_score(y[val], fin[val]))
             fold_rec[mname] = {"auc": auc, "selected_round": int(n_sel),
                                "argmax_round": int(n_argmax), "round_tolerance": args.round_tolerance,
-                               "inner_curve": curve,
+                               "inner_curve": curve, "grid": arm_snaps,
                                "snapshot_crosscheck": curve_snap,
                                "snapshot_vs_refit_argmax_gap_e5": (snap_gap * 1e5) if snap_gap is not None else None,
                                "n_rows": int(len(fit)), "seconds": round(t_refit, 1),
