@@ -985,7 +985,7 @@ a row-count effect.
 
 ## 7. Software quality
 
-`tests/run_tests.py`: **58 tests pass**, including the four original leakage audits
+`tests/run_tests.py`: **55/55 pass**, including the four original leakage audits
 (`test_fold_safe_te_never_sees_apply_rows`, `test_crossfit_row_never_sees_own_label`,
 `test_external_features_use_no_competition_label`, `test_original_overlap_audit_is_small`), **5
 index-space guards** and **9 `te_all21` / view-composition guards** added this session.
@@ -1064,10 +1064,20 @@ relative to its uncertainty.
   1. Finish the full-data refit, run `scripts/make_submission_v4.py`, pre-flight, and submit **once**.
   2. Re-check the final-submission selection rules on the competition Rules page near the deadline.
   3. Re-run `scripts/reproduce_finalist.py` from clean to confirm the submission is byte-reproducible.
-  4. Do **not** re-tune the GBDT families. Every honest axis measured this session came back at or
-     below +3e-5, and the evidence says that is the size of the remaining surface. The v4 board
-     result closes the question from the other end: the one mechanism that *was* mechanistically
-     sound delivered +2e-5 in practice, so that is the realistic scale of anything still available.
+  4. Do **not** re-tune the GBDT families, and do **not** revisit target encoding. Phase 8 tested the
+     public solution's two TE mechanisms honestly — all-21 exact-value `TargetEncoder` and 18
+     conditional cross keys through our own shrinkage machinery — and **both were rejected**, under both
+     `extra_trees` and deterministic trees, and on ensemble complementarity as well as standalone. The
+     measured reason is that our existing selective `te` block already captures the available signal
+     and beats all-21 TE by **13.3e-5**; the value here is *interactions plus a shrinkage spectrum*,
+     not column coverage.
+  5. Section 20 is closed: **no independently collected external labelled dataset exists** for this
+     schema, and the single anomaly carries a *different target definition* and is net harmful when
+     appended (−78.2e-5 against a row-count-matched duplicate control). Stop dataset hunting.
+  6. The one conclusion that survives every one of these negatives is **rho-independent and should
+     govern what is tried next**: the top twenty occupy a 1.0e-4 band while sitting 7.8e-4 above us,
+     and every gain actually measured is single-digit e-5. Closing that gap needs something
+     structurally different, not more of the same.
 
 ## 9. Reproducing the submission
 
