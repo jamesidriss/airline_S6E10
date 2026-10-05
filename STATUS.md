@@ -775,23 +775,44 @@ predictor — a bucket-mean AUC below 0.5 is a reliable smell), and the finite-s
 expectation was wrong by a factor of n (5.19 vs an observed 0.055), which a first pass reported as an
 "excess" of −5.13.
 
-### Is the leaderboard gap real? Yes — and a first hand estimate got it backwards
-`scripts/analyse_lb_noise.py`. The ±0.0002 paired noise floor in `AGENTS.md` is correct but narrow:
+### Is the leaderboard gap real? Unknown � and my own z-score was wrong twice
+`scripts/analyse_lb_noise.py`. The +-0.0002 paired noise floor in `AGENTS.md` is correct but narrow:
 it governs whether to send a *near-identical* submission, and it is the wrong instrument for asking
 whether we differ from a *different* solution.
 
-A first pass, done by hand, put the single-estimate SE at 0.0025–0.0036 and concluded the 7.8e-4 gap
-might be only ~0.2σ — i.e. noise. **Hanley–McNeil says SE is 0.00099–0.00124, about three times
-smaller**, so the gap is **z = 3.1 at ρ=0.995 and z = 4.4 at ρ=0.99**, and clears 2σ even between two
-*uncorrelated* predictions. The hand figure was a loose binomial approximation, and acting on it
-would have produced a confidently wrong strategy. Recorded because the error would otherwise have
-been invisible.
+**This file got it wrong twice, in opposite directions, and both errors are worth recording.**
 
-The consequence is uncomfortable and should govern how compute is spent: the gap is genuine, we are
-really behind, and **every gain measurable in this campaign is single-digit e-5.** The top twenty
-occupy a 1.0e-4 band while sitting 7.8e-4 above us, so they are a converged pack at a common higher
-level — beating one means beating that common level, not out-scoring a spread field. More GBDT-family
-polish will not close it; something structurally different would be needed.
+1. A first pass, done by hand, put the single-estimate SE at 0.0025-0.0036 and concluded the 7.8e-4
+   gap might be only ~0.2 sigma, i.e. noise. **Hanley-McNeil says SE is 0.00099-0.00124**, about
+   three times smaller, so that hand figure was simply wrong.
+2. Having fixed that, the script introduced the **opposite** error and I reported it. It computed the
+   correlation needed for a 2-sigma gap as `1 - (min_z/2)^2/2`, which is *not* the inversion of the
+   z formula. It returned a negative number, which I clamped to zero and rendered as the sentence
+
+   > "the gap clears 2 sigma even between two **uncorrelated** predictions"
+
+   **That is false, and the script's own table said so � at rho = 0 the z is 0.49, not above 2.** I
+   built a confident sentence from a number without checking the number against it. The correct
+   inversion is `rho = 1 - (gap/2)^2 / (2*se^2)` = **0.9411**.
+
+**Where that leaves the gap, stated no more strongly than the evidence allows:**
+
+| | |
+|---|---|
+| scores (factual) | ours 0.960980, leader 0.961760, **gap 7.8e-4** |
+| z across rho in [0,1] | **0.44 to 7.88** |
+| clears 2 sigma only if | **rho > 0.941** |
+| is rho measured? | **NO � we do not hold the leader's prediction vector** |
+
+So no single z is asserted. Two strong tabular solutions on the same 699k rows and the same metric
+would plausibly sit well above rho = 0.941, so **"probably real" is a reasonable working belief** �
+recorded as a belief, not a measurement.
+
+**What does not depend on rho, and is therefore the part that should govern compute:** the top twenty
+occupy a 1.0e-4 band while sitting 7.8e-4 above us, so they are a converged pack at a common level,
+not a spread field. And every gain this campaign has actually *measured* is single-digit e-5, with the
+one mechanistically sound mechanism delivering +2e-5 on this very board. Whether or not the gap is
+statistically real, **more GBDT-family polish will not close 7.8e-4**.
 
 ## 7. Software quality
 
@@ -833,21 +854,23 @@ relative to its uncertainty.
 - **What v4 actually tells us.** v4 keeps v3's 59 members, weights and OOF, but refits 32 of the
   LightGBM members on **100% of the labels** instead of that fold's outer-fit subset, with the
   iteration count set to the median of three independent 5% early-stopping holdouts.
-  - It is **not** statistically distinguishable from v3: +2e-5 against a **±2e-4** paired floor, and a
-    single observation that size is what the noise produces by itself. Reporting it as proof that the
-    policy helps would be the same error as reading the 7.8e-4 leaderboard gap as noise — in the
-    opposite direction.
-  - What it *does* support: **sign and magnitude both match the cross-validated prediction**, which
-    was low-single-digit e-5 after discounting the learning-curve extrapolation. So the fold-level
-    training-fraction finding **transferred to the real test set instead of reversing**, which is a
-    genuine sanity check on the audit, the leakage-safe protocol, the iteration policy and the
-    full-data feature verification — any of which could easily have produced a large *negative* delta.
-  - It also **bounds** the mechanism: training on 100% of the labels cannot be worth much more than
-    +2e-5 here, whatever the fold arithmetic suggested. The +20.2e-5 raw extrapolation was rightly
-    discounted, and the **realised** rate of the learning-curve law at the top of the range is now
-    measured end-to-end at roughly **+2e-5 per full 20-point data step**, not +20e-5.
-  - Rank did not move (215), the expected consequence of a gain this small against a top-20 band only
-    1.0e-4 wide.
+  - It is **directionally consistent with the cross-validated estimate, but the public delta is
+    unresolved at leaderboard precision**: +2e-5 against a **±2e-4** paired floor, i.e. an order of
+    magnitude below the board's resolution. One such observation places essentially no constraint on
+    the true effect — it is compatible with an effect several times larger or several times smaller.
+    It must not be quoted as measuring the full-data gain.
+  - **The evidence for a small full-data gain is the fold-level measurement**, not the public score:
+    fold 0 **+4.0e-5**, fold 1 **+0.4e-5**, mean **+2.2e-5**, 2/2 folds.
+  - What the board result *does* support is a sanity check on the whole chain — the train-fraction
+    audit, the leakage-safe full-fit protocol, the median-of-3 iteration policy and the full-data
+    feature verification all feed it, and any of them being wrong could easily have produced a large
+    *negative* delta instead. It came back the way the mechanism predicted rather than reversed.
+  - **No upside tuning**: the result gives no reason to expect *more* from this mechanism than the
+    fold arithmetic already implied, so nothing should be scaled up on the strength of +2e-5. (That
+    is "gives no reason to expect more", not "bounds it" — an earlier draft of this file conflated
+    the two; see `p7_v4_bounds_claim_CORRECTION`.)
+  - Rank did not move (215), the expected consequence of a change this small against a top-20 band
+    only 1.0e-4 wide.
 - **The gap is real and it is large.** Leader 0.961760, our public 0.960980, gap **7.8e-4**. That is
   **z = 3.1-4.4** even after allowing for correlation between two *different* solutions, and it clears
   2 sigma even between uncorrelated predictions (Hanley-McNeil SE ~ 0.0011 on the 59,969-row public

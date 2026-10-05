@@ -7,11 +7,43 @@
   "table": [
     {
       "pos_rate": 0.2,
+      "rho": 0.0,
+      "se_single": 0.001241632008745513,
+      "se_diff": 0.0017559328262444541,
+      "z": 0.4442083366413553,
+      "verdict": "indistinguishable"
+    },
+    {
+      "pos_rate": 0.2,
+      "rho": 0.5,
+      "se_single": 0.001241632008745513,
+      "se_diff": 0.001241632008745513,
+      "z": 0.6282054541973981,
+      "verdict": "indistinguishable"
+    },
+    {
+      "pos_rate": 0.2,
+      "rho": 0.9,
+      "se_single": 0.001241632008745513,
+      "se_diff": 0.0005552747149189161,
+      "z": 1.404710099421513,
+      "verdict": "indistinguishable"
+    },
+    {
+      "pos_rate": 0.2,
+      "rho": 0.95,
+      "se_single": 0.001241632008745513,
+      "se_diff": 0.00039263851634059274,
+      "z": 1.9865600738043616,
+      "verdict": "indistinguishable"
+    },
+    {
+      "pos_rate": 0.2,
       "rho": 0.98,
       "se_single": 0.001241632008745513,
       "se_diff": 0.00024832640174910273,
       "z": 3.1410272709869895,
-      "verdict": "clearly real"
+      "verdict": "probably real"
     },
     {
       "pos_rate": 0.2,
@@ -19,7 +51,7 @@
       "se_single": 0.001241632008745513,
       "se_diff": 0.00017559328262444548,
       "z": 4.442083366413551,
-      "verdict": "clearly real"
+      "verdict": "probably real"
     },
     {
       "pos_rate": 0.2,
@@ -27,15 +59,39 @@
       "se_single": 0.001241632008745513,
       "se_diff": 0.00012416320087455136,
       "z": 6.282054541973979,
-      "verdict": "clearly real"
+      "verdict": "real"
     },
     {
-      "pos_rate": 0.2,
-      "rho": 1.0,
-      "se_single": 0.001241632008745513,
-      "se_diff": 0.0,
-      "z": Infinity,
-      "verdict": "clearly real"
+      "pos_rate": 0.24,
+      "rho": 0.0,
+      "se_single": 0.0011361988358718036,
+      "se_diff": 0.001606827803242427,
+      "z": 0.48542849359840334,
+      "verdict": "indistinguishable"
+    },
+    {
+      "pos_rate": 0.24,
+      "rho": 0.5,
+      "se_single": 0.0011361988358718036,
+      "se_diff": 0.0011361988358718036,
+      "z": 0.6864995592092031,
+      "verdict": "indistinguishable"
+    },
+    {
+      "pos_rate": 0.24,
+      "rho": 0.9,
+      "se_single": 0.0011361988358718036,
+      "se_diff": 0.0005081235665930958,
+      "z": 1.5350596809154202,
+      "verdict": "indistinguishable"
+    },
+    {
+      "pos_rate": 0.24,
+      "rho": 0.95,
+      "se_single": 0.0011361988358718036,
+      "se_diff": 0.00035929761961867246,
+      "z": 2.170902219802702,
+      "verdict": "marginal"
     },
     {
       "pos_rate": 0.24,
@@ -43,7 +99,7 @@
       "se_single": 0.0011361988358718036,
       "se_diff": 0.00022723976717436083,
       "z": 3.432497796046014,
-      "verdict": "clearly real"
+      "verdict": "probably real"
     },
     {
       "pos_rate": 0.24,
@@ -51,7 +107,7 @@
       "se_single": 0.0011361988358718036,
       "se_diff": 0.00016068278032424274,
       "z": 4.854284935984031,
-      "verdict": "clearly real"
+      "verdict": "probably real"
     },
     {
       "pos_rate": 0.24,
@@ -59,15 +115,39 @@
       "se_single": 0.0011361988358718036,
       "se_diff": 0.00011361988358718042,
       "z": 6.864995592092028,
-      "verdict": "clearly real"
+      "verdict": "real"
     },
     {
-      "pos_rate": 0.24,
-      "rho": 1.0,
-      "se_single": 0.0011361988358718036,
-      "se_diff": 0.0,
-      "z": Infinity,
-      "verdict": "clearly real"
+      "pos_rate": 0.28,
+      "rho": 0.0,
+      "se_single": 0.0010547421321510406,
+      "se_diff": 0.0014916306280943169,
+      "z": 0.5229176615906033,
+      "verdict": "indistinguishable"
+    },
+    {
+      "pos_rate": 0.28,
+      "rho": 0.5,
+      "se_single": 0.0010547421321510406,
+      "se_diff": 0.0010547421321510406,
+      "z": 0.7395172490258556,
+      "verdict": "indistinguishable"
+    },
+    {
+      "pos_rate": 0.28,
+      "rho": 0.9,
+      "se_single": 0.0010547421321510406,
+      "se_diff": 0.0004716950212445586,
+      "z": 1.6536108393554534,
+      "verdict": "indistinguishable"
+    },
+    {
+      "pos_rate": 0.28,
+      "rho": 0.95,
+      "se_single": 0.0010547421321510406,
+      "se_diff": 0.00033353874817396015,
+      "z": 2.338558875903638,
+      "verdict": "marginal"
     },
     {
       "pos_rate": 0.28,
@@ -75,7 +155,7 @@
       "se_single": 0.0010547421321510406,
       "se_diff": 0.0002109484264302082,
       "z": 3.6975862451292763,
-      "verdict": "clearly real"
+      "verdict": "probably real"
     },
     {
       "pos_rate": 0.28,
@@ -83,7 +163,7 @@
       "se_single": 0.0010547421321510406,
       "se_diff": 0.00014916306280943174,
       "z": 5.229176615906031,
-      "verdict": "clearly real"
+      "verdict": "real"
     },
     {
       "pos_rate": 0.28,
@@ -91,15 +171,39 @@
       "se_single": 0.0010547421321510406,
       "se_diff": 0.0001054742132151041,
       "z": 7.3951724902585525,
-      "verdict": "clearly real"
+      "verdict": "real"
     },
     {
-      "pos_rate": 0.28,
-      "rho": 1.0,
-      "se_single": 0.0010547421321510406,
-      "se_diff": 0.0,
-      "z": Infinity,
-      "verdict": "clearly real"
+      "pos_rate": 0.32,
+      "rho": 0.0,
+      "se_single": 0.0009895709913061523,
+      "se_diff": 0.0013994647168361488,
+      "z": 0.5573559594724147,
+      "verdict": "indistinguishable"
+    },
+    {
+      "pos_rate": 0.32,
+      "rho": 0.5,
+      "se_single": 0.0009895709913061523,
+      "se_diff": 0.0009895709913061523,
+      "z": 0.7882203569553581,
+      "verdict": "indistinguishable"
+    },
+    {
+      "pos_rate": 0.32,
+      "rho": 0.9,
+      "se_single": 0.0009895709913061523,
+      "se_diff": 0.00044254960102448195,
+      "z": 1.7625142994013299,
+      "verdict": "indistinguishable"
+    },
+    {
+      "pos_rate": 0.32,
+      "rho": 0.95,
+      "se_single": 0.0009895709913061523,
+      "se_diff": 0.00031292982389581245,
+      "z": 2.492571626089873,
+      "verdict": "marginal"
     },
     {
       "pos_rate": 0.32,
@@ -107,7 +211,7 @@
       "se_single": 0.0009895709913061523,
       "se_diff": 0.00019791419826123056,
       "z": 3.9411017847767886,
-      "verdict": "clearly real"
+      "verdict": "probably real"
     },
     {
       "pos_rate": 0.32,
@@ -115,7 +219,7 @@
       "se_single": 0.0009895709913061523,
       "se_diff": 0.00013994647168361494,
       "z": 5.573559594724145,
-      "verdict": "clearly real"
+      "verdict": "real"
     },
     {
       "pos_rate": 0.32,
@@ -123,22 +227,18 @@
       "se_single": 0.0009895709913061523,
       "se_diff": 9.895709913061528e-05,
       "z": 7.882203569553577,
-      "verdict": "clearly real"
-    },
-    {
-      "pos_rate": 0.32,
-      "rho": 1.0,
-      "se_single": 0.0009895709913061523,
-      "se_diff": 0.0,
-      "z": Infinity,
-      "verdict": "clearly real"
+      "verdict": "real"
     }
   ],
-  "hanley_mcneil_note": "normal approximation, roughly right for AUCs near 0.96, used to bound significance rather than to make a precise claim",
-  "self_correction": "an initial hand estimate put the single-estimate SE at 0.0025-0.0036 and concluded the gap might be 0.2 sigma, i.e. noise. Hanley-McNeil gives 0.0011, about three times smaller, so the gap is z=3.4-7.9 and REAL. The hand figure was a loose binomial approximation; acting on it would have produced a confidently wrong strategy. Recorded because the error would otherwise have been invisible.",
-  "gap_is_real": true,
-  "min_z_tabulated": 3.1410272709869895,
-  "rho_at_2_sigma": 0.0,
-  "interpretation": "the +-2e-4 paired noise floor in AGENTS.md applies between near-identical submissions (rho~0.995) and is the correct gate for that decision; it does NOT make the leaderboard gap noise. The gap is statistically real and we are genuinely behind.",
-  "strategic_conclusion": "the top 20 span 1.0e-4 while sitting 7.8e-4 above us: a converged pack at a common genuinely higher score. Closing that needs something structurally different, not more GBDT-family polish, since every reachable gain measured is single-digit e-5."
+  "hanley_mcneil_note": "normal approximation, roughly right for AUCs near 0.96; used to bound the plausible range of z, never as a point estimate",
+  "self_correction": "TWO overstatements, in OPPOSITE directions, both corrected here. (1) An initial hand estimate put the single-estimate SE at 0.0025-0.0036 and called the gap 'maybe 0.2 sigma, i.e. noise'; Hanley-McNeil gives 0.0011, about three times smaller, so that hand figure was simply wrong. (2) Having fixed that, the script introduced the opposite error: it computed the correlation needed for a 2-sigma gap as 1-(min_z/2)^2/2, which is NOT the inversion of the z formula, obtained a negative number, clamped it to zero, and printed that the gap 'clears 2 sigma even between two UNCORRELATED predictions'. That is false and the script's own table said so: at rho=0 the z is 0.49. The correct inversion is rho = 1-(gap/2)^2/(2*se^2) = 0.941.",
+  "gap_is_significant": false,
+  "rho_is_measured": false,
+  "z_range_over_rho": [
+    0.4442083366413553,
+    7.882203569553577
+  ],
+  "rho_at_2_sigma": 0.9410897944006962,
+  "interpretation": "the +-2e-4 paired floor in AGENTS.md applies between near-identical submissions and is the correct gate for that decision. For a DIFFERENT solution the pairwise error correlation is UNMEASURED, because we do not hold the leader's prediction vector. The gap is therefore recorded as a score difference, NOT as a significance claim. It clears 2 sigma only if rho > 0.941; treating that as established was an error.",
+  "strategic_conclusion": "rho-independent, and therefore the part that should govern compute: the top 20 span 1.0e-4 while sitting 7.8e-4 above us (a converged pack, not a spread field), and every gain actually MEASURED in this campaign is single-digit e-5. More GBDT-family polish will not close 7.8e-4, regardless of whether the gap is statistically real."
 }
