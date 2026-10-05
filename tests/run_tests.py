@@ -17,8 +17,9 @@ def main() -> int:
     import tests.test_no_undefined_names as TN
     import tests.test_tabr_wiring as TW
     import tests.test_index_space as TI
+    import tests.test_te_all21 as TE
 
-    fns = [(mod.__name__, getattr(mod, n)) for mod in (T, TR, TW, TN, TI)
+    fns = [(mod.__name__, getattr(mod, n)) for mod in (T, TR, TW, TN, TI, TE)
            for n in sorted(dir(mod)) if n.startswith("test_")]
     ok = fail = 0
     for modname, fn in fns:
