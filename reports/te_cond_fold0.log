@@ -1,0 +1,33 @@
+﻿
+====================================================================================================
+fold 0   outer-fit=559,708   train=503,739 (72.0% of labels)   eval=139,927
+====================================================================================================
+    [cache] view full: (699635, 237)
+  base         full            xt=True  nfeat= 285 iter=  797  AUC=0.961299  (54s)
+    [cache] view full_tec: (699635, 237)
+  tec_stack    full_tec        xt=True  nfeat= 357 iter=  914  AUC=0.961299  (83s)
+    [cache] view full_tec_swap: (699635, 237)
+  tec_swap     full_tec_swap   xt=True  nfeat= 309 iter=  872  AUC=0.961092  (87s)
+  det_base     full            xt=False nfeat= 285 iter=  458  AUC=0.960979  (57s)
+  det_stack    full_tec        xt=False nfeat= 357 iter=  655  AUC=0.960975  (42s)
+  det_swap     full_tec_swap   xt=False nfeat= 309 iter=  548  AUC=0.960861  (32s)
+
+  arm            n_feat   iter         AUC  delta vs ctrl   logit corr   spearman  blend@0.2
+  ------------------------------------------------------------------------------------------------
+  base              285    797    0.961299      (control)                              +0.7e
+  tec_stack         357    914    0.961299          -0.0e      0.99862    0.98972      +2.6e
+  tec_swap          309    872    0.961092         -20.7e      0.99762    0.98409      +2.0e
+  det_base          285    458    0.960979      (control)                              -3.6e
+  det_stack         357    655    0.960975          -0.5e      0.99847    0.98537      +0.1e
+  det_swap          309    548    0.960861         -11.8e      0.99760    0.97919      +0.8e
+
+====================================================================================================
+FOLD 0 INTERPRETATION (the section 8 decision table)
+====================================================================================================
+  tec_stack      extra_trees    delta vs base      = -0.0e-5
+  tec_swap       extra_trees    delta vs base      = -20.7e-5
+  det_stack      deterministic  delta vs det_base  = -0.5e-5
+  det_swap       deterministic  delta vs det_base  = -11.8e-5
+  VERDICT: REJECT -- no arm improves against its matched control.
+
+wrote C:\Users\James\airline_S6E10\reports\te_cond.json

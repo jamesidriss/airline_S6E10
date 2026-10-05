@@ -18,8 +18,9 @@ def main() -> int:
     import tests.test_tabr_wiring as TW
     import tests.test_index_space as TI
     import tests.test_te_all21 as TE
+    import tests.test_view_composition as TV
 
-    fns = [(mod.__name__, getattr(mod, n)) for mod in (T, TR, TW, TN, TI, TE)
+    fns = [(mod.__name__, getattr(mod, n)) for mod in (T, TR, TW, TN, TI, TE, TV)
            for n in sorted(dir(mod)) if n.startswith("test_")]
     ok = fail = 0
     for modname, fn in fns:

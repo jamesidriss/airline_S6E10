@@ -1,0 +1,27 @@
+{
+  "candidate_rows": 129880,
+  "candidate_positives": 71087,
+  "candidate_positive_rate": 0.5473283030489683,
+  "missing_columns": [
+    "Gender"
+  ],
+  "step": 1,
+  "git_commit": "7f21bd6b1eee",
+  "fold0": {
+    "iter": 1877,
+    "auc_competition_val": 0.9533657201753393,
+    "auc_candidate_own_labels": 0.7982368991769027,
+    "n_candidate_scored": 129880,
+    "pred_quantiles_competition": [
+      0.025163305498733957,
+      0.24146389805399837,
+      0.9568935831247918
+    ],
+    "pred_quantiles_candidate": [
+      0.026971237728787987,
+      0.2598644449423926,
+      0.879386011324278
+    ]
+  },
+  "verdict_step1": "domains agree -- run step 2 append"
+}

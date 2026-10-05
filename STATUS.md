@@ -775,7 +775,7 @@ predictor — a bucket-mean AUC below 0.5 is a reliable smell), and the finite-s
 expectation was wrong by a factor of n (5.19 vs an observed 0.055), which a first pass reported as an
 "excess" of −5.13.
 
-### Is the leaderboard gap real? Unknown � and my own z-score was wrong twice
+### Is the leaderboard gap real? Unknown � and my own z-score was wrong twice
 `scripts/analyse_lb_noise.py`. The +-0.0002 paired noise floor in `AGENTS.md` is correct but narrow:
 it governs whether to send a *near-identical* submission, and it is the wrong instrument for asking
 whether we differ from a *different* solution.
@@ -791,7 +791,7 @@ whether we differ from a *different* solution.
 
    > "the gap clears 2 sigma even between two **uncorrelated** predictions"
 
-   **That is false, and the script's own table said so � at rho = 0 the z is 0.49, not above 2.** I
+   **That is false, and the script's own table said so � at rho = 0 the z is 0.49, not above 2.** I
    built a confident sentence from a number without checking the number against it. The correct
    inversion is `rho = 1 - (gap/2)^2 / (2*se^2)` = **0.9411**.
 
@@ -802,10 +802,10 @@ whether we differ from a *different* solution.
 | scores (factual) | ours 0.960980, leader 0.961760, **gap 7.8e-4** |
 | z across rho in [0,1] | **0.44 to 7.88** |
 | clears 2 sigma only if | **rho > 0.941** |
-| is rho measured? | **NO � we do not hold the leader's prediction vector** |
+| is rho measured? | **NO � we do not hold the leader's prediction vector** |
 
 So no single z is asserted. Two strong tabular solutions on the same 699k rows and the same metric
-would plausibly sit well above rho = 0.941, so **"probably real" is a reasonable working belief** �
+would plausibly sit well above rho = 0.941, so **"probably real" is a reasonable working belief** �
 recorded as a belief, not a measurement.
 
 **What does not depend on rho, and is therefore the part that should govern compute:** the top twenty
@@ -814,11 +814,184 @@ not a spread field. And every gain this campaign has actually *measured* is sing
 one mechanistically sound mechanism delivering +2e-5 on this very board. Whether or not the gap is
 statistically real, **more GBDT-family polish will not close 7.8e-4**.
 
+## 6f. PHASE 8 -- TARGET ENCODING: BOTH NEW MECHANISMS REJECTED, AND THE OLD BLOCK IS BETTER
+
+### The audit that motivated this, stated exactly
+`src/features/s6e10.py::TE_KEYS_DEFAULT` target-encodes **12 keys**, and only **4 of the 21 raw
+columns get a direct single-column exact-value TE** (`te_fd`, `te_age`, `te_online`, `te_ent`).
+`Class`, `Type of Travel` and `Customer Type` appear only inside crosses. The other **14 columns get no
+exact-value target statistic at all**, and 13 of those 14 have at most 6 distinct values:
+
+| column | distinct values | | column | distinct values |
+|---|---|---|---|---|
+| Inflight wifi service | 6 | | On-board service | 6 |
+| Departure/Arrival time convenient | 6 | | Leg room service | 6 |
+| Ease of Online booking | 6 | | Baggage handling | 5 |
+| Gate location | 6 | | Checkin service | 6 |
+| Food and drink | 6 | | Cleanliness | 6 |
+| Seat comfort | 6 | | Gender | 2 |
+| Online boarding | 6 | | Departure Delay | 186 |
+| Inflight entertainment | 6 | | Arrival Delay | 180 |
+
+So "TE already failed here" does **not** apply to an all-21 block, and the older negatives for
+`core3_te` / `full` say nothing about it. That was worth checking before spending compute, and the
+answer changed what got tested.
+
+### 8A -- `te_all21` (all 21 raw columns, exact values, sklearn `TargetEncoder`): REJECTED
+
+`scripts/run_te_all21.py`, fold 0, matched arms — same code path, same inner-ES split, same seed, same
+hyper-parameters, same rows; only the view and `extra_trees` differ. The control reproduces the
+recorded fold-0 baseline **exactly** (0.961299 at 797 rounds), which is what makes the rest readable.
+
+| arm | view | xt | nfeat | iter | AUC | Δ vs ctrl | logit corr | blend@0.2 |
+|---|---|---|---|---|---|---|---|---|
+| base | full | ✓ | 285 | 797 | 0.961299 | control | — | +0.7e |
+| stack | full_te21 | ✓ | 306 | 530 | 0.961296 | **−0.3e-5** | 0.99903 | +0.3e |
+| replace | full_all21te | ✓ | 258 | 556 | 0.961166 | **−13.3e-5** | 0.99840 | −0.5e |
+| det_base | full | ✗ | 285 | 458 | 0.960979 | control | — | −3.6e |
+| det_stack | full_te21 | ✗ | 306 | 574 | 0.960918 | **−6.2e-5** | 0.99910 | −4.2e |
+| det_replace | full_all21te | ✗ | 258 | 670 | 0.960888 | **−9.2e-5** | 0.99829 | −2.6e |
+
+Section 8 decision table: xt flat, deterministic negative → **REJECT**, no smoothing sweep.
+
+**The informative part.** Replacing our 48-column selective `te` block with 21 `te_all21` columns
+**costs −13.3e-5** under extra_trees and −9.2e-5 deterministic. The old block wins on four axes at
+once, and `te_all21` varies only the first:
+
+1. **crosses** (`te_fd_class`, `te_age_class_trip_cust`, …) — `te_all21` has none
+2. a **shrinkage spectrum** (smooth 10 / 20 / 100) — `te_all21` has one setting
+3. **log counts** per key — none
+4. **binned / modulo Flight Distance** variants — none
+
+**So the value of target encoding here is interactions plus a shrinkage spectrum, not column
+coverage** — the opposite of the public solution's headline mechanism. Iteration counts also fall
+sharply when `te_all21` is added (797 → 530): the new columns give a strong, quickly-saturating signal
+and the model early-stops before extracting the rest, which is what a redundant rather than a missing
+feature system looks like.
+
+### 8B -- `te_conditional` (13 rating × traveller-segment + 5 service-pair × trip/customer): REJECTED
+
+Built deliberately to the two axes 8A identified as the ones that work: 18 exact-value **cross** keys
+through `FoldSafeTE`, so each key gets smooth 10/20/100 **and** a count column (72 columns). Keys are
+well-estimated: 53–133 distinct values, median group 674–4,495 rows, **0% of rows in a group of ≤5**.
+
+| arm | view | xt | nfeat | iter | AUC | Δ vs ctrl | blend@0.2 (f0) | blend@0.2 (f1) |
+|---|---|---|---|---|---|---|---|---|
+| base | full | ✓ | 285 | 797/731 | 0.961299/0.961396 | control | +0.7e / −1.0e | — |
+| tec_stack | full_tec | ✓ | 357 | 914/624 | 0.961299/0.961302 | −0.0e / −9.4e | **+2.6e** | **−1.2e** |
+| tec_swap | full_tec_swap | ✓ | 309 | 872/611 | 0.961092/0.961138 | −20.7e / −25.8e | +2.0e | +0.5e |
+| det_stack | full_tec | ✗ | 357 | 655 | 0.960975 | −0.5e | +0.1e | — |
+| det_swap | full_tec_swap | ✗ | 309 | 548 | 0.960861 | −11.8e | +0.8e | — |
+
+Standalone: **rejected**. Fold 0's `tec_stack` also showed the highest blend gain of any arm in either
+experiment (+2.6e-5, against +0.7e-5 for the base model itself), which looked like the
+"equally good, more complementary" member this campaign has been hunting. **Fold 1 did not replicate
+it** (−1.2e-5); the 2-fold mean is +0.7e-5, far under the +1.5e-5 admission gate. Rejected on
+complementarity as well as on standalone.
+
+### Fold-safety: the inner split must not depend on y
+
+sklearn 1.9.1 deprecates `TargetEncoder(shuffle=, random_state=)`; passing `cv=5` silently yields
+`StratifiedKFold(shuffle=True, random_state=None)`. That is **not** a leak — `fit_transform` genuinely
+fits each fold's table on the complement, verified as `crossfit Z[j] == fit(other folds).transform(X[j])`.
+But `StratifiedKFold.split` stratifies **on y**, so perturbing one label can move that row to a
+different fold:
+
+```
+KFold(shuffle=True, random_state=0)           splits y-independent   max own-change 0.000e+00
+StratifiedKFold(shuffle=True, random_state=0)  splits y-DEPENDENT    max own-change 2.217e-02
+```
+
+With `KFold(shuffle=True, random_state=seed)` the leave-out property is **exactly zero** and therefore
+directly testable. `tests/test_te_all21.py` asserts exact equality rather than a loose bound. The first
+version of that test asserted `own < 1e-3` and failed at 5.7e-2; the cause was the stratified splitter
+moving folds, and the fix was to change the splitter and tighten the assertion — loosening it would
+have hidden the real cause.
+
+A second contamination bug, caught by arithmetic rather than by any check: a duplicated `te_all21`
+body was left **nested inside** the `if "te_cond"` branch, so `full_tec` silently received 21 extra
+columns (378 assembled vs 237+48+72=357 expected). It looked entirely plausible — no NaN, every
+block healthy — and would have made Phase 8B measure `full + te + te_cond + te_all21` and report it
+as conditional TE. `tests/test_view_composition.py` now pins the composition of every view and asserts
+that no view contains a block it does not declare.
+
+### Phase 8C/8D: not built, and why
+`te_numgroups` (Age × segment, FD × segment) is already largely covered — the existing block has
+`te_age_class_trip_cust`, `te_fd_class`, `te_fd_trip` — so its prior is low after 8A/8B. `te_shift`
+(competition TE − original TE) estimates how the generator rewrote the conditional, but for predicting
+the competition target `p_comp(y|x)` is the whole quantity and we already estimate it from 700k
+competition labels; the delta is redundant with the `external`/`ogte` blocks that are worth +1.0e-3
+and are already in the champion view. Neither is worth compute on current evidence.
+
+## 6g. PHASE 8 -- EXTERNAL LABELLED DATA: NONE INDEPENDENT EXISTS, AND THE ONE ANOMALY IS DEFINITIVELY DISQUALIFIED
+
+`scripts/audit_external_datasets.py`. Eight files across six Kaggle datasets, audited by hashing
+shared columns rather than by name.
+
+| dataset | rows | rating overlap | positives | verdict |
+|---|---|---|---|---|
+| binaryjoker | 129,880 | 100% | 56,428 | MIRROR |
+| mysarahmadbhat | 129,880 | 100% | 56,428 | MIRROR |
+| nilanjansamanta1210 | 129,880 | 100% | 56,428 | MIRROR |
+| teejmahal20 train | 103,904 | verbatim subset | 45,025 | MIRROR |
+| teejmahal20 test | 25,976 | verbatim subset | 11,403 | MIRROR |
+| **raminhuseyn** | 129,880 | **3.4%** | **71,087** | different label vector |
+| **yakhyojon** | 129,880 | **3.4%** | **71,087** | byte-identical to raminhuseyn |
+
+**Answer to §20: no genuinely independent, independently collected external labelled dataset exists
+for this schema.** Five of seven data files are verbatim mirrors or subsets of the same 129,880-row
+survey. Three bugs in this audit each produced a confidently wrong answer before being fixed:
+
+* the label mapping understood only the string vocabulary, so the source's **boolean** labels became
+  all-NaN and agreement printed as exactly 0.0000 for every candidate — reading as "every label
+  disagrees" when the comparison had simply never happened;
+* column-name matching rejected 5 of 8 files; four merely rename columns, and two carry
+  **"Online support"** where the competition carries **"Gender"** — a different survey question, which
+  aliasing together silently corrupts every hash;
+* the verdict keyed on full-feature overlap then called four files INDEPENDENT at 0%. They are not:
+  their 18-column overlap is low only because Age/Flight Distance/segment were perturbed while the
+  survey ratings overlap 100%. On a matched rating tuple, Age reads 66 vs 47, FD 1576 vs 300, Class
+  Eco Plus vs Economy.
+
+### The one anomaly, tested properly — and rejected (`scripts/run_external_probe.py`)
+
+**Step 1, domain transfer.** A model trained on competition fold-0 fit rows scores **0.953366** in
+domain and **0.798237** on raminhuseyn's own labels. The ranking transfers (0.798 ≫ 0.5), so the
+predeclared 0.60 threshold said run step 2 — and that is worth recording as the point where a naive
+reader would already have declared success.
+
+**Step 2, the append with a row-count-matched duplicate control** (all arms on the raw view, 129,880
+extra rows each):
+
+| arm | rows | iter | AUC | Δ vs ctl |
+|---|---|---|---|---|
+| ctl | 503,739 | 1877 | 0.953366 | — |
+| dup (duplicated competition rows, true labels) | 633,619 | 896 | 0.952312 | −105.4e-5 |
+| append (raminhuseyn rows, own labels) | 633,619 | 2894 | 0.952584 | **−78.2e-5** |
+
+`append − dup = +27.2e-5` is positive — the candidate's labels do carry real directional information,
+consistent with the 0.798 transfer AUC. **But `append − ctl = −78.2e-5`: appending is worse than not
+appending, so it is REJECTED.** The first version of this script tested only `append − dup` and printed
+"escalate to more folds" for a treatment 78e-5 worse than doing nothing. The duplicate control exists
+to separate information from row count; it is not itself the bar.
+
+**Mechanism, and it is the same one that closed two earlier branches.** raminhuseyn asks a **binary**
+`satisfied` / `dissatisfied` question at 54.73% positive, where the competition collapses a
+**three-class** survey to 44.36%. Its target is not a re-sample of the same question — it is a
+different definition, so the appended rows teach a foreign objective. That is the identical mechanism
+behind the closed original-row append and the Phase 1–2 external-teacher result (−4.2e-4 at λ=0.2,
+monotonically harmful). The duplicate control also loses (−105.4e-5), which confirms the loss is not
+a row-count effect.
+
 ## 7. Software quality
 
-15/15 tests in `tests/run_tests.py` pass, including four automated leakage audits:
-`test_fold_safe_te_never_sees_apply_rows`, `test_crossfit_row_never_sees_own_label`,
-`test_external_features_use_no_competition_label`, `test_original_overlap_audit_is_small`.
+`tests/run_tests.py`: **58 tests pass**, including the four original leakage audits
+(`test_fold_safe_te_never_sees_apply_rows`, `test_crossfit_row_never_sees_own_label`,
+`test_external_features_use_no_competition_label`, `test_original_overlap_audit_is_small`), **5
+index-space guards** and **9 `te_all21` / view-composition guards** added this session.
+
+The guards were not decorative — each one was written after that failure class actually bit:
+
 
 `scripts/external_block_audit.py`: **14/14 pass**. Proves the external blocks are label-free by
 runtime proof (bit-identical output when the competition target is randomised, and when it is

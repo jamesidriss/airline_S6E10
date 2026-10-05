@@ -60,6 +60,16 @@ VIEWS: dict[str, list[str]] = {
     "full_all21te": ["raw", "cat", "trans", "token", "external", "teacher", "te_all21"],
     "core3_te21": ["raw", "cat", "trans", "external", "teacher", "te", "te_all21"],
     "core3_all21te": ["raw", "cat", "trans", "external", "teacher", "te_all21"],
+    # ---- Phase 8B: conditional TE (service rating x traveller segment, service pair x trip/customer) ----
+    # Built to the two axes te_all21 lacked and which the existing `te` block demonstrably exploits:
+    # crosses, and a 10/20/100 shrinkage spectrum with a count column per key.
+    # 18 keys x 4 columns = 72 new columns. All keys are well-estimated: 53-133 distinct values,
+    # median group 674-4,495 rows, and 0% of rows fall in a group of size <= 5, so nothing here is a
+    # prior-dominated encoding.
+    "full_tec": ["raw", "cat", "trans", "token", "external", "teacher", "te", "te_cond"],
+    "full_tec_swap": ["raw", "cat", "trans", "token", "external", "teacher", "te_cond"],
+    "core3_tec": ["raw", "cat", "trans", "external", "teacher", "te", "te_cond"],
+    "core3_tec_swap": ["raw", "cat", "trans", "external", "teacher", "te_cond"],
 }
 
 _CACHE = ROOT / "artifacts" / "cache"
@@ -196,6 +206,24 @@ class ViewBuilder:
         return float(roc_auc_score(self._teacher_y, self._teacher_p))
 
     # ---------------------------------------------------------------- fold-safe
+    def build_te_generic(self, fit_idx: np.ndarray, apply_sets: dict[str, np.ndarray],
+                         y: np.ndarray, keys_all: dict[str, pd.Series], inner_seed: int = 0):
+        """Fold-safe TE for an ARBITRARY key dict, so `te` and `te_conditional` share one code path.
+
+        Fold-safety: fit rows are encoded by an inner cross-fit that excludes each row's own label, and
+        every apply set is encoded by a table fitted on ALL fit rows. Apply-row labels are never read.
+        """
+        te = S.FoldSafeTE(keys_all, inner_seed=inner_seed)
+        yfit = y[fit_idx]
+        fit_keys = {k: v.iloc[fit_idx].reset_index(drop=True) for k, v in keys_all.items()}
+        Xfit, fnames = te.crossfit(fit_keys, yfit)
+        outs = {}
+        for nm, idx in apply_sets.items():
+            ak = {k: v.iloc[idx].reset_index(drop=True) for k, v in keys_all.items()}
+            Xa, anames = te.apply(fit_keys, yfit, ak)
+            outs[nm] = Xa
+        return Xfit, outs, fnames, anames
+
     def build_te(self, fit_idx: np.ndarray, apply_sets: dict[str, np.ndarray], y: np.ndarray,
                  inner_seed: int = 0):
         """Fold-safe target encoding.
@@ -219,16 +247,14 @@ class ViewBuilder:
                     src[cols].astype(object).round(6), index=False
                 ).reset_index(drop=True)
 
-        te = S.FoldSafeTE(keys_all, inner_seed=inner_seed)
-        yfit = y[fit_idx]
-        fit_keys = {k: v.iloc[fit_idx].reset_index(drop=True) for k, v in keys_all.items()}
-        Xfit, fnames = te.crossfit(fit_keys, yfit)
-        outs = {}
-        for nm, idx in apply_sets.items():
-            ak = {k: v.iloc[idx].reset_index(drop=True) for k, v in keys_all.items()}
-            Xa, anames = te.apply(fit_keys, yfit, ak)
-            outs[nm] = Xa
-        return Xfit, outs, fnames, anames
+        return self.build_te_generic(fit_idx, apply_sets, y, keys_all, inner_seed)
+
+    def build_te_conditional(self, fit_idx: np.ndarray, apply_sets: dict[str, np.ndarray],
+                             y: np.ndarray, inner_seed: int = 0):
+        """Phase 8B: 13 (service rating x traveller segment) + 5 (service pair x trip/customer) keys."""
+        from src.features.te_conditional import SMOOTHS, build_te_conditional_keys
+        keys_all = build_te_conditional_keys(self.comb)
+        return self.build_te_generic(fit_idx, apply_sets, y, keys_all, inner_seed)
 
     def build_te_all21(self, fit_idx: np.ndarray, apply_sets: dict[str, np.ndarray],
                        y: np.ndarray, inner_seed: int = 0, smooth="auto"):
@@ -276,7 +302,10 @@ class ViewBuilder:
         if "te_all21" in self.blocks:
             # stacked ON TOP of any existing `te` block. The swap view `full_all21te` omits `te`
             # entirely, which is the comparison that separates "more TE columns" from "redundant TE
-            # systems competing for the same colsample_bytree slots".
+            # systems competing for the same colsample_bytree slots". Measured: te_all21 is REJECTED
+            # (-0.3e-5 stacked, -13.3e-5 replacing, under both extra_trees and deterministic), because
+            # our existing selective `te` block already wins on crosses, the 10/20/100 shrinkage
+            # spectrum, counts, and binned Flight Distance variants.
             Xf_21, outs21, fn21, _ = self.build_te_all21(fit_idx, apply_sets, y, inner_seed,
                                                           smooth=te_all21_smooth)
             Xf = np.column_stack([Xf, Xf_21])
@@ -284,6 +313,15 @@ class ViewBuilder:
             for k, v in outs21.items():
                 pieces_a[k] = (np.column_stack([pieces_a[k], v]) if k in pieces_a else v)
             names_a = list(names_a) + list(fn21)
+        if "te_cond" in self.blocks:
+            # Phase 8B. Built to the two axes te_all21 lacked: CROSSES and a shrinkage spectrum
+            # (smooth 10/20/100 plus a count column, all from FoldSafeTE).
+            Xf_tc, outs_tc, fn_tc, _ = self.build_te_conditional(fit_idx, apply_sets, y, inner_seed)
+            Xf = np.column_stack([Xf, Xf_tc])
+            names_f = list(names_f) + list(fn_tc)
+            for k, v in outs_tc.items():
+                pieces_a[k] = (np.column_stack([pieces_a[k], v]) if k in pieces_a else v)
+            names_a = list(names_a) + list(fn_tc)
         Xa = {"val": self.static_tr[val_idx]}
         for k, v in pieces_a.items():
             Xa[k] = np.column_stack([self.static_tr[val_idx] if k == "val" else self.static_te, v])

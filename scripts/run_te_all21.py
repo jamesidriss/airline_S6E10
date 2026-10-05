@@ -88,6 +88,9 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=4)
     ap.add_argument("--smooth", default="auto")
     ap.add_argument("--tag", default="te_all21")
+    ap.add_argument("--arm-spec", default="",
+                    help="comma list of name:view:xt, overriding the built-in arm table; used so "
+                         "the same matched harness serves Phase 8A and 8B and later blocks")
     args = ap.parse_args()
 
     import lightgbm as lgb
@@ -97,12 +100,27 @@ def main() -> None:
     y = y_int.astype("float64")
     folds = get_scheme(args.scheme, y_int, tr[ID_COL]).folds
     wanted = [a.strip() for a in args.arms.split(",") if a.strip()]
-    arms = [(n, v, x) for n, v, x in ARMS if n in wanted]
+    if args.arm_spec:
+        # An explicit spec REPLACES the built-in table outright. Filtering it through --arms was a
+        # bug: the default --arms list does not contain Phase 8B's names, so three of the six arms
+        # were silently dropped and the run reported a partial table as if it were complete.
+        arms = []
+        for item in args.arm_spec.split(","):
+            nm, view, xt = item.split(":")
+            arms.append((nm.strip(), view.strip(), xt.strip().lower() in ("1", "true", "yes")))
+        base_for = {"stack": "base", "replace": "base", "tec_stack": "base", "tec_swap": "base",
+                    "n21_stack": "base", "n21_swap": "base",
+                    "det_stack": "det_base", "det_swap": "det_base", "det_replace": "det_base"}
+    else:
+        arms = [(n, v, x) for n, v, x in ARMS if n in wanted]
+        base_for = {"stack": "base", "replace": "base",
+                    "det_stack": "det_base", "det_replace": "det_base"}
+    xt_of = {n: x for n, _, x in arms}
     fin = store.load_oof("blend_v3_final").astype("float64")
 
     vcache = {}
     out = {"tag": args.tag, "scheme": args.scheme, "seed": args.seed,
-           "smooth": args.smooth, "folds": {}, "arms": {n: {"view": v, "extra_trees": x}
+           "smooth": args.smooth, "folds": {}, "arm_pairing": {}, "arms": {n: {"view": v, "extra_trees": x}
                                                         for n, v, x in arms},
            "git_commit": subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
                                         text=True).stdout.strip()[:12]}
@@ -157,57 +175,61 @@ def main() -> None:
             np.save(REPORTS / f"{args.tag}_{label}_fold{k}.npy", pred.astype("float32"))
 
         # ---- paired deltas against the matched control for the same extra_trees setting ----
-        base_for = {"base": "base", "stack": "base", "replace": "base",
-                    "det_base": "det_base", "det_stack": "det_base", "det_replace": "det_base"}
         print(f"\n  {'arm':<14}{'n_feat':>7}{'iter':>7}{'AUC':>12}{'delta vs ctrl':>15}"
               f"{'logit corr':>13}{'spearman':>11}{'blend@0.2':>11}")
         print(f"  {'-'*96}")
         for label in [n for n, _, _ in arms]:
             r = fold_rec[label]
-            ctrl = fold_rec.get(base_for.get(label, "base"))
-            if ctrl is None or label == base_for.get(label):
+            ctrl_name = base_for.get(label, label)
+            ctrl = fold_rec.get(ctrl_name)
+            if ctrl is None or label == ctrl_name:
                 print(f"  {label:<14}{r['n_features']:>7}{r['iter']:>7}{r['auc']:>12.6f}"
                       f"{'(control)':>15}{'':>13}{'':>11}{r['blend_gain']['0.2']*1e5:>+10.1f}e")
                 continue
-            d = r["auc"] - ctrl["auc"]
+            dd = r["auc"] - ctrl["auc"]
             print(f"  {label:<14}{r['n_features']:>7}{r['iter']:>7}{r['auc']:>12.6f}"
-                  f"{d*1e5:>+14.1f}e{corr(logit(r['pred']), logit(ctrl['pred'])):>13.5f}"
+                  f"{dd*1e5:>+14.1f}e{corr(logit(r['pred']), logit(ctrl['pred'])):>13.5f}"
                   f"{spearman(r['pred'], ctrl['pred']):>11.5f}"
                   f"{r['blend_gain']['0.2']*1e5:>+10.1f}e")
         out["folds"][str(k)] = {kk: {a: b for a, b in vv.items() if a != "pred"}
                                 for kk, vv in fold_rec.items()}
         out["folds"][str(k)]["_pairing"] = base_for
+        out["arm_pairing"] = base_for
 
-    # ---- fold-0 interpretation (section 8 decision table) ----
+    # ---- fold-0 interpretation (section 8 decision table), derived rather than asserted ----
     if "0" in out["folds"]:
         f0 = out["folds"]["0"]
+
         def d(lbl):
-            c = base_for_of(lbl)
+            c = base_for.get(lbl, lbl)
             return None if lbl not in f0 or c not in f0 else f0[lbl]["auc"] - f0[c]["auc"]
-        def base_for_of(lbl):
-            return {"stack": "base", "replace": "base",
-                    "det_stack": "det_base", "det_replace": "det_base"}.get(lbl, lbl)
-        ds, dr = d("stack"), d("replace")
-        dd_s, dd_r = d("det_stack"), d("det_replace")
+
+        tested = [n for n, _, _ in arms if n in f0 and base_for.get(n, n) in f0
+                  and n != base_for.get(n, n)]
+        deltas = {n: d(n) for n in tested}
+        xt_d = [v for n, v in deltas.items() if xt_of[n]]
+        det_d = [v for n, v in deltas.items() if not xt_of[n]]
+
         print("\n" + "=" * 100)
         print("FOLD 0 INTERPRETATION (the section 8 decision table)")
         print("=" * 100)
-        print(f"  extra_trees=True   :  stack {ds*1e5:+.1f}e-5    replace {dr*1e5:+.1f}e-5")
-        print(f"  deterministic      :  stack {dd_s*1e5:+.1f}e-5    replace {dd_r*1e5:+.1f}e-5")
-        both = min(ds, dr, dd_s, dd_r)
-        if all(x is not None and x > 0 for x in (ds, dr, dd_s, dd_r)):
-            v = "STRONG GENUINE SIGNAL -- both model types improve under both stackings."
-        elif dd_s is not None and dd_s > 0 and ds is not None and ds <= 0:
-            v = ("real but redundant with the extra_trees pool: deterministic improves, random-split "
-                 "model flat. May still create ensemble diversity.")
-        elif ds is not None and ds > 0 and dd_s is not None and dd_s < 0:
-            v = ("RANDOM-FEATURE ARTEFACT, same shape as the `enrich` block: helps extra_trees, "
-                 "hurts deterministic.")
+        for n, v in deltas.items():
+            print(f"  {n:<14} {'extra_trees' if xt_of[n] else 'deterministic':<14} "
+                  f"delta vs {base_for[n]:<9} = {v*1e5:+.1f}e-5")
+        allpos = all(v > 0 for v in deltas.values()) and len(deltas) >= 2
+        anypos = any(v > 0 for v in deltas.values())
+        if allpos:
+            v_txt = "STRONG GENUINE SIGNAL -- every arm improves against its matched control."
+        elif not anypos:
+            v_txt = "REJECT -- no arm improves against its matched control."
+        elif det_d and all(x > 0 for x in det_d) and (not xt_d or all(x <= 0 for x in xt_d)):
+            v_txt = ("real but redundant with the extra_trees pool: deterministic improves while the "
+                     "random-split model is flat. May still create ensemble diversity.")
         else:
-            v = "REJECT -- neither model type gains."
-        print(f"  VERDICT: {v}")
-        out["fold0_interpretation"] = {"stack_xt": ds, "replace_xt": dr,
-                                       "stack_det": dd_s, "replace_det": dd_r, "verdict": v}
+            v_txt = ("MIXED -- the gains do not hold across both model types, which is the shape a "
+                     "random-feature artefact takes (the `enrich` block behaved this way).")
+        print(f"  VERDICT: {v_txt}")
+        out["fold0_interpretation"] = {"deltas": deltas, "verdict": v_txt}
 
     save_json(out, REPORTS / f"{args.tag}.json")
     print("\nwrote", REPORTS / f"{args.tag}.json")

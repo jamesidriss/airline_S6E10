@@ -1,0 +1,18 @@
+﻿
+====================================================================================================
+fold 1   outer-fit=559,708   train=503,739 (72.0% of labels)   eval=139,927
+====================================================================================================
+    [cache] view full: (699635, 237)
+  base         full            xt=True  nfeat= 285 iter=  731  AUC=0.961396  (42s)
+    [cache] view full_tec: (699635, 237)
+  tec_stack    full_tec        xt=True  nfeat= 357 iter=  624  AUC=0.961302  (37s)
+    [cache] view full_tec_swap: (699635, 237)
+  tec_swap     full_tec_swap   xt=True  nfeat= 309 iter=  611  AUC=0.961138  (32s)
+
+  arm            n_feat   iter         AUC  delta vs ctrl   logit corr   spearman  blend@0.2
+  ------------------------------------------------------------------------------------------------
+  base              285    731    0.961396      (control)                              -1.0e
+  tec_stack         357    624    0.961302          -9.4e      0.99890    0.99159      -1.2e
+  tec_swap          309    611    0.961138         -25.8e      0.99754    0.98453      +0.5e
+
+wrote C:\Users\James\airline_S6E10\reports\te_cond.json

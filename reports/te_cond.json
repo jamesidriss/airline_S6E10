@@ -1,0 +1,86 @@
+{
+  "tag": "te_cond",
+  "scheme": "primary",
+  "seed": 4,
+  "smooth": "auto",
+  "folds": {
+    "1": {
+      "base": {
+        "auc": 0.9613964768314239,
+        "iter": 731,
+        "n_features": 285,
+        "seconds": 42.5,
+        "blend_gain": {
+          "0.05": -5.304650175785852e-07,
+          "0.1": -1.9510393670651993e-06,
+          "0.2": -1.0036207756192184e-05,
+          "0.3": -2.308438491482878e-05,
+          "0.5": -6.577983494004958e-05
+        }
+      },
+      "tec_stack": {
+        "auc": 0.9613024994750952,
+        "iter": 624,
+        "n_features": 357,
+        "seconds": 37.3,
+        "blend_gain": {
+          "0.05": -3.0615291335411854e-07,
+          "0.1": -2.1242397649778866e-06,
+          "0.2": -1.2318024705137987e-05,
+          "0.3": -3.007903228091635e-05,
+          "0.5": -8.762522656735605e-05
+        }
+      },
+      "tec_swap": {
+        "auc": 0.9611380454904832,
+        "iter": 611,
+        "n_features": 309,
+        "seconds": 32.0,
+        "blend_gain": {
+          "0.05": 5.459951129438423e-06,
+          "0.1": 8.670676782562836e-06,
+          "0.2": 4.707760632660651e-06,
+          "0.3": -1.1785593852731147e-05,
+          "0.5": -8.332791156084873e-05
+        }
+      },
+      "_pairing": {
+        "stack": "base",
+        "replace": "base",
+        "tec_stack": "base",
+        "tec_swap": "base",
+        "n21_stack": "base",
+        "n21_swap": "base",
+        "det_stack": "det_base",
+        "det_swap": "det_base",
+        "det_replace": "det_base"
+      }
+    }
+  },
+  "arm_pairing": {
+    "stack": "base",
+    "replace": "base",
+    "tec_stack": "base",
+    "tec_swap": "base",
+    "n21_stack": "base",
+    "n21_swap": "base",
+    "det_stack": "det_base",
+    "det_swap": "det_base",
+    "det_replace": "det_base"
+  },
+  "arms": {
+    "base": {
+      "view": "full",
+      "extra_trees": true
+    },
+    "tec_stack": {
+      "view": "full_tec",
+      "extra_trees": true
+    },
+    "tec_swap": {
+      "view": "full_tec_swap",
+      "extra_trees": true
+    }
+  },
+  "git_commit": "7f21bd6b1eee"
+}
