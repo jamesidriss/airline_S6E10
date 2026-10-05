@@ -1,0 +1,42 @@
+﻿    [cache] view full: (699635, 237)
+
+==============================================================================================
+fold 0   outer-fit=559,708   train=503,739 (72.0% of labels)   eval=139,927   feats=285
+==============================================================================================
+  ctl                       iter=  797  AUC=0.961299  (34s)
+  pseudo frac=0.25  n_add= 34,981 (pseudo-positive rate 0.286)  iter=  737  AUC=0.959690  vs ctl -160.9e-5  vs dup -156.1e-5  (34s)
+  dup    frac=0.25  n_add= 34,981                          iter=  582  AUC=0.961251  vs ctl   -4.7e-5  (53s)
+         corr(pseudo,ctl) logit=0.99349 spearman=0.95989 | finalist blend gains: w=0.05:-3.2, w=0.1:-8.4, w=0.2:-23.8, w=0.3:-43.1, w=0.5:-85.7
+  pseudo frac=0.5   n_add= 69,963 (pseudo-positive rate 0.321)  iter=  547  AUC=0.958879  vs ctl -242.0e-5  vs dup -236.1e-5  (41s)
+  dup    frac=0.5   n_add= 69,963                          iter=  772  AUC=0.961240  vs ctl   -5.9e-5  (38s)
+         corr(pseudo,ctl) logit=0.99086 spearman=0.94118 | finalist blend gains: w=0.05:-4.0, w=0.1:-11.5, w=0.2:-34.3, w=0.3:-63.6, w=0.5:-127.5
+
+==============================================================================================
+fold 1   outer-fit=559,708   train=503,739 (72.0% of labels)   eval=139,927   feats=285
+==============================================================================================
+  ctl                       iter=  731  AUC=0.961396  (31s)
+  pseudo frac=0.25  n_add= 34,981 (pseudo-positive rate 0.279)  iter=  591  AUC=0.959851  vs ctl -154.6e-5  vs dup -148.9e-5  (30s)
+  dup    frac=0.25  n_add= 34,981                          iter=  757  AUC=0.961339  vs ctl   -5.7e-5  (35s)
+         corr(pseudo,ctl) logit=0.99460 spearman=0.96536 | finalist blend gains: w=0.05:-5.1, w=0.1:-11.6, w=0.2:-27.7, w=0.3:-46.5, w=0.5:-86.8
+  pseudo frac=0.5   n_add= 69,963 (pseudo-positive rate 0.329)  iter=  508  AUC=0.958855  vs ctl -254.1e-5  vs dup -237.5e-5  (30s)
+  dup    frac=0.5   n_add= 69,963                          iter=  740  AUC=0.961231  vs ctl  -16.6e-5  (48s)
+         corr(pseudo,ctl) logit=0.99128 spearman=0.94476 | finalist blend gains: w=0.05:-7.0, w=0.1:-16.9, w=0.2:-43.2, w=0.3:-74.5, w=0.5:-140.6
+
+==============================================================================================
+   frac  fold     ctl AUC      pseudo         dup    ps-ctl    ps-dup
+   0.25     0    0.961299    0.959690    0.961251   -160.9e   -156.1e
+   0.50     0    0.961299    0.958879    0.961240   -242.0e   -236.1e
+   0.25     1    0.961396    0.959851    0.961339   -154.6e   -148.9e
+   0.50     1    0.961396    0.958855    0.961231   -254.1e   -237.5e
+
+=== the comparison that matters: pseudo - dup ===
+  frac=0.25  pseudo-dup mean -152.5e-5  (positive 0/2)   pseudo-ctl mean -157.7e-5
+  frac=0.5   pseudo-dup mean -236.8e-5  (positive 0/2)   pseudo-ctl mean -248.1e-5
+
+  best frac=0.25: pseudo-dup -152.5e-5
+  VERDICT: REJECT. Pseudo-labelled evaluation rows do not beat duplicated rows, so adding test
+           covariates with model-derived labels adds no usable signal. Confirmation bias cancels any
+           boundary sharpening. Do not spend more here -- and note this is a DIFFERENT
+           verdict from Phase 5's synthetic augmentation, with a different mechanism.
+
+wrote C:\Users\James\airline_S6E10\reports\pseudo_label.json

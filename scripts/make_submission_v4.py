@@ -73,7 +73,6 @@ def main() -> None:
     tr, te = load_cached_parquet()
     y = tr[TARGET].values.astype("int8")
     folds = get_scheme("primary", y, tr["id"]).folds
-    ids = list(te["id"].astype(str))
 
     final = json.loads(FINALIST.read_text(encoding="utf-8"))
     members = final["members"]

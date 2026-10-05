@@ -1,0 +1,34 @@
+{
+  "n_train": 699635,
+  "n_test": 299844,
+  "base_rate": 0.44357272006117476,
+  "views": [
+    {
+      "view": "full",
+      "fit_shape": [
+        699635,
+        285
+      ],
+      "test_shape": [
+        299844,
+        285
+      ],
+      "n_static": 237,
+      "n_encoding": 48,
+      "static_identical_to_cache": true,
+      "encoding_all_finite": true,
+      "n_constant_encoding_cols": 0,
+      "encoding_col_means_range": [
+        0.41782346367836,
+        12.268750190734863
+      ],
+      "n_encoding_cols_changed_vs_80pct_fitted": 48,
+      "corr_encoding_vs_finalist_range": [
+        -0.09069848874702832,
+        0.7514496746953324
+      ],
+      "corr_encoding_vs_finalist_median": 0.45129700636196973
+    }
+  ],
+  "all_checks_passed": true
+}

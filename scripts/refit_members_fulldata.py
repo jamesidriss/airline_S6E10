@@ -278,39 +278,42 @@ def main() -> None:
               f"spearman(member)={entry['vs_member_spearman']:.5f} ({dt:.0f}s)", flush=True)
 
     # ---- build the substituted finalist and pre-flight it ----
+    #
+    # The blend must be over ALL finalist members, not only the ones this run refitted. An earlier
+    # version iterated the FILTERED list, so with --families lgbm it averaged just those 32 members
+    # and reported a candidate that was really a 32-member blend rather than the v3 geometry with 32
+    # substitutions. It under-reported the correlation to v3 (0.998672 instead of 0.999262) and, worse,
+    # mislabelled it. scripts/make_submission_v4.py is the authoritative builder; this block is a
+    # convenience summary and must use `final["members"]`.
     n_sub = 0
-    replaced = {}
-    for m in members:
+    for m in final["members"]:
         e = next((x for x in out["members"] if x["exp_id"] == m["exp_id"]), None)
         if e is None:
             continue
-        old = store.load_test(m["exp_id"])
-        new = np.load(e["path"]).astype("float64")
-        replaced[m["exp_id"]] = {"old": old, "new": new}
+        e["recomputed_candidate_test_spearman"] = None
         n_sub += 1
     if n_sub:
         mix = np.zeros(len(te), dtype="float64")
-        wsum = 0.0
-        for m in members:
+        n_all_members = 0
+        for m in final["members"]:
             e = next((x for x in out["members"] if x["exp_id"] == m["exp_id"]), None)
-            if e is None:
-                p = store.load_test(m["exp_id"]).astype("float64")
-            else:
-                p = np.load(e["path"]).astype("float64")
-            mix += logit(p)
-            wsum += 1.0
-        cand = sig(mix / wsum)
+            p = (np.load(e["path"]) if e is not None else store.load_test(m["exp_id"]))
+            mix += logit(np.asarray(p, dtype="float64"))
+            n_all_members += 1
+        cand = sig(mix / n_all_members)
         np.save(OUT / "candidate_v4_fulldata_test.npy", cand.astype("float32"))
         out["candidate"] = {"path": str(OUT / "candidate_v4_fulldata_test.npy"),
-                            "n_members_total": len(final["members"]),
+                            "n_members_total": n_all_members,
                             "n_members_refit_on_100pct": n_sub,
                             "spearman_vs_v3_final": spearman(cand, fin_test),
-                            "logit_corr_vs_v3_final": corr(logit(cand), fin_test),
-                            "note": ("members not refit keep their existing fold-averaged test "
-                                     "prediction, so this is a partial substitution, not a uniform "
-                                     "one. The weights are untouched -- they were fitted on OOF and "
-                                     "must not be disturbed.")}
-        print(f"\n  candidate: refit {n_sub}/{len(final['members'])} members on 100% of labels")
+                            "logit_corr_vs_v3_final": corr(logit(cand), logit(fin_test)),
+                            "note": ("built over ALL finalist members, substituting the full-data "
+                                     "prediction where one exists. Members not refit keep their "
+                                     "existing fold-averaged test prediction, so this is a partial "
+                                     "substitution, not a uniform one. The weights are untouched -- "
+                                     "they were fitted on OOF and must not be disturbed. The "
+                                     "authoritative builder is scripts/make_submission_v4.py.")}
+        print(f"\n  candidate: {n_sub}/{n_all_members} members refit on 100% of labels")
         print(f"    spearman vs v3_final = {out['candidate']['spearman_vs_v3_final']:.6f}")
         print(f"    logit corr vs v3_final = {out['candidate']['logit_corr_vs_v3_final']:.6f}")
 

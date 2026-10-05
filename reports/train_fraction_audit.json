@@ -245,9 +245,20 @@
     }
   ],
   "test_refit_policy": {
-    "run_views_mentions_refit": true,
-    "run_views_refit_uses_all_rows_heuristic": false,
-    "full_refit_would_use_fraction": 1.0,
-    "note": "A second-pass refit on all labelled rows is the documented test-time policy, so a submitted model is already trained on 100% of the labels. The CV-stage OOF numbers, by contrast, come from models that saw only the outer-fit fraction reported above. That asymmetry is the reason OOF and test-time behaviour differ, and it is why the honest way to improve test performance is NOT to train the fold models on more data -- they already cannot be, the held-out fold is what makes their OOF score meaningful -- but to make sure the refit iteration count is chosen without using any held-out information."
+    "test_loop_is_per_outer_fold": true,
+    "test_fit_index_is_outer_fit_rows": true,
+    "any_path_trains_on_all_rows": false,
+    "test_rows_per_model": "K-fold outer-fit (80% of labels at K=5, 90% at K=10)",
+    "test_prediction_is_average_over_folds": true,
+    "test_iteration_count": "median best_iteration from the CV folds",
+    "headline": "NO test-time model in this pipeline is trained on 100% of the labelled rows. Every submitted prediction is an average over K models, each fitted on that fold's OUTER-FIT subset: 559,708 rows (80.00%) at K=5 and 629,672 rows (90.00%) at K=10. So 20% (or 10%) of the real labels are never shown to any member that votes on the test set, even though we already hold those labels. Through the measured learning curve (+62.9e-5 per doubling) that unused 80%->100% gap is worth about +2.0e-4 for a single learner.",
+    "measured_fractions": {
+      "oof_model_5fold": 0.7200025727700873,
+      "oof_model_10fold": 0.81000235837258,
+      "test_model_5fold": 0.8,
+      "test_model_10fold": 0.9000007146583576,
+      "available_but_unused_at_K5": 0.19999999999999996,
+      "available_but_unused_at_K10": 0.09999928534164237
+    }
   }
 }
