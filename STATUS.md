@@ -533,9 +533,39 @@ reproducing the observed 504k count to within 2.3% (predicts 900 vs observed 879
 | 10-fold full outer-fit | 629,672 | 1.183 | 1040 |
 | full refit on all labels | 699,635 | 1.281 | 1126 |
 
-**Caveat, stated plainly:** five points spanning under one order of magnitude is a weak law. It is
-used only to *correct* an iteration count that is also measured directly by an inner CV, never as
-the sole source of that count.
+**Caveat, stated plainly:** five points spanning under one order of magnitude is a weak law, and
+**its sign turned out to be wrong in the regime that mattered** — see below.
+
+### The iteration-scaling law was withdrawn, and that is the more useful result
+A direct measurement at **95% of the labels** contradicted the law's direction:
+
+| training rows | early-stopping argmax | source |
+|---|---|---|
+| 503,739 (72%) | 797, 731 | fold-0 / fold-1 controls, 10% holdout |
+| 503,739 (72%) | 879 mean over 3 seeds | fold-0 subsample curve, frac = 1.0 |
+| **664,655 (95%)** | **[613, 846, 641]** | full-data measurement, three independent 5% holdouts |
+
+The **largest** training size yields a **lower** count. `best_iter` is flat-to-*decreasing* in `n`
+here, so extrapolating upward is the wrong direction and the ×1.039 correction was **withdrawn before
+any full-data member was fitted under it** (the refit job was killed and restarted so its recorded
+manifest reflects the policy actually used).
+
+**Mechanism.** With `extra_trees` plus `colsample_bytree=0.8` and `subsample=0.8`, every tree already
+sees ~64% of the columns and 80% of the rows. More data makes split statistics less noisy and the
+validation curve **flatter**, which both lowers the optimum and makes the argmax less well determined.
+The **38% spread across three holdouts at a single size** — [613, 846, 641] — is that flatness showing
+up directly, and it is the same phenomenon that cost −18.8e-5 when `subsample` moved 0.8→0.9.
+
+**Policy finally used:** median of three independent 5% early-stopping holdouts measured on 95% of the
+labels, **no size correction at all**. The measurement sits at 95% of the target size so there is
+almost no extrapolation, and mild under-iteration is the safe residual when over-iteration is the one
+failure mode actually measured. Materiality is small — 641 vs 666 rounds is 4%, and fold 0 measured
+811 vs 863 (6% apart) as worth exactly 0.0e-5.
+
+**The lesson, recorded in the ledger as `p7_iteration_size_correction_WITHDRAWN`:** a scaling law
+validated out-of-sample on the *fold-count* axis (it predicted the measured 5→10 fold gain to 7.4%)
+still did not transfer to the *iteration-count* axis. **Predictive power on one axis is not evidence on
+another**, and a five-point fit from a different regime is a hypothesis, not a constant.
 
 ### PHASE 7 RESULT 1 -- inner-ES vs full outer-fit (`scripts/run_fullfit.py`)
 

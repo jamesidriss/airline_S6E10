@@ -25,25 +25,43 @@ Net is clearly positive for a single model, and MORE so inside this blend: 59 me
 space already absorb per-member seed noise, so the averaging term is largely already banked while the
 data term is not.
 
-Iteration policy, predeclared
------------------------------
+Iteration policy, predeclared -- and then corrected downward on new evidence
+------------------------------------------------------------------------
 Over-iteration is the failure mode, not under-iteration, and it is worse than a single bad draw
 suggests. On fold 0, 811 and 863 rounds were indistinguishable while 1191 rounds cost -5.9e-5
 against the control. The bagging experiment then showed the argmax is genuinely noisy: changing only
-`subsample` from 0.8 to 0.9 moved the early-stopped count from 797 to 860 on fold 0 (harmless,
-+2.8e-5) but from 731 to 1082 on fold 1, which cost **-18.8e-5**. A single 55,969-row holdout is not
-enough to locate a flat optimum.
+`subsample` from 0.8 to 0.9 moved the early-stopped count from 797 to 860 on fold 0 (harmless) but
+from 731 to 1082 on fold 1, which cost **-18.8e-5**.
 
-So the count is both stabilised and extrapolated as little as possible:
+So the count is stabilised by repetition and measured as close to the final size as possible:
 
   1. three independent stratified 5% holdouts from all rows, used ONLY to measure the count
   2. early-stopped fits on the other 95% -> three best_iter values
-  3. take the MEDIAN of the three, which discards a single wild estimate like the 1082 above
-  4. correct by (1.00/0.95)^0.7527 = 1.0387 to cover the short remaining gap
-  5. final fit on 100% of rows at that fixed count, no early stopping
+  3. take the MEDIAN of the three
+  4. final fit on 100% of rows at that fixed count, no early stopping
 
-The exponent is measured (`scripts/iteration_scaling.py`, R^2 = 0.98371, reproduces the observed 504k
-count to 2.3%). At 1.039x the policy is nearly insensitive to it.
+A CORRECTION WAS DROPPED, deliberately
+--------------------------------------
+An earlier draft multiplied the median by (1.00/0.95)^0.7527 = 1.0387, on the theory that best_iter
+grows with training size. That theory came from `scripts/iteration_scaling.py`, which fitted
+best_iter ~ n^0.7527 to the fold-0 SUBSAMPLE curve. The direct measurement at 95% of the labels then
+contradicted its sign:
+
+    training rows        ES argmax                     source
+    503,739  (72%)       797, 731                      fold-0 / fold-1 controls, 10% holdout
+    664,655  (95%)       [613, 846, 641]               full-data measurement, three 5% holdouts
+    503,739  (72%)       879 mean over 3 seeds         fold-0 subsample curve, frac = 1.0
+
+The most recent and most direct measurement at the largest size gives a LOWER count, not a higher
+one. With `extra_trees` plus `colsample_bytree=0.8` and `subsample=0.8` each tree already sees ~64%
+of the columns and rows, so more data makes split statistics less noisy and the validation curve
+flatter -- which both lowers the optimum and makes the argmax less well determined. The 38% spread
+across three holdouts at the same size is the flatness showing up directly.
+
+So no upward correction is applied. The median of a measurement taken at 95% of the target size is
+used as-is: it involves essentially no extrapolation, and the residual under-iteration it risks is the
+safe direction. The factor actually matters little -- 666 versus ~700 rounds is a 5% difference, and
+fold 0 measured 811 versus 863 (a 6% difference) as worth exactly 0.0e-5.
 
 No OOF, by construction
 -----------------------
@@ -107,11 +125,22 @@ def es_holdout(y, frac, seed):
     return np.setdiff1d(idx, h), h
 
 
-def lgbm_params(member_params, seed):
+def lgbm_params(member_params, seed, metric=None):
+    """EXACT defaults of scripts/run_views.py::_fit_full_predict_lgbm, so a full-data fit is the
+    same configuration as the member it replaces with more rows and nothing else changed.
+
+    `metric` matters and is easy to get wrong: LightGBM early-stops on the FIRST metric in the
+    parameter dict, and its default for a binary objective is binary_logloss. The iteration count
+    must therefore be selected on AUC, which is what the whole campaign measures. `metric="auc"` is
+    passed ONLY for the measurement fits, where early stopping actually happens; the final
+    fixed-count fit has no valid set and so has nothing to stop on.
+    """
     p = dict(TEST_REFIT_DEFAULTS)
     p.update({k: v for k, v in (member_params or {}).items() if k != "n_estimators"})
     p.update(random_state=seed, bagging_seed=seed + 1, feature_fraction_seed=seed + 2)
     p.pop("metric", None)
+    if metric:
+        p["metric"] = metric
     return p
 
 
@@ -140,6 +169,9 @@ def main() -> None:
     members = [m for m in members if m["family"] in fams]
     if args.limit:
         members = members[:args.limit]
+    # Process in view order so only ONE assembled design matrix is resident at a time. Four views at
+    # ~800 MB each plus LightGBM's internal state does not fit comfortably alongside anything else.
+    members = sorted(members, key=lambda m: str(m.get("featureset")))
 
     print(f"  refitting {len(members)} members from {final['name']} on {n_all:,} rows "
           f"(100% of labels)\n")
@@ -151,13 +183,21 @@ def main() -> None:
            "why_no_oof": ("trained on every labelled row, so it cannot be scored on labels it has "
                           "seen; reported as a cross-validated training-policy gain, never as OOF"),
            "iteration_policy": {
-               "measure": f"early stop on {N_ITER_SPLITS} independent {args.es_frac:.0%} stratified holdouts, fit on the rest",
-               "correct": f"median of the {N_ITER_SPLITS}, then x (1.00/{1-args.es_frac:.2f})^{SIZE_EXPONENT} = "
-                          f"{(1.0/(1-args.es_frac))**SIZE_EXPONENT:.4f}",
+               "measure": f"early stop on {N_ITER_SPLITS} independent {args.es_frac:.0%} "
+                          f"stratified holdouts, fit on the rest",
+               "aggregate": f"MEDIAN of the {N_ITER_SPLITS} counts",
+               "size_correction": ("NONE. The direct 95%-of-labels measurement returns a LOWER count "
+                                   "than the 72% one, so the upward trend fitted to the fold-0 "
+                                   "subsample curve does not hold in this regime. The median of a "
+                                   "measurement taken at 95% of the target size is used as-is, which "
+                                   "involves essentially no extrapolation."),
                "final": "fit on 100% of rows at that fixed count, no early stopping",
-               "size_exponent": SIZE_EXPONENT,
-               "why": "over-iteration is the measured failure mode (1191 rounds cost -5.9e-5), so "
-                      "the extrapolation is kept as short as possible"},
+               "superseded_size_exponent": SIZE_EXPONENT,
+               "why": ("over-iteration is the measured failure mode (1191 rounds cost -5.9e-5, and a "
+                       "subsample change alone moved the argmax 731 -> 1082), so a single argmax is "
+                       "not trusted and no upward extrapolation is applied. Under-iteration is the "
+                       "safe residual."),
+           },
            "test_refit_defaults": TEST_REFIT_DEFAULTS,
            "git_commit": subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
                                         text=True).stdout.strip()[:12],
@@ -168,6 +208,7 @@ def main() -> None:
     for mi, m in enumerate(members):
         view = m.get("featureset")
         if view not in vcache:
+            vcache.clear()          # one view resident at a time; members arrive in view order
             vb = ViewBuilder(tr, te, view)
             vb.build_static()
             # fit_idx = EVERY labelled row; val_idx is a throwaway slice that only exists because
@@ -192,7 +233,7 @@ def main() -> None:
             meas_list = []
             for sp in range(N_ITER_SPLITS):
                 fr_, er_ = es_holdout(y_int, args.es_frac, 1000 * (sp + 1))
-                p = lgbm_params(m.get("params"), 0)
+                p = lgbm_params(m.get("params"), 0, metric="auc")
                 p["n_estimators"] = MAX_ROUNDS
                 ds = lgb.Dataset(Xf[fr_], label=y[fr_])
                 dv = lgb.Dataset(Xf[er_], label=y[er_], reference=ds)
@@ -200,11 +241,15 @@ def main() -> None:
                                callbacks=[lgb.early_stopping(300, verbose=False)])
                 meas_list.append(int(mm.best_iteration or MAX_ROUNDS))
             med = int(np.median(meas_list))
-            iter_cache[cfg_key] = (meas_list, med,
-                                   int(round(med * (1.0 / (1 - args.es_frac)) ** SIZE_EXPONENT)))
-            print(f"    iteration for {view} {json.dumps(m.get('params'))[:66]}: "
-                  f"{meas_list} at {len(fit_rows):,} rows -> median {med} -> "
-                  f"{iter_cache[cfg_key][2]} for {n_all:,} ({time.time()-t0:.0f}s)", flush=True)
+            # NO size correction. The direct 95%-of-labels measurement returns a LOWER count than the
+            # 72% one (see the module docstring), so the upward trend fitted to the fold-0 subsample
+            # curve does not hold in this regime. Over-iteration is the measured failure mode and the
+            # residual under-iteration is the safe direction. 666 vs ~700 rounds is a 5% difference
+            # and fold 0 measured 811 vs 863 (6% apart) as worth exactly 0.0e-5.
+            iter_cache[cfg_key] = (meas_list, med, med)
+            print(f"    iteration for {view} {json.dumps(m.get('params'))[:60]}: "
+                  f"{meas_list} at {len(fit_rows):,} rows -> median {med} used for {n_all:,} "
+                  f"(no upward correction) ({time.time()-t0:.0f}s)", flush=True)
         meas_list, med, n_iter = iter_cache[cfg_key]
 
         seed = int(m.get("seed", 1) or 1)
