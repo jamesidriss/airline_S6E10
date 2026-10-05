@@ -266,12 +266,37 @@ def main() -> None:
                       f"{per:.3f}s/round   -> full grid ({need} rounds) ~ "
                       f"{per*need/3600:.2f} h", flush=True)
             print(f"\n  inner-train rows used: {len(itr_l):,}   features: {Xf.shape[1]}")
+            # Extrapolation is quadratic in rounds for DART and linear for GBDT. This is measured,
+            # not assumed: DART cost per round rose from 0.058 s at 300 rounds to 0.152 s at 1500
+            # rounds on identical data, a 2.62x increase, because each new tree re-normalises the
+            # surviving ensemble. GBDT's s/round was flat to within noise and its inner curve decays
+            # after ~900, so it is treated as linear. A single-rounds linear projection understated
+            # a full DART grid by ~2.6x.
+            def cost(rounds: int, per300: float, dart: bool) -> float:
+                if dart:
+                    # measured anchor at 300 rounds, scaling as r^1.5 which fits 300->1500 closely
+                    return per300 * (rounds / 300.0) ** 1.5
+                return per300 * (rounds / 300.0)
+
+            for mname, pj in proj.items():
+                per300 = pj["sec_per_round"] * args.timing_probe / 300.0
+                dart = MODES[mname]["boosting"] == "dart"
+                pj["extrapolation"] = ("quadratic-ish (r^1.5, anchored on measured 300 vs 1500)"
+                                       if dart else "linear (s/round measured flat)")
+                pj["projected_full_grid_seconds"] = round(
+                    sum(cost(r, per300, dart) for r in snaps) + cost(snaps[len(snaps) // 2],
+                                                                     per300, dart))
+                pj["projected_full_grid_hours"] = round(
+                    pj["projected_full_grid_seconds"] / 3600.0, 2)
             save_json({"tag": args.tag, "timing_probe_rounds": args.timing_probe,
                        "scheme": args.scheme, "view": args.view, "folds": {str(k): proj},
-                       "note": "projections are linear in rounds from a single measured fit and "
-                               "will understate cost for DART, whose per-round normalisation "
-                               "overhead grows with the tree count"},
+                       "note": "DART extrapolated with r^1.5 because its measured per-round cost rose "
+                               "2.62x between a 300- and a 1500-round fit on identical data; GBDT "
+                               "extrapolated linearly. A purely linear projection understated DART."},
                       REPORTS / f"{args.tag}_timing.json")
+            for mname, pj in proj.items():
+                print(f"  {mname:<12} projection: {pj['extrapolation']}  -> full grid "
+                      f"~ {pj['projected_full_grid_hours']:.2f} h", flush=True)
             return
         fold_rec = {}
         for mname in modes:

@@ -1131,6 +1131,24 @@ this instrument alone does not close the question. But the one thing it does est
 negative: **error is not concentrated in high-disagreement rows**, so the specific mechanism Phase 9
 chases has little room to work. That is consistent with every Phase 7–8 result returning ≤ +3e-5.
 
+## 6k2. DART cost per round GROWS with tree count — measured, not assumed
+
+The first timing probe measured DART at **0.058 s/round** from a 300-round fit and projected a full
+8,900-round grid at 0.09 h. That projection was wrong, and the fold-0 run showed it by taking over
+25 minutes on `dart005` alone with no output. A second probe on identical data at 1,500 rounds:
+
+| probe | rounds | s/round |
+|---|---|---|
+| early | 300 | 0.058 |
+| late | 1500 | **0.152** |
+
+**2.62x more expensive per round at 1,500 trees than at 300.** The mechanism is structural: every
+new DART tree re-normalises the surviving ensemble, so per-round cost grows with the accumulated tree
+count. GBDT's s/round was flat and its curve decays after ~900, so GBDT is genuinely linear. The
+harness now extrapolates DART with `r^1.5` and GBDT linearly, and records which it used. A single-fit
+linear projection is not valid for DART — worth remembering independently of this project, since
+LightGBM's own early-stopping path would have hidden the problem entirely.
+
 ## 6k. `extra_trees` is confirmed load-bearing under the champion config (fold 0)
 
 | arm | rounds | fold-0 AUC | vs `ctl_fixed` | blend w=2% vs v3 |
