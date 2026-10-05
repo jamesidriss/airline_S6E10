@@ -54,5 +54,5 @@
   "test_sha256": "e43abb7b7d071aee0e4a18e52a675f7c3fbfbb87200cf964c091e33c7429de15",
   "evidence": "cross-validated training-policy gain: run_fullfit.py measured +2.2e-5 mean / +4.0e-5 best fold for the analogous 72pct->80pct substitution 2/2 folds; validate_curve_on_folds.py showed the training-fraction law predicts the already-measured 5->10 fold gain to 7.4pct. The 80pct->100pct step is an EXTRAPOLATION and the law over-states gains at the top of the range, so it is claimed as low-single-digit-e-5, not as the +20.2e-5 raw extrapolation.",
   "not_an_oof_gain": "the OOF printed here belongs to v3_final's members and is unchanged by construction; it is shown for internal consistency only and is NOT evidence for this candidate",
-  "git_commit": "08c16fb19946"
+  "git_commit": "ee29e9f2d100"
 }
