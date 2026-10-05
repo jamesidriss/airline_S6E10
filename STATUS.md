@@ -445,6 +445,33 @@ Projected through our own measured learning curve (**+62.9e-5 per doubling**):
 
 This is larger than anything else measured in the campaign and it is grounded in our own data.
 
+### The learning curve predicts a fold-count effect a priori -- and then over-extrapolates
+`scripts/validate_curve_on_folds.py`. If the measured 5→10 fold gain is nothing but the
+training-fraction change, the curve must predict it **before** the fold experiment was run. Using
+the seed-matched pairs from the prediction store (identical view, family, `extra_trees` and seed;
+only the fold scheme differs):
+
+| K=5 member | K=10 member | observed | predicted a priori | residual |
+|---|---|---|---|---|
+| `xt_xt_sh_s1` (shadow, seed 1) | `xt_xt_f10` (block10, seed 1) | **+9.9e-5** | **+10.7e-5** | −0.8e-5 |
+
+ratio 566,706/503,739 = 1.125 = 0.1699 doublings × 62.9e-5. A **7.4%** relative error, and the
+residual (−0.8e-5) is *smaller* than the seed-to-seed spread within either scheme (shadow 4.4e-5,
+block10 6.4e-5). Two consequences:
+
+1. **Fold-count scaling is not a mysterious diversity effect.** It is the same "more unique labels
+   per learner" effect the subsample curve measures. That explains why 5→10 helped, and predicts
+   saturation as the fraction approaches 1.
+2. The law has out-of-sample predictive power on an axis it was not fitted to — which is the only
+   thing that can justify a full-data refit, an intervention no CV can score.
+
+**But the law over-extrapolates at the top of the range.** `scripts/run_fullfit.py` measured
+72%→80% directly and got **+4.0e-5 on fold 0** where the curve predicts +9.6e-5 (or +7.8e-5 using
+the last segment's local slope rather than the mean). That is ~40–50% of prediction. So the
+80%→100% figure of **+20.2e-5 is an optimistic bound, not a point estimate**; a realistic estimate
+is single-digit e-5. This is recorded as a correction to our own extrapolation, and it is the reason
+the full-data members are not sold as a +2e-4 win.
+
 **The asymmetry that matters — and it is larger than we thought.** An earlier reading of this file
 asserted that "a second-pass refit on all labelled rows is the documented test-time policy, so a
 submitted model already trains on 100% of the labels." **That was wrong**, and it was wrong because
@@ -509,6 +536,74 @@ reproducing the observed 504k count to within 2.3% (predicts 900 vs observed 879
 **Caveat, stated plainly:** five points spanning under one order of magnitude is a weak law. It is
 used only to *correct* an iteration count that is also measured directly by an inner CV, never as
 the sole source of that count.
+
+### PHASE 7 RESULT 1 -- inner-ES vs full outer-fit (`scripts/run_fullfit.py`)
+
+Champion extra_trees LightGBM, view `full`, primary folds, identical features/params/seed; the
+control is the existing protocol and the full-fit arm trains on 100% of outer-fit. Three arms differ
+**only** in the estimator of the iteration count, so agreement between them is evidence about the
+estimator rather than a search over it.
+
+| arm | iteration source | fold 0 | fold 1 | mean | positive |
+|---|---|---|---|---|---|
+| **control** (503,739 rows = 72%) | inner early stopping | 0.961299 | 0.961396 | — | — |
+| `ctl_scaled` (559,708 rows = 80%) | control's ES × 1.083 | **+4.0e-5** | **+0.4e-5** | **+2.2e-5** | **2/2** |
+| `innercv_raw` | median inner-CV, no correction | +3.9e-5 | −0.8e-5 | +1.6e-5 | 1/2 |
+| `innercv_scaled` | median inner-CV × 1.47 | −5.9e-5 | +0.2e-5 | **−2.9e-5** | 1/2 |
+
+Three findings, all of which matter more than the headline number:
+
+1. **Recovering the inner-ES holdout is real but small: +2.2e-5, positive in 2/2 folds.** That is
+   below the +5e-5 promotion threshold, so it is *held*, not escalated. Critically it is **~4×
+   smaller than the +9.6e-5 the learning curve predicted**, i.e. the law over-extrapolates at the top
+   of the range (Section 6e above).
+2. **Over-iteration is the real risk, not under-iteration.** `innercv_scaled` extrapolates the count
+   over a 1.47× range and lands at 1191 rounds; AUC falls to 0.961240, **−5.9e-5 against the
+   control**. Meanwhile 811 vs 863 rounds differ by +0.0e-5. The model is flat in iteration count
+   over 811–863 and degrades beyond it. Therefore the full-data policy must **shorten the
+   extrapolation**, not sharpen it.
+3. The most defensible estimator is the one taken from the **closest available size measurement**
+   (the control's own early stopping at 90% of the final fit), which is also the only arm positive
+   in both folds.
+
+The predeclared full-data iteration policy therefore became: measure the count by early stopping on
+a **5%** holdout carved from all rows (fit on 95%), correct by only `(1.00/0.95)^0.7527 = 1.039`, then
+fit on 100% at that fixed count. At 1.039× the policy is nearly insensitive to which exponent is
+used, which is exactly the robustness the fold-0 failure demanded.
+
+**Harness note.** The first run of this script returned a fake **−483e-5 "REJECT"** caused by an
+index-space bug: the inner-CV picker indexed the design matrix by position-within-inner-train rather
+than position-within-outer-fit, so it early-stopped at 5 and 43 rounds. Fixed, plus a hard guard
+that now **aborts** if the inner-CV median differs from the control's early-stopping count by more
+than 3×, so this failure class can never again be reported as a result.
+
+### PHASE 7 RESULT 2 -- group-conditional calibration: CLOSED (`scripts/run_group_calibration.py`)
+
+Nested meta-validation on the primary folds: fit the calibrator on four folds of `logit(v3_final)`
+OOF, apply to the fifth, never the same rows.
+
+| arm | design | AUC | mean delta | folds positive |
+|---|---|---|---|---|
+| `G0_global` | 1 col — **mandatory control** | 0.961505 | **+0.0e-5** | 0/5 |
+| `G2_union` | base + 4 group intercepts + slopes (11 cols) | 0.961512 | +0.8e-5 | **5/5** |
+| `G1_union` | base + 4 group intercepts (6 cols) | 0.961511 | +0.6e-5 | 4/5 |
+| `G1_travel` | base + Type-of-Travel intercepts | 0.961510 | +0.5e-5 | 3/5 |
+| `G1_class` | base + Class intercepts | 0.961509 | +0.4e-5 | 4/5 |
+| `G2_class` | base + Class intercepts + slopes | 0.961508 | +0.3e-5 | 4/5 |
+| `G3_class` | shared 5-knot piecewise-linear base + Class | 0.961505 | +0.3e-5 | 3/5 |
+| `G1_custtype` | base + Customer-Type intercepts | 0.961506 | +0.0e-5 | 3/5 |
+| `G1_gender` | base + Gender intercepts | 0.961504 | −0.1e-5 | 2/5 |
+
+The **control check is the load-bearing part**: `G0` (a global Platt map, which is strictly
+increasing) moves AUC by **+0.0e-5 on all five folds**, exactly as theory requires — ROC-AUC is
+invariant to any strictly increasing transform of the score. The harness is therefore trustworthy,
+and every other arm is interpretable.
+
+**Verdict: closed.** The best arm is consistent (5/5 positive) but worth **+0.8e-5**, roughly 4×
+below the predeclared +3e-5 rule and an order of magnitude below the admission gate. There *is* a
+small systematic cross-group rank bias in the finalist, and it is too small to act on. Two harness
+bugs were found and fixed on the way (G0 initially omitted the base column entirely; group one-hot
+blocks were not subset per fold, which surfaced as a reshape error rather than a wrong number).
 
 ## 7. Software quality
 

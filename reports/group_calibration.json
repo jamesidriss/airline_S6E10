@@ -1,0 +1,201 @@
+{
+  "base_member": "blend_v3_final",
+  "base_oof_auc": 0.9615085785798723,
+  "arms": [
+    {
+      "arm": "G0_global",
+      "groups": null,
+      "mode": "intercept",
+      "n_columns": 1,
+      "auc": 0.9615050542867704,
+      "mean_delta": 0.0,
+      "delta_e5": 0.0,
+      "per_fold_delta": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "folds_positive": 0,
+      "n_folds": 5,
+      "meets_promotion_rule": false
+    },
+    {
+      "arm": "G1_class",
+      "groups": [
+        "Class"
+      ],
+      "mode": "intercept",
+      "n_columns": 3,
+      "auc": 0.9615091653923084,
+      "mean_delta": 4.193437224842001e-06,
+      "delta_e5": 0.41934372248420004,
+      "per_fold_delta": [
+        1.6386839091220295e-06,
+        9.586548897932978e-06,
+        4.430888312145775e-06,
+        9.221214008814371e-06,
+        -3.910149003805152e-06
+      ],
+      "folds_positive": 4,
+      "n_folds": 5,
+      "meets_promotion_rule": false
+    },
+    {
+      "arm": "G1_travel",
+      "groups": [
+        "TypeOfTravel"
+      ],
+      "mode": "intercept",
+      "n_columns": 2,
+      "auc": 0.9615097487655657,
+      "mean_delta": 4.777706778691382e-06,
+      "delta_e5": 0.4777706778691382,
+      "per_fold_delta": [
+        5.831202578576722e-06,
+        -7.627439260193825e-07,
+        1.1156009372070841e-05,
+        -2.4023536654427247e-06,
+        1.0066419534271454e-05
+      ],
+      "folds_positive": 3,
+      "n_folds": 5,
+      "meets_promotion_rule": false
+    },
+    {
+      "arm": "G1_custtype",
+      "groups": [
+        "CustomerType"
+      ],
+      "mode": "intercept",
+      "n_columns": 2,
+      "auc": 0.9615057720776955,
+      "mean_delta": 4.098453812551028e-07,
+      "delta_e5": 0.040984538125510284,
+      "per_fold_delta": [
+        -2.2617521322487733e-07,
+        1.901376170843072e-06,
+        -4.769632698131687e-06,
+        2.754962360351776e-06,
+        2.3886962864372308e-06
+      ],
+      "folds_positive": 3,
+      "n_folds": 5,
+      "meets_promotion_rule": false
+    },
+    {
+      "arm": "G1_gender",
+      "groups": [
+        "Gender"
+      ],
+      "mode": "intercept",
+      "n_columns": 2,
+      "auc": 0.9615038100490637,
+      "mean_delta": -1.4186317618403166e-06,
+      "delta_e5": -0.14186317618403166,
+      "per_fold_delta": [
+        -3.9077820791488804e-06,
+        6.217211410142198e-07,
+        -1.5490778706439556e-06,
+        -2.7876572981089254e-06,
+        5.296372976859587e-07
+      ],
+      "folds_positive": 2,
+      "n_folds": 5,
+      "meets_promotion_rule": false
+    },
+    {
+      "arm": "G1_union",
+      "groups": [
+        "Class",
+        "TypeOfTravel",
+        "CustomerType",
+        "Gender"
+      ],
+      "mode": "intercept",
+      "n_columns": 6,
+      "auc": 0.9615113619100143,
+      "mean_delta": 6.214830955797446e-06,
+      "delta_e5": 0.6214830955797446,
+      "per_fold_delta": [
+        -1.1633641795461003e-06,
+        1.0364916038119176e-05,
+        3.841448248720347e-06,
+        6.659420789700832e-06,
+        1.1371733881992974e-05
+      ],
+      "folds_positive": 4,
+      "n_folds": 5,
+      "meets_promotion_rule": false
+    },
+    {
+      "arm": "G2_class",
+      "groups": [
+        "Class"
+      ],
+      "mode": "slope",
+      "n_columns": 5,
+      "auc": 0.9615076069767384,
+      "mean_delta": 2.7670687316128096e-06,
+      "delta_e5": 0.27670687316128095,
+      "per_fold_delta": [
+        1.4797611609385086e-06,
+        4.93559054637327e-06,
+        3.995507622756023e-06,
+        5.419496317160544e-06,
+        -1.995011989164297e-06
+      ],
+      "folds_positive": 4,
+      "n_folds": 5,
+      "meets_promotion_rule": false
+    },
+    {
+      "arm": "G2_union",
+      "groups": [
+        "Class",
+        "TypeOfTravel",
+        "CustomerType",
+        "Gender"
+      ],
+      "mode": "slope",
+      "n_columns": 11,
+      "auc": 0.9615120905606321,
+      "mean_delta": 7.812707245746785e-06,
+      "delta_e5": 0.7812707245746785,
+      "per_fold_delta": [
+        5.460072436958008e-06,
+        4.731247185807419e-06,
+        2.5088191426547723e-06,
+        9.47656561078869e-06,
+        1.688683185252504e-05
+      ],
+      "folds_positive": 5,
+      "n_folds": 5,
+      "meets_promotion_rule": false
+    },
+    {
+      "arm": "G3_class",
+      "groups": [
+        "Class"
+      ],
+      "mode": "spline",
+      "n_columns": 8,
+      "auc": 0.9615045327400943,
+      "mean_delta": 2.6620713612146573e-06,
+      "delta_e5": 0.26620713612146574,
+      "per_fold_delta": [
+        -1.9699798992078854e-07,
+        8.581696888887436e-06,
+        1.6468522886503578e-06,
+        5.861912625970689e-06,
+        -2.583107007514407e-06
+      ],
+      "folds_positive": 3,
+      "n_folds": 5,
+      "meets_promotion_rule": false
+    }
+  ],
+  "control_check_pass": true,
+  "git_commit": "e763109a972d"
+}

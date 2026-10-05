@@ -91,9 +91,8 @@ def design(base, gcols, mode):
     (the last level is the reference).
     """
     n = len(base)
-    if mode == "intercept" and not gcols:
-        return np.ones((n, 1))
-    D = [base.reshape(n, 1)]
+    D = [base.reshape(n, 1)]           # column 0 is always the base logit; LogisticRegression adds
+                                        # the intercept itself, so no explicit ones column is needed
     if mode == "slope":
         for g in gcols:
             for j in range(g.shape[1]):
@@ -147,15 +146,17 @@ def main() -> None:
     print("=" * 104)
 
     for arm, gnames, mode in ARMS:
-        gcols = []
-        for g in (gnames or []):
-            gcols.append(G[g])
         per_fold, transformed_all = [], np.full(len(base), np.nan)
         for k in sorted(set(folds.tolist())):
             tr_m = np.where(folds != k)[0]
             va_m = np.where(folds == k)[0]
-            Xtr = design(base[tr_m], gcols, mode)
-            Xva = design(base[va_m], gcols, mode)
+            # the group one-hot blocks are indexed by ROW, so they must be subset exactly like the
+            # base column is; passing the full-length block alongside a subset base is a shape bug
+            # that shows up as a nonsensical reshape error rather than as a wrong number.
+            gtr = [G[g][tr_m] for g in (gnames or [])]
+            gva = [G[g][va_m] for g in (gnames or [])]
+            Xtr = design(base[tr_m], gtr, mode)
+            Xva = design(base[va_m], gva, mode)
             lr = LogisticRegression(C=1e6, max_iter=2000, solver="lbfgs")
             lr.fit(Xtr, y[tr_m])
             z = lr.decision_function(Xva)
@@ -168,7 +169,7 @@ def main() -> None:
         mean_d = float(np.mean(ok)) if ok else float("nan")
         auc_full = float(roc_auc_score(y, transformed_all)) if np.isfinite(
             transformed_all).all() else float("nan")
-        ncols = design(base[:2], gcols, mode).shape[1]
+        ncols = design(base[:2], [G[g][:2] for g in (gnames or [])], mode).shape[1]
         pos = sum(1 for d in ok if d > 0)
         pf = " ".join(f"{d*1e5:+.1f}" for d in per_fold)
         print(f"{arm:<14}{ncols:>6}{auc_full:>11.6f}{mean_d*1e5:>+11.1f}{pos:>7}/{len(ok):<4} {pf}")

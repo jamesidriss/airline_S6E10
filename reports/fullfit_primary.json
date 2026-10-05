@@ -1,0 +1,229 @@
+{
+  "results": [
+    {
+      "fold": 0,
+      "scheme": "primary",
+      "view": "full",
+      "n_features": 285,
+      "n_total_labelled": 699635,
+      "control": {
+        "n_rows": 503739,
+        "frac_of_all_labels": 0.7200025727700873,
+        "auc": 0.961298820121512,
+        "iter": 797,
+        "seconds": 47.5
+      },
+      "full_fit_common": {
+        "n_rows": 559708,
+        "frac_of_all_labels": 0.8,
+        "iteration_pick_seconds": 83.0,
+        "inner_cv_iters": [
+          604,
+          811,
+          1023
+        ],
+        "inner_cv_median": 811,
+        "inner_cv_rows_per_arm": 335827
+      },
+      "size_exponent": 0.7527,
+      "arms": [
+        {
+          "arm": "innercv_raw",
+          "iteration": 811,
+          "provenance": "median inner-CV best_iteration, used WITHOUT a size correction",
+          "auc": 0.9613375983067046,
+          "delta": 3.877818519260057e-05,
+          "delta_e5": 3.8778185192600567,
+          "iter_ratio_vs_control": 1.0175658720200753,
+          "seconds": 26.1,
+          "corr_with_control_logit": 0.9996529959135901,
+          "corr_with_finalist_logit": 0.9917351835791405,
+          "spearman_with_finalist": 0.9949737683588904,
+          "finalist_blend_gains": {
+            "0.05": 3.651291523576461e-07,
+            "0.1": 7.969934431306669e-07,
+            "0.2": 1.5750527305735673e-06,
+            "0.3": 2.5271407048110817e-06,
+            "0.5": 4.6854275053132e-06,
+            "1.0": -0.0001630846410430875
+          }
+        },
+        {
+          "arm": "innercv_scaled",
+          "iteration": 1191,
+          "provenance": "median inner-CV best_iteration x (n_final/n_inner_arm)^0.7527",
+          "auc": 0.961239597807745,
+          "delta": -5.922231376698228e-05,
+          "delta_e5": -5.922231376698228,
+          "iter_ratio_vs_control": 1.4943538268506902,
+          "seconds": 39.0,
+          "corr_with_control_logit": 0.9995659323609981,
+          "corr_with_finalist_logit": 0.9917339981077536,
+          "spearman_with_finalist": 0.9924482893113882,
+          "finalist_blend_gains": {
+            "0.05": 6.119974317320143e-07,
+            "0.1": 1.4105428547406262e-06,
+            "0.2": 2.53624565382804e-06,
+            "0.3": 4.144096894642679e-06,
+            "0.5": 8.388037833428896e-06,
+            "1.0": -0.00026108514000267036
+          }
+        },
+        {
+          "arm": "ctl_scaled",
+          "iteration": 863,
+          "provenance": "the control's own ES best_iteration x (n_final/n_ctrl)^0.7527",
+          "auc": 0.9613388574797804,
+          "delta": 4.003735826840771e-05,
+          "delta_e5": 4.003735826840771,
+          "iter_ratio_vs_control": 1.082810539523212,
+          "seconds": 28.9,
+          "corr_with_control_logit": 0.9996452853469465,
+          "corr_with_finalist_logit": 0.9917316789270845,
+          "spearman_with_finalist": 0.994700511657664,
+          "finalist_blend_gains": {
+            "0.05": 4.559717128316265e-07,
+            "0.1": 9.25704314536091e-07,
+            "0.2": 1.8765507046047958e-06,
+            "0.3": 2.945140641141819e-06,
+            "0.5": 5.9096292992499855e-06,
+            "1.0": -0.00016182546796728037
+          }
+        }
+      ],
+      "git_commit": "e763109a972d"
+    },
+    {
+      "fold": 1,
+      "scheme": "primary",
+      "view": "full",
+      "n_features": 285,
+      "n_total_labelled": 699635,
+      "control": {
+        "n_rows": 503739,
+        "frac_of_all_labels": 0.7200025727700873,
+        "auc": 0.9613964768314239,
+        "iter": 731,
+        "seconds": 40.3
+      },
+      "full_fit_common": {
+        "n_rows": 559708,
+        "frac_of_all_labels": 0.8,
+        "iteration_pick_seconds": 70.1,
+        "inner_cv_iters": [
+          642,
+          737,
+          645
+        ],
+        "inner_cv_median": 645,
+        "inner_cv_rows_per_arm": 335827
+      },
+      "size_exponent": 0.7527,
+      "arms": [
+        {
+          "arm": "innercv_raw",
+          "iteration": 645,
+          "provenance": "median inner-CV best_iteration, used WITHOUT a size correction",
+          "auc": 0.9613889240938873,
+          "delta": -7.552737536609122e-06,
+          "delta_e5": -0.7552737536609122,
+          "iter_ratio_vs_control": 0.8823529411764706,
+          "seconds": 22.1,
+          "corr_with_control_logit": 0.9996835478307988,
+          "corr_with_finalist_logit": 0.99171673407332,
+          "spearman_with_finalist": 0.9956281187970447,
+          "finalist_blend_gains": {
+            "0.05": 8.01853693443988e-08,
+            "0.1": 1.5519748819414758e-09,
+            "0.2": 1.2364066626080472e-07,
+            "0.3": 3.828204753197895e-09,
+            "0.5": -6.451042293686982e-07,
+            "1.0": -0.0002612009953302241
+          }
+        },
+        {
+          "arm": "innercv_scaled",
+          "iteration": 947,
+          "provenance": "median inner-CV best_iteration x (n_final/n_inner_arm)^0.7527",
+          "auc": 0.9613979834886476,
+          "delta": 1.506657223648844e-06,
+          "delta_e5": 0.1506657223648844,
+          "iter_ratio_vs_control": 1.2954856361149112,
+          "seconds": 28.3,
+          "corr_with_control_logit": 0.9996482087422212,
+          "corr_with_finalist_logit": 0.9917758528177227,
+          "spearman_with_finalist": 0.9941236953911647,
+          "finalist_blend_gains": {
+            "0.05": 3.3098451168722676e-07,
+            "0.1": 5.437085366377659e-07,
+            "0.2": 1.0900036979677452e-06,
+            "0.3": 1.6176751608254492e-06,
+            "0.5": 2.907469759838577e-06,
+            "1.0": -0.00025214160056996615
+          }
+        },
+        {
+          "arm": "ctl_scaled",
+          "iteration": 791,
+          "provenance": "the control's own ES best_iteration x (n_final/n_ctrl)^0.7527",
+          "auc": 0.9614002419225081,
+          "delta": 3.7650910841291463e-06,
+          "delta_e5": 0.37650910841291463,
+          "iter_ratio_vs_control": 1.0820793433652531,
+          "seconds": 25.0,
+          "corr_with_control_logit": 0.9996738142094763,
+          "corr_with_finalist_logit": 0.9917600084486301,
+          "spearman_with_finalist": 0.9951511832086911,
+          "finalist_blend_gains": {
+            "0.05": 2.3124425863052522e-07,
+            "0.1": 2.2979574876291764e-07,
+            "0.2": 5.083235090630467e-07,
+            "0.3": 6.006142826420202e-07,
+            "0.5": 7.891274992344322e-07,
+            "1.0": -0.00024988316670948585
+          }
+        }
+      ],
+      "git_commit": "e763109a972d"
+    }
+  ],
+  "arm_summary": {
+    "innercv_raw": {
+      "mean_delta": 1.5612723827995723e-05,
+      "mean_delta_e5": 1.5612723827995723,
+      "folds_positive": 1,
+      "n_folds": 2,
+      "per_fold_delta_e5": [
+        3.8778185192600567,
+        -0.7552737536609122
+      ]
+    },
+    "innercv_scaled": {
+      "mean_delta": -2.885782827166672e-05,
+      "mean_delta_e5": -2.885782827166672,
+      "folds_positive": 1,
+      "n_folds": 2,
+      "per_fold_delta_e5": [
+        -5.922231376698228,
+        0.1506657223648844
+      ]
+    },
+    "ctl_scaled": {
+      "mean_delta": 2.1901224676268427e-05,
+      "mean_delta_e5": 2.1901224676268427,
+      "folds_positive": 2,
+      "n_folds": 2,
+      "per_fold_delta_e5": [
+        4.003735826840771,
+        0.37650910841291463
+      ]
+    }
+  },
+  "any_arm_promotes": false,
+  "n_folds": 2,
+  "size_exponent": 0.7527,
+  "protocol": "per outer fold: the iteration count comes ONLY from information inside the outer-FIT rows -- (a) a 3-fold inner CV, each inner model early-stopping on a 10% holdout carved from its own inner-train portion, or (b) the control's own inner-ES run, which also lies entirely inside outer-fit. Either way the outer fold's labels never influence it. Then a from-scratch fit on 100% of the outer-fit rows at that fixed count with no early stopping, and the outer fold is scored exactly once.",
+  "arms_differ_only_in": "the ESTIMATOR of the iteration count. All arms train on the same 100% of outer-fit rows, so agreement between them is evidence about the estimator, not a search over it.",
+  "size_correction_source": "scripts/iteration_scaling.py, exponent 0.7527",
+  "control": "the existing inner-ES protocol, same process, rows, params and seed"
+}

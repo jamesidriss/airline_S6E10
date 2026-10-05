@@ -1,0 +1,99 @@
+{
+  "slope_per_doubling": 0.000629,
+  "n_5fold_model_fit_rows": 503739,
+  "n_10fold_model_fit_rows": 566706,
+  "doublings": 0.16992404678423323,
+  "predicted_gain": 0.0001068822254272827,
+  "predicted_gain_e5": 10.68822254272827,
+  "seed_matched_pairs": [
+    {
+      "seed": 1,
+      "k5_member": "xt_xt_sh_s1",
+      "k10_member": "xt_xt_f10",
+      "k5_auc": 0.961143,
+      "k10_auc": 0.961242,
+      "observed": 9.900000000007125e-05,
+      "observed_e5": 9.900000000007125,
+      "predicted": 0.0001068822254272827,
+      "residual_e5": -0.7882225427211447,
+      "accuracy": 0.07374683110966956
+    },
+    {
+      "seed": 1,
+      "k5_member": "xt_xt_sh_s1",
+      "k10_member": "z3_xt_f10",
+      "k5_auc": 0.961143,
+      "k10_auc": 0.961242,
+      "observed": 9.900000000007125e-05,
+      "observed_e5": 9.900000000007125,
+      "predicted": 0.0001068822254272827,
+      "residual_e5": -0.7882225427211447,
+      "accuracy": 0.07374683110966956
+    }
+  ],
+  "mean_observed": 9.900000000007125e-05,
+  "mean_relative_error": 0.07374683110966956,
+  "members": [
+    {
+      "name": "xt_xt_d127_s2",
+      "scheme": "primary",
+      "seed": 2,
+      "auc": 0.961189
+    },
+    {
+      "name": "zoo_lgbm_xt",
+      "scheme": "primary",
+      "seed": 5,
+      "auc": 0.961175
+    },
+    {
+      "name": "xt_xt_sh_s1",
+      "scheme": "shadow",
+      "seed": 1,
+      "auc": 0.961143
+    },
+    {
+      "name": "xt_xt_sh_s2",
+      "scheme": "shadow",
+      "seed": 2,
+      "auc": 0.961099
+    },
+    {
+      "name": "xt_xt_sh_s5",
+      "scheme": "shadow",
+      "seed": 5,
+      "auc": 0.961126
+    },
+    {
+      "name": "xt_xt_f10",
+      "scheme": "block10",
+      "seed": 1,
+      "auc": 0.961242
+    },
+    {
+      "name": "z3_xt_f10",
+      "scheme": "block10",
+      "seed": 1,
+      "auc": 0.961242
+    },
+    {
+      "name": "z4_xt_f10_s4",
+      "scheme": "block10",
+      "seed": 4,
+      "auc": 0.96126
+    },
+    {
+      "name": "z4_xt_f10_s3",
+      "scheme": "block10",
+      "seed": 3,
+      "auc": 0.961196
+    }
+  ],
+  "extrapolation_justified": {
+    "k5_test_model_80pct_to_100pct": 0.0002024927716841509,
+    "k10_test_model_90pct_to_100pct": 9.560922519896813e-05,
+    "oof_model_72pct_to_80pct": 9.560670318058476e-05
+  },
+  "caveat": "This validates the law at 72%->81%. The 80%->100% step is an EXTRAPOLATION beyond any measured point, justified by the law's a-priori accuracy here but not itself measured. It is reported as a cross-validated training-policy gain, never as OOF.",
+  "git_commit": "e763109a972d"
+}

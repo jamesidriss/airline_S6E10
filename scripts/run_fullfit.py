@@ -265,17 +265,15 @@ def main() -> None:
         np.save(REPORTS / f"{args.tag}_control_fold{k}.npy", p_ctl.astype("float32"))
 
     print("\n" + "=" * 96)
-    print(f"fold {k if len(results) == 1 else ''}  control rows={results[-1]['control']['n_rows']:,} "
-          f"({results[-1]['control']['frac_of_all_labels']:.1%} of labels)  "
-          f"full-fit rows={results[-1]['full_fit_common']['n_rows']:,} "
-          f"({results[-1]['full_fit_common']['frac_of_all_labels']:.1%} of labels)")
+    hdr = results[0]["control"]
+    print(f"  control rows={hdr['n_rows']:,} ({hdr['frac_of_all_labels']:.1%} of labels)   "
+          f"full-fit rows={results[0]['full_fit_common']['n_rows']:,} "
+          f"({results[0]['full_fit_common']['frac_of_all_labels']:.1%} of labels)")
     print(f"{'arm':<16}{'fold':>6}{'iter':>7}{'AUC':>12}{'delta_e5':>11}{'sec':>7}")
     for r in results:
         for a in r["arms"]:
             print(f"{a['arm']:<16}{r['fold']:>6}{a['iteration']:>7}{a['auc']:>12.6f}"
                   f"{a['delta_e5']:>+11.1f}{a['seconds']:>7.0f}")
-        print(f"{'  mean':<16}{'':>6}{'':>7}{'':>12}", end="")
-        print()
 
     print("\n=== per-arm summary ===")
     summary = {}
