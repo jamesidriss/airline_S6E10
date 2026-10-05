@@ -794,23 +794,32 @@ relative to its uncertainty.
 
 ## 8. Current state and next steps
 
-- **Champion / finalist**: 59-member equal-logit blend, OOF **0.961509** (primary 5-fold),
-  submitted as `v3_final` → public 0.960980, rank 144.
-- **Honest position**: rank 1 is 0.96165; rank 100 is 0.96123. The gap is ≈ 5e-4 of OOF-equivalent
-  and we have not been able to attribute it to any mechanism — see the plateau note below.
-- **Submission budget**: 7 remaining today; plan ≤ 3/day. Two final selections are allowed at the
-  deadline; one is the right choice here.
-- **Plateau note**: 0.9615 is the **current system plateau, not a proven ceiling.** Evidence that
-  the synthetic p(x) is weaker than the real survey's (0.9949 vs 0.9612) explains why the ceiling
-  feels close, but it is an inference about the generator, not a bound on what is achievable.
-  Concretely still open: an architecture genuinely decorrelated from the GBDT/RealMLP pool
-  (every family tried — LightGBM, XGBoost, CatBoost, RealMLP, TabM — has logit-correlation
-  0.995–0.999 with the others), and a representation richer in a way that helps *deterministic*
-  trees, since the `enrich` experiment showed added columns only help random splits.
+- **Champion / finalist**: 59-member equal-logit blend, OOF **0.961509** (primary 5-fold), submitted
+  as `v3_final`, public 0.960980, **rank 215 of 754** (refreshed 2026-10-05).
+- **Submission budget**: 0 used today, 10/day cap, 3 used in total. Two final selections are allowed
+  at the deadline.
+- **The gap is real and it is large.** Leader 0.961760, our public 0.960980, gap **7.8e-4**. That is
+  **z = 3.1-4.4** even after allowing for correlation between two *different* solutions, and it clears
+  2 sigma even between uncorrelated predictions (Hanley-McNeil SE ~ 0.0011 on the 59,969-row public
+  split, Section 6e). The top twenty occupy a 1.0e-4 band *while sitting 7.8e-4 above us*, so they
+  are a converged pack at a common higher level, not a spread field.
+- **Every gain measurable in this campaign is single-digit e-5.** Phase 7 measured six further axes
+  and the best was +2.2e-5. For calibration: **0.9335 of AUC comes free from 11 raw columns and a
+  lookup table**, and everything this campaign has built -- 285 features, a 59-member blend, five
+  rejected augmentation families -- buys the remaining **+0.028**. This is not a proven ceiling, but
+  the reachable surface is small, and closing 7.8e-4 needs something structurally different.
+- **The one concrete inference-policy defect found, now addressed.** No test-time model was trained on
+  100% of the labels (Section 6e). v4 refits 32 LightGBM members on all 699,635 rows with an
+  identical configuration and seed, and an iteration count taken as the **median of three independent
+  5% early-stopping holdouts** (measured spread on the first config: [782, 1029, 973]) then corrected
+  by only 1.039x. It is kept as a **complementary finalist** -- same 59 members, same equal weights,
+  same OOF -- rather than replacing v3.
 - **Next**:
-  1. Re-check the final-submission selection rules on the competition Rules page near the deadline.
-  2. Re-run `scripts/reproduce_finalist.py` from clean to confirm the submission is byte-reproducible.
-  3. Continue probing for a genuinely decorrelated family; do **not** re-tune existing families.
+  1. Finish the full-data refit, run `scripts/make_submission_v4.py`, pre-flight, and submit **once**.
+  2. Re-check the final-submission selection rules on the competition Rules page near the deadline.
+  3. Re-run `scripts/reproduce_finalist.py` from clean to confirm the submission is byte-reproducible.
+  4. Do **not** re-tune the GBDT families. Every honest axis measured this session came back at or
+     below +3e-5, and the evidence says that is the size of the remaining surface.
 
 ## 9. Reproducing the submission
 
