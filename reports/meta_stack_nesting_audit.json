@@ -1,0 +1,119 @@
+{
+  "verdict": "META-CROSSFIT BUT NOT FULLY NESTED",
+  "n_members": 59,
+  "equal_weight_auc_logit_mean": 0.9615085784350211,
+  "stored_v3_auc": 0.9615085785798723,
+  "note_on_averaging": "v3 is stored as sigmoid(mean(probabilities)); this audit's equal-weight control averages LOGITS. The gap is the averaging convention, not a modelling difference.",
+  "stack_per_fold": [
+    {
+      "fold": 0,
+      "stack_auc": 0.961512399465273,
+      "equal_auc": 0.9615006818096289,
+      "delta_e5": 1.1717655644116753
+    },
+    {
+      "fold": 1,
+      "stack_auc": 0.9616114505992035,
+      "equal_auc": 0.9616501266411924,
+      "delta_e5": -3.86760419889276
+    },
+    {
+      "fold": 2,
+      "stack_auc": 0.9615708163787631,
+      "equal_auc": 0.9615120786816208,
+      "delta_e5": 5.873769714226373
+    },
+    {
+      "fold": 3,
+      "stack_auc": 0.9608721311474107,
+      "equal_auc": 0.9607937462758759,
+      "delta_e5": 7.838487153477569
+    },
+    {
+      "fold": 4,
+      "stack_auc": 0.9621635526298769,
+      "equal_auc": 0.9621214173393221,
+      "delta_e5": 4.213529055474563
+    }
+  ],
+  "stack_mean_delta_vs_equal_e5": 3.045989457739484,
+  "stack_paired_t": 1.489503511117213,
+  "stack_significant_at_p05": false,
+  "stack_positive_folds": 4,
+  "stack_delta_spread_e5": [
+    -3.86760419889276,
+    7.838487153477569
+  ],
+  "stack_assembled_oof_auc": 0.9615091477991095,
+  "equal_weight_assembled_oof_auc": 0.9615085784350211,
+  "stack_assembled_delta_e5": 0.05693640883208673,
+  "wording_correction": "The earlier report stated the nested stack at ~0.961508 against equal weighting at 0.961509, i.e. 'equivalent'. Re-measured here with the same cross-fitted meta protocol the stack is +3.05e-5 on the mean of per-fold deltas, positive in 4/5 folds but with a paired t of +1.49 and a per-fold spread of -3.87e-5 to +7.84e-5. So the defensible wording is 'no RELIABLE advantage over equal weighting, and the measurement is contaminated at the base layer', not 'the stack is equivalent' -- and certainly not a reason to prefer the stack.",
+  "stack_nonzero_weights_per_fold": [
+    {
+      "n_nonzero": 59,
+      "intercept": -0.4345656096392758
+    },
+    {
+      "n_nonzero": 59,
+      "intercept": -0.43635727786016293
+    },
+    {
+      "n_nonzero": 59,
+      "intercept": -0.4347199758498354
+    },
+    {
+      "n_nonzero": 59,
+      "intercept": -0.432854386952924
+    },
+    {
+      "n_nonzero": 59,
+      "intercept": -0.43532758758861845
+    }
+  ],
+  "leakage_sensitivity_curve": {
+    "0.25": {
+      "mean_delta_e5": -3.824548991429033,
+      "per_fold_e5": [
+        -10.591870072562681,
+        -7.7086385876445895,
+        -0.8926131849773533,
+        1.8578174088124122,
+        -1.7874405207729538
+      ]
+    },
+    "0.50": {
+      "mean_delta_e5": 0.9662564470214186,
+      "per_fold_e5": [
+        -4.77341442265411,
+        -6.403882950800632,
+        4.486531785186099,
+        7.662493200899512,
+        3.8595546224762245
+      ]
+    },
+    "0.75": {
+      "mean_delta_e5": 1.7963671737586395,
+      "per_fold_e5": [
+        -0.4691118098421043,
+        -4.3228294737462925,
+        3.7139379917339177,
+        8.013073982171548,
+        2.0467651784761287
+      ]
+    },
+    "1.00": {
+      "mean_delta_e5": 3.045989457739484,
+      "per_fold_e5": [
+        1.1717655644116753,
+        -3.86760419889276,
+        5.873769714226373,
+        7.838487153477569,
+        4.213529055474563
+      ]
+    }
+  },
+  "degradation_100_to_25pct_e5": 6.870538449168517,
+  "decision_impact": "NONE. Equal weighting has no fitted parameters and so cannot be inflated by meta-level overfitting. The stack did not beat it, and its advantage is inside its own fold-to-fold spread and changes sign. Any optimism in the old stack number would only strengthen the case for equal weights, so the 59-member fully-nested stack was NOT rebuilt.",
+  "seconds": 47.8,
+  "git_commit": "ce5678f74a2e"
+}

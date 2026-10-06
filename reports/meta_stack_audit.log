@@ -1,0 +1,42 @@
+﻿AUDIT -- was the 'nested' logistic stack fully nested at the BASE layer?
+================================================================================================
+  59 members, 699,635 rows
+
+  1. EQUAL-WEIGHT BLEND (no fitted parameters, cannot overfit anything)
+     logit-mean OOF AUC        = 0.961508578
+     stored v3 OOF AUC         = 0.961508579
+     difference                = -0.000e-5
+     (v3 is stored as sigmoid(mean(probabilities)); the difference is the averaging
+      convention, not a modelling difference.)
+
+  2. LOGISTIC STACK, cross-fitted at the META layer (the protocol under audit)
+     fold 0: stack 0.961512   equal 0.961501   delta +1.17e-5   nonzero weights 59/59
+     fold 1: stack 0.961611   equal 0.961650   delta -3.87e-5   nonzero weights 59/59
+     fold 2: stack 0.961571   equal 0.961512   delta +5.87e-5   nonzero weights 59/59
+     fold 3: stack 0.960872   equal 0.960794   delta +7.84e-5   nonzero weights 59/59
+     fold 4: stack 0.962164   equal 0.962121   delta +4.21e-5   nonzero weights 59/59
+     mean delta vs equal = +3.05e-5   positive in 4/5 folds
+     spread of the per-fold delta: min -3.87e-5  max +7.84e-5
+     -> the stack's advantage is WITHIN ITS OWN FOLD-TO-FOLD SPREAD and changes sign.
+
+  3. LEAKAGE-SENSITIVITY PROBE (does removing meta-training data hurt suspiciously fast?)
+     meta-train fraction 0.25: stack - equal = -3.82e-5
+     meta-train fraction 0.50: stack - equal = +0.97e-5
+     meta-train fraction 0.75: stack - equal = +1.80e-5
+     meta-train fraction 1.00: stack - equal = +3.05e-5
+     degradation from 100% to 25% meta-training data = +6.87e-5
+     A stack that had absorbed held-out-fold information through its meta-training rows
+     would degrade SHARPLY here, because those rows are the only channel for it.
+
+  4. STRUCTURAL FINDING
+     The stack is CROSS-FITTED AT THE META LAYER BUT NOT FULLY NESTED AT THE BASE LAYER.
+     For meta fold k, every meta-TRAIN row j has f(j) != k, and its base prediction comes
+     from a member trained on all folds except f(j) -- a training set that CONTAINS FOLD k.
+     So the meta-training features depend on the held-out fold's labels. This is a property
+     of using pre-computed member OOF as meta features, not an implementation bug, and it
+     cannot be removed without re-cross-fitting all 59 members inside every meta-train set.
+
+VERDICT: META-CROSSFIT BUT NOT FULLY NESTED
+DECISION IMPACT: none. Equal weighting stands, and the old stack number should be read
+with this caveat attached.
+wrote C:\Users\James\airline_S6E10\reports\meta_stack_nesting_audit.json (39.3s)

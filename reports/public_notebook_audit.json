@@ -1,0 +1,121 @@
+{
+  "target": "LB 0.96134",
+  "competition": "playground-series-s6e10",
+  "policy": "source and metadata only; no prediction or submission file imported",
+  "attempts": [
+    {
+      "cmd": "kaggle kernels list -s playground-series-s6e10 --sort-by voteCount",
+      "rc": 0,
+      "stdout_head": "ref                                                         title                                              author                        lastRunTime                 totalVotes  \n----------------------------------------------------------  -------------------------------------------------  ----------------------------  --------------------------  ----------  \nyekenot/ps-s6-e10-realmlp-pytabkit                          PS|S6|E10: RealMLP \u00b7 PyTabKit                      Vladimir Demidov              2026-10-06 05:30:30.470000          60  \nmpwolke/can-t-get-no-satisfaction-delays-i-try-and-try      Can't Get No Satisfaction. Delays I try and try \ud83d\ude02  Mar\u00edlia Prata                 2026-10-01 01:53:42.123000          42  \nevgendvorkin/s6e10-lightgbm-cv-5-folds-0-96102              S6E10 LightGBM CV  5 folds 0.96102                 \u0414\u0432\u043e\u0440\u043a\u0438\u043d \u0415\u0432\u0433\u0435\u043d\u0438\u0439 \u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440\u043e\u0432\u0438\u0447  2026-10-05 16:41:59.867000          36  \nmohankrishnathalla/s6e10-airline-satisfaction-eda-ml-xai    S6E10 | Airline Satisfaction: EDA, ML & XAI        Mohan Krishna Thalla          2026-10-01 08:40:00.167000          29  \nanhadmahajan06/s6e10-are-you-satisfied                      S6E10 | Are You Satisfied                          Anhad Mahajan                 2026-10-06 13:07:45.150000          28  \nektarr/four-model-stacking                                  Four Model Stacking                                Maxim                         2026-10-04 09:47:05.477000          28  \ngiannhsstamelias/s6e10-eda-cv-adv-fe-optuna-10fold-xgboost  S6E10:EDA-CV-ADV FE-OPTUNA-10FOLD XGBOOST          \u0399\u03c9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03a3\u03c4\u03b1\u03bc\u03b5\u03bb\u03b9\u03ac\u03c2             2026-10-06 15:42:42.110000          27  \nnajiama/high-scoring-oof-cv-0-96192-lb-0-96165              \ud83d\ude80High-Scoring OOF CV: 0.96192 LB: 0.96165          Naji                          2026-10-05 17:55:11.637000          25  \ngoodpjw2008/s6e10-tabpfn-route-categories-lb-0-96160        S6E10 | TabPFN + Route Categories | LB 0.96160     goodpjw2008                   2026-10-04 07:05:46.370000          25 ",
+      "stderr_head": ""
+    }
+  ],
+  "listing": [
+    {
+      "ref": "yekenot/ps-s6-e10-realmlp-pytabkit",
+      "title": "PS|S6|E10:"
+    },
+    {
+      "ref": "mpwolke/can-t-get-no-satisfaction-delays-i-try-and-try",
+      "title": "Can't"
+    },
+    {
+      "ref": "evgendvorkin/s6e10-lightgbm-cv-5-folds-0-96102",
+      "title": "S6E10"
+    },
+    {
+      "ref": "mohankrishnathalla/s6e10-airline-satisfaction-eda-ml-xai",
+      "title": "S6E10"
+    },
+    {
+      "ref": "anhadmahajan06/s6e10-are-you-satisfied",
+      "title": "S6E10"
+    },
+    {
+      "ref": "ektarr/four-model-stacking",
+      "title": "Four"
+    },
+    {
+      "ref": "giannhsstamelias/s6e10-eda-cv-adv-fe-optuna-10fold-xgboost",
+      "title": "S6E10:EDA-CV-ADV"
+    },
+    {
+      "ref": "najiama/high-scoring-oof-cv-0-96192-lb-0-96165",
+      "title": "\ud83d\ude80High-Scoring"
+    },
+    {
+      "ref": "goodpjw2008/s6e10-tabpfn-route-categories-lb-0-96160",
+      "title": "S6E10"
+    },
+    {
+      "ref": "lucifer19/flight-log-s6e10-captains-realmlp-stack",
+      "title": "\u2708\ufe0f"
+    },
+    {
+      "ref": "sasha1111/eda-feature-engineering-xgboost",
+      "title": "EDA,"
+    },
+    {
+      "ref": "avikdas567/airline-satisfaction-gbdt-deep-tabular-resnet",
+      "title": "Airline"
+    },
+    {
+      "ref": "kospintr/airline-lgbm-catb-xgb-realmlp-baseline",
+      "title": "Airline"
+    },
+    {
+      "ref": "goodpjw2008/s6e10-more-aux-carriers-lb-0-96152",
+      "title": "S6E10"
+    },
+    {
+      "ref": "goodpjw2008/s6e10-auxiliary-task-features-lb-0-96129",
+      "title": "S6E10"
+    },
+    {
+      "ref": "devashish001/ps-s6-e10-lightgbm-oof",
+      "title": "PS"
+    },
+    {
+      "ref": "razanihababdellatif/airline-satisfaction-lightgbm",
+      "title": "\ud83d\udeeb"
+    },
+    {
+      "ref": "goodpjw2008/s6e10-route-id-fe-og-model-stack-lb-0-96108",
+      "title": "S6E10"
+    },
+    {
+      "ref": "busyaprime/s6e10-route-or-distance-both-lb-0-96169",
+      "title": "S6E10"
+    },
+    {
+      "ref": "sarunpm/airline-satisfaction-lgbm-0-96025-lb",
+      "title": "AirLine"
+    }
+  ],
+  "notebook_ids": [],
+  "verdict": "NOT RETRIEVED -- outstanding. No claim is made about the notebook's contents, models, validation scheme or claimed gains.",
+  "steps_classified": [],
+  "known_mechanisms_already_measured": {
+    "extra_trees / extremely randomised trees": "E -- +44.8e-5 under GBDT (Phase 9 ctl_det), and the single largest lever measured in this campaign",
+    "dart": "E -- REJECTED, -42.8e-5 and -48.7e-5 (Phase 9)",
+    "lightgbm rf / random forest mode": "E -- REJECTED, -306.8e-5 (Phase 9)",
+    "catboost ordered": "E -- REJECTED, -71.7e-5 (Phase 10B C1)",
+    "catboost native categorical": "E for the marginal-ensemble question -- +6.64e-5 at MODEL level (C2-C0, 4/5 folds) but +0.00e-5 added to the v3 ensemble (Phase 10B)",
+    "target encoding": "E -- existing TE beats all-21 TE by 13.3e-5; all-21 and conditional variants both REJECTED (Phase 8)",
+    "soft targets / label smoothing": "E -- REJECTED",
+    "pairwise / ranking objective": "E -- pure pairwise LightGBM REJECTED",
+    "augmentation": "E -- REJECTED, all families",
+    "original-row append": "E -- REJECTED, -4.2e-4 at lambda=0.2, monotone",
+    "external teacher": "E -- phase 1-2 result, -4.2e-4 at lambda=0.2",
+    "group calibration": "E -- REJECTED, +0.8e-5 with the control moving 0.0e-5",
+    "pseudo-labelling": "E -- REJECTED, -152.5e-5 at frac 0.25",
+    "bagging fraction sweep": "E -- REJECTED, signs flip",
+    "more members / seed proliferation": "E -- saturated; near-clones buy 1e-6..5e-6 against a +1.5e-5 gate",
+    "full-data refit": "E -- v4 submitted, public +2e-5, unresolved at +/-2e-4 board precision",
+    "k-fold averaging": "E -- 5->10 folds +1.0e-4 measured; already in v3 via block10 members",
+    "realmlp ensemble size": "E -- n_ens 8->32 +2.0e-4, already applied"
+  },
+  "what_a_reproduction_would_require": "If the source is obtained later, every claimed 'step worth X' must be classified A-F with ALREADY_TESTED as the reference for category E. Categories B (public-LB-only) and C (imported predictions) cannot license any local change: the paired public-LB noise floor between near-identical submissions is about +/-2e-4, so a sub-1e-4 attribution is below the board's resolution. Only A, D and F are worth reproducing.",
+  "seconds": 1.7,
+  "git_commit": "ce5678f74a2e"
+}
