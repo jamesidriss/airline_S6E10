@@ -100,8 +100,12 @@ def main() -> None:
     print(f"     logit-mean OOF AUC        = {a_eq:.9f}")
     print(f"     stored v3 OOF AUC         = {roc_auc_score(y, v3):.9f}")
     print(f"     difference                = {(a_eq-roc_auc_score(y,v3))*1e5:+.3f}e-5")
-    print("     (v3 is stored as sigmoid(mean(probabilities)); the difference is the averaging")
-    print("      convention, not a modelling difference.)")
+    print("     (CORRECTION: the authoritative v3 geometry is expit(mean(member LOGITS)) per")
+    print("      reproduce_finalist.py:122-152, NOT sigmoid(mean(probabilities)). The tiny")
+    print("      difference here is the float32 storage rounding of the same float64 value --")
+    print("      float32(expit(mean(logits))) matches the store with max abs diff exactly 0.0 --")
+    print("      so it is not a modelling difference. An earlier version of this line asserted")
+    print("      the wrong geometry.)")
 
     # ---------- 2. the stack, with the same cross-fitted meta protocol ----------
     print(f"\n  2. LOGISTIC STACK, cross-fitted at the META layer (the protocol under audit)")
@@ -193,9 +197,14 @@ def main() -> None:
         "n_members": nmem,
         "equal_weight_auc_logit_mean": a_eq,
         "stored_v3_auc": float(roc_auc_score(y, v3)),
-        "note_on_averaging": "v3 is stored as sigmoid(mean(probabilities)); this audit's equal-weight "
-                            "control averages LOGITS. The gap is the averaging convention, not a "
-                            "modelling difference.",
+        "note_on_averaging": "The authoritative v3 geometry is expit(mean(member LOGITS)) per "
+                             "reproduce_finalist.py:122-152, which is what this audit's equal-weight "
+                             "control computes, so the two agree by construction. The residual "
+                             "1.45e-10 AUC is the float32 storage rounding of the same float64 "
+                             "value: float32(expit(mean(logits))) matches the store with max abs "
+                             "difference exactly 0.0. An earlier version of this audit asserted "
+                             "that v3 was sigmoid(mean(probabilities)), which is FALSE -- that "
+                             "geometry differs from the store by 3.53e-02 with logit corr 0.978.",
         "stack_per_fold": per_fold,
         "stack_mean_delta_vs_equal_e5": float(np.mean(ds)),
         "stack_paired_t": tstat,

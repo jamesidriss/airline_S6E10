@@ -145,7 +145,46 @@ def main() -> None:
                                     "error": f"{type(exc).__name__}: {exc}"})
             print(f"  '{' '.join(cmd)}' -> {type(exc).__name__}: {str(exc)[:100]}")
 
-    print(f"\n  notebook ids recovered: {nb_ids if nb_ids else 'none'}")
+    # ---- the competition listing is NOT exhaustive: search the GLOBAL index BY TITLE ----
+    # The first attempt only listed kernels attached to the competition, which does not contain the
+    # target title. `kernels list --search` queries the global kernel index, where a notebook whose
+    # slug is unrelated to the competition still appears. Tried widest-to-narrowest so a partial
+    # match is not missed, and each attempt is recorded even on failure so the search is auditable.
+    if not nb_ids:
+        for term in ("What Each Step Was Worth", "0.96134", "S6E10", "Playground Series S6E10"):
+            argv = [sys.executable, "-m", "kaggle", "kernels", "list", "--search", term,
+                    "--sort-by", "voteCount"]
+            try:
+                r = subprocess.run(argv, capture_output=True, timeout=240, encoding="utf-8",
+                                   errors="replace")
+                out["attempts"].append({"cmd": " ".join(argv[2:]), "rc": r.returncode,
+                                        "stdout_head": (r.stdout or "")[:2500],
+                                        "stderr_head": (r.stderr or "")[:300]})
+                if r.returncode != 0:
+                    print(f"  search {term!r} -> rc={r.returncode} "
+                          f"{(r.stderr or '').strip()[:110]}")
+                    continue
+                lines = (r.stdout or "").splitlines()
+                print(f"  search {term!r} -> rc=0, {len(lines)} lines")
+                for line in lines:
+                    low = line.lower()
+                    if "0.96134" in low or "what each step" in low:
+                        m = re.match(r"\s*([0-9a-zA-Z_\-]+/[0-9a-zA-Z_\-]+)\s", line)
+                        if m:
+                            nb_ids.append(m.group(1))
+                        print(f"    EXACT MATCH: {line.strip()[:170]}")
+                if not nb_ids and term == "S6E10":
+                    print("    (no exact title match; S6E10-related kernels seen:)")
+                    for line in lines[:14]:
+                        print(f"      {line.strip()[:150]}")
+                if nb_ids:
+                    break
+            except Exception as exc:                             # noqa: BLE001
+                out["attempts"].append({"cmd": " ".join(argv[2:]),
+                                        "error": f"{type(exc).__name__}: {exc}"})
+                print(f"  search {term!r} -> {type(exc).__name__}")
+
+    print(f"\n  notebook refs recovered: {nb_ids if nb_ids else 'none'}")
     out["notebook_ids"] = nb_ids
 
     # ---- reuse any previously cached notebook research ----
@@ -174,6 +213,7 @@ def main() -> None:
             "is below the board's resolution. Only A, D and F are worth reproducing.")
     else:
         steps = []
+        nb_source, nb_cells_all = "", []
         for nid in nb_ids:
             dest = raw / f"kernel_{nid}.ipynb"
             r = subprocess.run([sys.executable, "-m", "kaggle", "kernels", "pull", nid,
@@ -181,13 +221,22 @@ def main() -> None:
                                encoding="utf-8", errors="replace")
             out["attempts"].append({"cmd": f"kernels pull {nid}", "rc": r.returncode,
                                     "stderr_head": (r.stderr or "")[:300]})
+            if not dest.exists():
+                # `kaggle kernels pull` names the file after the notebook SLUG, not the id, so the
+                # expected path is often wrong even on a successful pull. Locate whatever landed in
+                # research/raw and use that; a wrong path would otherwise leave `src` empty and make
+                # every targeted probe report ABSENT -- which is exactly the false negative I hit.
+                landed = sorted(raw.glob("*.ipynb"), key=lambda q: q.stat().st_mtime, reverse=True)
+                dest = landed[0] if landed else dest
             print(f"  pull {nid}: rc={r.returncode} "
                   f"{'-> ' + dest.name if dest.exists() else (r.stderr or '').strip()[:120]}")
             if not dest.exists():
+                print(f"    nothing landed in {raw} after the pull")
                 continue
             nb = json.loads(dest.read_text(encoding="utf-8"))
             cells = nb.get("cells", [])
             src = "\n".join("".join(c.get("source", [])) for c in cells)
+            nb_source, nb_cells_all = src, cells
             out["attempts"].append({"notebook": nid, "n_cells": len(cells),
                                     "source_chars": len(src),
                                     "metadata": {k: v for k, v in nb.get("metadata", {}).items()
@@ -214,8 +263,67 @@ def main() -> None:
         for s in steps:
             counts[s["category"]] = counts.get(s["category"], 0) + 1
         out["category_counts"] = counts
-        out["verdict"] = ("RETRIEVED AND CLASSIFIED -- see steps_classified. Category F items are "
-                          "the only candidates for reproduction under our folds.")
+
+        # ---- a targeted read of the things that actually matter for our decision ----
+        # The generic claim-line scan above is a coarse first pass. These are the specific questions
+        # Phase 11R needs answered, and each is answered by QUOTING the notebook rather than by
+        # pattern-matching a line, because a single word decides whether a step is reproducible here.
+        probes = {
+            "native_categorical_catboost":
+                ("cat_features", "boosting_type", "CatBoostClassifier", "Ordered"),
+            "imports_prediction_files": ("read_csv", "CC0", "public OOF", "kaggle datasets"),
+            "ten_fold_members": ("10-fold", "10 fold", "n_splits=10", "StratifiedKFold(n_splits=10"),
+            "target_encoding_flight_distance": ("Flight Distance", "_fd_bin", "te_fd"),
+            "original_data_teacher": ("original", "129,880", "teacher"),
+            "stacker": ("LogisticRegression", "combiner CV", "greedy"),
+        }
+        findings = {}
+        # `src` and `cells` are defined inside the per-notebook loop, so accumulate them into outer
+        # variables. Reading them here directly raises NameError because they are loop-local.
+        nb_src, nb_cells = nb_source, nb_cells_all
+        for key, needles in probes.items():
+            hits = {n: nb_src.count(n) for n in needles}
+            findings[key] = {"counts": hits,
+                             "present": {n: c for n, c in hits.items() if c > 0}}
+        out["targeted_findings"] = findings
+        print("\n  TARGETED FINDINGS from the retrieved source")
+        for key, f in findings.items():
+            print(f"    {key:<34} {f['present'] if f['present'] else 'ABSENT'}")
+
+        # CatBoost is the decisive one for us: if the notebook claims a native-categorical result we
+        # must know whether it actually passed cat_features, because that is the mechanism Phase 10B
+        # measured and Phase 11R is extending.
+        nb_cat = ("CatBoost" in nb_src)
+        nb_native = findings["native_categorical_catboost"]["present"]
+        print(f"\n    mentions CatBoost: {nb_cat}   passes native categoricals: "
+              f"{'YES' if nb_native else 'NO -- no cat_features / no CatBoostClassifier in the source'}")
+        out["catboost_native_categorical_used"] = bool(nb_native)
+
+        # The notebook's own "what did not help" table is the highest-value content for us, because
+        # it reports a NEGATIVE for exactly the mechanism we tested.
+        neg = []
+        for c in nb_cells_all:
+            if c.get("cell_type") != "markdown":
+                continue
+            t = "".join(c.get("source", []))
+            if "did not help" in t.lower() or "numerics as native categoricals" in t.lower():
+                for ln in t.splitlines():
+                    if "native categorical" in ln.lower():
+                        neg.append(ln.strip())
+        out["notebook_negative_on_native_cat"] = neg
+        for ln in neg:
+            print(f"    NOTEBOOK SAYS: {ln[:200]}")
+        if neg:
+            print("    -> the notebook reports a NEGATIVE for native categoricals INSTEAD OF target")
+            print("       encoding. That is the OPPOSITE substitution from ours: we measured +6.64e-5")
+            print("       for native categoricals ON TOP of our existing TE block, and the notebook")
+            print("       measured numerics-as-categories INSTEAD of TE. Different interventions;")
+            print("       neither refutes the other.")
+
+        out["verdict"] = ("RETRIEVED AND CLASSIFIED. See targeted_findings for the mechanism-level "
+                          "answers. Category A items are reproducible in principle; B and C cannot "
+                          "license a local change; the notebook's own negative table is recorded "
+                          "because it concerns a mechanism we tested, in a different substitution.")
 
     out["seconds"] = round(time.time() - t0, 1)
     out["git_commit"] = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,

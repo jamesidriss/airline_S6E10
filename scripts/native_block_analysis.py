@@ -152,32 +152,52 @@ def main() -> None:
     print(f"  v3 OOF = {base_all:.6f}\n")
 
     # ---------------- GUARD: alpha=0 must reconstruct v3 ----------------
-    # v3 is stored as an equal-logit blend of member PROBABILITIES, so the reference reconstruction is
-    # sigmoid(mean(logit(member))) -- which is what I do -- while the stored v3 is
-    # sigmoid(mean(member probability)). Those are NOT identical: averaging logits then exponentiating
-    # differs from averaging probabilities. So the reconstruction cannot be bit-exact, and demanding
-    # that it be was a wrong guard. The measured gap is 1.45e-10 AUC with logit corr 1.000000000,
-    # i.e. pure float64 round-off, which is the strongest achievable agreement.
-    recon = np.mean(np.column_stack([L[e] for e in non_cat]
-                                    + [L[c] for c in cat_ids]), axis=1)
-    d_auc = float(roc_auc_score(y, sig(recon))) - base_all
-    d_corr = float(corr(recon, v3_logit))
-    print("  GUARD  alpha=0 reconstruction of v3:")
-    print(f"    AUC {roc_auc_score(y, sig(recon)):.9f} vs stored {base_all:.9f}  "
+    # ---- GUARD: alpha=0 must reproduce the AUTHORITATIVE v3 geometry exactly ----
+    # The authoritative construction (scripts/reproduce_finalist.py:122-152) is
+    #     member probability -> logit -> mean over members -> expit
+    # i.e. expit(mean(member LOGITS)). Verified on the real store, not assumed:
+    #     expit(mean(logits))          vs stored v3: max abs prob diff 2.98e-08, 0 rows differ >1e-7,
+    #                                    logit corr 1.000000000000
+    #     mean(probabilities)          vs stored v3: max abs prob diff 3.53e-02, logit corr 0.978
+    #     float32(expit(mean(logits))) vs stored v3: max abs prob diff EXACTLY 0.0
+    # The stored vector is float32, so the residual 2.98e-08 IS the float32 storage rounding of the
+    # same float64 number -- casting the reconstruction to float32 reproduces the store bit for bit.
+    # That is why byte equality is achievable in float32 and is asserted as such, while the float64
+    # comparison is held to the float32 storage tolerance instead.
+    #
+    # My earlier version of this guard asserted a float64 round-off tolerance AND printed the false
+    # statement that v3 is stored as sigmoid(mean(probabilities)). Both were wrong: the geometry claim
+    # was simply false, and the tolerance was arbitrary rather than derived from the storage dtype.
+    recon_logit = np.mean(np.column_stack([L[e] for e in non_cat]
+                                          + [L[c] for c in cat_ids]), axis=1)
+    recon = sig(recon_logit)
+    v3_raw = store.load_oof("blend_v3_final")
+    max_abs = float(np.abs(recon - v3_raw.astype("float64")).max())
+    max_abs32 = float(np.abs(recon.astype(np.float32).astype("float64")
+                             - v3_raw.astype("float64")).max())
+    d_auc = float(roc_auc_score(y, recon)) - base_all
+    d_corr = float(corr(recon_logit, v3_logit))
+    tol32 = float(np.finfo(np.float32).eps)
+    print("  GUARD  alpha=0 reconstruction of v3 (authoritative geometry expit(mean(logits))):")
+    print(f"    store dtype                                   = {v3_raw.dtype}")
+    print(f"    AUC  reconstructed {roc_auc_score(y, recon):.12f}  stored {base_all:.12f}  "
           f"delta {d_auc:+.2e}")
-    print(f"    logit corr vs stored v3 logits = {d_corr:.9f}")
-    print(f"    NOTE v3 is stored as sigmoid(mean(probabilities)) while this harness averages LOGITS;")
-    print(f"    the two differ by construction, so the achievable agreement is float64 round-off, not")
-    print(f"    bit-equality. The tolerance below reflects that, and the logit-corr check is the")
-    print(f"    strong one: it must be 1 to machine precision.")
-    ok_recon = abs(d_auc) < 1e-8 and d_corr > 1 - 1e-12
-    print(f"    -> {'OK (round-off only)' if ok_recon else 'STOP: the harness does not reproduce v3. Do not read any number below.'}")
+    print(f"    max abs PROBABILITY difference                 = {max_abs:.3e}")
+    print(f"    max abs difference after casting to float32   = {max_abs32:.3e}")
+    print(f"    logit correlation with stored v3 logits        = {d_corr:.12f}")
+    print(f"    float32 eps (the storage tolerance)            = {tol32:.3e}")
+    ok_recon = (max_abs < tol32 and max_abs32 == 0.0 and d_corr > 1 - 1e-12)
+    verdict = ("OK: float64 within the float32 storage tolerance, and the float32 cast is BIT-EXACT"
+               if ok_recon else
+               "STOP: the harness does not reproduce v3 in the authoritative geometry. "
+               "Do not read any number below.")
+    print(f"    -> {verdict}")
     if not ok_recon:
-        raise SystemExit("STOP: alpha=0 failed to reproduce v3 beyond float64 round-off; the block "
-                         "harness is wrong.")
-    # The reported deltas are therefore relative to this reconstruction, not to the stored v3, so the
-    # geometry the candidates are compared against is identical across candidates.
-    REF = base_all
+        raise SystemExit(f"STOP: alpha=0 reconstruction failed. max|dp|={max_abs:.3e} "
+                         f"(tol {tol32:.3e}), float32 max|dp|={max_abs32:.3e}, "
+                         f"logit corr={d_corr:.12f}")
+    # Deltas are reported against the reconstructed control so every candidate shares one geometry.
+    REF = float(roc_auc_score(y, recon))
     print(f"    non-CatBoost slots untouched: {len(non_cat)} of {nmem}\n")
 
     # ---------------- load counterparts ----------------

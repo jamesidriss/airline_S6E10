@@ -1,0 +1,31 @@
+{
+  "id": "sachith7/s6e10-what-each-step-was-worth",
+  "id_no": 137135379,
+  "title": " S6E10: What Each Step Was Worth",
+  "code_file": "s6e10-what-each-step-was-worth.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "binary classification",
+    "feature engineering",
+    "tabular",
+    "ensembling"
+  ],
+  "dataset_sources": [
+    "arseniyshutko/binary-aviation-satisfaction-129k",
+    "megayak/s6e10-oof-library",
+    "dariushafshar/s6e10-golem-oof-library",
+    "sachith7/s6e10-stack-oof-predictions"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "playground-series-s6e10"
+  ],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-images/python@sha256:81b1e7c4b4f0f2a7e0a33943c95754b1b7af6b30d65221633a284b6b601cd84a",
+  "machine_shape": "None"
+}

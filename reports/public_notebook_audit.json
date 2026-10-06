@@ -6,8 +6,44 @@
     {
       "cmd": "kaggle kernels list -s playground-series-s6e10 --sort-by voteCount",
       "rc": 0,
-      "stdout_head": "ref                                                         title                                              author                        lastRunTime                 totalVotes  \n----------------------------------------------------------  -------------------------------------------------  ----------------------------  --------------------------  ----------  \nyekenot/ps-s6-e10-realmlp-pytabkit                          PS|S6|E10: RealMLP \u00b7 PyTabKit                      Vladimir Demidov              2026-10-06 05:30:30.470000          60  \nmpwolke/can-t-get-no-satisfaction-delays-i-try-and-try      Can't Get No Satisfaction. Delays I try and try \ud83d\ude02  Mar\u00edlia Prata                 2026-10-01 01:53:42.123000          42  \nevgendvorkin/s6e10-lightgbm-cv-5-folds-0-96102              S6E10 LightGBM CV  5 folds 0.96102                 \u0414\u0432\u043e\u0440\u043a\u0438\u043d \u0415\u0432\u0433\u0435\u043d\u0438\u0439 \u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440\u043e\u0432\u0438\u0447  2026-10-05 16:41:59.867000          36  \nmohankrishnathalla/s6e10-airline-satisfaction-eda-ml-xai    S6E10 | Airline Satisfaction: EDA, ML & XAI        Mohan Krishna Thalla          2026-10-01 08:40:00.167000          29  \nanhadmahajan06/s6e10-are-you-satisfied                      S6E10 | Are You Satisfied                          Anhad Mahajan                 2026-10-06 13:07:45.150000          28  \nektarr/four-model-stacking                                  Four Model Stacking                                Maxim                         2026-10-04 09:47:05.477000          28  \ngiannhsstamelias/s6e10-eda-cv-adv-fe-optuna-10fold-xgboost  S6E10:EDA-CV-ADV FE-OPTUNA-10FOLD XGBOOST          \u0399\u03c9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03a3\u03c4\u03b1\u03bc\u03b5\u03bb\u03b9\u03ac\u03c2             2026-10-06 15:42:42.110000          27  \nnajiama/high-scoring-oof-cv-0-96192-lb-0-96165              \ud83d\ude80High-Scoring OOF CV: 0.96192 LB: 0.96165          Naji                          2026-10-05 17:55:11.637000          25  \ngoodpjw2008/s6e10-tabpfn-route-categories-lb-0-96160        S6E10 | TabPFN + Route Categories | LB 0.96160     goodpjw2008                   2026-10-04 07:05:46.370000          25 ",
+      "stdout_head": "ref                                                                title                                              author                        lastRunTime                 totalVotes  \n-----------------------------------------------------------------  -------------------------------------------------  ----------------------------  --------------------------  ----------  \nyekenot/ps-s6-e10-realmlp-pytabkit                                 PS|S6|E10: RealMLP \u00b7 PyTabKit                      Vladimir Demidov              2026-10-06 05:30:30.470000          60  \nmpwolke/can-t-get-no-satisfaction-delays-i-try-and-try             Can't Get No Satisfaction. Delays I try and try \ud83d\ude02  Mar\u00edlia Prata                 2026-10-01 01:53:42.123000          42  \nevgendvorkin/s6e10-lightgbm-cv-5-folds-0-96102                     S6E10 LightGBM CV  5 folds 0.96102                 \u0414\u0432\u043e\u0440\u043a\u0438\u043d \u0415\u0432\u0433\u0435\u043d\u0438\u0439 \u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440\u043e\u0432\u0438\u0447  2026-10-05 16:41:59.867000          38  \nanhadmahajan06/s6e10-are-you-satisfied                             S6E10 | Are You Satisfied                          Anhad Mahajan                 2026-10-06 18:34:58.840000          29  \nektarr/four-model-stacking                                         Four Model Stacking                                Maxim                         2026-10-04 09:47:05.477000          29  \nmohankrishnathalla/s6e10-airline-satisfaction-eda-ml-xai           S6E10 | Airline Satisfaction: EDA, ML & XAI        Mohan Krishna Thalla          2026-10-01 08:40:00.167000          29  \ngiannhsstamelias/s6e10-eda-cv-adv-fe-optuna-ms-xgb-error-analysis  S6E10:EDA-CV-ADV FE-OPTUNA-MS XGB-ERROR ANALYSIS   \u0399\u03c9\u03ac\u03bd\u03bd\u03b7\u03c2 \u03a3\u03c4\u03b1\u03bc\u03b5\u03bb\u03b9\u03ac\u03c2             2026-10-06 17:08:03.780000          27  \nnajiama/high-scoring-oof-cv-0-96192-lb-0-96165                     \ud83d\ude80High-Scoring OOF CV: 0.96192 LB: 0.96165          Naji                          2026-10-05 17:55:11.637000          26  \ngoodpjw2008/s6e10-tabpfn-route-categories-lb-0-96160               S6E10 | TabPFN + Route Categories | LB 0.96",
       "stderr_head": ""
+    },
+    {
+      "cmd": "kaggle kernels list --search What Each Step Was Worth --sort-by voteCount",
+      "rc": 0,
+      "stdout_head": "ref                                                            title                                               author                lastRunTime                 totalVotes  \n-------------------------------------------------------------  --------------------------------------------------  --------------------  --------------------------  ----------  \nmarkishere/day-1-prompting                                     Day 1 - Prompting                                   Mark McD              2025-03-31 10:06:49.157000       64023  \nryanholbrook/exercise-maximum-pooling                          Exercise: Maximum Pooling                           Ryan Holbrook         2023-04-20 17:54:00.910000       36631  \npmarcelino/comprehensive-data-exploration-with-python          Comprehensive data exploration with Python          Pedro Marcelino, PhD  2022-04-30 19:20:37.243000       33698  \nrtatman/data-cleaning-challenge-handling-missing-values        Data Cleaning Challenge: Handling missing values    Rachael Tatman        2018-03-30 21:18:56.440000       15355  \nldfreeman3/a-data-science-framework-to-achieve-99-accuracy     A Data Science Framework: To Achieve 99% Accuracy   LD Freeman            2017-12-31 18:27:17.307000       14000  \nryanholbrook/feature-engineering-for-house-prices              Feature Engineering for House Prices                Ryan Holbrook         2023-09-05 22:43:07.020000        6676  \ntanulsingh077/deep-learning-for-nlp-zero-to-transformers-bert  Deep Learning For NLP: Zero To Transformers & BERT  Mr_KnowNothing        2020-04-13 17:19:49.647000        6454  \nerikbruin/house-prices-lasso-xgboost-and-a-detailed-eda        House prices: Lasso, XGBoost, and a detailed EDA    Erik Bruin            2018-05-10 06:33:09.887000        3625  \njhoward/how-random-forests-really-work                         How random forests really work                      Jeremy Howard         2022-05-23 23:51:47.673000        3565  \nheadsortails/back-to-predict-the-future-interactive-m5-eda     Back to (predict) the future - Interactive M5 EDA   Heads or Tails        2020-10-04 19:23:08.703000        3236  \npavansanagapati/knowledge-graph-nlp-tutorial-bert-spacy-nltk   Knowledge Graph & NLP Tutorial-(BERT,spaCy,NLTK)    Pavan Sanagapati      2020-09-08 14:40:39.107000        2899  \nmnassrib/titanic-logistic-regression-with-python               Titanic: logistic regression with python            Baligh Mnassri        2020-01-07 13:15:37.497000        2725  \nkashnits",
+      "stderr_head": ""
+    },
+    {
+      "cmd": "kaggle kernels list --search 0.96134 --sort-by voteCount",
+      "rc": 0,
+      "stdout_head": "ref                                                   title                                           author       lastRunTime                 totalVotes  \n----------------------------------------------------  ----------------------------------------------  -----------  --------------------------  ----------  \ngoodpjw2008/s6e10-tabpfn-route-categories-lb-0-96160  S6E10 | TabPFN + Route Categories | LB 0.96160  goodpjw2008  2026-10-04 07:05:46.370000          26  \nsachith7/s6e10-what-each-step-was-worth                S6E10: What Each Step Was Worth                Sachith7     2026-10-06 13:22:27.330000           8  \n",
+      "stderr_head": ""
+    },
+    {
+      "cached": "kernel-metadata.json",
+      "bytes": 927
+    },
+    {
+      "cmd": "kernels pull sachith7/s6e10-what-each-step-was-worth",
+      "rc": 0,
+      "stderr_head": ""
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "n_cells": 30,
+      "source_chars": 29222,
+      "metadata": {
+        "kernelspec": {
+          "display_name": "Python 3",
+          "language": "python",
+          "name": "python3"
+        },
+        "language_info": {
+          "name": "python"
+        }
+      }
     }
   ],
   "listing": [
@@ -24,10 +60,6 @@
       "title": "S6E10"
     },
     {
-      "ref": "mohankrishnathalla/s6e10-airline-satisfaction-eda-ml-xai",
-      "title": "S6E10"
-    },
-    {
       "ref": "anhadmahajan06/s6e10-are-you-satisfied",
       "title": "S6E10"
     },
@@ -36,7 +68,11 @@
       "title": "Four"
     },
     {
-      "ref": "giannhsstamelias/s6e10-eda-cv-adv-fe-optuna-10fold-xgboost",
+      "ref": "mohankrishnathalla/s6e10-airline-satisfaction-eda-ml-xai",
+      "title": "S6E10"
+    },
+    {
+      "ref": "giannhsstamelias/s6e10-eda-cv-adv-fe-optuna-ms-xgb-error-analysis",
       "title": "S6E10:EDA-CV-ADV"
     },
     {
@@ -60,12 +96,12 @@
       "title": "Airline"
     },
     {
-      "ref": "kospintr/airline-lgbm-catb-xgb-realmlp-baseline",
-      "title": "Airline"
-    },
-    {
       "ref": "goodpjw2008/s6e10-more-aux-carriers-lb-0-96152",
       "title": "S6E10"
+    },
+    {
+      "ref": "kospintr/airline-lgbm-catb-xgb-realmlp-baseline",
+      "title": "Airline"
     },
     {
       "ref": "goodpjw2008/s6e10-auxiliary-task-features-lb-0-96129",
@@ -80,11 +116,11 @@
       "title": "\ud83d\udeeb"
     },
     {
-      "ref": "goodpjw2008/s6e10-route-id-fe-og-model-stack-lb-0-96108",
+      "ref": "busyaprime/s6e10-route-or-distance-both-lb-0-96169",
       "title": "S6E10"
     },
     {
-      "ref": "busyaprime/s6e10-route-or-distance-both-lb-0-96169",
+      "ref": "goodpjw2008/s6e10-route-id-fe-og-model-stack-lb-0-96108",
       "title": "S6E10"
     },
     {
@@ -92,30 +128,185 @@
       "title": "AirLine"
     }
   ],
-  "notebook_ids": [],
-  "verdict": "NOT RETRIEVED -- outstanding. No claim is made about the notebook's contents, models, validation scheme or claimed gains.",
-  "steps_classified": [],
-  "known_mechanisms_already_measured": {
-    "extra_trees / extremely randomised trees": "E -- +44.8e-5 under GBDT (Phase 9 ctl_det), and the single largest lever measured in this campaign",
-    "dart": "E -- REJECTED, -42.8e-5 and -48.7e-5 (Phase 9)",
-    "lightgbm rf / random forest mode": "E -- REJECTED, -306.8e-5 (Phase 9)",
-    "catboost ordered": "E -- REJECTED, -71.7e-5 (Phase 10B C1)",
-    "catboost native categorical": "E for the marginal-ensemble question -- +6.64e-5 at MODEL level (C2-C0, 4/5 folds) but +0.00e-5 added to the v3 ensemble (Phase 10B)",
-    "target encoding": "E -- existing TE beats all-21 TE by 13.3e-5; all-21 and conditional variants both REJECTED (Phase 8)",
-    "soft targets / label smoothing": "E -- REJECTED",
-    "pairwise / ranking objective": "E -- pure pairwise LightGBM REJECTED",
-    "augmentation": "E -- REJECTED, all families",
-    "original-row append": "E -- REJECTED, -4.2e-4 at lambda=0.2, monotone",
-    "external teacher": "E -- phase 1-2 result, -4.2e-4 at lambda=0.2",
-    "group calibration": "E -- REJECTED, +0.8e-5 with the control moving 0.0e-5",
-    "pseudo-labelling": "E -- REJECTED, -152.5e-5 at frac 0.25",
-    "bagging fraction sweep": "E -- REJECTED, signs flip",
-    "more members / seed proliferation": "E -- saturated; near-clones buy 1e-6..5e-6 against a +1.5e-5 gate",
-    "full-data refit": "E -- v4 submitted, public +2e-5, unresolved at +/-2e-4 board precision",
-    "k-fold averaging": "E -- 5->10 folds +1.0e-4 measured; already in v3 via block10 members",
-    "realmlp ensemble size": "E -- n_ens 8->32 +2.0e-4, already applied"
+  "notebook_ids": [
+    "sachith7/s6e10-what-each-step-was-worth"
+  ],
+  "reads_prediction_csv": true,
+  "steps_classified": [
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "**Problem.** Playground S6E10 asks for the probability that an airline passenger is satisfied, scored by ROC AUC. Dozens of public notebooks stack many models, but few say what each trick is actually worth.",
+      "category": "B",
+      "why": "attributed from the leaderboard; the paired noise floor between near-identical submissions is about +/-2e-4, so sub-1e-4 attributions are not resolvable"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "- **Training members on 10 folds instead of 5 improved every model we tried (+0.00009 to +0.00018)**, comparable to the aux step (+0.00014), for compute rather than a new idea.",
+      "category": "A",
+      "why": "claims local validation; the scheme must be read before the claim is accepted"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "| Result | CV | Public LB |",
+      "category": "B",
+      "why": "attributed from the leaderboard; the paired noise floor between near-identical submissions is about +/-2e-4, so sub-1e-4 attributions are not resolvable"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "| **Submitted stack (9 members; sources at the end)** | 0.961794 | **0.96134** (historical: submitted 2026-10-04) |",
+      "category": "B",
+      "why": "attributed from the leaderboard; the paired noise floor between near-identical submissions is about +/-2e-4, so sub-1e-4 attributions are not resolvable"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "| Secondary: stack of our own models only (7 members) | 0.961760 | not submitted |",
+      "category": "B",
+      "why": "attributed from the leaderboard; the paired noise floor between near-identical submissions is about +/-2e-4, so sub-1e-4 attributions are not resolvable"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "Target encoding was the biggest single step. Two quick checks on the training labels show why, and whether the generator left anything our models still miss.",
+      "category": "E",
+      "why": "E -- existing TE beats all-21 TE by 13.3e-5; all-21 and conditional variants both REJECTED (Phase 8)"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "| Submission | Combiner CV | Public LB | Gap |",
+      "category": "C",
+      "why": "contributes a prediction file rather than a trained model; its 'value' is the author's own blend, not a mechanism"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "| 8-member stack, 5-fold members | 0.961710 | 0.96128 | \u22120.00043 |",
+      "category": "B",
+      "why": "attributed from the leaderboard; the paired noise floor between near-identical submissions is about +/-2e-4, so sub-1e-4 attributions are not resolvable"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "| 9-member stack, 10-fold members (this notebook) | 0.961794 | 0.96134 | \u22120.00045 |",
+      "category": "B",
+      "why": "attributed from the leaderboard; the paired noise floor between near-identical submissions is about +/-2e-4, so sub-1e-4 attributions are not resolvable"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "| A third round of 10-fold members and extra RealMLP seeds | stack +0.000015, only 3/5 folds up: noise |",
+      "category": "A",
+      "why": "claims local validation; the scheme must be read before the claim is accepted"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "| LightGBM with numerics as native categoricals instead of target encoding | 0.960387 vs 0.961014 with TE (indicative: the categorical run also used learning rate 0.01 and another seed) |",
+      "category": "E",
+      "why": "E -- existing TE beats all-21 TE by 13.3e-5; all-21 and conditional variants both REJECTED (Phase 8)"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "| Expected ratings from original-only models on the \"view B\" LightGBM | 0.960794 vs 0.960863 without (different seeds) |",
+      "category": "F",
+      "why": "not recognised as something already measured here"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "| Probability-of-actual-value aux features on top of expected values (XGBoost) | 0.960916 vs 0.961044 with expected values only (different seeds) |",
+      "category": "B",
+      "why": "attributed from the leaderboard; the paired noise floor between near-identical submissions is about +/-2e-4, so sub-1e-4 attributions are not resolvable"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "- **Do first:** target-encode the exact `Flight Distance` (and a few crosses) inside your folds, and add a teacher trained on the original dataset. Those two steps were worth about 0.002 AUC on one model.",
+      "category": "A",
+      "why": "claims local validation; the scheme must be read before the claim is accepted"
+    },
+    {
+      "notebook": "sachith7/s6e10-what-each-step-was-worth",
+      "claim": "- **Trust CV:** our CV\u2192LB gap was similar (about \u22120.0004) on both submissions.",
+      "category": "C",
+      "why": "contributes a prediction file rather than a trained model; its 'value' is the author's own blend, not a mechanism"
+    }
+  ],
+  "category_counts": {
+    "B": 7,
+    "A": 3,
+    "E": 2,
+    "C": 2,
+    "F": 1
   },
-  "what_a_reproduction_would_require": "If the source is obtained later, every claimed 'step worth X' must be classified A-F with ALREADY_TESTED as the reference for category E. Categories B (public-LB-only) and C (imported predictions) cannot license any local change: the paired public-LB noise floor between near-identical submissions is about +/-2e-4, so a sub-1e-4 attribution is below the board's resolution. Only A, D and F are worth reproducing.",
-  "seconds": 1.7,
-  "git_commit": "ce5678f74a2e"
+  "targeted_findings": {
+    "native_categorical_catboost": {
+      "counts": {
+        "cat_features": 0,
+        "boosting_type": 0,
+        "CatBoostClassifier": 0,
+        "Ordered": 0
+      },
+      "present": {}
+    },
+    "imports_prediction_files": {
+      "counts": {
+        "read_csv": 4,
+        "CC0": 4,
+        "public OOF": 3,
+        "kaggle datasets": 0
+      },
+      "present": {
+        "read_csv": 4,
+        "CC0": 4,
+        "public OOF": 3
+      }
+    },
+    "ten_fold_members": {
+      "counts": {
+        "10-fold": 9,
+        "10 fold": 4,
+        "n_splits=10": 0,
+        "StratifiedKFold(n_splits=10": 0
+      },
+      "present": {
+        "10-fold": 9,
+        "10 fold": 4
+      }
+    },
+    "target_encoding_flight_distance": {
+      "counts": {
+        "Flight Distance": 9,
+        "_fd_bin": 0,
+        "te_fd": 4
+      },
+      "present": {
+        "Flight Distance": 9,
+        "te_fd": 4
+      }
+    },
+    "original_data_teacher": {
+      "counts": {
+        "original": 18,
+        "129,880": 2,
+        "teacher": 20
+      },
+      "present": {
+        "original": 18,
+        "129,880": 2,
+        "teacher": 20
+      }
+    },
+    "stacker": {
+      "counts": {
+        "LogisticRegression": 3,
+        "combiner CV": 13,
+        "greedy": 1
+      },
+      "present": {
+        "LogisticRegression": 3,
+        "combiner CV": 13,
+        "greedy": 1
+      }
+    }
+  },
+  "catboost_native_categorical_used": false,
+  "notebook_negative_on_native_cat": [
+    "| LightGBM with numerics as native categoricals instead of target encoding | 0.960387 vs 0.961014 with TE (indicative: the categorical run also used learning rate 0.01 and another seed) |"
+  ],
+  "verdict": "RETRIEVED AND CLASSIFIED. See targeted_findings for the mechanism-level answers. Category A items are reproducible in principle; B and C cannot license a local change; the notebook's own negative table is recorded because it concerns a mechanism we tested, in a different substitution.",
+  "seconds": 5.3,
+  "git_commit": "624e94de3f2c"
 }
