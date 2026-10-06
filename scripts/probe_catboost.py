@@ -78,7 +78,7 @@ def prep(sub_frac=0.15, seed=0):
     return tr, X, y, itr, iv
 
 
-def probe(name, cat_cols, boosting, extra=None, task="CPU"):
+def probe(name, Xtr, Xiv, ytr, yiv, cat_cols, boosting, extra=None, task="CPU"):
     from catboost import CatBoostClassifier
     p = dict(BASE)
     p["boosting_type"] = boosting
@@ -93,15 +93,13 @@ def probe(name, cat_cols, boosting, extra=None, task="CPU"):
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
             m = CatBoostClassifier(**p)
-            fit_kw = {}
-            if cat_cols:
-                fit_kw["cat_features"] = list(cat_cols)
-            m.fit(Xn_tr, y[itr], **fit_kw)
+            fit_kw = {"cat_features": list(cat_cols)} if cat_cols else {}
+            m.fit(Xtr, ytr, **fit_kw)
             rec["warnings"] = sorted({str(x.message)[:110] for x in w})[:4]
         rec["trains"] = True
         rec["seconds"] = round(time.time() - t0, 1)
-        pred = m.predict_proba(Xn_iv)[:, 1]
-        rec["auc"] = float(roc_auc_score(y[iv], pred))
+        pred = m.predict_proba(Xiv)[:, 1]
+        rec["auc"] = float(roc_auc_score(yiv, pred))
         rec["trees"] = int(m.tree_count_)
         # Did CatBoost actually engage the CTR machinery? `model_features` and the ctr leaf
         # description expose it; a model given categoricals but no CTRs shows no ctr leaves.
@@ -127,7 +125,6 @@ def probe(name, cat_cols, boosting, extra=None, task="CPU"):
 def main() -> None:
     import catboost
     tr, X, y, itr, iv = prep()
-    global Xn_tr, Xn_iv, y, itr, iv
     cat_cols = default_cat_cols(True)
     card = cat_cardinality(tr, cat_cols)
     print("=" * 104)
@@ -154,16 +151,22 @@ def main() -> None:
            "numeric_features": int(X.shape[1]), "cat_cols": list(cat_cols),
            "cardinality": card, "probes": []}
 
-    out["probes"].append(probe("P0 numeric Plain (current control)", [], "Plain"))
-    out["probes"].append(probe("P1 numeric Ordered", [], "Ordered"))
-    out["probes"].append(probe("P2 +native cats Plain", cat_cols, "Plain"))
-    out["probes"].append(probe("P3 +native cats Ordered", cat_cols, "Ordered"))
-    out["probes"].append(probe("P4 +native cats Plain GPU", cat_cols, "Plain", task="GPU"))
-    out["probes"].append(probe("P5 +native cats Ordered GPU", cat_cols, "Ordered", task="GPU"))
-    out["probes"].append(probe("P6 +native cats Plain max_ctr_complexity=2", cat_cols, "Plain",
-                               {"max_ctr_complexity": 2}))
-    out["probes"].append(probe("P7 +native cats Plain one_hot_max_size=6", cat_cols, "Plain",
-                               {"one_hot_max_size": 6}))
+    out["probes"].append(probe("P0 numeric Plain (current control)", Xn_tr, Xn_iv, y[itr], y[iv],
+                               [], "Plain"))
+    out["probes"].append(probe("P1 numeric Ordered", Xn_tr, Xn_iv, y[itr], y[iv],
+                               [], "Ordered"))
+    out["probes"].append(probe("P2 +native cats Plain", Xc_tr, Xc_iv, y[itr], y[iv],
+                               cat_cols, "Plain"))
+    out["probes"].append(probe("P3 +native cats Ordered", Xc_tr, Xc_iv, y[itr], y[iv],
+                               cat_cols, "Ordered"))
+    out["probes"].append(probe("P4 +native cats Plain GPU", Xc_tr, Xc_iv, y[itr], y[iv],
+                               cat_cols, "Plain", task="GPU"))
+    out["probes"].append(probe("P5 +native cats Ordered GPU", Xc_tr, Xc_iv, y[itr], y[iv],
+                               cat_cols, "Ordered", task="GPU"))
+    out["probes"].append(probe("P6 +native cats Plain max_ctr_complexity=2", Xc_tr, Xc_iv,
+                               y[itr], y[iv], cat_cols, "Plain", {"max_ctr_complexity": 2}))
+    out["probes"].append(probe("P7 +native cats Plain one_hot_max_size=6", Xc_tr, Xc_iv,
+                               y[itr], y[iv], cat_cols, "Plain", {"one_hot_max_size": 6}))
 
     print("\n" + "=" * 104)
     print("SUMMARY")
