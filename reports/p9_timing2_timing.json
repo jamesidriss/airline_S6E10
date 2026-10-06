@@ -1,0 +1,35 @@
+{
+  "tag": "p9_timing2",
+  "timing_probe_rounds": 1500,
+  "scheme": "primary",
+  "view": "full",
+  "folds": {
+    "0": {
+      "ctl_fixed": {
+        "seconds": 46.3,
+        "sec_per_round": 0.031,
+        "projected_full_grid_seconds": 5,
+        "projected_full_grid_hours": 0.0,
+        "grid_rounds_sum": 8900,
+        "extrapolation": "linear (s/round measured flat)"
+      },
+      "dart005": {
+        "seconds": 230.5,
+        "sec_per_round": 0.154,
+        "projected_full_grid_seconds": 72,
+        "projected_full_grid_hours": 0.02,
+        "grid_rounds_sum": 9400,
+        "extrapolation": "quadratic-ish (r^1.5, anchored on measured 300 vs 1500)"
+      },
+      "rf": {
+        "seconds": 64.5,
+        "sec_per_round": 0.043,
+        "projected_full_grid_seconds": 7,
+        "projected_full_grid_hours": 0.0,
+        "grid_rounds_sum": 8900,
+        "extrapolation": "linear (s/round measured flat)"
+      }
+    }
+  },
+  "note": "DART extrapolated with r^1.5 because its measured per-round cost rose 2.62x between a 300- and a 1500-round fit on identical data; GBDT extrapolated linearly. A purely linear projection understated DART."
+}

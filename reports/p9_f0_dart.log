@@ -1,0 +1,59 @@
+﻿    [cache] view full: (699635, 237)
+
+========================================================================================================
+fold 0   outer-fit=559,708   eval=139,927   features=285
+========================================================================================================
+  dart005      inner curve (refit, refit):
+      round   400  inner AUC 0.960419
+      round   700  inner AUC 0.960906
+      round  1100  inner AUC 0.961165
+      round  1700  inner AUC 0.961238
+    curve max = 0.961238 at round 1700; selected round = 1700 (within 1e-05 of max, cheapest such round); inner selection took 817s
+    cross-check: a single long fit's truncated snapshots would have picked max 0.961238, i.e. +0.0e-5 (agrees)
+    REFIT on all 559,708 outer-fit rows at 1700 rounds -> AUC=0.960924  (314s)
+    blend gains vs v3: w=0.01:-0.16, w=0.02:-0.35, w=0.03:-0.55, w=0.05:-0.94, w=0.075:-1.48, w=0.1:-2.07
+  dart010      inner curve (refit, refit):
+      round   400  inner AUC 0.960216
+      round   700  inner AUC 0.960776
+      round  1100  inner AUC 0.961078
+      round  1700  inner AUC 0.961277
+    curve max = 0.961277 at round 1700; selected round = 1700 (within 1e-05 of max, cheapest such round); inner selection took 1003s
+    cross-check: a single long fit's truncated snapshots would have picked max 0.961277, i.e. +0.0e-5 (agrees)
+    REFIT on all 559,708 outer-fit rows at 1700 rounds -> AUC=0.960864  (344s)
+    blend gains vs v3: w=0.01:-0.19, w=0.02:-0.42, w=0.03:-0.64, w=0.05:-1.09, w=0.075:-1.67, w=0.1:-2.30
+  dart005_xt   inner curve (refit, refit):
+      round   400  inner AUC 0.960190
+      round   700  inner AUC 0.960762
+      round  1100  inner AUC 0.961163
+      round  1700  inner AUC 0.961336
+    curve max = 0.961336 at round 1700; selected round = 1700 (within 1e-05 of max, cheapest such round); inner selection took 949s
+    cross-check: a single long fit's truncated snapshots would have picked max 0.961336, i.e. +0.0e-5 (agrees)
+    REFIT on all 559,708 outer-fit rows at 1700 rounds -> AUC=0.961000  (389s)
+    blend gains vs v3: w=0.01:-0.14, w=0.02:-0.29, w=0.03:-0.43, w=0.05:-0.77, w=0.075:-1.22, w=0.1:-1.70
+  rf           inner curve (refit, refit):
+      round   500  inner AUC 0.958834
+      round   900  inner AUC 0.958848
+      round  1500  inner AUC 0.958854
+      round  2400  inner AUC 0.958842
+      round  3600  inner AUC 0.958837
+    curve max = 0.958854 at round 1500; selected round = 900 (within 1e-05 of max, cheapest such round); inner selection took 492s
+    NOTE: chose 900 over the raw argmax 1500; the argmax was 0e+00 below max by 0.00e-5, inside the 1e-05 tolerance, so the extra rounds are not evidenced.
+    cross-check: a single long fit's truncated snapshots would have picked max 0.958854, i.e. +0.0e-5 (agrees)
+    REFIT on all 559,708 outer-fit rows at 900 rounds -> AUC=0.958284  (40s)
+    blend gains vs v3: w=0.01:-0.19, w=0.02:-0.38, w=0.03:-0.57, w=0.05:-0.98, w=0.075:-1.51, w=0.1:-2.09
+
+  mode            rounds         AUC   delta vs ctl_es  logit corr   spearman  blend@2%
+  --------------------------------------------------------------------------------------------------------
+python.exe : Traceback (most recent call last):
+Au caractère Ligne:1 : 32
++ ... NG='utf-8'; & .\.venv\Scripts\python.exe -u scripts\run_stochastic_bo ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\James\airline_S6E10\scripts\run_stochastic_boosting.py", line 466, in <module>
+    main()
+  File "C:\Users\James\airline_S6E10\scripts\run_stochastic_boosting.py", line 449, in main
+    d = r["auc"] - ctrl["auc"]
+                   ~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable

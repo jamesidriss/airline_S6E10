@@ -178,6 +178,71 @@ def inner_split(fit_idx, y_int, frac, seed):
     return np.setdiff1d(fit_idx, iv), iv
 
 
+def report_only(args, y, folds) -> None:
+    """Rebuild the paired table from saved fold predictions. No training.
+
+    Every arm persists reports/{tag}_{mode}_fold{k}.npy, so this reconstructs the whole comparison
+    including arms trained in earlier invocations. Load-time AUCs are recomputed from the label, not
+    read from a cached report, so the table cannot inherit a stale or mislabelled number.
+    """
+    from src.validation.compare import corr, spearman
+    fin = store.load_oof("blend_v3_final").astype("float64")
+    out = {"tag": args.tag, "scheme": args.scheme, "report_only": True, "folds": {}}
+    for k in [int(x) for x in args.folds.split(",")]:
+        val = np.where(folds == k)[0]
+        preds, aucs = {}, {}
+        for m in list(MODES) + ["ctl_es"]:
+            f = REPORTS / f"{args.tag}_{m}_fold{k}.npy"
+            if f.exists():
+                p = np.load(f).astype("float64")
+                preds[m], aucs[m] = p, float(roc_auc_score(y[val], p))
+        if not preds:
+            print(f"fold {k}: no saved predictions for tag {args.tag!r}")
+            continue
+        ctrl_name = next((c for c in ("ctl_fixed", "ctl_es") if c in preds), None)
+        ctrl = aucs[ctrl_name]
+        print(f"\n{'='*104}\nfold {k}  ({len(preds)} arms, rebuilt from saved predictions)"
+              f"\n{'='*104}")
+        print(f"  {'mode':<14}{'AUC':>12}{'delta vs '+ctrl_name:>18}{'logit corr':>12}"
+              f"{'spearman':>11}" + "".join(f"{'blend@'+w:>11}" for w in ("0.01", "0.02", "0.05")))
+        print(f"  {'-'*104}")
+        rec = {}
+        for m in sorted(preds, key=lambda z: -aucs[z]):
+            p = preds[m]
+            d = aucs[m] - ctrl
+            bg = {w: (float(roc_auc_score(y[val], float(w) * logit(p)
+                                          + (1 - float(w)) * logit(fin[val])))
+                      - float(roc_auc_score(y[val], fin[val]))) for w in ("0.01", "0.02", "0.05")}
+            rec[m] = {"auc": aucs[m], "delta_e5": d * 1e5,
+                      "logit_corr_vs_ctrl": (corr(logit(p), logit(preds[ctrl_name]))
+                                             if m != ctrl_name else None),
+                      "spearman_vs_ctrl": (spearman(p, preds[ctrl_name]) if m != ctrl_name else None),
+                      "blend_gains_e5": {k2: v * 1e5 for k2, v in bg.items()}}
+            tag = "(control)" if m == ctrl_name else f"{d*1e5:>+17.1f}e"
+            lc = f"{rec[m]['logit_corr_vs_ctrl']:.5f}" if m != ctrl_name else ""
+            sp = f"{rec[m]['spearman_vs_ctrl']:.5f}" if m != ctrl_name else ""
+            print(f"  {m:<14}{aucs[m]:>12.6f}{tag:>18}{lc:>12}{sp:>11}"
+                  + "".join(f"{bg[w]*1e5:>+11.2f}" for w in ("0.01", "0.02", "0.05")))
+        out["folds"][str(k)] = {"control": ctrl_name, "control_auc": ctrl, "arms": rec}
+        # headline gate check, applied automatically so the verdict is not left to the reader
+        verdict = []
+        for m, r in rec.items():
+            if m == ctrl_name:
+                continue
+            b2 = r["blend_gains_e5"]["0.02"]
+            if r["delta_e5"] >= 5.0:
+                verdict.append(f"{m}: standalone {r['delta_e5']:+.1f}e-5 >= +5e-5 -> PROMOTE")
+            elif b2 >= 1.5:
+                verdict.append(f"{m}: marginal blend {b2:+.2f}e-5 >= +1.5e-5 -> consider promotion")
+            else:
+                verdict.append(f"{m}: standalone {r['delta_e5']:+.1f}e-5, blend@2% {b2:+.2f}e-5 "
+                               f"-> REJECT (fails the gate)")
+        out["folds"][str(k)]["verdicts"] = verdict
+        print("\n  " + "\n  ".join(verdict))
+    save_json(out, REPORTS / f"{args.tag}_report.json")
+    print("\nwrote", REPORTS / f"{args.tag}_report.json")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--modes", default="ctl_es,ctl_fixed,dart005")
@@ -189,6 +254,11 @@ def main() -> None:
     ap.add_argument("--snapshots", default="")
     ap.add_argument("--tag", default="phase9")
     ap.add_argument("--curve-mode", default="refit", choices=["refit", "snapshot"])
+    ap.add_argument("--report-only", action="store_true",
+                    help="rebuild the comparison table from saved fold predictions without training "
+                         "anything. Every arm writes reports/{tag}_{mode}_fold{k}.npy, so the paired "
+                         "table and the blend curve can be recomputed at any time -- including for "
+                         "arms run in an earlier invocation -- at zero compute cost.")
     ap.add_argument("--round-tolerance", type=float, default=1.0,
                     help="how far inner AUC may fall below the max before a cheaper round is "
                          "preferred. The inner curve is NOT monotone -- the champion peaks at ~900 "
@@ -232,6 +302,9 @@ def main() -> None:
     y_int = tr[TARGET].values.astype("int8")
     y = y_int.astype("float64")
     folds = get_scheme(args.scheme, y_int, tr[ID_COL]).folds
+
+    if args.report_only:
+        return report_only(args, y, folds)
     fin = store.load_oof("blend_v3_final").astype("float64")
     fin_test = store.load_test("blend_v3_final").astype("float64")
 
@@ -432,8 +505,28 @@ def main() -> None:
                   f"{', '.join(f'w={a}:{b*1e5:+.2f}' for a, b in bg.items())}", flush=True)
 
         # ---- paired comparison table ----
+        # Controls may be run in a SEPARATE invocation (they are expensive and reusable), so the
+        # reference is looked up from this fold's own records first and then from previously saved
+        # control predictions on disk. Without the disk fallback the table crashed with
+        # 'NoneType' is not subscriptable, which is how it first failed.
         ctrl = fold_rec.get("ctl_fixed") or fold_rec.get("ctl_es")
-        ctrl_name = "ctl_fixed" if "ctl_fixed" in fold_rec else "ctl_es"
+        ctrl_name = "ctl_fixed" if "ctl_fixed" in fold_rec else ("ctl_es" if "ctl_es" in fold_rec
+                                                                 else None)
+        if ctrl is None:
+            cands = ["ctl_fixed", "ctl_es"]
+            for c in cands:
+                f = REPORTS / f"{args.tag}_{c}_fold{k}.npy"
+                if f.exists():
+                    pv = np.load(f).astype("float64")
+                    ctrl = {"auc": float(roc_auc_score(y[val], pv)), "pred": pv,
+                            "iter": None, "blend_gains": {}}
+                    ctrl_name = f"{c} (loaded from {f.name})"
+                    break
+        if ctrl is None:
+            print("  no control available for this fold: run --modes ctl_es,ctl_fixed first")
+            out["folds"][str(k)] = {kk: {a: b for a, b in vv.items() if a != "pred"}
+                                    for kk, vv in fold_rec.items()}
+            continue
         print(f"\n  {'mode':<14}{'rounds':>8}{'AUC':>12}{'delta vs '+ctrl_name:>18}"
               f"{'logit corr':>12}{'spearman':>11}{'blend@2%':>10}")
         print(f"  {'-'*104}")
@@ -442,8 +535,9 @@ def main() -> None:
                 continue
             r = fold_rec[mname]
             rr = r.get("selected_round") or r.get("iter")
-            if mname == ctrl_name:
-                print(f"  {mname:<14}{rr:>8}{r['auc']:>12.6f}{'(control)':>18}{'':>12}{'':>11}"
+            if mname == ctrl_name or r is ctrl:
+                print(f"  {mname:<14}{str(rr):>8}{r['auc']:>12.6f}{'(control)':>18}{'':>12}"
+                      f"{'':>11}"
                       f"{r.get('blend_gains', {}).get('0.02', float('nan'))*1e5:>+10.2f}")
                 continue
             d = r["auc"] - ctrl["auc"]

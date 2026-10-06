@@ -20,8 +20,26 @@ def main() -> int:
     import tests.test_te_all21 as TE
     import tests.test_view_composition as TV
 
-    fns = [(mod.__name__, getattr(mod, n)) for mod in (T, TR, TW, TN, TI, TE, TV)
+    # NOTE: test_stochastic_protocol.py has its own __main__ runner with per-assertion reporting, so
+    # it is invoked as a subprocess rather than imported here -- importing it would only pick up its
+    # module-level helpers. It is registered explicitly so the aggregate count stays honest; a test
+    # file that silently stops being run is worse than no test file.
+    mods = (T, TR, TW, TN, TI, TE, TV)
+    fns = [(mod.__name__, getattr(mod, n)) for mod in mods
            for n in sorted(dir(mod)) if n.startswith("test_")]
+    ok = fail = 0
+
+    import subprocess
+    r = subprocess.run([sys.executable, str(ROOT / "tests" / "test_stochastic_protocol.py")],
+                       capture_output=True, text=True, cwd=str(ROOT))
+    tail = [ln for ln in r.stdout.splitlines() if "passed" in ln]
+    print(f"  {'PASS' if r.returncode == 0 else 'FAIL'}  "
+          f"tests.test_stochastic_protocol  ({tail[-1].strip() if tail else 'no summary'})")
+    if r.returncode == 0:
+        ok += 1
+    else:
+        fail += 1
+        print(r.stdout[-3000:])
     ok = fail = 0
     for modname, fn in fns:
         t0 = time.time()

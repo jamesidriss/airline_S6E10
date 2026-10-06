@@ -1163,6 +1163,82 @@ config `extra_trees` is worth **+44.8e-5** and is not optional — so the Phase 
 that the fixed-round protocol beats the ES control by **+5.3e-5**, larger than the +2.2e-5 measured in
 Phase 7 but the same sign.
 
+## 6m. PHASE 9 RESULT -- DART AND RF BOTH REJECTED. Stochastic tree construction is a dead end.
+
+All seven fold-0 arms, matched through one harness, one inner split, one seed
+(`reports/p9_f0_report.json`, rebuilt from saved predictions with `--report-only`):
+
+| mode | rounds | fold-0 AUC | Δ vs `ctl_fixed` | logit corr | spearman | blend@2% |
+|---|---|---|---|---|---|---|
+| `ctl_fixed` GBDT **+xt** | 900 | **0.961352** | control | — | — | +0.22 |
+| `ctl_es` established inner-ES | 797 | 0.961299 | −5.3e-5 | 0.99901 | 0.99194 | +0.17 |
+| `dart005_xt` DART +xt | 1700 | 0.961000 | −35.2e-5 | 0.99843 | 0.98852 | −0.29 |
+| `dart005` DART −xt | 1700 | 0.960924 | −42.8e-5 | 0.99788 | 0.98508 | −0.35 |
+| `ctl_det` GBDT **−xt** | 900 | 0.960904 | −44.8e-5 | 0.99775 | 0.98415 | −0.13 |
+| `dart010` DART drop .10 −xt | 1700 | 0.960864 | −48.7e-5 | 0.99786 | 0.98471 | −0.42 |
+| `rf` LightGBM RF | 900 | 0.958284 | **−306.8e-5** | 0.98662 | 0.93286 | −0.38 |
+
+**Every candidate fails, and none is close to the gate.** DART loses 42.8e-5 and 48.7e-5 standalone
+with negative blend gains at every weight tested. RF loses 306.8e-5 — an order of magnitude below
+everything else. No promotion to fold 1 is justified for any arm, so no further compute was spent.
+
+### What this settles
+1. **`extra_trees` is the mechanism, not a side effect — and its interaction with DART is real.**
+   Under GBDT it is worth **+44.8e-5** (`ctl_fixed` 0.961352 vs `ctl_det` 0.960904). Under DART the
+   sign **flips**: `dart005_xt` −35.2e-5 beats `dart005` −42.8e-5 by 7.6e-5. The 90k-row probe's
+   claim that `extra_trees` is catastrophic under DART **replicated on real data, in the same
+   direction, at 1/6 the magnitude**. DART's per-tree renormalisation evidently interacts with
+   random-threshold trees in a way that is mildly harmful rather than catastrophic at scale.
+2. **DART is a near-clone with less signal, not a different view.** Logit corr to the champion is
+   ≥ 0.9979 for every DART arm. There is no diversity to harvest: no arm is admissible even on the
+   marginal-blend criterion that a weaker-but-decorrelated model could still pass.
+3. **RF is genuinely different but far weaker.** Its spearman of 0.93286 is the lowest measured in
+   this campaign, so forest-style construction *does* decorrelate — the structure is real. It is
+   simply 306.8e-5 worse, and no weight makes that useful (blend@1% is already −0.19e-5). Its inner
+   curve was flat from 500 to 3600 rounds (0.958834→0.958837, range 2e-5), so RF mode saturates
+   almost immediately; more trees would not help.
+4. **The fixed-round protocol beats inner early stopping by +5.3e-5** (`ctl_fixed` vs `ctl_es`),
+   larger than the +2.2e-5 measured in Phase 7 but the same sign and now measured on two arms.
+
+### Why this was the right thing to test, and what it cost to learn
+The motivation was the campaign's only surviving mechanism — randomisation plus averaging. It is now
+measured at the level of tree *construction* rather than tree *parameters*, and it does not extend.
+Combined with 6j (error sits where members **agree**, not where they disagree), the picture is
+consistent: variance reduction has been mined out, and the remaining 7.8e-4 gap is not reachable by
+any stochastic-construction variant of the GBDT family.
+
+## 6m-old. PHASE 9A RESULT -- DART IS REJECTED ON STANDALONE AUC (fold 0)
+
+`dart005` = DART, `drop_rate=0.05`, `skip_drop=0.5`, `extra_trees=False`, everything else the
+champion. Inner curve by refit (mandatory — snapshot selection is unsafe for DART):
+
+| round | 400 | 700 | 1100 | 1700 |
+|---|---|---|---|---|
+| inner AUC | 0.960419 | 0.960906 | 0.961165 | **0.961238** |
+
+Still climbing at the grid's top, selected 1700, refit on all 559,708 outer-fit rows:
+
+| arm | fold-0 AUC | vs `ctl_fixed` | blend w=2% vs v3 |
+|---|---|---|---|
+| `ctl_fixed` (GBDT +xt) | **0.961352** | control | +0.22e-5 |
+| `dart005` (DART −xt) | 0.960924 | **−42.8e-5** | **−0.35e-5** |
+
+**DART loses 42.8e-5 standalone and every blend weight is negative.** That is far beyond the +1.5e-5
+admission gate, and it is not a rounding question. Combined with the probe finding that DART
+**+** `extra_trees` is catastrophic, DART is behind on both sides of the `extra_trees` axis — there is
+no setting of this mode that approaches the champion.
+
+Two honest caveats, both of which *strengthen* rather than weaken the conclusion:
+
+1. **The curve had not turned over.** 1700 was the grid boundary, so the true peak may lie beyond
+   it. But the gap is 42.8e-5 and the curve's slope at the boundary is +7e-5 per 600 rounds, so
+   closing a 42.8e-5 deficit would need roughly 3,700 further rounds. The truncation probe measured
+   DART's cost per round growing with tree count, so that extrapolation is not cheap either.
+2. **The gate is not met on the honest comparison anyway.** A −42.8e-5 standalone deficit with
+   negative blend gains at every weight fails the admission rule on its face; no promotion to fold 1
+   is warranted for the standalone claim. Superseded by the full seven-arm table in **6m**, which
+   also covers `dart010`, `dart005_xt` and `rf`.
+
 ## 6l. Earlier version of this section, retracted as confounded
 
 ## 6j-OLD. WHERE OUR REMAINING ERROR LIVES — SUPERSEDED BY 6j, conclusion retracted as confounded
