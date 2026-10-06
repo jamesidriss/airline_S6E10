@@ -3,3 +3,14 @@
 ====================================================================================================
 fold 1   outer-fit=559,708  eval=139,927
 ====================================================================================================
+  C0    boosting=Plain    cats=0   iters=1145  refit_rows=559,708  AUC=0.961221  (ES 108s + refit 90s)  blend@2% +0.07e-5
+  C2    boosting=Plain    cats=17  iters=1233  refit_rows=559,708  AUC=0.961337  (ES 481s + refit 411s)  blend@2% +0.35e-5
+
+  arm            AUC   delta vs C0  logit corr vs v3   spearman   blend@2%
+  ------------------------------------------------------------------------
+  C0        0.961221     (control)                                   +0.07
+  C2        0.961337        +11.6e           0.99871    0.99047      +0.35
+
+  C2: standalone +11.6e-5 >= +8e-5 -> PROMOTE to fold 1
+
+wrote C:\Users\James\airline_S6E10\reports\p10b.json
