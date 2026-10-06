@@ -1,0 +1,22 @@
+﻿    [cache] view full: (699635, 237)
+
+====================================================================================================
+fold 0   outer-fit=559,708  eval=139,927
+====================================================================================================
+  C0    boosting=Plain    cats=0   iters=851   refit_rows=559,708  AUC=0.961008  (ES 86s + refit 69s)  blend@2% -0.23e-5
+  C1    boosting=Ordered  cats=0   iters=497   refit_rows=559,708  AUC=0.960291  (ES 513s + refit 328s)  blend@2% -0.60e-5
+  C2    boosting=Plain    cats=17  iters=1043  refit_rows=559,708  AUC=0.961067  (ES 433s + refit 353s)  blend@2% -0.14e-5
+  C3    boosting=Ordered  cats=17  iters=629   refit_rows=559,708  AUC=0.960412  (ES 920s + refit 620s)  blend@2% -0.44e-5
+
+  arm            AUC   delta vs C0  logit corr vs v3   spearman   blend@2%
+  ------------------------------------------------------------------------
+  C0        0.961008     (control)                                   -0.23
+  C1        0.960291        -71.7e           0.99761    0.97968      -0.60
+  C2        0.961067         +5.9e           0.99895    0.99197      -0.14
+  C3        0.960412        -59.7e           0.99771    0.98058      -0.44
+
+  C1: standalone -71.7e-5, blend@2% -0.60e-5 -> REJECT
+  C2: standalone +5.9e-5 (+3..+8e-5) -> fold 1 if diversity also useful (blend@2% -0.14e-5)
+  C3: standalone -59.7e-5, blend@2% -0.44e-5 -> REJECT
+
+wrote C:\Users\James\airline_S6E10\reports\p10b.json

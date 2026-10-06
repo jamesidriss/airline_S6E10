@@ -85,9 +85,14 @@ def logit(p):
     return np.log(p / (1 - p))
 
 
-def build(vb, tr, fit, val, test, cats_on, extra_src):
-    """Numeric frame from the champion view, optionally with native categorical twins appended."""
-    Xf, Xa, names = vb.assemble(fit, None, val, test, inner_seed=0)
+def build(vb, tr, y_int, fit, val, test, cats_on, extra_src):
+    """Numeric frame from the champion view, optionally with native categorical twins appended.
+
+    `y_int` MUST be passed to assemble: the champion view's fold-safe TE block fits target statistics
+    on `fit_idx` only, and passing None raises deep inside build_te_generic. The labels are used only
+    inside the fit rows, which is the correct fold-safe behaviour.
+    """
+    Xf, Xa, names = vb.assemble(fit, y_int, val, test, inner_seed=0)
     if not cats_on:
         f = pd.DataFrame(np.asarray(Xf, dtype=np.float32), columns=list(names))
         a = {k: pd.DataFrame(np.asarray(v, dtype=np.float32), columns=list(names))
@@ -182,7 +187,7 @@ def main() -> None:
             proj = {}
             for a in arms:
                 spec = ARMS[a]
-                f, _, cn = build(vb, tr, fit, val, None, spec["cats"], spec.get("extra_src"))
+                f, _, cn = build(vb, tr, y_int, fit, val, None, spec["cats"], spec.get("extra_src"))
                 params = {"boosting_type": spec["boosting_type"], "task_type": TASK,
                           "random_seed": args.seed + k}
                 params.update({kk: vv for kk, vv in spec.items()
@@ -207,7 +212,7 @@ def main() -> None:
         rec = {}
         for a in arms:
             spec = ARMS[a]
-            f, A, cn = build(vb, tr, fit, val, None, spec["cats"], spec.get("extra_src"))
+            f, A, cn = build(vb, tr, y_int, fit, val, None, spec["cats"], spec.get("extra_src"))
             seed = args.seed + k
             params = {"boosting_type": spec["boosting_type"], "task_type": TASK,
                       "random_seed": seed}

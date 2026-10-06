@@ -1,0 +1,11 @@
+﻿    [cache] view full: (699635, 237)
+
+====================================================================================================
+TIMING PROBE fold 0: 40 rounds on all 559,708 outer-fit rows, CPU
+====================================================================================================
+  C0     285 feat (0 cat)  40 rounds in     4.9s = 0.1220s/round -> 900 rounds ~ 0.03 h
+  C1     285 feat (0 cat)  40 rounds in    27.6s = 0.6888s/round -> 900 rounds ~ 0.17 h
+  C2     302 feat (17 cat)  40 rounds in    11.4s = 0.2840s/round -> 900 rounds ~ 0.07 h
+  C3     302 feat (17 cat)  40 rounds in    35.3s = 0.8827s/round -> 900 rounds ~ 0.22 h
+
+wrote C:\Users\James\airline_S6E10\reports\p10b_timing.json

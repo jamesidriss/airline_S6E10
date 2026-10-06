@@ -1,0 +1,57 @@
+{
+  "tag": "p10b",
+  "view": "full",
+  "scheme": "primary",
+  "task_type": "CPU",
+  "arms": [
+    "C0",
+    "C1",
+    "C2",
+    "C3"
+  ],
+  "folds": {},
+  "base_params": {
+    "iterations": 6000,
+    "learning_rate": 0.04,
+    "depth": 8,
+    "l2_leaf_reg": 3.0,
+    "thread_count": 8,
+    "verbose": 0,
+    "allow_writing_files": false,
+    "eval_metric": "AUC"
+  },
+  "protocol": "inner ES on a 10% carve of outer-fit selects the iteration count; the model is then refitted on 100% of outer-fit at that fixed count; the outer fold is scored once",
+  "git_commit": "f40d255cb4b2",
+  "timing": {
+    "0": {
+      "C0": {
+        "seconds": 4.9,
+        "sec_per_round": 0.122,
+        "n_features": 285,
+        "n_cat": 0,
+        "projected_900_rounds_h": 0.03
+      },
+      "C1": {
+        "seconds": 27.6,
+        "sec_per_round": 0.6888,
+        "n_features": 285,
+        "n_cat": 0,
+        "projected_900_rounds_h": 0.17
+      },
+      "C2": {
+        "seconds": 11.4,
+        "sec_per_round": 0.284,
+        "n_features": 302,
+        "n_cat": 17,
+        "projected_900_rounds_h": 0.07
+      },
+      "C3": {
+        "seconds": 35.3,
+        "sec_per_round": 0.8827,
+        "n_features": 302,
+        "n_cat": 17,
+        "projected_900_rounds_h": 0.22
+      }
+    }
+  }
+}

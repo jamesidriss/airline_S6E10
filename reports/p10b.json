@@ -1,0 +1,125 @@
+{
+  "tag": "p10b",
+  "view": "full",
+  "scheme": "primary",
+  "task_type": "CPU",
+  "arms": [
+    "C0",
+    "C1",
+    "C2",
+    "C3"
+  ],
+  "folds": {
+    "0": {
+      "control": "C0",
+      "control_auc": 0.9610080664013674,
+      "arms": {
+        "C0": {
+          "auc": 0.9610080664013674,
+          "inner_best_iter": 851,
+          "n_fit_rows_es": 503739,
+          "n_fit_rows_refit": 559708,
+          "n_features": 285,
+          "n_cat": 0,
+          "seconds_es": 86.1,
+          "seconds_refit": 69.0,
+          "blend_gains_e5": {
+            "0.01": -0.10239963790237283,
+            "0.02": -0.22947575719634017,
+            "0.03": -0.3385282158596681,
+            "0.05": -0.6426955953542368,
+            "0.1": -1.471245964401735
+          },
+          "params": {
+            "boosting_type": "Plain",
+            "task_type": "CPU",
+            "random_seed": 4
+          }
+        },
+        "C1": {
+          "auc": 0.9602909204648716,
+          "inner_best_iter": 497,
+          "n_fit_rows_es": 503739,
+          "n_fit_rows_refit": 559708,
+          "n_features": 285,
+          "n_cat": 0,
+          "seconds_es": 512.9,
+          "seconds_refit": 327.7,
+          "blend_gains_e5": {
+            "0.01": -0.28857515413927004,
+            "0.02": -0.5975433249982842,
+            "0.03": -0.9133195145838435,
+            "0.05": -1.5969149552041983,
+            "0.1": -3.53039228496721
+          },
+          "params": {
+            "boosting_type": "Ordered",
+            "task_type": "CPU",
+            "random_seed": 4
+          }
+        },
+        "C2": {
+          "auc": 0.9610667411766038,
+          "inner_best_iter": 1043,
+          "n_fit_rows_es": 503739,
+          "n_fit_rows_refit": 559708,
+          "n_features": 302,
+          "n_cat": 17,
+          "seconds_es": 433.5,
+          "seconds_refit": 353.0,
+          "blend_gains_e5": {
+            "0.01": -0.06395192095887126,
+            "0.02": -0.14349606729524567,
+            "0.03": -0.21759793722431198,
+            "0.05": -0.378072665285778,
+            "0.1": -1.0133497964082139
+          },
+          "params": {
+            "boosting_type": "Plain",
+            "task_type": "CPU",
+            "random_seed": 4
+          }
+        },
+        "C3": {
+          "auc": 0.9604115328980167,
+          "inner_best_iter": 629,
+          "n_fit_rows_es": 503739,
+          "n_fit_rows_refit": 559708,
+          "n_features": 302,
+          "n_cat": 17,
+          "seconds_es": 920.5,
+          "seconds_refit": 619.8,
+          "blend_gains_e5": {
+            "0.01": -0.21608734338540714,
+            "0.02": -0.43655127024422313,
+            "0.03": -0.6715417295688475,
+            "0.05": -1.1787080880898415,
+            "0.1": -2.6714851878328894
+          },
+          "params": {
+            "boosting_type": "Ordered",
+            "task_type": "CPU",
+            "random_seed": 4
+          }
+        }
+      },
+      "verdicts": [
+        "C1: standalone -71.7e-5, blend@2% -0.60e-5 -> REJECT",
+        "C2: standalone +5.9e-5 (+3..+8e-5) -> fold 1 if diversity also useful (blend@2% -0.14e-5)",
+        "C3: standalone -59.7e-5, blend@2% -0.44e-5 -> REJECT"
+      ]
+    }
+  },
+  "base_params": {
+    "iterations": 6000,
+    "learning_rate": 0.04,
+    "depth": 8,
+    "l2_leaf_reg": 3.0,
+    "thread_count": 8,
+    "verbose": 0,
+    "allow_writing_files": false,
+    "eval_metric": "AUC"
+  },
+  "protocol": "inner ES on a 10% carve of outer-fit selects the iteration count; the model is then refitted on 100% of outer-fit at that fixed count; the outer fold is scored once",
+  "git_commit": "f40d255cb4b2"
+}
