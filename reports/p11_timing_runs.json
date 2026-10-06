@@ -1,0 +1,10 @@
+{
+  "tag": "p11_timing",
+  "inventory_hash": "2762b8bac95865586468b4d7ab159193e4a2a19e51c7c55d979c3a18203e63a5",
+  "protocol": "phase10 fixed-round: inner ES on a 10% outer-fit carve selects the iteration count; refit on 100% of outer-fit; outer fold scored once",
+  "variants": [
+    "native"
+  ],
+  "runs": {},
+  "git_commit": "58f8325dddec"
+}
