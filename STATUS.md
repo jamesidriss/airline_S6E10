@@ -1158,10 +1158,11 @@ LightGBM's own early-stopping path would have hidden the problem entirely.
 | `ctl_det` (GBDT **−xt**) | 900 | 0.960904 | **−44.8e-5** | −0.13e-5 |
 
 `ctl_es` reproduced the recorded 0.961299 **exactly**, validating the harness. Under the champion
-config `extra_trees` is worth **+44.8e-5** and is not optional — so the Phase 9A probe finding that
-`extra_trees` is catastrophic under DART is a genuine *interaction*, not a general property. Note also
-that the fixed-round protocol beats the ES control by **+5.3e-5**, larger than the +2.2e-5 measured in
-Phase 7 but the same sign.
+config `extra_trees` is worth **+44.8e-5** and is not optional. The Phase 9A probe's claim that
+`extra_trees` is *catastrophic* under DART is **contradicted** by the fold-0 arms (`dart005_xt` vs
+`dart005` = **+7.7e-5**, positive); the correct reading is attenuation, not reversal — see 6m. Note
+also that the fixed-round protocol beats the ES control by **+5.3e-5**, larger than the +2.2e-5
+measured in Phase 7 but the same sign.
 
 ## 6m. PHASE 9 RESULT -- DART AND RF BOTH REJECTED. Stochastic tree construction is a dead end.
 
@@ -1183,12 +1184,19 @@ with negative blend gains at every weight tested. RF loses 306.8e-5 — an order
 everything else. No promotion to fold 1 is justified for any arm, so no further compute was spent.
 
 ### What this settles
-1. **`extra_trees` is the mechanism, not a side effect — and its interaction with DART is real.**
-   Under GBDT it is worth **+44.8e-5** (`ctl_fixed` 0.961352 vs `ctl_det` 0.960904). Under DART the
-   sign **flips**: `dart005_xt` −35.2e-5 beats `dart005` −42.8e-5 by 7.6e-5. The 90k-row probe's
-   claim that `extra_trees` is catastrophic under DART **replicated on real data, in the same
-   direction, at 1/6 the magnitude**. DART's per-tree renormalisation evidently interacts with
-   random-threshold trees in a way that is mildly harmful rather than catastrophic at scale.
+1. **`extra_trees` is the mechanism, not a side effect — and its benefit is attenuated, not reversed,
+   under DART.**
+   - Under GBDT: `ctl_fixed` 0.9613518 − `ctl_det` 0.9609042 = **+44.76e-5**.
+   - Under DART: `dart005_xt` 0.9610003 − `dart005` 0.9609236 = **+7.67e-5**.
+   - **Both are positive. There is no sign flip.** The correct statement is that `extra_trees` stays
+     beneficial under DART but its value **collapses by 5.83x** (44.76 / 7.67).
+   - The 90k-row probe claimed ≈ **−4.82e-3** for `extra_trees` under DART. The fold-0 measurement is
+     **+7.67e-5**. So the probe result **does not replicate in direction — it is opposite in sign** —
+     and differs in magnitude by **62.8x**. The probe's sign was wrong; only its conclusion that
+     DART is uncompetitive survived.
+   - DART's per-tree renormalisation is the plausible reason for the attenuation: random-threshold
+     trees are individually weaker, so normalising a surviving ensemble of them costs more of the
+     signal. That is a hypothesis consistent with the 5.83x collapse, not a measured mechanism.
 2. **DART is a near-clone with less signal, not a different view.** Logit corr to the champion is
    ≥ 0.9979 for every DART arm. There is no diversity to harvest: no arm is admissible even on the
    marginal-blend criterion that a weaker-but-decorrelated model could still pass.
@@ -1338,11 +1346,16 @@ relative to its uncertainty.
     the two; see `p7_v4_bounds_claim_CORRECTION`.)
   - Rank did not move (215), the expected consequence of a change this small against a top-20 band
     only 1.0e-4 wide.
-- **The gap is real and it is large.** Leader 0.961760, our public 0.960980, gap **7.8e-4**. That is
-  **z = 3.1-4.4** even after allowing for correlation between two *different* solutions, and it clears
-  2 sigma even between uncorrelated predictions (Hanley-McNeil SE ~ 0.0011 on the 59,969-row public
-  split, Section 6e). The top twenty occupy a 1.0e-4 band *while sitting 7.8e-4 above us*, so they
-  are a converged pack at a common higher level, not a spread field.
+- **The gap is large: 7.8e-4.** Leader 0.961760, our public 0.960980. The two scores are facts. The
+  *significance* of their difference is **not** asserted: it depends on rho, the pairwise error
+  correlation between our vector and the leader's, and **we do not hold the leader's prediction
+  vector, so rho is unmeasured**. Across rho in [0,1] the paired z ranges **0.44 to 7.88** and clears
+  2 sigma only if **rho > 0.941**. An earlier version of this line stated "z = 3.1-4.4" and claimed
+  the gap "clears 2 sigma even between uncorrelated predictions"; both are **false** — at rho = 0 the
+  z is 0.49, and the formula that produced the claim was not the inversion of the z relation. See
+  section 6e and `p7_lb_gap_significance_CORRECTION`. The top twenty occupy a 1.0e-4 band *while
+  sitting 7.8e-4 above us*, so they are a converged pack at a common higher level, not a spread
+  field — and that observation needs no rho.
 - **Every gain measurable in this campaign is single-digit e-5.** Phase 7 measured six further axes
   and the best was +2.2e-5. For calibration: **0.9335 of AUC comes free from 11 raw columns and a
   lookup table**, and everything this campaign has built -- 285 features, a 59-member blend, five
