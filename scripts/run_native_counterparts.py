@@ -66,8 +66,25 @@ from scripts.native_cat import (attach, cat_frame, cat_indices, default_cat_cols
                                 verify_no_target)
 from scripts.run_views import _inner_es_split  # noqa: E402
 
-ES_ROUNDS = 6000
-ES_PATIENCE = 300
+# ES budget. Phase 10 used ES_ROUNDS=6000 with patience 300 and that is the reference protocol, but
+# it is NOT affordable for a seven-slot screen: a 40-round timing probe measured 0.2905 s/round and
+# implied ~0.10 h per arm, yet the real run spent 66 minutes on ONE variant of ONE slot and had not
+# finished. Two multiplicative causes, both structural:
+#   * CatBoost's per-round cost RISES with round count, because CTR statistics are rebuilt and
+#     re-normalised as trees accumulate. A 40-round probe measures the cheapest part of the schedule.
+#     This is the SAME failure mode as LightGBM DART in Phase 9 (0.058 -> 0.152 s/round from 300 to
+#     1500 trees) and it recurred here in a different library.
+#   * block10 fold 0 carries 629,671 outer-fit rows against primary fold 0's 559,708, a 1.125x factor.
+# Together, 6000 rounds alone is ~33 min per arm before any refit.
+# The cap below is pre-declared and applies IDENTICALLY to every arm, so comparisons stay fair. It
+# cannot manufacture a gain: it can only stop a model that has already stopped improving (patience is
+# reached long before 2500 in every Phase 10 run, which selected 851-1364 iterations). The selected
+# count is recorded per arm, and any arm whose inner ES was still improving AT the cap is flagged, so
+# a truncated search can never be mistaken for a converged one.
+ES_ROUNDS_FULL = 6000
+ES_ROUNDS_SCREEN = 2500
+ES_PATIENCE = 200
+TRUNCATED_FLAG = "inner_es_hit_cap"
 INV_PATH = REPORTS / "native_cat_slot_inventory.json"
 
 
@@ -114,7 +131,7 @@ def build_frames(vb, tr, y_int, fit, val, cats_on):
     return f, v, cn
 
 
-def fit_catboost(frame, y, params, cat_names, seed, n_rounds, es=None):
+def fit_catboost(frame, y, params, cat_names, seed, n_rounds, es=None, es_rounds=ES_ROUNDS_SCREEN):
     from catboost import CatBoostClassifier
     p = dict(params)
     p.pop("iterations", None)
@@ -130,12 +147,16 @@ def fit_catboost(frame, y, params, cat_names, seed, n_rounds, es=None):
         p.pop("eval_metric", None)
         m = CatBoostClassifier(**p)
         m.fit(frame, y, **kw)
-        return m, int(n_rounds)
-    p["iterations"] = int(ES_ROUNDS)
+        return m, int(n_rounds), False
+    p["iterations"] = int(es_rounds)
     p["eval_metric"] = "AUC"
     m = CatBoostClassifier(**p)
     m.fit(frame, y, eval_set=(es[0], es[1]), early_stopping_rounds=ES_PATIENCE, verbose=0, **kw)
-    return m, int(m.get_best_iteration() or ES_ROUNDS)
+    best = int(m.get_best_iteration() or es_rounds)
+    # A model that stopped because patience fired is converged. A model that stopped because the cap
+    # was hit is NOT, and saying otherwise would let a truncated search pass as a converged one.
+    hit_cap = best >= es_rounds - 1
+    return m, best, hit_cap
 
 
 def main() -> None:
@@ -148,6 +169,13 @@ def main() -> None:
     ap.add_argument("--variants", default="native,numeric",
                     help="native = with the 17 twins; numeric = same protocol without them. Both "
                          "are needed to decompose the operational delta.")
+    ap.add_argument("--es-rounds", type=int, default=0,
+                    help=f"inner-ES round cap; default {ES_ROUNDS_SCREEN} for a screen and "
+                         f"{ES_ROUNDS_FULL} with --full-protocol. Identical across every arm so "
+                         f"comparisons stay fair.")
+    ap.add_argument("--full-protocol", action="store_true",
+                    help=f"use the Phase 10 ES budget of {ES_ROUNDS_FULL} rounds instead of the "
+                         f"screen cap of {ES_ROUNDS_SCREEN}")
     ap.add_argument("--folds", default="",
                     help="comma list or a-b range of fold indices to train; default = all folds of "
                          "the slot's scheme. Stage 1 screens fold 0 only.")
@@ -166,17 +194,22 @@ def main() -> None:
     tr, te = load_cached_parquet()
     y = tr[TARGET].values.astype("float64")
     y_int = tr[TARGET].values.astype("int8")
+    es_budget = args.es_rounds or (ES_ROUNDS_FULL if args.full_protocol else ES_ROUNDS_SCREEN)
 
     print("PHASE 11 -- NATIVE CATEGORICAL COUNTERPARTS")
     print(f"  inventory_hash = {inv['inventory_hash'][:32]}")
     print(f"  slots {want}   variants {variants}")
     print(f"  protocol: inner ES on a 10% carve of outer-fit -> fixed count -> refit on 100% of "
           f"outer-fit -> score outer fold once")
+    print(f"  ES budget {es_budget} rounds, patience {ES_PATIENCE}"
+          f"{'  [FULL protocol]' if es_budget == ES_ROUNDS_FULL else '  [screen cap]'}")
     print(f"  boosting_type is forced to Plain (Ordered banned)\n")
 
     out = {"tag": args.tag, "inventory_hash": inv["inventory_hash"],
            "protocol": "phase10 fixed-round: inner ES on a 10% outer-fit carve selects the "
                        "iteration count; refit on 100% of outer-fit; outer fold scored once",
+           "es_rounds_budget": es_budget, "es_patience": ES_PATIENCE,
+           "full_protocol": es_budget == ES_ROUNDS_FULL,
            "variants": variants, "runs": {},
            "git_commit": subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
                                         text=True).stdout.strip()[:12]}
@@ -227,12 +260,14 @@ def main() -> None:
                     itr_l = np.array([pos[int(vv)] for vv in itr_g])
                     es_l = np.array([pos[int(vv)] for vv in es_g])
                     t0 = time.time()
-                    _, n_iter = fit_catboost(f, y[fit], params, cn, int(s["seed"]) + k, 0,
-                                             es=(f.iloc[es_l], y[es_g]))
+                    _, n_iter, hit_cap = fit_catboost(f, y[fit], params, cn,
+                                                     int(s["seed"]) + k, 0,
+                                                     es=(f.iloc[es_l], y[es_g]),
+                                                     es_rounds=es_budget)
                     t_es = time.time() - t0
                     # refit from scratch on 100% of outer-fit at that fixed count
                     t0 = time.time()
-                    m, used = fit_catboost(f, y[fit], params, cn, int(s["seed"]) + k, n_iter)
+                    m, used, _ = fit_catboost(f, y[fit], params, cn, int(s["seed"]) + k, n_iter)
                     pred = m.predict_proba(v)[:, 1]
                     t_refit = time.time() - t0
                     np.save(pred_path, pred.astype("float32"))
@@ -244,6 +279,8 @@ def main() -> None:
                         "cat_cols": cn, "cat_hash": sha(cn),
                         "schema_hash": sha({"cols": list(f.columns)}),
                         "inner_best_iter": int(n_iter), "refit_iter": int(used),
+                        "es_rounds_budget": int(es_budget), "es_patience": ES_PATIENCE,
+                        TRUNCATED_FLAG: bool(hit_cap),
                         "n_rows_es_fit": int(len(itr_l)), "n_rows_es": int(len(es_g)),
                         "n_rows_refit": int(len(fit)), "n_rows_eval": int(len(val)),
                         "auc": auc, "seconds_es": round(t_es, 1),
@@ -252,9 +289,10 @@ def main() -> None:
                         "config_hash": s["config_hash"],
                     }
                     out["runs"].setdefault(f"{sc}|{i}|{var}", {})[str(k)] = rec
+                    flag = f"  *** {TRUNCATED_FLAG}: NOT converged ***" if hit_cap else ""
                     print(f"  slot {i} {var:<7} fold {k}  iters={used:<5} "
                           f"es_rows={len(itr_l):,} refit_rows={len(fit):,}  AUC={auc:.6f}  "
-                          f"(ES {t_es:.0f}s + refit {t_refit:.0f}s)", flush=True)
+                          f"(ES {t_es:.0f}s + refit {t_refit:.0f}s){flag}", flush=True)
 
     save_json(out, REPORTS / f"{args.tag}_runs.json")
     print("\nwrote", REPORTS / f"{args.tag}_runs.json")
