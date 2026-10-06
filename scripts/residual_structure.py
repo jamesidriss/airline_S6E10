@@ -1,41 +1,53 @@
-"""Diagnostic: after the champion predicts p(x), is E[y - p | group] reproducible?
+"""NON-NESTED META-DIAGNOSTIC -- exploratory screen only. CANNOT license a correction.
 
-This is a falsifiable test, not another feature dump
-----------------------------------------------------
-Phase 8 added target-encoding features and both variants lost. The natural follow-up question is
-whether the champion has left *any* systematic bias behind that a correction could recover. We
-compute the residual r = y - p_oof on training rows and ask whether its conditional mean depends on
-anything in a way that replicates out of sample.
+.. warning::
+   This script is **not** promotion-grade evidence. Its base scores are `blend_v3_final` OOF, which
+   creates a second-order dependency between the correction's discovery rows and its confirmation
+   rows. For a discovery row ``j`` in fold ``f(j) != k``, the base prediction ``p_j`` was produced by
+   models trained on every fold EXCEPT ``f(j)`` -- which INCLUDES fold ``k``, the confirmation fold.
+   So the residual ``y_j - p_j``, and therefore the bias table fitted from it, indirectly depends on
+   the labels of the rows the correction is scored on.
 
-The subtlety that makes this honest
------------------------------------
-p_oof is out-of-fold for every training row, so (y, p) pairs on training rows are themselves
-honest. But a *correction* estimated on the same rows it is applied to would still be a leak, and
-it would look spectacular. So the design is strictly two-sided:
+   The size is unknown and the sign is not even guaranteed: a base model that memorised positive
+   confirmation-fold rows would push some discovery residuals the wrong way, biasing the correction
+   *against* the confirmation labels. The problem is not that this inflates results -- it is that
+   nothing licenses it.
 
-  DISCOVERY     estimate per-group residual bias using only the discovery rows' (y, p)
-  CONFIRMATION  apply those frozen numbers to confirmation rows and score the AUC change there
+   Use `scripts/residual_nested.py` for promotion evidence. It rebuilds the base score with an inner
+   cross-fit nested inside META_TRAIN, so no model producing a META_TRAIN prediction trains on any
+   META_VALIDATION row.
 
-Two numbers are reported for every grouping, and the second is the one that decides:
+What this script is still good for
+----------------------------------
+A cheap screen over many groupings. If the nested version finds nothing, a large apparent effect here
+is a strong hint that the non-nested design is manufacturing it, which is itself informative.
 
-  signed-bias replication   correlation between the bias estimated on discovery and the bias
-                            actually observed on confirmation, over groups present in both, plus
-                            the sign-agreement rate. If a structure is real it replicates with a
-                            positive correlation. If it is noise-fitted, discovery bias and
-                            confirmation bias are uncorrelated.
-  cross-fitted AUC delta    for each fold k, the bias is estimated on folds != k and applied to
-                            fold k only. This is the number that would matter operationally.
+Two further known defects, both fixed in the nested version
+-----------------------------------------------------------
+* SCALE MIXING. The correction below estimates a PROBABILITY-space residual ``y - p`` and then adds
+  it to a LOGIT-scale score (``logit(p) + bias``). That mixes scales. It can change a ranking, but it
+  is not a calibration correction and its AUC delta must not be read as one. `residual_nested.py`
+  implements probability-bias and logit-offset semantics separately.
+* The correction is a group-constant additive offset in logit space, which is why it saturates for
+  extreme groups.
 
-Aggregation is by fold, never pooled, so every reported delta is out-of-sample for the rows it is
-measured on.
+Original design intent, retained below
+--------------------------------------
+Phase 8 added target-encoding features and both variants lost. The question here is whether the
+champion leaves *any* systematic group bias a correction could recover. Two numbers decide it:
 
-Shrinkage is pre-declared, not tuned: bias_g = sum_g r / (n_g + PRIOR_N) with PRIOR_N = 50, and
-groups below MIN_N = 200 rows are dropped. Both constants are fixed before any result is seen, so
-the "many tiny groups fit noise" failure mode cannot be selected for post hoc.
+  signed-bias replication   correlation between the discovery-estimated bias and the bias actually
+                            observed on confirmation, over groups present in both, plus sign
+                            agreement. Real structure replicates positively; noise-fitted structure
+                            does not.
+  cross-fitted AUC delta    bias estimated on folds != k, applied to fold k only.
 
-Usage:
+Shrinkage is pre-declared, not tuned: ``bias_g = sum_g r / (n_g + PRIOR_N)`` with ``PRIOR_N = 50``,
+groups below ``MIN_N = 200`` dropped.
+
+Usage (exploratory only):
   python scripts/residual_structure.py --keys raw,te,pattern,route,teacher
-  python scripts/residual_structure.py --calibration
+  python scripts/residual_nested.py --folds 0,1,2,3,4        # <- promotion evidence
 """
 
 from __future__ import annotations
@@ -369,6 +381,15 @@ def main() -> None:
         verdict = "RESIDUAL STRUCTURE EXHAUSTED -- do not build a correction"
 
     out = {"pred": args.pred, "scheme": args.scheme, "base_auc": base, "calibration": cal,
+           "EVIDENCE_CLASS": "NON-NESTED META-DIAGNOSTIC -- EXPLORATORY ONLY",
+           "cannot_license_promotion_because": [
+               "base scores are blend_v3_final OOF; for a discovery row j in fold f(j) != k, p_j "
+               "was produced by models trained on every fold except f(j), which INCLUDES fold k",
+               "so the residual y_j - p_j, and the bias table fitted from it, indirectly depend on "
+               "the confirmation fold's labels",
+               "magnitude unknown and sign not guaranteed; nothing licenses the result",
+               "the correction mixes a probability-space residual with a logit-scale score"],
+           "promotion_evidence": "scripts/residual_nested.py",
            "constants": {"PRIOR_N": PRIOR_N, "MIN_N": MIN_N, "N_BINS": N_BINS},
            "n_groupings": len(rows), "top": scored[:args.top], "winners": winners,
            "verdict": verdict, "seconds": round(time.time() - t0, 1),
@@ -376,6 +397,12 @@ def main() -> None:
                                         text=True).stdout.strip()[:12]}
     save_json(out, REPORTS / f"{args.tag}.json")
     print(f"\nVERDICT: {verdict}")
+    print("EVIDENCE CLASS: NON-NESTED META-DIAGNOSTIC -- EXPLORATORY ONLY.")
+    print("  This CANNOT license a correction or a promotion. The base scores are v3 OOF, so for a")
+    print("  discovery row j in fold f(j) != k, p_j was produced by models trained on every fold")
+    print("  EXCEPT f(j) -- which includes fold k, the confirmation fold. The bias table therefore")
+    print("  depends indirectly on the labels of the rows it is scored on.")
+    print("  Promotion evidence: scripts/residual_nested.py")
     print("wrote", REPORTS / f"{args.tag}.json", f"({out['seconds']}s)")
 
 
