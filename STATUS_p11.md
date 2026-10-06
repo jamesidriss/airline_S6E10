@@ -99,3 +99,89 @@ than three slot swaps are positive, the diverse-block hypothesis stops immediate
 rationalisation.
 
 tests/test_native_block.py: 52/52, covering all ten required properties.
+
+================================================================================
+CLOSED ON ARITHMETIC, ~12 HOURS NOT SPENT
+================================================================================
+
+TRAINING COST, MEASURED BEFORE QUARTER-PARTICIPATING IN IT
+A 40-round probe measured 0.2905 s/round and implied ~0.10 h per arm. The real run then spent 66
+minutes on ONE variant of ONE slot without finishing -- ~7x wrong. Direct measurement on the actual
+slot-0 workload (block10, 629,671 outer-fit rows, native, depth 8):
+    100 rounds: 0.4916 s/round      400 rounds: 0.6835 s/round
+    cost(R) ~ 0.428*R + 6.4e-4*R^2  ->  a 2500-round inner ES is ~84 min PER ARM, ~12 h for seven.
+CatBoost's per-round cost RISES with round count because CTR statistics are rebuilt and re-normalised
+as trees accumulate. This is the SAME failure mode as LightGBM DART in Phase 9 (0.058 -> 0.152 s/round
+from 300 to 1500 trees) recurring in a different library: measuring cost on a short fit and
+extrapolating linearly is unsafe for both. The screen's ES cap is now 2500 rounds / patience 200, and
+an arm that stops because the CAP was hit rather than because patience fired is flagged
+`inner_es_hit_cap` so a truncated search cannot pass as a converged one.
+
+THE FREE TEST, AND IT SETTLES THE QUESTION
+C2's 5-fold OOF already exists, and C2's configuration (full view, depth 8, lr 0.04, l2 3.0) matches
+two of the seven slots apart from seed. So a single-slot swap costs ZERO compute:
+
+  replaced slot                 depth  seed   orig AUC   swap v3 AUC   delta   pos folds  O-C2 corr
+  z3_cat_d8_s2                      8     3   0.960954      0.961508   -0.08e      2/5     0.99782
+  prod5_cat_full_primary            8     1   0.960909      0.961510   +0.13e      4/5     0.99828
+  mean                                                          +0.03e-5    1/2
+  CONTROL: same swap with C0 (numeric, identical protocol)      -0.07e-5
+
+So the native mechanism contributes +0.09e-5 INSIDE the ensemble, measured against a
+protocol-matched numeric control rather than against the old member.
+
+THE DECISIVE FINDING IS STRUCTURAL
+  CatBoost block weight          = 7/59 = 11.86%
+  measured model-level gain      = +6.64e-5
+  if the WHOLE block improved by +6.64e-5 and that transferred PROPORTIONALLY to weight,
+    the blend gains at most      0.11864 x +6.64e-5 = +0.79e-5      <-- below the +1.5e-5 gate
+  reaching the gate via this block needs +12.64e-5 at model level = 1.9x what C2 delivers
+  naive 7x scaling of the measured one-slot figure = +0.18e-5, and that is GENEROUS because the
+    swapped members correlate 0.998 with the block, so most of the improvement cancels.
+
+VERDICT: the diverse native block CANNOT clear the admission gate, so the ~12 h seven-slot run was
+not spent. This is a property of v3's COMPOSITION, not of the native-cat mechanism, and it
+generalises: ANY improvement confined to the CatBoost family is capped near +0.8e-5 because that
+family is only 11.9% of the blend. Reaching +1.5e-5 through CatBoost alone would require roughly
+DOUBLING the per-model gain. That is why a real, replicated +6.6e-5 mechanism yields no ensemble
+gain, and it is the honest end of this thread.
+
+================================================================================
+S17 CLOSED -- THE "NESTED" STACK WAS NOT FULLY NESTED
+================================================================================
+STRUCTURAL: for meta fold k, a meta-TRAIN row j has f(j) != k, and its base prediction comes from a
+member trained on all folds EXCEPT f(j) -- a training set containing fold k. Every meta-training
+feature therefore depends on the held-out fold's labels. Unavoidable with pre-computed member OOF.
+
+MEASURED with the same cross-fitted meta protocol: per-fold deltas vs equal weighting +1.17, -3.87,
++5.87, +7.84, +4.21 e-5; mean +3.05e-5, positive in 4/5, paired t = +1.49 (|t| must exceed 2.5719 at
+df=4). Assembled cross-fitted stack OOF 0.9615091 vs equal-weight 0.9615086 = +0.06e-5, i.e. nothing.
+
+LEAKAGE-SENSITIVITY PROBE: cutting meta-training data 100% -> 25% moves the stack-minus-equal delta
+from +3.05e-5 through +0.97e-5 and +1.80e-5 to -3.82e-5. Smooth and monotone, no cliff. A genuine
+base-layer leak would show a sharp decline, since the meta-training rows are its only channel.
+
+WORDING CORRECTION: the earlier report said "nested stack ~0.961508 vs equal 0.961509", i.e.
+equivalent. The defensible statement is "no RELIABLE advantage over equal weighting, and the
+measurement is contaminated at the base layer".
+
+DECISION IMPACT: none. Equal weighting has no fitted parameters and cannot be inflated by meta-level
+overfitting; any optimism in the old stack number would only strengthen the case for equal weights, so
+the 59-member fully-nested stack was not rebuilt.
+
+================================================================================
+S18 NOT RETRIEVED -- NO CLAIM IS MADE
+================================================================================
+The Kaggle kernel listing succeeded via `python -m kaggle` (the bare kaggle.exe resolves to a
+different interpreter and raises UnicodeDecodeError under cp1252) but did not contain the target
+title. No source was retrieved, so no claim is made about its models, validation scheme, CatBoost
+treatment, blend formula or claimed gains. Recorded as OUTSTANDING deliberately rather than filled in
+with guesses -- an audit that invents its subject is worse than no audit. The report stores the
+retrieval attempts, the listing for reproducibility, the A-F classification scheme keyed to our own
+measured results as the category-E reference, and what a reproduction would require later.
+
+================================================================================
+SUBMISSION
+================================================================================
+NONE. No arm improved v3 by >= +1.5e-5. v3_final (OOF 0.961509, public 0.960980) and v4_fulldata
+(public 0.961000) remain the banked finalists, both immutable.

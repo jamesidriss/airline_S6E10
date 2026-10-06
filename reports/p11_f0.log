@@ -1,7 +1,8 @@
 ﻿PHASE 11 -- NATIVE CATEGORICAL COUNTERPARTS
   inventory_hash = 2762b8bac95865586468b4d7ab159193
-  slots [0, 1, 2, 3, 4, 5, 6]   variants ['native', 'numeric']
+  slots [0, 1, 2, 3, 4, 5, 6]   variants ['native']
   protocol: inner ES on a 10% carve of outer-fit -> fixed count -> refit on 100% of outer-fit -> score outer fold once
+  ES budget 2500 rounds, patience 200  [screen cap]
   boosting_type is forced to Plain (Ordered banned)
 
 ========================================================================================================

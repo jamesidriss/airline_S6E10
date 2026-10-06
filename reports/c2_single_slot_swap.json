@@ -1,0 +1,70 @@
+{
+  "nmem": 59,
+  "cat_block_weight": 0.11864406779661017,
+  "slot_weight": 0.01694915254237288,
+  "mechanism_model_level_e5": 6.644862641591587,
+  "gate_e5": 1.5,
+  "ensemble_upper_bound_if_block_perfect_e5": 0.7883735337481543,
+  "model_gain_needed_for_gate_e5": 12.642857142857142,
+  "naive_7x_scaled_measured_e5": 0.17865353356683045,
+  "reference_equal_logit_auc": 0.9615085784350211,
+  "c2_auc": 0.9611208398230365,
+  "c0_auc": 0.9610543911966206,
+  "swaps": [
+    {
+      "exp_id": "z3_cat_d8_s2",
+      "slot": 2,
+      "depth": 8,
+      "seed": 3,
+      "orig_auc": 0.9609540780627973,
+      "swap_auc": 0.9615077661432485,
+      "delta_e5": -0.08122917726227641,
+      "per_fold_e5": [
+        -0.06472791094225272,
+        0.06481047143402918,
+        -0.08217189719772477,
+        0.022989921388827383,
+        -0.22822308088921162
+      ],
+      "folds_positive": 2,
+      "o_c2_corr": 0.99782076971007
+    },
+    {
+      "exp_id": "prod5_cat_full_primary",
+      "slot": 3,
+      "depth": 8,
+      "seed": 1,
+      "orig_auc": 0.9609094207507518,
+      "swap_auc": 0.9615099011654611,
+      "delta_e5": 0.13227304399565654,
+      "per_fold_e5": [
+        0.2514414469190207,
+        0.09568442523866239,
+        -0.04353806892787304,
+        0.27993488422861645,
+        0.20980631220135493
+      ],
+      "folds_positive": 4,
+      "o_c2_corr": 0.9982796666906366
+    }
+  ],
+  "c0_control_swaps": [
+    {
+      "exp_id": "z3_cat_d8_s2",
+      "swap_auc": 0.9615068666097368,
+      "delta_e5": -0.17118252843006942
+    },
+    {
+      "exp_id": "prod5_cat_full_primary",
+      "swap_auc": 0.9615089701785712,
+      "delta_e5": 0.039174355004334416
+    }
+  ],
+  "mean_swap_c2_e5": 0.025521933366690064,
+  "mean_swap_c0_e5": -0.0660040867128675,
+  "mechanism_inside_ensemble_e5": 0.09152602007955757,
+  "caveat": "One swap leaves the other six CatBoost members untouched, so the block's internal diversity is preserved here whereas a 7-slot native block would rebuild it. This is a lower-bound-style screen on the hypothesis, not the block result, and C2 uses seed 4 rather than the swapped slots' own seeds.",
+  "verdict": "MARGINAL: a single-slot swap gives +0.03e-5, below the +1.0e-5 Stage 1 bar and below the +1.5e-5 admission gate. The 7-slot run would need to roughly multiply this, which is plausible but not established. Expensive; justify before spending. DECISIVE OVERRIDE: even a PERFECT native block is capped at about +0.79e-5 of ensemble gain by the block's 11.9% weight, which is below the +1.5e-5 gate, so the 7-slot run cannot succeed and is not justified regardless of the measured single-slot figure.",
+  "seconds": 3.3,
+  "git_commit": "f3ef41b63ea8"
+}
