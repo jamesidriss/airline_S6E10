@@ -1,0 +1,78 @@
+{
+  "rows": [
+    {
+      "arm": "C2REF",
+      "fold": 0,
+      "scheme": "primary",
+      "auc": 0.9609386570980606,
+      "delta_vs_C2_e5": 0.0,
+      "corr_vs_C2": 1.0,
+      "reference": "C2REF (budget-matched)",
+      "reference_auc": 0.9609386570980606,
+      "reference_es_hit_cap": true,
+      "corr_vs_v3": 0.9977530436775722,
+      "spearman_vs_v3": 0.9863819696775266,
+      "iters": 2499,
+      "seconds": 1661.6,
+      "es_hit_cap": true,
+      "n_cat": 17,
+      "ctr_audit": {
+        "dump_counts": {
+          "ctr_type": 4,
+          "ctr_data": 0,
+          "ctr_leaf_count": 0,
+          "one_hot": 0,
+          "simple_ctr": 0,
+          "combinations_ctr": 0,
+          "Borders": 2,
+          "target_border_count": 0
+        },
+        "error": "AttributeError: 'CatBoostClassifier' object has no attribute 'get_leaf_ctr_description'",
+        "cat_feature_count": 17
+      }
+    },
+    {
+      "arm": "C4",
+      "fold": 0,
+      "scheme": "primary",
+      "auc": 0.9608696532753848,
+      "delta_vs_C2_e5": -6.9003822675828275,
+      "corr_vs_C2": 0.9980618967463077,
+      "reference": "C2REF (budget-matched)",
+      "reference_auc": 0.9609386570980606,
+      "reference_es_hit_cap": true,
+      "corr_vs_v3": 0.9980413299017821,
+      "spearman_vs_v3": 0.9878844447778711,
+      "iters": 2499,
+      "seconds": 1758.1,
+      "es_hit_cap": true,
+      "n_cat": 18,
+      "ctr_audit": {
+        "dump_counts": {
+          "ctr_type": 4,
+          "ctr_data": 0,
+          "ctr_leaf_count": 0,
+          "one_hot": 0,
+          "simple_ctr": 0,
+          "combinations_ctr": 0,
+          "Borders": 2,
+          "target_border_count": 0
+        },
+        "error": "AttributeError: 'CatBoostClassifier' object has no attribute 'get_leaf_ctr_description'",
+        "cat_feature_count": 18
+      }
+    }
+  ],
+  "swaps": [],
+  "mini_block": {},
+  "diversity": {},
+  "gates": {
+    "A_mini_block_ge_1e-5": false,
+    "B_two_of_three_swaps_positive_and_diversity_retained": false,
+    "C_mechanism_strength_ge_5e-5": false
+  },
+  "passed": false,
+  "n_positive_swaps": 0,
+  "best_block_delta_e5": 0.0,
+  "verdict": "CLOSE Phase 11 -- no predeclared gate met; the seven-slot plan is NOT started"
+}

@@ -1,0 +1,28 @@
+﻿PHASE 11R -- staged native-CatBoost tests
+====================================================================================================
+  ES budget 2500 rounds, patience 200; Plain only; Ordered banned
+  timing anchor 400 rounds (NOT 40: per-round cost rises with rounds)
+  budget 90 min per arm; an arm projecting above that is reported, not launched
+
+    [cache] view full: (699635, 237)
+
+----------------------------------------------------------------------------------------------------
+C5: C2 + exact categorical Flight Distance twin; numeric FD retained
+  view=full scheme=primary depth=8 lr=0.04 l2=3.0 seed=4
+  added categorical cardinality: {'Flight Distance': 3474}
+----------------------------------------------------------------------------------------------------
+  fold 0: 303 feat (18 cat)  anchor 400 rounds = 0.5177s/round
+    fitted cost(R) = 0.1743*R + 8.58e-04*R^2   projected ES(2500) + refit ~ 121 min
+    SKIPPED: projected 121 min exceeds the 90 min budget. Reported, not launched.
+    [cache] view full: (699635, 237)
+
+----------------------------------------------------------------------------------------------------
+ctr2: C2 with max_ctr_complexity=2; nothing else changes
+  view=full scheme=primary depth=8 lr=0.04 l2=3.0 seed=4
+  added categorical cardinality: {}
+----------------------------------------------------------------------------------------------------
+  fold 0: 302 feat (17 cat)  anchor 400 rounds = 0.5525s/round
+    fitted cost(R) = 0.1743*R + 9.46e-04*R^2   projected ES(2500) + refit ~ 132 min
+    SKIPPED: projected 132 min exceeds the 90 min budget. Reported, not launched.
+
+wrote C:\Users\James\airline_S6E10\reports\p11r_runs.json

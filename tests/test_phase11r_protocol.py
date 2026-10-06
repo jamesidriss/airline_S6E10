@@ -319,13 +319,69 @@ def test_withdrawn_claim_is_not_asserted() -> None:
     check("the v3 geometry correction is recorded", "expit(mean(member LOGITS))" in p11)
 
 
+def test_es_carve_is_disjoint_from_its_own_training_rows() -> None:
+    """The bug that produced C2REF=2499 and C4=2499.
+
+    The harness fitted the early-stopping model on the FULL outer-fit frame and passed
+    eval_set=f.iloc[es_l], so the ES set was a SUBSET OF THE TRAINING DATA. CatBoost never
+    early-stops in that configuration, so every arm ran to the round cap. The symptom was an
+    iteration count that moved the wrong way under a SHORTER budget (2499 here vs 1043 in Phase
+    10), which is arithmetically impossible for a real early stop.
+    """
+    print("\n12. the ES carve must be disjoint from the ES model's own training rows")
+    from scripts.run_views import _inner_es_split
+
+    # `n` is local to the whole function because it appears on the LEFT of this tuple assignment, so
+    # `n // 5` on the right would read an unbound local. Compute the fold vector from a literal.
+    folds = np.repeat(np.arange(5), 1000)
+    n = 5000
+    y = (np.arange(n) % 7 == 0).astype("int8")
+    ids = np.arange(n)
+    fit = np.where(folds != 0)[0]
+    itr, es = _inner_es_split(fit, y, 4)
+    check("inner-train and ES are disjoint",
+          not (set(int(v) for v in itr) & set(int(v) for v in es)))
+    check("inner-train + ES partition the outer fit exactly",
+          len(itr) + len(es) == len(fit),
+          f"{len(itr)} + {len(es)} != {len(fit)}")
+    check("ES is roughly 10% of the fit rows, matching the declared policy",
+          0.08 < len(es) / len(fit) < 0.12, f"{len(es) / len(fit):.3f}")
+
+    # The defect itself, reproduced on the harness's own call shape.
+    rng = np.random.default_rng(0)
+    frame = rng.normal(size=(len(fit), 4))
+    pos = {int(v): j for j, v in enumerate(fit)}
+    itr_l = np.array([pos[int(v)] for v in itr])
+    es_l = np.array([pos[int(v)] for v in es])
+    ok_train = frame[itr_l]                 # the 90% carve -- right
+    check("the fixed ES model's row POSITIONS exclude every ES position",
+          not (set(itr_l.tolist()) & set(es_l.tolist())))
+    check("the fixed ES model trains on strictly fewer rows than the outer fit",
+          len(ok_train) < len(frame), f"{len(ok_train)} vs {len(frame)}")
+    check("the buggy call shape trained on every ES row",
+          len(set(es_l.tolist()) & set(range(len(frame)))) == len(es_l))
+
+    src = Path("scripts/run_phase11r.py").read_text(encoding="utf-8")
+    check("the harness now trains the ES model on the inner-train carve",
+          "fit_cat(f.iloc[itr_l], y[itr_g]" in src)
+    check("the harness refuses to run if the carve sets overlap",
+          "would be\n" not in src and "early stopping would be" in src)
+    check("the harness refuses to run if the carve does not partition the fit",
+          "is not a partition" in src)
+    check("the contamination is recorded in the corrections record",
+          "es_subset_of_training_CONTAMINATED_EARLY_STOPPING" in src)
+    check("the arms trained before the fix are named",
+          '"pre_fix_arms_contaminated"' in src)
+
+
 def main() -> int:
     print("=" * 78)
     print("PHASE 11R -- PROTOCOL GUARD TESTS")
     print("=" * 78)
     for fn in (test_authoritative_geometry, test_no_false_geometry_claims_in_source,
                test_exactness_requires_full_match, test_swap_isolation_and_weights,
-               test_native_category_safety, test_withdrawn_claim_is_not_asserted):
+               test_native_category_safety, test_withdrawn_claim_is_not_asserted,
+               test_es_carve_is_disjoint_from_its_own_training_rows):
         fn()
     print("\n" + "=" * 78)
     print(f"{N - len(FAILS)}/{N} passed")

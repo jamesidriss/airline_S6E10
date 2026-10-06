@@ -1,0 +1,13 @@
+﻿PHASE 11R -- staged native-CatBoost tests
+====================================================================================================
+  ES budget 2500 rounds, patience 200; Plain only; Ordered banned
+  timing anchor 400 rounds (NOT 40: per-round cost rises with rounds)
+  budget 90 min per arm; an arm projecting above that is reported, not launched
+
+    [cache] view full: (699635, 237)
+
+----------------------------------------------------------------------------------------------------
+C2REF: C2 reference retrained under THIS run's ES budget (budget-matched)
+  view=full scheme=primary depth=8 lr=0.04 l2=3.0 seed=4
+  added categorical cardinality: {}
+----------------------------------------------------------------------------------------------------

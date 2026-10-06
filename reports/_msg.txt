@@ -1,0 +1,65 @@
+FOURTH CORRECTION: early stopping was evaluated on its own training rows
+
+THE BUG
+--------
+run_phase11r.py fitted the early-stopping model on the FULL outer-fit frame while passing
+eval_set = f.iloc[es_l]. The ES set was therefore a SUBSET OF THE ES MODEL'S OWN TRAINING DATA.
+CatBoost never early-stops in that configuration, because the eval metric keeps improving while the
+model memorises the rows it is being scored on. Every arm ran to the round cap and its refit used a
+fixed cap-length round count instead of a validated one.
+
+HOW IT WAS FOUND
+----------------
+The first C2REF run selected 2499 of a 2500-round budget and hit the cap. Phase 10's
+identically-configured C2 selected 1043 under a 6000-round budget with patience 300. A SHORTER budget
+with SHORTER patience (2500 / 200 versus 6000 / 300) cannot plausibly stop LATER, so the gap was
+arithmetically inconsistent with a genuine early stop and had to be a defect, not a budget effect.
+
+The diagnosis was then confirmed rather than assumed. A direct control run with the same nominal
+settings (2500 rounds, patience 200) but with the ES model trained on the 90% inner-train carve
+selected 1043, matching Phase 10 exactly. Two such identical runs both returned 1043, so CatBoost IS
+deterministic in this configuration and the 2499 was not run-to-run noise.
+
+THE FIX
+-------
+The ES model now trains on f.iloc[itr_l] only, matching Phase 10's _fit_cat_es. The harness also
+refuses to run if the two row sets overlap, or if inner-train plus ES does not exactly partition the
+outer fit. Both guards raise SystemExit rather than proceeding.
+
+WHAT IS INVALIDATED
+-------------------
+C2REF and C4 fold 0, both trained before the fix, selected 2499 of 2500 and are CONTAMINATED. Their
+prediction vectors and run records are preserved as evidence under reports/contaminated_es_leak/ and
+are excluded from the report, which reads only the re-run artifacts. Their numbers are not used for
+any decision. The earlier reading of C4 as -6.9e-5 against a budget-matched reference was computed
+from these contaminated models and is WITHDRAWN, not merely superseded.
+
+FIFTH CORRECTION: a cost projection treated as a point estimate silently skipped two experiments
+----------------------------------------------------------------------------------------------
+The cost model was fitted as cost(R) = a*R + b*R^2 from a 400-round anchor, then evaluated at
+ES_ROUNDS = 2500 for the ES fit. That upper bound assumes early stopping never fires, which is
+false: this workload stops at ~1043. The consequence was concrete. C5 (Flight Distance twin)
+projected 121 minutes and ctr2 projected 132, both above the 90-minute budget, so BOTH WERE SKIPPED
+AND NOT RUN -- silently, because a skip on cost grounds prints as a skip rather than as a failure.
+At the measured stopping point their real cost is roughly 44 and 48 minutes, so both fit the budget.
+An upper bound used as a point estimate is not a conservative choice; it is a decision made by
+default.
+
+The projection now uses the MEASURED stopping point (--project-iters, default 1100, from the 1043
+that two reproducible control runs agree on) and reports the cap-worst-case on a separate line so the
+upper bound stays visible instead of being the estimate.
+
+CTESST NOTE ON THE FIX ITSELF
+-----------------------------
+While fixing the harness I introduced two further defects, both caught immediately:
+  * `n, folds = 5000, np.repeat(np.arange(5), n // 5)` raised UnboundLocalError, because `n` is
+    local to the whole function as a tuple-assignment target and `n // 5` therefore read an
+    unbound local.
+  * The first version of the new test asserted disjointness by comparing ES positions against
+    range(len(ok_train)), mixing the position index space with the row index space. The real
+    invariant is that the two POSITION sets are disjoint, which is what it now checks.
+Both are recorded because the pattern recurs in this codebase: `assemble()` returns matrices local to
+fit_idx while `y` is global, and index-space confusion has already produced fake results here.
+
+tests/test_phase11r_protocol.py: 65/65, with test 12 covering the carve-disjointness invariant that
+would have caught this bug before it produced two contaminated arms.

@@ -224,6 +224,11 @@ def main() -> None:
                     help="timing anchor length. Phase 11 proved a 40-round anchor understates cost "
                          "~7x because CatBoost's per-round cost rises with round count.")
     ap.add_argument("--budget-minutes", type=float, default=90.0)
+    ap.add_argument("--project-iters", type=int, default=1100,
+                    help="iteration count the cost projection assumes the ES fit reaches. MEASURED "
+                         "on this workload: a correctly-configured fold-0 CatBoost early-stops at "
+                         "1043. Projecting at the 2500 CAP instead made C5 and ctr2 project 121 and "
+                         "132 minutes and skip both, when their real cost is ~44 and ~48 min.")
     ap.add_argument("--retrain-c2", action="store_true",
                     help="also train the C2 REFERENCE under this run's ES budget. REQUIRED for a "
                          "fair delta whenever the budget differs from the one C2 was originally "
@@ -277,6 +282,24 @@ def main() -> None:
                    "-- it differs by 3.53e-02 with logit corr 0.978. Phase 11's guard printed the "
                    "wrong geometry and asserted a float64 round-off tolerance that happened to pass; "
                    "the correct guard is float64 within float32 eps AND the float32 cast bit-exact.",
+               "es_subset_of_training_CONTAMINATED_EARLY_STOPPING":
+                   "FOURTH CORRECTION, found by chasing an unexplained reproducibility gap. The first "
+                   "C2REF run selected 2499 of 2500 rounds and hit the ES cap, while Phase 10's "
+                   "identically-configured C2 selected 1043 under a 6000-round budget with patience "
+                   "300. A shorter budget with SHORTER patience cannot plausibly stop later, so the "
+                   "gap was not a budget effect. Cause: this harness fitted the ES model on the FULL "
+                   "outer-fit frame while passing eval_set = f.iloc[es_l], making the early-stopping "
+                   "set a SUBSET OF ITS OWN TRAINING DATA. CatBoost never early-stops in that "
+                   "configuration, so every arm ran to the cap and its refit used a fixed cap-length "
+                   "round count instead of a validated one. A direct control run -- same nominal "
+                   "settings (2500 rounds, patience 200), ES model trained on the 90% inner-train "
+                   "carve -- selected 1043, matching Phase 10, and two such identical runs both "
+                   "returned 1043, confirming CatBoost is deterministic here and the 2499 was a bug "
+                   "rather than noise. FIXED: the ES model now trains on f.iloc[itr_l] only, and the "
+                   "harness refuses to run if the two row sets overlap or do not partition the outer "
+                   "fit. Every fold-0 arm trained before this fix is flagged CONTAMINATED and its "
+                   "numbers are not used.",
+               "pre_fix_arms_contaminated": ["C2REF", "C4"],
            },
            "git_commit": subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
                                         text=True).stdout.strip()[:12]}
@@ -306,11 +329,26 @@ def main() -> None:
             b = max(0.0, (per - 0.6 * (0.2905 * len(fit) / 559708)) / args.probe_rounds)
             a = per - b * args.probe_rounds
             est = lambda R: a * R + b * R * R
-            proj_min = (est(ES_ROUNDS) + est(1200)) / 60.0
+            # Cost projection. The FIRST version of this projected `est(ES_ROUNDS) + est(1200)`,
+            # i.e. it assumed early stopping would never fire and the ES fit would run the whole
+            # 2500-round cap. That assumption is wrong: on this workload the correctly-configured
+            # model early-stops at ~1043 rounds (measured, and reproducible -- two identical
+            # correctly-configured runs both returned 1043). Using the cap as if it were the
+            # expected cost made C5 and ctr2 look like 121 and 132 minutes and skipped both, when
+            # their real cost at the measured stopping point is roughly 44 and 48 minutes.
+            # Project at the MEASURED stopping point, and report the cap-worst-case separately so
+            # the upper bound stays visible. An upper bound used as a point estimate is a silent
+            # skip of the experiment, which is what happened.
+            es_R = min(ES_ROUNDS, int(args.project_iters + ES_PATIENCE))
+            proj_min = (est(es_R) + est(args.project_iters)) / 60.0
+            worst_min = (est(ES_ROUNDS) + est(ES_ROUNDS)) / 60.0
             print(f"  fold {k}: {f.shape[1]} feat ({len(cn)} cat)  anchor {args.probe_rounds} rounds "
                   f"= {per:.4f}s/round", flush=True)
-            print(f"    fitted cost(R) = {a:.4f}*R + {b:.2e}*R^2   projected ES({ES_ROUNDS}) + refit "
-                  f"~ {proj_min:.0f} min", flush=True)
+            print(f"    fitted cost(R) = {a:.4f}*R + {b:.2e}*R^2", flush=True)
+            print(f"    projected at the MEASURED stopping point (ES ~{es_R}, refit "
+                  f"~{args.project_iters}) ~ {proj_min:.0f} min", flush=True)
+            print(f"    worst case if ES never fires and runs the {ES_ROUNDS} cap ~ {worst_min:.0f} min",
+                  flush=True)
             if args.probe_only:
                 out["arms"].setdefault(aname, {})[f"probe_f{k}"] = {
                     "n_features": int(f.shape[1]), "n_cat": len(cn),
@@ -328,9 +366,25 @@ def main() -> None:
 
             itr_g, es_g = _inner_es_split(fit, y_int, int(spec["seed"]) + k)
             pos = {int(vv): j for j, vv in enumerate(fit)}
+            itr_l = np.array([pos[int(vv)] for vv in itr_g])
             es_l = np.array([pos[int(vv)] for vv in es_g])
+            # BUG FOUND AND FIXED HERE. The ES model was previously fitted on the FULL outer-fit frame
+            # `f` with eval_set = f.iloc[es_l], which made the early-stopping set a SUBSET OF ITS OWN
+            # TRAINING DATA. CatBoost then never early-stopped -- training AUC keeps improving -- so
+            # every arm ran to the round cap. Measured: C2REF selected 2499 of 2500 while the same
+            # nominal config trained correctly selects 1043 (verified: two identical correct-config
+            # runs both return 1043, so CatBoost IS deterministic here and the 2499 was not noise).
+            # Every Phase 11R fold-0 arm trained before this fix has a contaminated iteration count.
+            # The ES model must be trained on the 90% inner-train rows ONLY, matching Phase 10's
+            # `_fit_cat_es`, and the eval set must be the disjoint 10% carve.
+            if len(set(itr_l.tolist()) & set(es_l.tolist())):
+                raise SystemExit("STOP: inner-train and ES row sets overlap; early stopping would be "
+                                 "evaluated on rows the model trained on.")
+            if len(itr_l) + len(es_l) != len(fit):
+                raise SystemExit(f"STOP: inner-train ({len(itr_l)}) + ES ({len(es_l)}) != outer fit "
+                                 f"({len(fit)}); the carve is not a partition.")
             t0 = time.time()
-            _, n_iter, info = fit_cat(f, y[fit], spec, cn, int(spec["seed"]) + k, 0,
+            _, n_iter, info = fit_cat(f.iloc[itr_l], y[itr_g], spec, cn, int(spec["seed"]) + k, 0,
                                       es=(f.iloc[es_l], y[es_g], ES_ROUNDS))
             t_es = time.time() - t0
             m, used, _ = fit_cat(f, y[fit], spec, cn, int(spec["seed"]) + k, n_iter)

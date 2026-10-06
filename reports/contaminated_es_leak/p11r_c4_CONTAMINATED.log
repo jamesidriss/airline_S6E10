@@ -1,0 +1,19 @@
+﻿PHASE 11R -- staged native-CatBoost tests
+====================================================================================================
+  ES budget 2500 rounds, patience 200; Plain only; Ordered banned
+  timing anchor 400 rounds (NOT 40: per-round cost rises with rounds)
+  budget 90 min per arm; an arm projecting above that is reported, not launched
+
+    [cache] view full: (699635, 237)
+
+----------------------------------------------------------------------------------------------------
+C4: C2 + exact categorical Age twin; numeric Age retained
+  view=full scheme=primary depth=8 lr=0.04 l2=3.0 seed=4
+  added categorical cardinality: {'Age': 75}
+----------------------------------------------------------------------------------------------------
+  fold 0: 303 feat (18 cat)  anchor 400 rounds = 0.3484s/round
+    fitted cost(R) = 0.1743*R + 4.35e-04*R^2   projected ES(2500) + refit ~ 67 min
+    AUC=0.960870  iters=2499  (ES 887s, total 1737s)  *** ES HIT CAP: NOT CONVERGED ***
+    CTR audit: {'ctr_type': 4, 'ctr_data': 0, 'ctr_leaf_count': 0, 'one_hot': 0, 'simple_ctr': 0, 'combinations_ctr': 0, 'Borders': 2, 'target_border_count': 0}
+
+wrote C:\Users\James\airline_S6E10\reports\p11r_runs.json
