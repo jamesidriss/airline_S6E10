@@ -3,3 +3,42 @@
 ====================================================================================================
 fold 2   outer-fit=559,708  eval=139,927
 ====================================================================================================
+  C0    boosting=Plain    cats=0   iters=885   refit_rows=559,708  AUC=0.961174  (ES 90s + refit 70s)  blend@2% +0.02e-5
+  C2    boosting=Plain    cats=17  iters=842   refit_rows=559,708  AUC=0.961151  (ES 359s + refit 282s)  blend@2% -0.02e-5
+
+  arm            AUC   delta vs C0  logit corr vs v3   spearman   blend@2%
+  ------------------------------------------------------------------------
+  C0        0.961174     (control)                                   +0.02
+  C2        0.961151         -2.4e           0.99900    0.99216      -0.02
+
+  C2: standalone -2.4e-5, blend@2% -0.02e-5 -> REJECT
+    [cache] view full: (699635, 237)
+
+====================================================================================================
+fold 3   outer-fit=559,708  eval=139,927
+====================================================================================================
+  C0    boosting=Plain    cats=0   iters=600   refit_rows=559,708  AUC=0.960267  (ES 69s + refit 50s)  blend@2% -0.29e-5
+  C2    boosting=Plain    cats=17  iters=1321  refit_rows=559,708  AUC=0.960411  (ES 510s + refit 442s)  blend@2% -0.01e-5
+
+  arm            AUC   delta vs C0  logit corr vs v3   spearman   blend@2%
+  ------------------------------------------------------------------------
+  C0        0.960267     (control)                                   -0.29
+  C2        0.960411        +14.4e           0.99877    0.99159      -0.01
+
+  C2: standalone +14.4e-5 >= +8e-5 -> PROMOTE to fold 1
+    [cache] view full: (699635, 237)
+
+====================================================================================================
+fold 4   outer-fit=559,708  eval=139,927
+====================================================================================================
+  C0    boosting=Plain    cats=0   iters=599   refit_rows=559,708  AUC=0.961665  (ES 70s + refit 50s)  blend@2% -0.14e-5
+  C2    boosting=Plain    cats=17  iters=1364  refit_rows=559,708  AUC=0.961695  (ES 530s + refit 448s)  blend@2% -0.12e-5
+
+  arm            AUC   delta vs C0  logit corr vs v3   spearman   blend@2%
+  ------------------------------------------------------------------------
+  C0        0.961665     (control)                                   -0.14
+  C2        0.961695         +3.0e           0.99874    0.99139      -0.12
+
+  C2: standalone +3.0e-5 (+3..+8e-5) -> fold 1 if diversity also useful (blend@2% -0.12e-5)
+
+wrote C:\Users\James\airline_S6E10\reports\p10b.json

@@ -1,0 +1,91 @@
+{
+  "oof_C0": 0.9610543911966206,
+  "oof_C2": 0.9611208398230365,
+  "oof_v3": 0.9615085785798723,
+  "delta_C2_minus_C0_e5": 6.644862641591587,
+  "per_fold_e5": [
+    5.867508563228707,
+    11.584840727418833,
+    -2.368127445784296,
+    14.44435446301684,
+    3.018953289324333
+  ],
+  "paired_se_e5": 3.0010776169479385,
+  "t_stat": 2.1690561692506227,
+  "cat_members": [
+    "z3_cat_f10",
+    "z3_cat_d10",
+    "z3_cat_d8_s2",
+    "z3_cat_d6",
+    "prod5_cat_full_primary",
+    "z3_cat_core3",
+    "z3_cat_ogs"
+  ],
+  "per_member": {
+    "z3_cat_f10": {
+      "auc": 0.961071917569463,
+      "corr_c0": 0.9982057973496767,
+      "corr_c2": 0.9982119781339643,
+      "spearman_c2": 0.9869739383612199
+    },
+    "z3_cat_d10": {
+      "auc": 0.9610555094387154,
+      "corr_c0": 0.9985236027028391,
+      "corr_c2": 0.9984363496493983,
+      "spearman_c2": 0.9880935725375409
+    },
+    "z3_cat_d8_s2": {
+      "auc": 0.9609540780627973,
+      "corr_c0": 0.9978582048629111,
+      "corr_c2": 0.99782076971007,
+      "spearman_c2": 0.9850585378087023
+    },
+    "z3_cat_d6": {
+      "auc": 0.9609383685943547,
+      "corr_c0": 0.9981142219581173,
+      "corr_c2": 0.9982048285486806,
+      "spearman_c2": 0.9873845419419917
+    },
+    "prod5_cat_full_primary": {
+      "auc": 0.9609094207507518,
+      "corr_c0": 0.9982404110276163,
+      "corr_c2": 0.9982796666906366,
+      "spearman_c2": 0.9877689682793851
+    },
+    "z3_cat_core3": {
+      "auc": 0.9608951571775568,
+      "corr_c0": 0.9975520483682494,
+      "corr_c2": 0.9975014809647301,
+      "spearman_c2": 0.9821827865955132
+    },
+    "z3_cat_ogs": {
+      "auc": 0.9608639359251541,
+      "corr_c0": 0.9972715470310631,
+      "corr_c2": 0.9972304387051641,
+      "spearman_c2": 0.9801401613724376
+    }
+  },
+  "swap": {
+    "before_auc": 0.9615085784350211,
+    "after_auc": 0.9615046730428548,
+    "delta_e5": -0.3905392166325683,
+    "per_fold_e5": [
+      0.023983263697235913,
+      0.3160441666927305,
+      -1.2480775138823397,
+      -0.38364819291425434,
+      -0.2784242953302041
+    ],
+    "w_cat": 0.11864406779661017,
+    "n_members": 59,
+    "caveat": "SINGLE C2 model fills the whole CatBoost block. Seven genuinely diverse native-cat members would differ from one another, so this is an approximation, not a submission."
+  },
+  "marginal_gains_e5": {
+    "0.01": 0.003005866922034528,
+    "0.02": -0.00436995027941478,
+    "0.05": -0.07240277990483435,
+    "0.1": -0.3447095751285545
+  },
+  "gate_e5": 1.5,
+  "verdict": "NEITHER clears the +1.5e-5 gate: marginal add +0.00e-5, swap -0.39e-5. Native categorical CTRs improve the CatBoost FAMILY (+6.6e-5 on C0) but v3's existing seven CatBoost members already occupy that region, so the ensemble cannot capture it without retraining the block."
+}

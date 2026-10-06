@@ -1,4 +1,4 @@
-Phase 10 -- shared bias: nested residual structure, and native CatBoost categoricals
+Phase 10 complete -- shared bias tested on two independent axes
 
 MOTIVATION
 Phase 9 closed DART and RF. Its most informative result was not either model: our remaining ranking
@@ -7,7 +7,6 @@ is U-shaped; the full-agreement band carries a 1.7-1.8x higher pair error rate t
 That argues the ensemble shares a systematic bias rather than carrying excess variance, and it
 contradicts every variance-reduction lever still on the table.
 
-Two independent ways to test shared bias:
   A. nested residual structure -- is E[y - p | group] reproducibly non-zero?
   B. a model family whose representation of categorical interactions is genuinely different
 
@@ -15,10 +14,11 @@ Two independent ways to test shared bias:
 HEADLINE
 ================================================================================
 A. Simple group residual structure: EXHAUSTED. No specialist built.
-B. Native CatBoost categorical CTRs: THE FIRST REPLICATED POSITIVE MECHANISM IN SEVERAL PHASES.
-   +5.9e-5 on fold 0, +11.6e-5 on fold 1, 2/2 folds positive, mean +8.75e-5.
-   Ordered boosting, the other half of the CatBoost-specific hypothesis, is clearly HARMFUL
-   (-71.7e-5) and is closed.
+B. Native CatBoost categorical CTRs: a REAL, REPLICATED, POSITIVE mechanism at the model level.
+     C2 - C0 = +6.64e-5 on the full 5-fold OOF; per-fold mean +6.51e-5, paired SE 3.00e-5,
+     t = 2.17, positive in 4/5 folds (+5.87, +11.58, -2.37, +14.44, +3.02).
+   Ordered boosting, the other half of the CatBoost hypothesis, is clearly HARMFUL (-71.7e-5).
+   BUT the ensemble cannot harvest it: marginal add of C2 = +0.00e-5, single-model swap = -0.39e-5.
 
 ================================================================================
 CORRECTIONS TO PHASE 9 MADE BEFORE ANY NEW RESEARCH
@@ -51,8 +51,7 @@ CORRECTIONS TO PHASE 9 MADE BEFORE ANY NEW RESEARCH
 10A. NESTED RESIDUAL STRUCTURE -- EXHAUSTED
 ================================================================================
 
-VERDICT: **SIMPLE GROUP RESIDUAL STRUCTURE IS EXHAUSTED.** No specialist is built (§16 not triggered).
-The finding is a negative, and it is specific rather than general.
+VERDICT: **SIMPLE GROUP RESIDUAL STRUCTURE IS EXHAUSTED.** No specialist built.
 
 AUDIT of the pre-existing scripts/residual_structure.py: NOT promotion-grade. For a discovery row j in
 fold f(j) != k, its base score comes from blend_v3_final OOF, i.e. models trained on every fold EXCEPT
@@ -68,8 +67,8 @@ scripts/residual_nested.py is the promotion evidence. Per outer fold k:
                            producing one trains on ANY META_VAL row)
   one champion fit on 100% of META_TRAIN at a fixed 900 rounds -> p_meta_val
   bias estimated on (y - p_meta_train_oof) over META_TRAIN, frozen, applied to p_meta_val
-Base is a single champion lgbm extra_trees surrogate, NOT the 59-member v3 blend. Consistency check:
-the fold-0 surrogate scores 0.961352, identical to Phase 9's ctl_fixed (0.9613518).
+Base is a single champion lgbm extra_trees surrogate, NOT v3. Consistency check: the fold-0 surrogate
+scores 0.961352, identical to Phase 9's ctl_fixed (0.9613518).
 
 Two score-space semantics kept strictly separate, both cross-fitted:
   PROBABILITY   b_g = shrunk mean(y - p | g);            score = clip(p + b_g, eps, 1-eps)
@@ -87,8 +86,8 @@ Two numbers already argued against believing it: r=0.540 is modest, and the bias
 size of the gain it produces -- a fitted group offset that does not carry its magnitude out of sample.
 
 TRANSFER TEST (scripts/residual_transfer_test.py) -- the operationally decisive question. The nested
-scan used a single champion surrogate, not v3. Applying the same correction (fitted only on META_TRAIN
-from nested residuals, so it saw no META_VAL label) to v3's OOF on META_VAL rows:
+scan used a single champion surrogate, not v3. Same correction (fitted only on META_TRAIN from nested
+residuals, so it saw no META_VAL label) applied to v3's OOF on META_VAL rows:
 
   fold   surrogate    v3 prob    v3 logit
     0      +2.04e      -0.71e       -0.27e
@@ -123,9 +122,11 @@ BUGS FOUND IN MY OWN DIAGNOSTIC, kept because they nearly produced a false posit
   all-5-folds completeness required.
 - BASE-CONFIDENCE keys must be built per side (p-deciles from p_oof on discovery, p_val on
   confirmation); one shared series crashed AND would have used the scored rows to set boundaries.
+- residual_nested.py's aggregation wrote the summary into the same dict it was accumulating, raising
+  KeyError on the next key. Accumulation and summarisation are now separate passes.
 
 ================================================================================
-10B. NATIVE CATBOOST CATEGORICAL LEARNING -- POSITIVE
+10B. NATIVE CATBOOST CATEGORICAL LEARNING -- POSITIVE AT MODEL LEVEL, UNUSABLE BY THE ENSEMBLE
 ================================================================================
 
 AUDIT: zero `cat_features` and zero CatBoost `boosting_type` anywhere in src/ or scripts/. Every
@@ -162,19 +163,23 @@ except the mechanism -- asserted in tests/test_native_cat.py:
   C2   Plain     yes   1043   0.961067      +5.9e     0.99895       0.99197   -0.14
   C3   Ordered   yes    629   0.960412     -59.7e     0.99771       0.98058   -0.44
 
-NATIVE CATEGORICAL CTRs HELP. C2 is C0 plus 17 native categorical twins (META4 + SERVICE13) under
-Plain boosting, with a byte-identical numeric block. REPLICATED on fold 1:
-  fold 0  +5.9e-5      fold 1  +11.6e-5      2/2 positive, mean +8.75e-5
-Both folds positive with mean >= +5e-5, so the remaining folds are being completed.
-
 ORDERED BOOSTING HURTS, and is closed. -71.7e-5, the worst arm, selecting far fewer iterations
 (497 vs 851). Mechanism stated as a hypothesis consistent with the data, NOT a measured finding:
 Ordered exists to prevent target leakage and buys that by computing each tree's target statistics from
 an ordered SUBSET of rows. With 559,708 outer-fit rows that safety is unnecessary and the reduced
 effective sample is a pure cost; the early iteration count is the same signal. The 2x2 is clean and
 additive in the harmful direction -- Ordered hurts regardless of categoricals (C3 - C1 = +12.1e-5) and
-its cost swamps the categoricals' benefit (C3 - C2 = -65.5e-5). So the two halves of the CatBoost
-mechanism have OPPOSITE verdicts, which is why testing them as one hypothesis would have been wrong.
+its cost swamps the categoricals' benefit (C3 - C2 = -65.5e-5). The two halves of the CatBoost
+mechanism have OPPOSITE verdicts, so testing them as one hypothesis would have been wrong.
+
+NATIVE CATEGORICAL CTRs HELP, and this replicated over the full primary 5-fold:
+
+  arm    fold0     fold1     fold2     fold3     fold4     full OOF
+  C0   0.961008 0.961221  0.961174  0.960267  0.961665  0.961063
+  C2   0.961067 0.961337  0.961151  0.960411  0.961695  0.961121
+  d     +5.87e   +11.58e    -2.37e   +14.44e    +3.02e    +6.64e
+
+  mean +6.51e-5   paired SE 3.00e-5   t = 2.17   positive in 4/5 folds
 
 CONTROL VALIDATED: C0 = 0.961008 vs the established view_cat_full_primary fold-0 of 0.960880, i.e.
 +12.8e-5. Not a discrepancy: C0 uses the Phase 9 fixed-round protocol (inner ES picks the iteration
@@ -182,15 +187,39 @@ count, refit on 100% of outer-fit) where the established path discarded the 10% 
 measured +5.3e-5 for that change on LightGBM; a weaker model gaining more from 11% more data is
 plausible. Recorded so the +12.8e-5 is not later mistaken for a bug.
 
-OPEN QUESTION, and it is the operationally important one. C2's logit correlation with v3 is 0.9987-
-0.9990 and its marginal blend gain is tiny (fold 0 -0.14e-5, fold 1 +0.35e-5, mean ~+0.1e-5), so
-ADDING C2 to the 59-member blend would fail the +1.5e-5 admission gate. But the blend already
-CONTAINS CatBoost members trained the C0 way, and C2 is strictly better than C0 by +8.75e-5. Swapping
-those members to the native-categorical form is a different question from adding C2 as a new member,
-and it is the version that could actually move the ensemble. Not yet measured.
+--------------------------------------------------------------------------------
+WHY A REAL +6.6e-5 MECHANISM YET NO ENSEMBLE GAIN
+--------------------------------------------------------------------------------
+scripts/cat_swap_analysis.py, zero training cost:
+
+* C2 (OOF 0.961121) is individually STRONGER than ALL SEVEN of v3's existing CatBoost members, by
+  +4.9e-5 (z3_cat_f10) to +25.7e-5 (z3_cat_ogs). So the mechanism is not cosmetic -- it genuinely
+  improves the CatBoost family, and every current CatBoost member is strictly dominated.
+* Marginal admission of C2 as a NEW member: +0.00e-5 at w=1%, ~0 at 2%, -0.07e-5 at 5%, -0.34e-5 at 10%.
+* Swap counterfactual, giving the CatBoost block's 7/59 = 0.119 weight to C2 instead:
+  0.961509 -> 0.961505, delta **-0.39e-5**, positive in only 2/5 folds.
+
+The explanation is DIVERSITY, and it is the substantive lesson of Phase 10B. v3's rebuild from its 59
+stored members reproduces the stored blend to logit corr 1.000000 and AUC 0.961509 exactly, so the
+arithmetic is trustworthy. C2's logit correlation with each existing CatBoost member is 0.997-0.998 --
+nearly identical. Replacing SEVEN correlated-but-distinct members with ONE individually stronger model
+destroys the averaging that made the block worth 11.9% of the ensemble in the first place. Individual
+member quality and block contribution are different quantities, and here they point opposite ways.
+
+THE ONE LIVE UNTESTED HYPOTHESIS. A DIVERSE native-categorical CatBoost block -- several members
+mirroring the existing configs (depth 6/8/10, feature_fraction, core3 and ogs views, seed variation),
+each individually better than its numeric counterpart AND retaining the diversity the block depends on
+-- could be strictly better than the current numeric block. That is untested; the single-model swap
+above is pessimistic about diversity and is explicitly an approximation, not a submission. Estimated
+cost ~1.5 h for 7 members plus a re-blend. It is the only Phase 10 thread with a plausible route to a
+real ensemble gain.
 
 Real-scale timing measured BEFORE committing (s/round on 559,708 rows x 285 features): C0 0.122,
 C1 0.689, C2 0.284, C3 0.883, so the slowest arm projected to 0.22 h for the refit rather than the
 hours a naive extrapolation from the 15% probe suggested.
 
-tests/test_native_cat.py: 101/101. tests/test_residual_nested.py: 62/62.
+SUBMISSION: none. No arm improved v3 by >= +1.5e-5. v3_final (public 0.960980) and v4_fulldata
+(public 0.961000) remain the banked finalists, both immutable.
+
+tests/run_tests.py: 54 passed + test_stochastic_protocol 69/69.
+tests/test_residual_nested.py: 62/62.  tests/test_native_cat.py: 101/101.
