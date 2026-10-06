@@ -1,0 +1,109 @@
+{
+  "entries": [
+    {
+      "exp_id": "p10b_native_cats_FULL5FOLD_FINAL",
+      "date": "2026-10-06",
+      "git": "68db392456e1",
+      "family": "catboost_native_cats",
+      "featureset": "full (+17 native categorical twins)",
+      "fold_scheme": "primary",
+      "control": "C0 (current numeric CatBoost path)",
+      "control_auc": 0.9610543911966206,
+      "oof_auc": 0.9611208398230365,
+      "oof_auc_v3": 0.9615085785798723,
+      "delta_vs_control_e5": 6.644862641591587,
+      "per_fold_e5": [
+        5.867508563228707,
+        11.584840727418833,
+        -2.368127445784296,
+        14.44435446301684,
+        3.018953289324333
+      ],
+      "paired_fold_se_e5": 3.0010776169479385,
+      "t_stat": 2.1690561692506227,
+      "folds_positive": 4,
+      "n_folds": 5,
+      "blend_gains_e5": {
+        "0.01": 0.003005866922034528,
+        "0.02": -0.00436995027941478,
+        "0.05": -0.07240277990483435,
+        "0.1": -0.3447095751285545
+      },
+      "gate_standalone_e5": 8.0,
+      "gate_blend_e5": 1.5,
+      "verdict": "REAL, REPLICATED mechanism at the model level (+6.64e-5 full OOF, t=2.17, 4/5 folds) but NOT harvestable by the ensemble: marginal add +0.00e-5, single-model swap -0.39e-5. NO SUBMISSION.",
+      "notes": "C2 = C0 + 17 native categorical twins (META4 + SERVICE13) under Plain boosting, numeric block byte-identical. Fold deltas +5.87, +11.58, -2.37, +14.44, +3.02 e-5: mean +6.51e-5, paired SE 3.00e-5, t=2.17, 4/5 positive. Fold 2 is NEGATIVE, and the two-fold mean of +8.75e-5 observed before folds 2-4 ran overstated the effect by 35% -- a direct vindication of the predeclared multi-fold gate.\n\nC2 (OOF 0.961121) is individually stronger than ALL SEVEN of v3's existing CatBoost members, by +4.9e-5 (z3_cat_f10) to +25.7e-5 (z3_cat_ogs). So the mechanism genuinely improves the CatBoost family and every current CatBoost member is strictly dominated.\n\nYet the ensemble gains nothing: marginal admission of C2 as a new member is +0.00e-5 at w=1% and negative beyond, and giving the CatBoost block's 7/59 = 0.119 weight to C2 instead moves the blend 0.961509 -> 0.961505 (-0.39e-5, 2/5 folds). The explanation is DIVERSITY. v3 rebuilt from its 59 stored members reproduces the stored blend to logit corr 1.000000 and AUC 0.961509 exactly, so the arithmetic is trustworthy, and C2's logit correlation with each existing CatBoost member is 0.997-0.998. Replacing seven correlated-but-distinct members with one individually stronger model destroys the averaging that made the block worth 11.9% of the ensemble. Individual member quality and block contribution are different quantities and here they point opposite ways.\n\nLIVE UNTESTED THREAD: a DIVERSE native-categorical CatBoost block, several members mirroring the existing configs (depth 6/8/10, feature_fraction, core3 and ogs views, seed variation), each individually better AND retaining the diversity the block depends on. The single-model swap is pessimistic about diversity and is explicitly an approximation, not a submission.",
+      "extra": {
+        "swap": {
+          "before_auc": 0.9615085784350211,
+          "after_auc": 0.9615046730428548,
+          "delta_e5": -0.3905392166325683,
+          "per_fold_e5": [
+            0.023983263697235913,
+            0.3160441666927305,
+            -1.2480775138823397,
+            -0.38364819291425434,
+            -0.2784242953302041
+          ],
+          "w_cat": 0.11864406779661017,
+          "n_members": 59,
+          "caveat": "SINGLE C2 model fills the whole CatBoost block. Seven genuinely diverse native-cat members would differ from one another, so this is an approximation, not a submission."
+        },
+        "per_cat_member": {
+          "z3_cat_f10": {
+            "auc": 0.961071917569463,
+            "corr_c0": 0.9982057973496767,
+            "corr_c2": 0.9982119781339643,
+            "spearman_c2": 0.9869739383612199
+          },
+          "z3_cat_d10": {
+            "auc": 0.9610555094387154,
+            "corr_c0": 0.9985236027028391,
+            "corr_c2": 0.9984363496493983,
+            "spearman_c2": 0.9880935725375409
+          },
+          "z3_cat_d8_s2": {
+            "auc": 0.9609540780627973,
+            "corr_c0": 0.9978582048629111,
+            "corr_c2": 0.99782076971007,
+            "spearman_c2": 0.9850585378087023
+          },
+          "z3_cat_d6": {
+            "auc": 0.9609383685943547,
+            "corr_c0": 0.9981142219581173,
+            "corr_c2": 0.9982048285486806,
+            "spearman_c2": 0.9873845419419917
+          },
+          "prod5_cat_full_primary": {
+            "auc": 0.9609094207507518,
+            "corr_c0": 0.9982404110276163,
+            "corr_c2": 0.9982796666906366,
+            "spearman_c2": 0.9877689682793851
+          },
+          "z3_cat_core3": {
+            "auc": 0.9608951571775568,
+            "corr_c0": 0.9975520483682494,
+            "corr_c2": 0.9975014809647301,
+            "spearman_c2": 0.9821827865955132
+          },
+          "z3_cat_ogs": {
+            "auc": 0.9608639359251541,
+            "corr_c0": 0.9972715470310631,
+            "corr_c2": 0.9972304387051641,
+            "spearman_c2": 0.9801401613724376
+          }
+        },
+        "cat_members": [
+          "z3_cat_f10",
+          "z3_cat_d10",
+          "z3_cat_d8_s2",
+          "z3_cat_d6",
+          "prod5_cat_full_primary",
+          "z3_cat_core3",
+          "z3_cat_ogs"
+        ],
+        "verdict_detail": "NEITHER clears the +1.5e-5 gate: marginal add +0.00e-5, swap -0.39e-5. Native categorical CTRs improve the CatBoost FAMILY (+6.6e-5 on C0) but v3's existing seven CatBoost members already occupy that region, so the ensemble cannot capture it without retraining the block."
+      }
+    }
+  ]
+}
