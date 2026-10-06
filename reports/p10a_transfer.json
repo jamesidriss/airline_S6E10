@@ -1,0 +1,68 @@
+{
+  "candidate": "raw:On-board service",
+  "folds": [
+    {
+      "fold": 0,
+      "surrogate_delta_e5": 2.0382049376044264,
+      "v3_delta_prob_e5": -0.7142418715910814,
+      "v3_delta_logit_e5": -0.2749901562126844,
+      "v3_base_auc": 0.9615006829477477,
+      "surrogate_base_auc": 0.9613518214787993,
+      "bias_gap_e5": -52.830542195200586,
+      "magnitude_ratio": 1.0369825302670106,
+      "sign_agreement": 0.6
+    },
+    {
+      "fold": 1,
+      "surrogate_delta_e5": -4.078403775009676,
+      "v3_delta_prob_e5": -7.179342724528137,
+      "v3_delta_logit_e5": -4.399900546792068,
+      "v3_base_auc": 0.9616501250892175,
+      "surrogate_base_auc": 0.9613901615352001,
+      "bias_gap_e5": -2.483604714600474,
+      "magnitude_ratio": 0.9464131908695635,
+      "sign_agreement": 0.4
+    },
+    {
+      "fold": 2,
+      "surrogate_delta_e5": 3.894236087997882,
+      "v3_delta_prob_e5": 2.0955178830051047,
+      "v3_delta_logit_e5": 2.3424267415861344,
+      "v3_base_auc": 0.9615120789920157,
+      "surrogate_base_auc": 0.9613367295228831,
+      "bias_gap_e5": -49.530644163251445,
+      "magnitude_ratio": 0.8914631836227929,
+      "sign_agreement": 0.6
+    },
+    {
+      "fold": 3,
+      "surrogate_delta_e5": 6.285063753197484,
+      "v3_delta_prob_e5": 4.949496241479778,
+      "v3_delta_logit_e5": 3.617529311528145,
+      "v3_base_auc": 0.960793745034296,
+      "surrogate_base_auc": 0.9605093781236365,
+      "bias_gap_e5": -17.57348316410877,
+      "magnitude_ratio": 1.6924036708372476,
+      "sign_agreement": 1.0
+    },
+    {
+      "fold": 4,
+      "surrogate_delta_e5": 1.8508852542953314,
+      "v3_delta_prob_e5": -0.5700817632403599,
+      "v3_delta_logit_e5": 0.2089475527600193,
+      "v3_base_auc": 0.962121418373972,
+      "surrogate_base_auc": 0.9619667526949939,
+      "bias_gap_e5": -135.32983514684753,
+      "magnitude_ratio": 1.2047815528555172,
+      "sign_agreement": 0.8
+    }
+  ],
+  "mean_surrogate_e5": 1.9979972516170896,
+  "mean_v3_prob_e5": -0.2837304469749391,
+  "mean_v3_logit_e5": 0.2988025805739092,
+  "mean_bias_gap_e5": -51.54962187680176,
+  "mean_magnitude_ratio": 1.1544088256904266,
+  "mean_sign_agreement": 0.68,
+  "gate_e5": 1.5,
+  "verdict": "PARTIAL: the correction helps v3 by only +0.30e-5, below the 1.5e-5 gate, and/or is not positive in 4/5 folds. Do NOT promote. The surrogate's +2.00e-5 does not carry over."
+}

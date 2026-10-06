@@ -39,8 +39,11 @@ CORRECTIONS TO PHASE 9 MADE BEFORE ANY NEW RESEARCH
    part that gets read.
 
 ================================================================================
-10A. NESTED RESIDUAL STRUCTURE
+10A. NESTED RESIDUAL STRUCTURE -- EXHAUSTED
 ================================================================================
+
+VERDICT: **SIMPLE GROUP RESIDUAL STRUCTURE IS EXHAUSTED.** No specialist is built (§16 is not
+triggered). The finding is a negative, and it is specific rather than general.
 
 AUDIT of the pre-existing scripts/residual_structure.py: it is NOT promotion-grade. For a discovery
 row j in fold f(j) != k, its base score comes from blend_v3_final OOF, i.e. models trained on every
@@ -58,39 +61,69 @@ scripts/residual_nested.py is the promotion evidence. Per outer fold k:
   one champion fit on 100% of META_TRAIN at a fixed 900 rounds -> p_meta_val
   bias estimated on (y - p_meta_train_oof) over META_TRAIN, frozen, applied to p_meta_val
 Base is a single champion lgbm extra_trees surrogate, NOT the 59-member v3 blend. Round count fixed
-at 900 (Phase 9's honest inner selection), so iteration choice raises no nesting question.
+at 900 (Phase 9's honest inner selection). Consistency check: the fold-0 surrogate scores 0.961352,
+identical to Phase 9's ctl_fixed (0.9613518).
 
 Two score-space semantics kept strictly separate, both cross-fitted:
   PROBABILITY   b_g = shrunk mean(y - p | g);            score = clip(p + b_g, eps, 1-eps)
   LOGIT OFFSET  delta_g = regularised intercept MLE;    score = logit(p) + delta_g
 Pre-declared and not tuned: PRIOR_N = 50, LAMBDA = 50, MIN_N = 200, N_BINS = 24, ROUNDS = 900.
 
-BUG the tests caught: I first implemented the logit offset as a SINGLE Newton step from 0 and called
-it the MLE. It is not. With a saturated base (p = 0.30, true rate 0.20) one step returned +0.4557
-where the numerical optimum is -0.4861 -- the WRONG SIGN, because the gradient at delta=0 is small
-and so is the curvature, so one step overshoots past the point where the gradient changes sign. Now
-iterated to convergence, and the tests verify the iterate against a brute-force minimiser. This would
-have silently inverted corrections for exactly the saturated groups where a large bias lives.
+42 predeclared keys: raw 21, current TE keys, survey patterns, segments, original-knowledge regimes,
+base confidence. Hundreds of ad-hoc keys are deliberately excluded -- the gate demands replication
+across folds, and a huge family guarantees some key passes by chance.
 
-Three further bugs found by running the scan, all mine:
-  - `pd.factorize` returns -1 for NaN and `np.bincount` rejects negatives, so any key with a missing
-    value crashed it. NaN is now its own group, normalised ONCE before the two sides are sliced so
-    discovery and confirmation cannot disagree about the sentinel.
-  - A single malformed key aborted the whole 5-fold scan. Failures are now caught per key and
-    RECORDED, never silently dropped.
-  - Aggregation was positional, so one fold's failed key would shift every later record and pair fold
-    A's key with fold B's neighbour. Now aggregated by key NAME, and a key must be scored on all 5
-    folds to be eligible -- otherwise a key that survived only where it did not crash could pass.
-  - BASE-CONFIDENCE keys are built per side (p-deciles from p_oof on discovery, p_val on
-    confirmation). Using one series for both made them crash AND would have chosen decile boundaries
-    using the rows being scored.
+RESULT. Exactly one key passed the predeclared gate on the surrogate:
+  raw:On-board service   prob +2.00e-5 (4/5 folds)   logit +1.92e-5 (4/5 folds)
+                          sign agreement 0.720   replication r=0.540
+                          mean bias gap -20.45e-5
+Two numbers already argued against believing it: r=0.540 is modest, and the bias gap is TEN TIMES
+the size of the gain it produces -- the signature of a fitted group offset that does not carry its
+magnitude out of sample.
 
-Groupings are PREDECLARED (raw 21, current TE keys, survey patterns, segments, original-knowledge
-regimes, base confidence) -- 44 keys. Hundreds of ad-hoc keys are deliberately excluded: the gate
-demands replication across folds, and a huge family guarantees some key passes by chance.
-Gate: >=4/5 folds positive under BOTH semantics AND mean >= +1.5e-5.
+TRANSFER TEST (scripts/residual_transfer_test.py) -- the operationally decisive question. The nested
+scan used a single champion surrogate, not v3. Same correction, fitted only on META_TRAIN from
+nested residuals, applied to v3's OOF on META_VAL rows (legitimate: the table saw no META_VAL label,
+and v3's OOF is out-of-fold for fold k by construction):
 
-Consistency check: the fold-0 surrogate scores 0.961352, identical to Phase 9's ctl_fixed (0.9613518).
+  fold   surrogate d    v3 d(prob)   v3 d(logit)
+    0        +2.04e         -0.71e         -0.27e
+    1        -4.08e         -7.18e         -4.40e
+    2        +3.89e         +2.10e         +2.34e
+    3        +6.29e         +4.95e         +3.62e
+    4        +1.85e         -0.57e         +0.21e
+  mean      +2.00e         -0.28e         +0.30e     (2/5 and 3/5 folds positive)
+
+**The +2.00e-5 does NOT transfer.** On v3 the same correction is -0.28e-5 (probability) and
++0.30e-5 (logit), both far below the +1.5e-5 gate and not positive in 4/5 folds. So the structure was
+a property of the SURROGATE'S residuals, not a shared bias in the ensemble.
+
+Conclusion: shared bias is real (Phase 9's models-fail-together result stands) but it is NOT a
+group-constant mean offset on any of the 42 predeclared groupings. If a recoverable shared bias
+exists it is not of this form, and no correction is promoted.
+
+--------------------------------------------------------------------------------
+BUGS FOUND IN MY OWN DIAGNOSTIC, kept because they nearly produced a false positive
+--------------------------------------------------------------------------------
+- The logit offset was first a SINGLE Newton step from 0, called the MLE. It is not: with a saturated
+  base (p = 0.30, true rate 0.20) one step returned +0.4557 where the numerical optimum is -0.4861 --
+  the WRONG SIGN. Now iterated to convergence, verified against a brute-force minimiser. It would
+  have silently inverted corrections for exactly the saturated groups where a large bias lives.
+- **The replication statistic was TAUTOLOGICAL.** I computed the "confirmation-observed" group bias
+  from (y - p_oof) over the DISCOVERY rows -- the same rows and same quantity the table was fitted
+  on, differing only by shrinkage. It returned r = 1.000 for all 42 keys, which is exactly why every
+  key in the first report looked perfectly replicated. It measured shrinkage, not replication, and
+  gate criterion 3 was vacuous. Fixed to estimate E[y - p | g] independently on META_VAL using
+  p_val; the honest correlations are 0.02-0.98 with a median near 0.3, and several keys go NEGATIVE.
+  This is the single most important correction in Phase 10: a diagnostic that cannot fail is worse
+  than no diagnostic.
+- `pd.factorize` returns -1 for NaN and `np.bincount` rejects negatives, so any key with a missing
+  value crashed the scan. NaN is now its own group, normalised ONCE before the sides are sliced.
+- A single malformed key aborted the whole 5-fold scan. Failures are caught per key and RECORDED.
+- Aggregation was POSITIONAL, so one fold's failed key would shift every later record. Now by NAME,
+  and a key must be scored on all 5 folds to be eligible.
+- BASE-CONFIDENCE keys must be built per side (p-deciles from p_oof on discovery, p_val on
+  confirmation); one shared series crashed AND would have chosen boundaries using the scored rows.
 
 ================================================================================
 10B. NATIVE CATBOOST CATEGORICAL LEARNING
@@ -130,24 +163,25 @@ ignored" that it had never actually tested. Replaced by three decisive checks:
   T1 model dump contains ctr_type structures           -> YES (4 occurrences)
   T2 predictions DIVERGE from an ordinal-code control   -> max |diff| 3.6e-01, corr 0.99914
   T3 declaring a numeric column as categorical RAISES   -> TypeError
-Verdict: CTR MACHINERY VERIFIED ENGAGED. The experiment is genuinely testable. This check matters
-because the silent-ignore case is real: a categorical column present but undeclared trains happily
-as a float and every number looks plausible while nothing is tested.
+VERDICT: CTR MACHINERY VERIFIED ENGAGED. This matters because the silent-ignore case is real -- a
+categorical column present but undeclared trains happily as a float and every number looks plausible
+while the experiment tests nothing.
 
 Frame rules: category identity never passes through float32 (twins are strings, declared by name);
 twins come from the raw frame by column name and never touch the target; the existing `*__cat` float
 twins inside the champion view are left untouched so arm C0 reproduces the numeric control
-bit-for-bit. Flight Distance (~3,474 levels) and Age (~75) are EXCLUDED so the 2x2 stays
-interpretable; high-cardinality CTRs are a separate later arm (C4/C5).
+bit-for-bit. Flight Distance (~3,474 levels) and Age (~75) are EXCLUDED from the 2x2 so it stays
+interpretable; they are arms C4/C5, tested only after C2/C3 shows signal.
 
-2x2 (fold 0 first): C0 numeric Plain (control) / C1 numeric Ordered / C2 numeric + native cats Plain /
-C3 numeric + native cats Ordered. Round selection uses the Phase 9 fixed-round protocol: inner ES
-picks the iteration count, refit on 100% of outer-fit, score the outer fold once.
+2x2: C0 numeric Plain (control) / C1 numeric Ordered / C2 numeric + native cats Plain /
+C3 numeric + native cats Ordered. C0 vs C1 differ ONLY in boosting_type; C0 vs C2 ONLY by appended
+twin columns. Round selection follows the Phase 9 fixed-round protocol -- inner ES on a 10% carve
+picks the iteration count, then refit on 100% of outer-fit, then score the outer fold once. The
+existing CatBoost path throws the carve away, and refitting on 100% was worth +5.3e-5 in Phase 9,
+larger than most effects being chased, so leaving it out would have buried it.
 
 Capability probe (15% subsample, 250 rounds -- capability and RATE only, no score is evidence):
 all eight arms train. Ordered CPU SUPPORTED. Native cats CPU SUPPORTED. GPU + cats works.
-GPU + Ordered works. Ordered is ~4.7x slower than Plain; native cats ~11x slower than numeric
-Plain. GPU is worth measuring at real scale before committing.
+GPU + Ordered works. Ordered ~4.7x slower than Plain; native cats ~11x slower than numeric Plain.
 
-tests/test_native_cat.py: 101/101, covering all nine required properties plus the name-resolution
-rule. tests/test_residual_nested.py: 62/62.
+tests/test_native_cat.py: 101/101. tests/test_residual_nested.py: 62/62.

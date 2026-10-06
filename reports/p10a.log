@@ -4,3 +4,58 @@
   base = single champion lgbm extra_trees surrogate, NOT the 59-member v3 blend
 
 fold 0: loaded cached surrogate from p10a_surrogate_fold0.npz
+  scanning 42 predeclared groupings (base fold-0 AUC 0.961352) ...
+    30/42
+  fold 0 done (83s elapsed)
+
+fold 1: loaded cached surrogate from p10a_surrogate_fold1.npz
+  scanning 42 predeclared groupings (base fold-1 AUC 0.961390) ...
+    30/42
+  fold 1 done (166s elapsed)
+
+fold 2: loaded cached surrogate from p10a_surrogate_fold2.npz
+  scanning 42 predeclared groupings (base fold-2 AUC 0.961337) ...
+    30/42
+  fold 2 done (249s elapsed)
+
+fold 3: loaded cached surrogate from p10a_surrogate_fold3.npz
+  scanning 42 predeclared groupings (base fold-3 AUC 0.960509) ...
+    30/42
+  fold 3 done (332s elapsed)
+
+fold 4: loaded cached surrogate from p10a_surrogate_fold4.npz
+  scanning 42 predeclared groupings (base fold-4 AUC 0.961967) ...
+    30/42
+  fold 4 done (415s elapsed)
+
+======================================================================================================================
+PHASE 10A -- NESTED residual structure. Gate: >=4/5 folds positive under BOTH semantics and mean >= +1.5e-5
+======================================================================================================================
+  key                                 prob mean   pos  logit mean   pos  repl r   sign  bias gap
+  ----------------------------------------------------------------------------------------------------------------
+  raw:On-board service                   +2.00e  4/5      +1.92e  4/5   0.540  0.720    -20.45 *
+  orig:ogte_Baggage handling__cnt        +1.68e  1/5      +1.89e  1/5       -      -         -
+  orig:ogte_Ease of Online booking_      +1.60e  1/5      +0.62e  1/5   0.977  0.600    +47.33
+  raw:Baggage handling                   +0.25e  3/5      +1.15e  3/5   0.438  0.720    -16.93
+  orig:ogte_Inflight entertainment_      +0.74e  1/5      +0.91e  1/5   0.030  0.800   -121.18
+  seg:class_x_cust                       +0.56e  5/5      +0.33e  5/5   0.384  0.667    -19.09
+  orig:teacher_composite                 -0.29e  2/5      +0.53e  4/5   0.184  0.550    -23.45
+  orig:ogte_Departure/Arrival time       +0.39e  1/5      +0.18e  1/5   0.641  0.800    +61.97
+  orig:ogte_Online boarding__cnt         +0.33e  1/5      +0.29e  1/5  -0.511  0.600    -65.96
+  pat:n_zero                             +0.32e  4/5      +0.17e  4/5   0.435  0.640    -27.10
+  raw:Flight Distance                    -0.21e  3/5      +0.32e  4/5   0.161  0.592    -23.55
+  te:fd                                  -0.21e  3/5      +0.32e  4/5   0.161  0.592    -23.55
+  seg:trip_x_cust                        +0.26e  4/5      +0.17e  4/5       -      -         -
+  raw:Online boarding                    +0.25e  4/5      +0.11e  4/5   0.298  0.600    -20.54
+  seg:class_x_trip                       +0.19e  3/5      +0.13e  3/5   0.020  0.567     -9.46
+  raw:Class                              +0.17e  4/5      +0.10e  3/5       -      -         -
+  raw:Ease of Online booking             +0.16e  2/5      +0.04e  3/5  -0.181  0.533    -23.53
+  orig:ogte_Cleanliness__cnt             +0.04e  1/5      +0.16e  2/5   0.319  0.600    -25.78
+  raw:Seat comfort                       -0.15e  2/5      +0.15e  3/5   0.085  0.560    -23.65
+  raw:Inflight wifi service              +0.13e  3/5      -0.06e  3/5   0.211  0.600    -17.80
+
+PASSING KEYS (both semantics, >=4/5 folds, mean >= +1.5e-5, AND real sign replication on confirmation rows):
+  raw:On-board service: prob +2.00e-5 (4/5), logit +1.92e-5 (4/5), sign agreement 0.720, replication r=0.540, mean bias gap -20.45e-5
+
+VERDICT: SIMPLE GROUP RESIDUAL STRUCTURE FOUND -- a targeted specialist is justified
+wrote C:\Users\James\airline_S6E10\reports\p10a.json (414.9s)

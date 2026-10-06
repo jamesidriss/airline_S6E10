@@ -347,13 +347,33 @@ def evaluate_key(name, g_fit, g_val, y, p_oof, p_val, base_auc):
     dB = apply_table(g_val, np.arange(len(yv)), loff)
     a_logit = float(roc_auc_score(yv, logit(pv) + dB))
 
-    # signed-bias replication on the SAME groups, discovery vs confirmation
-    obs = observed_bias(g_fit, yf - pf, np.arange(len(yf)))
-    common = [u for u in pbias if u in obs]
-    rep = float(np.corrcoef([pbias[u] for u in common], [obs[u] for u in common])[0, 1]) \
+    # ---- replication on INDEPENDENT rows -------------------------------------------------
+    # This must compare the DISCOVERY-estimated bias against the bias actually observed on the
+    # CONFIRMATION rows, using that side's own base scores.
+    #
+    # My first version computed the "observed" bias from (y - p_oof) over the DISCOVERY rows, i.e.
+    # the same rows and the same quantity the table was fitted on, differing only by shrinkage. That
+    # is a tautology: it returned r = 1.000 for all 42 keys, which is why every key in the report
+    # showed a perfect replication score. It measured shrinkage, not replication, and criterion 3 of
+    # the gate was therefore vacuous.
+    #
+    # The honest version estimates E[y - p | g] independently on META_VAL using p_val.
+    obs_val = observed_bias(g_val, yv - pv, np.arange(len(yv)))
+    common = [u for u in pbias if u in obs_val]
+    rep = float(np.corrcoef([pbias[u] for u in common], [obs_val[u] for u in common])[0, 1]) \
         if len(common) >= 5 else None
     sign = float(np.mean(np.sign([pbias[u] for u in common])
-                         == np.sign([obs[u] for u in common]))) if len(common) >= 5 else None
+                         == np.sign([obs_val[u] for u in common]))) if len(common) >= 5 else None
+    # effect-size replication: does the CONFIRMATION side show a bias of comparable magnitude?
+    if len(common) >= 5:
+        d_ = np.array([pbias[u] for u in common])
+        o_ = np.array([obs_val[u] for u in common])
+        mag_ratio = float(np.mean(np.abs(o_)) / max(np.mean(np.abs(d_)), 1e-12))
+        mean_disc = float(d_.mean())
+        mean_conf = float(o_.mean())
+        bias_gap_e5 = float((mean_conf - mean_disc) * 1e5)
+    else:
+        mag_ratio, mean_disc, mean_conf, bias_gap_e5 = None, None, None, None
 
     sizes = g_fit.value_counts()
     return {
@@ -365,6 +385,10 @@ def evaluate_key(name, g_fit, g_val, y, p_oof, p_val, base_auc):
         "delta_logit_e5": (a_logit - a_base) * 1e5,
         "bias_replication_r": rep,
         "sign_agreement": sign,
+        "replication_magnitude_ratio": mag_ratio,
+        "mean_bias_discovery": mean_disc,
+        "mean_bias_confirmation": mean_conf,
+        "mean_bias_gap_e5": bias_gap_e5,
     }
 
 
@@ -473,17 +497,28 @@ def main() -> None:
         for r in fk["keys"]:
             if r["key"] in failed_names:
                 continue
-            a = agg.setdefault(r["key"], {"dp": [], "dl": [], "rp": [], "sg": [], "folds": []})
+            a = agg.setdefault(r["key"], {"dp": [], "dl": [], "rp": [], "sg": [], "folds": [],
+                                          "bg": [], "mr": []})
             a["dp"].append(r["delta_prob_e5"])
             a["dl"].append(r["delta_logit_e5"])
             if r["bias_replication_r"] is not None:
                 a["rp"].append(r["bias_replication_r"])
             if r["sign_agreement"] is not None:
                 a["sg"].append(r["sign_agreement"])
+            if r.get("mean_bias_gap_e5") is not None:
+                a["bg"].append(r["mean_bias_gap_e5"])
+            if r.get("replication_magnitude_ratio") is not None:
+                a["mr"].append(r["replication_magnitude_ratio"])
             a["folds"].append(k)
+
+    # Second pass: summarise. Kept separate from accumulation so a key's summary dict is never the
+    # same object being appended to -- an earlier version wrote both in one loop body and clobbered
+    # the accumulator with the summary, which then raised KeyError on the next key.
+    summary: dict[str, dict] = {}
+    for nm, a in agg.items():
         rp_ok, sg_ok = a["rp"], a["sg"]
         n = len(a["dp"])
-        agg[nm] = {
+        s = {
             "n_folds_scored": n,
             "delta_prob_mean_e5": float(np.mean(a["dp"])),
             "delta_prob_pos": int(sum(d > 0 for d in a["dp"])),
@@ -493,51 +528,83 @@ def main() -> None:
             "delta_logit_folds": [round(d, 2) for d in a["dl"]],
             "replication_r_mean": float(np.mean(rp_ok)) if rp_ok else None,
             "sign_agreement_mean": float(np.mean(sg_ok)) if sg_ok else None,
+            "mean_bias_gap_e5": (float(np.mean(a["bg"])) if a["bg"] else None),
+            "replication_magnitude_ratio": (float(np.mean(a["mr"])) if a["mr"] else None),
         }
         # A key must be scored on ALL 5 folds to be eligible. Requiring 4/5 positive among fewer than
         # 5 scored folds would let a key that only worked where it did not crash collect a pass.
-        agg[nm]["complete"] = n == len(K)
-        agg[nm]["passes_both_semantics"] = bool(
-            agg[nm]["complete"]
-            and agg[nm]["delta_prob_pos"] >= 4 and agg[nm]["delta_logit_pos"] >= 4
-            and max(agg[nm]["delta_prob_mean_e5"], agg[nm]["delta_logit_mean_e5"]) >= 1.5)
+        s["complete"] = n == len(K)
+        # Gate criterion 3 is REPLICATION, and it must be a real one: the confirmation-side group bias
+        # must agree in SIGN with the discovery-side bias. A mean magnitude ratio near 1 with a poor
+        # sign rate means the structure is real but noisy; poor on both means it is not real.
+        s["replicates"] = bool(
+            s["sign_agreement_mean"] is not None and s["sign_agreement_mean"] >= 0.60)
+        s["passes_both_semantics"] = bool(
+            s["complete"] and s["replicates"]
+            and s["delta_prob_pos"] >= 4 and s["delta_logit_pos"] >= 4
+            and max(s["delta_prob_mean_e5"], s["delta_logit_mean_e5"]) >= 1.5)
+        summary[nm] = s
+    agg = summary
     out["aggregate"] = agg
 
     print(f"{'='*118}")
     print("PHASE 10A -- NESTED residual structure. Gate: >=4/5 folds positive under BOTH semantics "
           "and mean >= +1.5e-5")
     print("=" * 118)
-    print(f"  {'key':<36}{'prob mean':>11}{'pos':>6}{'logit mean':>12}{'pos':>6}"
-          f"{'repl r':>9}{'sign':>8}")
-    print(f"  {'-'*118}")
+    print(f"  {'key':<34}{'prob mean':>11}{'pos':>6}{'logit mean':>12}{'pos':>6}"
+          f"{'repl r':>8}{'sign':>7}{'bias gap':>10}")
+    print(f"  {'-'*112}")
     ranked = sorted(agg.items(), key=lambda kv: -max(kv[1]["delta_prob_mean_e5"],
                                                     kv[1]["delta_logit_mean_e5"]))
     for nm, a in ranked[:20]:
         rr = f"{a['replication_r_mean']:.3f}" if a["replication_r_mean"] is not None else "  -"
         ss = f"{a['sign_agreement_mean']:.3f}" if a["sign_agreement_mean"] is not None else "  -"
+        bg = f"{a['mean_bias_gap_e5']:+.2f}" if a.get("mean_bias_gap_e5") is not None else "  -"
         star = " *" if a["passes_both_semantics"] else ""
-        print(f"  {nm[:35]:<36}{a['delta_prob_mean_e5']:>+10.2f}e{a['delta_prob_pos']:>3}/5"
-              f"{a['delta_logit_mean_e5']:>+11.2f}e{a['delta_logit_pos']:>3}/5{rr:>9}{ss:>8}{star}")
+        print(f"  {nm[:33]:<34}{a['delta_prob_mean_e5']:>+10.2f}e{a['delta_prob_pos']:>3}/5"
+              f"{a['delta_logit_mean_e5']:>+11.2f}e{a['delta_logit_pos']:>3}/5{rr:>8}{ss:>7}"
+              f"{bg:>10}{star}")
 
     winners = [nm for nm, a in agg.items() if a["passes_both_semantics"]]
+    near = [(nm, a) for nm, a in agg.items()
+            if a["complete"] and a["delta_prob_pos"] >= 4 and a["delta_logit_pos"] >= 4
+            and not a["passes_both_semantics"]]
     out["winners"] = winners
+    out["near_misses"] = [{"key": nm, **{k: a[k] for k in
+                                         ("delta_prob_mean_e5", "delta_prob_pos",
+                                          "delta_logit_mean_e5", "delta_logit_pos",
+                                          "sign_agreement_mean", "replicates", "complete")}}
+                          for nm, a in near]
     if winners:
-        print("\nPASSING KEYS (both semantics, >=4/5 folds, mean >= +1.5e-5):")
+        print("\nPASSING KEYS (both semantics, >=4/5 folds, mean >= +1.5e-5, AND real sign "
+              "replication on confirmation rows):")
         for nm in winners:
             a = agg[nm]
             print(f"  {nm}: prob {a['delta_prob_mean_e5']:+.2f}e-5 ({a['delta_prob_pos']}/5), "
                   f"logit {a['delta_logit_mean_e5']:+.2f}e-5 ({a['delta_logit_pos']}/5), "
-                  f"replication r={a['replication_r_mean']:.3f}")
+                  f"sign agreement {a['sign_agreement_mean']:.3f}, "
+                  f"replication r={a['replication_r_mean']:.3f}, "
+                  f"mean bias gap {a['mean_bias_gap_e5']:+.2f}e-5")
         verdict = "SIMPLE GROUP RESIDUAL STRUCTURE FOUND -- a targeted specialist is justified"
     else:
         best = max(max(a["delta_prob_mean_e5"], a["delta_logit_mean_e5"]) for a in agg.values())
+        best_consistent = max((max(a["delta_prob_mean_e5"], a["delta_logit_mean_e5"])
+                               for a in agg.values()
+                               if a["delta_prob_pos"] >= 4 and a["delta_logit_pos"] >= 4),
+                              default=None)
         print("\nNO KEY PASSES.")
-        print("  Simple group residual structure is EXHAUSTED as a source of gain. The best "
-              f"predeclared key reached {best:+.2f}e-5 under its better semantics, below the "
-              "+1.5e-5 gate.")
-        print("  Combined with Phase 9 (error sits where members AGREE) this means the shared bias "
-              "is NOT recoverable by a\n  per-group mean correction on these groupings. If it exists "
-              "it is not a group-constant offset.")
+        print(f"  Best predeclared key by mean delta: {best:+.2f}e-5.")
+        print(f"  Best among keys positive in >=4/5 folds under BOTH semantics: "
+              f"{best_consistent if best_consistent is None else f'{best_consistent:+.2f}e-5'}.")
+        if near:
+            print("  Failing only on replication or the size gate:")
+            for nm, a in near[:8]:
+                print(f"    {nm}: prob {a['delta_prob_mean_e5']:+.2f}e-5, "
+                      f"sign agreement {a['sign_agreement_mean']}, "
+                      f"best mean {max(a['delta_prob_mean_e5'], a['delta_logit_mean_e5']):+.2f}e-5")
+        print("  Combined with Phase 9 (error sits where members AGREE) the shared bias is NOT "
+              "recoverable\n  by a per-group MEAN correction on these groupings. If it exists it is "
+              "not a group-constant offset.")
         verdict = "SIMPLE GROUP RESIDUAL STRUCTURE EXHAUSTED"
     out["verdict"] = verdict
     out["seconds"] = round(time.time() - t0, 1)
