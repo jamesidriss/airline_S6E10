@@ -1,0 +1,20 @@
+{
+  "rounds": 120,
+  "n_train": 40000,
+  "n_val": 20000,
+  "T1_dump_counts": {
+    "ctr_type": 4,
+    "ctr_data": 0,
+    "ctr": 0,
+    "one_hot": 0
+  },
+  "T1_ctr_present": true,
+  "T2_max_abs_diff": 0.3648503553803548,
+  "T2_corr": 0.9991397669125114,
+  "T2_auc_cat": 0.9575660625,
+  "T2_auc_ord": 0.9576775520833334,
+  "T2_divergent": true,
+  "T3_numeric_as_cat_raised": true,
+  "T3_error": "TypeError: declared categorical column 'Age' holds float32, not strings",
+  "verdict": "CTR MACHINERY VERIFIED ENGAGED"
+}

@@ -183,10 +183,37 @@ def teacher_keys(extra: dict[str, np.ndarray], p: np.ndarray) -> dict[str, pd.Se
 
 
 # --------------------------------------------------------------------------- semantics
+NA_SENTINEL = "__NA_GROUP__"
+
+
+def as_group_series(s: pd.Series) -> pd.Series:
+    """Normalise a grouping key to a total string domain.
+
+    Two problems this prevents. (1) `pd.factorize` returns -1 for NaN, and `np.bincount` rejects
+    negative values, so a key with any missing value crashed the scan -- which is exactly what
+    happened on `pat:zero_signature`. (2) If discovery and confirmation rows were normalised
+    differently, a confirmation row could miss its own group's table entry. Normalising ONCE, before
+    the two row subsets are taken, guarantees both sides agree on the sentinel.
+    """
+    out = s.astype("object").where(s.notna(), NA_SENTINEL).map(str)
+    return out
+
+
+def _codes(g: pd.Series) -> tuple[np.ndarray, np.ndarray]:
+    """factorize with NaN mapped to its own group instead of the -1 sentinel code."""
+    codes, uniq = pd.factorize(g, sort=True)
+    na = codes < 0
+    if na.any():
+        codes = codes.copy()
+        codes[na] = len(uniq)
+        uniq = np.append(np.asarray(uniq, dtype=object), NA_SENTINEL)
+    return codes, uniq
+
+
 def fit_prob_bias(g: pd.Series, y: np.ndarray, p: np.ndarray, rows: np.ndarray) -> dict:
     """b_g = shrunk mean of (y - p) over discovery rows. PROBABILITY semantics."""
     sub, ys, ps = g.iloc[rows], y[rows], p[rows]
-    codes, uniq = pd.factorize(sub, sort=True)
+    codes, uniq = _codes(sub)
     cnt = np.bincount(codes, minlength=len(uniq)).astype("float64")
     tot = np.bincount(codes, weights=(ys - ps), minlength=len(uniq))
     bias = tot / (cnt + PRIOR_N)
@@ -214,7 +241,7 @@ def fit_logit_offset(g: pd.Series, y: np.ndarray, p: np.ndarray, rows: np.ndarra
     gradient the tests do not tolerate.
     """
     sub, ys, z = g.iloc[rows], y[rows], logit(p[rows])
-    codes, uniq = pd.factorize(sub, sort=True)
+    codes, uniq = _codes(sub)
     m = len(uniq)
     cnt = np.bincount(codes, minlength=m).astype("float64")
     delta = np.zeros(m, dtype="float64")
@@ -237,7 +264,7 @@ def apply_table(g: pd.Series, rows: np.ndarray, table: dict) -> np.ndarray:
 
 def observed_bias(g: pd.Series, r: np.ndarray, rows: np.ndarray) -> dict:
     sub, rs = g.iloc[rows], r[rows]
-    codes, uniq = pd.factorize(sub, sort=True)
+    codes, uniq = _codes(sub)
     cnt = np.bincount(codes, minlength=len(uniq)).astype("float64")
     tot = np.bincount(codes, weights=rs, minlength=len(uniq))
     return {u: float(t / n) for u, t, n in zip(uniq, tot, cnt) if n >= MIN_N}
@@ -293,34 +320,45 @@ def build_surrogate(tr, te, y, meta_fit, meta_val, view, seed, k):
 
 
 # --------------------------------------------------------------------------- evaluation
-def evaluate_key(name, g, y, p_oof, p_val, meta_fit, meta_val, base_auc):
-    """Both semantics, cross-fitted at the correction layer, on top of a nested base."""
-    r = y[meta_fit] - p_oof
-    pbias = fit_prob_bias(g, y[meta_fit], p_oof, np.arange(len(meta_fit)))
-    loff = fit_logit_offset(g, y[meta_fit], p_oof, np.arange(len(meta_fit)))
-    yv, pv = y[meta_val], p_val
-    gv = g.iloc[meta_val]
+def evaluate_key(name, g_fit, g_val, y, p_oof, p_val, base_auc):
+    """Both semantics, cross-fitted at the correction layer, on top of a nested base.
+
+    `g_fit` is the grouping over META_TRAIN rows and `g_val` the grouping over META_VAL rows. They
+    are usually the same underlying key sliced two ways, but BASE-CONFIDENCE keys are not: a p-decile
+    must be computed from `p_oof` on discovery rows and from `p_val` on confirmation rows, or the
+    decile boundaries would be chosen using the rows being scored. Passing one series for both sides
+    (as an earlier version did) made those keys crash, because a confidence key is built over
+    META_VAL and was then indexed with META_TRAIN positions.
+    """
+    r = None
+    g_fit = as_group_series(pd.Series(np.asarray(g_fit, dtype=object)))
+    g_val = as_group_series(pd.Series(np.asarray(g_val, dtype=object)))
+    yv, pv = y["val"], p_val
+    yf, pf = y["fit"], p_oof
 
     a_base = float(roc_auc_score(yv, pv))
+    pbias = fit_prob_bias(g_fit, yf, pf, np.arange(len(yf)))
+    loff = fit_logit_offset(g_fit, yf, pf, np.arange(len(yf)))
+
     # A. PROBABILITY semantics
-    bA = apply_table(gv, np.arange(len(meta_val)), pbias)
+    bA = apply_table(g_val, np.arange(len(yv)), pbias)
     a_prob = float(roc_auc_score(yv, np.clip(pv + bA, EPS, 1 - EPS)))
     # B. LOGIT-OFFSET semantics
-    dB = apply_table(gv, np.arange(len(meta_val)), loff)
+    dB = apply_table(g_val, np.arange(len(yv)), loff)
     a_logit = float(roc_auc_score(yv, logit(pv) + dB))
 
     # signed-bias replication on the SAME groups, discovery vs confirmation
-    obs = observed_bias(g.iloc[meta_fit], r, np.arange(len(meta_fit)))
+    obs = observed_bias(g_fit, yf - pf, np.arange(len(yf)))
     common = [u for u in pbias if u in obs]
     rep = float(np.corrcoef([pbias[u] for u in common], [obs[u] for u in common])[0, 1]) \
         if len(common) >= 5 else None
     sign = float(np.mean(np.sign([pbias[u] for u in common])
                          == np.sign([obs[u] for u in common]))) if len(common) >= 5 else None
 
-    sizes = g.iloc[meta_fit].value_counts()
+    sizes = g_fit.value_counts()
     return {
         "key": name,
-        "n_groups": int(g.iloc[meta_fit].nunique()),
+        "n_groups": int(g_fit.nunique()),
         "groups_kept": int((sizes >= MIN_N).sum()),
         "base_auc": a_base,
         "delta_prob_e5": (a_prob - a_base) * 1e5,
@@ -383,46 +421,85 @@ def main() -> None:
         keys = predeclared_keys(tr)
         for nm, s in teacher_keys(load_teacher_columns(args.view), p_val).items():
             keys[nm] = s
-        # base confidence, needs the base score. NOTE the positional take: `tr["Class"]` is indexed
-        # by GLOBAL row, so the META_VAL rows must be selected with .to_numpy()[meta_val], not with
-        # .loc[] or by passing an index array as a column name.
-        cls_val = tr["Class"].to_numpy()[meta_val].astype(str)
-        keys["conf:p_decile"] = pd.qcut(pd.Series(p_val), 10, labels=False).astype(str)
-        keys["conf:p_decile_x_class"] = (pd.qcut(pd.Series(p_val), 10, labels=False).astype(str)
-                                        + "|" + cls_val)
+
+        # Rows for the two sides. Grouping keys are sliced by GLOBAL index; confidence keys are built
+        # separately per side from that side's own base score, so decile boundaries are never chosen
+        # using the rows being scored.
+        cls_all = tr["Class"].to_numpy().astype(str)
+        static = {nm: (as_group_series(g)[meta_fit], as_group_series(g)[meta_val])
+                  for nm, g in keys.items()}
+
+        def conf_keys(score_fit, score_val):
+            qf = pd.qcut(pd.Series(score_fit), 10, labels=False).astype(str).to_numpy()
+            qv = pd.qcut(pd.Series(score_val), 10, labels=False).astype(str).to_numpy()
+            return {"conf:p_decile": (qf, qv),
+                    "conf:p_decile_x_class": (np.char.add(np.char.add(qf, "|"),
+                                                          cls_all[meta_fit]),
+                                              np.char.add(np.char.add(qv, "|"),
+                                                          cls_all[meta_val]))}
+
+        sides = dict(static)
+        sides.update(conf_keys(p_oof, p_val))
 
         base = float(roc_auc_score(y[meta_val], p_val))
-        print(f"  scanning {len(keys)} predeclared groupings "
+        print(f"  scanning {len(sides)} predeclared groupings "
               f"(base fold-{k} AUC {base:.6f}) ...", flush=True)
         recs = []
-        for i, (nm, g) in enumerate(keys.items()):
-            recs.append(evaluate_key(nm, g, y, p_oof, p_val, meta_fit, meta_val, base))
+        failed = []
+        ylab = {"fit": y[meta_fit], "val": y[meta_val]}
+        for i, (nm, (gf, gv)) in enumerate(sides.items()):
+            try:
+                recs.append(evaluate_key(nm, gf, gv, ylab, p_oof, p_val, base))
+            except Exception as exc:                              # noqa: BLE001
+                # one malformed key must not abort a 5-fold scan; record it and keep going
+                failed.append({"key": nm, "error": f"{type(exc).__name__}: {str(exc)[:140]}"})
             if (i + 1) % 30 == 0:
-                print(f"    {i+1}/{len(keys)}", flush=True)
-        out["folds"][str(k)] = {"base_auc": base, "n_keys": len(keys), "keys": recs}
+                print(f"    {i+1}/{len(sides)}", flush=True)
+        if failed:
+            print(f"  fold {k}: {len(failed)} key(s) failed and were recorded, not hidden:")
+            for fb in failed[:6]:
+                print(f"      {fb['key']}: {fb['error']}")
+        out["folds"][str(k)] = {"base_auc": base, "n_keys": len(sides), "keys": recs,
+                                "failed_keys": failed}
         print(f"  fold {k} done ({time.time()-t0:.0f}s elapsed)\n", flush=True)
 
     # ------------------------------------------------------------------ aggregate
-    names = list(out["folds"][str(K[0])]["keys"][i]["key"]
-                 for i in range(len(out["folds"][str(K[0])]["keys"])))
-    agg = {}
-    for i, nm in enumerate(names):
-        dp = [out["folds"][str(k)]["keys"][i]["delta_prob_e5"] for k in K]
-        dl = [out["folds"][str(k)]["keys"][i]["delta_logit_e5"] for k in K]
-        rp = [out["folds"][str(k)]["keys"][i]["bias_replication_r"] for k in K]
-        sg = [out["folds"][str(k)]["keys"][i]["sign_agreement"] for k in K]
-        rp_ok = [r for r in rp if r is not None]
-        sg_ok = [s for s in sg if s is not None]
+    # Aggregate by key NAME, not by position. A key that failed on one fold would otherwise shift
+    # every later fold's record and silently pair fold A's key with fold B's neighbour.
+    agg: dict[str, dict] = {}
+    for k in K:
+        fk = out["folds"][str(k)]
+        failed_names = {fb["key"] for fb in fk.get("failed_keys", [])}
+        for r in fk["keys"]:
+            if r["key"] in failed_names:
+                continue
+            a = agg.setdefault(r["key"], {"dp": [], "dl": [], "rp": [], "sg": [], "folds": []})
+            a["dp"].append(r["delta_prob_e5"])
+            a["dl"].append(r["delta_logit_e5"])
+            if r["bias_replication_r"] is not None:
+                a["rp"].append(r["bias_replication_r"])
+            if r["sign_agreement"] is not None:
+                a["sg"].append(r["sign_agreement"])
+            a["folds"].append(k)
+        rp_ok, sg_ok = a["rp"], a["sg"]
+        n = len(a["dp"])
         agg[nm] = {
-            "delta_prob_mean_e5": float(np.mean(dp)), "delta_prob_pos": int(sum(d > 0 for d in dp)),
-            "delta_prob_folds": [round(d, 2) for d in dp],
-            "delta_logit_mean_e5": float(np.mean(dl)), "delta_logit_pos": int(sum(d > 0 for d in dl)),
-            "delta_logit_folds": [round(d, 2) for d in dl],
+            "n_folds_scored": n,
+            "delta_prob_mean_e5": float(np.mean(a["dp"])),
+            "delta_prob_pos": int(sum(d > 0 for d in a["dp"])),
+            "delta_prob_folds": [round(d, 2) for d in a["dp"]],
+            "delta_logit_mean_e5": float(np.mean(a["dl"])),
+            "delta_logit_pos": int(sum(d > 0 for d in a["dl"])),
+            "delta_logit_folds": [round(d, 2) for d in a["dl"]],
             "replication_r_mean": float(np.mean(rp_ok)) if rp_ok else None,
             "sign_agreement_mean": float(np.mean(sg_ok)) if sg_ok else None,
         }
+        # A key must be scored on ALL 5 folds to be eligible. Requiring 4/5 positive among fewer than
+        # 5 scored folds would let a key that only worked where it did not crash collect a pass.
+        agg[nm]["complete"] = n == len(K)
         agg[nm]["passes_both_semantics"] = bool(
-            agg[nm]["delta_prob_pos"] >= 4 and agg[nm]["delta_logit_pos"] >= 4
+            agg[nm]["complete"]
+            and agg[nm]["delta_prob_pos"] >= 4 and agg[nm]["delta_logit_pos"] >= 4
             and max(agg[nm]["delta_prob_mean_e5"], agg[nm]["delta_logit_mean_e5"]) >= 1.5)
     out["aggregate"] = agg
 

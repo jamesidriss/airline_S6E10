@@ -1,0 +1,51 @@
+﻿========================================================================================================
+CATBOOST CAPABILITY PROBE   version=1.2.10   250 rounds on a 15% subsample
+========================================================================================================
+  inner-train=58,770  inner-val=25,186  numeric features=21  cat twins=17
+  source cols: ['Gender', 'Customer Type', 'Type of Travel', 'Class'] ...
+  twin cols  : ['ncat__Gender', 'ncat__Customer Type', 'ncat__Type of Travel', 'ncat__Class'] ...
+  cardinality: {'Baggage handling': 5, 'Checkin service': 6, 'Class': 3, 'Cleanliness': 6, 'Customer Type': 2, 'Departure/Arrival time convenient': 6, 'Ease of Online booking': 6, 'Food and drink': 6, 'Gate location': 6, 'Gender': 2, 'Inflight entertainment': 6, 'Inflight wifi service': 6, 'Leg room service': 6, 'On-board service': 6, 'Online boarding': 6, 'Seat comfort': 6, 'Type of Travel': 2}
+  sentinel='__MISSING__'  collides with a real level: none
+
+  P0 numeric Plain (current control)                   trains      1.3s  AUC=0.957067  trees=250  ctr_leaves=None
+  P1 numeric Ordered                                   trains      6.1s  AUC=0.956201  trees=250  ctr_leaves=None
+  P2 +native cats Plain                                trains     14.3s  AUC=0.956353  trees=250  ctr_leaves=None
+  P3 +native cats Ordered                              trains     22.8s  AUC=0.956026  trees=250  ctr_leaves=None
+python.exe : Default metric period is 5 because AUC is/are not implemented for GPU
+Au caractère Ligne:2 : 1
++ & .\.venv\Scripts\python.exe -u scripts\probe_catboost.py 2>&1 | Out- ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Default metric ...emented for GPU:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  P4 +native cats Plain GPU                            trains     12.9s  AUC=0.957012  trees=250  ctr_leaves=None
+Default metric period is 5 because AUC is/are not implemented for GPU
+  P5 +native cats Ordered GPU                          trains     30.9s  AUC=0.956657  trees=250  ctr_leaves=None
+  P6 +native cats Plain max_ctr_complexity=2           trains     13.5s  AUC=0.956155  trees=250  ctr_leaves=None
+  P7 +native cats Plain one_hot_max_size=6             trains      1.6s  AUC=0.956389  trees=250  ctr_leaves=None
+
+========================================================================================================
+SUMMARY
+========================================================================================================
+  arm                                                 trains     sec        AUC  ctr_leaves
+  P0 numeric Plain (current control)                     yes     1.3   0.957067        None
+  P1 numeric Ordered                                     yes     6.1   0.956201        None
+  P2 +native cats Plain                                  yes    14.3   0.956353        None
+  P3 +native cats Ordered                                yes    22.8   0.956026        None
+  P4 +native cats Plain GPU                              yes    12.9   0.957012        None
+  P5 +native cats Ordered GPU                            yes    30.9   0.956657        None
+  P6 +native cats Plain max_ctr_complexity=2             yes    13.5   0.956155        None
+  P7 +native cats Plain one_hot_max_size=6               yes     1.6   0.956389        None
+
+  DECISIONS THIS PROBE FORCES ON THE HARNESS:
+  * Ordered boosting on CPU: SUPPORTED
+  * Native categoricals on CPU: SUPPORTED
+  * GPU + categoricals: works
+  * GPU + Ordered: works
+  * CTR machinery engaged: None leaf CTR descriptions reported. ZERO -- categoricals may have been silently ignored
+  * native cats vs numeric-only, same config: 0.956353 vs 0.957067 = -71.4e-5 (probe scale, NOT evidence)
+
+  NOTE: every AUC here is on a 15% subsample at 250 rounds. They establish CAPABILITY
+  and RATE only. No score from this probe may be quoted as a result.
+
+wrote C:\Users\James\airline_S6E10\reports\catboost_capability.json

@@ -1,0 +1,6 @@
+﻿FULLY NESTED residual-structure scan (Phase 10A)
+  view=full  scheme=primary  folds=[0, 1, 2, 3, 4]
+  pre-declared, NOT tuned: PRIOR_N=50.0  LAMBDA=50.0  MIN_N=200  N_BINS=24  ROUNDS=900
+  base = single champion lgbm extra_trees surrogate, NOT the 59-member v3 blend
+
+fold 0: loaded cached surrogate from p10a_surrogate_fold0.npz
