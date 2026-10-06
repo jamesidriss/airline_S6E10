@@ -48,8 +48,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.common import ID_COL, REPORTS, TARGET, load_cached_parquet, save_json  # noqa: E402
 from src.features.view import RAW21  # noqa: E402
 from src.validation.folds import get_scheme  # noqa: E402
-from scripts.native_cat import (DEFAULT_SERVICE_CARDINALITY, EXPECTED_CARDINALITY,  # noqa: E402
-                                MISSING_SENTINEL, cat_cardinality, cat_frame, default_cat_cols)
+from scripts.native_cat import (MISSING_SENTINEL, cat_cardinality, cat_frame,  # noqa: E402
+                                cat_indices, cat_name, default_cat_cols, is_string_series,
+                                to_cat_series)
 
 ROUNDS = 250          # small on purpose: we are measuring capability and rate, not score
 BASE = dict(iterations=ROUNDS, learning_rate=0.05, depth=8, l2_leaf_reg=3.0,
@@ -93,7 +94,15 @@ def probe(name, Xtr, Xiv, ytr, yiv, cat_cols, boosting, extra=None, task="CPU"):
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
             m = CatBoostClassifier(**p)
-            fit_kw = {"cat_features": list(cat_cols)} if cat_cols else {}
+            fit_kw = {}
+            rec["cat_indices"] = None
+            if cat_cols:
+                ci = cat_indices(Xtr, cat_cols)
+                # CatBoost resolves cat_features POSITIONALLY; declaring names reads column 0.
+                assert ci == cat_indices(Xiv, cat_cols), "cat indices differ between train and apply"
+                assert all(is_string_series(Xtr[c]) for c in cat_cols), "a declared cat is not string"
+                fit_kw["cat_features"] = ci
+                rec["cat_indices"] = ci
             m.fit(Xtr, ytr, **fit_kw)
             rec["warnings"] = sorted({str(x.message)[:110] for x in w})[:4]
         rec["trains"] = True
@@ -125,31 +134,41 @@ def probe(name, Xtr, Xiv, ytr, yiv, cat_cols, boosting, extra=None, task="CPU"):
 def main() -> None:
     import catboost
     tr, X, y, itr, iv = prep()
-    cat_cols = default_cat_cols(True)
-    card = cat_cardinality(tr, cat_cols)
+    # src_cols are the RAW column names; twin_cols are the names the assembled frame actually
+    # carries. Cardinality and sentinel reporting use src_cols, `cat_features` uses twin_cols.
+    # Conflating them was the bug that made the first probe run report every native-categorical arm
+    # as unsupported: CatBoost was handed names absent from the frame, reinterpreted them as column
+    # positions, read numeric column 0, and raised `Invalid type for cat_feature[...] = 1.0`.
+    src_cols = default_cat_cols(True)
+    cat_cols = [cat_name(c) for c in src_cols]
+    card = cat_cardinality(tr, src_cols)
     print("=" * 104)
     print(f"CATBOOST CAPABILITY PROBE   version={catboost.__version__}   "
           f"{ROUNDS} rounds on a 15% subsample")
     print("=" * 104)
     print(f"  inner-train={len(itr):,}  inner-val={len(iv):,}  numeric features={X.shape[1]}  "
           f"cat twins={len(cat_cols)}")
+    print(f"  source cols: {src_cols[:4]} ...")
+    print(f"  twin cols  : {cat_cols[:4]} ...")
     print(f"  cardinality: {dict(sorted(card.items(), key=lambda kv: str(kv[0])))}")
-    print(f"  sentinel={MISSING_SENTINEL!r}  collides="
-          f"{[c for c in cat_cols if MISSING_SENTINEL in set(cat_frame(tr, [c], np.arange(200)).iloc[:,0])]}")
+    collide = [c for c in src_cols
+               if MISSING_SENTINEL in set(to_cat_series(tr[c]).unique())]
+    print(f"  sentinel={MISSING_SENTINEL!r}  collides with a real level: "
+          f"{collide if collide else 'none'}")
     print()
 
     # numeric-only frames
     Xn_tr = pd.DataFrame(X[itr], columns=list(RAW21))
     Xn_iv = pd.DataFrame(X[iv], columns=list(RAW21))
     # numeric + native categorical frames
-    ctr = cat_frame(tr, cat_cols, itr)
-    civ = cat_frame(tr, cat_cols, iv)
+    ctr = cat_frame(tr, src_cols, itr)
+    civ = cat_frame(tr, src_cols, iv)
     Xc_tr = pd.concat([Xn_tr.reset_index(drop=True), ctr], axis=1)
     Xc_iv = pd.concat([Xn_iv.reset_index(drop=True), civ], axis=1)
 
     out = {"catboost_version": catboost.__version__, "rounds": ROUNDS,
-           "numeric_features": int(X.shape[1]), "cat_cols": list(cat_cols),
-           "cardinality": card, "probes": []}
+           "numeric_features": int(X.shape[1]), "src_cols": list(src_cols),
+           "cat_cols": list(cat_cols), "cardinality": card, "probes": []}
 
     out["probes"].append(probe("P0 numeric Plain (current control)", Xn_tr, Xn_iv, y[itr], y[iv],
                                [], "Plain"))

@@ -96,13 +96,49 @@ def to_cat_series(s: pd.Series) -> pd.Series:
 
 
 def cat_frame(src: pd.DataFrame, cols: list[str], rows: np.ndarray) -> pd.DataFrame:
-    """Build the categorical twin block for a specific set of GLOBAL row indices."""
+    """Build the categorical twin block for a specific set of GLOBAL row indices.
+
+    String dtype is enforced explicitly. Pandas will otherwise infer whatever it likes from a numpy
+    array of Python strings, and CatBoost refuses float or NaN values in a categorical column with
+    an error that names the offending type but not the column.
+    """
     data = {}
     for c in cols:
         if c not in src.columns:
             raise KeyError(f"categorical source column {c!r} is absent from the frame")
-        data[cat_name(c)] = to_cat_series(src[c]).to_numpy()[rows]
+        vals = to_cat_series(src[c]).to_numpy()[rows]
+        data[cat_name(c)] = pd.Series(vals, index=pd.RangeIndex(len(rows)), dtype="str")
     return pd.DataFrame(data, index=pd.RangeIndex(len(rows)))
+
+
+def cat_indices(frame: pd.DataFrame, cat_cols: list[str]) -> list[int]:
+    """Resolve `cat_features` for a frame, by NAME, into positional indices.
+
+    CatBoost's `cat_features` accepts names OR indices, and MEASURED behaviour in 1.2.10 is:
+
+      positional index   OK
+      twin NAME          OK
+      a name not in the frame   raises `KeyError: 'Gender' is not in list`
+
+    So the earlier probe failure was NOT "CatBoost ignores names". It was that I passed the SOURCE
+    column names (`Gender`, `Type of Travel`, ...) to a frame whose columns are the TWIN names
+    (`ncat__Gender`, ...), which do not exist in it.
+
+    This helper takes names -- the readable form, and the one that fails loudly on a typo -- and
+    returns the positional indices so callers cannot accidentally pass an index list where names
+    were meant. It also verifies each named column really holds strings, since CatBoost's own error
+    for a float in a categorical column names the type but not the column.
+    """
+    cols = list(frame.columns)
+    idx = []
+    for c in cat_cols:
+        if c not in cols:
+            raise KeyError(f"declared categorical column {c!r} is not in the frame; available "
+                           f"twin names look like {cols[-3:]}")
+        if not is_string_series(frame[c]):
+            raise TypeError(f"declared categorical column {c!r} holds {frame[c].dtype}, not strings")
+        idx.append(cols.index(c))
+    return idx
 
 
 def cat_cardinality(src: pd.DataFrame, cols: list[str]) -> dict[str, int]:
@@ -114,12 +150,28 @@ def cat_cardinality(src: pd.DataFrame, cols: list[str]) -> dict[str, int]:
     return {c: int(to_cat_series(src[c]).nunique()) for c in cols}
 
 
+def is_string_series(s: pd.Series) -> bool:
+    """True when the column holds genuine strings (object OR pandas' `str` dtype).
+
+    Pandas 2.x can infer a dedicated `str` dtype instead of `object`, and this environment does, so a
+    check for `== object` would reject valid frames. What matters to CatBoost is that the VALUES are
+    strings, not the storage dtype.
+    """
+    return bool(s.dtype == object or str(s.dtype) in ("str", "string"))
+
+
 def attach(X: np.ndarray, names: list[str], cats: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
     """Combine the numeric matrix with the categorical block into one CatBoost frame.
 
     Numeric columns keep their float32 dtype and their original names. Categorical columns are
-    appended as object dtype and their names returned separately so the caller can pass them to
-    `cat_features` by name.
+    appended as string columns and their names returned separately. `cat_frame` enforces string
+    dtype in the block itself, so the caller should pass `cat_frame`'s output straight through.
+
+    Callers pass the returned names to `cat_indices`, which resolves them to positional indices.
+    CatBoost also accepts names directly, but resolving here means a typo raises at resolution time
+    with a useful message rather than inside `fit`. An earlier version of this docstring claimed
+    CatBoost ignores names and resolves positionally; that was wrong, and `cat_indices`' docstring
+    records the measured behaviour.
     """
     num = pd.DataFrame(np.asarray(X, dtype=np.float32), columns=list(names))
     num.index = pd.RangeIndex(len(num))

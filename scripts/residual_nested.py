@@ -383,10 +383,13 @@ def main() -> None:
         keys = predeclared_keys(tr)
         for nm, s in teacher_keys(load_teacher_columns(args.view), p_val).items():
             keys[nm] = s
-        # base confidence, needs the base score
+        # base confidence, needs the base score. NOTE the positional take: `tr["Class"]` is indexed
+        # by GLOBAL row, so the META_VAL rows must be selected with .to_numpy()[meta_val], not with
+        # .loc[] or by passing an index array as a column name.
+        cls_val = tr["Class"].to_numpy()[meta_val].astype(str)
         keys["conf:p_decile"] = pd.qcut(pd.Series(p_val), 10, labels=False).astype(str)
         keys["conf:p_decile_x_class"] = (pd.qcut(pd.Series(p_val), 10, labels=False).astype(str)
-                                        + "|" + tr["Class"].astype(tr[meta_val]).astype(str))
+                                        + "|" + cls_val)
 
         base = float(roc_auc_score(y[meta_val], p_val))
         print(f"  scanning {len(keys)} predeclared groupings "
