@@ -1,0 +1,10 @@
+﻿python.exe :   File "C:\Users\James\airline_S6E10\scripts\run_phase11r.py", line 424
+Au caractère Ligne:2 : 1
++ & .\.venv\Scripts\python.exe -u scripts\run_phase11r.py --arm C4 --re ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  File "C:\User...r.py", line 424:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    print(f"  {'-'*105)
+          ^
+SyntaxError: unterminated string literal (detected at line 424)

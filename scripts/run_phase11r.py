@@ -142,6 +142,14 @@ def arm_specs() -> dict:
                    "lr": c3["params"]["learning_rate"], "l2": c3["params"]["l2_leaf_reg"],
                    "seed": c3["seed"], "scheme": c3["fold_scheme"], "extra_src": [],
                    "note": "EXACT counterpart of z3_cat_core3 (own seed 4, core3 view)"},
+        # The C2 reference, restated as an arm so it can be retrained under THIS run's ES budget.
+        # Phase 10's C2 was selected under a 6000-round budget (fold 0 selected ~1040-1300); an arm
+        # trained under a 2500 cap that hits the cap is penalised in a way C2 was not, so comparing
+        # against the stored C2 would manufacture a negative delta out of a budget difference.
+        "C2REF": {"view": C2_REF["view"], "depth": C2_REF["depth"], "lr": C2_REF["lr"],
+                  "l2": C2_REF["l2"], "seed": C2_REF["seed"], "scheme": C2_REF["scheme"],
+                  "extra_src": [],
+                  "note": "C2 reference retrained under THIS run's ES budget (budget-matched)"},
     }
 
 
@@ -211,6 +219,11 @@ def main() -> None:
                     help="timing anchor length. Phase 11 proved a 40-round anchor understates cost "
                          "~7x because CatBoost's per-round cost rises with round count.")
     ap.add_argument("--budget-minutes", type=float, default=90.0)
+    ap.add_argument("--retrain-c2", action="store_true",
+                    help="also train the C2 REFERENCE under this run's ES budget. REQUIRED for a "
+                         "fair delta whenever the budget differs from the one C2 was originally "
+                         "trained under, because a truncated ES penalises only the arm that hit the "
+                         "cap.")
     ap.add_argument("--report", action="store_true")
     args = ap.parse_args()
 
@@ -220,6 +233,8 @@ def main() -> None:
     specs = arm_specs()
     arms = [a.strip().upper() if a.strip().lower() != "ctr2" else "ctr2"
             for a in args.arm.split(",") if a.strip()]
+    if args.retrain_c2 and "C2REF" not in arms:
+        arms = ["C2REF"] + arms
     unknown = [a for a in arms if a not in specs]
     if unknown:
         raise SystemExit(f"unknown arms {unknown}; known {sorted(specs)}")
@@ -375,31 +390,49 @@ def report(args, tr, y, y_int) -> None:
             val = np.where(fl == k)[0]
             P = np.load(f).astype("float64")
             # C2's own fold-k prediction for the same scheme, when it exists
-            c2f = REPORTS / f"p10b_C2_{sc}_f{k}.npy"
+            # Budget-matched reference: prefer a C2REF trained in the SAME run (same ES cap), because
+            # Phase 10's stored C2 used a 6000-round budget while this run uses 2500. Comparing an
+            # arm that hit the cap against a reference that did not would manufacture a negative delta
+            # out of a budget difference rather than out of the mechanism.
+            c2f = REPORTS / f"{args.tag}_C2REF_{sc}_f{k}.npy"
+            ref_name = "C2REF (budget-matched)"
+            if not c2f.exists():
+                c2f = REPORTS / f"p10b_C2_{sc}_f{k}.npy"
+                ref_name = "C2 (Phase 10, 6000-round budget)"
             d_c2 = None
+            o_n = None
+            ref_auc = None
             if c2f.exists():
                 c2 = np.load(c2f).astype("float64")
-                d_c2 = (float(roc_auc_score(y[val], P)) - float(roc_auc_score(y[val], c2))) * 1e5
+                ref_auc = float(roc_auc_score(y[val], c2))
+                d_c2 = (float(roc_auc_score(y[val], P)) - ref_auc) * 1e5
                 o_n = float(corr(logit(c2), logit(P)))
-            else:
-                o_n = None
             rows.append({"arm": aname, "fold": k, "scheme": sc, "auc": float(
                 roc_auc_score(y[val], P)), "delta_vs_C2_e5": d_c2, "corr_vs_C2": o_n,
+                         "reference": ref_name, "reference_auc": ref_auc,
+                         "reference_es_hit_cap": (
+                             runs["arms"].get("C2REF", {}).get(f"f{k}", {}) or {}
+                         ).get("es_hit_cap"),
                          "corr_vs_v3": float(corr(logit(P), logit(v3[val]))),
                          "spearman_vs_v3": float(spearman(P, v3[val])),
                          "iters": r["refit_iter"], "seconds": r["seconds_total"],
                          "es_hit_cap": r.get("es_hit_cap"),
                          "n_cat": r["n_cat"], "ctr_audit": r.get("ctr_audit")})
 
-    print(f"\n  {'arm':<8}{'fold':>5}{'AUC':>12}{'d vs C2':>10}{'corr C2':>10}"
-          f"{'corr v3':>10}{'spear v3':>10}{'iters':>8}{'sec':>8}")
-    print(f"  {'-'*91}")
+    print(f"\n  {'arm':<8}{'fold':>5}{'AUC':>12}{'d vs ref':>10}{'ref':>9}{'ref cap':>9}"
+          f"{'corr ref':>10}{'corr v3':>10}{'spear v3':>10}{'iters':>8}{'sec':>7}")
+    print(f"  {'-'*105)
     for r in rows:
         dc = f"{r['delta_vs_C2_e5']:+.1f}e" if r["delta_vs_C2_e5"] is not None else "-"
         cc = f"{r['corr_vs_C2']:.5f}" if r["corr_vs_C2"] is not None else "-"
-        print(f"  {r['arm']:<8}{r['fold']:>5}{r['auc']:>12.6f}{dc:>10}{cc:>10}"
-              f"{r['corr_vs_v3']:>10.5f}{r['spearman_vs_v3']:>10.5f}{r['iters']:>8}"
-              f"{r['seconds']:>8.0f}")
+        cap = "HIT" if r.get("reference_es_hit_cap") else "-"
+        print(f"  {r['arm']:<8}{r['fold']:>5}{r['auc']:>12.6f}{dc:>10}"
+              f"{('C2REF' if 'budget-matched' in str(r.get('reference')) else 'C2p10'):>9}{cap:>9}"
+              f"{cc:>10}{r['corr_vs_v3']:>10.5f}{r['spearman_vs_v3']:>10.5f}{r['iters']:>8}"
+              f"{r['seconds']:>7.0f}")
+    print("  'ref cap' = HIT means the REFERENCE also hit the ES cap, so both sides are truncated")
+    print("  and the comparison is fair; '-' means only the arm was truncated, which would make its")
+    print("  delta a pessimistic artifact of the budget rather than a property of the mechanism.")
 
     # ---- exact single-slot swaps, fold-0 only, using ACTUAL vectors ----
     print(f"\n  EXACT SINGLE-SLOT SWAPS on fold 0 (replace only slot O_i; other 58 untouched)")

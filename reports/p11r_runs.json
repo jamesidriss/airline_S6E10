@@ -1,0 +1,104 @@
+{
+  "tag": "p11r",
+  "es_rounds": 2500,
+  "es_patience": 200,
+  "c2_reference": {
+    "view": "full",
+    "depth": 8,
+    "learning_rate": 0.04,
+    "l2_leaf_reg": 3.0,
+    "seed": 4,
+    "scheme": "primary"
+  },
+  "arms": {
+    "C4": {
+      "f0": {
+        "arm": "C4",
+        "fold": 0,
+        "fold_scheme": "primary",
+        "view": "full",
+        "depth": 8,
+        "lr": 0.04,
+        "l2": 3.0,
+        "seed": 4,
+        "extra_src": [
+          "Age"
+        ],
+        "max_ctr_complexity": null,
+        "n_features": 303,
+        "n_cat": 18,
+        "cat_cols": [
+          "ncat__Gender",
+          "ncat__Customer Type",
+          "ncat__Type of Travel",
+          "ncat__Class",
+          "ncat__Inflight wifi service",
+          "ncat__Departure/Arrival time convenient",
+          "ncat__Ease of Online booking",
+          "ncat__Gate location",
+          "ncat__Food and drink",
+          "ncat__Online boarding",
+          "ncat__Seat comfort",
+          "ncat__Inflight entertainment",
+          "ncat__On-board service",
+          "ncat__Leg room service",
+          "ncat__Baggage handling",
+          "ncat__Checkin service",
+          "ncat__Cleanliness",
+          "ncat__Age"
+        ],
+        "cat_cardinality": {
+          "Gender": 2,
+          "Customer Type": 2,
+          "Type of Travel": 2,
+          "Class": 3,
+          "Inflight wifi service": 6,
+          "Departure/Arrival time convenient": 6,
+          "Ease of Online booking": 6,
+          "Gate location": 6,
+          "Food and drink": 6,
+          "Online boarding": 6,
+          "Seat comfort": 6,
+          "Inflight entertainment": 6,
+          "On-board service": 6,
+          "Leg room service": 6,
+          "Baggage handling": 5,
+          "Checkin service": 6,
+          "Cleanliness": 6,
+          "Age": 75
+        },
+        "cat_hash": "b89aad72ab13f31a9b5b2f988ce22f854cf4e33a20005a814d702f8e45d9504c",
+        "schema_hash": "4362b10b9dae5a6908202a290a35a793fc6c7d355dfe7542036cc5ced641fbaf",
+        "inner_best_iter": 2499,
+        "refit_iter": 2499,
+        "es_hit_cap": true,
+        "n_rows_refit": 559708,
+        "n_rows_eval": 139927,
+        "auc": 0.9608696537927115,
+        "seconds_es": 886.7,
+        "seconds_total": 1736.5,
+        "ctr_audit": {
+          "dump_counts": {
+            "ctr_type": 4,
+            "ctr_data": 0,
+            "ctr_leaf_count": 0,
+            "one_hot": 0,
+            "simple_ctr": 0,
+            "combinations_ctr": 0,
+            "Borders": 2,
+            "target_border_count": 0
+          },
+          "error": "AttributeError: 'CatBoostClassifier' object has no attribute 'get_leaf_ctr_description'",
+          "cat_feature_count": 18
+        },
+        "pred_sha": "167d639d7677a3152aa2d53d68020bcca35eda14af33bab927b4f3c87916ee7e"
+      }
+    }
+  },
+  "corrections": {
+    "structural_cap_withdrawn": "Phase 11's claim that the CatBoost block is capped at +0.79e-5 was NOT a mathematical upper bound. AUC is a nonlinear functional of the prediction vector, and blend gain is not bounded by family_weight x standalone gain: a member can disproportionately correct pairs the ensemble currently gets wrong. The valid Phase 11 conclusion is only that the two zero-cost swaps gave essentially zero gain, making this hypothesis lower priority.",
+    "previous_swaps_relabelled": "The Phase 11 swaps are APPROXIMATE ZERO-COMPUTE DIAGNOSTICS, not exact slot replacements: C2 was trained with seed 4, so it is not the counterpart of any slot whose original seed differs, and substituting one C2 for several diverse originals destroys the diversity the hypothesis was about. No slot matches C2 exactly.",
+    "v3_geometry": "Authoritative v3 = expit(mean(member LOGITS)) per reproduce_finalist.py:122-152. Verified on the store: float32(expit(mean(logits))) reproduces it with max abs difference exactly 0.0, while mean(probabilities) does NOT reproduce the store -- it differs by 3.53e-02 with logit corr 0.978. Phase 11's guard printed the wrong geometry and asserted a float64 round-off tolerance that happened to pass; the correct guard is float64 within float32 eps AND the float32 cast bit-exact."
+  },
+  "git_commit": "b3a08eafb413"
+}
