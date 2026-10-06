@@ -90,8 +90,13 @@ ES_ROUNDS = 2500
 ES_PATIENCE = 200
 # Phase 10's C2 reference, for apples-to-apples deltas. Seed 4 is recorded so no later arm can
 # silently differ from it on anything but the intended mechanism.
-C2_REF = {"view": "full", "depth": 8, "learning_rate": 0.04, "l2_leaf_reg": 3.0, "seed": 4,
-          "scheme": "primary"}
+# Phase 10's C2 reference, for apples-to-apples deltas. Seed 4 is recorded so no later arm can
+# silently differ from it on anything but the intended mechanism.
+# Keys are spelled to match `arm_specs()` entries ("lr", "l2") so the C2REF arm can be built from
+# this dict directly; the test suite compares against them by name. An earlier version used
+# "learning_rate"/"l2_leaf_reg" here and "lr"/"l2" in the specs, which raised KeyError the moment a
+# reference arm was actually constructed -- the mismatch was invisible while C2REF was unused.
+C2_REF = {"view": "full", "depth": 8, "lr": 0.04, "l2": 3.0, "seed": 4, "scheme": "primary"}
 MINI_SLOTS = {                      # exact counterpart -> original slot it replaces
     "C2": "z3_cat_d8_s2",           # replaced as a DIAGNOSTIC; seed differs, flagged in the report
     "ND6": "z3_cat_d6",
@@ -421,7 +426,7 @@ def report(args, tr, y, y_int) -> None:
 
     print(f"\n  {'arm':<8}{'fold':>5}{'AUC':>12}{'d vs ref':>10}{'ref':>9}{'ref cap':>9}"
           f"{'corr ref':>10}{'corr v3':>10}{'spear v3':>10}{'iters':>8}{'sec':>7}")
-    print(f"  {'-'*105)
+    print("  " + "-" * 105)
     for r in rows:
         dc = f"{r['delta_vs_C2_e5']:+.1f}e" if r["delta_vs_C2_e5"] is not None else "-"
         cc = f"{r['corr_vs_C2']:.5f}" if r["corr_vs_C2"] is not None else "-"
