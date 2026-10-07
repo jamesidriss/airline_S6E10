@@ -1,0 +1,20 @@
+﻿    [cache] view full: (699635, 237)
+========================================================================================================
+PHASE 13 -- auxiliary-task expected-value features on the champion configuration
+========================================================================================================
+  champion xt_xt_d127_s1: full view, primary, fixed seed 1
+  13 auxiliary models per fold, each trained on the OUTER FIT ROWS ONLY.
+  No competition label reaches any auxiliary model. Validation rows are unseen by the
+  model that produces their features.
+  PRIOR: the only mechanism found in this campaign with a reported effect an order of
+  magnitude above Phases 11-12. If real it should show >= +5e-5 standalone here.
+  HONEST COUNTER-PRIOR: an expected value is a shrunk target statistic, the same object
+  as a target encoding -- so 'a smoother encoding we already have' is a live hypothesis,
+  which is why the ENSEMBLE MARGINAL is measured rather than inferred.
+
+   fold  base feat  aux         AUC  vs champ  aux acc  aux sec  champ sec
+  --------------------------------------------------------------------------
+      0        285   13    0.961047     -5.5e    0.700      966         67
+
+  paired vs champion: ['-5.5']  mean -5.55e-5
+  wrote C:\Users\James\airline_S6E10\reports\p13_runs.json
