@@ -27,6 +27,12 @@ sys.path.insert(0, str(ROOT))
 # Scripts on the critical path: anything that trains, submits, or validates. A late NameError in
 # any of these costs real GPU hours or a submission.
 CRITICAL_SCRIPTS = [
+    "scripts/run_sol_a.py",
+    "scripts/evaluate_sol_aux.py",
+    "scripts/evaluate_sol_ssl.py",
+    "scripts/run_sol_tabpfn.py",
+    "scripts/cache_sol_aux.py",
+    "scripts/build_v5_aux_cross.py",
     "scripts/run_tabr.py",
     "scripts/profile_tabr_step.py",
     "scripts/profile_tabr_ops.py",
@@ -44,6 +50,7 @@ CRITICAL_SCRIPTS = [
 
 # Library modules the runners import; an undefined name here breaks every caller.
 CRITICAL_MODULES = [
+    "src/models/windows_attention.py",
     "src/models/tabr_retrieval.py",
     "src/models/tabr_epochlog.py",
     "src/models/residual.py",

@@ -22,12 +22,13 @@ def main() -> int:
     import tests.test_sol_contracts as TS
     import tests.test_private_sim as TP
     import tests.test_masked_encoder as TM
+    import tests.test_sol_research as TQ
 
     # NOTE: test_stochastic_protocol.py has its own __main__ runner with per-assertion reporting, so
     # it is invoked as a subprocess rather than imported here -- importing it would only pick up its
     # module-level helpers. It is registered explicitly so the aggregate count stays honest; a test
     # file that silently stops being run is worse than no test file.
-    mods = (T, TR, TW, TN, TI, TE, TV, TS, TP, TM)
+    mods = (T, TR, TW, TN, TI, TE, TV, TS, TP, TM, TQ)
     fns = [(mod.__name__, getattr(mod, n)) for mod in mods
            for n in sorted(dir(mod)) if n.startswith("test_")]
     ok = fail = 0

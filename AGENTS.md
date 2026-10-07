@@ -77,6 +77,8 @@ rich view; a future refactor that trims features must re-check this.
 | `tok*` | GPT-2 BPE token keys | yes (deterministic) |
 | `ogte_*`, `ogs_*`, `teach_*` | built from **original-dataset labels only** | yes — no competition label involved |
 | `te_*` | fold-safe target encoding | **must** be recomputed per fold with inner cross-fitting |
+| `aux_*` | covariate-rating predictive distributions and signatures; no satisfaction input | **must** use inner OOS probabilities for FIT and outer-FIT-only models for applied rows |
+| `ssl_*` | masked reconstruction of the 21 covariates on train+test | yes — no satisfaction label or id accepted by the encoder |
 
 Any new feature must state which row of this table it belongs to.
 

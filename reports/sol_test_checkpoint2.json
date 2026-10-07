@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "runner": "tests/run_tests.py",
+  "passed": 70,
+  "failed": 0,
+  "log": "reports/sol_tests_checkpoint2.log"
+}

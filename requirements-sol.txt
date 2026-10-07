@@ -1,0 +1,6 @@
+# Frozen SOL foundation-model extension; existing core versions are retained.
+-r requirements-lock.txt
+tabpfn==9.1.0
+safetensors==0.8.0
+einops==0.8.2
+huggingface-hub==2.1.1

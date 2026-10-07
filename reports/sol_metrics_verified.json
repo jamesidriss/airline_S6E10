@@ -1,0 +1,244 @@
+{
+  "updated_utc": "2026-10-07T19:24:42.486596+00:00",
+  "verified_records": [
+    {
+      "exp_id": "sol_repair_C1_A0_f0",
+      "fold": 0,
+      "validation_auc": 0.9610228536664458,
+      "paired_fold_deltas": [
+        -8.051672043540847e-07
+      ],
+      "corr_with_champion": 0.9988449280787438,
+      "verdict": "REPAIRED_BASELINE_REQUIRES_ALL_FOLDS"
+    },
+    {
+      "exp_id": "sol_repair_X0_A0_f0",
+      "fold": 0,
+      "validation_auc": 0.9608649731246114,
+      "paired_fold_deltas": [
+        -4.755266603817532e-07
+      ],
+      "corr_with_champion": 0.9982375530657855,
+      "verdict": "REPAIRED_BASELINE_REQUIRES_ALL_FOLDS"
+    },
+    {
+      "exp_id": "sol_repair_X1_A0_f0",
+      "fold": 0,
+      "validation_auc": 0.9610889978108433,
+      "paired_fold_deltas": [
+        3.221289609167677e-06
+      ],
+      "corr_with_champion": 0.9985387179735814,
+      "verdict": "REPAIRED_BASELINE_REQUIRES_ALL_FOLDS"
+    },
+    {
+      "exp_id": "sol_repair_X2_A0_f0",
+      "fold": 0,
+      "validation_auc": 0.9609447899020784,
+      "paired_fold_deltas": [
+        -1.498384920695095e-06
+      ],
+      "corr_with_champion": 0.9986582476845441,
+      "verdict": "REPAIRED_BASELINE_REQUIRES_ALL_FOLDS"
+    },
+    {
+      "exp_id": "sol_repair_xt_xt_d127_bin63_A0_f0",
+      "fold": 0,
+      "validation_auc": 0.9611615850517857,
+      "paired_fold_deltas": [
+        6.667305917362754e-07
+      ],
+      "corr_with_champion": 0.9987617651367164,
+      "verdict": "REPAIRED_BASELINE_REQUIRES_ALL_FOLDS"
+    },
+    {
+      "exp_id": "sol_repair_xt_xt_d127_cs05_A0_f0",
+      "fold": 0,
+      "validation_auc": 0.9612786111696345,
+      "paired_fold_deltas": [
+        1.692485881221728e-06
+      ],
+      "corr_with_champion": 0.9986646454630729,
+      "verdict": "REPAIRED_BASELINE_REQUIRES_ALL_FOLDS"
+    },
+    {
+      "exp_id": "sol_repair_xt_xt_d127_s1_A0_f0",
+      "fold": 0,
+      "validation_auc": 0.9613071099707466,
+      "paired_fold_deltas": [
+        -1.1557077450596864e-06
+      ],
+      "corr_with_champion": 0.9992811724587339,
+      "verdict": "REPAIRED_BASELINE_REQUIRES_ALL_FOLDS"
+    },
+    {
+      "exp_id": "sol_repair_xt_xt_d127_ss06_A0_f0",
+      "fold": 0,
+      "validation_auc": 0.9611706087806118,
+      "paired_fold_deltas": [
+        -1.9182472332790468e-07
+      ],
+      "corr_with_champion": 0.9990928909696654,
+      "verdict": "REPAIRED_BASELINE_REQUIRES_ALL_FOLDS"
+    },
+    {
+      "exp_id": "sol_repair_xt_xt_d255_A0_f0",
+      "fold": 0,
+      "validation_auc": 0.9612560024428745,
+      "paired_fold_deltas": [
+        2.460405565951618e-07
+      ],
+      "corr_with_champion": 0.998975301592927,
+      "verdict": "REPAIRED_BASELINE_REQUIRES_ALL_FOLDS"
+    },
+    {
+      "exp_id": "sol_repair_xt_xt_d63_A0_f0",
+      "fold": 0,
+      "validation_auc": 0.9611866550118352,
+      "paired_fold_deltas": [
+        -4.71388047151855e-07
+      ],
+      "corr_with_champion": 0.9987900789038918,
+      "verdict": "REPAIRED_BASELINE_REQUIRES_ALL_FOLDS"
+    },
+    {
+      "exp_id": "sol_b_B0_f0",
+      "fold": 0,
+      "validation_auc": 0.9607292901383125,
+      "paired_fold_deltas": [
+        -4.2232478727477485e-06
+      ],
+      "corr_with_champion": 0.9983341800480919,
+      "verdict": "BASELINE"
+    },
+    {
+      "exp_id": "sol_b_B0_f1",
+      "fold": 1,
+      "validation_auc": 0.9608696044288242,
+      "paired_fold_deltas": [
+        -8.620703191297707e-06
+      ],
+      "corr_with_champion": 0.9982236703570735,
+      "verdict": "BASELINE"
+    },
+    {
+      "exp_id": "sol_b_B0_f2",
+      "fold": 2,
+      "validation_auc": 0.9608646809436818,
+      "paired_fold_deltas": [
+        -3.0056580377912923e-06
+      ],
+      "corr_with_champion": 0.9986544796228111,
+      "verdict": "BASELINE"
+    },
+    {
+      "exp_id": "sol_b_B1_f0",
+      "fold": 0,
+      "validation_auc": 0.9609094364193353,
+      "paired_fold_deltas": [
+        -6.07548422570936e-07
+      ],
+      "corr_with_champion": 0.9982381759446479,
+      "verdict": "POSITIVE_UNCONFIRMED"
+    },
+    {
+      "exp_id": "sol_b_B1_f1",
+      "fold": 1,
+      "validation_auc": 0.9611478937023478,
+      "paired_fold_deltas": [
+        -4.433268007031366e-06
+      ],
+      "corr_with_champion": 0.99837425121978,
+      "verdict": "POSITIVE_UNCONFIRMED"
+    },
+    {
+      "exp_id": "sol_b_B1_f2",
+      "fold": 2,
+      "validation_auc": 0.9607714429481907,
+      "paired_fold_deltas": [
+        -3.413723968725968e-06
+      ],
+      "corr_with_champion": 0.9985128707424665,
+      "verdict": "NEGATIVE"
+    },
+    {
+      "exp_id": "sol_b_B2_f0",
+      "fold": 0,
+      "validation_auc": 0.9607601508459961,
+      "paired_fold_deltas": [
+        -6.884583112487519e-07
+      ],
+      "corr_with_champion": 0.9978403196138896,
+      "verdict": "POSITIVE_UNCONFIRMED"
+    },
+    {
+      "exp_id": "sol_b_B3_f0",
+      "fold": 0,
+      "validation_auc": 0.9608292557542999,
+      "paired_fold_deltas": [
+        -2.080480871802237e-06
+      ],
+      "corr_with_champion": 0.9984457862532393,
+      "verdict": "POSITIVE_UNCONFIRMED"
+    },
+    {
+      "exp_id": "sol_a_ladder_A1_f0",
+      "fold": 0,
+      "validation_auc": 0.9610639430601977,
+      "paired_fold_deltas": [
+        4.9245358848537535e-06
+      ],
+      "corr_with_champion": 0.9979355133180811,
+      "verdict": "POSITIVE_UNCONFIRMED"
+    },
+    {
+      "exp_id": "sol_a_ladder_A2_f0",
+      "fold": 0,
+      "validation_auc": 0.9610509660245471,
+      "paired_fold_deltas": [
+        4.473427042461786e-06
+      ],
+      "corr_with_champion": 0.9979413109632327,
+      "verdict": "POSITIVE_UNCONFIRMED"
+    },
+    {
+      "exp_id": "sol_a_ladder_A3_f0",
+      "fold": 0,
+      "validation_auc": 0.9608284453103637,
+      "paired_fold_deltas": [
+        -7.346038488620366e-08
+      ],
+      "corr_with_champion": 0.9982452399359953,
+      "verdict": "NEGATIVE"
+    },
+    {
+      "exp_id": "sol_a_ladder_A4_f0",
+      "fold": 0,
+      "validation_auc": 0.960874770567181,
+      "paired_fold_deltas": [
+        6.572117812186917e-07
+      ],
+      "corr_with_champion": 0.998252224786852,
+      "verdict": "NEGATIVE"
+    },
+    {
+      "exp_id": "sol_a_ladder_SSL_A0_f0",
+      "fold": 0,
+      "validation_auc": 0.9609167556603017,
+      "paired_fold_deltas": [
+        -1.5118354137477752e-06
+      ],
+      "corr_with_champion": 0.9985043231257187,
+      "verdict": "NEGATIVE"
+    }
+  ],
+  "repaired_blend_partial": {
+    "0": {
+      "completed_slots": 10,
+      "auc": 0.9615119057287144,
+      "delta_vs_legacy_v5": 2.064133349466424e-06,
+      "delta_vs_v3": 1.122391908547904e-05
+    }
+  },
+  "limitation": "Unreplaced legacy members retain historical inner crossfit TE priors. Full strict no-own-label finalist reproduction is not complete."
+}

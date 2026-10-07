@@ -1,32 +1,13 @@
-"""Build v5_aux_cross: v3 with 10 slots replaced by aux-equipped counterparts, on the TEST set.
+"""Repaired ten-slot v5 inference, preserving every banked finalist.
 
-PREDECLARED BEFORE ANY PUBLIC SCORE WAS CONSULTED
--------------------------------------------------
-  role          Champion A candidate
-  OOF           0.961523, +1.49e-5 versus v3
-  folds         5/5 positive, paired t +3.97
-  slots         6 extra_trees LightGBM, 3 XGBoost, 1 CatBoost (native-cat representation)
-  admission     MISSES the predeclared +1.5e-5 gate by 0.6%. The gate is not moved. Submitted
-                because the user authorised sanity-check submissions and the sign consistency is the
-                cleanest this campaign has produced.
-  expectation   public movement UNKNOWN, and predicted to be below public resolution, which is
-                about +/-2e-4 paired. No specific score is predicted and none will be tuned toward.
+Require exactly five corrected OOF iteration records per counterpart. Refit
+these ten slots on all labels with their own configurations and median TREE
+COUNTS; retain the other 49 stored v3 test vectors. Auxiliary training features
+use three inner folds, matching OOF. Save every substituted test vector.
 
-TEST-TIME PROTOCOL
-------------------
-Each counterpart is refit on ALL 699,635 training labels, because a test model that used only 80% of
-them would be strictly worse than v3's own test models, all of which use 100% (that is exactly what
-v4_fulldata measures). The iteration count is the MEDIAN of that slot's five cross-validated
-best_iterations, which is the policy scripts/run_views.py::_fit_full_predict_* documents.
-
-THE AUX FEATURES AT TEST TIME MIRROR OOF EXACTLY
--------------------------------------------------
-OOF used cross-fitted aux predictions for the fit rows and a full-fit aux model for the applied rows.
-If the test model were given differently-distributed aux features than it was calibrated on, the
-gain measured OOF would not be the gain realised at test. So: training rows get 5-fold inner
-cross-fitted aux predictions over the training set; test rows get predictions from aux models fitted
-on ALL training rows. Same construction, same label-freeness, same expected-value form, no
-satisfaction label anywhere.
+Legacy v5's OOF gate passed on mean paired fold gain (+1.53545e-5), but its
+submitted test configurations did not reproduce the OOF recipe. The repaired
+candidate needs its own scorecard; it does not inherit the legacy public score.
 """
 
 from __future__ import annotations
@@ -39,7 +20,6 @@ import sys
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -48,8 +28,6 @@ from src.features.view import ViewBuilder  # noqa: E402
 from src.submission import store  # noqa: E402
 from src.validation.compare import corr, spearman  # noqa: E402
 from scripts.run_phase12 import lg, sg  # noqa: E402
-from scripts.run_phase13 import RATINGS, build_aux  # noqa: E402
-from sklearn.model_selection import StratifiedKFold  # noqa: E402
 
 XT_SLOTS = ["xt_xt_d127_s1", "xt_xt_d63", "xt_xt_d255", "xt_xt_d127_cs05",
             "xt_xt_d127_ss06", "xt_xt_d127_bin63"]
@@ -111,12 +89,7 @@ def _iters_from_logs() -> dict:
 
 
 def median_ints(record_dir="reports/sol_repair") -> dict:
-    """Median cross-validated best_iteration per slot.
-
-    Sourced from the run JSON where it survives, and from the logs otherwise. Both sources are
-    merged and the number of folds recovered per slot is reported, because a test-time refit length
-    taken from 2 folds instead of 5 is a silently different model.
-    """
+    """Median tree count from exact fold/treatment/member records; fail closed."""
     out = {}
     arms = {s: s for s in XT_SLOTS}
     arms.update(XGB_ARM)
@@ -222,7 +195,6 @@ def main() -> int:
         np.save(pred_dir / f"{slot}_test.npy", preds[slot])
         print(f"    {slot:<26} lgb  iters {n:<5} done")
 
-    from scripts.run_views import _fit_xgb_es
     XGB_BASE = dict(objective="binary:logistic", eval_metric="auc", learning_rate=0.03,
                     max_depth=8, min_child_weight=8, subsample=0.8, colsample_bytree=0.8,
                     reg_lambda=2.0, max_bin=256, tree_method="hist", device="cuda", n_jobs=8)
@@ -270,12 +242,10 @@ def main() -> int:
     print(f"    EXPECTED public movement: UNKNOWN, likely below public resolution (~+/-2e-4 paired)")
 
     SUB_DIR.mkdir(parents=True, exist_ok=True)
-    sub = te[[ID_COL]].copy()
-    sub[TGT] = v5t
     from src.submission.make import build
     p_out = build(v5t, args.name, notes="S0 repaired v5 configs; OOF from corrected counterparts; not automatically submitted", members=ids)
     sha = hashlib.sha256(p_out.read_bytes()).hexdigest()[:16]
-    print(f"    wrote {p_out}  rows {len(sub)}  sha16 {sha}")
+    print(f"    wrote {p_out}  rows {len(te)}  sha16 {sha}")
     save_json({"name": args.name, "role": "repaired candidate pending OOF scorecard",
                "slots_replaced": sorted(preds), "n_members": 59, "geometry": "expit(mean(logits))",
                "median_iterations": mi, "test_corr_vs_v3": float(corr(lg(v5t), lg(v3t))),
@@ -285,7 +255,7 @@ def main() -> int:
                "training_policy": "10 corrected slots use all labels; other 49 retain v3 fold-averaged test vectors",
                "test_spearman_vs_v3": float(spearman(v5t, v3t)),
                "expected_public_movement": "UNKNOWN, likely below public resolution",
-               "sha16": sha, "rows": int(len(sub)),
+               "sha16": sha, "rows": int(len(te)),
                "git": subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
                                      text=True).stdout.strip()[:12]},
               REPORTS / f"{args.name}_manifest.json")

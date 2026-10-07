@@ -1,0 +1,100 @@
+{
+  "created_utc": "2026-10-07T19:28:06.190670+00:00",
+  "reason": "Exact duplicate label-free static caches of closed TE-view branches; canonical arrays, folds, original data, model checkpoints and all predictions preserved",
+  "bytes_to_free": 6488621126,
+  "files": [
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_tec.npz",
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full.npz",
+      "length": 947506586,
+      "array_hashes": {
+        "tr": "1eb5192bc2fc67c7d781f3100a28bf6be7c4175da34f7ccb5395af18ecc3ff32",
+        "te": "4b64bdcee88271d04a175eaa0811052f8ce527a0a037e3901a33c4f676c41168"
+      },
+      "canonical_array_hashes": {
+        "tr": "1eb5192bc2fc67c7d781f3100a28bf6be7c4175da34f7ccb5395af18ecc3ff32",
+        "te": "4b64bdcee88271d04a175eaa0811052f8ce527a0a037e3901a33c4f676c41168"
+      }
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_tec_swap.npz",
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full.npz",
+      "length": 947506586,
+      "array_hashes": {
+        "tr": "1eb5192bc2fc67c7d781f3100a28bf6be7c4175da34f7ccb5395af18ecc3ff32",
+        "te": "4b64bdcee88271d04a175eaa0811052f8ce527a0a037e3901a33c4f676c41168"
+      },
+      "canonical_array_hashes": {
+        "tr": "1eb5192bc2fc67c7d781f3100a28bf6be7c4175da34f7ccb5395af18ecc3ff32",
+        "te": "4b64bdcee88271d04a175eaa0811052f8ce527a0a037e3901a33c4f676c41168"
+      }
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_te21.npz",
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full.npz",
+      "length": 947506586,
+      "array_hashes": {
+        "tr": "1eb5192bc2fc67c7d781f3100a28bf6be7c4175da34f7ccb5395af18ecc3ff32",
+        "te": "4b64bdcee88271d04a175eaa0811052f8ce527a0a037e3901a33c4f676c41168"
+      },
+      "canonical_array_hashes": {
+        "tr": "1eb5192bc2fc67c7d781f3100a28bf6be7c4175da34f7ccb5395af18ecc3ff32",
+        "te": "4b64bdcee88271d04a175eaa0811052f8ce527a0a037e3901a33c4f676c41168"
+      }
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_all21te.npz",
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full.npz",
+      "length": 947506586,
+      "array_hashes": {
+        "tr": "1eb5192bc2fc67c7d781f3100a28bf6be7c4175da34f7ccb5395af18ecc3ff32",
+        "te": "4b64bdcee88271d04a175eaa0811052f8ce527a0a037e3901a33c4f676c41168"
+      },
+      "canonical_array_hashes": {
+        "tr": "1eb5192bc2fc67c7d781f3100a28bf6be7c4175da34f7ccb5395af18ecc3ff32",
+        "te": "4b64bdcee88271d04a175eaa0811052f8ce527a0a037e3901a33c4f676c41168"
+      }
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3_te.npz",
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3.npz",
+      "length": 899531594,
+      "array_hashes": {
+        "tr": "92a256f72da0e90b3e3f00e9c5a25a635c2319289e4eba7875dd0b20c042cfaa",
+        "te": "965f1f25faaa0939f8cffa9b4de48e54802443b82da9a4d615a6ef9c530b0544"
+      },
+      "canonical_array_hashes": {
+        "tr": "92a256f72da0e90b3e3f00e9c5a25a635c2319289e4eba7875dd0b20c042cfaa",
+        "te": "965f1f25faaa0939f8cffa9b4de48e54802443b82da9a4d615a6ef9c530b0544"
+      }
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3_tec.npz",
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3.npz",
+      "length": 899531594,
+      "array_hashes": {
+        "tr": "92a256f72da0e90b3e3f00e9c5a25a635c2319289e4eba7875dd0b20c042cfaa",
+        "te": "965f1f25faaa0939f8cffa9b4de48e54802443b82da9a4d615a6ef9c530b0544"
+      },
+      "canonical_array_hashes": {
+        "tr": "92a256f72da0e90b3e3f00e9c5a25a635c2319289e4eba7875dd0b20c042cfaa",
+        "te": "965f1f25faaa0939f8cffa9b4de48e54802443b82da9a4d615a6ef9c530b0544"
+      }
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3_tec_swap.npz",
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3.npz",
+      "length": 899531594,
+      "array_hashes": {
+        "tr": "92a256f72da0e90b3e3f00e9c5a25a635c2319289e4eba7875dd0b20c042cfaa",
+        "te": "965f1f25faaa0939f8cffa9b4de48e54802443b82da9a4d615a6ef9c530b0544"
+      },
+      "canonical_array_hashes": {
+        "tr": "92a256f72da0e90b3e3f00e9c5a25a635c2319289e4eba7875dd0b20c042cfaa",
+        "te": "965f1f25faaa0939f8cffa9b4de48e54802443b82da9a4d615a6ef9c530b0544"
+      }
+    }
+  ],
+  "status": "NOT_EXECUTED",
+  "reason_not_executed": "Windows released pagefile space after our full-context job stopped; 35GB disk reserve restored. No cache deletion necessary."
+}

@@ -15,7 +15,7 @@ from src.common import ARTIFACTS, REPORTS, arr_sha256, file_sha256, git_commit, 
 from src.features.view import ViewBuilder
 from src.validation.folds import get_scheme
 from src.validation.compare import logit
-from scripts.run_views import _inner_es_split, _fit_xgb_es
+from scripts.run_views import _inner_es_split, _fit_xgb_es, _fit_lgbm_es
 from scripts.run_phase14 import XGB_ARMS, XGB_BASE, fit_xgb
 from scripts.run_phase14c import counter_path
 from scripts.audit_sol_state import reconstruct_v5
@@ -27,6 +27,7 @@ def main():
     ap.add_argument("--representation", default="sol_ssl12")
     ap.add_argument("--tag", default="sol_b")
     ap.add_argument("--variant", default="B0,B1,B2,B3")
+    ap.add_argument("--family", choices=["xgb", "xt"], default="xgb")
     args = ap.parse_args()
     tr, te = load_cached_parquet()
     y = tr["satisfaction"].to_numpy(dtype="int8")
@@ -43,6 +44,15 @@ def main():
     vb.build_static()
     _, champ, _ = reconstruct_v5(y, folds)
     member, seed, params = XGB_ARMS["X2"]
+    if args.family == 'xt':
+        from scripts.run_phase12 import CHAMPION_PARAMS, CAT_PARAMS
+        from scripts.run_phase13b import fit_slot
+        member, seed = 'xt_xt_d127_s1', 1
+        params = dict(CHAMPION_PARAMS, **CAT_PARAMS)
+        fit = fit_slot
+        canonical_fit = _fit_lgbm_es
+    else:
+        fit, canonical_fit = fit_xgb, _fit_xgb_es
     records = REPORTS / args.tag
     preds = ARTIFACTS / args.tag
     records.mkdir(exist_ok=True)
@@ -54,7 +64,7 @@ def main():
         tl, el = np.searchsorted(fi, itr), np.searchsorted(fi, es)
         Xv = Xa["val"]
         # Independent canonical runner control, on the corrected TE implementation.
-        control, control_it = _fit_xgb_es(Xf[tl].astype(float), y[itr], Xv.astype(float),
+        control, control_it = canonical_fit(Xf[tl].astype(float), y[itr], Xv.astype(float),
                      params, seed, Xf[el].astype(float), y[es])
         b0 = None
         old_slot = np.load(counter_path(member, k))
@@ -67,7 +77,7 @@ def main():
             if rpth.exists():
                 raise ValueError(f"result exists; choose another tag or omit completed folds: {rpth}")
             t0 = time.monotonic()
-            pred, it = fit_xgb(F[tl], y[itr], V, seed, params, F[el], y[es])
+            pred, it = fit(F[tl], y[itr], V, seed, params, F[el], y[es])
             pred = pred.astype("float32")
             if variant == "B0":
                 assert np.array_equal(pred, control.astype("float32")), "STOP: canonical B0 control fails"
@@ -80,15 +90,15 @@ def main():
             slot_champ = champ[va] + (logit(pred) - logit(old_slot)) / 59
             marginal = float(roc_auc_score(y[va], slot_champ) - roc_auc_score(y[va], champ[va]))
             np.save(pth, pred)
-            full_params = dict(XGB_BASE, **params, random_state=seed)
-            rec = {"git": git_commit(), "variant": variant, "fold": k, "model_family": "xgb",
+            full_params = dict(XGB_BASE, **params, random_state=seed) if args.family == 'xgb' else dict(params, random_state=seed, bagging_seed=seed+1, feature_fraction_seed=seed+2)
+            rec = {"git": git_commit(), "variant": variant, "fold": k, "model_family": args.family,
                    "member": member, "params": full_params, "seed": seed, "train_rows": len(itr),
                    "es_rows": len(es), "validation_rows": len(va), "n_features": F.shape[1],
                    "fit_ids_sha256": arr_sha256(tr["id"].to_numpy()[itr]),
                    "validation_ids_sha256": arr_sha256(tr["id"].to_numpy()[va]),
                    "fold_sha256": arr_sha256(folds), "feature_fit_sha256": arr_sha256(F),
                    "feature_val_sha256": arr_sha256(V), "representation_fingerprint": manifest["fingerprint"],
-                   "auc": auc, "delta_vs_B0": delta, "v5_slot_delta": marginal, "n_trees": it + 1,
+                   "auc": auc, "delta_vs_B0": delta, "v5_slot_delta": marginal, "n_trees": it + (args.family == 'xgb'),
                    "canonical_control_bit_identical": True, "prediction_sha256": arr_sha256(pred),
                    "seconds": time.monotonic() - t0, "test_policy": "same fixed transductive encoder; full-label tree refit at primary median tree count",
                    "logit_corr_vs_B0": float(np.corrcoef(logit(pred), logit(b0))[0, 1]),

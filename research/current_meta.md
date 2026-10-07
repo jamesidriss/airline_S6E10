@@ -295,3 +295,15 @@ labels only support 0.9612, the original rows teach a *different, sharper* funct
 model — yet their **conditional target statistics** are worth +0.001015, because those encode
 feature-level structure that survives even when the overall dependence is much weaker.
 **Use external data as knowledge, never as rows — measured, not assumed.**
+
+## 10. SOL source audit, 7 October 2026
+
+`goodpjw2008/s6e10-tabpfn-route-categories-lb-0-96160` contains a genuinely new
+full-context TabPFN route representation. Its tree OOF cells early-stop on the
+outer evaluation labels, and its meta folds differ from the base folds without
+fully nested base training. Reject those tree/stack CV claims as comparable
+evidence; do not import their prediction CSVs. Reimplement only the pretrained
+inference mechanism with all context targets drawn from outer FIT, fixed primary
+folds and no outer-fold model selection. The other inspected current leading
+stacking notebooks import public prediction libraries of insufficient nesting
+provenance. Detailed classifications and the ranked queue: `research/sol_queue.md`.
