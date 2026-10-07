@@ -50,6 +50,13 @@ PROTOCOL (must match the champion exactly, or the comparison is void)
   Training follows run_zoo.py::run_gbdt: an inner 10% carve of the FIT rows is used for early
   stopping, the model is trained on the other 90%, and the OUTER fold is predicted at
   best_iteration. No outer-validation label ever reaches early stopping.
+  THE SEED IS FIXED AT 1 FOR EVERY FOLD. scripts/run_xt_zoo.py:112 calls
+  run_gbdt(..., seed) with the zoo entry's single seed and never adds the fold index. My first
+  version used CHAMPION_SEED + k, which coincidentally matches on fold 0 (1+0 == 1) and diverges
+  everywhere else: L0 then scored +2.7e-5 and +2.8e-5 against the stored champion on folds 1 and 2
+  instead of +0.0e-5. A fold-0-only screen would never have caught it, because fold 0 is exactly
+  where the two conventions coincide. The L0 reproduction check is therefore run on EVERY fold, not
+  just the first, and it is the check that exposed this.
   L0 must reproduce the stored xt_xt_d127_s1 fold score before any treatment is trusted.
 
 Usage:
@@ -131,6 +138,13 @@ def sg(z):
     return 1.0 / (1.0 + np.exp(-np.clip(np.asarray(z, dtype="float64"), -35, 35)))
 
 
+def te_hash(Xf, te_pos) -> str:
+    """Content hash of the 48 te_ columns for ONE fold. Per fold, never across folds."""
+    import hashlib
+    a = np.ascontiguousarray(Xf[:, te_pos], dtype="float64")
+    return hashlib.sha256(a.tobytes()).hexdigest()[:16]
+
+
 def census(m) -> dict:
     """Split census straight from dump_model(); categorical splits carry decision_type '=='."""
     d = m.dump_model()
@@ -171,9 +185,17 @@ def fit_arm(Xf, yf, Xv, cat_idx, seed, es_X=None, es_y=None, n_rounds=None):
 
 
 # ------------------------------------------------------------------ safety assertions
-def assert_safety(arm, Xf, Xv, names, cat_cols, base_names, base_Xf):
-    """The 10 predeclared schema/safety checks. Any failure aborts before training."""
-    from sklearn.metrics import roc_auc_score
+def assert_safety(arm, Xf, Xv, names, cat_cols, te_ref):
+    """The 10 predeclared schema/safety checks. Any failure aborts before training.
+
+    `te_ref` is the PER-FOLD control hash of the 48 te_ columns. Comparing te_ across FOLDS is
+    meaningless -- they are fold-safe target encodings, refitted per fold, so fold 1's te_ columns
+    are supposed to differ from fold 2's. My first version captured a single reference from
+    whichever fold ran first and then compared later folds against it, so it aborted with "te_
+    columns changed vs control" on a perfectly correct run. The reference is now keyed by fold, and
+    the stronger property is checked directly: every arm in a fold receives the SAME assembled
+    matrix object, so the treatment cannot have perturbed feature construction at all.
+    """
     fails: list[str] = []
 
     def req(ok, msg):
@@ -184,17 +206,14 @@ def assert_safety(arm, Xf, Xv, names, cat_cols, base_names, base_Xf):
     req(Xf.shape[1] == 285, f"feature count {Xf.shape[1]} != 285")
     # 3b the column NAMES and order are identical to the control: declaring categorical changes
     #    handling only, never the matrix layout.
-    req(list(names) == list(base_names), "column names/order differ from the control")
-    # 2/4 the te_ block is present and byte-identical
+    req(len(names) == 285 and len(set(names)) == 285, "column names are not 285 distinct values")
+    # 2/4 the te_ block is present and byte-identical to this fold's control
     te_pos = [i for i, n in enumerate(names) if n.startswith("te_")]
     req(len(te_pos) == 48, f"te_ column count {len(te_pos)} != 48")
-    if base_Xf is not None and te_pos:
-        req(np.array_equal(Xf[:, te_pos], base_Xf[:, te_pos]), "te_ columns changed vs control")
-    # 2b no appended duplicate: a declared categorical must be an EXISTING column, so the count of
-    #    distinct positions must equal the count of declared names
+    req(te_hash(Xf, te_pos) == te_ref, "te_ columns differ from this fold's control")
+    # 2b no appended duplicate: a declared categorical must be an EXISTING column
     pos = [names.index(c) for c in cat_cols]
     req(len(set(pos)) == len(pos), "duplicate column positions among the declared categoricals")
-    req(len(pos) == len(set(pos)), "a declared categorical appears twice")
     # 5/6/7 category codes: non-negative integers, no NaN, and no code in the apply rows that was
     #    absent from the fit rows (which would let LightGBM invent a level at prediction time).
     for c, j in zip(cat_cols, pos):
@@ -205,8 +224,7 @@ def assert_safety(arm, Xf, Xv, names, cat_cols, base_names, base_Xf):
             req(bool(np.all(col == np.floor(col))), f"{c}: non-integer code in {tag} rows")
         unseen = set(np.unique(Xv[:, j]).tolist()) - set(np.unique(Xf[:, j]).tolist())
         req(not unseen, f"{c}: codes in val absent from fit: {sorted(unseen)}")
-    # 7 survey zero must remain a REAL level, distinct from missingness. Verified by the survey
-    #   columns declaring 0 as a present code, which can only happen if 0 is not being swallowed.
+    # 7 survey zero must remain a REAL level, distinct from missingness.
     for c in cat_cols:
         if c in SURVEY13:
             req(0.0 in set(np.unique(Xf[:, names.index(c)].tolist())),
@@ -243,19 +261,39 @@ def main() -> int:
     print("  declared prior: cat_smooth=10 and cat_l2=10 make a categorical split a SHRUNK target")
     print("  statistic with a prior -- the same smoothing family the 48 te_ columns already supply,")
     print("  so the expected effect is SMALL rather than new information. Stated before running.")
-    print(f"  {'arm':<5}{'cat cols':>9}{'feat':>6}{'AUC':>12}{'delta':>10}{'iters':>7}"
-          f"{'cat splits':>11}{'sec':>7}")
-    print("  " + "-" * 84)
+    print(f"  {'arm':<5}{'fold':>5}{'cat cols':>9}{'feat':>6}{'AUC':>12}{'delta':>10}"
+          f"{'iters':>7}{'cat splits':>11}{'sec':>7}")
+    print("  " + "-" * 89)
 
+    # TWO fold-index coincidences, both invisible on fold 0, both found only because the L0
+    # reproduction check runs on EVERY fold rather than the first:
+    #   (a) the SEED. run_xt_zoo.py:112 passes the zoo entry's single seed and never adds the fold
+    #       index. Using seed+k matches on fold 0 (1+0 == 1) and diverges thereafter.
+    #   (b) the INNER SEED of the cross-fitted target encodings. run_xt_zoo.py:111 calls
+    #       vb.assemble(fit, y, val, None, inner_seed=k) -- the FOLD INDEX. Using inner_seed=0
+    #       matches on fold 0 and diverges on every other fold, because the inner cross-fit split
+    #       for training rows is seeded by it.
+    # Fixing (a) alone still left folds 1 and 2 mismatched by +4.5e-5 and -6.6e-5, which is what
+    # exposed (b). A fold-0-only screen passes both bugs.
     out = {"tag": args.tag, "champion_member": CHAMPION_MEMBER,
            "champion_params": CHAMPION_PARAMS, "cat_params": CAT_PARAMS,
            "arms": {}, "folds_run": [],
            "protocol": "inner 10% carve of the FIT rows for early stopping; the model trains on "
                        "the other 90% and predicts the OUTER fold at best_iteration, exactly as "
-                       "scripts/run_zoo.py::run_gbdt does. No outer-validation label reaches ES.",
+                       "scripts/run_zoo.py::run_gbdt does. No outer-validation label reaches ES. "
+                       "The SEED IS FIXED at 1 on every fold (run_xt_zoo.py:112 passes the entry "
+                       "seed and never adds k) and inner_seed IS the fold index (run_xt_zoo.py:111). "
+                       "Both fold-index coincidences are invisible on fold 0, which is why the L0 "
+                       "reproduction check runs on every fold.",
            "git": subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
                                  text=True).stdout.strip()[:12]}
-    base_names = base_Xf = None
+    # te_ (target-encoding) columns are refitted PER FOLD, so a cross-fold reference is meaningless.
+    # Keying the reference by fold is what makes the te_ invariance check meaningful: it asserts
+    # every arm of a given fold was handed identical features, which is the property that actually
+    # matters. The first version captured one reference from whichever fold ran first and compared
+    # later folds against it, so it aborted with "te_ columns changed vs control" on a correct run.
+    te_ref_by_fold: dict[int, str] = {}
+    first_names: list[str] | None = None
 
     for aname in [a.strip().upper() for a in args.arms.split(",") if a.strip()]:
         if aname not in ARMS:
@@ -265,10 +303,21 @@ def main() -> int:
             out["folds_run"].append(k)
             fit_idx = np.where(folds != k)[0]
             val_idx = np.where(folds == k)[0]
-            Xf, Xa, names = vb.assemble(fit_idx, yi, val_idx, None, inner_seed=0)
+            Xf, Xa, names = vb.assemble(fit_idx, yi, val_idx, None, inner_seed=k)
             Xv = Xa["val"]
-            if base_names is None:
-                base_names, base_Xf = list(names), Xf
+            te_pos = [i for i, n in enumerate(names) if n.startswith("te_")]
+            te_ref = te_hash(Xf, te_pos)
+            if k in te_ref_by_fold and te_ref_by_fold[k] != te_ref:
+                raise SystemExit(f"STOP: fold {k} features differ between arms -- the treatment "
+                                 f"perturbed feature construction.")
+            te_ref_by_fold[k] = te_ref
+            out.setdefault("fold_matrices", {})[str(k)] = {
+                "te_hash": te_ref, "n_te": len(te_pos), "n_features": int(Xf.shape[1]),
+                "n_fit": int(Xf.shape[0]), "n_val": int(Xv.shape[0])}
+            if first_names is None:
+                first_names = list(names)
+            elif list(names) != first_names:
+                raise SystemExit("STOP: column names/order differ between arms.")
 
             cat_cols_here = [c for c in cat_cols if c in names]
             missing = [c for c in cat_cols if c not in names]
@@ -276,15 +325,17 @@ def main() -> int:
                 raise SystemExit(f"{aname}: columns absent from the {CHAMPION_VIEW} view: {missing}")
             cat_idx = [names.index(c) for c in cat_cols_here]
 
-            fails = assert_safety(aname, Xf, Xv, names, cat_cols_here, base_names,
-                                  base_Xf if aname != "L0" else None)
+            fails = assert_safety(aname, Xf, Xv, names, cat_cols_here, te_ref)
             if fails:
-                print(f"\n  {aname}: SAFETY CHECK FAILED, not training:")
+                print(f"\n  {aname} fold {k}: SAFETY CHECK FAILED, not training:")
                 for f in fails:
                     print(f"    - {f}")
                 raise SystemExit("STOP: safety checks failed.")
 
-            itr, es = _inner_es_split(fit_idx, yi, CHAMPION_SEED + k)
+            # SEED IS FIXED, not seed+k. run_xt_zoo.py:112 passes the zoo entry's single seed and
+            # never adds the fold index. seed+k coincides with the correct value on fold 0
+            # (1+0 == 1) and diverges on every other fold, so a fold-0-only screen cannot detect it.
+            itr, es = _inner_es_split(fit_idx, yi, CHAMPION_SEED)
             pos = {int(v): i for i, v in enumerate(fit_idx)}
             tr_l = np.array([pos[int(v)] for v in itr])
             es_l = np.array([pos[int(v)] for v in es])
@@ -294,8 +345,7 @@ def main() -> int:
                 raise SystemExit("STOP: the inner carve does not partition the fit rows.")
 
             t0 = time.time()
-            m, best = fit_arm(Xf[tr_l], y[itr], Xv, cat_idx, CHAMPION_SEED + k,
-                              Xf[es_l], y[es])
+            m, best = fit_arm(Xf[tr_l], y[itr], Xv, cat_idx, CHAMPION_SEED, Xf[es_l], y[es])
             pred = m.predict(Xv, num_iteration=best)
             secs = time.time() - t0
             cen = census(m)
@@ -321,7 +371,7 @@ def main() -> int:
                    "n_train_rows": int(len(tr_l)), "n_es_rows": int(len(es_l))}
             out["arms"].setdefault(aname, {})[f"f{k}"] = rec
             dc = f"{rec['delta_vs_champion_e5']:+.1f}e"
-            print(f"  {aname:<5}{len(cat_cols_here):>9}{Xf.shape[1]:>6}{auc:>12.6f}{dc:>10}"
+            print(f"  {aname:<5}{k:>5}{len(cat_cols_here):>9}{Xf.shape[1]:>6}{auc:>12.6f}{dc:>10}"
                   f"{best:>7}{cen['n_categorical_splits']:>11}{secs:>7.0f}")
 
     save_json(out, REPORTS / f"{args.tag}_runs.json")
@@ -386,13 +436,23 @@ def report(args, tr, y, yi) -> int:
                   f"{r['corr_vs_champion']:>12.5f}{r['spearman_vs_champion']:>12.5f}"
                   f"{a_sw:>11.6f}{(a_sw - a_b4) * 1e5:>+8.2f}e{r['seconds']:>7.0f}")
 
-    # ---- L0 must reproduce the stored champion, or the harness is not the champion -------
-    l0 = [r for r in rows if r["arm"] == "L0"]
+    # ---- L0 must reproduce the stored champion ON EVERY FOLD, or the harness is not the champion
+    l0 = sorted((r for r in rows if r["arm"] == "L0"), key=lambda r: r["fold"])
     print()
     if l0:
-        d = l0[0]["delta_vs_champion_e5"]
-        print(f"  L0 REPRODUCTION CHECK: retrained control vs stored {tgt} = {d:+.3f}e-5")
-        print(f"    {'PASS -- the harness is the champion configuration' if abs(d) < 1.0 else 'FAIL -- a ' + str(abs(d)) + 'e-5 gap means the harness is NOT the champion config; every delta above is void'}")
+        worst = max(abs(r["delta_vs_champion_e5"]) for r in l0)
+        print(f"  L0 REPRODUCTION CHECK vs stored {tgt}, EVERY fold:")
+        for r in l0:
+            d = r["delta_vs_champion_e5"]
+            print(f"    fold {r['fold']}: {d:+.3f}e-5  {'ok' if abs(d) < 1.0 else 'MISMATCH'}")
+        print(f"    worst |delta| = {worst:.3f}e-5")
+        if worst >= 1.0:
+            print("    FAIL -- the harness is NOT the champion configuration; every delta above is")
+            print("           void. The usual cause is the seed convention: the champion uses a")
+            print("           FIXED seed on every fold, so seed+k matches on fold 0 and diverges")
+            print("           after it, which a fold-0-only screen cannot detect.")
+        else:
+            print("    PASS -- the harness reproduces the champion configuration on every fold run.")
     else:
         print("  L0 not run: the reproduction check is MISSING and every delta is unvalidated.")
 

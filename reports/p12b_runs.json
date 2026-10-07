@@ -1,0 +1,473 @@
+{
+  "tag": "p12b",
+  "champion_member": "xt_xt_d127_s1",
+  "champion_params": {
+    "objective": "binary",
+    "metric": "auc",
+    "n_estimators": 6000,
+    "learning_rate": 0.02,
+    "num_leaves": 127,
+    "min_child_samples": 40,
+    "colsample_bytree": 0.8,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "reg_lambda": 1.0,
+    "max_bin": 255,
+    "verbose": -1,
+    "n_jobs": 8,
+    "extra_trees": true
+  },
+  "cat_params": {
+    "cat_smooth": 10,
+    "cat_l2": 10,
+    "max_cat_threshold": 32,
+    "max_cat_to_onehot": 4,
+    "min_data_per_group": 100
+  },
+  "arms": {
+    "L0": {
+      "f0": {
+        "arm": "L0",
+        "note": "control: no categorical declaration",
+        "fold": 0,
+        "scheme": "primary",
+        "view": "full",
+        "seed": 1,
+        "cat_cols": [],
+        "cat_idx": [],
+        "n_features": 285,
+        "n_cat": 0,
+        "n_te": 48,
+        "best_iter": 1073,
+        "es_hit_cap": false,
+        "auc": 0.9611027137958863,
+        "champion_stored_auc": 0.9611027125543024,
+        "delta_vs_champion_e5": 0.00012415839467649903,
+        "corr_vs_champion": 0.9999999999999892,
+        "spearman_vs_champion": 0.9999999999985194,
+        "seconds": 42.1,
+        "census": {
+          "n_splits": 135198,
+          "decision_types": {
+            "<=": 135198
+          },
+          "n_categorical_splits": 0
+        },
+        "splits_on_declared": {},
+        "n_train_rows": 503739,
+        "n_es_rows": 55969
+      },
+      "f1": {
+        "arm": "L0",
+        "note": "control: no categorical declaration",
+        "fold": 1,
+        "scheme": "primary",
+        "view": "full",
+        "seed": 1,
+        "cat_cols": [],
+        "cat_idx": [],
+        "n_features": 285,
+        "n_cat": 0,
+        "n_te": 48,
+        "best_iter": 878,
+        "es_hit_cap": false,
+        "auc": 0.961289784558678,
+        "champion_stored_auc": 0.9612897844552131,
+        "delta_vs_champion_e5": 1.0346490331158975e-05,
+        "corr_vs_champion": 0.99999999999999,
+        "spearman_vs_champion": 0.9999999999984254,
+        "seconds": 36.8,
+        "census": {
+          "n_splits": 110628,
+          "decision_types": {
+            "<=": 110628
+          },
+          "n_categorical_splits": 0
+        },
+        "splits_on_declared": {},
+        "n_train_rows": 503739,
+        "n_es_rows": 55969
+      },
+      "f2": {
+        "arm": "L0",
+        "note": "control: no categorical declaration",
+        "fold": 2,
+        "scheme": "primary",
+        "view": "full",
+        "seed": 1,
+        "cat_cols": [],
+        "cat_idx": [],
+        "n_features": 285,
+        "n_cat": 0,
+        "n_te": 48,
+        "best_iter": 764,
+        "es_hit_cap": false,
+        "auc": 0.9610989615894932,
+        "champion_stored_auc": 0.9610989614860279,
+        "delta_vs_champion_e5": 1.0346523637849714e-05,
+        "corr_vs_champion": 0.9999999999999909,
+        "spearman_vs_champion": 0.999999999998445,
+        "seconds": 44.9,
+        "census": {
+          "n_splits": 96264,
+          "decision_types": {
+            "<=": 96264
+          },
+          "n_categorical_splits": 0
+        },
+        "splits_on_declared": {},
+        "n_train_rows": 503739,
+        "n_es_rows": 55969
+      }
+    },
+    "L1": {
+      "f0": {
+        "arm": "L1",
+        "note": "META4 as native categories",
+        "fold": 0,
+        "scheme": "primary",
+        "view": "full",
+        "seed": 1,
+        "cat_cols": [
+          "Gender",
+          "Customer Type",
+          "Type of Travel",
+          "Class"
+        ],
+        "cat_idx": [
+          13,
+          14,
+          15,
+          16
+        ],
+        "n_features": 285,
+        "n_cat": 4,
+        "n_te": 48,
+        "best_iter": 888,
+        "es_hit_cap": false,
+        "auc": 0.9611622384353499,
+        "champion_stored_auc": 0.9611027125543024,
+        "delta_vs_champion_e5": 5.952588104751744,
+        "corr_vs_champion": 0.9990134838495517,
+        "spearman_vs_champion": 0.992028255260498,
+        "seconds": 38.0,
+        "census": {
+          "n_splits": 111888,
+          "decision_types": {
+            "<=": 107202,
+            "==": 4686
+          },
+          "n_categorical_splits": 4686
+        },
+        "splits_on_declared": {
+          "Gender": 2022,
+          "Customer Type": 1113,
+          "Type of Travel": 741,
+          "Class": 810
+        },
+        "n_train_rows": 503739,
+        "n_es_rows": 55969
+      },
+      "f1": {
+        "arm": "L1",
+        "note": "META4 as native categories",
+        "fold": 1,
+        "scheme": "primary",
+        "view": "full",
+        "seed": 1,
+        "cat_cols": [
+          "Gender",
+          "Customer Type",
+          "Type of Travel",
+          "Class"
+        ],
+        "cat_idx": [
+          13,
+          14,
+          15,
+          16
+        ],
+        "n_features": 285,
+        "n_cat": 4,
+        "n_te": 48,
+        "best_iter": 846,
+        "es_hit_cap": false,
+        "auc": 0.9612784212054605,
+        "champion_stored_auc": 0.9612897844552131,
+        "delta_vs_champion_e5": -1.1363249752593951,
+        "corr_vs_champion": 0.9991508278439502,
+        "spearman_vs_champion": 0.9931330832334394,
+        "seconds": 47.0,
+        "census": {
+          "n_splits": 106596,
+          "decision_types": {
+            "<=": 102175,
+            "==": 4421
+          },
+          "n_categorical_splits": 4421
+        },
+        "splits_on_declared": {
+          "Gender": 1878,
+          "Customer Type": 1093,
+          "Type of Travel": 756,
+          "Class": 694
+        },
+        "n_train_rows": 503739,
+        "n_es_rows": 55969
+      },
+      "f2": {
+        "arm": "L1",
+        "note": "META4 as native categories",
+        "fold": 2,
+        "scheme": "primary",
+        "view": "full",
+        "seed": 1,
+        "cat_cols": [
+          "Gender",
+          "Customer Type",
+          "Type of Travel",
+          "Class"
+        ],
+        "cat_idx": [
+          13,
+          14,
+          15,
+          16
+        ],
+        "n_features": 285,
+        "n_cat": 4,
+        "n_te": 48,
+        "best_iter": 690,
+        "es_hit_cap": false,
+        "auc": 0.9611549034556026,
+        "champion_stored_auc": 0.9610989614860279,
+        "delta_vs_champion_e5": 5.59419695747021,
+        "corr_vs_champion": 0.9992676877016929,
+        "spearman_vs_champion": 0.9938869665045509,
+        "seconds": 31.5,
+        "census": {
+          "n_splits": 86940,
+          "decision_types": {
+            "<=": 83291,
+            "==": 3649
+          },
+          "n_categorical_splits": 3649
+        },
+        "splits_on_declared": {
+          "Gender": 1449,
+          "Customer Type": 973,
+          "Type of Travel": 599,
+          "Class": 628
+        },
+        "n_train_rows": 503739,
+        "n_es_rows": 55969
+      }
+    },
+    "L2": {
+      "f0": {
+        "arm": "L2",
+        "note": "META4 + the three zero/N-A sensitive surveys",
+        "fold": 0,
+        "scheme": "primary",
+        "view": "full",
+        "seed": 1,
+        "cat_cols": [
+          "Gender",
+          "Customer Type",
+          "Type of Travel",
+          "Class",
+          "Online boarding",
+          "Inflight wifi service",
+          "Gate location"
+        ],
+        "cat_idx": [
+          13,
+          14,
+          15,
+          16,
+          5,
+          0,
+          3
+        ],
+        "n_features": 285,
+        "n_cat": 7,
+        "n_te": 48,
+        "best_iter": 731,
+        "es_hit_cap": false,
+        "auc": 0.9611574976538926,
+        "champion_stored_auc": 0.9611027125543024,
+        "delta_vs_champion_e5": 5.478509959022659,
+        "corr_vs_champion": 0.9989079916623949,
+        "spearman_vs_champion": 0.9913957748518831,
+        "seconds": 42.8,
+        "census": {
+          "n_splits": 92106,
+          "decision_types": {
+            "<=": 83200,
+            "==": 8906
+          },
+          "n_categorical_splits": 8906
+        },
+        "splits_on_declared": {
+          "Gender": 1477,
+          "Customer Type": 951,
+          "Type of Travel": 594,
+          "Class": 644,
+          "Online boarding": 1354,
+          "Inflight wifi service": 1807,
+          "Gate location": 2079
+        },
+        "n_train_rows": 503739,
+        "n_es_rows": 55969
+      },
+      "f1": {
+        "arm": "L2",
+        "note": "META4 + the three zero/N-A sensitive surveys",
+        "fold": 1,
+        "scheme": "primary",
+        "view": "full",
+        "seed": 1,
+        "cat_cols": [
+          "Gender",
+          "Customer Type",
+          "Type of Travel",
+          "Class",
+          "Online boarding",
+          "Inflight wifi service",
+          "Gate location"
+        ],
+        "cat_idx": [
+          13,
+          14,
+          15,
+          16,
+          5,
+          0,
+          3
+        ],
+        "n_features": 285,
+        "n_cat": 7,
+        "n_te": 48,
+        "best_iter": 589,
+        "es_hit_cap": false,
+        "auc": 0.96134569310906,
+        "champion_stored_auc": 0.9612897844552131,
+        "delta_vs_champion_e5": 5.590865384696997,
+        "corr_vs_champion": 0.9990425690419534,
+        "spearman_vs_champion": 0.9925099415251152,
+        "seconds": 28.7,
+        "census": {
+          "n_splits": 74214,
+          "decision_types": {
+            "<=": 66902,
+            "==": 7312
+          },
+          "n_categorical_splits": 7312
+        },
+        "splits_on_declared": {
+          "Gender": 1098,
+          "Customer Type": 867,
+          "Type of Travel": 532,
+          "Class": 484,
+          "Online boarding": 1165,
+          "Inflight wifi service": 1551,
+          "Gate location": 1615
+        },
+        "n_train_rows": 503739,
+        "n_es_rows": 55969
+      },
+      "f2": {
+        "arm": "L2",
+        "note": "META4 + the three zero/N-A sensitive surveys",
+        "fold": 2,
+        "scheme": "primary",
+        "view": "full",
+        "seed": 1,
+        "cat_cols": [
+          "Gender",
+          "Customer Type",
+          "Type of Travel",
+          "Class",
+          "Online boarding",
+          "Inflight wifi service",
+          "Gate location"
+        ],
+        "cat_idx": [
+          13,
+          14,
+          15,
+          16,
+          5,
+          0,
+          3
+        ],
+        "n_features": 285,
+        "n_cat": 7,
+        "n_te": 48,
+        "best_iter": 787,
+        "es_hit_cap": false,
+        "auc": 0.9611644563783781,
+        "champion_stored_auc": 0.9610989614860279,
+        "delta_vs_champion_e5": 6.549489235019301,
+        "corr_vs_champion": 0.9991857565820469,
+        "spearman_vs_champion": 0.9932713361245109,
+        "seconds": 34.4,
+        "census": {
+          "n_splits": 99162,
+          "decision_types": {
+            "<=": 89705,
+            "==": 9457
+          },
+          "n_categorical_splits": 9457
+        },
+        "splits_on_declared": {
+          "Gender": 1674,
+          "Customer Type": 1066,
+          "Type of Travel": 667,
+          "Class": 678,
+          "Online boarding": 1422,
+          "Inflight wifi service": 1720,
+          "Gate location": 2230
+        },
+        "n_train_rows": 503739,
+        "n_es_rows": 55969
+      }
+    }
+  },
+  "folds_run": [
+    0,
+    1,
+    2,
+    0,
+    1,
+    2,
+    0,
+    1,
+    2
+  ],
+  "protocol": "inner 10% carve of the FIT rows for early stopping; the model trains on the other 90% and predicts the OUTER fold at best_iteration, exactly as scripts/run_zoo.py::run_gbdt does. No outer-validation label reaches ES. The SEED IS FIXED at 1 on every fold (run_xt_zoo.py:112 passes the entry seed and never adds k) and inner_seed IS the fold index (run_xt_zoo.py:111). Both fold-index coincidences are invisible on fold 0, which is why the L0 reproduction check runs on every fold.",
+  "git": "62fadd3dbe03",
+  "fold_matrices": {
+    "0": {
+      "te_hash": "fd77a0392e5ec5b5",
+      "n_te": 48,
+      "n_features": 285,
+      "n_fit": 559708,
+      "n_val": 139927
+    },
+    "1": {
+      "te_hash": "05a52215b7ad8d50",
+      "n_te": 48,
+      "n_features": 285,
+      "n_fit": 559708,
+      "n_val": 139927
+    },
+    "2": {
+      "te_hash": "2ef5e552d658c45c",
+      "n_te": 48,
+      "n_features": 285,
+      "n_fit": 559708,
+      "n_val": 139927
+    }
+  }
+}

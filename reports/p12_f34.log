@@ -8,10 +8,13 @@ PHASE 12 -- native categorical splits inside the winning LightGBM extra_trees fa
   declared prior: cat_smooth=10 and cat_l2=10 make a categorical split a SHRUNK target
   statistic with a prior -- the same smoothing family the 48 te_ columns already supply,
   so the expected effect is SMALL rather than new information. Stated before running.
-  arm   cat cols  feat         AUC     delta  iters cat splits    sec
-  ------------------------------------------------------------------------------------
-  L0           0   285    0.961103     +0.0e   1073          0     56
-  L1           4   285    0.961162     +6.0e    888       4686     58
-  L2           7   285    0.961157     +5.5e    731       8906     50
+  arm   fold cat cols  feat         AUC     delta  iters cat splits    sec
+  -----------------------------------------------------------------------------------------
+  L0       3        0   285    0.960453     +0.0e    869          0     37
+  L0       4        0   285    0.961806     -0.0e    830          0     36
+  L1       3        4   285    0.960498     +4.5e    690       3513     32
+  L1       4        4   285    0.961552    -25.4e   1703       9472     77
+  L2       3        7   285    0.960446     -0.7e    973      11645     39
+  L2       4        7   285    0.961732     -7.5e    990      11716     52
 
-  wrote C:\Users\James\airline_S6E10\reports\p12_runs.json
+  wrote C:\Users\James\airline_S6E10\reports\p12c_runs.json

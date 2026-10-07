@@ -10,8 +10,16 @@ PHASE 12 -- native categorical splits inside the winning LightGBM extra_trees fa
   so the expected effect is SMALL rather than new information. Stated before running.
   arm   cat cols  feat         AUC     delta  iters cat splits    sec
   ------------------------------------------------------------------------------------
-  L0           0   285    0.961103     +0.0e   1073          0     56
-  L1           4   285    0.961162     +6.0e    888       4686     58
-  L2           7   285    0.961157     +5.5e    731       8906     50
+  L0           0   285    0.961317     +2.7e   1002          0     63
+  L0           0   285    0.961127     +2.8e    917          0     41
+  L1           4   285    0.961314     +2.4e    782       3900     46
 
-  wrote C:\Users\James\airline_S6E10\reports\p12_runs.json
+  L1: SAFETY CHECK FAILED, not training:
+    - te_ columns changed vs control
+python.exe : STOP: safety checks failed.
+Au caractère Ligne:1 : 32
++ ... NG='utf-8'; & .\.venv\Scripts\python.exe -u scripts\run_phase12.py -- ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (STOP: safety checks failed.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

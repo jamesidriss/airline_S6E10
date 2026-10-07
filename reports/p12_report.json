@@ -1,0 +1,73 @@
+{
+  "rows": [
+    {
+      "arm": "L0",
+      "fold": 0,
+      "auc": 0.9611027137958863,
+      "delta_vs_champion_e5": 0.00012415839467649903,
+      "v3_before": 0.9615006818096289,
+      "v3_after": 0.9615006818096289,
+      "swap_delta_e5": 0.0,
+      "corr_champ": 0.9999999999999892,
+      "spear_champ": 0.9999999999985194,
+      "n_cat": 0,
+      "best_iter": 1073,
+      "cat_splits": 0,
+      "splits_on_declared": {},
+      "seconds": 55.8
+    },
+    {
+      "arm": "L1",
+      "fold": 0,
+      "auc": 0.9611622384353499,
+      "delta_vs_champion_e5": 5.952588104751744,
+      "v3_before": 0.9615006818096289,
+      "v3_after": 0.9615008171422817,
+      "swap_delta_e5": 0.01353326528619192,
+      "corr_champ": 0.9990134838495517,
+      "spear_champ": 0.992028255260498,
+      "n_cat": 4,
+      "best_iter": 888,
+      "cat_splits": 4686,
+      "splits_on_declared": {
+        "Gender": 2022,
+        "Customer Type": 1113,
+        "Type of Travel": 741,
+        "Class": 810
+      },
+      "seconds": 57.9
+    },
+    {
+      "arm": "L2",
+      "fold": 0,
+      "auc": 0.9611574976538926,
+      "delta_vs_champion_e5": 5.478509959022659,
+      "v3_before": 0.9615006818096289,
+      "v3_after": 0.9615003685166073,
+      "swap_delta_e5": -0.03132930216365182,
+      "corr_champ": 0.9989079916623949,
+      "spear_champ": 0.9913957748518831,
+      "n_cat": 7,
+      "best_iter": 731,
+      "cat_splits": 8906,
+      "splits_on_declared": {
+        "Gender": 1477,
+        "Customer Type": 951,
+        "Type of Travel": 594,
+        "Class": 644,
+        "Online boarding": 1354,
+        "Inflight wifi service": 1807,
+        "Gate location": 2079
+      },
+      "seconds": 50.1
+    }
+  ],
+  "trigger5": [
+    "L1",
+    "L2"
+  ],
+  "trigger15": [],
+  "verdict": "PROMOTE to fold 1",
+  "best_arm": "L1",
+  "best_delta_e5": 5.952588104751744
+}

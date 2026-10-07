@@ -1,0 +1,241 @@
+{
+  "pulled": [
+    {
+      "ref": "busyaprime/s6e10-route-or-distance-both-lb-0-96169",
+      "dest": "research\\raw\\notebooks\\busyaprime__s6e10-route-or-distance-both-lb-0-96169",
+      "returncode": 0,
+      "stderr": "",
+      "notebooks": [
+        {
+          "file": "s6e10-route-or-distance-both-lb-0-96169.ipynb",
+          "bytes": 50483,
+          "sha16": "4d3614bc2e42f414",
+          "n_cells": 25,
+          "source_chars": 46960,
+          "reads_csv": true,
+          "nb_title": null,
+          "slug_matches_ref": true
+        }
+      ],
+      "kernel_metadata": {
+        "id": "busyaprime/s6e10-route-or-distance-both-lb-0-96169",
+        "title": "S6E10 | Route or distance? Both | LB 0.96169",
+        "author": null,
+        "code_file": "s6e10-route-or-distance-both-lb-0-96169.ipynb",
+        "language": "python",
+        "kernel_type": "notebook"
+      },
+      "metadata_id_matches_ref": true
+    },
+    {
+      "ref": "goodpjw2008/s6e10-auxiliary-task-features-lb-0-96129",
+      "dest": "research\\raw\\notebooks\\goodpjw2008__s6e10-auxiliary-task-features-lb-0-96129",
+      "returncode": 0,
+      "stderr": "",
+      "notebooks": [
+        {
+          "file": "s6e10-auxiliary-task-features-lb-0-96129.ipynb",
+          "bytes": 68922,
+          "sha16": "e55c9ef4b024fda8",
+          "n_cells": 34,
+          "source_chars": 63975,
+          "reads_csv": true,
+          "nb_title": null,
+          "slug_matches_ref": true
+        }
+      ],
+      "kernel_metadata": {
+        "id": "goodpjw2008/s6e10-auxiliary-task-features-lb-0-96129",
+        "title": "S6E10 | Auxiliary-Task Features | LB 0.96129",
+        "author": null,
+        "code_file": "s6e10-auxiliary-task-features-lb-0-96129.ipynb",
+        "language": "python",
+        "kernel_type": "notebook"
+      },
+      "metadata_id_matches_ref": true
+    },
+    {
+      "ref": "sachith7/s6e10-what-each-step-was-worth",
+      "dest": "research\\raw\\notebooks\\sachith7__s6e10-what-each-step-was-worth",
+      "returncode": 0,
+      "stderr": "",
+      "notebooks": [
+        {
+          "file": "s6e10-what-each-step-was-worth.ipynb",
+          "bytes": 32954,
+          "sha16": "9fdae7c20ca6d526",
+          "n_cells": 30,
+          "source_chars": 29222,
+          "reads_csv": true,
+          "nb_title": null,
+          "slug_matches_ref": true
+        }
+      ],
+      "kernel_metadata": {
+        "id": "sachith7/s6e10-what-each-step-was-worth",
+        "title": " S6E10: What Each Step Was Worth",
+        "author": null,
+        "code_file": "s6e10-what-each-step-was-worth.ipynb",
+        "language": "python",
+        "kernel_type": "notebook"
+      },
+      "metadata_id_matches_ref": true
+    }
+  ],
+  "problems": [],
+  "classified": [
+    {
+      "ref": "busyaprime/s6e10-route-or-distance-both-lb-0-96169",
+      "probes": {
+        "native_categorical_lightgbm": {
+          "category": 11
+        },
+        "native_categorical_catboost": {
+          "cat_features": 1,
+          "CatBoostClassifier": 2
+        },
+        "auxiliary_task_features": {
+          "aux": 13
+        },
+        "pseudo_labelling": {},
+        "route_features": {
+          "route": 36,
+          "Route": 2
+        },
+        "neural_or_mlp": {
+          "torch": 5,
+          "RealMLP": 21,
+          "MLP": 21
+        },
+        "target_encoding": {
+          "TargetEncoder": 4,
+          "target encoding": 4,
+          "te_": 1
+        },
+        "original_dataset": {
+          "original": 15,
+          "129,880": 2
+        },
+        "stacking": {
+          "LogisticRegression": 3,
+          "stack": 50
+        },
+        "imports_public_predictions": {}
+      },
+      "markdown_mechanism_lines": [
+        "raw categorical keys (-0.000081 at that rung), and target encodings of the route on top",
+        "The cell below is his configuration with four changes: our folds and seeds; categorical columns taken as every"
+      ]
+    },
+    {
+      "ref": "goodpjw2008/s6e10-auxiliary-task-features-lb-0-96129",
+      "probes": {
+        "native_categorical_lightgbm": {
+          "category": 7
+        },
+        "native_categorical_catboost": {
+          "cat_features": 2,
+          "CatBoostClassifier": 4
+        },
+        "auxiliary_task_features": {
+          "aux": 35,
+          "each rating": 4,
+          "other 20": 9,
+          "auxiliary": 8
+        },
+        "pseudo_labelling": {
+          "pseudo": 3
+        },
+        "route_features": {
+          "route": 23,
+          "Route": 1
+        },
+        "neural_or_mlp": {
+          "torch": 24,
+          "RealMLP": 23,
+          "MLP": 27
+        },
+        "target_encoding": {
+          "TargetEncoder": 3,
+          "target encoding": 14,
+          "te_": 4
+        },
+        "original_dataset": {
+          "original": 33
+        },
+        "stacking": {
+          "LogisticRegression": 5,
+          "stack": 60
+        },
+        "imports_public_predictions": {}
+      },
+      "markdown_mechanism_lines": [
+        "# S6E10 | Auxiliary-Task Features | LB 0.96129",
+        "| Part 3: + CatBoost with its own categorical statistics \u00d73, XGBoost from a GLM margin \u00d72 (26 models) | 0.961612 | 0.96127 |",
+        "| + 3 trees with auxiliary-task features (29 models, this notebook) | **0.961671** | **0.96129** |",
+        "| numeric and rating columns as categorical features, CatBoost's own ordered target statistics, no target encoding of ours | 0.961064 | **+0.00015** |",
+        "| public recipe (categorical twin of every numeric column, 3 epochs) | 0.960706 | | |",
+        "| + 3 CatBoost with native categorical statistics | 0.961603 | +0.00003 | |",
+        "| + 3 trees with auxiliary-task features *(new)* | 0.961671 | **+0.00006** | **0.96129** |",
+        "The pattern over four notebooks: two feature ideas were worth +0.0023, stacking +0.0003, a second view and a schedule +0.00014, two more tree variants +0.00004, and the auxiliary-task features +0.00006 in the stack (+0.0001 for a single tree model).",
+        "What is ours in this part: the auxiliary-task features and their ablation (section 8), the comparison of how predictable each column is in the original and in the synthetic data, and the correction of Part 3 (section 10).",
+        "| native categorical statistics, depth 8 | 0.961259 |",
+        "## 8. New in Part 4: auxiliary-task features",
+        "- `aux_ev_<column>`: the **expected value** of the rating, \u03a3 k \u00b7 P(k). \"What this passenger would be expected to answer, given everything else they answered.\"",
+        "- `aux_p_<column>`: the probability the model gives to the value the row **actually** has. Low means the value is surprising.",
+        "- `aux_sum_logp`: the sum of log `aux_p` over the 16 columns, a pseudo-log-likelihood of the whole row.",
+        "| `xgb_auxev` | view A + 13 expected values | **0.961208** | +0.000034 |",
+        "| `xgb_auxall` | view A + all 30, another seed | 0.961189 | **+0.000062** |",
+        "| `lgb_auxall` | LightGBM, view A + all 30 | 0.961161 | +0.000048 |"
+      ]
+    },
+    {
+      "ref": "sachith7/s6e10-what-each-step-was-worth",
+      "probes": {
+        "native_categorical_lightgbm": {},
+        "native_categorical_catboost": {},
+        "auxiliary_task_features": {
+          "aux": 48,
+          "each rating": 1,
+          "other 20": 1,
+          "auxiliary": 1
+        },
+        "pseudo_labelling": {},
+        "route_features": {
+          "route": 15,
+          "Route": 2
+        },
+        "neural_or_mlp": {
+          "RealMLP": 7,
+          "MLP": 7
+        },
+        "target_encoding": {
+          "target encoding": 8,
+          "te_": 10
+        },
+        "original_dataset": {
+          "original": 18,
+          "129,880": 2
+        },
+        "stacking": {
+          "LogisticRegression": 3,
+          "greedy": 1,
+          "stack": 42
+        },
+        "imports_public_predictions": {
+          "public OOF": 3,
+          "CC0": 4
+        }
+      },
+      "markdown_mechanism_lines": [
+        "- **Training members on 10 folds instead of 5 improved every model we tried (+0.00009 to +0.00018)**, comparable to the aux step (+0.00014), for compute rather than a new idea.",
+        "- **Label-free features** (route profile, value counts, aux expected ratings, the original-data teacher) are computed once over train+test. They use no competition labels. This is transductive, standard in Playground, and stated here.",
+        "Four model families, each with the features above. RealMLP (pytabkit, public hyper-parameters, every numeric column also given as a categorical) is the strongest single model, and also gets the largest stack weight.",
+        "### A fancier stacker did not help",
+        "## 7. What did not help (measured)",
+        "| LightGBM with numerics as native categoricals instead of target encoding | 0.960387 vs 0.961014 with TE (indicative: the categorical run also used learning rate 0.01 and another seed) |",
+        "| Probability-of-actual-value aux features on top of expected values (XGBoost) | 0.960916 vs 0.961044 with expected values only (different seeds) |"
+      ]
+    }
+  ]
+}

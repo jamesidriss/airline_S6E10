@@ -1,114 +1,109 @@
-PHASE 12 HARNESS: native categorical splits in the winning LightGBM extra_trees family
+PHASE 12 CLOSED: native LightGBM categoricals help standalone and are worth nothing to the ensemble
 
-THE HYPOTHESIS
-Our strongest single family is LightGBM extra_trees=True. The 285-column full view carries raw
-categoricals and numeric copies, but LightGBM sees them as plain numbers, so its ordered
-target-based categorical split algorithm has never been exercised inside the winning configuration.
-CatBoost's native CTRs were worth +6.64e-5 at model level, and LightGBM's mechanism is DIFFERENT: an
-ordered shrunk target statistic with cat_smooth/cat_l2, not a CTR with priors. This asks whether
-native categorical splits improve the extra_trees family WITHOUT removing the existing 48-column
-competition TE block.
+VERDICT: NO ADMISSION, NO SUBMISSION. The checkpoint question has a direct answer -- categorical
+handling changes random-split behaviour WITHOUT adding information the blend lacks.
 
-This is NOT the public notebook's failed experiment. That substituted numerics-as-categories
-INSTEAD OF target encoding and confounded learning rate and seed. Here the te_ block stays
-byte-identical and only the split algorithm changes, so L0 -> L1 is a clean single-variable test.
+THE CHAMPION CONFIGURATION (recovered from its authoritative runner, not src/models/gbdt.py)
+  member  xt_xt_d127_s1, view=full, scheme=primary, seed 1 FIXED ON EVERY FOLD
+  params  scripts/run_views.py::_fit_lgbm_es defaults verbatim -- lr 0.02, num_leaves 127,
+          min_child_samples 40, colsample 0.8, subsample 0.8, subsample_freq 1, reg_lambda 1.0,
+          max_bin 255, n_estimators 6000, ES patience 300 -- PLUS extra_trees=True
+  protocol inner 10% carve of the FIT rows for ES, train on the other 90%, predict the OUTER fold at
+          best_iteration (run_zoo.py::run_gbdt). No outer-validation label reaches ES.
+  ALSO    inner_seed = k, the FOLD INDEX (run_xt_zoo.py:111), which seeds the inner cross-fit behind
+          the fold-safe target encodings.
+  285-column matrix, 48 of them te_. The raw categoricals are already global ordinal integers, so
+  declaring them categorical adds no column and duplicates nothing.
 
-CHAMPION CONFIGURATION, RECOVERED FROM ITS AUTHORITATIVE RUNNER (answer to checkpoint Q1)
-  member      xt_xt_d127_s1
-  view        full (285 features, 48 of them te_)
-  scheme      primary (seed 20261010)
-  seed        1
-  params      scripts/run_views.py::_fit_lgbm_es defaults, verbatim:
-              objective=binary metric=auc n_estimators=6000 learning_rate=0.02 num_leaves=127
-              min_child_samples=40 colsample_bytree=0.8 subsample=0.8 subsample_freq=1
-              reg_lambda=1.0 max_bin=255 verbose=-1 n_jobs=8
-              PLUS extra_trees=True, which scripts/run_xt_zoo.py:36 supplies
-  protocol    scripts/run_zoo.py::run_gbdt -> an inner 10% carve of the FIT rows for early
-              stopping, training on the other 90%, predicting the OUTER fold at best_iteration.
-              No outer-validation label reaches ES. The harness aborts if the carve overlaps or
-              fails to partition the fit rows.
-  NOT used    src/models/gbdt.py defaults, which the brief explicitly warned against.
+WAS IT ALREADY TESTED? No. No lgbm ledger entry anywhere declares categorical_feature, and neither
+src/features/s6e10.py nor src/features/view.py emits such a flag. The only prior native-categorical
+work was CatBoost -- a different library with a different mechanism. Genuinely new, not a re-run.
 
-WAS NATIVE LIGHTGBM CATEGORICAL HANDLING ALREADY TESTED? (checkpoint Q2)
-No. A ledger scan finds no lgbm entry anywhere declaring categorical_feature, and neither
-src/features/s6e10.py nor src/features/view.py ever emits such a flag. The only prior native-
-categorical work in this campaign is CatBoost (Phase 10B and 11R), a different library with a
-different mechanism. This is genuinely new, not a re-run.
+RESULTS (5 folds, primary, the slot replaced is xt_xt_d127_s1)
 
-THE AUDIT WAS NECESSARY, AND IT CAUGHT A DETECTOR THAT WOULD HAVE CLOSED THE PHASE EARLY
-scripts/audit_lgb_native_cat.py answers each question from the FITTED MODEL rather than from
-parameter docs, because docs describe intent and the dump is what ran. My first version counted the
-substring "||" to detect categorical splits and reported ZERO for every configuration, including one
-where the declaration had demonstrably worked. LightGBM's dump_model() renders both one-hot and
-subset categorical splits as decision_type "==" with an integer threshold; only the saved model
-TEXT file uses pipe-joined category lists. A wrong detector reported a working treatment as inert,
-which is precisely the failure that would have closed Phase 12 before it started. The discriminator
-is now decision_type, and every conclusion is cross-checked against a forced synthetic probe where
-the categorical is the ONLY signal, so "the split lost the gain race" can never be mistaken for
-"the declaration did not take effect".
+  L0 CONTROL reproduces the champion on every fold: +0.0001 +0.0000 +0.0000 +0.0000 -0.0001e-5.
+  Worst |delta| = 0.0001e-5, so the harness IS the champion.
 
-  A1  categorical_feature works on this CPU build, by index and by name. Forced probe: undeclared
-      gives 64 splits all of decision_type "<="; declared gives 125 all of "==".
-  A2  requirements met on the real view: all 7 audited columns are non-negative integers, zero NaN
-      on fit and apply rows, and every apply-row code is present in the fit rows.
-  A3  NaN in a declared categorical is routed as MISSING, not as a category. Proven from the model
-      itself: feature_infos carries LightGBM's internal missing marker -1. A missingness sentinel
-      therefore cannot silently become a real level.
-  A4  extra_trees does NOT disturb the categorical search. A forced probe gives 125 categorical
-      splits with extra_trees=True and 125 with False -- identical count, identical code set.
-      extra_trees randomises the NUMERICAL threshold search only. The two coexist, so categoricals
-      can be tested inside the winning configuration rather than only outside it.
-  A5  by cardinality (forced probe): levels 2/3/4/5/6 give 25/41/75/100/125 categorical splits.
-  A7  this CPU build supports categorical splits.
-  On the REAL 285-column view, declaring META4 produces 58 categorical splits against the control's
-      0, so the treatment is OBSERVABLE and not inert.
+  arm   standalone delta vs champion, per fold     mean      SE   t     pos   marginal on v3            mean    t    pos  corr w/ champ
+  L1    +6.0 -1.1 +5.6 +4.5 -25.4                -2.10e-5  5.96 -0.35  3/5   +0.01 -0.07 +0.10 +0.02 +0.02  +0.02e-5 +0.67  4/5  0.9982-0.9993
+  L2    +5.5 +5.6 +6.5 -0.7  -7.5                +1.89e-5  2.67 +0.71  3/5   -0.03 -0.02 +0.15 +0.12 -0.04  +0.04e-5 +0.88  2/5  0.9989-0.9992
 
-A MECHANISTIC PRIOR RECORDED BEFORE THE RUN, NOT AFTER
-cat_smooth=10 and cat_l2=10 make a LightGBM categorical split a SHRUNK target statistic with an
-explicit prior. That is the same smoothing family our 48 te_ columns already supply in the same
-matrix. The expected effect is therefore SMALL rather than new information. Stated in the runner's
-own output before any result, so a small outcome is a prediction met rather than a surprise
-reinterpreted afterwards.
+  L2's marginal of +0.04e-5 is 37x short of the +1.5e-5 admission gate.
+  L3 was NOT run -- it was gated on L1/L2 looking promising and neither was.
+  Categorical splits created per fold: L1 3,513-9,472 and L2 7,312-11,716. The treatment is
+  emphatically not inert.
 
-ARMS (predeclared; L3 gated)
-  L0 control, no declaration
-  L1 META4 = Gender, Customer Type, Type of Travel, Class
-  L2 META4 + Online boarding, Inflight wifi service, Gate location (the zero/N-A sensitive surveys)
-  L3 META4 + all 13 survey ratings -- only if L1 or L2 looks promising
-  Age, Flight Distance and both delay columns stay NUMERIC in every arm. High-cardinality
-  categoricals are explicitly NOT retested; Phase 11R found Flight-Distance-as-category negligible
-  for CatBoost and that is not re-run under a different library.
+MECHANISM: cat_smooth=10 and cat_l2=10 make a LightGBM categorical split a SHRUNK TARGET STATISTIC --
+the same smoothing family the 48 te_ columns already encode from the same columns. The extra_trees
+family already randomises its split search aggressively, so there is little for an ordered
+categorical search to add that survives averaging over 59 members. The audit predicted a small
+effect BEFORE the run; the measured marginal is smaller still, which is the prediction confirmed
+twice over.
 
-FOUR BUGS FOUND WHILE BUILDING THIS, ALL FIXED, ALL WORTH RECORDING
-1. The split detector (above). The most dangerous of the four: it produced a confident ZERO for a
-   treatment that worked.
-2. SURVEY13 used raw-dataset spellings. Three of the thirteen -- "In-flight entertainment",
-   "WiFi service", "In-flight service" -- do not exist in the view, whose spellings are "Inflight
-   entertainment", "Inflight wifi service" and "Ease of Online booking". Declaring an absent column
-   raises KeyError, so column names are now resolved against the view rather than trusted from the
-   raw header.
-3. splits_on_declared looked up int-keyed counts with string keys and so reported 0 splits on the
-   declared META4 columns when the true count was 58. A reporting bug that would have read as "the
-   treatment does nothing" -- the same false negative as (1), reached by a different route.
-4. roc_auc_score was imported only inside report(), so the training path raised NameError at the
-   first AUC computation.
+One asymmetry recorded: META4's 2-3 levels sit at or below LightGBM's max_cat_to_onehot default of
+4, so those columns receive ONE-HOT rather than subset splits. L1 is therefore not a strict subset of
+L2's test.
 
-WHY THE CATEGORICAL HYPERPARAMETERS ARE PINNED
-cat_smooth, cat_l2, max_cat_threshold, max_cat_to_onehot and min_data_per_group are written out
-explicitly. Left implicit, m.params returns None for every one of them, so the run record would not
-contain the values that governed the result and the arm would silently depend on whatever the
-installed library defaults to.
+THE AUDIT WAS NECESSARY, NOT CEREMONIAL
+My first audit detected categorical splits by counting the substring "||" and reported ZERO for every
+configuration, including one where the declaration had demonstrably worked. LightGBM's dump_model()
+renders both one-hot and subset categorical splits as decision_type "==" with an integer threshold;
+only the saved model TEXT file uses pipe-joined category lists. A wrong detector reported a working
+treatment as inert, which is indistinguishable from a genuine negative and would have closed Phase
+12 before it started. Corrected detector, on a forced probe where the categorical is the ONLY signal:
+undeclared gives 64 splits all "<=", declared gives 125 all "==".
+extra_trees=True and extra_trees=False give IDENTICAL categorical split counts (125 and 125, same
+code set), so extra_trees randomises only the NUMERICAL threshold search and the two mechanisms
+coexist -- which is what makes the test possible inside the winning configuration at all.
+NaN in a declared categorical is routed as MISSING, proven from the model itself: feature_infos
+carries LightGBM's internal missing marker -1, so a missingness sentinel cannot become a real
+category code.
 
-SAFETY CHECKS RUN BEFORE EVERY ARM, ANY FAILURE ABORTS (the 10 required assertions)
-feature count is exactly 285; column names and order identical to the control so handling is the
-only variable; all 48 te_ columns present and byte-identical; declared columns are existing columns
-with no duplicates and no appended twins; category codes non-negative integers with no NaN on both
-fit and apply rows; no apply-row code absent from fit rows; survey level 0 present as a real level;
-inner ES carve disjoint and partitioning; the model's own census confirms categorical splits were
-created; and the v3 reconstruction is asserted bit-exact in float32 before any swap is scored.
+THREE BUGS, ALL MINE, ALL WITH EVIDENCE
+1. The split detector described above.
+2. TWO fold-index coincidences, both invisible on fold 0. The champion uses a FIXED seed and
+   inner_seed=k; I used seed+k and inner_seed=0, which coincide on fold 0 (1+0 == 1, k=0) and
+   diverge after. L0 measured +0.0001e-5 on fold 0 but +4.4984e-5 and -6.5733e-5 on folds 1 and 2.
+   Fixing the seed alone still left the mismatch, and that residue is what exposed inner_seed. A
+   fold-0-only screen cannot detect either, so the control-reproduction check now runs on EVERY fold
+   and tests pin the fixed-seed and inner_seed=k conventions against run_xt_zoo.py.
+   This is the transferable lesson: any fold-indexed convention reproduces correctly on fold 0 by
+   default.
+3. A te_ reference compared ACROSS folds. te_ columns are refitted per fold, so the check aborted
+   with "te_ columns changed vs control" on a perfectly correct run. Now keyed by fold, which makes
+   it assert the property that actually matters -- every arm of a fold received identical features.
 
-tests/test_phase12_lgb_cat.py: 212/212. It pins the champion config against run_views.py verbatim
-so a silent edit there cannot leave this harness claiming a match it no longer has, proves no prior
-lgbm run declared categoricals, checks handling-only invariance, checks code safety, checks the ES
-carve, proves the detector against ground truth, and proves extra_trees leaves the categorical
-search intact.
+METHODOLOGICAL FINDING TO CARRY FORWARD
+A three-fold screen overstated the effect by 3.1x. Folds 0-2 gave L2 +5.87e-5; five folds gave
++1.89e-5. L1 went the other way, +3.47e-5 to -2.10e-5. Fold-level spread here is several times the
+mean, so FIVE FOLDS IS THE MINIMUM for a standalone claim on this competition. Both statistics are
+printed side by side in reports/p12_final.json so the gap stays visible. This is the second instance
+of the same failure mode as Phase 11R's gate B: a criterion satisfied for a reason that carries no
+weight.
+
+A PUBLIC-NOTEBOOK PROVENANCE CORRUPTION, FOUND AND FIXED
+Pulling three kernels into one shared directory produced a single file containing a DIFFERENT notebook
+than the one already audited, while still carrying the audited notebook's filename. Had the audit
+been re-run, a notebook's findings would have been attributed to the wrong author, and existing
+ledger entries referencing that filename would have silently become wrong. Same class as the earlier
+path-assumption bug -- trusting an output filename instead of verifying identity -- but worse,
+because the misfiled content was already referenced by ledger entries. Each kernel now gets its own
+directory, and identity is cross-checked three ways: per-kernel directory, kernel-metadata.json id,
+and the notebook slug in the filename, with a mismatch a hard failure. The sachith7 notebook
+re-pulls to 30 cells / 29222 chars / sha16 9fdae7c2e42ca6d526, matching the original audit exactly,
+so its recorded findings stand.
+
+STRONGEST REMAINING DIRECTION: AUXILIARY-TASK EXPECTED-VALUE FEATURES
+Two independent public sources converge on a mechanism our 285-column view does not contain.
+goodpjw2008 trains 16 auxiliary models, each predicting ONE rating from the other 20 columns with no
+satisfaction label, and uses the expected value sum_k k*P(k) per rating as 13 new features:
++13e-5 on one XGBoost, +9e-5 on one LightGBM, +5.9e-5 on the stack with all five folds up.
+sachith7 independently uses "aux expected ratings" computed once over train+test. Our view has 48
+te_ + 54 ogte_* + 2 teach_*, but our teacher predicts SATISFACTION from the original dataset, which
+is a different mechanism -- there is no per-rating auxiliary target here. It is label-free, so it can
+be fitted fold-safely with no new infrastructure, and goodpjw2008 narrows the target precisely: the
+SURPRISE features from those same auxiliary models do nothing, only the plain expected value helps.
+
+Tests: tests/test_phase12_lgb_cat.py 224/224. Ledger 168 append-only lines including both withdrawn
+claims. Runtime was ~35-77 s per arm per fold, so the whole hypothesis cost about 12 minutes -- the
+reason it failed is mechanism, not compute. v3_final and v4_fulldata remain the immutable finalists.

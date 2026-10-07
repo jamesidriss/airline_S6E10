@@ -73,6 +73,51 @@ def test_champion_config_provenance() -> None:
           "from src.models.gbdt import" not in Path("scripts/run_phase12.py").read_text(
               encoding="utf-8"))
 
+    # The seed convention. run_xt_zoo.py:112 calls run_gbdt(..., seed) with the zoo entry's single
+    # seed and never adds the fold index. Using seed+k coincides with the correct value on fold 0
+    # (1+0 == 1) and diverges on every other fold, so a fold-0-only screen CANNOT detect it. My
+    # first version did exactly that and scored +2.7e-5 / +2.8e-5 against the stored champion on
+    # folds 1 and 2. This pins the fixed-seed convention and the absence of a `+ k`.
+    src12 = Path("scripts/run_phase12.py").read_text(encoding="utf-8")
+    # Only CODE lines matter. The runner's docstring legitimately names `CHAMPION_SEED + k` in
+    # order to record that it was the bug, so a substring test over the whole file fails on the
+    # documentation of the very thing being prevented.
+    code_seed_lines = [ln for ln in src12.splitlines()
+                       if "CHAMPION_SEED" in ln and not ln.lstrip().startswith("#")
+                       and not ln.strip().startswith(('"', "'", "version", "The", "and"))
+                       and "(1+0" not in ln and "coincidentally" not in ln]
+    check("no CODE line computes CHAMPION_SEED + k",
+          not any("CHAMPION_SEED" in ln and "+" in ln.split("CHAMPION_SEED")[1][:4]
+                  for ln in code_seed_lines), str(code_seed_lines))
+    check("no CODE line adds the fold index to any seed",
+          not any(("+ k" in ln or "+k" in ln) and "seed" in ln.lower() and "CHAMPION_SEED" in ln
+                  for ln in code_seed_lines), str(code_seed_lines))
+    check("the runner states the champion seed is fixed on every fold",
+          "SEED IS FIXED" in src12)
+    check("the inner ES split also uses the fixed seed",
+          "_inner_es_split(fit_idx, yi, CHAMPION_SEED)" in src12)
+    xtzoo_call = [ln for ln in xtzoo.splitlines() if "run_gbdt(" in ln]
+    check("run_xt_zoo passes the entry seed straight through, with no + k",
+          any("seed" in ln and "+" not in ln.split("run_gbdt(")[1].rsplit(",", 1)[-1]
+              for ln in xtzoo_call), str(xtzoo_call))
+    check("the reproduction check runs on EVERY fold, not just the first",
+          "EVERY fold" in src12 and "worst |delta|" in src12)
+
+    # The SECOND fold-index coincidence, found only after the seed was fixed: the champion's runner
+    # passes inner_seed=k to vb.assemble, because the inner cross-fit split behind the fold-safe
+    # target encodings is seeded by the FOLD INDEX. Passing inner_seed=0 matches on fold 0 and
+    # diverges on every other fold. Fixing the seed alone still left folds 1 and 2 mismatched by
+    # +4.5e-5 and -6.6e-5; this is what explained the residue.
+    asm_lines = [ln for ln in xtzoo.splitlines() if "vb.assemble(" in ln and "val," in ln]
+    check("run_xt_zoo seeds the target-encoding cross-fit with the FOLD INDEX",
+          any("inner_seed=k" in ln for ln in asm_lines), str(asm_lines))
+    asm_code = [ln for ln in src12.splitlines()
+                if "vb.assemble(" in ln and not ln.lstrip().startswith("#")]
+    check("the runner passes inner_seed=k to vb.assemble",
+          any("inner_seed=k" in ln for ln in asm_code), str(asm_code))
+    check("no code line passes a constant inner_seed=0",
+          not any("inner_seed=0" in ln for ln in asm_code), str(asm_code))
+
     check("fit_arm accepts a categorical index list",
           "cat_idx" in Path("scripts/run_phase12.py").read_text(encoding="utf-8"))
     check("the champion params do not silently include a categorical declaration",
@@ -134,6 +179,21 @@ def test_handling_only_may_change() -> None:
           np.array_equal(Xf, Xf2) and names == names2)
     check("te_ columns are byte-identical across assemblies",
           np.array_equal(Xf[:, te_pos], Xf2[:, te_pos]))
+
+    # te_ is refitted PER FOLD, so comparing te_ across folds is meaningless. The runner's reference
+    # must therefore be keyed by fold; a single global reference aborts on a correct run.
+    from scripts.run_phase12 import te_hash
+    other_fit = np.where(fl != 1)[0]
+    Xg, Ga, ng = vb.assemble(other_fit, yi, np.where(fl == 1)[0], None, inner_seed=0)
+    tg = [i for i, n in enumerate(ng) if n.startswith("te_")]
+    h_a, h_b = te_hash(Xf, te_pos), te_hash(Xg, tg)
+    check("te_ for fold 0 and fold 1 genuinely differ, so a cross-fold reference is invalid",
+          h_a != h_b, f"both {h_a}")
+    check("the runner keys its te_ reference by fold",
+          "te_ref_by_fold" in Path("scripts/run_phase12.py").read_text(encoding="utf-8"))
+    check("the runner aborts if one fold's features differ between arms",
+          "features differ between arms" in Path("scripts/run_phase12.py").read_text(
+              encoding="utf-8"))
 
     # The declared columns must already EXIST in the matrix: no appending, no duplicates.
     for arm, (cols, _n) in ARMS.items():
