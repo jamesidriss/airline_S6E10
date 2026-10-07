@@ -1,0 +1,182 @@
+{
+  "v3_oof": 0.9615085784350211,
+  "n_members": 59,
+  "groups": {
+    "v3_control": {
+      "slots": [],
+      "n_slots": 0,
+      "oof": 0.9615085784350211,
+      "delta_e5": 0.0,
+      "per_fold_delta_e5": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "n_folds_positive": 0,
+      "corr_v3": 0.9658001390426364,
+      "spearman_v3": 0.9999999999999999,
+      "A": 11978,
+      "B": 0,
+      "C": 0,
+      "D": 298361,
+      "rescue_rate": 0.0,
+      "damage_rate": 0.0,
+      "net": 0
+    },
+    "AUX_xt6": {
+      "slots": [
+        "xt_xt_d127_s1",
+        "xt_xt_d63",
+        "xt_xt_d255",
+        "xt_xt_d127_cs05",
+        "xt_xt_d127_ss06",
+        "xt_xt_d127_bin63"
+      ],
+      "n_slots": 6,
+      "oof": 0.9615157863822495,
+      "delta_e5": 0.720794722841589,
+      "per_fold_delta_e5": [
+        0.7063785064542749,
+        1.1641053258015788,
+        0.4683860219123481,
+        0.22418794617395932,
+        1.1598839541049344
+      ],
+      "n_folds_positive": 5,
+      "corr_v3": 0.9658475427792742,
+      "spearman_v3": 0.9999604308946846,
+      "A": 11905,
+      "B": 73,
+      "C": 60,
+      "D": 298301,
+      "rescue_rate": 0.006094506595424946,
+      "damage_rate": 0.00020109866906197526,
+      "net": 13
+    },
+    "AUX_xgb3": {
+      "slots": [
+        "prod5_xgb_full_primary",
+        "xt_xgb_lossguide",
+        "zoo_xgb_d6"
+      ],
+      "n_slots": 3,
+      "oof": 0.9615166210969701,
+      "delta_e5": 0.8042661948981511,
+      "per_fold_delta_e5": [
+        0.20767561199619422,
+        1.5361240535249898,
+        1.05724668132412,
+        0.43078684357489294,
+        0.7612747232488282
+      ],
+      "n_folds_positive": 5,
+      "corr_v3": 0.9657900670641963,
+      "spearman_v3": 0.999972801721432,
+      "A": 11911,
+      "B": 67,
+      "C": 49,
+      "D": 298312,
+      "rescue_rate": 0.005593588245116046,
+      "damage_rate": 0.00016423057973394647,
+      "net": 18
+    },
+    "AUX_cat1": {
+      "slots": [
+        "z3_cat_d8_s2"
+      ],
+      "n_slots": 1,
+      "oof": 0.9615100704260225,
+      "delta_e5": 0.1491991001412174,
+      "per_fold_delta_e5": [
+        0.11377047776095495,
+        0.2685537350388678,
+        0.22547091207414383,
+        0.17121386990393006,
+        0.01841676869895892
+      ],
+      "n_folds_positive": 5,
+      "corr_v3": 0.9658004626772367,
+      "spearman_v3": 0.9999935640498465,
+      "A": 11948,
+      "B": 30,
+      "C": 27,
+      "D": 298334,
+      "rescue_rate": 0.002504591751544498,
+      "damage_rate": 9.049440107788887e-05,
+      "net": 3
+    },
+    "AUX_xgb3_cat1": {
+      "slots": [
+        "prod5_xgb_full_primary",
+        "xt_xgb_lossguide",
+        "zoo_xgb_d6",
+        "z3_cat_d8_s2"
+      ],
+      "n_slots": 4,
+      "oof": 0.961517837581209,
+      "delta_e5": 0.925914618787882,
+      "per_fold_delta_e5": [
+        0.3024705480747514,
+        1.7570425059232342,
+        1.2756612809083911,
+        0.557945319601405,
+        0.7516938649310134
+      ],
+      "n_folds_positive": 5,
+      "corr_v3": 0.9657895943743543,
+      "spearman_v3": 0.9999595689911466,
+      "A": 11898,
+      "B": 80,
+      "C": 60,
+      "D": 298301,
+      "rescue_rate": 0.006678911337451995,
+      "damage_rate": 0.00020109866906197526,
+      "net": 20
+    },
+    "AUX_CROSS": {
+      "slots": [
+        "xt_xt_d127_s1",
+        "xt_xt_d63",
+        "xt_xt_d255",
+        "xt_xt_d127_cs05",
+        "xt_xt_d127_ss06",
+        "xt_xt_d127_bin63",
+        "prod5_xgb_full_primary",
+        "xt_xgb_lossguide",
+        "zoo_xgb_d6",
+        "z3_cat_d8_s2"
+      ],
+      "n_slots": 10,
+      "oof": 0.9615234900843839,
+      "delta_e5": 1.491164936273659,
+      "per_fold_delta_e5": [
+        0.9159785736012616,
+        2.7946308386650465,
+        1.542000865095705,
+        0.6431177015708833,
+        1.7815223232076072
+      ],
+      "n_folds_positive": 5,
+      "corr_v3": 0.9658335253249006,
+      "spearman_v3": 0.9998904955665812,
+      "A": 11855,
+      "B": 123,
+      "C": 96,
+      "D": 298265,
+      "rescue_rate": 0.010268826181332442,
+      "damage_rate": 0.00032175787049916043,
+      "net": 27
+    }
+  },
+  "pair_seed": 20261010,
+  "n_pairs": 310339,
+  "slot_selection_rule": "every v3 slot with a trained aux counterpart, all three families; no selection on measured gain",
+  "best_group": "AUX_CROSS",
+  "best_delta_e5": 1.491164936273659,
+  "best_paired_se_e5": 0.3759077456961854,
+  "best_t": 3.9668374843194694,
+  "gate_pass": false,
+  "verdict": "Best group is AUX_CROSS at +1.49e-5, short of the +1.5e-5 gate. No admission and no submission from this block."
+}

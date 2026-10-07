@@ -1,0 +1,41 @@
+{
+  "name": "v5_aux_cross",
+  "role": "Champion A candidate",
+  "oof": 0.961523,
+  "delta_vs_v3_e5": 1.491,
+  "folds_positive": "5/5",
+  "paired_t": 3.97,
+  "gate": "+1.5e-5 MISSED by 0.6%; gate not moved",
+  "slots_replaced": [
+    "prod5_xgb_full_primary",
+    "xt_xgb_lossguide",
+    "xt_xt_d127_bin63",
+    "xt_xt_d127_cs05",
+    "xt_xt_d127_s1",
+    "xt_xt_d127_ss06",
+    "xt_xt_d255",
+    "xt_xt_d63",
+    "z3_cat_d8_s2",
+    "zoo_xgb_d6"
+  ],
+  "n_members": 59,
+  "geometry": "expit(mean(logits))",
+  "median_iterations": {
+    "prod5_xgb_full_primary": 548,
+    "xt_xgb_lossguide": 441,
+    "zoo_xgb_d6": 899,
+    "z3_cat_d8_s2": 1429,
+    "xt_xt_d127_s1": 855,
+    "xt_xt_d63": 732,
+    "xt_xt_d255": 614,
+    "xt_xt_d127_cs05": 793,
+    "xt_xt_d127_ss06": 664,
+    "xt_xt_d127_bin63": 693
+  },
+  "test_corr_vs_v3": 0.9999885550122626,
+  "test_spearman_vs_v3": 0.9999047865581037,
+  "expected_public_movement": "UNKNOWN, likely below public resolution",
+  "sha16": "9f88dc476d28f367",
+  "rows": 299844,
+  "git": "daa08d817842"
+}

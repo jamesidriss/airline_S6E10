@@ -1,0 +1,34 @@
+﻿  median cross-validated iteration counts (the test-time refit length):
+    xt_xt_d127_s1              855
+    xt_xt_d63                  732
+    xt_xt_d255                 614
+    xt_xt_d127_cs05            793
+    xt_xt_d127_ss06            664
+    xt_xt_d127_bin63           693
+    prod5_xgb_full_primary     548
+    xt_xgb_lossguide           441
+    zoo_xgb_d6                 899
+    z3_cat_d8_s2               1429
+    [cache] view full: (699635, 237)
+  train frame (699635, 285), test frame (299844, 285)
+  building aux features over train+test (label-free, 5-fold inner cross-fit)
+    aux mean out-of-fold accuracy 0.7006
+    xt_xt_d127_s1              lgb  iters 855   done
+    xt_xt_d63                  lgb  iters 732   done
+    xt_xt_d255                 lgb  iters 614   done
+    xt_xt_d127_cs05            lgb  iters 793   done
+    xt_xt_d127_ss06            lgb  iters 664   done
+    xt_xt_d127_bin63           lgb  iters 693   done
+    prod5_xgb_full_primary     xgb  iters 548   done
+    xt_xgb_lossguide           xgb  iters 441   done
+    zoo_xgb_d6                 xgb  iters 899   done
+    z3_cat_d8_s2               cat  iters 1429  done
+
+  v5_aux_cross test prediction
+    slots replaced      : 10  (member count stays 59, equal-logit)
+    test corr vs v3     : 0.99999
+    test spearman vs v3 : 0.99990
+    mean |test p change|: 7.117e-04
+    EXPECTED public movement: UNKNOWN, likely below public resolution (~+/-2e-4 paired)
+    wrote C:\Users\James\airline_S6E10\submissions\v5_aux_cross.csv  rows 299844  sha16 9f88dc476d28f367
+    wrote C:\Users\James\airline_S6E10\reports\v5_aux_cross_manifest.json

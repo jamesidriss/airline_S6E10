@@ -60,6 +60,7 @@ XT_SLOTS = ["xt_xt_d127_s1", "xt_xt_d63", "xt_xt_d255", "xt_xt_d127_cs05",
             "xt_xt_d127_ss06", "xt_xt_d127_bin63"]
 XGB_SLOTS = ["prod5_xgb_full_primary", "xt_xgb_lossguide", "zoo_xgb_d6"]
 CAT_SLOTS = ["z3_cat_d8_s2"]
+XGB_ARM = {"prod5_xgb_full_primary": "X0", "xt_xgb_lossguide": "X1", "zoo_xgb_d6": "X2"}
 GROUPS = {
     "v3_control": [],
     "AUX_xt6": XT_SLOTS,
@@ -71,14 +72,29 @@ GROUPS = {
 
 
 def counterpart(member: str) -> str | None:
-    """The saved aux-equipped prediction tag for a v3 slot, or None if none was trained."""
+    """The saved aux-equipped prediction TAG for a v3 slot, or None if none was trained.
+
+    The tag is a prefix; the file is f"{tag}_{scheme}_f{k}.npy" for the p13b extra_trees files and
+    f"{tag}_f{k}.npy" for the Phase 14 ones, because the two runners use different save formats. That
+    asymmetry is asserted here by checking the file exists before use, rather than assumed -- my
+    first version built a p13b-style name for a p14 file and reported 20 missing counterpart
+    predictions that were all present under the other naming.
+    """
     if member in XT_SLOTS:
-        return f"p13b_{member}"
+        return ("p13b_" + member, True)
     if member in XGB_SLOTS:
-        return f"p14_{ {'prod5_xgb_full_primary': 'X0', 'xt_xgb_lossguide': 'X1', 'zoo_xgb_d6': 'X2'}[member] }_aux"
+        return (f"p14_{XGB_ARM[member]}_aux", False)
     if member in CAT_SLOTS:
-        return "p14_C1_aux"
+        return ("p14_C1_aux", False)
     return None
+
+
+def counter_path(member: str, fold: int):
+    tag, with_scheme = counterpart(member)
+    if tag is None:
+        return None
+    name = f"{tag}_{CHAMPION_SCHEME}_f{fold}.npy" if with_scheme else f"{tag}_f{fold}.npy"
+    return REPORTS / name
 
 
 def main() -> int:
@@ -115,9 +131,9 @@ def main() -> int:
     for m in XT_SLOTS + XGB_SLOTS + CAT_SLOTS:
         cp = counterpart(m)
         for k in range(5):
-            p = REPORTS / f"{cp}_{CHAMPION_SCHEME}_f{k}.npy"
-            if not p.exists():
-                missing.append(f"{m} -> {p.name}")
+            pf = counter_path(m, k)
+            if pf is None or not pf.exists():
+                missing.append(f"{m} -> {pf}")
     if missing:
         raise SystemExit("STOP: missing counterpart predictions:\n  " + "\n  ".join(missing[:12]))
 
@@ -154,21 +170,35 @@ def main() -> int:
     for name, slots in GROUPS.items():
         cols = list(L[e] if counterpart(e) is None else L[e] for e in ids)
         for m in slots:
-            cp = counterpart(m)
             c = L[m].copy()
             for k in range(5):
                 val = np.where(folds == k)[0]
-                c[val] = lg(np.load(REPORTS / f"{cp}_{CHAMPION_SCHEME}_f{k}.npy")
-                           .astype("float64"))
-            outside = np.ones(len(c), dtype=bool)
-            outside[np.concatenate([np.where(folds == k)[0] for k in range(5)])] = False
-            assert np.array_equal(c[outside], L[m][outside]), f"{name}/{m}: moved out-of-fold rows"
+                c[val] = lg(np.load(counter_path(m, k)).astype("float64"))
+            # The splice writes every row (all 5 folds together), so the only thing worth asserting
+            # is that the column is fully defined and the member count is unchanged. The previous
+            # version built an "outside the fold" mask over ALL folds, which is empty, and asserted
+            # an equality between two empty arrays -- a check that cannot fail, the fourth such
+            # instance in this campaign.
+            assert len(c) == len(L[m]) and np.isfinite(c).all(), f"{name}/{m}: bad spliced column"
+            assert np.any(c != L[m]), f"{name}/{m}: splice changed nothing"
             cols[ids.index(m)] = c
         blend = sg(np.mean(np.column_stack(cols), axis=1))
         assert len(cols) == len(ids), "member count changed"
         a = float(roc_auc_score(y, blend))
         fa = [float(roc_auc_score(y[folds == k], blend[folds == k])) for k in range(5)]
-        db = [a - float(roc_auc_score(y[folds == k], base[folds == k])) for k in range(5)]
+        # BUG FIXED HERE. This was `a - auc(y[fold], base[fold])`, where `a` is the FULL-OOF AUC.
+        # Subtracting a full-OOF number from a per-fold number is meaningless, and it produced a
+        # fabricated per-fold profile: for the CONTROL, whose per-fold delta must be identically
+        # zero, it printed +0.79, -14.15, -0.35, +71.48, -61.28 e-5 -- which is simply the full-OOF
+        # AUC minus each fold's own control AUC. The aggregate `delta_e5` was NOT affected, because
+        # both of its terms are full-OOF quantities, so +1.491e-5 stands; but every per-fold claim,
+        # including the fold-consistency count that gates admission, was meaningless.
+        db = [fa[k] - float(roc_auc_score(y[folds == k], base[folds == k])) for k in range(5)]
+        # The control's per-fold delta must now be exactly zero. Asserted rather than assumed: a
+        # reporting bug that makes the control look non-zero is precisely what should stop the run.
+        if not slots:
+            assert max(abs(x) for x in db) < 1e-12, (
+                f"control per-fold delta is not zero ({db}); the blend is not reproducing v3")
         ps = rescue(blend)
         rec = {"slots": slots, "n_slots": len(slots), "oof": a, "delta_e5": (a - a_v3) * 1e5,
                "per_fold_delta_e5": [d * 1e5 for d in db],

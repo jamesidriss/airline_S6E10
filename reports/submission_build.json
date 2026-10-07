@@ -1,0 +1,14 @@
+{
+  "git": "daa08d817842",
+  "built": {
+    "v6_private_hedge": {
+      "oof": 0.961496,
+      "role": "PRIVATE HEDGE (Champion B)",
+      "test_corr_vs_v3": 0.9999509806347251,
+      "test_spearman_vs_v3": 0.9996779423400006,
+      "sha16": "5d881dc76c41790c",
+      "rows": 299844,
+      "file": "C:\\Users\\James\\airline_S6E10\\submissions\\v6_private_hedge.csv"
+    }
+  }
+}
