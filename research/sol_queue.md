@@ -22,6 +22,15 @@ surprise diagnostic does not justify a specialist. Full-context foundation
 inference is still the only eligible new mechanism. Neural replay is mandatory
 repair of withdrawn outer-selected CV, not a new model/seed search.
 
+Own full-context discovery is now positive, not a resource-only result: raw f0
+AUC0.960972296, route f0 AUC0.961132446 (+0.000160150). Both fixed 1/60
+legacy-stack additions gain about0.000020. The predeclared 50/50 route/strict
+auxiliary10 combination reaches0.961727180, versus0.961414204 for its strict
+classical component. This single-fold result promotes exact replication; it
+does not admit a finalist. Route f1 and the current-code auxiliary counterpart
+replay take priority. Full699635-row test-context feasibility is a separate
+resource gate before committing to a larger finalist run.
+
 Primary sources:
 
 - [TabPFN repository](https://github.com/PriorLabs/TabPFN) and

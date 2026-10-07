@@ -455,3 +455,92 @@ def test_shadow_auxiliary_features_never_reuse_primary_fold_arrays():
     assert np.all(a[:,13:]==3) and np.all(b[:,13:]==3)
     assert contract['independent_ev_max_gap'] is None and contract['upstream_fingerprint']=='shadow'
 
+
+def test_full_context_probe_uses_every_training_row_and_reports_no_auc():
+    import json
+    import tempfile
+    from contextlib import ExitStack, nullcontext, redirect_stdout
+    from io import StringIO
+    from pathlib import Path
+    from importlib.metadata import version
+    import numpy as np
+    import pandas as pd
+    from unittest.mock import patch
+    import scripts.run_sol_tabpfn_test as runner
+    tr=pd.DataFrame({'id':np.arange(10),'satisfaction':np.arange(10)%2})
+    te=pd.DataFrame({'id':np.arange(100,103)})
+    names=[f'column{i}' for i in range(22)]
+    params={'model_path':'dummy','inference_precision':'autocast','categorical_features_indices':[18,21]}
+    ref={'full_intended_population':True,'prediction_sha256':'sha','model_family':'TabPFN-3.5','arm':'route',
+        'source_sha256':'sha','backend_source_sha256':'sha','decoder_chunk_source_sha256':'sha',
+        'resource_guard_source_sha256':'sha','icl_bf16':True,'decoder_inplace_gelu':True,
+        'reuse_query_output':True,'decoder_chunk_rows':None,'windows_mqa_backend':True,
+        'precision':'autocast','batch_size':1024,'params':params,'checkpoint':{'checkpoint_sha256':'sha'},
+        'data_sha256':{'train':'sha','test':'sha'},'feature_names':names,'label_free_category_maps':{},
+        'seed':1201,'inference_chunk_cells':262144,'inference_col_chunk_size':1,'library_version':version('tabpfn')}
+    class Model:
+        def fit(self,x,y):
+            self.fit_rows=len(x); self.labels=np.array(y)
+            return self
+        def predict_proba(self,x):
+            return np.tile([.3,.7],(len(x),1))
+    model=Model()
+    with tempfile.TemporaryDirectory() as temporary, ExitStack() as stack:
+        folder=Path(temporary)
+        (folder/'artifacts').mkdir(); (folder/'reports').mkdir()
+        reference=folder/'reference.json'; reference.write_text(json.dumps(ref))
+        stack.enter_context(patch.object(runner,'ARTIFACTS',folder/'artifacts'))
+        stack.enter_context(patch.object(runner,'REPORTS',folder/'reports'))
+        stack.enter_context(patch.object(runner,'file_sha256',return_value='sha'))
+        stack.enter_context(patch.object(runner,'load_cached_parquet',return_value=(tr,te)))
+        stack.enter_context(patch.object(runner,'frames',return_value=(np.zeros((10,22)),np.zeros((3,22)),names,[18,21],{})))
+        stack.enter_context(patch.object(runner,'create_model',return_value=model))
+        stack.enter_context(patch.object(runner,'inference_guard',side_effect=lambda *a,**k:nullcontext()))
+        stack.enter_context(patch.object(runner.shutil,'disk_usage',return_value=type('Disk',(),{'free':30*1024**3})()))
+        for name in ('set_per_process_memory_fraction','reset_peak_memory_stats','empty_cache'):
+            stack.enter_context(patch.object(runner.torch.cuda,name))
+        stack.enter_context(patch.object(runner.torch.cuda,'max_memory_allocated',return_value=100))
+        stack.enter_context(patch('src.models.windows_attention.register'))
+        stack.enter_context(patch('src.models.windows_attention.verify_gpu_equivalence',return_value=0))
+        stack.enter_context(patch('sys.argv',['run_sol_tabpfn_test.py','--reference',str(reference),'--tag','trial','--probe-only']))
+        with redirect_stdout(StringIO()):
+            assert runner.main()==0
+        report=json.loads((folder/'reports'/'trial'/'probe.json').read_text())
+        assert model.fit_rows==10 and np.array_equal(model.labels,tr.satisfaction.to_numpy())
+        assert report['contract']['entire_competition_training_context'] is True
+        assert report['contract']['timing_only'] is True and report['status']=='TIMING_ONLY'
+        assert 'auc' not in report and 'test_prediction_sha256' not in report
+        assert np.load(folder/'artifacts'/'trial'/'probe.npy').shape==(3,)
+
+
+def test_clean_replay_resume_rejects_misaligned_ids_before_writing():
+    import json
+    import tempfile
+    from hashlib import sha256
+    from pathlib import Path
+    from unittest.mock import patch
+    import numpy as np
+    import scripts.replay_sol_classical as runner
+    ids=np.array([10,11,12]); prediction=np.array([.1,.2,.3],dtype='float32')
+    contract={'validation_ids_sha256':runner.arr_sha256(ids),'fold':0}
+    fp=sha256(json.dumps(contract,sort_keys=True).encode()).hexdigest()
+    with tempfile.TemporaryDirectory() as temporary:
+        folder=Path(temporary); artifacts=folder/'artifacts'; reports=folder/'reports'
+        for p in (artifacts/'old',reports/'old',artifacts/'new',reports/'new'):
+            p.mkdir(parents=True)
+        np.save(artifacts/'old'/'member_f0.npy',prediction)
+        np.save(artifacts/'old'/'member_f0_ids.npy',ids[::-1])
+        (reports/'old'/'member_f0.json').write_text(json.dumps({'contract':contract,
+            'fingerprint':fp,'prediction_sha256':runner.arr_sha256(prediction)}))
+        with patch.object(runner,'ARTIFACTS',artifacts),patch.object(runner,'REPORTS',reports):
+            try:
+                runner.reuse_completed_fold('old',artifacts/'new',reports/'new','member_f0',fp,ids)
+            except AssertionError:
+                pass
+            else:
+                raise AssertionError('Misaligned completed fold was accepted')
+            assert not list((artifacts/'new').iterdir()) and not list((reports/'new').iterdir())
+            np.save(artifacts/'old'/'member_f0_ids.npy',ids)
+            assert runner.reuse_completed_fold('old',artifacts/'new',reports/'new','member_f0',fp,ids)
+            assert np.array_equal(np.load(artifacts/'new'/'member_f0.npy'),prediction)
+

@@ -33,6 +33,29 @@ from scripts.native_cat import default_cat_cols
 PROTOCOL = 'sol_clean_classical_v1_strict_te_exact_refit'
 
 
+def reuse_completed_fold(previous_tag,root,reports,stem,fingerprint,expected_ids):
+    """Resume only an identical completed contract; preserve invalid attempts."""
+    if not previous_tag:
+        return False
+    origin=REPORTS/previous_tag/(stem+'.json')
+    if not origin.exists():
+        return False
+    record=json.loads(origin.read_text(encoding='utf-8'))
+    if 'prediction_sha256' not in record:
+        return False
+    assert record['fingerprint']==fingerprint, 'Resume contract differs; do not mix model protocols'
+    assert sha256(json.dumps(record['contract'],sort_keys=True).encode()).hexdigest()==fingerprint
+    prediction=np.load(ARTIFACTS/previous_tag/(stem+'.npy'))
+    ids=np.load(ARTIFACTS/previous_tag/(stem+'_ids.npy'))
+    assert arr_sha256(prediction)==record['prediction_sha256']
+    assert np.array_equal(ids,expected_ids) and prediction.shape==(len(expected_ids),)
+    assert np.isfinite(prediction).all() and ((prediction>=0)&(prediction<=1)).all()
+    assert not (root/(stem+'.npy')).exists() and not (reports/(stem+'.json')).exists()
+    np.save(root/(stem+'.npy'),prediction); np.save(root/(stem+'_ids.npy'),ids)
+    save_json({**record,'reused_from':previous_tag,'origin_report_sha256':file_sha256(origin)},reports/(stem+'.json'))
+    return True
+
+
 def frozen_roles():
     members = json.loads((REPORTS/'finalist_v3_final.json').read_text(encoding='utf-8'))['members']
     index = store._load_index()
@@ -202,6 +225,7 @@ def main():
     ap.add_argument('--folds',default='all')
     ap.add_argument('--families',default='lgbm,xgb,cat')
     ap.add_argument('--tag',default='sol_clean_classical')
+    ap.add_argument('--resume-from',help='Reuse completed predictions only when every contract field and row ID matches')
     ap.add_argument('--refit-test',action='store_true')
     ap.add_argument('--confirmation-shadow',action='store_true',
         help='Confirm the frozen auxiliary10 recipe on immutable shadow folds; no tuning')
@@ -231,9 +255,10 @@ def main():
     tr,te=load_cached_parquet()
     y,ids=tr['satisfaction'].to_numpy(dtype='int8'),tr['id'].to_numpy()
     sources={p:file_sha256(p) for p in ('scripts/replay_sol_classical.py','scripts/run_views.py',
-        'scripts/run_phase13.py','scripts/run_phase13b.py','scripts/run_phase14.py',
+        'scripts/run_phase12.py','scripts/run_phase13.py','scripts/run_phase13b.py','scripts/run_phase14.py',
         'scripts/native_cat.py','scripts/run_sol_a.py','scripts/sol_aux_cache.py',
-        'src/features/aux_distribution.py','src/features/view.py','src/features/s6e10.py')}
+        'src/features/aux_distribution.py','src/features/view.py','src/features/s6e10.py',
+        'src/models/resource_guard.py')}
     data_hash={s:file_sha256(f'data/raw/{s}.csv') for s in ('train','test')}
     for role in chosen:
         folds=get_scheme(role['scheme'],y,ids).folds
@@ -264,16 +289,22 @@ def main():
             contract.update(native_categorical_columns=native,model_feature_count=len(names)+len(native))
             fp=sha256(json.dumps(contract,sort_keys=True).encode()).hexdigest()
             stem=f'{role["member"]}_f{k}'; rp=reports/(stem+'.json'); pp=root/(stem+'.npy')
+            reused=rp.exists()
             if rp.exists():
                 previous=json.loads(rp.read_text(encoding='utf-8'))
                 if 'prediction_sha256' not in previous:
                     raise FileExistsError('Preserve the failed OOF attempt; select a new tag')
                 assert previous['fingerprint']==fp and arr_sha256(np.load(pp))==previous['prediction_sha256']
-                print(f'reuse {stem}',flush=True); del xf,xv; continue
+                assert sha256(json.dumps(previous['contract'],sort_keys=True).encode()).hexdigest()==fp
+                assert np.array_equal(np.load(root/(stem+'_ids.npy')),ids[va])
+            else:
+                reused=reuse_completed_fold(args.resume_from,root,reports,stem,fp,ids[va])
+            if reused:
+                print(f'certified reuse {stem}',flush=True); xf=xv=None; gc.collect(); continue
             tl,el=np.searchsorted(fi,itr),np.searchsorted(fi,es)
             assert np.array_equal(fi[tl],itr) and np.array_equal(fi[el],es)
             start=time.monotonic()
-            def fit_oof():
+            def fit_oof(xf=xf,xv=xv):
                 if role['aux_arm']=='C1':
                     from scripts.native_cat import attach,cat_frame,default_cat_cols
                     cats=default_cat_cols(True)
@@ -295,7 +326,7 @@ def main():
                 'prediction_sha256':arr_sha256(pred),'status':'CORRECTED_BASELINE_PARTIAL_REQUIRES_FULL_CV_AND_TEST'}
             save_json(record,rp)
             print(f'{stem}: AUC{record["auc"]:.9f}; {record["n_trees"]} trees; {record["seconds"]:.1f}s',flush=True)
-            del xf,xv; gc.collect()
+            del fit_oof,xf,xv; gc.collect()
         complete_role(role,tr,te,y,ids,folds,root,reports,params,args.refit_test,sources,data_hash)
     return 0
 

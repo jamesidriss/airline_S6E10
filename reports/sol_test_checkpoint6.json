@@ -1,0 +1,24 @@
+{
+  "utc": "2026-10-07T23:02:27.617826+00:00",
+  "focused_checks": {
+    "passed": 4,
+    "failed": 0,
+    "checks": [
+      "resume rejects row misalignment before writes and copies exact valid predictions",
+      "full-context probe fits every training row and reports no AUC",
+      "frozen role defaults and schemas",
+      "39 critical files have no undefined names"
+    ]
+  },
+  "sources_sha256": {
+    "scripts/replay_sol_classical.py": "caf32a32f34f45b9f408e1b287535ae04de42fe547a73773b266f046af937c21",
+    "scripts/run_sol_tabpfn_test.py": "3fe9562afa593b5b4a60a5611722ca928238cccc9c3f1fa97720b7408a27a879",
+    "tests/test_sol_contracts.py": "cece0c2d81cedeaba5aea6d7c8722173a56ba2efb2c2fad8df41f02764e57caf"
+  },
+  "secret_scan": {
+    "high": 0,
+    "medium": 0,
+    "report_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "limitation": "Focused checks after checkpoint5; no second full-suite pass claimed"
+}
