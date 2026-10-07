@@ -1,0 +1,36 @@
+﻿    [cache] view full: (699635, 237)
+================================================================================================================
+PHASE 14 -- the SAME validated auxiliary features, now on XGBoost and CatBoost
+================================================================================================================
+  auxiliary features: reused EXACTLY from Phase 13, cached per fold, not redesigned
+  arms: X0,X1,X2,C0,C1   folds: 1,2
+  single changed variable per arm: 13 extra columns appended. Nothing else moves.
+
+  arm  fold  variant  nfeat         AUC  d(ctrl)  O/A corr    spear   v3 swap  iters    sec
+  --------------------------------------------------------------------------------------------------
+  d(ctrl) = aux minus the SAME harness's control, which is the honest treatment delta.
+  The bracketed figure is aux minus the STORED member; where those differ, the stored
+  member came from a different runner and its reproduction gap must not be charged to
+  the treatment.
+  X0      1     ctrl    285    0.960961       -         -  0.98423         -    488      9   (vs stored   +0.5e)
+  X0      1      aux    298    0.961198  +23.8e   0.99767  0.98214    +0.56e    506      9   (vs stored  +24.2e)
+  X1      1     ctrl    285    0.960936       -         -  0.98422         -    446     27   (vs stored   -4.1e)
+  X1      1      aux    298    0.960936   -0.0e   0.99762  0.98062    +0.34e    516     30   (vs stored   -4.1e)
+  X2      1     ctrl    285    0.961004       -         -  0.98709         -    592      7   (vs stored   +1.6e)
+  X2      1      aux    298    0.961196  +19.1e   0.99748  0.98245    +0.66e    899     10   (vs stored  +20.7e)
+  C0      1     ctrl    285    0.961247       -         -  0.98579         -   1433    150   (vs stored   +2.2e)
+  C0      1      aux    298    0.961336   +8.8e   0.99765  0.98375    +0.20e   1468    159   (vs stored  +11.0e)
+  C1      1     ctrl    285    0.961274       -         -  0.98665         -   1188    544   (vs stored   +4.8e)
+  C1      1      aux    298    0.961416  +14.2e   0.99772  0.98410    +0.27e   1489    670   (vs stored  +19.0e)
+  X0      2     ctrl    285    0.960841       -         -  0.98447         -    463      9   (vs stored  -11.9e)
+  X0      2      aux    298    0.961004  +16.3e   0.99751  0.98140    +0.31e    548     10   (vs stored   +4.5e)
+  X1      2     ctrl    285    0.960779       -         -  0.98529         -    298     22   (vs stored   +2.6e)
+  X1      2      aux    298    0.961029  +25.0e   0.99779  0.98266    +0.41e    360     25   (vs stored  +27.6e)
+  X2      2     ctrl    285    0.960812       -         -  0.98628         -    461      6   (vs stored   +5.7e)
+  X2      2      aux    298    0.961047  +23.6e   0.99768  0.98323    +0.37e    353      6   (vs stored  +29.3e)
+  C0      2     ctrl    285    0.960862       -         -  0.98178         -   1592    161   (vs stored   +0.9e)
+  C0      2      aux    298    0.961106  +24.3e   0.99698  0.98012    +0.43e   1632    176   (vs stored  +25.2e)
+  C1      2     ctrl    285    0.960973       -         -  0.98161         -   1083    509   (vs stored  +11.9e)
+  C1      2      aux    298    0.961202  +22.9e   0.99713  0.98080    +0.23e   1327    600   (vs stored  +34.8e)
+
+  wrote C:\Users\James\airline_S6E10\reports\p14_runs.json

@@ -1,0 +1,19 @@
+﻿    [cache] view full: (699635, 237)
+================================================================================================================
+PHASE 14 -- the SAME validated auxiliary features, now on XGBoost and CatBoost
+================================================================================================================
+  auxiliary features: reused EXACTLY from Phase 13, cached per fold, not redesigned
+  arms: X0,X1,X2,C0,C1   folds: 3,4
+  single changed variable per arm: 13 extra columns appended. Nothing else moves.
+
+  arm  fold  variant  nfeat         AUC  d(ctrl)  O/A corr    spear   v3 swap  iters    sec
+  --------------------------------------------------------------------------------------------------
+  d(ctrl) = aux minus the SAME harness's control, which is the honest treatment delta.
+  The bracketed figure is aux minus the STORED member; where those differ, the stored
+  member came from a different runner and its reproduction gap must not be charged to
+  the treatment.
+  X0      3     ctrl    285    0.960169       -         -  0.98888         -    338      8   (vs stored   +0.9e)
+  X0      3      aux    298    0.960168   -0.1e   0.99777  0.98403    +0.24e    507     10   (vs stored   +0.8e)
+  X1      3     ctrl    285    0.960292       -         -  0.98477         -    327     23   (vs stored   -0.6e)
+  X1      3      aux    298    0.960305   +1.4e   0.99777  0.98230    -0.01e    375     25   (vs stored   +0.8e)
+  X2      3     ctrl    285    0.960257       -         -  0.98870         -    588      7   (vs stored   +5.8e)
