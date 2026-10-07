@@ -107,6 +107,10 @@ def add_expected_values(x, apply, names, fit_ids, val_ids, fold_hash, fold, sche
         assert np.isfinite(a).all() and np.isfinite(b).all()
         gap=max(float(np.abs(a-fresh_a).max()),float(np.abs(b-fresh_b).max()))
         assert gap<=1e-10,'Historical auxiliary EV control failed; do not interpret downstream fits'
+        # Use the same verified probability-to-EV arithmetic as the strict
+        # SOL-A counterparts, rather than retaining their harmless float64
+        # rounding difference from the older expectation-only cache.
+        a,b=fresh_a,fresh_b
     else:
         assert scheme=='shadow', 'Only frozen shadow confirmation is supported'
         a,b=fresh_a,fresh_b
@@ -239,10 +243,10 @@ def main():
     if args.members not in ('all','aux10'):
         assert selected.issubset({r['member'] for r in roles})
     if args.confirmation_shadow:
-        assert len(chosen)==10 and all(r['aux_arm'] for r in chosen), 'Confirm all ten frozen auxiliary roles together'
+        assert chosen and all(r['aux_arm'] for r in chosen), 'Shadow confirmation supports only the frozen auxiliary roles'
         assert args.tag!='sol_clean_classical', 'Use a distinct shadow artifact tag'
         assert not args.refit_test, 'Final inference uses primary-selected capacity; shadow is confirmation only'
-        for role in chosen:
+        for role in [r for r in roles if r['aux_arm']]:
             role.update(source_scheme=role['scheme'],scheme='shadow')
     plan={'protocol':PROTOCOL,'roles':roles,'role_count':47,'weights':'47 frozen equal-logit roles; no new-score filtering',
           'confirmation_shadow':args.confirmation_shadow,

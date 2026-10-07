@@ -544,3 +544,26 @@ def test_clean_replay_resume_rejects_misaligned_ids_before_writing():
             assert runner.reuse_completed_fold('old',artifacts/'new',reports/'new','member_f0',fp,ids)
             assert np.array_equal(np.load(artifacts/'new'/'member_f0.npy'),prediction)
 
+
+def test_foundation_reader_rejects_ambiguous_completed_vectors_before_scoring():
+    import json
+    import tempfile
+    from pathlib import Path
+    from unittest.mock import patch
+    import numpy as np
+    import scripts.evaluate_sol_foundation as runner
+    with tempfile.TemporaryDirectory() as temporary:
+        folder=Path(temporary)
+        for name,sha in [('first','different1'),('second','different2')]:
+            (folder/name).mkdir()
+            (folder/name/'route_f0.json').write_text(json.dumps({'prediction_sha256':sha}))
+        with patch.object(runner,'REPORTS',folder),patch.object(runner.np,'load') as load, \
+             patch.object(runner,'roc_auc_score') as score:
+            try:
+                runner.foundation(0,['first','second'],np.arange(4),np.array([0,0,1,1]),np.array([0,1,0,1]),{})
+            except AssertionError as error:
+                assert 'ambiguous' in str(error)
+            else:
+                raise AssertionError('Ambiguous completed predictions were silently selected')
+            load.assert_not_called(); score.assert_not_called()
+

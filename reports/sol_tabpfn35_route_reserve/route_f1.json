@@ -1,0 +1,131 @@
+{
+  "git": "f6463ac98769e3de57b66882a56ea01098112a06",
+  "arm": "route",
+  "fold": 1,
+  "model_family": "TabPFN-3.5",
+  "library_version": "9.1.0",
+  "params": {
+    "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35\\tabpfn-v3.5-20260909.safetensors",
+    "n_estimators": 1,
+    "auto_scale_n_estimators": false,
+    "random_state": 1201,
+    "device": "cuda",
+    "ignore_pretraining_limits": true,
+    "fit_mode": "fit_with_cache",
+    "kv_cache_precision": "int8",
+    "keep_cache_on_device": true,
+    "inference_precision": "autocast",
+    "categorical_features_indices": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      21
+    ],
+    "memory_saving_mode": true,
+    "n_preprocessing_jobs": 1,
+    "tuning_config": null
+  },
+  "seed": 1201,
+  "train_rows": 559708,
+  "validation_rows": 139927,
+  "full_intended_population": true,
+  "fit_ids_sha256": "ced415bb6d81f93d93ae77b5d52005e3cae1370a8d0922cd99264905334f6a70",
+  "validation_ids_sha256": "2d0d8882d4ebd7f52b328d670a425eea2103354e2ed7d1fadf6d4a008431784e",
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "feature_names": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "label_free_category_maps": {
+    "Gender": [
+      "Female",
+      "Male"
+    ],
+    "Customer Type": [
+      "Loyal Customer",
+      "disloyal Customer"
+    ],
+    "Type of Travel": [
+      "Business travel",
+      "Personal Travel"
+    ],
+    "Class": [
+      "Business",
+      "Eco",
+      "Eco Plus"
+    ]
+  },
+  "feature_fit_sha256": "4add8bf13062614d0d73da2d96f03b47b05dcd3f97790a231f51fdd5a1c283b9",
+  "feature_val_sha256": "3bb919fc597af513adbcb853b7bcc5686821f8b2c3efd7e4417f2a9d41b0f80e",
+  "data_sha256": {
+    "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+    "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+  },
+  "source_sha256": "e3d84441b6e2b927cf058dbefe4bd0a3956f12834d75a8ff4a2f85fafc6e5d6b",
+  "checkpoint": {
+    "accessed_utc": "2026-10-07T18:55:06.560314+00:00",
+    "source": "https://huggingface.co/Prior-Labs/tabpfn_3_5",
+    "revision": "06bf2ba35c80a92a3b9abb436b99cf49e7a0365e",
+    "checkpoint_sha256": "ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3",
+    "license_sha256": "9570fdd687bb76ed45499412ad57d6ba949848e6d731f1242572bb57f2f73ae1",
+    "license": "TabPFN-3.5 Non-Commercial License v1.0; section 1.c includes data science competitions; no commercial deployment",
+    "usage": "own fold-safe full-context inference, no imported competition predictions",
+    "rule_section": "2.6 external public models"
+  },
+  "early_stopping": "none; pretrained inference uses every outer-fit target and no evaluation targets",
+  "test_policy": "same representation; entire competition training set as context; no new gradient fitting",
+  "predeclared_ensemble_geometry": "append one equal-logit member to the 59-member legacy-v5 reference",
+  "hardware": "RTX 5070 Ti 16GB; 32GB RAM",
+  "timing_only": false,
+  "batch_size": 1024,
+  "precision": "autocast",
+  "icl_bf16": true,
+  "decoder_chunk_rows": null,
+  "decoder_inplace_gelu": true,
+  "decoder_chunk_source_sha256": "1aedd977666d9a1777692dbfd889d0a50bd303609154cbc68bcfb18c94e8b1ab",
+  "inference_chunk_cells": 262144,
+  "inference_col_chunk_size": 1,
+  "gpu_memory_fraction": 0.85,
+  "prefit_host_reserve_gib": 4.0,
+  "prediction_host_reserve_gib": 2.0,
+  "windows_mqa_backend": true,
+  "backend_max_reference_gap": {
+    "fp16": 0.00048828125,
+    "bf16": 0.0078125
+  },
+  "reuse_query_output": true,
+  "backend_source_sha256": "104bed55ad7eb37911a27e22ee37b558b6bda43ae123c0f386303cea4116bc34",
+  "resource_guard_source_sha256": "b91280215a10f688690603b17289e9b80d865488127744826ef0e449721a2049",
+  "flash_attention_compiled": false,
+  "fit_seconds": 786.7189999999246,
+  "predict_seconds": 240.4529999999795,
+  "seconds": 1027.3589999999385,
+  "peak_gpu_bytes": 13675054592,
+  "status": "POSITIVE_UNCONFIRMED",
+  "auc": 0.9613791656896364,
+  "prediction_sha256": "83ca4330f955aef150dab5f45ebd2f1d432109659842e9fb371e88d6d1c0771a",
+  "logit_corr_vs_v5": 0.9948759247148701,
+  "v5_equal_member_delta": 2.3192712762187817e-05
+}
