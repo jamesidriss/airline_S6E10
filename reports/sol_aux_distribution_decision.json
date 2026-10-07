@@ -1,0 +1,26 @@
+{
+  "updated_utc": "2026-10-07T21:17:50.457719+00:00",
+  "git": "86dbee239790457108d865718b0f819182299373",
+  "standalone_deltas": [
+    0.0001061761224686597,
+    9.112575766512254e-05,
+    -0.00020121530344618943
+  ],
+  "standalone_mean_delta": -1.3044744374690609e-06,
+  "standalone_positive_folds": 2,
+  "actual_legacy_v5_slot_deltas": [
+    4.473427042461786e-06,
+    -5.611941203964577e-07,
+    4.129701718480483e-06
+  ],
+  "actual_legacy_slot_mean_delta": 2.680644880181937e-06,
+  "actual_legacy_slot_paired_se": 1.623953699446699e-06,
+  "positive_slot_folds": 2,
+  "report_hashes": [
+    "6dc2a08c40d084641dbe8c04e696d9d784bbf139bdf96820b42aa27251ceb3ee",
+    "e64bc8135ffa65edae4f790c29ee02870de2a038106b1813d2d82ed11cae6b32",
+    "e2777cb42adba04dffd897f1b05f9eaff09898a3e81bb14b4b4867237f1aba85"
+  ],
+  "verdict": "FAILED_THREE_FOLD_PROMOTION; NO_XT_CAT_OR_MULTITASK_EXPANSION",
+  "limitation": "Three primary folds, not full OOF; legacy comparison portfolio retains CV/test defects"
+}

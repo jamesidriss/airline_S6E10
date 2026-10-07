@@ -97,7 +97,8 @@ MANIFEST = REPORTS / "finalist_v3_final.json"
 # EXACT defaults of scripts/run_views.py::_fit_full_predict_lgbm, so a full-data fit is the same
 # configuration as the member it replaces with more rows and nothing else changed.
 TEST_REFIT_DEFAULTS = {"objective": "binary", "n_estimators": 1200, "learning_rate": 0.02,
-                       "num_leaves": 127, "colsample_bytree": 0.8, "subsample": 0.8,
+                       "num_leaves": 127, "min_child_samples": 40, "reg_lambda": 1.0,
+                       "max_bin": 255, "colsample_bytree": 0.8, "subsample": 0.8,
                        "subsample_freq": 1, "verbose": -1, "n_jobs": 8}
 
 SIZE_EXPONENT = 0.7527

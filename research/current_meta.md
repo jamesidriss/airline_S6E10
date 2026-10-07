@@ -328,3 +328,19 @@ seed **1**, with disjoint training and stopping rows. New run IDs carry
 `sol_v2_inner10_literal_twins` to prevent accidental reuse of legacy results.
 Regression tests flip outer labels and verify unchanged fold0 fit/ES inputs for
 all three entry points, and test differing split vocabularies explicitly.
+
+## 12. Generic test refit configuration audit, 7 October 2026
+
+The old generic LightGBM full-prediction helper differed from its CV helper:
+min_child_samples 20 versus 40, reg_lambda 0 versus 1, and omitted explicit
+bagging_seed=seed+1 / feature_fraction_seed=seed+2. The generic CatBoost refit
+default learning rate was 0.05 versus CV's 0.04. Explicit recipe overrides
+could mask some differences; historical prediction vectors cannot prove their
+parameters without a fitted-model manifest. Do not call these test refits exact
+copies of the CV recipe. Banked predictions are preserved, not silently repaired.
+
+The helpers now preserve estimator configuration. XGB and CatBoost selected
+iteration indices are zero based and refit counts require +1; XGB index zero
+must not be replaced by the maximum 6000-round budget. Parameter-identity and
+first-tree regression checks pass. No leaderboard improvement is inferred from
+these implementation changes; clean OOF/test replay remains necessary.

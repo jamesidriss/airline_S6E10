@@ -15,7 +15,6 @@ import warnings
 import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
-from sklearn.model_selection import train_test_split
 
 warnings.filterwarnings("ignore")
 
@@ -42,8 +41,8 @@ def fit_inner_validation(model, frame, labels, seed=1):
     labels = np.asarray(labels)
     if len(frame) != len(labels):
         raise ValueError("FIT frame/label lengths differ")
-    train, es = train_test_split(np.arange(len(labels)), test_size=.1,
-                                 random_state=seed, stratify=labels)
+    from scripts.run_views import _inner_es_split
+    train, es = _inner_es_split(np.arange(len(labels)), labels, seed)
     assert not np.intersect1d(train, es).size
     model.fit(frame.iloc[train], labels[train],
               X_val=frame.iloc[es], y_val=labels[es])

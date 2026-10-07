@@ -1,0 +1,10 @@
+{
+  "status": "PASS_COMPLETE_MODEL_PROBE",
+  "rows": 1024,
+  "max_probability_gap": 0.0,
+  "predeclared_tolerance": 2e-06,
+  "reference_prediction_sha256": "a64dfea84287aad3f6c1675916f5f7e252c055d4eb45e22d79b265a930c3d543",
+  "reused_prediction_sha256": "a64dfea84287aad3f6c1675916f5f7e252c055d4eb45e22d79b265a930c3d543",
+  "context_rows": 100000,
+  "limitation": "Numerical equivalence probe, not CV evidence"
+}

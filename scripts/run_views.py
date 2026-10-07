@@ -111,7 +111,7 @@ def main() -> None:
                     oof[val] = o
                 # second pass: refit on ALL fold-fit rows at the median CV iteration count, so the
                 # test prediction uses 11% more data per fold and never consults a held-out label.
-                n_it = int(np.median(iters)) if iters else 800
+                n_it = int(np.median(iters)) + (mdl in ("xgb", "cat")) if iters else 800
                 print(f"  [{mdl}/{view}] median best_iter={n_it} per-fold={iters}", flush=True)
                 set_seed(args.seed)
                 for k in sorted(set(folds.tolist())):
@@ -191,7 +191,7 @@ def _fit_xgb_es(X, y, Xv, params, seed, es_X=None, es_y=None):
     p.update(params)
     m = xgb.XGBClassifier(**p)
     m.fit(X, y, eval_set=[(es_X, es_y)], verbose=False)
-    it = int(getattr(m, "best_iteration", 0) or p["n_estimators"])
+    it = int(m.best_iteration)  # zero is a valid, zero-based selected iteration
     return m.predict_proba(Xv)[:, 1], it
 
 
@@ -216,9 +216,11 @@ def _fit_cat_es(X, y, Xv, params, seed, es_X=None, es_y=None):
 # --------------------------------------------------------------------------------------
 def _fit_full_predict_lgbm(X, y, Xt, params, seed, n_estimators=None):
     import lightgbm as lgb
-    p = dict(objective="binary", n_estimators=1200, learning_rate=0.02, num_leaves=127,
-             colsample_bytree=0.8, subsample=0.8, subsample_freq=1, verbose=-1,
-             n_jobs=8, random_state=seed)
+    p = dict(objective="binary", metric="auc", n_estimators=1200, learning_rate=0.02,
+             num_leaves=127, min_child_samples=40, colsample_bytree=0.8,
+             subsample=0.8, subsample_freq=1, reg_lambda=1.0, max_bin=255,
+             verbose=-1, n_jobs=8, random_state=seed, bagging_seed=seed+1,
+             feature_fraction_seed=seed+2)
     p.update({k: v for k, v in params.items() if k != "n_estimators"})
     p["n_estimators"] = int(n_estimators or params.get("n_estimators", 1200))
     m = lgb.LGBMClassifier(**p)
@@ -241,8 +243,8 @@ def _fit_full_predict_xgb(X, y, Xt, params, seed, n_estimators=None):
 
 def _fit_full_predict_cat(X, y, Xt, params, seed, n_estimators=None):
     from catboost import CatBoostClassifier
-    p = dict(iterations=1800, learning_rate=0.05, depth=8, l2_leaf_reg=3.0, random_seed=seed,
-             thread_count=8, verbose=0, allow_writing_files=False)
+    p = dict(iterations=1800, learning_rate=0.04, depth=8, l2_leaf_reg=3.0, random_seed=seed,
+             thread_count=8, verbose=0, allow_writing_files=False, eval_metric="AUC")
     p.update({k: v for k, v in params.items() if k != "iterations"})
     p["iterations"] = int(n_estimators or params.get("iterations", 1800))
     m = CatBoostClassifier(**p)

@@ -1,0 +1,30 @@
+{
+  "utc": "2026-10-07T21:28:02.180535+00:00",
+  "status": "EXECUTED",
+  "files": [
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_ogm_ogs.npz",
+      "bytes": 2562664726,
+      "payload_sha256": {
+        "te.npy": "a69951301e8bbb06524a9af4ba53f283d9b1d18b4eda75f463d7c2d6839a2a57",
+        "tr.npy": "36df26116183aa7b2c9777987d79e54b9a511e1415a5ff968389e92a8cc00fe8"
+      },
+      "view": "full_ogm_ogs",
+      "reason": "regenerable label-free static view, absent from saved finalist recipes",
+      "regeneration": "python -c \"from src.common import load_cached_parquet; from src.features.view import ViewBuilder; a,b=load_cached_parquet(); ViewBuilder(a,b,'full_ogm_ogs').build_static()\""
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3_ogsurf.npz",
+      "bytes": 1571181482,
+      "payload_sha256": {
+        "te.npy": "9913dca7e9a95d9ec6a58357d951575933adfa9430b470faa5594482d144a1b8",
+        "tr.npy": "141d468123dbe31475a36ca784224675d09153ccd8b04332990356f2aecd58ac"
+      },
+      "view": "core3_ogsurf",
+      "reason": "regenerable label-free static view, absent from saved finalist recipes",
+      "regeneration": "python -c \"from src.common import load_cached_parquet; from src.features.view import ViewBuilder; a,b=load_cached_parquet(); ViewBuilder(a,b,'core3_ogsurf').build_static()\""
+    }
+  ],
+  "total_bytes": 4133846208,
+  "preserved": "raw/original data, folds, model weights, predictions, submissions and used static views"
+}

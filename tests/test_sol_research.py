@@ -80,3 +80,61 @@ def test_query_chunks_preserve_full_context_for_mha_and_mqa():
             q.permute(0, 2, 1, 3), k.permute(0, 2, 1, 3),
             v.permute(0, 2, 1, 3), enable_gqa=heads == 1).permute(0, 2, 1, 3)
         torch.testing.assert_close(actual, expected)
+
+
+def test_opt_in_query_reuse_preserves_keys_values_and_refuses_aliases():
+    from contextlib import nullcontext
+    from unittest.mock import patch
+    from src.models.windows_attention import WindowsMQABackend
+    generator = torch.Generator().manual_seed(705)
+    for alias in (False, True):
+        q = torch.randn(2, 19, 4, 8, generator=generator)
+        k = q if alias else torch.randn(2, 23, 4, 8, generator=generator)
+        v = torch.randn_like(k)
+        original_k, original_v = k.clone(), v.clone()
+        expected = torch.nn.functional.scaled_dot_product_attention(
+            q.permute(0, 2, 1, 3), k.permute(0, 2, 1, 3), v.permute(0, 2, 1, 3)).permute(0, 2, 1, 3)
+        with torch.no_grad(), patch('src.models.windows_attention.sdpa_kernel', return_value=nullcontext()):
+            actual = WindowsMQABackend(query_chunk_size=7, reuse_query_output=True).run(q, k, v)
+        torch.testing.assert_close(actual, expected)
+        assert torch.equal(k, original_k) and torch.equal(v, original_v)
+        assert (actual.data_ptr() == q.data_ptr()) != alias
+def test_decoder_projection_chunks_keep_every_context_row():
+    from types import SimpleNamespace
+    from src.models.pointwise_inference import install_decoder_projection_chunks
+    from tabpfn.architectures.tabpfn_v3_5 import MultiTaskHeads
+    torch.manual_seed(707)
+    heads = MultiTaskHeads(input_size=8, max_num_classes=2, num_buckets=4,
+        decoder_head_dim=4, decoder_num_heads=2, mlp_dim_feedforward=16,
+        norm_factory=torch.nn.LayerNorm)
+    heads.eval()
+    # The shipped residual MLP initializes its final layer at zero. Nonzero
+    # weights make this check exercise normalization, both projections and GELU.
+    for parameter in heads.mlp_classification.parameters():
+        torch.nn.init.uniform_(parameter, -.3, .3)
+    x = torch.randn(2, 19, 8)
+    with torch.no_grad():
+        expected = heads.project_decoder_keys(x)
+        install_decoder_projection_chunks(SimpleNamespace(heads=heads), rows=7)
+        actual = heads.project_decoder_keys(x)
+    assert actual.shape == expected.shape and actual.shape[1] == 19
+    torch.testing.assert_close(actual, expected)
+def test_decoder_activation_reuse_preserves_matrix_shapes_and_gradients():
+    from copy import deepcopy
+    from types import SimpleNamespace
+    from src.models.pointwise_inference import install_decoder_gelu_reuse
+    torch.manual_seed(709)
+    mlp = torch.nn.Sequential(torch.nn.Linear(8, 16), torch.nn.GELU(), torch.nn.Linear(16, 8))
+    reference = deepcopy(mlp)
+    model = SimpleNamespace(heads=SimpleNamespace(mlp_classification=SimpleNamespace(mlp=mlp)))
+    install_decoder_gelu_reuse(model, rows=7)
+    x = torch.randn(2, 19, 8)
+    with torch.no_grad():
+        actual, expected = mlp(x), reference(x)
+    # CPU strided GELU kernels can differ by one float32 rounding unit.
+    # The complete-model GPU probability gate remains independently stricter.
+    torch.testing.assert_close(actual, expected, rtol=1e-5, atol=2e-7)
+    with torch.enable_grad():
+        a, b = x.clone().requires_grad_(), x.clone().requires_grad_()
+        mlp(a).sum().backward(); reference(b).sum().backward()
+    torch.testing.assert_close(a.grad, b.grad, rtol=0, atol=0)

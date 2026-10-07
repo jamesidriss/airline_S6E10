@@ -14,8 +14,13 @@ run a model catalogue.
 | 5 | ModernNCA learned metric with sampled candidate objective | Medium objective novelty; 0–0.0002 standalone | Medium/high if it closes the standalone gap | Retrieval scale and implementation high; 2–4 h | Substantial overlap with rejected TabR/kNN; only new evidence justifies execution. No default rerun. |
 
 The measured branches already in progress are not additional queue entries:
-distribution A1/A2 pass fold0; A3/A4 lose standalone; the frozen SSL encoder is
-trained and B1 confirmed on three folds, with adverse actual v5 slot deltas.
+distribution A1 failed fold1; A2 failed fold2 with −0.000201215 standalone and
+three-fold mean −0.000001304. A3/A4 lose standalone. The frozen SSL encoder was
+evaluated on three folds, with adverse actual v5 slot deltas, and its XT check
+lost −0.000044376. Multitask and field-factorization conditions are unmet; the
+surprise diagnostic does not justify a specialist. Full-context foundation
+inference is still the only eligible new mechanism. Neural replay is mandatory
+repair of withdrawn outer-selected CV, not a new model/seed search.
 
 Primary sources:
 

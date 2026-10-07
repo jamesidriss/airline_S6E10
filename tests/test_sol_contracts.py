@@ -294,3 +294,66 @@ def test_banked_submission_cannot_be_overwritten():
             else:
                 raise AssertionError('Banked submission was overwritten')
             assert path.read_bytes() == original and len(pd.read_csv(make.MANIFEST)) == 1
+def test_full_refit_preserves_early_stop_estimator_configuration():
+    """Changing label population/tree count must preserve the model recipe."""
+    import numpy as np
+    from unittest.mock import patch
+    import scripts.run_views as runner
+    seen = {}
+
+    class Model:
+        best_iteration = 123
+        def get_best_iteration(self):
+            return self.best_iteration
+        def __init__(self, **params):
+            seen['refit'] = params
+        def fit(self, *args, **kwargs):
+            return self
+        def predict_proba(self, x):
+            return np.tile([.4, .6], (len(x), 1))
+        def predict(self, x, **kwargs):
+            return np.full(len(x), .6)
+
+    def train(params, *args, **kwargs):
+        seen['selection'] = params
+        return Model()
+
+    x, y = np.zeros((10, 2)), np.arange(10) % 2
+    for overrides in ({}, {'extra_trees': True, 'min_child_samples': 80, 'reg_lambda': 3.0}):
+        with patch('lightgbm.Dataset'), patch('lightgbm.train', side_effect=train), patch('lightgbm.LGBMClassifier', Model):
+            runner._fit_lgbm_es(x, y, x, overrides, 7, x, y)
+            runner._fit_full_predict_lgbm(x, y, x, overrides, 7, 123)
+        a, b = dict(seen['selection']), dict(seen['refit'])
+        a.pop('n_estimators'); b.pop('n_estimators')
+        assert a == b, 'Selection and full refit changed the model configuration'
+    with patch('catboost.CatBoostClassifier', Model):
+        runner._fit_cat_es(x, y, x, {}, 7, x, y)
+        selected = dict(seen['refit'])
+        runner._fit_full_predict_cat(x, y, x, {}, 7, 124)
+        refit = dict(seen['refit'])
+    selected.pop('iterations'); refit.pop('iterations')
+    assert selected == refit, 'CatBoost refit changed defaults'
+
+
+def test_zero_based_best_iteration_zero_refits_one_tree():
+    import numpy as np
+    from unittest.mock import patch
+    import scripts.run_views as runner
+    import scripts.run_zoo as zoo
+    class Model:
+        best_iteration = 0
+        def __init__(self, **params):
+            pass
+        def fit(self, *args, **kwargs):
+            return self
+        def predict_proba(self, x):
+            return np.tile([.4, .6], (len(x), 1))
+    x, y = np.zeros((10, 2)), np.arange(10) % 2
+    with patch('xgboost.XGBClassifier', Model):
+        _, best = runner._fit_xgb_es(x, y, x, {}, 1, x, y)
+    assert best == 0, 'First selected tree was replaced by the maximum training budget'
+    for family, function in [('xgb', '_fit_full_predict_xgb'), ('cat', '_fit_full_predict_cat')]:
+        with patch.object(zoo, function, return_value=np.full(10, .6)) as fit:
+            zoo.predict_test(family, x, x, y, np.arange(10), {}, 1, best)
+        assert fit.call_args.args[-1] == 1, 'A zero-based index was used as the tree count'
+

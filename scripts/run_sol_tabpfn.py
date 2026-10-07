@@ -55,6 +55,9 @@ def main():
     ap.add_argument('--batch-size', type=int, default=8192)
     ap.add_argument('--precision', choices=['autocast', 'fp16', 'bf16'], default='autocast')
     ap.add_argument('--windows-mqa', action='store_true')
+    ap.add_argument('--reuse-query-output', action='store_true')
+    ap.add_argument('--decoder-chunk-rows', type=int)
+    ap.add_argument('--decoder-inplace-gelu', action='store_true')
     ap.add_argument('--memory-saving', choices=['auto', 'on'], default='auto')
     ap.add_argument('--icl-bf16', action='store_true')
     ap.add_argument('--chunk-cells', type=int)
@@ -75,10 +78,10 @@ def main():
     backend_gate = None
     if args.windows_mqa:
         from src.models.windows_attention import register, verify_gpu_equivalence
-        backend_gate = verify_gpu_equivalence()
+        backend_gate = verify_gpu_equivalence(reuse_query_output=args.reuse_query_output)
         if args.icl_bf16:
-            backend_gate = {'fp16': backend_gate, 'bf16': verify_gpu_equivalence(torch.bfloat16)}
-        register()
+            backend_gate = {'fp16': backend_gate, 'bf16': verify_gpu_equivalence(torch.bfloat16, reuse_query_output=args.reuse_query_output)}
+        register(reuse_query_output=args.reuse_query_output)
     checkpoint = ARTIFACTS / 'tabpfn35' / 'tabpfn-v3.5-20260909.safetensors'
     provenance = json.loads(Path('research/raw/sol_tabpfn_provenance.json').read_text(encoding='utf-8'))
     assert file_sha256(checkpoint) == provenance['checkpoint_sha256']
@@ -121,11 +124,14 @@ def main():
                         'predeclared_ensemble_geometry': 'append one equal-logit member to the 59-member legacy-v5 reference',
                         'hardware': 'RTX 5070 Ti 16GB; 32GB RAM', 'timing_only': args.timing,
                         'batch_size': args.batch_size, 'precision': args.precision,
-                        'icl_bf16': args.icl_bf16,
+                        'icl_bf16': args.icl_bf16, 'decoder_chunk_rows': args.decoder_chunk_rows,
+                        'decoder_inplace_gelu': args.decoder_inplace_gelu,
+                        'decoder_chunk_source_sha256': file_sha256('src/models/pointwise_inference.py'),
                         'inference_chunk_cells': args.chunk_cells, 'inference_col_chunk_size': args.col_chunk,
                         'gpu_memory_fraction': args.gpu_fraction,
                         'prefit_host_reserve_gib': args.host_reserve_gib,
                         'windows_mqa_backend': args.windows_mqa, 'backend_max_reference_gap': backend_gate,
+                        'reuse_query_output': args.reuse_query_output,
                         'backend_source_sha256': file_sha256('src/models/windows_attention.py') if args.windows_mqa else None,
                         'resource_guard_source_sha256': file_sha256('src/models/resource_guard.py'),
                         'flash_attention_compiled': torch.backends.cuda.is_flash_attention_available()}
@@ -142,9 +148,11 @@ def main():
                 with guard:
                     # Check the reserve before allocating the checkpoint, rather
                     # than demanding the same reserve again after loading it.
-                    model = create_model(params, args.icl_bf16, args.chunk_cells, args.col_chunk)
+                    model = create_model(params, args.icl_bf16, args.chunk_cells, args.col_chunk, args.decoder_chunk_rows, args.decoder_inplace_gelu)
                     model.fit(X[fit_idx], y[fit_idx])
                 fit_seconds = time.monotonic() - start
+                gc.collect()
+                torch.cuda.empty_cache()  # keep live model/cache; release inactive fit workspaces
                 print(f'{arm}: fitted in {fit_seconds:.1f}s; peak GPU {torch.cuda.max_memory_allocated()/2**30:.3f} GiB', flush=True)
                 chunks = []
                 pred_start = time.monotonic()
@@ -161,6 +169,9 @@ def main():
                 rec = {**contract, 'fit_seconds': fit_seconds, 'predict_seconds': time.monotonic()-pred_start,
                        'seconds': time.monotonic()-start, 'peak_gpu_bytes': torch.cuda.max_memory_allocated(),
                        'status': 'TIMING_ONLY' if args.timing else 'POSITIVE_UNCONFIRMED'}
+                if args.timing:
+                    np.save(root / f'probe_{arm}_{len(fit_idx)}.npy', pred)
+                    rec['probe_prediction_sha256'] = arr_sha256(pred)
                 if not args.timing:
                     np.save(root / f'{arm}_f{k}.npy', pred)
                     np.save(root / f'ids_f{k}.npy', ids[va])
@@ -186,9 +197,9 @@ def main():
     return 0
 
 
-def create_model(params, icl_bf16=False, chunk_cells=None, col_chunk=None):
+def create_model(params, icl_bf16=False, chunk_cells=None, col_chunk=None, decoder_chunk_rows=None, decoder_inplace_gelu=False):
     from tabpfn import TabPFNClassifier
-    if not icl_bf16 and chunk_cells is None and col_chunk is None:
+    if not icl_bf16 and chunk_cells is None and col_chunk is None and decoder_chunk_rows is None and not decoder_inplace_gelu:
         return TabPFNClassifier(**params)
     # Keep categorical/fingerprint preprocessing at fp32. Only the officially
     # supported ICL blocks and residual stream switch to bf16; no gradient fit.
@@ -203,6 +214,14 @@ def create_model(params, icl_bf16=False, chunk_cells=None, col_chunk=None):
     if col_chunk is not None:
         assert col_chunk > 0
         models[0].inference_col_chunk_size = col_chunk
+    if decoder_chunk_rows is not None:
+        from src.models.pointwise_inference import install_decoder_projection_chunks
+        install_decoder_projection_chunks(models[0], decoder_chunk_rows)
+    if decoder_inplace_gelu:
+        if decoder_chunk_rows is not None:
+            raise ValueError('Use activation reuse independently of the rejected projection chunking')
+        from src.models.pointwise_inference import install_decoder_gelu_reuse
+        install_decoder_gelu_reuse(models[0])
     spec = ModelSpecs(models[0], configs[0], inference)
     return TabPFNClassifier(**dict(params, model_path=spec))
 

@@ -121,7 +121,7 @@ def fit_xgb(Xf, yf, Xv, seed, params, es_X, es_y):
     p.update(random_state=seed)
     m = xgb.XGBClassifier(**p)
     m.fit(Xf, yf, eval_set=[(es_X, es_y)], verbose=False)
-    it = int(getattr(m, "best_iteration", 0) or p["n_estimators"])
+    it = int(m.best_iteration)  # zero is a valid selected iteration
     return m.predict_proba(Xv)[:, 1], it
 
 

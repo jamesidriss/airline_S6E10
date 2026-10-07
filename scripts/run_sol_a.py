@@ -29,6 +29,7 @@ from scripts.run_phase13b import SLOTS, SLOT_SEEDS, fit_slot
 from scripts.run_phase14 import XGB_ARMS, CAT_ARMS, fit_xgb, fit_cat
 from scripts.sol_aux_cache import probability_cache
 from scripts.audit_sol_state import reconstruct_v5
+from scripts.run_phase14c import counter_path
 
 
 def model_spec(arm):
@@ -85,6 +86,7 @@ def main():
             raise RuntimeError(f"STOP: auxiliary expectation control failed ({ev_gap})")
         for arm in arms:
             spec = model_spec(arm)
+            old_slot_pred = np.load(counter_path(spec['member'], k))
             # Historical p13b/p14 use seed 1 for the ES partition, independently
             # of each estimator's seed. Freeze that convention for comparability.
             itr, es = _inner_es_split(fi, y, 1)
@@ -151,7 +153,7 @@ def main():
                 if a0_pred is None:
                     a0_pred = np.load(root / f"{arm}_A0_f{k}.npy")
                 delta = rec["auc"] - float(roc_auc_score(y[va], a0_pred))
-                new_champion = champion[va] + (logit(pred) - logit(a0_pred)) / 59
+                new_champion = champion[va] + (logit(pred) - logit(old_slot_pred)) / 59
                 marginal = float(roc_auc_score(y[va], new_champion) - roc_auc_score(y[va], champion[va]))
                 rec.update(delta_vs_A0=delta, operational_v5_slot_delta=marginal,
                            logit_corr_vs_A0=float(np.corrcoef(logit(pred), logit(a0_pred))[0, 1]))

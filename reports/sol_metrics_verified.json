@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-07T20:59:14.687015+00:00",
+  "updated_utc": "2026-10-07T21:48:55.842864+00:00",
   "verified_records": [
     {
       "exp_id": "sol_repair_C1_A0_f0",
@@ -242,6 +242,16 @@
       "verdict": "POSITIVE_UNCONFIRMED"
     },
     {
+      "exp_id": "sol_a_ladder_A2_f2",
+      "fold": 2,
+      "validation_auc": 0.9607863330091494,
+      "paired_fold_deltas": [
+        4.129701718480483e-06
+      ],
+      "corr_with_champion": 0.9974109936233989,
+      "verdict": "NEGATIVE"
+    },
+    {
       "exp_id": "sol_a_ladder_A3_f0",
       "fold": 0,
       "validation_auc": 0.9608284453103637,
@@ -270,6 +280,16 @@
       ],
       "corr_with_champion": 0.9985043231257187,
       "verdict": "NEGATIVE"
+    },
+    {
+      "exp_id": "sol_neural_clean_compact_z3_rm_bs256_e6_f0",
+      "fold": 0,
+      "validation_auc": 0.9607581724854058,
+      "paired_fold_deltas": [
+        -2.5313827833883806e-06
+      ],
+      "corr_with_champion": 0.997766640260098,
+      "verdict": "CORRECTED_BASELINE_UNCONFIRMED"
     }
   ],
   "repaired_blend_partial": {

@@ -151,9 +151,9 @@ def predict_test(family, Xf, Xtest, y, fit, params, seed, n_it):
     if family == LGBM:
         return _fit_full_predict_lgbm(Xf, y[fit], Xtest, params, seed, n_it or None)
     if family == XGB:
-        return _fit_full_predict_xgb(Xf, y[fit], Xtest, params, seed, n_it or None)
+        return _fit_full_predict_xgb(Xf, y[fit], Xtest, params, seed, n_it + 1)
     if family == CAT:
-        return _fit_full_predict_cat(Xf, y[fit], Xtest, params, seed, n_it or None)
+        return _fit_full_predict_cat(Xf, y[fit], Xtest, params, seed, n_it + 1)
     if family == ETR:
         from sklearn.ensemble import ExtraTreesClassifier
         m = ExtraTreesClassifier(random_state=seed, n_jobs=8, **params).fit(Xf, y[fit])

@@ -1,0 +1,38 @@
+{
+  "utc": "2026-10-07T21:12:16.777100+00:00",
+  "status": "EXECUTED",
+  "files": [
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_te21.npz",
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full.npz",
+      "bytes": 947506586,
+      "payload_sha256": {
+        "te.npy": "2d57314566471a627ba248567e9835298b4d7a50022c032ec0bf1a6fa0e34908",
+        "tr.npy": "dedf4633a0a09fd382216bf1b8b0554ad3356a9a0ee23ab385d62f419cea56a6"
+      },
+      "reason": "exact static alias; canonical cache retained"
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_ogsurf_te.npz",
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_ogsurf.npz",
+      "bytes": 1619156474,
+      "payload_sha256": {
+        "te.npy": "e62c0d8db63a164eb7c35b5f6bc9eae5965bd4599de1055fac62234b26027910",
+        "tr.npy": "e514329bd1181a0e219f24580255f36ae5fa18461b7cda76ac1e4fa5e2c6a5a0"
+      },
+      "reason": "exact static alias; canonical cache retained"
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_enrich.npz",
+      "bytes": 1323310690,
+      "payload_sha256": {
+        "te.npy": "93525e4736a1f3d32adb4f27e975285f54fbe72779cd209e3bb7d13d014f039a",
+        "tr.npy": "005f150336ed1bc42096a5dd389060cf1cec0f328af96818946fb1f1723b48f0"
+      },
+      "reason": "regenerable label-free full_enrich cache; absent from every saved finalist member manifest",
+      "regeneration": "python -c \"from src.common import load_cached_parquet; from src.features.view import ViewBuilder; a,b=load_cached_parquet(); ViewBuilder(a,b,'full_enrich').build_static()\""
+    }
+  ],
+  "total_bytes": 3889973750,
+  "preserved": "all canonical/used feature caches, raw/original data, folds, weights, predictions and submissions"
+}

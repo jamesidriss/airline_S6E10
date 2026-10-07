@@ -22,10 +22,11 @@ def expand_heads(q, k, v):
 class WindowsMQABackend:
     name = 'sol_windows_efficient_mqa'
 
-    def __init__(self, query_chunk_size=2048):
+    def __init__(self, query_chunk_size=2048, reuse_query_output=False):
         if query_chunk_size < 1:
             raise ValueError('query_chunk_size must be positive')
         self.query_chunk_size = query_chunk_size
+        self.reuse_query_output = reuse_query_output
 
     def is_preferred(self, spec):
         return (spec.device.type == 'cuda' and not spec.is_grad_enabled
@@ -45,7 +46,13 @@ class WindowsMQABackend:
         repeat = q.shape[2] // k.shape[2]
         key = k.permute(0, 2, 1, 3).repeat_interleave(repeat, dim=1).contiguous()
         value = v.permute(0, 2, 1, 3).repeat_interleave(repeat, dim=1).contiguous()
-        output = torch.empty_like(q)
+        # Opt-in for the audited TabPFN3.5 ICL path: its Q is an ephemeral,
+        # separately projected/normalized tensor, never used again by the caller.
+        # Keys/values are already copied above. Decline reuse when any original
+        # storage is shared or gradients are enabled.
+        independent = q.untyped_storage().data_ptr() not in {
+            k.untyped_storage().data_ptr(), v.untyped_storage().data_ptr()}
+        output = q if self.reuse_query_output and independent and not torch.is_grad_enabled() else torch.empty_like(q)
         with sdpa_kernel(backends=[SDPBackend.EFFICIENT_ATTENTION]):
             for start in range(0, q.shape[1], self.query_chunk_size):
                 stop = min(start + self.query_chunk_size, q.shape[1])
@@ -59,12 +66,13 @@ class WindowsMQABackend:
 BACKEND = WindowsMQABackend()
 
 
-def register():
+def register(reuse_query_output=False):
     from tabpfn.architectures.shared.attention_backends import register_attention_backend
+    BACKEND.reuse_query_output = reuse_query_output
     register_attention_backend(BACKEND)
 
 
-def verify_gpu_equivalence(dtype=torch.float16):
+def verify_gpu_equivalence(dtype=torch.float16, reuse_query_output=False):
     """Numerical gate before any expensive run, with a small independent reference."""
     generator = torch.Generator(device='cuda').manual_seed(2701)
     q = torch.randn(2, 31, 8, 64, generator=generator, device='cuda', dtype=dtype)
@@ -73,11 +81,11 @@ def verify_gpu_equivalence(dtype=torch.float16):
         for heads in (1, 8):
             k = torch.randn(2, 43, heads, 64, generator=generator, device='cuda', dtype=dtype)
             v = torch.randn(2, 43, heads, 64, generator=generator, device='cuda', dtype=dtype)
-            # Force multiple calls, including a partial final query chunk.
-            actual = WindowsMQABackend(query_chunk_size=7).run(q, k, v)
             with sdpa_kernel(backends=[SDPBackend.MATH]):
                 expected = torch.nn.functional.scaled_dot_product_attention(
                     q.permute(0, 2, 1, 3), k.permute(0, 2, 1, 3), v.permute(0, 2, 1, 3), enable_gqa=heads == 1).permute(0, 2, 1, 3)
+            # Force multiple calls, including a partial final query chunk.
+            actual = WindowsMQABackend(query_chunk_size=7, reuse_query_output=reuse_query_output).run(q.clone(), k, v)
             tolerance = 1.6e-2 if dtype == torch.bfloat16 else 2e-3
             torch.testing.assert_close(actual, expected, atol=tolerance, rtol=tolerance)
             gaps.append(float((actual - expected).abs().max()))

@@ -1,0 +1,9 @@
+{
+  "status": "PASS_BIT_IDENTICAL_COMPLETE_MODEL_PROBE",
+  "rows": 1024,
+  "context_rows": 100000,
+  "max_probability_gap": 0.0,
+  "control_sha256": "a64dfea84287aad3f6c1675916f5f7e252c055d4eb45e22d79b265a930c3d543",
+  "reuse_sha256": "a64dfea84287aad3f6c1675916f5f7e252c055d4eb45e22d79b265a930c3d543",
+  "scope": "resource correctness probe; no AUC or promotion evidence"
+}

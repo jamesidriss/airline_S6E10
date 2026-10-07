@@ -1,0 +1,13 @@
+{
+  "status": "FAIL_STRICT_PROBABILITY_EQUIVALENCE",
+  "predeclared_tolerance": 2e-06,
+  "max_probability_gap": 0.00022682547569274902,
+  "mean_probability_gap": 3.171286152792163e-06,
+  "changed_predictions": 66,
+  "correlation": 0.9999999991131571,
+  "reference_sha256": "a64dfea84287aad3f6c1675916f5f7e252c055d4eb45e22d79b265a930c3d543",
+  "chunked_sha256": "ec57f01b241875ec2c80da81be69426ba96a0deb1231978a5e9e86f4afc37f8a",
+  "context_rows": 100000,
+  "prediction_rows": 1024,
+  "decision": "Do not promote as an equivalent implementation; no CV result or performance rejection"
+}

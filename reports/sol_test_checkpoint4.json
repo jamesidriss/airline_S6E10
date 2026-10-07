@@ -1,0 +1,24 @@
+{
+  "utc": "2026-10-07T21:50:25.601696+00:00",
+  "git": "86dbee239790457108d865718b0f819182299373",
+  "complete_suite": {
+    "passed": 85,
+    "failed": 0,
+    "log_sha256": "ae7a8a05850379fb6c42b0e92de3adb55b49f08db1f763582551cc2a3d63788c"
+  },
+  "newer_targeted_activation_check": "PASS numeric forward (rtol1e-5, atol2e-7) and exact gradients; initial bitwise CPU assertion failed at max1.1920928955078125e-7",
+  "complete_model_gpu_activation_probe": "PASS bit-identical all1024; probability tolerance2e-6 unchanged",
+  "projection_chunk_probe": "FAIL strict equivalence, max0.000226825; implementation rejected",
+  "source_sha256": {
+    "scripts/run_views.py": "89d50b5e08c85e92ccb2a183f29974b19ba39b2639c2cf20dab136169545b3fe",
+    "scripts/run_zoo.py": "60655f885dc8c6ac74b7ffc59a891955ef39113d0ed21cf17d941c66d2c6eede",
+    "scripts/run_phase14.py": "68ecb8d5d6d438f8413beb0da4ceee19bba1bb27f084cb779016df631a17d50e",
+    "scripts/replay_sol_neural.py": "3d743c756fbb321346a936335d2ee0f673eaf5a364d097273d6528f0b9a56ba5",
+    "src/models/realmlp.py": "4d67d476332fdb9587053d378caf519986a4fa6fb61daf7e818506ec4c8581fc",
+    "src/models/pointwise_inference.py": "1aedd977666d9a1777692dbfd889d0a50bd303609154cbc68bcfb18c94e8b1ab",
+    "src/models/windows_attention.py": "104bed55ad7eb37911a27e22ee37b558b6bda43ae123c0f386303cea4116bc34",
+    "tests/test_sol_contracts.py": "77e7e700399fad5fe26f02207bd36a4bf5ba13d7cd4e51345318b168d5f0e7b0",
+    "tests/test_sol_research.py": "b6ce8003950fe96218559b3b6603d9b29dfb218e1139ea8b0c52dacd15cbae98"
+  },
+  "limitation": "85-test suite imported before the later activation check was added; that check was subsequently run separately"
+}
