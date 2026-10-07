@@ -1,0 +1,165 @@
+{
+  "lightgbm_version": "4.7.0",
+  "A1_works": true,
+  "A1_undeclared_has_none": true,
+  "A7_build_supports_categorical": true,
+  "A3_missing_marker": {
+    "values": [
+      -1,
+      2,
+      3,
+      0,
+      4,
+      1,
+      5
+    ],
+    "min_value": -1
+  },
+  "A4_extra_trees_categorical_splits": {
+    "extra_trees_True": 125,
+    "extra_trees_False": 125
+  },
+  "A4_extra_trees_leaves_categorical_intact": true,
+  "A5_levels": {
+    "2": {
+      "cat_splits": 25,
+      "distinct_cat_thresholds": 2,
+      "total_splits": 25
+    },
+    "3": {
+      "cat_splits": 41,
+      "distinct_cat_thresholds": 3,
+      "total_splits": 41
+    },
+    "4": {
+      "cat_splits": 75,
+      "distinct_cat_thresholds": 3,
+      "total_splits": 75
+    },
+    "5": {
+      "cat_splits": 100,
+      "distinct_cat_thresholds": 5,
+      "total_splits": 100
+    },
+    "6": {
+      "cat_splits": 125,
+      "distinct_cat_thresholds": 7,
+      "total_splits": 125
+    }
+  },
+  "n_features": 285,
+  "n_te_columns": 48,
+  "column_positions": {
+    "Online boarding": 5,
+    "Gender": 13,
+    "Type of Travel": 15,
+    "Inflight wifi service": 0,
+    "Class": 16,
+    "Customer Type": 14,
+    "Gate location": 3
+  },
+  "column_index_semantics": "Positions are into the EXISTING 285-column view matrix, so declaring them categorical adds no column, duplicates nothing, and leaves all 48 te_ columns byte-identical.",
+  "A2_value_profiles": {
+    "Inflight wifi service": {
+      "idx": 0,
+      "levels_fit": 6,
+      "min": 0.0,
+      "max": 5.0,
+      "n_nan_fit": 0,
+      "n_nan_val": 0,
+      "all_nonneg_int": true,
+      "val_codes_seen_in_fit": true
+    },
+    "Gate location": {
+      "idx": 3,
+      "levels_fit": 6,
+      "min": 0.0,
+      "max": 5.0,
+      "n_nan_fit": 0,
+      "n_nan_val": 0,
+      "all_nonneg_int": true,
+      "val_codes_seen_in_fit": true
+    },
+    "Online boarding": {
+      "idx": 5,
+      "levels_fit": 6,
+      "min": 0.0,
+      "max": 5.0,
+      "n_nan_fit": 0,
+      "n_nan_val": 0,
+      "all_nonneg_int": true,
+      "val_codes_seen_in_fit": true
+    },
+    "Gender": {
+      "idx": 13,
+      "levels_fit": 2,
+      "min": 0.0,
+      "max": 1.0,
+      "n_nan_fit": 0,
+      "n_nan_val": 0,
+      "all_nonneg_int": true,
+      "val_codes_seen_in_fit": true
+    },
+    "Customer Type": {
+      "idx": 14,
+      "levels_fit": 2,
+      "min": 0.0,
+      "max": 1.0,
+      "n_nan_fit": 0,
+      "n_nan_val": 0,
+      "all_nonneg_int": true,
+      "val_codes_seen_in_fit": true
+    },
+    "Type of Travel": {
+      "idx": 15,
+      "levels_fit": 2,
+      "min": 0.0,
+      "max": 1.0,
+      "n_nan_fit": 0,
+      "n_nan_val": 0,
+      "all_nonneg_int": true,
+      "val_codes_seen_in_fit": true
+    },
+    "Class": {
+      "idx": 16,
+      "levels_fit": 3,
+      "min": 0.0,
+      "max": 2.0,
+      "n_nan_fit": 0,
+      "n_nan_val": 0,
+      "all_nonneg_int": true,
+      "val_codes_seen_in_fit": true
+    }
+  },
+  "A2_all_satisfy_requirements": true,
+  "code_consistency": "The audited columns are static ordinal encodings of raw values, identical for train, val and test by construction. No category map is fitted anywhere, so requirement 5 (stable codes across splits) is satisfied structurally rather than by a check that could be skipped.",
+  "real_view_control": {
+    "decision_types": {
+      "<=": 1200
+    },
+    "n_categorical_splits": 0
+  },
+  "real_view_META4": {
+    "decision_types": {
+      "<=": 1142,
+      "==": 58
+    },
+    "n_categorical_splits": 58,
+    "splits_on_declared": {
+      "Gender": 0,
+      "Customer Type": 0,
+      "Type of Travel": 0,
+      "Class": 0
+    }
+  },
+  "real_view_declaration_observed": true,
+  "A1_by_name_works": true,
+  "categorical_defaults": {
+    "cat_smooth": null,
+    "cat_l2": null,
+    "max_cat_threshold": null,
+    "max_cat_to_onehot": null,
+    "min_data_per_group": null
+  },
+  "mechanistic_expectation": "cat_smooth=10 and cat_l2=10 make a LightGBM categorical split a SHRUNK target statistic with an explicit prior. That is the same smoothing family our 48-column te_ block already supplies in the same matrix, which is a mechanistic reason to expect a small effect rather than new information. This predicts Phase 12 will move AUC by O(1e-6) unless the splits capture structure the te_ block cannot express."
+}
