@@ -42,12 +42,18 @@ def save(exp_id: str, oof: np.ndarray, test: np.ndarray | None, fold_scheme: str
 
 def load_oof(exp_id: str) -> np.ndarray:
     idx = _load_index()
-    return np.load(PREDICTIONS.parent.parent / idx[exp_id]["oof"])
+    out = np.load(PREDICTIONS.parent.parent / idx[exp_id]["oof"])
+    if arr_sha256(out) != idx[exp_id]["oof_sha"]:
+        raise ValueError(f"prediction hash mismatch: {exp_id}/oof")
+    return out
 
 
 def load_test(exp_id: str) -> np.ndarray:
     idx = _load_index()
-    return np.load(PREDICTIONS.parent.parent / idx[exp_id]["test"])
+    out = np.load(PREDICTIONS.parent.parent / idx[exp_id]["test"])
+    if arr_sha256(out) != idx[exp_id]["test_sha"]:
+        raise ValueError(f"prediction hash mismatch: {exp_id}/test")
+    return out
 
 
 def list_all() -> list[dict]:

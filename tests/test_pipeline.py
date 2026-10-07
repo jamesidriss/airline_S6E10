@@ -124,10 +124,24 @@ def test_crossfit_row_never_sees_own_label():
     inner = (np.arange(200) % te.inner_folds)[np.random.default_rng(te.inner_seed).permutation(200)]
     for i in range(200):
         others = y[inner != inner[i]]
-        expected = (others.sum() + 1.0 * y.mean()) / (len(others) + 1.0)
+        expected = (others.sum() + 1.0 * others.mean()) / (len(others) + 1.0)
         assert abs(X[i, 0] - expected) < 1e-5, f"row {i} encoded by a table containing its own label"
     # and in particular not by its own label alone
     assert not np.allclose(X[:, 0], y)
+
+
+def test_crossfit_prior_never_sees_own_label():
+    from src.features.s6e10 import FoldSafeTE
+
+    keys = {"k": pd.Series(np.arange(100))}  # all unseen keys use the prior
+    y = np.random.default_rng(2).integers(0, 2, 100).astype(float)
+    te = FoldSafeTE(keys, smooths=(100.0,), inner_folds=5, inner_seed=7)
+    original, _ = te.crossfit(keys, y)
+    for row in (0, 17, 99):
+        changed = y.copy()
+        changed[row] = 1 - changed[row]
+        encoded, _ = te.crossfit(keys, changed)
+        assert np.array_equal(original[row], encoded[row]), "own label reached the prior"
 
 
 def test_external_features_use_no_competition_label():

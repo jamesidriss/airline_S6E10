@@ -24,7 +24,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import StratifiedKFold
 
-from src.common import CACHE, set_seed
+from src.common import CACHE, arr_sha256, set_seed
 
 SEED_PRIMARY = 20261010
 SEED_SHADOW = 777001
@@ -80,7 +80,19 @@ def get_scheme(name: str, y: np.ndarray, ids: pd.Series, n_splits: int | None = 
         assert meta[name]["y_hash"] == yhash, f"registry y_hash mismatch for scheme {name}"
         arr = np.load(REGISTRY_PATH / meta[name]["file"])
         assert len(arr) == len(y)
+        assert set(np.unique(arr)) == set(range(meta[name]["n_splits"])), "invalid fold labels"
+        ah, ih = arr_sha256(arr), arr_sha256(np.asarray(ids))
+        if "fold_sha256" in meta[name]:
+            assert meta[name]["fold_sha256"] == ah, "immutable fold array was altered"
+            assert meta[name]["ids_sha256"] == ih, "fold row ids/order changed"
+        else:
+            # Bind the existing assignment; never regenerate it during migration.
+            meta[name].update(fold_sha256=ah, ids_sha256=ih)
+            meta_path.write_text(json.dumps(meta, indent=2))
         return FoldScheme(name, meta[name]["n_splits"], meta[name]["seed"], arr)
+
+    if name in meta:
+        raise ValueError("registered folds are immutable; force regeneration is forbidden")
 
     defaults = {
         "primary": (N_SPLITS, SEED_PRIMARY),
@@ -97,6 +109,7 @@ def get_scheme(name: str, y: np.ndarray, ids: pd.Series, n_splits: int | None = 
     fname = f"{name}_{n_splits}f_seed{seed}.npy"
     np.save(REGISTRY_PATH / fname, fs.folds)
     meta[name] = {"file": fname, "n_splits": n_splits, "seed": seed, "y_hash": yhash,
+                  "fold_sha256": arr_sha256(fs.folds), "ids_sha256": arr_sha256(np.asarray(ids)),
                   "fold_sizes": np.bincount(fs.folds, minlength=n_splits).tolist()}
     meta_path.write_text(json.dumps(meta, indent=2))
     return fs

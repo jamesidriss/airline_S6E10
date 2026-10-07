@@ -203,7 +203,7 @@ def main() -> int:
         rec = {"slots": slots, "n_slots": len(slots), "oof": a, "delta_e5": (a - a_v3) * 1e5,
                "per_fold_delta_e5": [d * 1e5 for d in db],
                "n_folds_positive": int(sum(1 for d in db if d > 0)),
-               "corr_v3": float(corr(lg(blend), lg(base))),
+               "corr_v3": float(corr(lg(blend), base)),
                "spearman_v3": float(spearman(blend, base)), **ps}
         out["groups"][name] = rec
         print(f"  {name:<18}{len(slots):>6}{a:>12.6f}{(a - a_v3) * 1e5:>+12.2f}e"

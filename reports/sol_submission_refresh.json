@@ -1,0 +1,40 @@
+{
+  "accessed_utc": "2026-10-07T18:50:34.179420+00:00",
+  "submissions": [
+    {
+      "ref": "56918343",
+      "fileName": "v5_aux_cross.csv",
+      "date": "2026-10-07 18:05:59.993000",
+      "status": "SubmissionStatus.COMPLETE",
+      "publicScore": "0.96103"
+    },
+    {
+      "ref": "56845975",
+      "fileName": "v4_fulldata.csv",
+      "date": "2026-10-05 07:23:04.763000",
+      "status": "SubmissionStatus.COMPLETE",
+      "publicScore": "0.96100"
+    },
+    {
+      "ref": "56805526",
+      "fileName": "v3_final.csv",
+      "date": "2026-10-03 19:38:08.657000",
+      "status": "SubmissionStatus.COMPLETE",
+      "publicScore": "0.96098"
+    },
+    {
+      "ref": "56793823",
+      "fileName": "v2_equal34.csv",
+      "date": "2026-10-03 08:43:18.273000",
+      "status": "SubmissionStatus.COMPLETE",
+      "publicScore": "0.96092"
+    },
+    {
+      "ref": "56788249",
+      "fileName": "v1_equal4.csv",
+      "date": "2026-10-03 03:14:34.997000",
+      "status": "SubmissionStatus.COMPLETE",
+      "publicScore": "0.96093"
+    }
+  ]
+}

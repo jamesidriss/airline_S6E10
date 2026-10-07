@@ -87,7 +87,8 @@ RATINGS = ["Inflight wifi service", "Departure/Arrival time convenient", "Ease o
 N_EXPECTED = 6          # ratings are 0..5
 
 
-def build_aux(Xf, Xv, names, seed, rounds=400, nthread=8, inner_folds=5) -> tuple:
+def build_aux(Xf, Xv, names, seed, rounds=400, nthread=8, inner_folds=5,
+              return_probabilities=False, progress=None) -> tuple:
     """Fit 13 auxiliary models and return their expected values for the fit and val rows.
 
     Each model predicts rating_j from the OTHER raw columns. No satisfaction label is passed to any
@@ -119,8 +120,12 @@ def build_aux(Xf, Xv, names, seed, rounds=400, nthread=8, inner_folds=5) -> tupl
     pos = [names.index(c) for c in raw_cols]
     Zf = np.column_stack([Xf[:, j] for j in pos]).astype("float32")
     Zv = np.column_stack([Xv[:, j] for j in pos]).astype("float32")
+    assert len(raw_cols) == 21 and len(set(names)) == len(names), "aux raw schema mismatch"
+    assert inner_folds >= 2 and rounds > 0
     out_fit = np.zeros((Zf.shape[0], len(RATINGS)), dtype="float64")
     out_val = np.zeros((Zv.shape[0], len(RATINGS)), dtype="float64")
+    probabilities_fit = np.zeros((len(Zf), len(RATINGS), N_EXPECTED), dtype="float64") if return_probabilities else None
+    probabilities_val = np.zeros((len(Zv), len(RATINGS), N_EXPECTED), dtype="float64") if return_probabilities else None
     info = []
     for j, rname in enumerate(RATINGS):
         t0 = time.time()
@@ -144,7 +149,9 @@ def build_aux(Xf, Xv, names, seed, rounds=400, nthread=8, inner_folds=5) -> tupl
         # shape is asserted rather than assumed.
         oof = np.zeros((len(yf), N_EXPECTED), dtype="float64")
         skf = StratifiedKFold(inner_folds, shuffle=True, random_state=seed + j)
+        coverage = np.zeros(len(yf), dtype="uint8")
         for a, b in skf.split(Zft, yf):
+            assert not np.intersect1d(a, b).size and len(a) + len(b) == len(yf)
             m = lgb.train(params(seed + j), lgb.Dataset(Zft[a], label=yf[a]),
                           num_boost_round=rounds)
             p = m.predict(Zft[b])
@@ -152,6 +159,10 @@ def build_aux(Xf, Xv, names, seed, rounds=400, nthread=8, inner_folds=5) -> tupl
                 raise SystemExit(f"STOP: aux model for {rname} returned shape {p.shape}; expected "
                                  f"({len(b)}, {N_EXPECTED}). The expected value cannot be formed.")
             oof[b] = p
+            coverage[b] += 1
+        assert (coverage == 1).all(), "aux crossfit did not cover each row exactly once"
+        assert np.isfinite(oof).all() and (oof >= 0).all()
+        assert np.allclose(oof.sum(axis=1), 1, atol=1e-8)
         out_fit[:, j] = oof @ np.arange(N_EXPECTED, dtype="float64")
         # (2) a model on ALL fit rows for the val rows, so both sides are out-of-sample
         mall = lgb.train(params(seed + j), lgb.Dataset(Zft, label=yf), num_boost_round=rounds)
@@ -159,12 +170,19 @@ def build_aux(Xf, Xv, names, seed, rounds=400, nthread=8, inner_folds=5) -> tupl
         if pv.ndim != 2 or pv.shape[1] != N_EXPECTED:
             raise SystemExit(f"STOP: aux model for {rname} returned shape {pv.shape} on val rows.")
         out_val[:, j] = pv @ np.arange(N_EXPECTED, dtype="float64")
+        if return_probabilities:
+            probabilities_fit[:, j] = oof
+            probabilities_val[:, j] = pv
         acc = float((np.argmax(oof, axis=1) == yf).mean())
         info.append({"rating": rname, "aux_oof_acc": acc,
                      "seconds": round(time.time() - t0, 1),
                      "levels_seen": int(np.unique(yf).size),
                      "ev_fit_mean": float(out_fit[:, j].mean()),
                      "ev_val_mean": float(out_val[:, j].mean())})
+        if progress is not None:
+            progress(j, info[-1])
+    if return_probabilities:
+        return probabilities_fit, probabilities_val, info
     return out_fit, out_val, info
 
 

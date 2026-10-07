@@ -110,45 +110,60 @@ def _iters_from_logs() -> dict:
     return out
 
 
-def median_ints() -> dict:
+def median_ints(record_dir="reports/sol_repair") -> dict:
     """Median cross-validated best_iteration per slot.
 
     Sourced from the run JSON where it survives, and from the logs otherwise. Both sources are
     merged and the number of folds recovered per slot is reported, because a test-time refit length
     taken from 2 folds instead of 5 is a silently different model.
     """
-    out: dict = {}
-    p14 = _iters_from_json("p14")
-    for fk, m in p14.items():
-        for slot, it in m.items():
-            if slot in XGB_ARM or slot == CAT_MEMBER:
-                out.setdefault(slot, []).append(it)
-    lg = _iters_from_logs()
-    for fk, m in lg.items():
-        for slot, it in m.items():
-            if slot.startswith("ARM_"):
-                arm = slot[4:]
-                member = next((k for k, v in XGB_ARM.items() if v == arm), None)
-                if member is None and arm == "C1":
-                    member = CAT_MEMBER
-                if member:
-                    out.setdefault(member, []).append(it)
-    for slot, lst in lg.get("p13", {}).items():
-        out.setdefault(slot, []).extend(lst)
-    miss = [k for k in XT_SLOTS + list(XGB_ARM) + [CAT_MEMBER] if len(out.get(k, [])) < 5]
-    if miss:
-        raise SystemExit(f"STOP: fewer than 5 fold iteration counts recovered for {miss}. "
-                         f"A median over fewer folds is a different model; refusing to guess.")
-    return {k: int(np.median(sorted(v))) for k, v in out.items() if k in
-            XT_SLOTS + list(XGB_ARM) + [CAT_MEMBER]}
+    out = {}
+    arms = {s: s for s in XT_SLOTS}
+    arms.update(XGB_ARM)
+    arms[CAT_MEMBER] = "C1"
+    for member, arm in arms.items():
+        counts = []
+        for fold in range(5):
+            path = ROOT / record_dir / f"{arm}_A0_f{fold}.json"
+            if not path.exists():
+                raise SystemExit(f"STOP: missing exact fold/treatment iteration record: {path}")
+            rec = json.loads(path.read_text(encoding="utf-8"))
+            c = rec["contract"]
+            if c["fold"] != fold or c["stage"] != 0 or c["spec"]["member"] != member:
+                raise SystemExit(f"STOP: iteration record is for the wrong slot/fold/stage: {path}")
+            # n_trees is a count; XGB/CatBoost zero-based indices were converted by the runner.
+            counts.append(int(rec["n_trees"]))
+        out[member] = int(np.median(counts))
+    return out
+
+
+def xt_refit_params(slot, n):
+    from scripts.run_phase12 import CHAMPION_PARAMS, CAT_PARAMS
+    from scripts.run_phase13b import SLOTS, SLOT_SEEDS
+    seed = SLOT_SEEDS[slot]
+    p = dict(CHAMPION_PARAMS)
+    p.update(CAT_PARAMS)
+    p.update(SLOTS[slot])
+    p.update(n_estimators=n, random_state=seed, bagging_seed=seed + 1,
+             feature_fraction_seed=seed + 2)
+    return p
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--aux-rounds", type=int, default=250)
+    ap.add_argument("--name", default="v5_aux_cross_repaired")
+    ap.add_argument("--iteration-records", default="reports/sol_repair")
     args = ap.parse_args()
 
+    mi = median_ints(args.iteration_records)
+    if args.dry_run:
+        print(json.dumps({"name": args.name, "median_tree_counts": mi,
+                          "xt_params": {s: xt_refit_params(s, mi[s]) for s in XT_SLOTS}}, indent=2))
+        return 0
+    if (SUB_DIR / f"{args.name}.csv").exists():
+        raise SystemExit("STOP: output submission exists; use a new name to preserve finalists")
     tr, te = load_cached_parquet()
     yi = tr[TARGET].values.astype("int8")
     y = tr[TARGET].values.astype("float64")
@@ -158,7 +173,6 @@ def main() -> int:
     ms = man["members"] if isinstance(man, dict) and "members" in man else man
     ids = [(m["exp_id"] if isinstance(m, dict) else m) for m in ms]
 
-    mi = median_ints()
     print("  median cross-validated iteration counts (the test-time refit length):")
     for k in XT_SLOTS + list(XGB_ARM) + [CAT_MEMBER]:
         print(f"    {k:<26} {mi[k]}")
@@ -178,9 +192,14 @@ def main() -> int:
     print(f"  train frame {Xtr_raw.shape}, test frame {Xte_raw.shape}")
 
     # ---- aux features, mirroring the OOF construction ---------------------------------
-    print("  building aux features over train+test (label-free, 5-fold inner cross-fit)")
-    aux_tr, aux_te, info = build_aux(Xtr_raw, Xte_raw, names, 1, rounds=args.aux_rounds,
-                                     inner_folds=5)
+    print("  building aux features (label-free, 3-fold inner cross-fit, matching OOF)")
+    from scripts.sol_aux_cache import probability_cache
+    from src.common import arr_sha256, ARTIFACTS
+    pf, pv, aux_manifest = probability_cache(Xtr_raw, Xte_raw, names,
+             tr[ID_COL].to_numpy(), te[ID_COL].to_numpy(), arr_sha256(tr[ID_COL].to_numpy()),
+             rounds=args.aux_rounds, inner_folds=3, label="test refit")
+    aux_tr, aux_te = pf @ np.arange(6), pv @ np.arange(6)
+    info = aux_manifest["ratings"]
     Xtr = np.column_stack([Xtr_raw, aux_tr]).astype("float64")
     Xte = np.column_stack([Xte_raw, aux_te]).astype("float64")
     print(f"    aux mean out-of-fold accuracy {np.mean([i['aux_oof_acc'] for i in info]):.4f}")
@@ -191,14 +210,16 @@ def main() -> int:
     import xgboost as xgb
     from scripts.run_phase12 import CAT_PARAMS
     preds = {}
+    configs = {}
+    pred_dir = ARTIFACTS / args.name
+    pred_dir.mkdir(exist_ok=True)
     for slot in XT_SLOTS:
         n = mi[slot]
-        p = dict(objective="binary", metric="auc", n_estimators=n, learning_rate=0.02,
-                 num_leaves=127, min_child_samples=40, colsample_bytree=0.8, subsample=0.8,
-                 subsample_freq=1, reg_lambda=1.0, max_bin=255, verbose=-1, n_jobs=8,
-                 extra_trees=True, random_state=1, bagging_seed=2, feature_fraction_seed=3)
+        p = xt_refit_params(slot, n)
+        configs[slot] = p
         m = lgb.train(p, lgb.Dataset(Xtr, label=y), num_boost_round=n)
         preds[slot] = m.predict(Xte)
+        np.save(pred_dir / f"{slot}_test.npy", preds[slot])
         print(f"    {slot:<26} lgb  iters {n:<5} done")
 
     from scripts.run_views import _fit_xgb_es
@@ -212,9 +233,11 @@ def main() -> int:
         p.update(XGB_PARAMS[arm])
         p.update(n_estimators=n, random_state=seed)
         p.pop("early_stopping_rounds", None)
+        configs[member] = p
         m = xgb.XGBClassifier(**p)
         m.fit(Xtr, y, verbose=False)
         preds[member] = m.predict_proba(Xte)[:, 1]
+        np.save(pred_dir / f"{member}_test.npy", preds[member])
         print(f"    {member:<26} xgb  iters {n:<5} done")
 
     from catboost import CatBoostClassifier
@@ -227,8 +250,10 @@ def main() -> int:
              random_seed=CAT_SEED, thread_count=8, verbose=0, allow_writing_files=False,
              boosting_type="Plain")
     m = CatBoostClassifier(**p)
+    configs[CAT_MEMBER] = {**p, "cat_columns": catcols}
     m.fit(F, y, cat_features=cat_indices(F, cn), verbose=0)
     preds[CAT_MEMBER] = m.predict_proba(V)[:, 1]
+    np.save(pred_dir / f"{CAT_MEMBER}_test.npy", preds[CAT_MEMBER])
     print(f"    {CAT_MEMBER:<26} cat  iters {mi[CAT_MEMBER]:<5} done")
 
     # ---- splice into v3's TEST predictions, keeping 59 slots and equal-logit geometry ----
@@ -247,22 +272,24 @@ def main() -> int:
     SUB_DIR.mkdir(parents=True, exist_ok=True)
     sub = te[[ID_COL]].copy()
     sub[TGT] = v5t
-    p_out = SUB_DIR / "v5_aux_cross.csv"
-    sub.to_csv(p_out, index=False)
+    from src.submission.make import build
+    p_out = build(v5t, args.name, notes="S0 repaired v5 configs; OOF from corrected counterparts; not automatically submitted", members=ids)
     sha = hashlib.sha256(p_out.read_bytes()).hexdigest()[:16]
     print(f"    wrote {p_out}  rows {len(sub)}  sha16 {sha}")
-    save_json({"name": "v5_aux_cross", "role": "Champion A candidate",
-               "oof": 0.961523, "delta_vs_v3_e5": 1.491, "folds_positive": "5/5", "paired_t": 3.97,
-               "gate": "+1.5e-5 MISSED by 0.6%; gate not moved",
+    save_json({"name": args.name, "role": "repaired candidate pending OOF scorecard",
                "slots_replaced": sorted(preds), "n_members": 59, "geometry": "expit(mean(logits))",
                "median_iterations": mi, "test_corr_vs_v3": float(corr(lg(v5t), lg(v3t))),
+               "params_by_slot": configs, "aux_manifest": aux_manifest,
+               "test_slot_sha256": {s: arr_sha256(p) for s, p in preds.items()},
+               "test_ids_sha256": arr_sha256(te[ID_COL].to_numpy()),
+               "training_policy": "10 corrected slots use all labels; other 49 retain v3 fold-averaged test vectors",
                "test_spearman_vs_v3": float(spearman(v5t, v3t)),
                "expected_public_movement": "UNKNOWN, likely below public resolution",
                "sha16": sha, "rows": int(len(sub)),
                "git": subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
                                      text=True).stdout.strip()[:12]},
-              REPORTS / "v5_aux_cross_manifest.json")
-    print(f"    wrote {REPORTS / 'v5_aux_cross_manifest.json'}")
+              REPORTS / f"{args.name}_manifest.json")
+    print(f"    wrote {REPORTS / f'{args.name}_manifest.json'}")
     return 0
 
 

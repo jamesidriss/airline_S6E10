@@ -350,21 +350,25 @@ class FoldSafeTE:
         return np.column_stack(cols).astype("float32"), names
 
     def crossfit(self, keys_fit: dict[str, pd.Series], y: np.ndarray) -> tuple[np.ndarray, list[str]]:
-        prior = float(np.mean(y))
         n = len(y)
+        if not 2 <= self.inner_folds <= n:
+            raise ValueError("crossfit requires at least two nonempty inner folds")
         names = []
         for name in keys_fit:
             for sm in self.smooths:
                 names.append(f"{name}_s{int(sm)}_xfit")
                 if sm == self.smooths[-1]:
                     names.append(f"{name}_cnt_xfit")
-        out = np.full((n, len(names)), prior, dtype="float32")
+        out = np.full((n, len(names)), np.nan, dtype="float32")
         rng = np.random.default_rng(self.inner_seed)
         inner = (np.arange(n) % self.inner_folds)[rng.permutation(n)]
         for name, k in keys_fit.items():
             for i in range(self.inner_folds):
                 a = np.where(inner != i)[0]
                 b = np.where(inner == i)[0]
+                # The smoothing prior is target-dependent too. Using y.mean() here lets
+                # every held-out row contribute its own label through the prior.
+                prior = float(np.mean(y[a]))
                 for sm in self.smooths:
                     tab, cnt = self._table(k.iloc[a], y[a], sm, prior)
                     j = names.index(f"{name}_s{int(sm)}_xfit")

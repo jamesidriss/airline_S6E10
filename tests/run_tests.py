@@ -19,12 +19,15 @@ def main() -> int:
     import tests.test_index_space as TI
     import tests.test_te_all21 as TE
     import tests.test_view_composition as TV
+    import tests.test_sol_contracts as TS
+    import tests.test_private_sim as TP
+    import tests.test_masked_encoder as TM
 
     # NOTE: test_stochastic_protocol.py has its own __main__ runner with per-assertion reporting, so
     # it is invoked as a subprocess rather than imported here -- importing it would only pick up its
     # module-level helpers. It is registered explicitly so the aggregate count stays honest; a test
     # file that silently stops being run is worse than no test file.
-    mods = (T, TR, TW, TN, TI, TE, TV)
+    mods = (T, TR, TW, TN, TI, TE, TV, TS, TP, TM)
     fns = [(mod.__name__, getattr(mod, n)) for mod in mods
            for n in sorted(dir(mod)) if n.startswith("test_")]
     ok = fail = 0
@@ -40,7 +43,6 @@ def main() -> int:
     else:
         fail += 1
         print(r.stdout[-3000:])
-    ok = fail = 0
     for modname, fn in fns:
         t0 = time.time()
         try:
