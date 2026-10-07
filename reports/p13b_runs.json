@@ -1,0 +1,147 @@
+{
+  "tag": "p13b",
+  "slots": [
+    "xt_xt_d127_s1",
+    "xt_xt_d63",
+    "xt_xt_d255",
+    "xt_xt_d127_cs05",
+    "xt_xt_d127_ss06",
+    "xt_xt_d127_bin63"
+  ],
+  "folds": {
+    "f3": {
+      "v3_control": 0.9607937462758759,
+      "per_slot": {
+        "xt_xt_d127_s1": {
+          "seed": 1,
+          "best_iter": 855,
+          "auc_with_aux": 0.9604918834349521,
+          "auc_original": 0.9604528779604263,
+          "standalone_e5": 3.9005474525732886,
+          "corr_with_original": 0.9989581029039952
+        },
+        "xt_xt_d63": {
+          "seed": 3,
+          "best_iter": 861,
+          "auc_with_aux": 0.9604240333689732,
+          "auc_original": 0.9604942601292992,
+          "standalone_e5": -7.022676032597541,
+          "corr_with_original": 0.9984042201538657
+        },
+        "xt_xt_d255": {
+          "seed": 4,
+          "best_iter": 486,
+          "auc_with_aux": 0.9604087584182418,
+          "auc_original": 0.9602893466766191,
+          "standalone_e5": 11.941174162266588,
+          "corr_with_original": 0.998632610257688
+        },
+        "xt_xt_d127_cs05": {
+          "seed": 5,
+          "best_iter": 715,
+          "auc_with_aux": 0.960378025797602,
+          "auc_original": 0.9604069615417138,
+          "standalone_e5": -2.8935744111779904,
+          "corr_with_original": 0.9988882117336552
+        },
+        "xt_xt_d127_ss06": {
+          "seed": 7,
+          "best_iter": 575,
+          "auc_with_aux": 0.9602919083663732,
+          "auc_original": 0.960379696757234,
+          "standalone_e5": -8.778839086076573,
+          "corr_with_original": 0.998458940122449
+        },
+        "xt_xt_d127_bin63": {
+          "seed": 8,
+          "best_iter": 727,
+          "auc_with_aux": 0.9604450260021308,
+          "auc_original": 0.9603273739931039,
+          "standalone_e5": 11.765200902691397,
+          "corr_with_original": 0.9988341327035561
+        }
+      },
+      "cumulative_marginal_e5": {
+        "xt_xt_d127_s1": 0.14474752477733333,
+        "xt_xt_d63": 0.04608330773647751,
+        "xt_xt_d255": 0.2156417377774389,
+        "xt_xt_d127_cs05": 0.20208782374186995,
+        "xt_xt_d127_ss06": 0.003414344751373477,
+        "xt_xt_d127_bin63": 0.22425002517145742
+      },
+      "aux_seconds": 436.4
+    },
+    "f4": {
+      "v3_control": 0.9621214173393221,
+      "per_slot": {
+        "xt_xt_d127_s1": {
+          "seed": 1,
+          "best_iter": 874,
+          "auc_with_aux": 0.9618250453855605,
+          "auc_original": 0.9618064495189588,
+          "standalone_e5": 1.8595866601689437,
+          "corr_with_original": 0.998940281558008
+        },
+        "xt_xt_d63": {
+          "seed": 3,
+          "best_iter": 521,
+          "auc_with_aux": 0.9617647751649465,
+          "auc_original": 0.9615843499102023,
+          "standalone_e5": 18.04252547442653,
+          "corr_with_original": 0.9974817671001313
+        },
+        "xt_xt_d255": {
+          "seed": 4,
+          "best_iter": 614,
+          "auc_with_aux": 0.9617730140823146,
+          "auc_original": 0.9616977303670059,
+          "standalone_e5": 7.528371530873823,
+          "corr_with_original": 0.9983063220915732
+        },
+        "xt_xt_d127_cs05": {
+          "seed": 5,
+          "best_iter": 906,
+          "auc_with_aux": 0.9619878471377042,
+          "auc_original": 0.9617106528341984,
+          "standalone_e5": 27.71943035058122,
+          "corr_with_original": 0.9985551226162005
+        },
+        "xt_xt_d127_ss06": {
+          "seed": 7,
+          "best_iter": 664,
+          "auc_with_aux": 0.961916589762586,
+          "auc_original": 0.9618353669497667,
+          "standalone_e5": 8.122281281930377,
+          "corr_with_original": 0.9984003660793982
+        },
+        "xt_xt_d127_bin63": {
+          "seed": 8,
+          "best_iter": 693,
+          "auc_with_aux": 0.9619696226069613,
+          "auc_original": 0.9617576935035215,
+          "standalone_e5": 21.192910343981186,
+          "corr_with_original": 0.9988373194094899
+        }
+      },
+      "cumulative_marginal_e5": {
+        "xt_xt_d127_s1": 0.1454510867304748,
+        "xt_xt_d63": 0.17051030797299305,
+        "xt_xt_d255": 0.26433236334222343,
+        "xt_xt_d127_cs05": 0.7916520451067832,
+        "xt_xt_d127_ss06": 0.7891895782763392,
+        "xt_xt_d127_bin63": 1.1598839541049344
+      },
+      "aux_seconds": 435.3
+    }
+  },
+  "aux_rounds": 250,
+  "aux_inner_folds": 3,
+  "git": "4bc43f15ca85",
+  "all_slot_marginals_e5": [
+    0.22425002517145742,
+    1.1598839541049344
+  ],
+  "all_slot_mean_e5": 0.6920669896381959,
+  "gate_pass": false,
+  "verdict": "marginal remains below the +1.5e-5 gate; no admission, no submission"
+}

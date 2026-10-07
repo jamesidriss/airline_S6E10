@@ -14,12 +14,8 @@ PHASE 13 -- auxiliary-task expected-value features on the champion configuration
 
    fold  base  aux         AUC  vs champ  MARGINAL  aux acc   aux%  aux sec
   ----------------------------------------------------------------------------
-      0   285   13    0.961320    +21.8e    +0.31e    0.700  10.1%      457
-      1   285   13    0.961454    +16.4e    +0.25e    0.700  10.0%      446
-      2   285   13    0.961272    +17.3e    +0.48e    0.700  10.0%      432
-      3   285   13    0.960492     +3.9e    +0.14e    0.700  10.2%      440
-      4   285   13    0.961825     +1.9e    +0.15e    0.700  10.1%      462
+      0   285   13    0.961047     -5.5e    +0.24e    0.700  10.3%      968
 
-  standalone vs champion: ['+21.8', '+16.4', '+17.3', '+3.9', '+1.9']  mean +12.25e-5
-  MARGINAL on v3       : ['+0.31', '+0.25', '+0.48', '+0.14', '+0.15']  mean +0.27e-5
-  wrote C:\Users\James\airline_S6E10\reports\p13_runs.json
+  standalone vs champion: ['-5.5']  mean -5.55e-5
+  MARGINAL on v3       : ['+0.24']  mean +0.24e-5
+  wrote C:\Users\James\airline_S6E10\reports\p13sens_runs.json

@@ -1,0 +1,55 @@
+{
+  "per_fold": [
+    {
+      "fold": 0,
+      "v3_control": 0.9615006818096289,
+      "v3_with_aux": 0.9615077455946934,
+      "marginal_e5": 0.7063785064542749,
+      "n_slots": 6
+    },
+    {
+      "fold": 1,
+      "v3_control": 0.9616501266411924,
+      "v3_with_aux": 0.9616617676944504,
+      "marginal_e5": 1.1641053258015788,
+      "n_slots": 6
+    },
+    {
+      "fold": 2,
+      "v3_control": 0.9615120786816208,
+      "v3_with_aux": 0.9615167625418399,
+      "marginal_e5": 0.4683860219123481,
+      "n_slots": 6
+    },
+    {
+      "fold": 3,
+      "v3_control": 0.9607937462758759,
+      "v3_with_aux": 0.9607959881553376,
+      "marginal_e5": 0.22418794617395932,
+      "n_slots": 6
+    },
+    {
+      "fold": 4,
+      "v3_control": 0.9621214173393221,
+      "v3_with_aux": 0.9621330161788632,
+      "marginal_e5": 1.1598839541049344,
+      "n_slots": 6
+    }
+  ],
+  "slots": [
+    "xt_xt_d127_s1",
+    "xt_xt_d63",
+    "xt_xt_d255",
+    "xt_xt_d127_cs05",
+    "xt_xt_d127_ss06",
+    "xt_xt_d127_bin63"
+  ],
+  "mean_marginal_e5": 0.7445883508894191,
+  "se": 0.1866854614400541,
+  "t": 3.988464581793431,
+  "n_positive": 5,
+  "n_folds": 5,
+  "gate_pass": false,
+  "verdict": "NO ADMISSION AND NO SUBMISSION. The auxiliary-task mechanism is VALIDATED as real: it is the largest standalone effect measured in this campaign (+12.25e-5 mean, t +3.11, 5/5 folds) and it produces the first consistently positive ensemble marginal in the campaign (5/5 folds, t +4.24 on a single slot). Replacing all six recoverable extra_trees slots simultaneously gives +0.745e-5, 5/5 folds positive. That is 2.8x the single-slot gain, so the effect genuinely compounds across slots -- but it compounds SUB-LINEARLY and still falls short of the +1.5e-5 gate. Extrapolating to the remaining extra_trees members is refused for the same reason Phase 11R refused to scale a block arithmetically: family weight times a per-slot number is not a prediction of blend gain, and the measured cumulative curve is non-monotonic in slot order, so any extrapolation from it would be inventing precision.",
+  "note": "recomputed from per-fold .npy prediction vectors because the run-scoped JSON was overwritten by the second --folds invocation; this record is durable and covers all five folds."
+}

@@ -1,0 +1,65 @@
+﻿    [cache] view full: (699635, 237)
+============================================================================================================
+PHASE 13B -- do the auxiliary-task gains COMPOUND across extra_trees slots?
+============================================================================================================
+  v3 geometry verified bit-exact. 59 members; 6 extra_trees slots present in v3:
+    xt_xt_d127_s1          seed 1   {'learning_rate': 0.02, 'num_leaves': 127, 'extra_trees': True}
+    xt_xt_d63              seed 3   {'learning_rate': 0.03, 'num_leaves': 63, 'extra_trees': True}
+    xt_xt_d255             seed 4   {'learning_rate': 0.02, 'num_leaves': 255, 'min_child_samples': 80, 'extra_trees': True}
+    xt_xt_d127_cs05        seed 5   {'learning_rate': 0.02, 'num_leaves': 127, 'colsample_bytree': 0.5, 'extra_trees': True}
+    xt_xt_d127_ss06        seed 7   {'learning_rate': 0.02, 'num_leaves': 127, 'subsample': 0.6, 'extra_trees': True}
+    xt_xt_d127_bin63       seed 8   {'learning_rate': 0.02, 'num_leaves': 127, 'max_bin': 63, 'extra_trees': True}
+  The auxiliary features are built ONCE PER FOLD and shared by every slot, so the cost is
+  13 aux fits per fold plus one extra_trees fit per slot.
+
+  fold 0: aux features loaded from cache
+    slot xt_xt_d127_s1          seed 1   standalone  +21.76e-5  iters 793   corr w/ original 0.99880
+    slot xt_xt_d63              seed 3   standalone  +26.03e-5  iters 573   corr w/ original 0.99824
+    slot xt_xt_d255             seed 4   standalone   -7.45e-5  iters 632   corr w/ original 0.99842
+    slot xt_xt_d127_cs05        seed 5   standalone  +13.83e-5  iters 793   corr w/ original 0.99867
+    slot xt_xt_d127_ss06        seed 7   standalone   -6.34e-5  iters 736   corr w/ original 0.99844
+    slot xt_xt_d127_bin63       seed 8   standalone   +0.92e-5  iters 881   corr w/ original 0.99843
+    v3 fold-0 control = 0.961501
+    cumulative over 1 slot(s) -> +0.308e-5
+    cumulative over 2 slot(s) -> +0.630e-5
+    cumulative over 3 slot(s) -> +0.692e-5
+    cumulative over 4 slot(s) -> +0.930e-5
+    cumulative over 5 slot(s) -> +0.789e-5
+    cumulative over 6 slot(s) -> +0.706e-5
+    ALL 6 aux slots swapped: +0.706e-5
+
+  fold 1: aux features built in 442s
+    slot xt_xt_d127_s1          seed 1   standalone  +16.43e-5  iters 762   corr w/ original 0.99894
+    slot xt_xt_d63              seed 3   standalone   +2.02e-5  iters 960   corr w/ original 0.99837
+    slot xt_xt_d255             seed 4   standalone   +1.64e-5  iters 590   corr w/ original 0.99849
+    slot xt_xt_d127_cs05        seed 5   standalone   +8.61e-5  iters 1083  corr w/ original 0.99838
+    slot xt_xt_d127_ss06        seed 7   standalone   +4.72e-5  iters 737   corr w/ original 0.99835
+    slot xt_xt_d127_bin63       seed 8   standalone   +8.53e-5  iters 558   corr w/ original 0.99883
+    v3 fold-1 control = 0.961650
+    cumulative over 1 slot(s) -> +0.250e-5
+    cumulative over 2 slot(s) -> +0.520e-5
+    cumulative over 3 slot(s) -> +0.620e-5
+    cumulative over 4 slot(s) -> +1.012e-5
+    cumulative over 5 slot(s) -> +1.030e-5
+    cumulative over 6 slot(s) -> +1.164e-5
+    ALL 6 aux slots swapped: +1.164e-5
+
+  fold 2: aux features built in 432s
+    slot xt_xt_d127_s1          seed 1   standalone  +17.28e-5  iters 929   corr w/ original 0.99894
+    slot xt_xt_d63              seed 3   standalone   +0.77e-5  iters 732   corr w/ original 0.99854
+    slot xt_xt_d255             seed 4   standalone   -1.88e-5  iters 720   corr w/ original 0.99801
+    slot xt_xt_d127_cs05        seed 5   standalone  +14.63e-5  iters 692   corr w/ original 0.99791
+    slot xt_xt_d127_ss06        seed 7   standalone   +4.05e-5  iters 525   corr w/ original 0.99896
+    slot xt_xt_d127_bin63       seed 8   standalone   +6.03e-5  iters 662   corr w/ original 0.99884
+    v3 fold-2 control = 0.961512
+    cumulative over 1 slot(s) -> +0.484e-5
+    cumulative over 2 slot(s) -> +0.518e-5
+    cumulative over 3 slot(s) -> +0.388e-5
+    cumulative over 4 slot(s) -> +0.230e-5
+    cumulative over 5 slot(s) -> +0.336e-5
+    cumulative over 6 slot(s) -> +0.468e-5
+    ALL 6 aux slots swapped: +0.468e-5
+
+  ALL-SLOT marginal per fold: ['+0.706', '+0.468', '+1.164']  mean +0.780e-5  3/3 positive
+  -> marginal remains below the +1.5e-5 gate; no admission, no submission
+  wrote C:\Users\James\airline_S6E10\reports\p13b_runs.json

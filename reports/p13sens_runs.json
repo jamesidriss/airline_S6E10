@@ -1,0 +1,220 @@
+{
+  "tag": "p13sens",
+  "mechanism": "auxiliary-task expected value of each rating",
+  "rounds_per_aux": 400,
+  "aux_inner_folds": 5,
+  "n_ratings": 13,
+  "ratings": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness"
+  ],
+  "label_free": true,
+  "trained_on": "outer fit rows only",
+  "git": "4bc43f15ca85",
+  "arms": {
+    "f0": {
+      "fold": 0,
+      "auc": 0.961047232995412,
+      "champion_auc": 0.9611027125543024,
+      "delta_vs_champion_e5": -5.547955889040335,
+      "best_iter": 1372,
+      "n_features": 298,
+      "n_base": 285,
+      "aux_mean_fit_acc": 0.6997837058993948,
+      "aux_seconds": 968.1,
+      "champ_seconds": 53.7,
+      "label_free_structural": true,
+      "label_free_proof": "build_aux's signature contains no label argument and the view matrix contains no label column, so the aux path cannot reach the competition target.",
+      "te_hash_unchanged": true,
+      "aux_models": [
+        {
+          "rating": "Inflight wifi service",
+          "aux_oof_acc": 0.9095260385772581,
+          "seconds": 74.0,
+          "levels_seen": 6,
+          "ev_fit_mean": 2.7803366614181804,
+          "ev_val_mean": 2.772723453496795
+        },
+        {
+          "rating": "Departure/Arrival time convenient",
+          "aux_oof_acc": 0.7552831119083522,
+          "seconds": 72.6,
+          "levels_seen": 6,
+          "ev_fit_mean": 3.1598208419545073,
+          "ev_val_mean": 3.151228755259493
+        },
+        {
+          "rating": "Ease of Online booking",
+          "aux_oof_acc": 0.9174194401366427,
+          "seconds": 73.4,
+          "levels_seen": 6,
+          "ev_fit_mean": 2.8151508046475935,
+          "ev_val_mean": 2.806029785610159
+        },
+        {
+          "rating": "Gate location",
+          "aux_oof_acc": 0.6791648502433412,
+          "seconds": 72.9,
+          "levels_seen": 6,
+          "ev_fit_mean": 3.0153113193079735,
+          "ev_val_mean": 3.0113635131307253
+        },
+        {
+          "rating": "Food and drink",
+          "aux_oof_acc": 0.6712321424742902,
+          "seconds": 78.3,
+          "levels_seen": 6,
+          "ev_fit_mean": 3.2684227557062946,
+          "ev_val_mean": 3.265117629098581
+        },
+        {
+          "rating": "Online boarding",
+          "aux_oof_acc": 0.7371986821699886,
+          "seconds": 77.1,
+          "levels_seen": 6,
+          "ev_fit_mean": 3.366086590375427,
+          "ev_val_mean": 3.361297051598494
+        },
+        {
+          "rating": "Seat comfort",
+          "aux_oof_acc": 0.7322979124829375,
+          "seconds": 74.9,
+          "levels_seen": 6,
+          "ev_fit_mean": 3.571150842291658,
+          "ev_val_mean": 3.567303481974457
+        },
+        {
+          "rating": "Inflight entertainment",
+          "aux_oof_acc": 0.9535382735283398,
+          "seconds": 75.5,
+          "levels_seen": 6,
+          "ev_fit_mean": 3.455400827001007,
+          "ev_val_mean": 3.4526460740456053
+        },
+        {
+          "rating": "On-board service",
+          "aux_oof_acc": 0.5662792027271363,
+          "seconds": 76.8,
+          "levels_seen": 6,
+          "ev_fit_mean": 3.518922861958015,
+          "ev_val_mean": 3.5185458420608917
+        },
+        {
+          "rating": "Leg room service",
+          "aux_oof_acc": 0.5124654284019524,
+          "seconds": 79.0,
+          "levels_seen": 6,
+          "ev_fit_mean": 3.47421115355612,
+          "ev_val_mean": 3.4742847216857666
+        },
+        {
+          "rating": "Baggage handling",
+          "aux_oof_acc": 0.6467318673308226,
+          "seconds": 62.8,
+          "levels_seen": 5,
+          "ev_fit_mean": 3.806615315125114,
+          "ev_val_mean": 3.8077206188685033
+        },
+        {
+          "rating": "Checkin service",
+          "aux_oof_acc": 0.31243434076339804,
+          "seconds": 74.1,
+          "levels_seen": 6,
+          "ev_fit_mean": 3.4231897502404736,
+          "ev_val_mean": 3.4220642893462174
+        },
+        {
+          "rating": "Cleanliness",
+          "aux_oof_acc": 0.7036168859476727,
+          "seconds": 76.5,
+          "levels_seen": 6,
+          "ev_fit_mean": 3.3830529642536815,
+          "ev_val_mean": 3.37981025931354
+        }
+      ],
+      "corr_vs_champion": 0.9984965247729608,
+      "spearman_vs_champion": 0.989438232917248,
+      "v3_before": 0.9615006818096289,
+      "v3_after": 0.9615030704102558,
+      "marginal_e5": 0.23886006269568938,
+      "split_census": {
+        "total_splits": 172872,
+        "splits_on_aux": 17841,
+        "pct_splits_on_aux": 0.10320352630848258
+      },
+      "aux_vs_rating": {
+        "Inflight wifi service": {
+          "corr_aux_ev_with_rating_fit": 0.9653802343159887,
+          "rmse": 0.33396603592072027
+        },
+        "Departure/Arrival time convenient": {
+          "corr_aux_ev_with_rating_fit": 0.8653843643131516,
+          "rmse": 0.7389294979196409
+        },
+        "Ease of Online booking": {
+          "corr_aux_ev_with_rating_fit": 0.9547769681409611,
+          "rmse": 0.39516659577680086
+        },
+        "Gate location": {
+          "corr_aux_ev_with_rating_fit": 0.8062367396252963,
+          "rmse": 0.7420439697374451
+        },
+        "Food and drink": {
+          "corr_aux_ev_with_rating_fit": 0.7941355194574401,
+          "rmse": 0.7906154207640403
+        },
+        "Online boarding": {
+          "corr_aux_ev_with_rating_fit": 0.9192008464101427,
+          "rmse": 0.50723759155044
+        },
+        "Seat comfort": {
+          "corr_aux_ev_with_rating_fit": 0.8897103271414056,
+          "rmse": 0.5822935293262316
+        },
+        "Inflight entertainment": {
+          "corr_aux_ev_with_rating_fit": 0.983765927429421,
+          "rmse": 0.23484318931489953
+        },
+        "On-board service": {
+          "corr_aux_ev_with_rating_fit": 0.7336624245322094,
+          "rmse": 0.8418649182568997
+        },
+        "Leg room service": {
+          "corr_aux_ev_with_rating_fit": 0.6225751212669861,
+          "rmse": 0.995301763361714
+        },
+        "Baggage handling": {
+          "corr_aux_ev_with_rating_fit": 0.7772039351322813,
+          "rmse": 0.6793139601554975
+        },
+        "Checkin service": {
+          "corr_aux_ev_with_rating_fit": 0.5275997867049821,
+          "rmse": 1.028034245336426
+        },
+        "Cleanliness": {
+          "corr_aux_ev_with_rating_fit": 0.8685925529939419,
+          "rmse": 0.6335488114959174
+        }
+      }
+    }
+  },
+  "deltas_e5": [
+    -5.547955889040335
+  ],
+  "mean_delta_e5": -5.547955889040335,
+  "marginals_e5": [
+    0.23886006269568938
+  ],
+  "mean_marginal_e5": 0.23886006269568938
+}
