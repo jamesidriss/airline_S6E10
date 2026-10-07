@@ -51,6 +51,7 @@ CRITICAL_SCRIPTS = [
 # Library modules the runners import; an undefined name here breaks every caller.
 CRITICAL_MODULES = [
     "src/models/windows_attention.py",
+    "src/models/resource_guard.py",
     "src/models/tabr_retrieval.py",
     "src/models/tabr_epochlog.py",
     "src/models/residual.py",

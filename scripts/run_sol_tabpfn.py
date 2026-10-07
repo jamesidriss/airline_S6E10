@@ -10,6 +10,8 @@ import gc
 import json
 import sys
 import time
+import shutil
+from contextlib import nullcontext
 from pathlib import Path
 
 import numpy as np
@@ -53,6 +55,9 @@ def main():
     ap.add_argument('--precision', choices=['autocast', 'fp16', 'bf16'], default='autocast')
     ap.add_argument('--windows-mqa', action='store_true')
     ap.add_argument('--memory-saving', choices=['auto', 'on'], default='auto')
+    ap.add_argument('--icl-bf16', action='store_true')
+    ap.add_argument('--chunk-cells', type=int)
+    ap.add_argument('--col-chunk', type=int)
     ap.add_argument('--tag', default='sol_tabpfn35')
     args = ap.parse_args()
     from tabpfn import TabPFNClassifier
@@ -61,6 +66,8 @@ def main():
     if args.windows_mqa:
         from src.models.windows_attention import register, verify_gpu_equivalence
         backend_gate = verify_gpu_equivalence()
+        if args.icl_bf16:
+            backend_gate = {'fp16': backend_gate, 'bf16': verify_gpu_equivalence(torch.bfloat16)}
         register()
     checkpoint = ARTIFACTS / 'tabpfn35' / 'tabpfn-v3.5-20260909.safetensors'
     provenance = json.loads(Path('research/raw/sol_tabpfn_provenance.json').read_text(encoding='utf-8'))
@@ -104,26 +111,36 @@ def main():
                         'predeclared_ensemble_geometry': 'append one equal-logit member to the 59-member legacy-v5 reference',
                         'hardware': 'RTX 5070 Ti 16GB; 32GB RAM', 'timing_only': args.timing,
                         'batch_size': args.batch_size, 'precision': args.precision,
+                        'icl_bf16': args.icl_bf16,
+                        'inference_chunk_cells': args.chunk_cells, 'inference_col_chunk_size': args.col_chunk,
                         'windows_mqa_backend': args.windows_mqa, 'backend_max_reference_gap': backend_gate,
                         'backend_source_sha256': file_sha256('src/models/windows_attention.py') if args.windows_mqa else None,
+                        'resource_guard_source_sha256': file_sha256('src/models/resource_guard.py'),
                         'flash_attention_compiled': torch.backends.cuda.is_flash_attention_available()}
             save_json({**contract, 'status': 'FITTING'}, root / 'progress.json')
             torch.cuda.reset_peak_memory_stats()
             start = time.monotonic()
-            model = TabPFNClassifier(**params)
+            if shutil.disk_usage(root).free < 20 * 1024**3:
+                raise RuntimeError('At least 20 GiB disk reserve required before this model fit')
+            model = create_model(params, args.icl_bf16, args.chunk_cells, args.col_chunk)
             try:
                 print(f'{arm} f{k}: fit {len(fit_idx)} context rows; {len(names)} columns', flush=True)
-                model.fit(X[fit_idx], y[fit_idx])
+                from src.models.resource_guard import inference_guard
+                guard = inference_guard(root, contract) if not args.timing else nullcontext()
+                with guard:
+                    model.fit(X[fit_idx], y[fit_idx])
                 fit_seconds = time.monotonic() - start
                 print(f'{arm}: fitted in {fit_seconds:.1f}s; peak GPU {torch.cuda.max_memory_allocated()/2**30:.3f} GiB', flush=True)
                 chunks = []
                 pred_start = time.monotonic()
-                for begin in range(0, len(eval_idx), args.batch_size):
-                    stop = min(begin + args.batch_size, len(eval_idx))
-                    chunks.append(model.predict_proba(X[eval_idx[begin:stop]])[:, 1])
-                    save_json({**contract, 'status': 'PREDICTING', 'completed_rows': stop,
-                               'fit_seconds': fit_seconds, 'seconds': time.monotonic() - start}, root / 'progress.json')
-                    print(f'{arm}: predicted {stop}/{len(eval_idx)}', flush=True)
+                prediction_guard = inference_guard(root, contract, max_seconds=max(1,2700-fit_seconds)) if not args.timing else nullcontext()
+                with prediction_guard:
+                    for begin in range(0, len(eval_idx), args.batch_size):
+                        stop = min(begin + args.batch_size, len(eval_idx))
+                        chunks.append(model.predict_proba(X[eval_idx[begin:stop]])[:, 1])
+                        save_json({**contract, 'status': 'PREDICTING', 'completed_rows': stop,
+                                   'fit_seconds': fit_seconds, 'seconds': time.monotonic() - start}, root / 'progress.json')
+                        print(f'{arm}: predicted {stop}/{len(eval_idx)}', flush=True)
                 pred = np.concatenate(chunks).astype('float32')
                 assert pred.shape == (len(eval_idx),) and np.isfinite(pred).all() and ((pred >= 0) & (pred <= 1)).all()
                 rec = {**contract, 'fit_seconds': fit_seconds, 'predict_seconds': time.monotonic()-pred_start,
@@ -152,6 +169,27 @@ def main():
                 torch.cuda.empty_cache()
             del X
     return 0
+
+
+def create_model(params, icl_bf16=False, chunk_cells=None, col_chunk=None):
+    from tabpfn import TabPFNClassifier
+    if not icl_bf16 and chunk_cells is None and col_chunk is None:
+        return TabPFNClassifier(**params)
+    # Keep categorical/fingerprint preprocessing at fp32. Only the officially
+    # supported ICL blocks and residual stream switch to bf16; no gradient fit.
+    from tabpfn.base import ModelSpecs, initialize_tabpfn_model
+    models, configs, _, inference = initialize_tabpfn_model(params['model_path'], 'classifier',
+                n_estimators_override=1, devices=[torch.device('cpu')])
+    if icl_bf16:
+        models[0].enable_icl_bf16()
+    if chunk_cells is not None:
+        assert chunk_cells > 0
+        models[0].inference_chunk_cells = chunk_cells
+    if col_chunk is not None:
+        assert col_chunk > 0
+        models[0].inference_col_chunk_size = col_chunk
+    spec = ModelSpecs(models[0], configs[0], inference)
+    return TabPFNClassifier(**dict(params, model_path=spec))
 
 
 if __name__ == '__main__':

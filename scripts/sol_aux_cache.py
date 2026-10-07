@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import time
+import shutil
 
 import numpy as np
 
@@ -36,17 +37,25 @@ def probability_cache(Xfit, Xapply, names, fit_ids, apply_ids, fold_hash, seed=1
         assert arr_sha256(pa) == m["apply_probability_sha256"]
         print(f"{label}: aux probability cache {fingerprint[:12]}", flush=True)
         return pf, pa, m
+    required_bytes = (len(fi) + len(ai)) * 13 * 6 * 8 + 2 * 1024**3
+    if shutil.disk_usage(dest).free < required_bytes:
+        raise RuntimeError('Insufficient disk reserve for a complete auxiliary probability cache')
     start = time.monotonic()
 
     def progress(j, info):
         save_json({"contract": contract, "git": git_commit(), "completed_ratings": j + 1,
                    "last_rating": info, "elapsed_seconds": time.monotonic() - start}, dest / "progress.json")
         print(f"{label}: aux {j + 1}/13 {info['rating']} {info['seconds']:.1f}s", flush=True)
+        if shutil.disk_usage(dest).free < required_bytes:
+            raise RuntimeError('Disk reserve fell below auxiliary cache safety margin; no result claimed')
 
     pf, pa, info = build_aux(Xfit, Xapply, names, seed, rounds=rounds,
                               inner_folds=inner_folds, return_probabilities=True, progress=progress)
-    np.save(dest / "fit.npy", pf)
-    np.save(dest / "apply.npy", pa)
+    # Never expose a truncated array as a completed cache component.
+    for name, array in (('fit', pf), ('apply', pa)):
+        temporary = dest / f'{name}.partial.npy'
+        np.save(temporary, array)
+        temporary.replace(dest / f'{name}.npy')
     np.save(dest / "fit_ids.npy", fi)
     np.save(dest / "apply_ids.npy", ai)
     m = {"contract": contract, "git": git_commit(), "fingerprint": fingerprint,

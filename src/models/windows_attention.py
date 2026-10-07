@@ -47,16 +47,17 @@ def register():
     register_attention_backend(BACKEND)
 
 
-def verify_gpu_equivalence():
+def verify_gpu_equivalence(dtype=torch.float16):
     """Numerical gate before any expensive run, with a small independent reference."""
     generator = torch.Generator(device='cuda').manual_seed(2701)
-    q = torch.randn(2, 31, 8, 64, generator=generator, device='cuda', dtype=torch.float16)
-    k = torch.randn(2, 43, 1, 64, generator=generator, device='cuda', dtype=torch.float16)
-    v = torch.randn(2, 43, 1, 64, generator=generator, device='cuda', dtype=torch.float16)
+    q = torch.randn(2, 31, 8, 64, generator=generator, device='cuda', dtype=dtype)
+    k = torch.randn(2, 43, 1, 64, generator=generator, device='cuda', dtype=dtype)
+    v = torch.randn(2, 43, 1, 64, generator=generator, device='cuda', dtype=dtype)
     with torch.no_grad():
         actual = BACKEND.run(q, k, v)
         with sdpa_kernel(backends=[SDPBackend.MATH]):
             expected = torch.nn.functional.scaled_dot_product_attention(
                 q.permute(0, 2, 1, 3), k.permute(0, 2, 1, 3), v.permute(0, 2, 1, 3), enable_gqa=True).permute(0, 2, 1, 3)
-    torch.testing.assert_close(actual, expected, atol=2e-3, rtol=2e-3)
+    tolerance = 1.6e-2 if dtype == torch.bfloat16 else 2e-3
+    torch.testing.assert_close(actual, expected, atol=tolerance, rtol=tolerance)
     return float((actual - expected).abs().max())

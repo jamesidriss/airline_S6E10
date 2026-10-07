@@ -49,3 +49,17 @@ def test_invalid_grouped_head_geometry_is_rejected():
     except ValueError:
         return
     raise AssertionError('Non-divisible query/KV heads were accepted')
+
+
+def test_resource_guard_rejects_insufficient_disk_before_fit():
+    from collections import namedtuple
+    from tempfile import TemporaryDirectory
+    from unittest.mock import patch
+    from src.models.resource_guard import inference_guard
+    Usage = namedtuple('Usage', 'total used free')
+    with TemporaryDirectory() as directory, patch('src.models.resource_guard.shutil.disk_usage', return_value=Usage(10**12, 10**12-1024, 1024)):
+        try:
+            with inference_guard(directory, {}):
+                raise AssertionError('Fit was allowed with only 1 KiB free disk')
+        except RuntimeError as error:
+            assert 'disk reserve' in str(error)
