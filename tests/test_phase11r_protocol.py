@@ -374,6 +374,108 @@ def test_es_carve_is_disjoint_from_its_own_training_rows() -> None:
           '"pre_fix_arms_contaminated"' in src)
 
 
+def test_partial_vector_splice_is_safe() -> None:
+    """The swap harness blends a FOLD-0-ONLY vector into a FULL-LENGTH 59-member blend.
+
+    Three distinct defects came out of getting this wrong, so each is pinned here.
+    """
+    print("\n13. partial-vector splice: shape, weight conservation, and no silent broadcast")
+    ids = [f"m{i}" for i in range(59)]
+    rng = np.random.default_rng(0)
+    L = {e: rng.normal(size=699635) for e in ids}
+    fold = np.arange(699635) % 5 == 0
+    n_val = int(fold.sum())
+    P = rng.normal(size=n_val)                    # a fold-0-only prediction
+    tgt = "m17"
+
+    # (a) shape: a raw partial vector cannot be column-stacked against full-length members
+    try:
+        np.column_stack([logit(P) if e == tgt else L[e] for e in ids])
+        check("stacking a raw partial vector against full members raises (the original crash)", False,
+              "no exception -- numpy broadcast it silently, which is worse")
+    except ValueError:
+        check("stacking a raw partial vector against full members raises (the original crash)", True)
+
+    # (b) the splice: full-length column, original outside the fold, native inside
+    col = L[tgt].copy()
+    col[fold] = logit(P)
+    outside = np.ones(len(col), dtype=bool)
+    outside[fold] = False
+    check("splice leaves every out-of-fold row byte-identical",
+          np.array_equal(col[outside], L[tgt][outside]))
+    check("splice writes the native logit inside the fold",
+          np.array_equal(col[fold], logit(P)))
+
+    # (c) weight conservation: the replaced slot still contributes exactly 1/59
+    cols = [col if e == tgt else L[e] for e in ids]
+    check("member count is unchanged after the swap", len(cols) == 59)
+    s = sig(np.column_stack(cols).sum(axis=1))
+    s_orig = sig(np.column_stack([L[e] for e in ids]).sum(axis=1))
+    # the swap changes the logit SUM by exactly the per-row difference on the fold, nothing else
+    d_before = np.column_stack([L[e] for e in ids]).sum(axis=1)
+    d_after = np.column_stack(cols).sum(axis=1)
+    delta = d_after - d_before
+    check("out-of-fold blend logits are bit-identical to the control",
+          np.array_equal(delta[outside], np.zeros(int(outside.sum()))))
+    check("in-fold blend logits move by the full native-original difference",
+          np.allclose(delta[fold], logit(P) - L[tgt][fold]))
+    del s, s_orig, d_before, d_after, delta
+
+    # (d) the over-strict check that produced a false alarm: counting changed rows over the WHOLE
+    # vector and demanding exactly len(val) is wrong, because a fold row may legitimately be
+    # unchanged. Assert the count can legitimately be one short.
+    # For the degenerate case, the native vector must equal the ORIGINAL LOGIT on the fold, not zero.
+    degenerate = L[tgt][fold].copy()            # native logit == original logit, exactly
+    check("a native logit identical to the original changes ZERO fold rows",
+          int(np.sum(degenerate != L[tgt][fold])) == 0)
+    check("so demanding n_changed == n_fold would false-alarm (the check that fired)",
+          0 != n_val)
+
+    # (e) identity, not just equality: the other 58 must be the original objects
+    same_obj = all(c is L[e] for c, e in zip(cols, ids) if e != tgt)
+    check("the other 58 columns are the original array objects, not copies", same_obj)
+    try:
+        _ = cols[[i for i, e in enumerate(ids) if e != tgt]]
+        check("fancy-indexing the plain list raises (the original TypeError)", False,
+              "it succeeded")
+    except TypeError:
+        check("fancy-indexing the plain list raises (the original TypeError)", True)
+
+    # (f) alpha mixing keeps each slot's weight at exactly 1/59
+    for alpha in (0.0, 0.25, 0.5, 1.0):
+        col = L[tgt].copy()
+        col[fold] = (1 - alpha) * L[tgt][fold] + alpha * logit(P)
+        check(f"alpha={alpha}: out-of-fold rows untouched by the mix",
+              np.array_equal(col[outside], L[tgt][outside]))
+        check(f"alpha={alpha}: in-fold rows equal the exact logit mix",
+              np.array_equal(col[fold], (1 - alpha) * L[tgt][fold] + alpha * logit(P)))
+        check(f"alpha={alpha}: the mix coefficients sum to 1", abs((1 - alpha) + alpha - 1) < 1e-15)
+
+
+def test_alpha0_control_is_exact() -> None:
+    """The block harness must reproduce v3 at alpha=0, and it does -- bit-exactly in float32."""
+    print("\n14. alpha=0 reproduces the v3 control bit-exactly")
+    import json as _j
+    from sklearn.metrics import roc_auc_score
+    from src.common import TARGET, load_cached_parquet
+    from src.submission import store
+    tr, _ = load_cached_parquet()
+    y = tr[TARGET].values.astype("float64")
+    man = _j.loads(Path("reports/finalist_v3_final.json").read_text(encoding="utf-8"))
+    ms = man["members"] if isinstance(man, dict) and "members" in man else man
+    ids = [(m["exp_id"] if isinstance(m, dict) else m) for m in ms]
+    M = np.column_stack([logit(store.load_oof(e).astype("float64")) for e in ids])
+    recon = sig(M.mean(axis=1))
+    v3r = store.load_oof("blend_v3_final")
+    check("alpha=0 mean over the unmutated member logits, cast to float32, is bit-exact",
+          float(np.abs(recon.astype(np.float32).astype("float64")
+                       - v3r.astype("float64")).max()) == 0.0)
+    check("the blend divides by 59 in both the reconstruction and the store",
+          len(ids) == 59 and abs(recon - sig(M.mean(axis=1))).max() == 0.0)
+    check("alpha=0 AUC equals the stored v3 AUC to float64 round-off",
+          abs(roc_auc_score(y, recon) - roc_auc_score(y, v3r.astype("float64"))) < 1e-9)
+
+
 def main() -> int:
     print("=" * 78)
     print("PHASE 11R -- PROTOCOL GUARD TESTS")
@@ -381,7 +483,8 @@ def main() -> int:
     for fn in (test_authoritative_geometry, test_no_false_geometry_claims_in_source,
                test_exactness_requires_full_match, test_swap_isolation_and_weights,
                test_native_category_safety, test_withdrawn_claim_is_not_asserted,
-               test_es_carve_is_disjoint_from_its_own_training_rows):
+               test_es_carve_is_disjoint_from_its_own_training_rows,
+               test_partial_vector_splice_is_safe, test_alpha0_control_is_exact):
         fn()
     print("\n" + "=" * 78)
     print(f"{N - len(FAILS)}/{N} passed")

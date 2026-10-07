@@ -1,65 +1,110 @@
-FOURTH CORRECTION: early stopping was evaluated on its own training rows
+PHASE 11R CLOSED: native CatBoost counterparts are DIVERSE but REDUNDANT; the ensemble does not move
 
-THE BUG
---------
-run_phase11r.py fitted the early-stopping model on the FULL outer-fit frame while passing
-eval_set = f.iloc[es_l]. The ES set was therefore a SUBSET OF THE ES MODEL'S OWN TRAINING DATA.
-CatBoost never early-stops in that configuration, because the eval metric keeps improving while the
-model memorises the rows it is being scored on. Every arm ran to the round cap and its refit used a
-fixed cap-length round count instead of a validated one.
+Both predeclared questions answered, both negative. No fold 1, no seven-slot training, no submission.
 
-HOW IT WAS FOUND
-----------------
-The first C2REF run selected 2499 of a 2500-round budget and hit the cap. Phase 10's
-identically-configured C2 selected 1043 under a 6000-round budget with patience 300. A SHORTER budget
-with SHORTER patience (2500 / 200 versus 6000 / 300) cannot plausibly stop LATER, so the gap was
-arithmetically inconsistent with a genuine early stop and had to be a defect, not a budget effect.
+QUESTION A -- can the native CTR mechanism be made materially stronger? NO.
+Primary fold 0, against a budget-matched C2 reference retrained under this run's ES budget:
 
-The diagnosis was then confirmed rather than assumed. A direct control run with the same nominal
-settings (2500 rounds, patience 200) but with the ES model trained on the 90% inner-train carve
-selected 1043, matching Phase 10 exactly. Two such identical runs both returned 1043, so CatBoost IS
-deterministic in this configuration and the 2499 was not run-to-run noise.
+  arm    mechanism                                 AUC         delta    iters  verdict
+  C2REF  the 17-native-category reference           0.961067      --      1043   reference
+  C4     + exact categorical Age (75 levels)        0.960938  -12.9e-5    697   NEGATIVE
+  C5     + exact categorical Flight Distance (3474)  0.961075   +0.9e-5   1010   below +2e-5
+  ctr2   max_ctr_complexity 1 -> 2                   0.961039   -2.7e-5   1462   NEGATIVE
 
-THE FIX
--------
-The ES model now trains on f.iloc[itr_l] only, matching Phase 10's _fit_cat_es. The harness also
-refuses to run if the two row sets overlap, or if inner-train plus ES does not exactly partition the
-outer fit. Both guards raise SystemExit rather than proceeding.
+Age converges EARLIER AND WORSE (1043 -> 697 iterations), consistent with a shortcut that saturates
+the model without improving generalisation. Flight Distance is the only positive and is an order of
+magnitude below the +5e-5 fold-1 trigger; its high-cardinality cost concern was real in projection
+and false in fact (0.3710 s/round, converged at 1010 iters). The ctr2 precondition was VERIFIED
+rather than assumed -- the dump shows simple_ctr 0 and combinations_ctr 0, so the default build
+really was simple-CTR-only -- and the extension still lost while costing 58% more compute.
 
-WHAT IS INVALIDATED
--------------------
-C2REF and C4 fold 0, both trained before the fix, selected 2499 of 2500 and are CONTAMINATED. Their
-prediction vectors and run records are preserved as evidence under reports/contaminated_es_leak/ and
-are excluded from the report, which reads only the re-run artifacts. Their numbers are not used for
-any decision. The earlier reading of C4 as -6.9e-5 against a budget-matched reference was computed
-from these contaminated models and is WITHDRAWN, not merely superseded.
+QUESTION B -- do distinct native counterparts retain enough diversity to move the blend?
+Diversity: YES. Effect: NO. That combination is the informative result.
 
-FIFTH CORRECTION: a cost projection treated as a point estimate silently skipped two experiments
-----------------------------------------------------------------------------------------------
-The cost model was fitted as cost(R) = a*R + b*R^2 from a 400-round anchor, then evaluated at
-ES_ROUNDS = 2500 for the ES fit. That upper bound assumes early stopping never fires, which is
-false: this workload stops at ~1043. The consequence was concrete. C5 (Flight Distance twin)
-projected 121 minutes and ctr2 projected 132, both above the 90-minute budget, so BOTH WERE SKIPPED
-AND NOT RUN -- silently, because a skip on cost grounds prints as a skip rather than as a failure.
-At the measured stopping point their real cost is roughly 44 and 48 minutes, so both fit the budget.
-An upper bound used as a point estimate is not a conservative choice; it is a decision made by
-default.
+  arm     replaces              standalone d  O-N corr   single-slot v3 delta
+  ND6     z3_cat_d6             +23.1e-5      0.99893          +0.24e-5
+  ND10    z3_cat_d10             +5.1e-5      0.99850          +0.02e-5
+  NCORE3  z3_cat_core3           -3.4e-5      0.99880          -0.19e-5
 
-The projection now uses the MEASURED stopping point (--project-iters, default 1100, from the 1043
-that two reproducible control runs agree on) and reports the cap-worst-case on a separate line so the
-upper bound stays visible instead of being the estimate.
+  MINI_B100  alpha=1.00   v3 control 0.961501 -> 0.961501   +0.07e-5
+  MINI_B50   alpha=0.50   v3 control 0.961501 -> 0.961501   +0.04e-5
+  alpha=0 control reconstructs with max|dp| = 0.000e+00, so these are measurements, not artefacts.
 
-CTESST NOTE ON THE FIX ITSELF
------------------------------
-While fixing the harness I introduced two further defects, both caught immediately:
-  * `n, folds = 5000, np.repeat(np.arange(5), n // 5)` raised UnboundLocalError, because `n` is
-    local to the whole function as a tuple-assignment target and `n // 5` therefore read an
-    unbound local.
-  * The first version of the new test asserted disjointness by comparing ES positions against
-    range(len(ok_train)), mixing the position index space with the row index space. The real
-    invariant is that the two POSITION sets are disjoint, which is what it now checks.
-Both are recorded because the pattern recurs in this codebase: `assemble()` returns matrices local to
-fit_idx while `y` is global, and index-space confusion has already produced fake results here.
+  subset      pairwise logit corr   min      median   max
+  ORIGINAL    3 slots               0.99697  0.99748  0.99780
+  NATIVE      3 counterparts        0.99771  0.99779  0.99856
 
-tests/test_phase11r_protocol.py: 65/65, with test 12 covering the carve-disjointness invariant that
-would have caught this bug before it produced two contaminated arms.
+The native set did NOT collapse toward 1.0. So the hypothesis fails for a reason OTHER than the
+predicted one: the counterparts are diverse AND interchangeable in effect. That is a different and
+more informative negative than diversity collapse would have been, and it is independent
+corroboration that the Phase 11B structural-cap intuition was pointing at something real even
+though its arithmetic was invalid.
+
+THE GATE DOES NOT LICENSE FOLD 1
+  A  mini block >= +1.0e-5            False -- best +0.07e-5, roughly 14x short
+  B  >=2 of 3 swaps positive + divers  True  -- 2/3 positive, diversity retained
+  C  mechanism >= +5e-5 over C2       False -- 0 arms
+
+Gate B's boolean is True and carries NO evidential weight. Under pure noise each swap delta is
+positive with probability 0.5, so P(>=2 of 3) = 0.500 -- at n=3 that is close to the SINGLE MOST
+LIKELY outcome of no signal at all. One of the two positives is +0.02e-5, a tie-scale effect; the
+mean swap delta is +0.024e-5. The predeclared boolean is preserved EXACTLY as written in the
+report's `gates` field, with a separate `gates_weighted` field recording that no gate carrying
+evidential weight was met and `substantive_signal: false`. Amending a criterion after seeing the
+result is precisely what a predeclared gate exists to prevent, so it is annotated, not rewritten.
+Roughly 2.5 hours of fold-1 compute is NOT spent resolving a signal of this size.
+
+TWO BUGS FOUND, BOTH MINE, BOTH WITH EVIDENCE
+
+1. The ES set was a SUBSET OF ITS OWN TRAINING DATA. The harness fitted the early-stopping model on
+   the full outer-fit frame while passing eval_set = f.iloc[es_l]. CatBoost never early-stops in
+   that configuration, because the eval metric keeps improving while the model memorises the rows
+   it is scored on. Exposed by an arithmetic impossibility rather than a hunch: a SHORTER budget
+   with SHORTER patience (2500/200 versus 6000/300) selected 2499 where Phase 10's identical
+   configuration selected 1043.
+   Verified rather than assumed: the fixed harness reproduces Phase 10 EXACTLY, 0.961067 at 1043
+   iterations, and two identical control runs both return 1043 -- so CatBoost IS deterministic here
+   and 2499 was a bug, not noise. The harness now aborts if the carve sets overlap or do not
+   partition the outer fit. The two contaminated arms are quarantined under
+   reports/contaminated_es_leak/ with their logs, and the earlier reading of C4 as -6.9e-5 against
+   a budget-matched reference is WITHDRAWN rather than superseded.
+
+2. A cost UPPER BOUND was used as a point estimate, which silently skipped two experiments. The
+   projection evaluated cost(R) = a*R + b*R^2 at the 2500-round cap, assuming early stopping never
+   fires. C5 and ctr2 therefore "projected" 121 and 132 minutes against a 90-minute budget and
+   were SKIPPED, NOT RUN -- quietly, because a cost skip prints as a skip rather than as a failure.
+   Their real cost is about 31 and 32 minutes. An upper bound used as a point estimate is not a
+   conservative choice, it is a decision made by default, and it removed both arms from Question A.
+   The projection now uses the measured stopping point and prints the cap worst case on its own
+   line so the upper bound stays visible.
+
+Three further defects introduced while fixing these are recorded too: an UnboundLocalError from `n`
+being both a tuple-assignment target and read on the right-hand side; a test that mixed the POSITION
+index space with the ROW index space; and an over-strict changed-row count that false-alarmed
+because a fold-0 row may legitimately be unchanged. A fourth is a test that asserted on a literal
+stop-message string and broke when that message was deliberately rewritten to report measured
+quantities -- it was testing wording, not behaviour, and now checks the behaviour.
+
+The report harness also needed a real fix: each counterpart covers only the fold-0 rows while the
+blend has 699,635 members, so a raw partial vector cannot be column-stacked (the original crash) and
+splicing one naively would silently broadcast. The splice now writes into a full-length copy, leaves
+out-of-fold rows byte-identical, asserts the other 58 columns are the original OBJECTS, and verifies
+the alpha=0 control reconstructs exactly.
+
+NOTEBOOK AUDIT (S18) CLOSED. sachith7/s6e10-what-each-step-was-worth was retrieved and read: 30 cells,
+29,222 chars. NO CatBoost at all -- no cat_features, no CatBoostClassifier, no max_ctr_complexity. It
+never tests native categorical CTRs. It reports a negative for a DIFFERENT substitution, numerics as
+categories INSTEAD OF target encoding (0.960387 versus 0.961014), and flags its own confound of
+learning rate and seed. We measured categories ON TOP OF our existing TE block. Neither refutes the
+other. Its reproducible finding is 10-fold members (+0.00009 to +0.00018); its remaining gains are
+dominated by public-LB observation and imported public predictions, which cannot license a local
+change. NO category-F genuinely new mechanism was found. Its own +/-0.0008 single-submission noise
+estimate agrees with our +/-2e-4 paired floor.
+
+.gitignore: reports/*.npy is now excluded BELOW the `!reports/**` rule (later rules win). The 7 raw
+per-fold prediction arrays are ~546 KB each and are regenerable; the JSON records that cite them are
+committed, so every reported number stays auditable without ~4 MB of float32 arrays. This restores
+test_no_source_files_missing_from_git, which had been failing because `git add -A` was staging them.
+
+Tests: 432 assertions across 6 suites, 0 failures. Ledger at 161 append-only lines including the two
+withdrawn claims. Failed history was not rewritten.

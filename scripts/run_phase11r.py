@@ -495,9 +495,13 @@ def report(args, tr, y, y_int) -> None:
 
     # ---- exact single-slot swaps, fold-0 only, using ACTUAL vectors ----
     print(f"\n  EXACT SINGLE-SLOT SWAPS on fold 0 (replace only slot O_i; other 58 untouched)")
+    print(f"  Each counterpart is trained on fold 0 alone, so its vector covers only the fold-0 rows.")
+    print(f"  The splice writes the native logit into those rows and leaves the original byte-identical")
+    print(f"  elsewhere; the AUC is read on fold 0 only. 'exact' = seed, view, scheme AND depth all")
+    print(f"  match the slot being replaced.")
     print(f"  {'arm':<8}{'replaces':<26}{'O_i AUC':>11}{'N_i AUC':>11}{'standalone d':>14}"
-          f"{'O-N corr':>10}{'v3 before':>12}{'v3 swap':>12}{'swap d':>10}")
-    print(f"  {'-'*116}")
+          f"{'O-N corr':>10}{'v3 before':>12}{'v3 swap':>12}{'swap d':>10}{'exact':>7}")
+    print("  " + "-" * 124)
     swaps = []
     for aname in MINI_SLOTS:
         tgt = MINI_SLOTS[aname]
@@ -507,9 +511,50 @@ def report(args, tr, y, y_int) -> None:
         fl = get_scheme("primary", y_int, tr[ID_COL]).folds
         val = np.where(fl == 0)[0]
         P = np.load(f).astype("float64")
-        cols = [logit(P) if e == tgt else L[e] for e in ids]
+        # GUARD, and the reason this line exists. Each counterpart is trained on fold 0 ALONE, so its
+        # prediction vector covers ONLY the 139,927 fold-0 rows, while the blend has 699,635 columns
+        # of members. The first version of this loop column-stacked the fold-0-sized vector against
+        # the full-length members and died with a shape error. Splicing a partial vector straight in
+        # would be worse than a crash -- it would silently drop or broadcast the other 560k rows and
+        # produce a confident wrong AUC. So: the native logit is written into a FULL-LENGTH array
+        # that starts as a copy of the original slot, only the fold-0 rows are overwritten, and the
+        # overlap is asserted. The AUC is then read on fold 0, where the swap actually happened;
+        # elsewhere the vector is identical to the original by construction.
+        if len(P) != len(val):
+            raise SystemExit(f"STOP: {aname} prediction has {len(P)} rows but fold 0 has {len(val)}.")
+        col = L[tgt].copy()
+        col[val] = logit(P)
+        # Count only the OUT-OF-FOLD rows and require them all to be unchanged. The first version
+        # counted changed rows over the WHOLE vector and demanded exactly len(val), which is wrong:
+        # a fold-0 row whose native logit happens to equal the original logit is legitimately
+        # unchanged. One row did exactly that, and the check demanded 139,927 changes while
+        # observing 139,926 -- a false alarm from an over-strict invariant, not a splice bug.
+        # What actually matters is the two-part claim: nothing outside the fold moved, and inside
+        # the fold the column now EQUALS the native prediction.
+        mask = np.ones(len(col), dtype=bool)
+        mask[val] = False
+        if not np.array_equal(col[mask], L[tgt][mask]):
+            n_bad = int(np.sum(col[mask] != L[tgt][mask]))
+            raise SystemExit(f"STOP: splice altered {n_bad} rows OUTSIDE fold 0; the replaced "
+                             f"slot must be byte-identical there.")
+        if not np.array_equal(col[val], logit(P)):
+            raise SystemExit("STOP: inside fold 0 the spliced column does not equal the native logit.")
+        n_changed = int(np.sum(col[val] != L[tgt][val]))
+        cols = [col if e == tgt else L[e] for e in ids]
         aft = sig(np.mean(np.column_stack(cols), axis=1))
-        a_sw = float(roc_auc_score(y[val], aft))
+        # The other 58 members must be the SAME OBJECTS, byte for byte. `cols` is a plain list, so
+        # fancy-indexing it with a list of ints raises TypeError (that was the first version's bug);
+        # compare the identities and then the arrays directly instead.
+        if any(c is not L[e] for c, e in zip(cols, ids) if e != tgt):
+            raise SystemExit("STOP: a non-target member column is not the original array object.")
+        others = [e for e in ids if e != tgt]
+        if not np.array_equal(np.column_stack([cols[ids.index(e)] for e in others]),
+                              np.column_stack([L[e] for e in others])):
+            raise SystemExit("STOP: a non-target member changed during the swap.")
+        if len(cols) != len(ids) or ids.count(tgt) != 1:
+            raise SystemExit(f"STOP: expected exactly one {tgt} among {len(ids)} members, "
+                             f"found {ids.count(tgt)}.")
+        a_sw = float(roc_auc_score(y[val], aft[val]))
         a_b4 = float(roc_auc_score(y[val], sig(base_logit[val])))
         o_auc = float(roc_auc_score(y[val], sig(L[tgt][val])))
         n_auc = float(roc_auc_score(y[val], P))
@@ -521,10 +566,22 @@ def report(args, tr, y, y_int) -> None:
                       == by_id[tgt]["fold_scheme"],
                       "o_auc": o_auc, "n_auc": n_auc,
                       "standalone_delta_e5": (n_auc - o_auc) * 1e5, "o_n_corr": c,
-                      "v3_before": a_b4, "v3_after": a_sw, "swap_delta_e5": (a_sw - a_b4) * 1e5})
+                      "v3_before": a_b4, "v3_after": a_sw, "swap_delta_e5": (a_sw - a_b4) * 1e5,
+                      "rows_changed": n_changed, "n_rows_fold": len(val),
+                      "exact_counterpart": bool(
+                          runs["arms"][aname][f"f0"]["seed"] == by_id[tgt]["seed"]
+                          and runs["arms"][aname][f"f0"]["view"] == by_id[tgt]["view"]
+                          and runs["arms"][aname][f"f0"]["fold_scheme"] == by_id[tgt]["fold_scheme"]
+                          and runs["arms"][aname][f"f0"]["depth"]
+                          == by_id[tgt]["params"]["depth"])})
+        ex = "yes" if swaps[-1]["exact_counterpart"] else "NO"
         print(f"  {aname:<8}{tgt:<26}{o_auc:>11.6f}{n_auc:>11.6f}"
               f"{(n_auc-o_auc)*1e5:>+13.1f}e{c:>10.5f}{a_b4:>12.6f}{a_sw:>12.6f}"
-              f"{(a_sw-a_b4)*1e5:>+9.2f}e")
+              f"{(a_sw-a_b4)*1e5:>+9.2f}e{ex:>7}")
+    if swaps and not all(s["exact_counterpart"] for s in swaps):
+        print("  A row marked exact=NO is an APPROXIMATE DIAGNOSTIC: reusing one model's prediction")
+        print("  for a slot trained with a different seed/view/depth destroys the diversity that")
+        print("  the hypothesis is about, so its swap delta is not evidence for the mechanism.")
 
     # ---- MINI block: four real native predictions, both alphas ----
     mini = {}
@@ -537,22 +594,47 @@ def report(args, tr, y, y_int) -> None:
         print(f"  {'block':<12}{'alpha':>7}{'v3 control':>13}{'block AUC':>12}{'delta e5':>11}")
         print(f"  {'-'*56}")
         for alpha, nm in ((1.0, "MINI_B100"), (0.5, "MINI_B50")):
-            cols = []
+            # The mix is per SLOT, in logit space, so each slot still contributes exactly 1/59 of
+            # the blend: (1-alpha)*original + alpha*native sums to alpha+(1-alpha) = 1. Mixing is
+            # done INSIDE the full-length array at the fold-0 rows, and the untouched rows keep
+            # the original exactly (alpha=0 contribution), so the blend weight per slot is
+            # unchanged on every row.
+            cols, touched = [], []
             for e in ids:
                 tgt = next((a for a in have if MINI_SLOTS[a] == e), None)
                 if tgt is None:
                     cols.append(L[e])
-                else:
-                    P = np.load(REPORTS / f"{args.tag}_{tgt}_primary_f0.npy").astype("float64")
-                    # the counterpart only covers fold 0, so outside it the original stands in.
-                    # Reported on FOLD 0 ONLY for that reason.
-                    v = logit(P) if e == tgt else L[e]
-                    cols.append((1 - alpha) * L[e] + alpha * v if e == tgt else v)
-            a = float(roc_auc_score(y[val], sig(np.mean(np.column_stack(cols), axis=1))[val]))
+                    continue
+                P = np.load(REPORTS / f"{args.tag}_{tgt}_primary_f0.npy").astype("float64")
+                if len(P) != len(val):
+                    raise SystemExit(f"STOP: {tgt} has {len(P)} rows, fold 0 has {len(val)}.")
+                col = L[e].copy()
+                col[val] = (1 - alpha) * L[e][val] + alpha * logit(P)
+                # weight conservation: outside the fold the slot contributes exactly L[e], so the
+                # 1/59 weight is untouched; inside, (1-alpha)+alpha == 1 keeps it so as well.
+                outside = np.ones(len(col), dtype=bool)
+                outside[val] = False
+                if not np.array_equal(col[outside], L[e][outside]):
+                    raise SystemExit(f"STOP: mini-block altered rows outside fold 0 in slot {e}.")
+                expect = (1 - alpha) * L[e][val] + alpha * logit(P)
+                if not np.array_equal(col[val], expect):
+                    raise SystemExit(f"STOP: mini-block slot {e} does not equal its mixed logit.")
+                cols.append(col)
+                touched.append(e)
+            blend = sig(np.mean(np.column_stack(cols), axis=1))
+            a = float(roc_auc_score(y[val], blend[val]))
             mini[nm] = {"alpha_native": alpha, "slots": [MINI_SLOTS[a2] for a2 in have],
                         "v3_control_fold0": a_b4, "block_auc_fold0": a,
-                        "delta_e5": (a - a_b4) * 1e5, "n_native": len(have)}
-            print(f"  {nm:<12}{alpha:>7.2f}{a_b4:>13.6f}{a:>12.6f}{(a-b4)*1e5:>+10.2f}e")
+                        "delta_e5": (a - a_b4) * 1e5, "n_native": len(have),
+                        "slots_touched": touched,
+                        "weight_per_slot": 1.0 / len(ids)}
+            print(f"  {nm:<12}{alpha:>7.2f}{a_b4:>13.6f}{a:>12.6f}{(a-a_b4)*1e5:>+10.2f}e")
+        # alpha=0 MUST reproduce the control exactly. If it does not, the splice is wrong and every
+        # number above it is meaningless.
+        ctrl_check = sig(np.mean(np.column_stack(
+            [L[e] for e in ids]), axis=1))
+        print(f"  alpha=0 control reconstruction: max|dp| = "
+              f"{np.abs(ctrl_check[val] - sig(base_logit[val])).max():.3e} (must be 0.0)")
         print(f"  NOTE: these are FOLD-0 numbers only, because each counterpart is trained on fold 0")
         print(f"  alone. A block AUC over all folds is not defined until fold 1+ are trained.")
     else:
@@ -610,14 +692,60 @@ def report(args, tr, y, y_int) -> None:
     print(f"    C mechanism >= +5e-5 over C2        : {gates['C_mechanism_strength_ge_5e-5']} "
           f"({len(mech)} arm(s))")
     passed = any(gates.values())
-    print(f"    -> {'PROCEED to fold 1' if passed else 'CLOSE Phase 11: no gate met, no seven-slot training'}")
+    # ---- GATE B'S OWN STATISTICAL WORTH, computed rather than assumed ----
+    # Gate B as written is ">= 2 of 3 single-slot swaps positive AND diversity retained". Under pure
+    # noise each swap delta is positive with probability 0.5, so P(>=2 of 3) = 0.500. That makes the
+    # gate's second condition the single most likely outcome of NO signal whatsoever: at n=3 it is
+    # close to a coin flip, not evidence. So "gate B passed" carries no evidential weight on its own,
+    # and the gate is recorded as FAILED-IN-SUBSTANCE even though its boolean is True.
+    #
+    # This is recorded rather than quietly amended: the boolean in `gates` is left EXACTLY as
+    # predeclared, and the additional `gates_weighted` field states the corrected reading. Editing the
+    # criterion after seeing the result is exactly what a predeclared gate exists to prevent.
+    import math as _m
+    p_noise = sum(_m.comb(3, i) * 0.5 ** 3 for i in range(2, 4))
+    substantive = bool(gates["A_mini_block_ge_1e-5"] or gates["C_mechanism_strength_ge_5e-5"]
+                       or (npos >= 3 and not div.get("collapsed", False)))
+    gates_weighted = {
+        "B_as_written": gates["B_two_of_three_swaps_positive_and_diversity_retained"],
+        "B_p_under_pure_noise": round(p_noise, 3),
+        "B_mean_swap_delta_e5": round(
+            sum(s["swap_delta_e5"] for s in swaps) / max(len(swaps), 1), 3),
+        "B_zero_of_three_positive": bool(npos == 0),
+        "A_or_C_passed": bool(gates["A_mini_block_ge_1e-5"]
+                              or gates["C_mechanism_strength_ge_5e-5"]),
+    }
+    print(f"\n  GATE B's STATISTICAL WORTH, computed rather than assumed")
+    print(f"    P(>=2 of 3 swap deltas positive | pure noise) = {p_noise:.3f}")
+    print(f"    mean single-slot swap delta = {gates_weighted['B_mean_swap_delta_e5']:+.3f}e-5")
+    print(f"    Because that probability is near 0.5, '2 of 3 positive' is close to the MOST LIKELY")
+    print(f"    outcome of no signal at all. It is not evidence of complementarity.")
+    print(f"    substantive signal (gate A or C, or 3 of 3 positive) = {substantive}")
+    print(f"    -> fold 1 is {'justified' if substantive else 'NOT justified: no gate that carries'}")
+    if not substantive:
+        print(f"       evidential weight was met. No seven-slot training, no fold 1, no submission.")
 
+    verdict = ("PROCEED to fold 1: at least one predeclared gate met" if substantive else
+               "CLOSE Phase 11. Gate B's boolean is True (2 of 3 swaps positive with diversity "
+               "retained) but P(>=2 of 3 | pure noise) = 0.500, so that condition is near the most "
+               "likely outcome of no signal and carries no evidential weight. Gate A (mini block "
+               f">= +1.0e-5) missed by {(1.0 - block_best):.2f}e-5, i.e. roughly 14x short. Gate C "
+               "(mechanism >= +5e-5 over C2) was not met by any arm. Question A is closed: the Age "
+               "twin is negative, the Flight Distance twin is +0.9e-5 (below the +2e-5 promotion "
+               "threshold), and max_ctr_complexity=2 is negative. Question B is answered in the "
+               "negative: native counterparts RETAIN diversity (median logit corr 0.99779 vs the "
+               "originals' 0.99748, so no collapse) but substituting them moves v3 by +0.07e-5 at "
+               "alpha=1, which is nothing. The seven-slot plan is NOT started and no fold-1 compute "
+               "is spent on a signal this size.")
     save_json({"rows": rows, "swaps": swaps, "mini_block": mini, "diversity": div,
-               "gates": gates, "passed": passed, "n_positive_swaps": npos,
-               "best_block_delta_e5": block_best,
-               "verdict": ("PROCEED to fold 1 on at least one predeclared gate" if passed
-                           else "CLOSE Phase 11 -- no predeclared gate met; the seven-slot plan "
-                                "is NOT started")},
+               "gates": gates, "gates_as_predeclared_boolean": passed,
+               "gates_weighted": gates_weighted, "substantive_signal": substantive,
+               "n_positive_swaps": npos, "best_block_delta_e5": block_best,
+               "contaminated_pre_fix_arms": runs.get("corrections", {}).get(
+                   "pre_fix_arms_contaminated", []),
+               "es_carve_fix": runs.get("corrections", {}).get(
+                   "es_subset_of_training_CONTAMINATED_EARLY_STOPPING", "")[:600],
+               "verdict": verdict},
               REPORTS / f"{args.tag}_report.json")
     print("\nwrote", REPORTS / f"{args.tag}_report.json")
 

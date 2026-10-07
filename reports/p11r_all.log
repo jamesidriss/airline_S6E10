@@ -11,3 +11,89 @@ C2REF: C2 reference retrained under THIS run's ES budget (budget-matched)
   view=full scheme=primary depth=8 lr=0.04 l2=3.0 seed=4
   added categorical cardinality: {}
 ----------------------------------------------------------------------------------------------------
+  fold 0: 302 feat (17 cat)  anchor 400 rounds = 0.3303s/round
+    fitted cost(R) = 0.1743*R + 3.90e-04*R^2
+    projected at the MEASURED stopping point (ES ~1300, refit ~1100) ~ 26 min
+    worst case if ES never fires and runs the 2500 cap ~ 96 min
+    AUC=0.961067  iters=1043  (ES 386s, total 736s)
+    CTR audit: {'ctr_type': 4, 'ctr_data': 0, 'ctr_leaf_count': 0, 'one_hot': 0, 'simple_ctr': 0, 'combinations_ctr': 0, 'Borders': 2, 'target_border_count': 0}
+    [cache] view full: (699635, 237)
+
+----------------------------------------------------------------------------------------------------
+C4: C2 + exact categorical Age twin; numeric Age retained
+  view=full scheme=primary depth=8 lr=0.04 l2=3.0 seed=4
+  added categorical cardinality: {'Age': 75}
+----------------------------------------------------------------------------------------------------
+  fold 0: 303 feat (18 cat)  anchor 400 rounds = 0.3585s/round
+    fitted cost(R) = 0.1743*R + 4.60e-04*R^2
+    projected at the MEASURED stopping point (ES ~1300, refit ~1100) ~ 29 min
+    worst case if ES never fires and runs the 2500 cap ~ 110 min
+    AUC=0.960938  iters=697  (ES 304s, total 551s)
+    CTR audit: {'ctr_type': 4, 'ctr_data': 0, 'ctr_leaf_count': 0, 'one_hot': 0, 'simple_ctr': 0, 'combinations_ctr': 0, 'Borders': 2, 'target_border_count': 0}
+    [cache] view full: (699635, 237)
+
+----------------------------------------------------------------------------------------------------
+C5: C2 + exact categorical Flight Distance twin; numeric FD retained
+  view=full scheme=primary depth=8 lr=0.04 l2=3.0 seed=4
+  added categorical cardinality: {'Flight Distance': 3474}
+----------------------------------------------------------------------------------------------------
+  fold 0: 303 feat (18 cat)  anchor 400 rounds = 0.3710s/round
+    fitted cost(R) = 0.1743*R + 4.92e-04*R^2
+    projected at the MEASURED stopping point (ES ~1300, refit ~1100) ~ 31 min
+    worst case if ES never fires and runs the 2500 cap ~ 117 min
+    AUC=0.961075  iters=1010  (ES 422s, total 837s)
+    CTR audit: {'ctr_type': 4, 'ctr_data': 0, 'ctr_leaf_count': 0, 'one_hot': 0, 'simple_ctr': 0, 'combinations_ctr': 0, 'Borders': 2, 'target_border_count': 0}
+    [cache] view full: (699635, 237)
+
+----------------------------------------------------------------------------------------------------
+ctr2: C2 with max_ctr_complexity=2; nothing else changes
+  view=full scheme=primary depth=8 lr=0.04 l2=3.0 seed=4
+  added categorical cardinality: {}
+----------------------------------------------------------------------------------------------------
+  fold 0: 302 feat (17 cat)  anchor 400 rounds = 0.3845s/round
+    fitted cost(R) = 0.1743*R + 5.25e-04*R^2
+    projected at the MEASURED stopping point (ES ~1300, refit ~1100) ~ 32 min
+    worst case if ES never fires and runs the 2500 cap ~ 124 min
+    AUC=0.961039  iters=1462  (ES 616s, total 1160s)
+    CTR audit: {'ctr_type': 4, 'ctr_data': 0, 'ctr_leaf_count': 0, 'one_hot': 0, 'simple_ctr': 0, 'combinations_ctr': 0, 'Borders': 2, 'target_border_count': 0}
+    [cache] view full: (699635, 237)
+
+----------------------------------------------------------------------------------------------------
+ND6: EXACT counterpart of z3_cat_d6 (own seed 1, depth 6, l2 5.0)
+  view=full scheme=primary depth=6 lr=0.04 l2=5.0 seed=1
+  added categorical cardinality: {}
+----------------------------------------------------------------------------------------------------
+  fold 0: 302 feat (17 cat)  anchor 400 rounds = 0.2802s/round
+    fitted cost(R) = 0.1743*R + 2.65e-04*R^2
+    projected at the MEASURED stopping point (ES ~1300, refit ~1100) ~ 20 min
+    worst case if ES never fires and runs the 2500 cap ~ 70 min
+    AUC=0.961117  iters=2198  (ES 619s, total 1160s)
+    CTR audit: {'ctr_type': 4, 'ctr_data': 0, 'ctr_leaf_count': 0, 'one_hot': 0, 'simple_ctr': 0, 'combinations_ctr': 0, 'Borders': 2, 'target_border_count': 0}
+    [cache] view full: (699635, 237)
+
+----------------------------------------------------------------------------------------------------
+ND10: EXACT counterpart of z3_cat_d10 (own seed 2, depth 10, l2 6.0, lr 0.03)
+  view=full scheme=primary depth=10 lr=0.03 l2=6.0 seed=2
+  added categorical cardinality: {}
+----------------------------------------------------------------------------------------------------
+  fold 0: 302 feat (17 cat)  anchor 400 rounds = 0.6699s/round
+    fitted cost(R) = 0.1743*R + 1.24e-03*R^2
+    projected at the MEASURED stopping point (ES ~1300, refit ~1100) ~ 67 min
+    worst case if ES never fires and runs the 2500 cap ~ 273 min
+    AUC=0.961067  iters=1313  (ES 1052s, total 1998s)
+    CTR audit: {'ctr_type': 4, 'ctr_data': 0, 'ctr_leaf_count': 0, 'one_hot': 0, 'simple_ctr': 0, 'combinations_ctr': 0, 'Borders': 2, 'target_border_count': 0}
+    [cache] view core3: (699635, 225)
+
+----------------------------------------------------------------------------------------------------
+NCORE3: EXACT counterpart of z3_cat_core3 (own seed 4, core3 view)
+  view=core3 scheme=primary depth=8 lr=0.04 l2=3.0 seed=4
+  added categorical cardinality: {}
+----------------------------------------------------------------------------------------------------
+  fold 0: 242 feat (17 cat)  anchor 400 rounds = 0.3616s/round
+    fitted cost(R) = 0.1743*R + 4.68e-04*R^2
+    projected at the MEASURED stopping point (ES ~1300, refit ~1100) ~ 30 min
+    worst case if ES never fires and runs the 2500 cap ~ 112 min
+    AUC=0.960754  iters=1027  (ES 427s, total 800s)
+    CTR audit: {'ctr_type': 4, 'ctr_data': 0, 'ctr_leaf_count': 0, 'one_hot': 0, 'simple_ctr': 0, 'combinations_ctr': 0, 'Borders': 2, 'target_border_count': 0}
+
+wrote C:\Users\James\airline_S6E10\reports\p11r_runs.json

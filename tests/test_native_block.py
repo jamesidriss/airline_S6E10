@@ -230,8 +230,24 @@ def test_frame_schema_consistency() -> None:
 def test_harness_refuses_when_guard_fails() -> None:
     print("\n11. the harness refuses to report when the guard fails")
     src = Path("scripts/native_block_analysis.py").read_text(encoding="utf-8")
+    # This test asserted on the literal OLD stop message ("STOP: alpha=0 failed to reproduce v3").
+    # Phase 11R replaced that message with a stricter, more informative one that reports the measured
+    # max|dp|, the float32-cast difference and the logit correlation, because the old tolerance was
+    # arbitrary rather than derived from the store's dtype. A literal-string assertion on a message
+    # that was deliberately rewritten is a test of the wording, not of the behaviour, so it now
+    # asserts the behaviour: the script still aborts, the abort is keyed on the reconstruction, and it
+    # names the actual quantities.
     check("the script raises SystemExit on a failed reconstruction guard",
-          "STOP: alpha=0 failed to reproduce v3" in src)
+          'raise SystemExit(f"STOP: alpha=0 reconstruction failed.' in src,
+          "no SystemExit keyed on the alpha=0 reconstruction")
+    check("the abort message reports the measured probability difference",
+          "max|dp|=" in src)
+    check("the abort message reports the float32 storage comparison",
+          "float32 max|dp|=" in src)
+    check("the abort message reports the logit correlation",
+          "logit corr=" in src)
+    check("the stop is still raised, not merely warned about",
+          "if not ok_recon:" in src and src.count("raise SystemExit") >= 2)
     check("the guard is evaluated BEFORE any candidate is scored",
           src.index("ok_recon =") < src.index("def blend("))
     check("the guard is evaluated before single-slot swaps are computed",

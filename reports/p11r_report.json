@@ -4,17 +4,17 @@
       "arm": "C2REF",
       "fold": 0,
       "scheme": "primary",
-      "auc": 0.9609386570980606,
+      "auc": 0.9610667416939305,
       "delta_vs_C2_e5": 0.0,
-      "corr_vs_C2": 1.0,
+      "corr_vs_C2": 0.9999999999999999,
       "reference": "C2REF (budget-matched)",
-      "reference_auc": 0.9609386570980606,
-      "reference_es_hit_cap": true,
-      "corr_vs_v3": 0.9977530436775722,
-      "spearman_vs_v3": 0.9863819696775266,
-      "iters": 2499,
-      "seconds": 1661.6,
-      "es_hit_cap": true,
+      "reference_auc": 0.9610667416939305,
+      "reference_es_hit_cap": false,
+      "corr_vs_v3": 0.9989518372775943,
+      "spearman_vs_v3": 0.9919747382339832,
+      "iters": 1043,
+      "seconds": 736.5,
+      "es_hit_cap": false,
       "n_cat": 17,
       "ctr_audit": {
         "dump_counts": {
@@ -35,17 +35,17 @@
       "arm": "C4",
       "fold": 0,
       "scheme": "primary",
-      "auc": 0.9608696532753848,
-      "delta_vs_C2_e5": -6.9003822675828275,
-      "corr_vs_C2": 0.9980618967463077,
+      "auc": 0.9609379511541084,
+      "delta_vs_C2_e5": -12.879053982206567,
+      "corr_vs_C2": 0.9991090435299351,
       "reference": "C2REF (budget-matched)",
-      "reference_auc": 0.9609386570980606,
-      "reference_es_hit_cap": true,
-      "corr_vs_v3": 0.9980413299017821,
-      "spearman_vs_v3": 0.9878844447778711,
-      "iters": 2499,
-      "seconds": 1758.1,
-      "es_hit_cap": true,
+      "reference_auc": 0.9610667416939305,
+      "reference_es_hit_cap": false,
+      "corr_vs_v3": 0.9989567873005468,
+      "spearman_vs_v3": 0.9913770786221685,
+      "iters": 697,
+      "seconds": 551.3,
+      "es_hit_cap": false,
       "n_cat": 18,
       "ctr_audit": {
         "dump_counts": {
@@ -61,18 +61,292 @@
         "error": "AttributeError: 'CatBoostClassifier' object has no attribute 'get_leaf_ctr_description'",
         "cat_feature_count": 18
       }
+    },
+    {
+      "arm": "C5",
+      "fold": 0,
+      "scheme": "primary",
+      "auc": 0.961075317417874,
+      "delta_vs_C2_e5": 0.8575723943526903,
+      "corr_vs_C2": 0.9990998411145132,
+      "reference": "C2REF (budget-matched)",
+      "reference_auc": 0.9610667416939305,
+      "reference_es_hit_cap": false,
+      "corr_vs_v3": 0.9989865027368462,
+      "spearman_vs_v3": 0.992167921885427,
+      "iters": 1010,
+      "seconds": 836.5,
+      "es_hit_cap": false,
+      "n_cat": 18,
+      "ctr_audit": {
+        "dump_counts": {
+          "ctr_type": 4,
+          "ctr_data": 0,
+          "ctr_leaf_count": 0,
+          "one_hot": 0,
+          "simple_ctr": 0,
+          "combinations_ctr": 0,
+          "Borders": 2,
+          "target_border_count": 0
+        },
+        "error": "AttributeError: 'CatBoostClassifier' object has no attribute 'get_leaf_ctr_description'",
+        "cat_feature_count": 18
+      }
+    },
+    {
+      "arm": "ctr2",
+      "fold": 0,
+      "scheme": "primary",
+      "auc": 0.9610393588698765,
+      "delta_vs_C2_e5": -2.7382824054011934,
+      "corr_vs_C2": 0.9990190294687028,
+      "reference": "C2REF (budget-matched)",
+      "reference_auc": 0.9610667416939305,
+      "reference_es_hit_cap": false,
+      "corr_vs_v3": 0.9987890862447603,
+      "spearman_vs_v3": 0.9914566217554209,
+      "iters": 1462,
+      "seconds": 1160.3,
+      "es_hit_cap": false,
+      "n_cat": 17,
+      "ctr_audit": {
+        "dump_counts": {
+          "ctr_type": 4,
+          "ctr_data": 0,
+          "ctr_leaf_count": 0,
+          "one_hot": 0,
+          "simple_ctr": 0,
+          "combinations_ctr": 0,
+          "Borders": 2,
+          "target_border_count": 0
+        },
+        "error": "AttributeError: 'CatBoostClassifier' object has no attribute 'get_leaf_ctr_description'",
+        "cat_feature_count": 17
+      }
+    },
+    {
+      "arm": "ND6",
+      "fold": 0,
+      "scheme": "primary",
+      "auc": 0.9611165183472525,
+      "delta_vs_C2_e5": 4.977665332206449,
+      "corr_vs_C2": 0.9989938325807723,
+      "reference": "C2REF (budget-matched)",
+      "reference_auc": 0.9610667416939305,
+      "reference_es_hit_cap": false,
+      "corr_vs_v3": 0.9988764371431472,
+      "spearman_vs_v3": 0.9919885677229584,
+      "iters": 2198,
+      "seconds": 1160.0,
+      "es_hit_cap": false,
+      "n_cat": 17,
+      "ctr_audit": {
+        "dump_counts": {
+          "ctr_type": 4,
+          "ctr_data": 0,
+          "ctr_leaf_count": 0,
+          "one_hot": 0,
+          "simple_ctr": 0,
+          "combinations_ctr": 0,
+          "Borders": 2,
+          "target_border_count": 0
+        },
+        "error": "AttributeError: 'CatBoostClassifier' object has no attribute 'get_leaf_ctr_description'",
+        "cat_feature_count": 17
+      }
+    },
+    {
+      "arm": "ND10",
+      "fold": 0,
+      "scheme": "primary",
+      "auc": 0.9610668088429302,
+      "delta_vs_C2_e5": 0.00671489996939556,
+      "corr_vs_C2": 0.9987419847684941,
+      "reference": "C2REF (budget-matched)",
+      "reference_auc": 0.9610667416939305,
+      "reference_es_hit_cap": false,
+      "corr_vs_v3": 0.9988329903350277,
+      "spearman_vs_v3": 0.9912690016794653,
+      "iters": 1313,
+      "seconds": 1998.3,
+      "es_hit_cap": false,
+      "n_cat": 17,
+      "ctr_audit": {
+        "dump_counts": {
+          "ctr_type": 4,
+          "ctr_data": 0,
+          "ctr_leaf_count": 0,
+          "one_hot": 0,
+          "simple_ctr": 0,
+          "combinations_ctr": 0,
+          "Borders": 2,
+          "target_border_count": 0
+        },
+        "error": "AttributeError: 'CatBoostClassifier' object has no attribute 'get_leaf_ctr_description'",
+        "cat_feature_count": 17
+      }
+    },
+    {
+      "arm": "NCORE3",
+      "fold": 0,
+      "scheme": "primary",
+      "auc": 0.9607542650137227,
+      "delta_vs_C2_e5": -31.247668020772945,
+      "corr_vs_C2": 0.9980493958173626,
+      "reference": "C2REF (budget-matched)",
+      "reference_auc": 0.9610667416939305,
+      "reference_es_hit_cap": false,
+      "corr_vs_v3": 0.998329505696994,
+      "spearman_vs_v3": 0.9879273139450099,
+      "iters": 1027,
+      "seconds": 800.4,
+      "es_hit_cap": false,
+      "n_cat": 17,
+      "ctr_audit": {
+        "dump_counts": {
+          "ctr_type": 4,
+          "ctr_data": 0,
+          "ctr_leaf_count": 0,
+          "one_hot": 0,
+          "simple_ctr": 0,
+          "combinations_ctr": 0,
+          "Borders": 2,
+          "target_border_count": 0
+        },
+        "error": "AttributeError: 'CatBoostClassifier' object has no attribute 'get_leaf_ctr_description'",
+        "cat_feature_count": 17
+      }
     }
   ],
-  "swaps": [],
-  "mini_block": {},
-  "diversity": {},
+  "swaps": [
+    {
+      "arm": "ND6",
+      "replaces": "z3_cat_d6",
+      "seed_matches_original": true,
+      "view_matches": true,
+      "scheme_matches": true,
+      "o_auc": 0.9608859029194488,
+      "n_auc": 0.9611165183472525,
+      "standalone_delta_e5": 23.061542780378197,
+      "o_n_corr": 0.9989345782688408,
+      "v3_before": 0.9615006818096289,
+      "v3_after": 0.9615030356459048,
+      "swap_delta_e5": 0.23538362758923626,
+      "rows_changed": 139926,
+      "n_rows_fold": 139927,
+      "exact_counterpart": true
+    },
+    {
+      "arm": "ND10",
+      "replaces": "z3_cat_d10",
+      "seed_matches_original": true,
+      "view_matches": true,
+      "scheme_matches": true,
+      "o_auc": 0.9610154388235138,
+      "n_auc": 0.9610668088429302,
+      "standalone_delta_e5": 5.137001941635244,
+      "o_n_corr": 0.998499293987063,
+      "v3_before": 0.9615006818096289,
+      "v3_after": 0.9615009243323644,
+      "swap_delta_e5": 0.02425227355606907,
+      "rows_changed": 139927,
+      "n_rows_fold": 139927,
+      "exact_counterpart": true
+    },
+    {
+      "arm": "NCORE3",
+      "replaces": "z3_cat_core3",
+      "seed_matches_original": true,
+      "view_matches": true,
+      "scheme_matches": true,
+      "o_auc": 0.9607879951254255,
+      "n_auc": 0.9607542650137227,
+      "standalone_delta_e5": -3.373011170271223,
+      "o_n_corr": 0.9988026496227468,
+      "v3_before": 0.9615006818096289,
+      "v3_after": 0.9614988047415977,
+      "swap_delta_e5": -0.18770680312307775,
+      "rows_changed": 139927,
+      "n_rows_fold": 139927,
+      "exact_counterpart": true
+    }
+  ],
+  "mini_block": {
+    "MINI_B100": {
+      "alpha_native": 1.0,
+      "slots": [
+        "z3_cat_d6",
+        "z3_cat_d10",
+        "z3_cat_core3"
+      ],
+      "v3_control_fold0": 0.9615006818096289,
+      "block_auc_fold0": 0.9615014197243684,
+      "delta_e5": 0.0737914739534773,
+      "n_native": 3,
+      "slots_touched": [
+        "z3_cat_d10",
+        "z3_cat_d6",
+        "z3_cat_core3"
+      ],
+      "weight_per_slot": 0.01694915254237288
+    },
+    "MINI_B50": {
+      "alpha_native": 0.5,
+      "slots": [
+        "z3_cat_d6",
+        "z3_cat_d10",
+        "z3_cat_core3"
+      ],
+      "v3_control_fold0": 0.9615006818096289,
+      "block_auc_fold0": 0.9615010602858091,
+      "delta_e5": 0.03784761801739478,
+      "n_native": 3,
+      "slots_touched": [
+        "z3_cat_d10",
+        "z3_cat_d6",
+        "z3_cat_core3"
+      ],
+      "weight_per_slot": 0.01694915254237288
+    }
+  },
+  "diversity": {
+    "native": {
+      "n_pairs": 3,
+      "corr_min": 0.9977133186005814,
+      "corr_median": 0.9977888582239877,
+      "corr_max": 0.9985554916049103,
+      "spear_min": 0.9832135244059121,
+      "spear_median": 0.9846677849137767,
+      "spear_max": 0.9890212255066747
+    },
+    "original": {
+      "n_pairs": 3,
+      "corr_min": 0.9969721395885381,
+      "corr_median": 0.9974849317677688,
+      "corr_max": 0.9977969807882161
+    },
+    "collapsed": false
+  },
   "gates": {
     "A_mini_block_ge_1e-5": false,
-    "B_two_of_three_swaps_positive_and_diversity_retained": false,
+    "B_two_of_three_swaps_positive_and_diversity_retained": true,
     "C_mechanism_strength_ge_5e-5": false
   },
-  "passed": false,
-  "n_positive_swaps": 0,
-  "best_block_delta_e5": 0.0,
-  "verdict": "CLOSE Phase 11 -- no predeclared gate met; the seven-slot plan is NOT started"
+  "gates_as_predeclared_boolean": true,
+  "gates_weighted": {
+    "B_as_written": true,
+    "B_p_under_pure_noise": 0.5,
+    "B_mean_swap_delta_e5": 0.024,
+    "B_zero_of_three_positive": false,
+    "A_or_C_passed": false
+  },
+  "substantive_signal": false,
+  "n_positive_swaps": 2,
+  "best_block_delta_e5": 0.0737914739534773,
+  "contaminated_pre_fix_arms": [
+    "C2REF",
+    "C4"
+  ],
+  "es_carve_fix": "FOURTH CORRECTION, found by chasing an unexplained reproducibility gap. The first C2REF run selected 2499 of 2500 rounds and hit the ES cap, while Phase 10's identically-configured C2 selected 1043 under a 6000-round budget with patience 300. A shorter budget with SHORTER patience cannot plausibly stop later, so the gap was not a budget effect. Cause: this harness fitted the ES model on the FULL outer-fit frame while passing eval_set = f.iloc[es_l], making the early-stopping set a SUBSET OF ITS OWN TRAINING DATA. CatBoost never early-stops in that configuration, so every arm ran to the cap and",
+  "verdict": "CLOSE Phase 11. Gate B's boolean is True (2 of 3 swaps positive with diversity retained) but P(>=2 of 3 | pure noise) = 0.500, so that condition is near the most likely outcome of no signal and carries no evidential weight. Gate A (mini block >= +1.0e-5) missed by 0.93e-5, i.e. roughly 14x short. Gate C (mechanism >= +5e-5 over C2) was not met by any arm. Question A is closed: the Age twin is negative, the Flight Distance twin is +0.9e-5 (below the +2e-5 promotion threshold), and max_ctr_complexity=2 is negative. Question B is answered in the negative: native counterparts RETAIN diversity (median logit corr 0.99779 vs the originals' 0.99748, so no collapse) but substituting them moves v3 by +0.07e-5 at alpha=1, which is nothing. The seven-slot plan is NOT started and no fold-1 compute is spent on a signal this size."
 }

@@ -51,6 +51,12 @@ data/cache/
 # ---- keep ledgers / reports / submissions ----
 !experiments/**
 !reports/**
+# Raw per-fold prediction vectors are regenerable intermediates, not evidence: 7 arms x 546 KB.
+# The JSON records that CITE them are committed (p11r_report.json, p11r_runs.json,
+# contaminated_es_leak/), so every reported number stays auditable without committing ~4 MB of
+# float32 arrays. This rule must stay BELOW `!reports/**` because a later rule wins in gitignore.
+reports/*.npy
+reports/**/*.npy
 !submissions/manifest.csv
 !submissions/kaggle_submissions.csv
 !submissions/*.csv
