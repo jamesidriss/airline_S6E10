@@ -11,12 +11,12 @@ import psutil
 
 
 @contextmanager
-def inference_guard(directory, contract, max_seconds=2700):
+def inference_guard(directory, contract, max_seconds=2700, min_available_gib=8):
     directory = Path(directory)
     if shutil.disk_usage(directory).free < 20 * 1024**3:
         raise RuntimeError('Full inference requires at least 20 GiB free disk reserve')
-    if psutil.virtual_memory().available < 8 * 1024**3:
-        raise RuntimeError('Full inference requires at least 8 GiB available host RAM')
+    if psutil.virtual_memory().available < min_available_gib * 1024**3:
+        raise RuntimeError(f'Inference requires at least {min_available_gib} GiB available host RAM')
     stop = threading.Event()
     start = time.monotonic()
 

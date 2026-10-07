@@ -81,7 +81,7 @@ def main():
                 if row['exp_id'] not in existing:
                     out.write(json.dumps(row, default=str) + '\n')
         # Timing failures remain visible, distinct from scientific negatives.
-        for tag in ('sol_tabpfn35', 'sol_tabpfn35_b64', 'sol_tabpfn35_efficient', 'sol_tabpfn35_verified', 'sol_tabpfn35_memory'):
+        for tag in ('sol_tabpfn35', 'sol_tabpfn35_b64', 'sol_tabpfn35_efficient', 'sol_tabpfn35_verified', 'sol_tabpfn35_memory', 'sol_tabpfn35_iclbf16', 'sol_tabpfn35_compact', 'sol_tabpfn35_bounded'):
             for path in sorted((REPORTS / tag).glob('*.json')):
                 r = json.loads(path.read_text(encoding='utf-8'))
                 if 'prediction_sha256' in r:

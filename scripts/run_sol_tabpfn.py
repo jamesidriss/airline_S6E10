@@ -122,18 +122,21 @@ def main():
             start = time.monotonic()
             if shutil.disk_usage(root).free < 20 * 1024**3:
                 raise RuntimeError('At least 20 GiB disk reserve required before this model fit')
-            model = create_model(params, args.icl_bf16, args.chunk_cells, args.col_chunk)
+            model = None
             try:
                 print(f'{arm} f{k}: fit {len(fit_idx)} context rows; {len(names)} columns', flush=True)
                 from src.models.resource_guard import inference_guard
                 guard = inference_guard(root, contract) if not args.timing else nullcontext()
                 with guard:
+                    # Check the reserve before allocating the checkpoint, rather
+                    # than demanding the same reserve again after loading it.
+                    model = create_model(params, args.icl_bf16, args.chunk_cells, args.col_chunk)
                     model.fit(X[fit_idx], y[fit_idx])
                 fit_seconds = time.monotonic() - start
                 print(f'{arm}: fitted in {fit_seconds:.1f}s; peak GPU {torch.cuda.max_memory_allocated()/2**30:.3f} GiB', flush=True)
                 chunks = []
                 pred_start = time.monotonic()
-                prediction_guard = inference_guard(root, contract, max_seconds=max(1,2700-fit_seconds)) if not args.timing else nullcontext()
+                prediction_guard = inference_guard(root, contract, max_seconds=max(1,2700-fit_seconds), min_available_gib=4) if not args.timing else nullcontext()
                 with prediction_guard:
                     for begin in range(0, len(eval_idx), args.batch_size):
                         stop = min(begin + args.batch_size, len(eval_idx))

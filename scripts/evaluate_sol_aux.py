@@ -76,6 +76,9 @@ def main():
         saved_control = ARTIFACTS / 'sol_repair' / f'X2_A0_f{k}.npy'
         if saved_control.exists():
             assert np.array_equal(a0, np.load(saved_control)), 'STOP: independent A0 control failed'
+        else:
+            second_control, second_it = fit_xgb(F0[tl], y[itr], V0, seed, overrides, F0[el], y[es])
+            assert np.array_equal(a0, second_control.astype('float32')) and control_it == second_it, 'STOP: independent A0 runner control failed'
         auc0 = float(roc_auc_score(y[va], a0))
         old = np.load(counter_path(member, k))
         np.save(root / f'A0_f{k}.npy', a0)
