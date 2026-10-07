@@ -1,6 +1,6 @@
 # SOL campaign — audit and continuation
 
-Checkpoint: 7 October 2026, 22:42 UTC. **No clean finalist has yet been fully
+Checkpoint: 7 October 2026, 23:12 UTC. **No clean finalist has yet been fully
 reproduced. No new Kaggle submission was spent. Final slots remain unlocked.**
 The campaign continues; this is not a final decision or research stopping point.
 
@@ -71,7 +71,10 @@ contracts or forecast ranks. A clean candidate needs its own simulation.
 
 ## Resources and verification
 
-Active: checkpoint5 verification resolved; route fold1 is the next serialized GPU job.
+Active: route fold1, fresh tag `sol_tabpfn35_route_reserve`.
+The first fold1 FIT succeeded in787.9 s but prediction was refused because the
+Windows pagefile expansion left less than20 GiB free disk. No fold1 CV vector or
+performance score was produced. This attempt remains preserved as resource-invalid.
 Raw f0 is complete under `sol_tabpfn35_predict_guard`, with all 559708 FIT and
 139927 evaluation rows. Peak GPU allocation was 13671814656 B (12.733 GiB).
 The first completed full FIT was previously discarded by an overstrict prediction
@@ -95,6 +98,12 @@ Additional exact aliases/unused, regenerable static caches freed 3,889,973,750 B
 and 4,133,846,208 B, with streamed payload hashes and guarded workspace paths.
 All used canonical views, raw/original data, folds, predictions, weights and
 submissions are preserved. Cleanup manifests record regeneration commands.
+
+Lossless filesystem compression now preserves every byte of five static caches.
+NTFS compression saved874403714 B; stronger LZX compression subsequently saved
+2986467556 B in allocated storage. Before/after file SHA256 values agree for
+every processed file. Free disk recovered to about40.5 GiB. No file was deleted;
+compression reports include exact reversal commands.
 
 Generic test refits also drifted from CV defaults: LightGBM changed leaf-size
 and regularization defaults and omitted explicit bagging/feature seeds; CatBoost

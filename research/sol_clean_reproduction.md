@@ -53,3 +53,10 @@ is not a completed replay. A strong, fully reproduced new candidate can replace
 banked v5 without replaying every obsolete legacy role; any legacy finalist that
 remains in contention still requires its own complete clean reproduction. No
 finalist or submission is selected from this single-fold result.
+
+Timebox extension is justified by the predeclared exception: the paired route
+representation gain is0.000160150, and the fixed route/auxiliary10 blend gains
+0.000312976 versus its honest strict classical component on f0. Discovery
+promotion therefore passed, with plausible upside above0.0001 and a credible
+different-method hedge. Resource engineering failures remain unscored; they do
+not count as negative model evidence or permit a parameter/weight search.

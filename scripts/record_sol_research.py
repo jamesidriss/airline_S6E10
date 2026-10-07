@@ -21,7 +21,7 @@ FOUNDATION_TAGS = ('sol_tabpfn35_verified', 'sol_tabpfn35_memory', 'sol_tabpfn35
                   'sol_tabpfn35_reuse_control', 'sol_tabpfn35_reuse', 'sol_tabpfn35_reuse_full',
                   'sol_tabpfn35_decoder', 'sol_tabpfn35_decoder_full',
                   'sol_tabpfn35_gelu', 'sol_tabpfn35_gelu_full', 'sol_tabpfn35_predict_guard',
-                  'sol_tabpfn35_route')
+                  'sol_tabpfn35_route', 'sol_tabpfn35_route_reserve')
 
 
 def main():

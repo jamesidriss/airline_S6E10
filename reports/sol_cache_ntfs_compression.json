@@ -1,0 +1,37 @@
+{
+  "utc": "2026-10-07T23:06:42.883567+00:00",
+  "status": "EXECUTED",
+  "files": [
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_ogm.npz",
+      "logical_bytes": 1891014762,
+      "sha256_before": "ba71b0af6759542fd22c3a0d69857a1095ff9474d8b76ee01a674cbb18101f6b",
+      "allocated_before": 1891014762,
+      "reversal_command": "compact.exe /u \"C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_ogm.npz\"",
+      "sha256_after": "ba71b0af6759542fd22c3a0d69857a1095ff9474d8b76ee01a674cbb18101f6b",
+      "allocated_after": 1654312960
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_ogsurf.npz",
+      "logical_bytes": 1619156474,
+      "sha256_before": "4858e575dde851bb1745c3e4f0aec61fe6af1f37e38f5dcd89c756b90836629e",
+      "allocated_before": 1619156474,
+      "reversal_command": "compact.exe /u \"C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_ogsurf.npz\"",
+      "sha256_after": "4858e575dde851bb1745c3e4f0aec61fe6af1f37e38f5dcd89c756b90836629e",
+      "allocated_after": 1246408704
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_raw_trans.npz",
+      "logical_bytes": 591692062,
+      "sha256_before": "01f391d3878a585786283db77af2dd4152f3a65b4af3aa888b4799232aa0f512",
+      "allocated_before": 591692062,
+      "reversal_command": "compact.exe /u \"C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_raw_trans.npz\"",
+      "sha256_after": "01f391d3878a585786283db77af2dd4152f3a65b4af3aa888b4799232aa0f512",
+      "allocated_after": 326737920
+    }
+  ],
+  "disk_free_before": 38093844480,
+  "disk_free_after": 38414327808,
+  "allocated_bytes_saved": 874403714,
+  "preserved": "Every file byte, predictions, model weights, folds, raw/original data and submissions; no files deleted"
+}
