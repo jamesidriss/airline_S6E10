@@ -75,6 +75,14 @@ VIEWS: dict[str, list[str]] = {
 _CACHE = ROOT / "artifacts" / "cache"
 
 
+def static_cache_view(view: str) -> str:
+    """Share exact static blocks across views that differ only in fold features."""
+    dynamic = {"te", "te_all21", "te_cond"}
+    wanted = [b for b in VIEWS[view] if b not in dynamic]
+    return next(name for name, blocks in VIEWS.items()
+                if [b for b in blocks if b not in dynamic] == wanted)
+
+
 def _prep_raw(df: pd.DataFrame) -> pd.DataFrame:
     out = df[RAW21].copy()
     for c in out.columns:
@@ -115,8 +123,9 @@ class ViewBuilder:
         tr, te = self.tr, self.te
         # `comb` is needed by build_te even on a cache hit, so always materialise it.
         self.comb = pd.concat([tr[RAW21], te[RAW21]], ignore_index=True)
-        cache = FEATURES / f"static_{self.view}.npz"
-        meta = FEATURES / f"static_{self.view}.json"
+        canonical = static_cache_view(self.view)
+        cache = FEATURES / f"static_{canonical}.npz"
+        meta = FEATURES / f"static_{canonical}.json"
         if cache.exists() and meta.exists():
             try:
                 z = np.load(cache)

@@ -11,10 +11,18 @@ import warnings
 
 import numpy as np
 from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import train_test_split
 
 warnings.filterwarnings("ignore")
 
 N_JOBS = 8
+
+
+def _inner_fit_es(fit, labels, seed):
+    train, es = train_test_split(fit, test_size=.1, random_state=seed,
+                                 stratify=np.asarray(labels)[fit])
+    assert not np.intersect1d(train, es).size
+    return train, es
 
 
 def _fold_auc(y, oof, folds):
@@ -37,8 +45,9 @@ def lgbm(Xtr, ytr, Xte, folds, params=None, seed=1, feat_names=None, callbacks=N
     for k in sorted(set(folds.tolist())):
         a = np.where(folds != k)[0]
         b = np.where(folds == k)[0]
-        ds = lgb.Dataset(Xtr[a], label=ytr[a], feature_name=feat_names, free_raw_data=False)
-        dv = lgb.Dataset(Xtr[b], label=ytr[b], reference=ds, feature_name=feat_names, free_raw_data=False)
+        train, es = _inner_fit_es(a, ytr, seed)
+        ds = lgb.Dataset(Xtr[train], label=ytr[train], feature_name=feat_names, free_raw_data=False)
+        dv = lgb.Dataset(Xtr[es], label=ytr[es], reference=ds, feature_name=feat_names, free_raw_data=False)
         m = lgb.train(
             {**p, "metric": "auc", "seed": seed, "bagging_seed": seed + 1, "feature_fraction_seed": seed + 2},
             ds, num_boost_round=p["n_estimators"], valid_sets=[dv],
@@ -67,8 +76,9 @@ def xgboost(Xtr, ytr, Xte, folds, params=None, seed=1, device="cuda"):
     for k in sorted(set(folds.tolist())):
         a = np.where(folds != k)[0]
         b = np.where(folds == k)[0]
+        train, es = _inner_fit_es(a, ytr, seed)
         m = xgb.XGBClassifier(**p)
-        m.fit(Xtr[a], ytr[a], eval_set=[(Xtr[b], ytr[b])], verbose=False)
+        m.fit(Xtr[train], ytr[train], eval_set=[(Xtr[es], ytr[es])], verbose=False)
         best = getattr(m, "best_iteration", None)
         oof[b] = m.predict_proba(Xtr[b])[:, 1]
         test += m.predict_proba(Xte)[:, 1] / len(set(folds.tolist()))
@@ -92,10 +102,12 @@ def catboost(Xtr, ytr, Xte, folds, params=None, seed=1, cat_idx=None):
     for k in sorted(set(folds.tolist())):
         a = np.where(folds != k)[0]
         b = np.where(folds == k)[0]
-        ptr = Pool(Xtr[a], ytr[a], cat_features=cat_idx)
+        train, es = _inner_fit_es(a, ytr, seed)
+        ptr = Pool(Xtr[train], ytr[train], cat_features=cat_idx)
+        pes = Pool(Xtr[es], ytr[es], cat_features=cat_idx)
         pva = Pool(Xtr[b], ytr[b], cat_features=cat_idx)
         m = CatBoostClassifier(**p)
-        m.fit(ptr, eval_set=pva, early_stopping_rounds=200, verbose=0)
+        m.fit(ptr, eval_set=pes, early_stopping_rounds=200, verbose=0)
         oof[b] = m.predict_proba(pva)[:, 1]
         test += m.predict_proba(Pool(Xte, cat_features=cat_idx))[:, 1] / len(set(folds.tolist()))
         print(f"    cat fold{k} best_iter={m.get_best_iteration()} auc={roc_auc_score(ytr[b], oof[b]):.6f}", flush=True)

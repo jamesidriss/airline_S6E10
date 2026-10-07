@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-07T20:59:12.015885+00:00",
+  "git": "8b7cc81c3ca3796eda870350d56c9d812100c334",
+  "targeted_checks_passed": 22,
+  "critical_files": 30,
+  "undefined_names": 0,
+  "realmlp_and_tabm_constructors": "PASS; installed RealMLP use_best_epoch default=True, stopping=False",
+  "attention_gpu_reference_max_gap": {
+    "fp16": 0.00048828125,
+    "bf16": 0.0078125
+  },
+  "full_post_change_suite": "resource-aborted; not a pass; rerun after serialization",
+  "legacy_full_suite": {
+    "passed": 70,
+    "failed": 0
+  },
+  "scope": "neural, generic GBDT, categorical twins, covariate-only auxiliary probabilities, folds, full-context attention, normalization, banked-artifact preservation, hashes, static-cache aliases"
+}

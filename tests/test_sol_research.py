@@ -63,3 +63,20 @@ def test_resource_guard_rejects_insufficient_disk_before_fit():
                 raise AssertionError('Fit was allowed with only 1 KiB free disk')
         except RuntimeError as error:
             assert 'disk reserve' in str(error)
+
+
+def test_query_chunks_preserve_full_context_for_mha_and_mqa():
+    from contextlib import nullcontext
+    from unittest.mock import patch
+    from src.models.windows_attention import WindowsMQABackend
+    generator = torch.Generator().manual_seed(703)
+    q = torch.randn(2, 19, 4, 8, generator=generator)
+    for heads in (1, 4):
+        k = torch.randn(2, 23, heads, 8, generator=generator)
+        v = torch.randn(2, 23, heads, 8, generator=generator)
+        with patch('src.models.windows_attention.sdpa_kernel', return_value=nullcontext()):
+            actual = WindowsMQABackend(query_chunk_size=7).run(q, k, v)
+        expected = torch.nn.functional.scaled_dot_product_attention(
+            q.permute(0, 2, 1, 3), k.permute(0, 2, 1, 3),
+            v.permute(0, 2, 1, 3), enable_gqa=heads == 1).permute(0, 2, 1, 3)
+        torch.testing.assert_close(actual, expected)

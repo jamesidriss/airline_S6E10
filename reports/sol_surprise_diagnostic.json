@@ -1,0 +1,362 @@
+{
+  "exp_id": "sol_d_surprise_diagnostic_f0",
+  "git": "73463924811eb38a809aa0e41ce57256e7203fb8",
+  "fold": 0,
+  "seed": 20261012,
+  "pairs": 20000000,
+  "threshold_protocol": "fixed FIT-covariate 95th percentile, no satisfaction tuning",
+  "results": {
+    "surprise": {
+      "fit_95th_percentile": 1.1693311457859858,
+      "validation_high_row_rate": 0.04733896960558005,
+      "groups": [
+        {
+          "high_pair": false,
+          "pairs": 18205934,
+          "errors": 686508,
+          "ties": 0,
+          "error_rate": 0.03770792533906802,
+          "rescue_count": 1183,
+          "damage_count": 1204,
+          "margin_bands": [
+            {
+              "abs_v5_margin_range": [
+                0.0,
+                0.5
+              ],
+              "pairs": 719522,
+              "errors": 314230,
+              "ties": 0,
+              "error_rate": 0.43672048943604225,
+              "rescue_count": 1183,
+              "damage_count": 1204
+            },
+            {
+              "abs_v5_margin_range": [
+                0.5,
+                1.0
+              ],
+              "pairs": 440519,
+              "errors": 139894,
+              "ties": 0,
+              "error_rate": 0.31756632517553157,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                1.0,
+                2.0
+              ],
+              "pairs": 540843,
+              "errors": 99414,
+              "ties": 0,
+              "error_rate": 0.1838130474093221,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                2.0,
+                4.0
+              ],
+              "pairs": 1869049,
+              "errors": 90404,
+              "ties": 0,
+              "error_rate": 0.04836898337068744,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                4.0,
+                8.0
+              ],
+              "pairs": 14379802,
+              "errors": 42496,
+              "ties": 0,
+              "error_rate": 0.0029552562684799135,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                8.0,
+                Infinity
+              ],
+              "pairs": 256199,
+              "errors": 70,
+              "ties": 0,
+              "error_rate": 0.0002732251101682676,
+              "rescue_count": 0,
+              "damage_count": 0
+            }
+          ]
+        },
+        {
+          "high_pair": true,
+          "pairs": 1794066,
+          "errors": 84728,
+          "ties": 0,
+          "error_rate": 0.04722680213548443,
+          "rescue_count": 163,
+          "damage_count": 156,
+          "margin_bands": [
+            {
+              "abs_v5_margin_range": [
+                0.0,
+                0.5
+              ],
+              "pairs": 79646,
+              "errors": 35089,
+              "ties": 0,
+              "error_rate": 0.4405619867915526,
+              "rescue_count": 163,
+              "damage_count": 156
+            },
+            {
+              "abs_v5_margin_range": [
+                0.5,
+                1.0
+              ],
+              "pairs": 50759,
+              "errors": 16568,
+              "ties": 0,
+              "error_rate": 0.32640516952658644,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                1.0,
+                2.0
+              ],
+              "pairs": 76286,
+              "errors": 14774,
+              "ties": 0,
+              "error_rate": 0.19366594132606246,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                2.0,
+                4.0
+              ],
+              "pairs": 249586,
+              "errors": 13103,
+              "ties": 0,
+              "error_rate": 0.0524989382417283,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                4.0,
+                8.0
+              ],
+              "pairs": 1321258,
+              "errors": 5189,
+              "ties": 0,
+              "error_rate": 0.003927317753232147,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                8.0,
+                Infinity
+              ],
+              "pairs": 16531,
+              "errors": 5,
+              "ties": 0,
+              "error_rate": 0.0003024620410138528,
+              "rescue_count": 0,
+              "damage_count": 0
+            }
+          ]
+        }
+      ],
+      "high_pair_share_of_errors": 0.10986001690792442
+    },
+    "residual": {
+      "fit_95th_percentile": 0.6867885333753723,
+      "validation_high_row_rate": 0.04776061803654763,
+      "groups": [
+        {
+          "high_pair": false,
+          "pairs": 18176274,
+          "errors": 694033,
+          "ties": 0,
+          "error_rate": 0.03818345828193391,
+          "rescue_count": 1190,
+          "damage_count": 1194,
+          "margin_bands": [
+            {
+              "abs_v5_margin_range": [
+                0.0,
+                0.5
+              ],
+              "pairs": 723273,
+              "errors": 316009,
+              "ties": 0,
+              "error_rate": 0.4369152450043068,
+              "rescue_count": 1190,
+              "damage_count": 1194
+            },
+            {
+              "abs_v5_margin_range": [
+                0.5,
+                1.0
+              ],
+              "pairs": 444486,
+              "errors": 141028,
+              "ties": 0,
+              "error_rate": 0.31728333400827025,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                1.0,
+                2.0
+              ],
+              "pairs": 550536,
+              "errors": 101639,
+              "ties": 0,
+              "error_rate": 0.18461826292921807,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                2.0,
+                4.0
+              ],
+              "pairs": 1884971,
+              "errors": 92102,
+              "ties": 0,
+              "error_rate": 0.04886122916479882,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                4.0,
+                8.0
+              ],
+              "pairs": 14315324,
+              "errors": 43184,
+              "ties": 0,
+              "error_rate": 0.003016627496520512,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                8.0,
+                Infinity
+              ],
+              "pairs": 257684,
+              "errors": 71,
+              "ties": 0,
+              "error_rate": 0.0002755312708588814,
+              "rescue_count": 0,
+              "damage_count": 0
+            }
+          ]
+        },
+        {
+          "high_pair": true,
+          "pairs": 1823726,
+          "errors": 77203,
+          "ties": 0,
+          "error_rate": 0.04233256530860447,
+          "rescue_count": 156,
+          "damage_count": 166,
+          "margin_bands": [
+            {
+              "abs_v5_margin_range": [
+                0.0,
+                0.5
+              ],
+              "pairs": 75895,
+              "errors": 33310,
+              "ties": 0,
+              "error_rate": 0.4388958429409052,
+              "rescue_count": 156,
+              "damage_count": 166
+            },
+            {
+              "abs_v5_margin_range": [
+                0.5,
+                1.0
+              ],
+              "pairs": 46792,
+              "errors": 15434,
+              "ties": 0,
+              "error_rate": 0.3298427081552402,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                1.0,
+                2.0
+              ],
+              "pairs": 66593,
+              "errors": 12549,
+              "ties": 0,
+              "error_rate": 0.18844322976889463,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                2.0,
+                4.0
+              ],
+              "pairs": 233664,
+              "errors": 11405,
+              "ties": 0,
+              "error_rate": 0.048809401533826346,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                4.0,
+                8.0
+              ],
+              "pairs": 1385736,
+              "errors": 4501,
+              "ties": 0,
+              "error_rate": 0.0032480934319379737,
+              "rescue_count": 0,
+              "damage_count": 0
+            },
+            {
+              "abs_v5_margin_range": [
+                8.0,
+                Infinity
+              ],
+              "pairs": 15046,
+              "errors": 4,
+              "ties": 0,
+              "error_rate": 0.0002658513890735079,
+              "rescue_count": 0,
+              "damage_count": 0
+            }
+          ]
+        }
+      ],
+      "high_pair_share_of_errors": 0.10010295162570212
+    }
+  },
+  "fold_hash": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "validation_ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+  "aux_fingerprint": "5454f223e84bed6bd45b58a614f3824d478172cf67a34b44b8b239dd5b323603",
+  "verdict": "DIAGNOSTIC_NOT_SPECIALIST_ADMISSION",
+  "limitations": "Discovery fold only. Repeated pairs are Monte Carlo diagnostics, not independent data for inferential confidence. Concentration can reflect irreducible noise; no label-dependent correction is fitted.",
+  "decision": "NO_SPECIALIST: high-surprise pairs are 8.97% of sampled pairs and 10.99% of errors; within-margin enrichment is modest. A1 rescue/damage counts in that group 163/156 do not establish a focused opportunity."
+}

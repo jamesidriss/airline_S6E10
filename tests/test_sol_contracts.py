@@ -110,3 +110,187 @@ def test_v5_iterations_require_exact_five_treatment_folds():
             pass
         else:
             raise AssertionError("missing fold 0 was silently replaced by duplicate fold counts")
+
+
+def test_neural_twins_preserve_values_across_split_vocabularies():
+    from src.models.realmlp import _twin_frame, build_twin_frame
+    train = np.array([[10., 100.], [20., 200.], [30., 300.]])
+    apply = np.array([[20., 200.], [30., 900.]])
+    names = ["Age", "Flight Distance"]
+    a, b = _twin_frame(train, names), _twin_frame(apply, names)
+    assert a.loc[1, "Age__tw"] == b.loc[0, "Age__tw"] == 20
+    assert a.loc[1, "Flight Distance__tw"] == b.loc[0, "Flight Distance__tw"] == 200
+    assert b.loc[1, "Flight Distance__tw"] == 900
+    built, cats = build_twin_frame(apply, names)
+    assert built.equals(b) and cats == [2, 3]
+
+
+def test_all_neural_entry_points_isolate_outer_labels_and_respect_no_twin():
+    from src.models import realmlp as RM
+    folds = np.repeat(np.arange(5), 40)
+    y = np.tile([0, 1], 100)
+    X = np.column_stack([1000 + np.arange(200), np.zeros(200)])
+    Xte = np.array([[2000., 0.], [2001., 0.]])
+    names = ["Flight Distance", "signal"]
+    calls = []
+
+    class Model:
+        def __init__(self, **params):
+            self.params = params
+
+        def fit(self, frame, labels, X_val, y_val):
+            calls.append((frame.copy(), np.array(labels), X_val.copy(), np.array(y_val), self.params))
+
+        def predict_proba(self, frame):
+            return np.full((len(frame), 2), .5)
+
+    class Builder:
+        def assemble(self, fit, labels, val, test, inner_seed):
+            return X[fit], {"val": X[val], "test": Xte}, names
+
+    module = SimpleNamespace(RealMLP_TD_Classifier=Model, TabM_D_Classifier=Model)
+    with patch.dict(sys.modules, {"pytabkit": module}):
+        for family in ("array", "realmlp", "tabm"):
+            for twin in (True, False) if family != "array" else (False,):
+                def run(labels):
+                    calls.clear()
+                    if family == "array":
+                        RM.realmlp(X, labels, Xte, folds, names, params={"random_seed": 17})
+                    else:
+                        fn = RM.realmlp_view if family == "realmlp" else RM.tabm_view
+                        fn(Builder(), folds, labels, 200, 2, twin=twin, params={"random_seed": 17})
+                    return [(a.copy(), b.copy(), c.copy(), d.copy(), p) for a, b, c, d, p in calls]
+
+                original = run(y)
+                changed = y.copy()
+                changed[folds == 0] = 1 - changed[folds == 0]
+                flipped = run(changed)
+                # Flipping only evaluation labels cannot alter fold0 fit or ES inputs.
+                for idx in (0, 1, 2, 3):
+                    assert np.array_equal(original[0][idx], flipped[0][idx])
+                for k, (train, labels, es, es_labels, params) in enumerate(original):
+                    fit_ids = set(X[folds != k, 0])
+                    train_ids, es_ids = set(train.iloc[:, 0]), set(es.iloc[:, 0])
+                    assert not train_ids.intersection(es_ids)
+                    assert train_ids | es_ids == fit_ids
+                    assert len(train) == 144 and len(es) == 16
+                    assert params["random_state"] == 17
+                    assert ("Flight Distance__tw" in train) == twin
+
+
+def test_generic_gbdt_validation_never_receives_outer_rows():
+    from src.models import gbdt
+    X, y, folds = np.arange(200.)[:, None], np.tile([0, 1], 100), np.repeat(np.arange(5), 40)
+    calls = []
+
+    class Pool:
+        def __init__(self, data, label=None, **kwargs):
+            self.data, self.label = data, label
+
+    class Model:
+        best_iteration = 3
+
+        def __init__(self, **kwargs):
+            pass
+
+        def fit(self, data, label=None, eval_set=None, **kwargs):
+            if isinstance(data, Pool):
+                calls.append((data.data, data.label, eval_set.data, eval_set.label))
+            else:
+                calls.append((data, label, eval_set[0][0], eval_set[0][1]))
+
+        def predict_proba(self, data):
+            return np.full((len(data.data if isinstance(data, Pool) else data), 2), .5)
+
+        def predict(self, data, **kwargs):
+            return np.full(len(data), .5)
+
+        def get_best_iteration(self):
+            return 3
+
+    def train(params, dataset, **kwargs):
+        validation = kwargs['valid_sets'][0]
+        calls.append((dataset.data, dataset.label, validation.data, validation.label))
+        return Model()
+
+    modules = {'lightgbm': SimpleNamespace(Dataset=Pool, train=train, early_stopping=lambda *a, **k: None),
+               'xgboost': SimpleNamespace(XGBClassifier=Model),
+               'catboost': SimpleNamespace(CatBoostClassifier=Model, Pool=Pool)}
+    with patch.dict(sys.modules, modules):
+        for fn in (gbdt.lgbm, gbdt.xgboost, gbdt.catboost):
+            calls.clear()
+            fn(X, y, X[:2], folds)
+            for k, (fit, fit_y, es, es_y) in enumerate(calls):
+                assert not set(fit[:, 0]).intersection(es[:, 0])
+                assert set(fit[:, 0]) | set(es[:, 0]) == set(X[folds != k, 0])
+                assert np.array_equal(fit_y, y[fit[:, 0].astype(int)])
+                assert np.array_equal(es_y, y[es[:, 0].astype(int)])
+
+
+def test_static_cache_aliases_only_identical_ordered_label_free_blocks():
+    from src.features.view import VIEWS, static_cache_view
+    dynamic = {'te', 'te_all21', 'te_cond'}
+    for view, blocks in VIEWS.items():
+        canonical = static_cache_view(view)
+        assert [b for b in blocks if b not in dynamic] == [b for b in VIEWS[canonical] if b not in dynamic]
+    for view in ('full_te21', 'full_all21te', 'full_tec', 'full_tec_swap'):
+        assert static_cache_view(view) == 'full'
+    for view in ('core3_te', 'core3_tec', 'core3_tec_swap'):
+        assert static_cache_view(view) == 'core3'
+
+
+def test_array_hash_buffer_path_preserves_historical_digests():
+    import hashlib
+    from src.common import arr_sha256
+    examples = [np.arange(30, dtype='float32').reshape(5, 6),
+                np.arange(30, dtype='int64').reshape(5, 6)[:, ::2],
+                np.asfortranarray(np.arange(30, dtype='float64').reshape(5, 6)),
+                np.array([1, 2, 3], dtype='>i4'), np.empty((0, 4), dtype='float32')]
+    for example in examples:
+        canonical = np.ascontiguousarray(example)
+        old = hashlib.sha256(str(canonical.dtype).encode() + str(canonical.shape).encode()
+                             + canonical.tobytes()).hexdigest()
+        assert arr_sha256(example) == old
+
+
+def test_banked_predictions_cannot_be_replaced_or_lose_test_sidecar():
+    import tempfile
+    from pathlib import Path
+    from src.submission import store
+    with tempfile.TemporaryDirectory() as d:
+        root = Path(d) / 'artifacts' / 'predictions'
+        with patch.object(store, 'PREDICTIONS', root), patch.object(store, 'INDEX', root / 'index.json'):
+            oof, test = np.array([.1, .2, .3]), np.array([.4, .5])
+            saved = store.save('banked', oof, test)
+            assert store.save('banked', oof, None) == saved
+            for a, b in ((oof + .1, test), (oof, test + .1)):
+                try:
+                    store.save('banked', a, b)
+                except FileExistsError:
+                    pass
+                else:
+                    raise AssertionError('Banked prediction was replaced')
+            assert np.array_equal(store.load_oof('banked'), oof.astype('float32'))
+            assert np.array_equal(store.load_test('banked'), test.astype('float32'))
+
+
+def test_banked_submission_cannot_be_overwritten():
+    import tempfile
+    from pathlib import Path
+    from src.submission import make
+    with tempfile.TemporaryDirectory() as d:
+        root = Path(d)
+        sample, test = root / 'sample.csv', root / 'test.csv'
+        pd.DataFrame({'id': [10, 11, 12], 'satisfaction': [0., 0., 0.]}).to_csv(sample, index=False)
+        pd.DataFrame({'id': [10, 11, 12]}).to_csv(test, index=False)
+        with patch.object(make, 'SAMPLE_CSV', sample), patch.object(make, 'TEST_CSV', test), \
+             patch.object(make, 'SUBMISSIONS', root), patch.object(make, 'MANIFEST', root / 'manifest.csv'):
+            path = make.build(np.array([.1, .2, .3]), 'banked')
+            original = path.read_bytes()
+            try:
+                make.build(np.array([.7, .8, .9]), 'banked')
+            except FileExistsError:
+                pass
+            else:
+                raise AssertionError('Banked submission was overwritten')
+            assert path.read_bytes() == original and len(pd.read_csv(make.MANIFEST)) == 1

@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-07T19:24:42.486596+00:00",
+  "updated_utc": "2026-10-07T20:59:14.687015+00:00",
   "verified_records": [
     {
       "exp_id": "sol_repair_C1_A0_f0",
@@ -182,6 +182,26 @@
       "verdict": "POSITIVE_UNCONFIRMED"
     },
     {
+      "exp_id": "sol_b_xt_B0_f0",
+      "fold": 0,
+      "validation_auc": 0.9611741286711656,
+      "paired_fold_deltas": [
+        -2.8875104520764694e-06
+      ],
+      "corr_with_champion": 0.9991851812306435,
+      "verdict": "BASELINE"
+    },
+    {
+      "exp_id": "sol_b_xt_B1_f0",
+      "fold": 0,
+      "validation_auc": 0.9611297530115768,
+      "paired_fold_deltas": [
+        -2.372253104510058e-06
+      ],
+      "corr_with_champion": 0.9989896967568558,
+      "verdict": "NEGATIVE"
+    },
+    {
       "exp_id": "sol_a_ladder_A1_f0",
       "fold": 0,
       "validation_auc": 0.9610639430601977,
@@ -192,6 +212,16 @@
       "verdict": "POSITIVE_UNCONFIRMED"
     },
     {
+      "exp_id": "sol_a_ladder_A1_f1",
+      "fold": 1,
+      "validation_auc": 0.9609705652582997,
+      "paired_fold_deltas": [
+        -1.1399772896769633e-06
+      ],
+      "corr_with_champion": 0.9970355117942089,
+      "verdict": "NEGATIVE"
+    },
+    {
       "exp_id": "sol_a_ladder_A2_f0",
       "fold": 0,
       "validation_auc": 0.9610509660245471,
@@ -199,6 +229,16 @@
         4.473427042461786e-06
       ],
       "corr_with_champion": 0.9979413109632327,
+      "verdict": "POSITIVE_UNCONFIRMED"
+    },
+    {
+      "exp_id": "sol_a_ladder_A2_f1",
+      "fold": 1,
+      "validation_auc": 0.9611554775828471,
+      "paired_fold_deltas": [
+        -5.611941203964577e-07
+      ],
+      "corr_with_champion": 0.9976966620645938,
       "verdict": "POSITIVE_UNCONFIRMED"
     },
     {
@@ -240,5 +280,5 @@
       "delta_vs_v3": 1.122391908547904e-05
     }
   },
-  "limitation": "Unreplaced legacy members retain historical inner crossfit TE priors. Full strict no-own-label finalist reproduction is not complete."
+  "limitation": "Unreplaced legacy members retain historical inner crossfit TE priors; all 12 legacy neural members also selected checkpoints on outer evaluation labels and factorized twins separately. Full strict finalist reproduction is not complete."
 }

@@ -29,7 +29,7 @@ def main():
     repair_counts = {k: 0 for k in range(5)}
     now = datetime.now(timezone.utc).isoformat()
     with ledger.open('a', encoding='utf-8') as out:
-        for tag in ('sol_repair', 'sol_b', 'sol_b_xt', 'sol_a_ladder', 'sol_tabpfn35_verified', 'sol_tabpfn35_memory'):
+        for tag in ('sol_repair', 'sol_b', 'sol_b_xt', 'sol_a_ladder', 'sol_tabpfn35_verified', 'sol_tabpfn35_memory', 'sol_tabpfn35_solo', 'sol_tabpfn35_query', 'sol_tabpfn35_query_full', 'sol_tabpfn35_query_serial'):
             for path in sorted((REPORTS / tag).glob('*.json')):
                 rec = json.loads(path.read_text(encoding='utf-8'))
                 if 'prediction_sha256' not in rec:
@@ -81,7 +81,7 @@ def main():
                 if row['exp_id'] not in existing:
                     out.write(json.dumps(row, default=str) + '\n')
         # Timing failures remain visible, distinct from scientific negatives.
-        for tag in ('sol_tabpfn35', 'sol_tabpfn35_b64', 'sol_tabpfn35_efficient', 'sol_tabpfn35_verified', 'sol_tabpfn35_memory', 'sol_tabpfn35_iclbf16', 'sol_tabpfn35_compact', 'sol_tabpfn35_bounded'):
+        for tag in ('sol_tabpfn35', 'sol_tabpfn35_b64', 'sol_tabpfn35_efficient', 'sol_tabpfn35_verified', 'sol_tabpfn35_memory', 'sol_tabpfn35_iclbf16', 'sol_tabpfn35_compact', 'sol_tabpfn35_bounded', 'sol_tabpfn35_solo', 'sol_tabpfn35_query', 'sol_tabpfn35_query_full', 'sol_tabpfn35_query_serial'):
             for path in sorted((REPORTS / tag).glob('*.json')):
                 r = json.loads(path.read_text(encoding='utf-8'))
                 if 'prediction_sha256' in r:
@@ -96,7 +96,7 @@ def main():
                          'delta_vs_v3': float(roc_auc_score(y[folds == k], repair_sum[k])-roc_auc_score(y[folds == k], v3[folds == k]))}
                 for k in range(5) if repair_counts[k]}
     save_json({'updated_utc': now, 'verified_records': verified, 'repaired_blend_partial': combined,
-               'limitation': 'Unreplaced legacy members retain historical inner crossfit TE priors. Full strict no-own-label finalist reproduction is not complete.'}, REPORTS / 'sol_metrics_verified.json')
+               'limitation': 'Unreplaced legacy members retain historical inner crossfit TE priors; all 12 legacy neural members also selected checkpoints on outer evaluation labels and factorized twins separately. Full strict finalist reproduction is not complete.'}, REPORTS / 'sol_metrics_verified.json')
     print(json.dumps({'verified_records': len(verified), 'repaired_blend_partial': combined}, indent=2))
     return 0
 

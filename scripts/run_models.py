@@ -55,7 +55,7 @@ def main() -> None:
         vb = ViewBuilder(tr, te, args.view)
         vb.build_static()
         for mdl in args.model.split(","):
-            key = f"{mdl}|{args.view}|{scheme}|{args.seed}|e{args.epochs}|ns{args.ens}|tw{0 if args.no_twin else 1}"
+            key = f"{RM.TRAINING_PROTOCOL}|{mdl}|{args.view}|{scheme}|{args.seed}|e{args.epochs}|ns{args.ens}|tw{0 if args.no_twin else 1}"
             if any(s.get("key") == key for s in summary):
                 print("skip cached", key)
                 continue
@@ -78,9 +78,10 @@ def main() -> None:
             auc = float(roc_auc_score(y, oof))
             print(f"  ==> {mdl}/{args.view}/{scheme} OOF AUC = {auc:.6f} ({dur:.0f}s) "
                   f"folds={[round(x,6) for x in fa]}", flush=True)
-            eid = f"{args.tag}_{mdl}_{args.view}_{scheme}_s{args.seed}_e{args.epochs}"
+            eid = f"{args.tag}_{mdl}_{args.view}_{scheme}_s{args.seed}_e{args.epochs}_{RM.TRAINING_PROTOCOL}"
             store.save(eid, oof, test if args.save_test else None, fold_scheme=scheme,
-                       meta={"family": mdl, "featureset": args.view, "auc": round(auc, 6), "seed": args.seed})
+                       meta={"family": mdl, "featureset": args.view, "auc": round(auc, 6), "seed": args.seed,
+                             "training_protocol": RM.TRAINING_PROTOCOL})
             led.log_experiment(family=mdl, featureset=args.view, params=p, seed=args.seed,
                                fold_scheme=scheme, oof_auc=auc, fold_aucs=fa, oof=oof,
                                duration_s=dur, data_hash=dh,

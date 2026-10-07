@@ -1,0 +1,215 @@
+{
+  "updated_utc": "2026-10-07T20:44:09.377793+00:00",
+  "git": "8b7cc81c3ca3796eda870350d56c9d812100c334",
+  "status": "REJECT_LEGACY_NEURAL_OUTER_CHECKPOINT_SELECTION",
+  "affected_members": [
+    {
+      "exp_id": "z5_rm_ens32",
+      "auc": 0.961017,
+      "family": "realmlp",
+      "featureset": "full",
+      "params": {
+        "n_epochs": 6,
+        "n_ens": 32,
+        "random_seed": 1,
+        "batch_size": 256
+      },
+      "prediction_sha256": "cf69ad47db2b0acb778d86875ab3e9a2479310182508d9262e8547520640bcbc"
+    },
+    {
+      "exp_id": "z5_rm_ens32_s2",
+      "auc": 0.960977,
+      "family": "realmlp",
+      "featureset": "full",
+      "params": {
+        "n_epochs": 6,
+        "n_ens": 32,
+        "random_seed": 2,
+        "batch_size": 256
+      },
+      "prediction_sha256": "4790e946107fb881635436f0e64a4c7168b774d2ba3179b34a50633eb0b18048"
+    },
+    {
+      "exp_id": "z5_rm_ens16_ogs",
+      "auc": 0.960969,
+      "family": "realmlp",
+      "featureset": "full_ogsurf",
+      "params": {
+        "n_epochs": 6,
+        "n_ens": 16,
+        "random_seed": 3,
+        "batch_size": 256
+      },
+      "prediction_sha256": "fe9fccfe1a9ca3e8715ba6f1f081d0b4cd7ee3069cf642110e3886e2808bd14b"
+    },
+    {
+      "exp_id": "prod5_realmlp_full_primary_s7_e6",
+      "auc": 0.960881,
+      "family": "realmlp",
+      "featureset": "full",
+      "seed": 7,
+      "prediction_sha256": "314cccd9a6cfe6556d5256d1f03bfde85771cdd0b9a7e59fdbb43aa287a7773e"
+    },
+    {
+      "exp_id": "z3_rm_bs1024_e8",
+      "auc": 0.960877,
+      "family": "realmlp",
+      "featureset": "full",
+      "params": {
+        "n_epochs": 8,
+        "n_ens": 8,
+        "random_seed": 1,
+        "batch_size": 1024
+      },
+      "prediction_sha256": "0fc5aa1a0c0789fd0388dca00a89fe9bea1b92c5de2260a6116024d33d15a7dc"
+    },
+    {
+      "exp_id": "z3_rm_bs256_e6",
+      "auc": 0.960862,
+      "family": "realmlp",
+      "featureset": "full",
+      "params": {
+        "n_epochs": 6,
+        "n_ens": 8,
+        "random_seed": 1,
+        "batch_size": 256
+      },
+      "prediction_sha256": "ab4a646fdd0fe8267865d36670dc6b5f4c6aa30e75819c17c9f11b0e505e31ff"
+    },
+    {
+      "exp_id": "prod5_realmlp_full_primary_s1_e6",
+      "auc": 0.96082,
+      "family": "realmlp",
+      "featureset": "full",
+      "seed": 1,
+      "prediction_sha256": "936fe7979feb83b0acde11312cf0fef15122f1b4a081b27d87b8717e870f02cf"
+    },
+    {
+      "exp_id": "prod5_realmlp_full_primary_s123_e6",
+      "auc": 0.960804,
+      "family": "realmlp",
+      "featureset": "full",
+      "seed": 123,
+      "prediction_sha256": "842e5094c412f37a20c7dc5bf08085bc356241db812fb1e53e6a2c0f5db11bd5"
+    },
+    {
+      "exp_id": "prod5_realmlp_full_primary_s2024_e6",
+      "auc": 0.960789,
+      "family": "realmlp",
+      "featureset": "full",
+      "seed": 2024,
+      "prediction_sha256": "265e246ee0511a9606e746c853f30b9e331c4c6a8965dffe867ed749ea881416"
+    },
+    {
+      "exp_id": "z3_rm_bs256_e10",
+      "auc": 0.960739,
+      "family": "realmlp",
+      "featureset": "full",
+      "params": {
+        "n_epochs": 10,
+        "n_ens": 8,
+        "random_seed": 1,
+        "batch_size": 256
+      },
+      "prediction_sha256": "0ba5126d0425e7a8ca45b1051eed1995ffc682518a53538be43d56c4529599f3"
+    },
+    {
+      "exp_id": "z5_tabm_e25",
+      "auc": 0.960693,
+      "family": "tabm",
+      "featureset": "full",
+      "params": {
+        "n_epochs": 25,
+        "tabm_k": 8,
+        "random_seed": 1,
+        "batch_size": 2048,
+        "d_block": 256,
+        "n_blocks": 3,
+        "lr": 0.002
+      },
+      "prediction_sha256": "b123b56a3ea2c78490c2cfe8554fc25caa4640cac3fe83d4e6bb553fbb14c518"
+    },
+    {
+      "exp_id": "z5_tabm_e25_s2",
+      "auc": 0.96063,
+      "family": "tabm",
+      "featureset": "full",
+      "params": {
+        "n_epochs": 25,
+        "tabm_k": 8,
+        "random_seed": 2,
+        "batch_size": 2048,
+        "d_block": 256,
+        "n_blocks": 3,
+        "lr": 0.002
+      },
+      "prediction_sha256": "777c0e7636e4f58c0d6eef02753160b0268da1f55f698f57baa50510c017c662"
+    }
+  ],
+  "affected_count": 12,
+  "legacy_v5_auc": 0.9615234900843839,
+  "legacy_neural12_auc": 0.9613169119601727,
+  "legacy_classical47_auc": 0.9614916230444606,
+  "paired_fold_metrics": [
+    {
+      "fold": 0,
+      "legacy_v5_auc": 0.9615098415953649,
+      "legacy_classical47_auc": 0.9614957057480095,
+      "classical_minus_v5": -1.4135847355434272e-05
+    },
+    {
+      "fold": 1,
+      "legacy_v5_auc": 0.9616780729495791,
+      "legacy_classical47_auc": 0.9616703517710342,
+      "classical_minus_v5": -7.721178544861651e-06
+    },
+    {
+      "fold": 2,
+      "legacy_v5_auc": 0.9615274986902718,
+      "legacy_classical47_auc": 0.9614584565006472,
+      "classical_minus_v5": -6.904218962455744e-05
+    },
+    {
+      "fold": 3,
+      "legacy_v5_auc": 0.9608001774528916,
+      "legacy_classical47_auc": 0.9607490026328553,
+      "classical_minus_v5": -5.117482003624829e-05
+    },
+    {
+      "fold": 4,
+      "legacy_v5_auc": 0.9621392325625542,
+      "legacy_classical47_auc": 0.9621190179861415,
+      "classical_minus_v5": -2.0214576412658225e-05
+    }
+  ],
+  "classical_logit_corr_v5": 0.9999491121988969,
+  "pair_diagnostic": {
+    "seed": 20261010,
+    "pairs": 2000000,
+    "rescue_rate": 0.015932642487046633,
+    "damage_rate": 0.0006833784064905346,
+    "rescue_count": 1230,
+    "damage_count": 1314,
+    "sampled_delta_with_ties": -4.2e-05,
+    "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+  },
+  "evidence": {
+    "realmlp_use_early_stopping": false,
+    "realmlp_use_best_epoch_default": true,
+    "realmlp_checkpoint_callback_restores_best": true,
+    "tabm_checkpoint_restores_best": true,
+    "legacy_validation_inputs": "outer evaluation rows and labels",
+    "fixed_validation_inputs": "stratified inner10 percent of outer FIT, seed1",
+    "twins_old": "separately factorized category codes; vocabularies could alias values",
+    "twins_new": "literal rounded numeric values; estimator FIT-only ordinal mapping"
+  },
+  "source_sha256": {
+    "src/models/realmlp.py": "e3300bdaa367d8719f6b64f436f26f227e71fc93401cf021bbbc6dbc657dfdbf",
+    ".venv/Lib/site-packages/pytabkit/models/training/nn_creator.py": "1916809520f7dc475e304de06c88aa6ec94b4721154f1b7c8cca5e4f280e1d7e",
+    ".venv/Lib/site-packages/pytabkit/models/training/lightning_modules.py": "8e91bb61f3ea4e92326f978f14edaf6205fb060add9558dfab6a805446e80048",
+    ".venv/Lib/site-packages/pytabkit/models/alg_interfaces/tabm_interface.py": "87ef750909b5d603f3e610895c8f36bb1bf7e370317cd45625650092ed8c6622"
+  },
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "ordered_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+  "limitation": "Fixed legacy-vector diagnostics only. Classical47 still includes historical own-label TE priors. Neither group is a clean reconstructed finalist; no new ensemble admission."
+}

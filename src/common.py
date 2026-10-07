@@ -56,7 +56,10 @@ def arr_sha256(a: np.ndarray) -> str:
     h = hashlib.sha256()
     h.update(str(a.dtype).encode())
     h.update(str(a.shape).encode())
-    h.update(a.tobytes())
+    # Hash the identical C-order byte stream without allocating a second copy
+    # of a multi-gigabyte feature matrix. Preserve every historical digest.
+    if a.size:
+        h.update(memoryview(a).cast("B"))
     return h.hexdigest()
 
 

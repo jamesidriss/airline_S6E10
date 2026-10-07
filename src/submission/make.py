@@ -23,6 +23,11 @@ MANIFEST = SUBMISSIONS / "manifest.csv"
 
 def build(pred: np.ndarray, name: str, notes: str = "", oof_auc: float | None = None,
           members: list[str] | None = None, allow_out_of_range: float = 1e-9) -> Path:
+    if not name or Path(name).name != name or name in ('.', '..'):
+        raise ValueError('Submission name must be a filename stem inside submissions/')
+    path = SUBMISSIONS / f"{name}.csv"
+    if path.exists():
+        raise FileExistsError(f'Preserve existing submission: {path}; use a new name')
     sample = pd.read_csv(SAMPLE_CSV)
     test = pd.read_csv(TEST_CSV, usecols=[ID_COL])
     p = np.asarray(pred, dtype="float64").ravel()
@@ -47,8 +52,7 @@ def build(pred: np.ndarray, name: str, notes: str = "", oof_auc: float | None = 
     out = sample.copy()
     out[TARGET] = np.clip(p, 0.0, 1.0)
     SUBMISSIONS.mkdir(parents=True, exist_ok=True)
-    path = SUBMISSIONS / f"{name}.csv"
-    out.to_csv(path, index=False)
+    out.to_csv(path, index=False, mode='x')
 
     row = {
         "name": name,

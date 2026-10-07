@@ -1,11 +1,16 @@
 {
-  "updated_utc": "2026-10-07T18:50:34.179420+00:00",
+  "updated_utc": "2026-10-07T20:44:09.377793+00:00",
   "BEST_A": {
     "name": "v5_aux_cross",
     "ref": 56918343,
     "oof": 0.9615234900843839,
     "public": 0.96103,
-    "status": "PROVISIONAL_TEST_REPAIR_REQUIRED"
+    "status": "BANKED_LEGACY_ONLY; OOF_AND_TEST_CONTRACT_REPAIR_REQUIRED",
+    "limitations": [
+      "12 neural members select checkpoints on outer labels",
+      "historical TE prior sees each fit row label",
+      "six auxiliary XT test configurations collapsed; auxiliary/test iteration mismatch"
+    ]
   },
   "BEST_B_HEDGE": null,
   "fallback_B": {
@@ -14,5 +19,6 @@
     "public": 0.961,
     "status": "NOT_A_TRUE_HEDGE; v3 OOF proxy only"
   },
-  "final_selection_locked": false
+  "final_selection_locked": false,
+  "verified_clean_BEST_A": null
 }

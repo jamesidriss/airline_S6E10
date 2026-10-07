@@ -307,3 +307,24 @@ inference mechanism with all context targets drawn from outer FIT, fixed primary
 folds and no outer-fold model selection. The other inspected current leading
 stacking notebooks import public prediction libraries of insufficient nesting
 provenance. Detailed classifications and the ranked queue: `research/sol_queue.md`.
+
+## 11. Neural validation and twin audit, 7 October 2026
+
+All **12** neural members in the 59-member legacy portfolio supplied the outer
+evaluation frame and labels as PyTabKit validation inputs. RealMLP's
+`use_early_stopping=False` does not prevent the default `use_best_epoch=True`
+checkpoint callback from restoring the best validation epoch; TabM also uses
+validation for model selection. Reject those 12 legacy OOF vectors as honest
+outer-fold evidence. Do not treat earlier neural ablation negatives as conclusive
+when they share this contract. Banked artifacts remain preserved.
+
+The numeric twins were independently factorized in each train/validation/test
+frame. Different split vocabularies could assign the same numeric category code
+to different distances. Twins now retain their literal numeric values, and
+PyTabKit's FIT-only ordinal encoder handles shared and unseen values consistently.
+The previous `twin=False` argument was ignored; it now removes twins. Neural
+selection now receives only a stratified **10 percent** inner split of outer FIT,
+seed **1**, with disjoint training and stopping rows. New run IDs carry
+`sol_v2_inner10_literal_twins` to prevent accidental reuse of legacy results.
+Regression tests flip outer labels and verify unchanged fold0 fit/ES inputs for
+all three entry points, and test differing split vocabularies explicitly.

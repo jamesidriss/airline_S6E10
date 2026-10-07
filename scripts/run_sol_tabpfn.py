@@ -25,6 +25,7 @@ from src.features.view import RAW21
 from src.validation.folds import get_scheme
 from src.validation.compare import logit
 from scripts.audit_sol_state import reconstruct_v5
+from src.models.resource_guard import ResourcePreflightError
 
 
 def frames(tr, te, route):
@@ -58,8 +59,17 @@ def main():
     ap.add_argument('--icl-bf16', action='store_true')
     ap.add_argument('--chunk-cells', type=int)
     ap.add_argument('--col-chunk', type=int)
+    ap.add_argument('--gpu-fraction', type=float, default=.85)
+    ap.add_argument('--host-reserve-gib', type=float, default=8)
     ap.add_argument('--tag', default='sol_tabpfn35')
     args = ap.parse_args()
+    if not 0 < args.gpu_fraction <= 1:
+        raise ValueError('gpu-fraction must be in (0, 1]')
+    if args.host_reserve_gib < 4:
+        raise ValueError('At least4 GiB host pre-fit reserve is required')
+    # Under Windows WDDM, oversubscription can silently spill into shared host
+    # RAM. Fail with a recorded OOM before exhausting the desktop/pagefile.
+    torch.cuda.set_per_process_memory_fraction(args.gpu_fraction)
     from tabpfn import TabPFNClassifier
     import tabpfn
     backend_gate = None
@@ -113,6 +123,8 @@ def main():
                         'batch_size': args.batch_size, 'precision': args.precision,
                         'icl_bf16': args.icl_bf16,
                         'inference_chunk_cells': args.chunk_cells, 'inference_col_chunk_size': args.col_chunk,
+                        'gpu_memory_fraction': args.gpu_fraction,
+                        'prefit_host_reserve_gib': args.host_reserve_gib,
                         'windows_mqa_backend': args.windows_mqa, 'backend_max_reference_gap': backend_gate,
                         'backend_source_sha256': file_sha256('src/models/windows_attention.py') if args.windows_mqa else None,
                         'resource_guard_source_sha256': file_sha256('src/models/resource_guard.py'),
@@ -120,13 +132,13 @@ def main():
             save_json({**contract, 'status': 'FITTING'}, root / 'progress.json')
             torch.cuda.reset_peak_memory_stats()
             start = time.monotonic()
-            if shutil.disk_usage(root).free < 20 * 1024**3:
-                raise RuntimeError('At least 20 GiB disk reserve required before this model fit')
             model = None
             try:
+                if shutil.disk_usage(root).free < 20 * 1024**3:
+                    raise ResourcePreflightError('At least20 GiB disk reserve required before this model fit')
                 print(f'{arm} f{k}: fit {len(fit_idx)} context rows; {len(names)} columns', flush=True)
                 from src.models.resource_guard import inference_guard
-                guard = inference_guard(root, contract) if not args.timing else nullcontext()
+                guard = inference_guard(root, contract, min_available_gib=args.host_reserve_gib) if not args.timing else nullcontext()
                 with guard:
                     # Check the reserve before allocating the checkpoint, rather
                     # than demanding the same reserve again after loading it.
@@ -158,7 +170,7 @@ def main():
                                v5_equal_member_delta=float(roc_auc_score(y[va], blended)-roc_auc_score(y[va], champ[va])))
                     print(f'{arm} AUC {rec["auc"]:.9f}; v5 addition {rec["v5_equal_member_delta"]:+.9f}; corr {rec["logit_corr_vs_v5"]:.6f}', flush=True)
                 save_json(rec, path)
-            except torch.cuda.OutOfMemoryError as exc:
+            except (torch.cuda.OutOfMemoryError, ResourcePreflightError) as exc:
                 save_json({**contract, 'status': 'INVALID_RESOURCE_LIMIT_NOT_NEGATIVE', 'error': str(exc),
                            'seconds': time.monotonic()-start}, path)
                 raise

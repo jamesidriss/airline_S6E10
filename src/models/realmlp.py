@@ -1,9 +1,10 @@
 """RealMLP (PyTabKit) and TabM runners.
 
 RealMLP is fed a *twin* representation: every numeric column is duplicated as a categorical
-column so the network gets a dedicated embedding per exact value. The twin vocabulary is fitted
-on train+test only (never on any label) so it is label-free and therefore fold-safe; see
-`tests/test_leakage.py::test_twin_vocabulary_is_label_free`.
+column so the network gets a dedicated embedding per exact value. Twins retain
+their literal values: the estimator's FIT-only ordinal encoder maps those values
+consistently at validation and inference. Checkpoint selection uses an inner
+10 percent partition of outer FIT, never the outer evaluation labels.
 """
 
 from __future__ import annotations
@@ -14,6 +15,7 @@ import warnings
 import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import train_test_split
 
 warnings.filterwarnings("ignore")
 
@@ -27,6 +29,26 @@ TWIN_CAPS: dict[str, int] = {
     "Arrival Delay in Minutes": 400,
 }
 
+TRAINING_PROTOCOL = "sol_v2_inner10_literal_twins"
+
+
+def fit_inner_validation(model, frame, labels, seed=1):
+    """Fit/select checkpoints using only outer-FIT rows and labels.
+
+    ``use_early_stopping=False`` alone does not disable PyTabKit's default
+    best-epoch restoration. Both its validation and restoration must therefore
+    be isolated from the outer evaluation population.
+    """
+    labels = np.asarray(labels)
+    if len(frame) != len(labels):
+        raise ValueError("FIT frame/label lengths differ")
+    train, es = train_test_split(np.arange(len(labels)), test_size=.1,
+                                 random_state=seed, stratify=labels)
+    assert not np.intersect1d(train, es).size
+    model.fit(frame.iloc[train], labels[train],
+              X_val=frame.iloc[es], y_val=labels[es])
+    return model
+
 
 def build_twin_frame(X: np.ndarray, names: list[str]) -> tuple[pd.DataFrame, list[int]]:
     """Return a copy of the design matrix with numeric->categorical twin columns.
@@ -34,16 +56,7 @@ def build_twin_frame(X: np.ndarray, names: list[str]) -> tuple[pd.DataFrame, lis
     Returns (frame, cat_feature_indices). Only *raw* columns get twins; engineered columns are
     left numeric because RealMLP penalises feature bloat.
     """
-    df = pd.DataFrame(X, columns=names)
-    add = []
-    for c in names:
-        if c in TWIN_CAPS:
-            v = df[c]
-            v = v.round(6) if v.dtype.kind == "f" else v
-            codes = pd.factorize(v.astype("object"), sort=True)[0].astype("int32")
-            add.append((c + "__tw", codes))
-    for nm, codes in add:
-        df[nm] = pd.Series(codes).astype("category")
+    df = _twin_frame(X, names)
     cat_idx = [i for i, c in enumerate(df.columns) if str(df[c].dtype) == "category"]
     return df, cat_idx
 
@@ -75,7 +88,7 @@ def realmlp(X, y, Xte, folds, names, params=None, seed=1, cat_idx=None, device="
     p = {**REALMLP_BASE, "device": device, "random_state": seed, "verbosity": 0}
     if params:
         p.update({k: v for k, v in params.items() if k not in ("random_seed", "verbose")})
-    p["random_state"] = p.get("random_seed", seed)
+    p["random_state"] = (params or {}).get("random_seed", seed)
     p.pop("random_seed", None)
 
     oof = np.zeros(len(y), dtype="float64")
@@ -89,7 +102,7 @@ def realmlp(X, y, Xte, folds, names, params=None, seed=1, cat_idx=None, device="
         va_d = _frame(X[b], names, cat_idx)
         te_d = _frame(Xte, names, cat_idx)
         m = RealMLP_TD_Classifier(**p)
-        m.fit(tr_d, y[a], X_val=va_d, y_val=y[b])
+        fit_inner_validation(m, tr_d, y[a])
         oof[b] = m.predict_proba(va_d)[:, 1]
         test += m.predict_proba(te_d)[:, 1] / len(ks)
         print(f"    realmlp fold{k} auc={roc_auc_score(y[b], oof[b]):.6f}", flush=True)
@@ -102,7 +115,7 @@ def _frame(X, names, cat_idx=None):
     df = pd.DataFrame(X, columns=names)
     if cat_idx is not None and len(cat_idx):
         for i in cat_idx:
-            df.iloc[:, i] = df.iloc[:, i].astype("category")
+            df[names[i]] = df[names[i]].astype("category")
     return df
 
 
@@ -113,7 +126,7 @@ def realmlp_view(vb, folds, y, ntr, nte, params=None, seed=1, device="cuda", twi
     p = {**REALMLP_BASE, "device": device, "random_state": seed, "verbosity": 0}
     if params:
         p.update({k: v for k, v in params.items() if k not in ("random_seed", "verbose")})
-    p["random_state"] = p.get("random_seed", seed)
+    p["random_state"] = (params or {}).get("random_seed", seed)
     p.pop("random_seed", None)
 
     oof = np.zeros(ntr, dtype="float64")
@@ -125,12 +138,13 @@ def realmlp_view(vb, folds, y, ntr, nte, params=None, seed=1, device="cuda", twi
         fit = np.where(folds != k)[0]
         val = np.where(folds == k)[0]
         Xf, Xa, names = vb.assemble(fit, y, val, np.arange(ntr, ntr + nte), inner_seed=k)
-        tr_d = _twin_frame(Xf, names)
-        va_d = _twin_frame(Xa["val"], names)
-        te_d = _twin_frame(Xa["test"], names)
+        frame_builder = _twin_frame if twin else _frame
+        tr_d = frame_builder(Xf, names)
+        va_d = frame_builder(Xa["val"], names)
+        te_d = frame_builder(Xa["test"], names)
         cat_idx = tr_d.dtypes.index[tr_d.dtypes.astype(str) == "category"].tolist()
         m = RealMLP_TD_Classifier(**p)
-        m.fit(tr_d, y[fit], X_val=va_d, y_val=y[val])
+        fit_inner_validation(m, tr_d, y[fit])
         oof[val] = m.predict_proba(va_d)[:, 1]
         test += m.predict_proba(te_d)[:, 1] / len(ks)
         print(f"    realmlp fold{k} auc={roc_auc_score(y[val], oof[val]):.6f} "
@@ -148,8 +162,9 @@ def _twin_frame(X, names):
         if c in df.columns:
             v = df[c]
             v = v.round(6) if getattr(v.dtype, "kind", "i") == "f" else v
-            codes = pd.factorize(np.asarray(v, dtype="object"), sort=True)[0]
-            df[c + "__tw"] = pd.Series(codes).astype("category")
+            # Preserve semantic values; independent factorization would alias
+            # different distances whenever split vocabularies differ.
+            df[c + "__tw"] = pd.Categorical(v)
     return df
 
 
@@ -160,7 +175,7 @@ def tabm_view(vb, folds, y, ntr, nte, params=None, seed=1, device="cuda", twin=T
     p = {**TABM_BASE, "device": device, "random_state": seed, "verbosity": 0}
     if params:
         p.update({k: v for k, v in params.items() if k not in ("random_seed", "verbose")})
-    p["random_state"] = p.get("random_seed", seed)
+    p["random_state"] = (params or {}).get("random_seed", seed)
     p.pop("random_seed", None)
     oof = np.zeros(ntr)
     test = np.zeros(nte)
@@ -170,11 +185,12 @@ def tabm_view(vb, folds, y, ntr, nte, params=None, seed=1, device="cuda", twin=T
         fit = np.where(folds != k)[0]
         val = np.where(folds == k)[0]
         Xf, Xa, names = vb.assemble(fit, y, val, np.arange(ntr, ntr + nte), inner_seed=k)
-        tr_d = _twin_frame(Xf, names)
-        va_d = _twin_frame(Xa["val"], names)
-        te_d = _twin_frame(Xa["test"], names)
+        frame_builder = _twin_frame if twin else _frame
+        tr_d = frame_builder(Xf, names)
+        va_d = frame_builder(Xa["val"], names)
+        te_d = frame_builder(Xa["test"], names)
         m = TabM_D_Classifier(**p)
-        m.fit(tr_d, y[fit], X_val=va_d, y_val=y[val])
+        fit_inner_validation(m, tr_d, y[fit])
         oof[val] = m.predict_proba(va_d)[:, 1]
         test += m.predict_proba(te_d)[:, 1] / len(ks)
         print(f"    tabm fold{k} auc={roc_auc_score(y[val], oof[val]):.6f}", flush=True)

@@ -1,0 +1,115 @@
+{
+  "git": "73463924811eb38a809aa0e41ce57256e7203fb8",
+  "arm": "raw",
+  "fold": 0,
+  "model_family": "TabPFN-3.5",
+  "library_version": "9.1.0",
+  "params": {
+    "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35\\tabpfn-v3.5-20260909.safetensors",
+    "n_estimators": 1,
+    "auto_scale_n_estimators": false,
+    "random_state": 1201,
+    "device": "cuda",
+    "ignore_pretraining_limits": true,
+    "fit_mode": "fit_with_cache",
+    "kv_cache_precision": "int8",
+    "keep_cache_on_device": true,
+    "inference_precision": "autocast",
+    "categorical_features_indices": [
+      13,
+      14,
+      15,
+      16
+    ],
+    "memory_saving_mode": true,
+    "n_preprocessing_jobs": 1,
+    "tuning_config": null
+  },
+  "seed": 1201,
+  "train_rows": 559708,
+  "validation_rows": 139927,
+  "full_intended_population": true,
+  "fit_ids_sha256": "4f6cafdf586649e3589d97fa657ce942699627c12053770d519e4d9d1004c338",
+  "validation_ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "feature_names": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes"
+  ],
+  "label_free_category_maps": {
+    "Gender": [
+      "Female",
+      "Male"
+    ],
+    "Customer Type": [
+      "Loyal Customer",
+      "disloyal Customer"
+    ],
+    "Type of Travel": [
+      "Business travel",
+      "Personal Travel"
+    ],
+    "Class": [
+      "Business",
+      "Eco",
+      "Eco Plus"
+    ]
+  },
+  "feature_fit_sha256": "1dbf549a15729e18f4abb6e36a2f8a1ed293b77577ba1cb1ba4fcde435b5722e",
+  "feature_val_sha256": "cff543e17f12c549139c256aeb1ffaf04c31513aa82bfd8d595e65f1d7e2d581",
+  "data_sha256": {
+    "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+    "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+  },
+  "source_sha256": "63c70eb5d36ccc027d959b412af06c218a33b291fb9accd82d15399a8280e09d",
+  "checkpoint": {
+    "accessed_utc": "2026-10-07T18:55:06.560314+00:00",
+    "source": "https://huggingface.co/Prior-Labs/tabpfn_3_5",
+    "revision": "06bf2ba35c80a92a3b9abb436b99cf49e7a0365e",
+    "checkpoint_sha256": "ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3",
+    "license_sha256": "9570fdd687bb76ed45499412ad57d6ba949848e6d731f1242572bb57f2f73ae1",
+    "license": "TabPFN-3.5 Non-Commercial License v1.0; section 1.c includes data science competitions; no commercial deployment",
+    "usage": "own fold-safe full-context inference, no imported competition predictions",
+    "rule_section": "2.6 external public models"
+  },
+  "early_stopping": "none; pretrained inference uses every outer-fit target and no evaluation targets",
+  "test_policy": "same representation; entire competition training set as context; no new gradient fitting",
+  "predeclared_ensemble_geometry": "append one equal-logit member to the 59-member legacy-v5 reference",
+  "hardware": "RTX 5070 Ti 16GB; 32GB RAM",
+  "timing_only": false,
+  "batch_size": 1024,
+  "precision": "autocast",
+  "icl_bf16": true,
+  "inference_chunk_cells": 262144,
+  "inference_col_chunk_size": 1,
+  "windows_mqa_backend": true,
+  "backend_max_reference_gap": {
+    "fp16": 0.00048828125,
+    "bf16": 0.0078125
+  },
+  "backend_source_sha256": "fd99bbf03132c64687d91e9a993320666fe5fa92995b74d82fdccf8a628cc0f4",
+  "resource_guard_source_sha256": "274ef6f823328f6de4257f1b9eccf61a5130578f45a231e2dc5fb2a3f11b2822",
+  "flash_attention_compiled": false,
+  "status": "INVALID_IMPLEMENTATION_NOT_NEGATIVE",
+  "error": "RuntimeError('Full inference requires at least 8 GiB available host RAM')",
+  "seconds": 0.31299999996554106
+}

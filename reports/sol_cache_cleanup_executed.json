@@ -1,0 +1,71 @@
+{
+  "status": "EXECUTED",
+  "reason": "Free disk reserve for guarded full-context inference; only seven previously hash-verified duplicate static feature caches",
+  "removed": [
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_tec.npz",
+      "bytes": 947506586,
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full.npz",
+      "canonical_array_hashes": {
+        "tr": "1eb5192bc2fc67c7d781f3100a28bf6be7c4175da34f7ccb5395af18ecc3ff32",
+        "te": "4b64bdcee88271d04a175eaa0811052f8ce527a0a037e3901a33c4f676c41168"
+      }
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_tec_swap.npz",
+      "bytes": 947506586,
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full.npz",
+      "canonical_array_hashes": {
+        "tr": "1eb5192bc2fc67c7d781f3100a28bf6be7c4175da34f7ccb5395af18ecc3ff32",
+        "te": "4b64bdcee88271d04a175eaa0811052f8ce527a0a037e3901a33c4f676c41168"
+      }
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_te21.npz",
+      "bytes": 947506586,
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full.npz",
+      "canonical_array_hashes": {
+        "tr": "1eb5192bc2fc67c7d781f3100a28bf6be7c4175da34f7ccb5395af18ecc3ff32",
+        "te": "4b64bdcee88271d04a175eaa0811052f8ce527a0a037e3901a33c4f676c41168"
+      }
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_all21te.npz",
+      "bytes": 947506586,
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full.npz",
+      "canonical_array_hashes": {
+        "tr": "1eb5192bc2fc67c7d781f3100a28bf6be7c4175da34f7ccb5395af18ecc3ff32",
+        "te": "4b64bdcee88271d04a175eaa0811052f8ce527a0a037e3901a33c4f676c41168"
+      }
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3_te.npz",
+      "bytes": 899531594,
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3.npz",
+      "canonical_array_hashes": {
+        "tr": "92a256f72da0e90b3e3f00e9c5a25a635c2319289e4eba7875dd0b20c042cfaa",
+        "te": "965f1f25faaa0939f8cffa9b4de48e54802443b82da9a4d615a6ef9c530b0544"
+      }
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3_tec.npz",
+      "bytes": 899531594,
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3.npz",
+      "canonical_array_hashes": {
+        "tr": "92a256f72da0e90b3e3f00e9c5a25a635c2319289e4eba7875dd0b20c042cfaa",
+        "te": "965f1f25faaa0939f8cffa9b4de48e54802443b82da9a4d615a6ef9c530b0544"
+      }
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3_tec_swap.npz",
+      "bytes": 899531594,
+      "canonical": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3.npz",
+      "canonical_array_hashes": {
+        "tr": "92a256f72da0e90b3e3f00e9c5a25a635c2319289e4eba7875dd0b20c042cfaa",
+        "te": "965f1f25faaa0939f8cffa9b4de48e54802443b82da9a4d615a6ef9c530b0544"
+      }
+    }
+  ],
+  "utc": "2026-10-07T20:28:42.7344958Z",
+  "folds_models_predictions_preserved": true
+}
