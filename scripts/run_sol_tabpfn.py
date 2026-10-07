@@ -64,12 +64,15 @@ def main():
     ap.add_argument('--col-chunk', type=int)
     ap.add_argument('--gpu-fraction', type=float, default=.85)
     ap.add_argument('--host-reserve-gib', type=float, default=8)
+    ap.add_argument('--prediction-host-reserve-gib', type=float, default=2)
     ap.add_argument('--tag', default='sol_tabpfn35')
     args = ap.parse_args()
     if not 0 < args.gpu_fraction <= 1:
         raise ValueError('gpu-fraction must be in (0, 1]')
     if args.host_reserve_gib < 4:
         raise ValueError('At least4 GiB host pre-fit reserve is required')
+    if args.prediction_host_reserve_gib < 2:
+        raise ValueError('At least2 GiB host prediction reserve is required')
     # Under Windows WDDM, oversubscription can silently spill into shared host
     # RAM. Fail with a recorded OOM before exhausting the desktop/pagefile.
     torch.cuda.set_per_process_memory_fraction(args.gpu_fraction)
@@ -130,6 +133,7 @@ def main():
                         'inference_chunk_cells': args.chunk_cells, 'inference_col_chunk_size': args.col_chunk,
                         'gpu_memory_fraction': args.gpu_fraction,
                         'prefit_host_reserve_gib': args.host_reserve_gib,
+                        'prediction_host_reserve_gib': args.prediction_host_reserve_gib,
                         'windows_mqa_backend': args.windows_mqa, 'backend_max_reference_gap': backend_gate,
                         'reuse_query_output': args.reuse_query_output,
                         'backend_source_sha256': file_sha256('src/models/windows_attention.py') if args.windows_mqa else None,
@@ -156,7 +160,7 @@ def main():
                 print(f'{arm}: fitted in {fit_seconds:.1f}s; peak GPU {torch.cuda.max_memory_allocated()/2**30:.3f} GiB', flush=True)
                 chunks = []
                 pred_start = time.monotonic()
-                prediction_guard = inference_guard(root, contract, max_seconds=max(1,2700-fit_seconds), min_available_gib=4) if not args.timing else nullcontext()
+                prediction_guard = inference_guard(root, contract, max_seconds=max(1,2700-fit_seconds), min_available_gib=args.prediction_host_reserve_gib) if not args.timing else nullcontext()
                 with prediction_guard:
                     for begin in range(0, len(eval_idx), args.batch_size):
                         stop = min(begin + args.batch_size, len(eval_idx))

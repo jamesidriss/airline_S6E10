@@ -39,12 +39,14 @@ def save(exp_id: str, oof: np.ndarray, test: np.ndarray | None, fold_scheme: str
             return previous
     elif op.exists():
         raise FileExistsError(f'Unindexed prediction already exists: {op}; preserve it and use a new ID')
+    tp = PREDICTIONS / f"{exp_id}_test.npy"
+    if test is not None and tp.exists():
+        raise FileExistsError(f'Unindexed test prediction already exists: {tp}; preserve it and use a new ID')
     np.save(op, oof)
     entry = {"exp_id": exp_id, "oof": str(op.relative_to(PREDICTIONS.parent.parent)),
              "oof_sha": oof_hash, "fold_scheme": fold_scheme, "meta": meta or {}}
     if test is not None:
         test = np.asarray(test, dtype="float32")
-        tp = PREDICTIONS / f"{exp_id}_test.npy"
         np.save(tp, test)
         entry["test"] = str(tp.relative_to(PREDICTIONS.parent.parent))
         entry["test_sha"] = arr_sha256(test)

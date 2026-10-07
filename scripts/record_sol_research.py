@@ -20,7 +20,8 @@ FOUNDATION_TAGS = ('sol_tabpfn35_verified', 'sol_tabpfn35_memory', 'sol_tabpfn35
                   'sol_tabpfn35_query', 'sol_tabpfn35_query_full', 'sol_tabpfn35_query_serial',
                   'sol_tabpfn35_reuse_control', 'sol_tabpfn35_reuse', 'sol_tabpfn35_reuse_full',
                   'sol_tabpfn35_decoder', 'sol_tabpfn35_decoder_full',
-                  'sol_tabpfn35_gelu', 'sol_tabpfn35_gelu_full')
+                  'sol_tabpfn35_gelu', 'sol_tabpfn35_gelu_full', 'sol_tabpfn35_predict_guard',
+                  'sol_tabpfn35_route')
 
 
 def main():
@@ -76,7 +77,8 @@ def main():
                 row = {'exp_id': f'{tag}_{path.stem}', 'ts': now, 'git': rec.get('git', git_commit()),
                        'scope': 'single primary fold, not full OOF', 'fold': k, 'validation_auc': auc,
                        'paired_fold_deltas': [marginal], 'comparison': 'actual historical v5 slot or append one fixed equal-logit member',
-                       'corr_with_champion': corr, 'params': params, 'seed': c.get('seed', c.get('spec', {}).get('seed')),
+                       'corr_with_champion': corr, 'params': params,
+                       'seed': c.get('seed', c.get('spec', {}).get('seed', params.get('random_state', params.get('random_seed')))),
                        'train_rows': c.get('train_rows'), 'validation_rows': len(va), 'test_policy': c.get('test_policy'),
                        'duration_s': rec['seconds'], 'data_hash': data_hash, 'fold_hash': arr_sha256(folds),
                        'prediction_hash': arr_sha256(pred), 'report_hash': file_sha256(path), 'report': str(path.relative_to(Path.cwd())) if path.is_absolute() else str(path),

@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-07T21:48:55.842864+00:00",
+  "updated_utc": "2026-10-07T22:39:55.250385+00:00",
   "verified_records": [
     {
       "exp_id": "sol_repair_C1_A0_f0",
@@ -290,6 +290,26 @@
       ],
       "corr_with_champion": 0.997766640260098,
       "verdict": "CORRECTED_BASELINE_UNCONFIRMED"
+    },
+    {
+      "exp_id": "sol_tabpfn35_predict_guard_raw_f0",
+      "fold": 0,
+      "validation_auc": 0.9609722955394799,
+      "paired_fold_deltas": [
+        2.1134242330855812e-05
+      ],
+      "corr_with_champion": 0.9945322047940718,
+      "verdict": "POSITIVE_UNCONFIRMED"
+    },
+    {
+      "exp_id": "sol_tabpfn35_route_route_f0",
+      "fold": 0,
+      "validation_auc": 0.9611324459037415,
+      "paired_fold_deltas": [
+        2.01591850533811e-05
+      ],
+      "corr_with_champion": 0.9949058059523848,
+      "verdict": "POSITIVE_UNCONFIRMED"
     }
   ],
   "repaired_blend_partial": {

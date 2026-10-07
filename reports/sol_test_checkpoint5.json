@@ -1,0 +1,26 @@
+{
+  "utc": "2026-10-07T22:48:23.549542+00:00",
+  "full_suite": {
+    "passed": 89,
+    "failed": 1,
+    "exit_code": 1,
+    "log": "reports/sol_tests_checkpoint5.log",
+    "log_sha256": "fbf4daa7848f1ffc1db23f1c8ac362782f08a269c23a36b0208bf3efc46dea4c",
+    "failure": "New assembler not yet staged in git; no functional failure"
+  },
+  "targeted_followup": {
+    "passed": 3,
+    "failed": 0,
+    "checks": [
+      "source files tracked after staging",
+      "shadow auxiliary arrays independent of primary",
+      "frozen classical roles retain original defaults"
+    ]
+  },
+  "secret_scan": {
+    "high": 0,
+    "medium": 0,
+    "report_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "verdict": "ALL_REQUIRED_CHECKS_RESOLVED; historical full-suite failure retained explicitly"
+}

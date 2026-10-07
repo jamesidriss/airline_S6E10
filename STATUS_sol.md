@@ -1,6 +1,6 @@
 # SOL campaign — audit and continuation
 
-Checkpoint: 7 October 2026, 21:49 UTC. **No clean finalist has yet been fully
+Checkpoint: 7 October 2026, 22:42 UTC. **No clean finalist has yet been fully
 reproduced. No new Kaggle submission was spent. Final slots remain unlocked.**
 The campaign continues; this is not a final decision or research stopping point.
 
@@ -44,9 +44,11 @@ its historical TE priors remain affected. See `reports/sol_neural_audit.json`.
 | SSL32 rich-view XT | B0 0.961174129; B1 0.961129753; delta −0.000044376; actual slot −0.000002372 | No promotion |
 | SSL+aux A0 | f0 −0.000028034 standalone; slot −0.000001512 | No promotion |
 | Surprise diagnostic | High-surprise pair error rate0.04723 vs0.03771 outside; modest within-margin enrichment | No specialist justified |
-| Full-context TabPFN3.5 | No completed CV; latest raw FIT reached the decoder then CUDA OOM at 818.391 s | Resource-invalid, not negative |
+| Full-context TabPFN3.5 raw | Honest f0 AUC 0.960972296; fixed 1/60 append gain +0.000021134; logit correlation 0.994532205; 1030.312 s | Positive discovery only; legacy comparison, no admission |
+| Matched TabPFN3.5 route | Honest f0 AUC 0.961132446; +0.000160150 versus raw; 1/60 append gain +0.000020159 | Promote to fold1, not admitted |
+| Frozen 50/50 route/strict auxiliary10 | Honest f0 AUC 0.961727180; +0.000312976 versus strict auxiliary10; +0.000217338 versus legacy v5 | Promising candidate; prioritize exact replication |
 | Corrected RealMLP recipe | f0 AUC 0.960758172; legacy slot diagnostic −0.000002531; 70.328 s; OOF/test vectors saved | Contract repair only; no improvement/admission claim |
-| Query and activation buffer reuse | Complete-model 100k-context/1024-prediction probes are bit-identical to the reference | Full raw/route run active |
+| Query and activation buffer reuse | Complete-model 100k-context/1024-prediction probes are bit-identical to the reference; raw full-FIT now completes | Route f0 active in a fresh process |
 | Decoder linear-projection batching | Max probability gap 0.000226825 vs tolerance 0.000002 | Failed equivalence gate; reject implementation |
 
 Attention reference gaps: FP16 **0.00048828125**, BF16 **0.0078125**, within
@@ -69,7 +71,15 @@ contracts or forecast ranks. A clean candidate needs its own simulation.
 
 ## Resources and verification
 
-Active: GPU full-context TabPFN raw/route fold0, tag `sol_tabpfn35_gelu_full`.
+Active: checkpoint5 verification resolved; route fold1 is the next serialized GPU job.
+Raw f0 is complete under `sol_tabpfn35_predict_guard`, with all 559708 FIT and
+139927 evaluation rows. Peak GPU allocation was 13671814656 B (12.733 GiB).
+The first completed full FIT was previously discarded by an overstrict prediction
+RAM preflight. Prediction now requires 2 GiB before allocating its small batch;
+the periodic abort threshold remains 1 GiB. Pre-fit reserve remains 4 GiB.
+The route attempt in the raw process was refused before fitting; the completed
+fresh-process run preserves that failed report. Both complete arms retain the
+same seed/context/inference settings and differ only in route representation.
 All three auxiliary probability caches are complete. Their builder reads only the21 raw covariates;
 fold0/1 reproduce the exact original fingerprints in6 seconds. Larger jobs are
 serialized. Authenticated Kaggle GPU quota is exhausted:61503s used versus
@@ -89,19 +99,32 @@ submissions are preserved. Cleanup manifests record regeneration commands.
 Generic test refits also drifted from CV defaults: LightGBM changed leaf-size
 and regularization defaults and omitted explicit bagging/feature seeds; CatBoost
 changed the default learning rate. XGB/Cat indices needed +1 when passed as tree
-counts. Helpers now preserve the CV recipe. Regression checks cover parameter
+counts. Helpers now preserve the CV recipe, including native CatBoost's first
+selected tree. Regression checks cover parameter
 identity and the first-tree edge case. Banked test predictions stay untouched.
 
-Complete post-change suite: **85 passed, 0 failed**, including all nine real-data
-view-composition checks. The subsequently added activation-reuse numeric/gradient
-check also passes. The complete-model GPU activation probe has max probability
+The frozen classical replay runner and neural/portfolio certification scripts
+are implemented. They require complete row-aligned, hash-bound predictions and
+refuse partial or legacy members. They do not filter roles by new scores. The
+full 47-classical/12-neural replay and ensemble scorecard remain outstanding.
+The new frozen route/auxiliary10 combination now takes priority for honest
+replication and finalist reproduction. A legacy candidate remains ineligible
+until completely repaired; no clean 59-role claim is made.
+
+Checkpoint4 full suite: **85 passed, 0 failed**. Checkpoint5: **89 passed, 1 failed**;
+the sole failure was an unstaged new source file. After staging, the failed check
+and two current-state/added checks passed (3/3). The failed full-suite log is
+retained in `reports/sol_test_checkpoint5.json`. Secret scan found0 high/medium
+findings. All nine actual-data view compositions and activation-reuse checks pass.
+The complete-model GPU activation probe has max probability
 gap **0**, retaining SHA a64dfea84287aad3f6c1675916f5f7e252c055d4eb45e22d79b265a930c3d543.
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\audit_sol_state.py
 .\.venv\Scripts\python.exe scripts\audit_sol_neural.py
 .\.venv\Scripts\python.exe scripts\replay_sol_neural.py --members z3_rm_bs256_e6 --folds 0 --save-test --tag sol_neural_clean_compact
-.\.venv\Scripts\python.exe scripts\run_sol_tabpfn.py --folds 0 --arms raw,route --batch-size 1024 --windows-mqa --reuse-query-output --decoder-inplace-gelu --memory-saving on --icl-bf16 --chunk-cells 262144 --col-chunk 1 --host-reserve-gib 4 --tag sol_tabpfn35_gelu_full
+.\.venv\Scripts\python.exe scripts\run_sol_tabpfn.py --folds 1 --arms route --batch-size 1024 --windows-mqa --reuse-query-output --decoder-inplace-gelu --memory-saving on --icl-bf16 --chunk-cells 262144 --col-chunk 1 --host-reserve-gib 4 --prediction-host-reserve-gib 2 --tag sol_tabpfn35_route
+.\.venv\Scripts\python.exe scripts\replay_sol_classical.py --members aux10 --folds 0,1 --tag sol_clean_classical
 .\.venv\Scripts\python.exe tests\run_tests.py
 ```
 

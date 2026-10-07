@@ -40,3 +40,16 @@ Foundation raw/route discovery remains the highest eligible research branch.
 Research is serialized with repairs. Auxiliary distribution, SSL tree features
 and surprise specialists failed their gates; they do not justify multitask or
 another architecture catalogue. Resource failures contain no AUC evidence.
+
+At 22:40 UTC, the predeclared equal-method route/auxiliary10 combination produced
+honest fold0 AUC0.961727180, versus auxiliary10 alone0.961414204. Its legacy-v5
+diagnostic gain was0.000217338. This is sufficient discovery evidence to prioritize
+its exact two-fold replication and, conditionally, full primary/confirmation/test
+reproduction. The ten classical roles will be replayed from the current frozen
+runner, with identical seeds and no new score-based role selection.
+
+The 59-role scripts remain available as a baseline repair. Their implementation
+is not a completed replay. A strong, fully reproduced new candidate can replace
+banked v5 without replaying every obsolete legacy role; any legacy finalist that
+remains in contention still requires its own complete clean reproduction. No
+finalist or submission is selected from this single-fold result.

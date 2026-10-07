@@ -135,7 +135,7 @@ def fit_cat(frame_fit, y_fit, frame_val, seed, params, cat_names, es_frame, es_y
     kw = {"cat_features": ci} if ci else {}
     m = CatBoostClassifier(**p)
     m.fit(frame_fit, y_fit, eval_set=(es_frame, es_y), early_stopping_rounds=300, verbose=0, **kw)
-    return m.predict_proba(frame_val)[:, 1], int(m.get_best_iteration() or p["iterations"])
+    return m.predict_proba(frame_val)[:, 1], int(m.get_best_iteration())
 
 
 def main() -> int:

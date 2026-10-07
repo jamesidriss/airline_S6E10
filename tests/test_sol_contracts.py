@@ -357,3 +357,101 @@ def test_zero_based_best_iteration_zero_refits_one_tree():
             zoo.predict_test(family, x, x, y, np.arange(10), {}, 1, best)
         assert fit.call_args.args[-1] == 1, 'A zero-based index was used as the tree count'
 
+
+def test_native_cat_zero_based_first_tree_is_preserved():
+    import numpy as np
+    from unittest.mock import patch
+    from scripts.run_phase14 import fit_cat
+    class Model:
+        def __init__(self, **params):
+            pass
+        def fit(self, *args, **kwargs):
+            return self
+        def get_best_iteration(self):
+            return 0
+        def predict_proba(self, x):
+            return np.tile([.4, .6], (len(x), 1))
+    x, y = np.zeros((10, 2)), np.arange(10) % 2
+    with patch('catboost.CatBoostClassifier', Model):
+        _, best = fit_cat(x, y, x, 1, {}, [], x, y)
+    assert best == 0, 'Native CatBoost first selected tree was replaced by the budget'
+
+
+def test_clean_classical_role_plan_is_frozen_and_retains_original_schemes():
+    from scripts.replay_sol_classical import frozen_roles,resolved_params
+    from src.submission import store
+    roles=frozen_roles()
+    index=store._load_index()
+    assert len(roles)==47 and sum(r['aux_arm'] is not None for r in roles)==10
+    assert len({r['member'] for r in roles})==47
+    for role in roles:
+        assert role['scheme']==index[role['member']]['fold_scheme']
+        p=resolved_params(role)
+        if p.get('extra_trees'):
+            assert role['view'] in ('full','full_ogsurf','full_ogm','core3')
+        if role['family']=='lgbm':
+            assert p['bagging_seed']==role['seed']+1 and p['feature_fraction_seed']==role['seed']+2
+        if role['aux_arm']:
+            assert role['scheme']=='primary' and role['es_seed_policy']=='1'
+
+
+def test_clean_portfolio_refuses_missing_test_predictions_before_loading_data():
+    import tempfile
+    from pathlib import Path
+    from unittest.mock import patch
+    import scripts.assemble_sol_clean as assembler
+    with tempfile.TemporaryDirectory() as temporary:
+        with patch.object(assembler, 'REPORTS', Path(temporary)), \
+             patch.object(assembler, 'frozen_plan', return_value={'members': [{'store_id': 'new'}]}), \
+             patch.object(assembler.store, '_load_index', return_value={'new': {'oof': 'anything'}}), \
+             patch.object(assembler, 'load_cached_parquet') as load, \
+             patch.object(assembler.store, 'save') as save, \
+             patch('sys.argv', ['assemble_sol_clean.py']):
+            try:
+                assembler.main()
+            except RuntimeError as error:
+                assert 'complete OOF/test members are missing' in str(error)
+            else:
+                raise AssertionError('Partial portfolio was accepted')
+            load.assert_not_called()
+            save.assert_not_called()
+
+
+def test_prediction_store_preserves_unindexed_test_only_artifact():
+    import tempfile
+    from pathlib import Path
+    import numpy as np
+    from unittest.mock import patch
+    from src.submission import store
+    with tempfile.TemporaryDirectory() as temporary:
+        folder = Path(temporary)
+        test_path = folder/'new_test.npy'
+        np.save(test_path, np.array([.1, .2], dtype='float32'))
+        before = test_path.read_bytes()
+        with patch.object(store, 'PREDICTIONS', folder), patch.object(store, 'INDEX', folder/'index.json'):
+            try:
+                store.save('new', np.array([.3, .4]), np.array([.5, .6]))
+            except FileExistsError:
+                pass
+            else:
+                raise AssertionError('Unindexed test-only artifact was overwritten')
+        assert test_path.read_bytes() == before
+        assert not (folder/'new_oof.npy').exists()
+
+
+def test_shadow_auxiliary_features_never_reuse_primary_fold_arrays():
+    import numpy as np
+    from unittest.mock import patch
+    import scripts.replay_sol_classical as runner
+    names=list(runner.RATINGS)
+    fit=np.zeros((8,13)); val=np.zeros((2,13))
+    pf=np.zeros((8,13,6)); pv=np.zeros((2,13,6))
+    pf[:,:,3]=1; pv[:,:,3]=1
+    cache={'fingerprint':'shadow','contract':{}}
+    with patch.object(runner,'probability_cache',return_value=(pf,pv,cache)), \
+         patch.object(runner.np,'load',side_effect=AssertionError('Primary fold data was accessed')):
+        a,b,contract=runner.add_expected_values(fit,val,names,np.arange(8),np.arange(8,10),'shadow_hash',0,'shadow')
+    assert a.shape==(8,26) and b.shape==(2,26)
+    assert np.all(a[:,13:]==3) and np.all(b[:,13:]==3)
+    assert contract['independent_ev_max_gap'] is None and contract['upstream_fingerprint']=='shadow'
+

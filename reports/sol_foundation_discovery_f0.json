@@ -1,0 +1,20 @@
+{
+  "fold": 0,
+  "scope": "single-fold discovery only; no full OOF or admission",
+  "legacy_v5_auc": 0.9615098415953649,
+  "raw_auc": 0.9609722955394799,
+  "route_auc": 0.9611324459037415,
+  "route_minus_raw": 0.0001601503642615354,
+  "pure_corrected_aux10_auc": 0.9614142040376302,
+  "route_aux10_equal_method_logit_auc": 0.9617271800415245,
+  "hedge_minus_legacy_v5": 0.0002173384461595651,
+  "route_minus_legacy_v5": -0.0003773956916234278,
+  "hedge_corr_vs_legacy_v5": 0.9986340222393592,
+  "raw_route_logit_correlation": 0.9959476404648687,
+  "ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+  "raw_prediction_sha256": "ecaa1b1ad54cc0fa247054936370727249b40e81016209153fe610b999c6393d",
+  "route_prediction_sha256": "9cb5e530334f834c826ed7bc9127b59f8abe2a99ff6067f4e780ed803eb6b41d",
+  "aux_logit_sha256": "4c1c1226f27ed2552bf20ac4501fccc334dd148f5e4e41b443c1b1028f0b0085",
+  "predeclared_portfolio": "research/sol_foundation_portfolio.md",
+  "verdict": "PROMOTE_ROUTE_TO_FOLD1; fixed hedge only if gap<=0.0003"
+}
