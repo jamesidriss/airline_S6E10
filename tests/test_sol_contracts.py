@@ -32,6 +32,24 @@ def test_partial_shadow_scope_requires_predeclaration_and_never_becomes_full_oof
         raise AssertionError('Contradicting partial evidence accepted')
 
 
+def test_small_policy_audit_contexts_exclude_every_outer_query_row():
+    from scripts.run_sol_policy_pseudotest import partitions
+    ids=np.arange(150000)+1000000
+    primary=np.arange(len(ids))%5
+    shadow=np.random.default_rng(77).permutation(primary)
+    fits,query=partitions(primary,shadow,ids)
+    assert len(fits['all'])==100000 and len(query)==20000
+    assert (shadow[query]==0).all() and (shadow[fits['all']]!=0).all()
+    assert not np.intersect1d(ids[fits['all']],ids[query]).size
+    fits_again,query_again=partitions(primary,shadow,ids)
+    assert np.array_equal(query,query_again)
+    for k in range(5):
+        fit=fits[str(k)]
+        assert (primary[fit]!=k).all() and (shadow[fit]!=0).all()
+        assert len(fit)==int((primary[fits['all']]!=k).sum())
+        assert np.array_equal(fit,fits_again[str(k)])
+
+
 def test_aux_fit_and_apply_rows_are_actually_unseen():
     from scripts.run_phase13 import RATINGS, build_aux
     names = RATINGS + ["Gender", "Customer Type", "Type of Travel", "Class", "Age", "Flight Distance",

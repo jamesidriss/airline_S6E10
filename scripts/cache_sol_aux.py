@@ -14,20 +14,28 @@ from scripts.sol_aux_cache import probability_cache
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--folds', default='1,2')
+    ap.add_argument('--scheme', choices=['primary','shadow'], default='primary')
+    ap.add_argument('--test', action='store_true', help='Raw-only full-label train/test cache for the frozen test refits')
     args = ap.parse_args()
     tr, te = load_cached_parquet()
     y, ids = tr['satisfaction'].to_numpy(dtype='int8'), tr['id'].to_numpy()
-    folds = get_scheme('primary', y, ids).folds
+    folds = get_scheme(args.scheme, y, ids).folds
+    assert not args.test or args.scheme=='primary'
     # Auxiliary targets and covariates use only the raw 21-column block. Match
     # ViewBuilder's label-free joint vocabulary without loading its 237 static
     # columns or computing any satisfaction target encoding.
     raw = _prep_raw(pd.concat([tr[RAW21], te[RAW21]], ignore_index=True)).to_numpy(dtype='float32')
     raw = np.nan_to_num(raw, nan=-999.0, posinf=1e9, neginf=-1e9)
     names = list(RAW21)
+    if args.test:
+        probability_cache(raw[:len(tr)],raw[len(tr):],names,ids,te['id'].to_numpy(),
+                          arr_sha256(folds),label='full-label test')
+        print('Full-label test auxiliary cache COMPLETE',flush=True)
+        return 0
     for k in map(int, args.folds.split(',')):
         fi, va = np.flatnonzero(folds != k), np.flatnonzero(folds == k)
         Xf, Xv = raw[fi], raw[va]
-        pf, pv, manifest = probability_cache(Xf, Xv, names, ids[fi], ids[va], arr_sha256(folds), label=f'fold{k}')
+        pf, pv, manifest = probability_cache(Xf, Xv, names, ids[fi], ids[va], arr_sha256(folds), label=f'{args.scheme} fold{k}')
         print(f'fold{k} COMPLETE {manifest["fingerprint"]}', flush=True)
         del Xf, Xv, pf, pv
     return 0

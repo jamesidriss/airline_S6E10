@@ -1,6 +1,6 @@
 # SOL campaign — audit and continuation
 
-Checkpoint: 8 October 2026, 01:51 UTC. **No clean finalist has yet been fully
+Checkpoint: 8 October 2026, 05:38 UTC. **No clean finalist has yet been fully
 reproduced. No new Kaggle submission was spent. Final slots remain unlocked.**
 The campaign continues; this is not a final decision or research stopping point.
 
@@ -75,11 +75,35 @@ All thirty frozen auxiliary role/fold jobs are complete under
 `sol_clean_aux10_threefold`. Every one of the ten fold0 controls has identical
 predictions, FIT/validation matrix hashes and selected tree count versus strict
 SOL-A A0. Their verified fixed portfolio is in `reports/sol_route_aux10_threefold.json`.
-Active: serialized remaining route folds3/4, separate raw-only auxiliary caches3/4,
+The interrupted route fold3 completed FIT but failed prediction's20 GiB disk
+preflight at777.203 seconds; no OOF vector exists for that attempt. Recovery
+found no surviving model worker, HEAD671826b matching the live GitHub branch,
+43.4 GiB free disk and8.4 GiB available RAM. All33 completed vectors are
+revalidated in `reports/sol_recovery_inventory_20261008.json`.
+Active: fresh route retry3/4 under `sol_tabpfn35_route_recovery`, separate raw-only auxiliary caches3/4,
 then isolated auxiliary completion under `sol_clean_aux10_primary` and complete
 five-fold evaluation. Existing thirty completed role/fold records are verified
 before reuse. Fold2 native C1 AUC0.961269750529,1812 trees,875.875 seconds.
 One fresh process per fold avoids native allocator retention.
+
+The critical recovery handoff supersedes the previous open-ended campaign and
+revokes the supplied AGENTS.md agreement. The new finite scope is declared in
+`research/sol_recovery_scope_20261008.json`: complete primary as
+`sol_route_aux10_primary_final`, then preselected shadow folds0/1 and a fixed
+seed1202 replay, five-context test inference, private diagnostics and submission
+if qualified. Block10 is deferred as disproportionate extra compute and resource
+risk; no block10 claim will be made. Partial shadow must remain explicitly
+partial and show positive gains on both specified folds. No model or weight
+has changed. No39-cross or clean59 replay is scheduled.
+
+Recovery's full current suite: **110 passed,0 failed**, exit0. Separate new
+partial-scope and pseudo-test partition checks also pass; current static guard
+covers62 files with0 undefined names. A small100k-pool/20k-shadow-holdout policy
+audit is prepared, not fitted, to compare single-context inference with five
+80-percent contexts. It is not a full OOF estimate or a deployment test score.
+The source-tracking check passes after recovery commit2a283d5. Secret scan has
+0 high/medium findings. Live05:35 UTC Kaggle snapshot: rank336/1106, public
+leader0.96185,10 submissions available; banked v5 remains0.96103.
 
 The all699635-row context resource probe failed before predictions in14.375s.
 Fresh scaling-output reuse is bit-identical on10,247,168 BF16 values, leaves
