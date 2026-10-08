@@ -1,0 +1,66 @@
+{
+  "utc": "2026-10-08T06:07:25.587022+00:00",
+  "status": "ALL_FIVE_ROUTE_VECTORS_VERIFIED_NOT_YET_COMBINED_FULL_PORTFOLIO",
+  "data_sha256": {
+    "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+    "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+  },
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "folds": [
+    {
+      "fold": 0,
+      "auc": 0.9611324459037415,
+      "rows": 139927,
+      "train_rows": 559708,
+      "proof": {
+        "tag": "sol_tabpfn35_route",
+        "report_sha256": "fa03f11f7e283dac771fa97230257e761d7618d321ac29f7d69154e95b785bf2",
+        "prediction_sha256": "9cb5e530334f834c826ed7bc9127b59f8abe2a99ff6067f4e780ed803eb6b41d"
+      }
+    },
+    {
+      "fold": 1,
+      "auc": 0.9613791656896364,
+      "rows": 139927,
+      "train_rows": 559708,
+      "proof": {
+        "tag": "sol_tabpfn35_route_reserve",
+        "report_sha256": "a0ed314e8052754918b4b807a22147837daa2b4dcf1653c30845cc6ced748d4b",
+        "prediction_sha256": "83ca4330f955aef150dab5f45ebd2f1d432109659842e9fb371e88d6d1c0771a"
+      }
+    },
+    {
+      "fold": 2,
+      "auc": 0.9611995647404888,
+      "rows": 139927,
+      "train_rows": 559708,
+      "proof": {
+        "tag": "sol_tabpfn35_route_reserve",
+        "report_sha256": "e1bf8203252c4df805fb680abd427548559d5b2fc3175814a9269322a90a36f1",
+        "prediction_sha256": "b47583ab92ecf9ebd70ea55b917a5cf2f766de6b79b73073106326148641f6f8"
+      }
+    },
+    {
+      "fold": 3,
+      "auc": 0.9606084962415924,
+      "rows": 139927,
+      "train_rows": 559708,
+      "proof": {
+        "tag": "sol_tabpfn35_route_recovery",
+        "report_sha256": "e5f0bff60aa5a46d3233fc3b23f817054cb8c095d97b342391543546c1632cd8",
+        "prediction_sha256": "09403f0cdedb6da75772407093b45c35221d992a9f34dbe8494dae6b04a4527c"
+      }
+    },
+    {
+      "fold": 4,
+      "auc": 0.9618192023035632,
+      "rows": 139927,
+      "train_rows": 559708,
+      "proof": {
+        "tag": "sol_tabpfn35_route_recovery",
+        "report_sha256": "32e43165ab085ee2c4c9e02ae6df156f2e23bc9ca6522885cd8e96ad8c0138bb",
+        "prediction_sha256": "de821220a6721cd9866b3ab6923b76f2f6e3e97d1ccedc2cbf712c274c7f7d5f"
+      }
+    }
+  ]
+}
