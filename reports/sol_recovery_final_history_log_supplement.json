@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-08T11:48:49.364576+00:00",
+  "status": "PASS",
+  "scope": "Every unique reachable .log blob, supplementing the standard scanner suffix set which excludes .log; BOM-aware decode; same redacted detectors",
+  "scanned_head": "fc33684418d0e955a0e87222a06c545d7646be1f",
+  "reachable_commits": 126,
+  "unique_log_blobs": 170,
+  "encodings": {
+    "utf-16": 76,
+    "utf-8-sig": 94
+  },
+  "counts": {
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0
+  },
+  "findings_redacted": []
+}

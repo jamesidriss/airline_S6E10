@@ -1,0 +1,91 @@
+==============================================================================
+NESTED RESIDUAL DIAGNOSTIC -- SEMANTICS AND NESTING TESTS
+==============================================================================
+
+probability semantics
+  PASS  returns one bias per sufficiently sized group
+  PASS  biases are finite
+  PASS  group with y << p gets a negative bias
+  PASS  group with y >> p gets a positive bias
+
+logit-offset semantics -- Newton step vs numerical minimiser
+  PASS  group 0: Newton step -0.48608 matches numerical optimum -0.48610
+  PASS  group 1: Newton step -0.01500 matches numerical optimum -0.01500
+  PASS  group 2: Newton step +0.49435 matches numerical optimum +0.49435
+  PASS  perfectly calibrated group gets ~zero offset (got +3.65e-03)
+
+the two semantics stay separate
+  PASS  both semantics produce estimates for the same groups
+  PASS  the two are numerically distinct (no accidental sharing of one number)
+  PASS  apply_table on probability semantics returns a bounded additive offset
+  PASS  both semantics agree on SIGN for a moderately under-performing group
+  PASS  probability semantics can saturate at extreme groups (documented limitation)
+
+shrinkage behaviour
+  PASS  probability bias is monotone non-increasing in shrinkage
+  PASS  larger shrinkage drives the estimate toward zero
+  PASS  logit offset is monotone non-increasing in LAMBDA
+  PASS  larger LAMBDA drives the offset toward zero
+
+minimum group size
+  PASS  fixture sizes put 'big' above MIN_N and 'tiny' below it
+  PASS  group at or above MIN_N is kept
+  PASS  group below MIN_N is dropped
+
+unseen groups
+  PASS  an unseen group gets exactly zero offset
+  PASS  apply_table with an empty table returns zeros
+
+inner fold construction
+  PASS  every row gets exactly one inner fold
+  PASS  all 5 inner folds are non-empty
+  PASS  inner folds are balanced within 1 row
+  PASS  inner folds are deterministic for a fixed seed
+  PASS  a different seed gives a different partition
+  PASS  inner fold 0: complement and fold are disjoint and cover everything
+  PASS  inner fold 1: complement and fold are disjoint and cover everything
+  PASS  inner fold 2: complement and fold are disjoint and cover everything
+  PASS  inner fold 3: complement and fold are disjoint and cover everything
+  PASS  inner fold 4: complement and fold are disjoint and cover everything
+
+nesting on the real primary fold scheme
+  PASS  fold 0: META_FIT and META_VAL are disjoint
+  PASS  fold 0: they partition all rows
+  PASS  fold 0: no inner-fit set touches META_VAL
+  PASS  fold 1: META_FIT and META_VAL are disjoint
+  PASS  fold 1: they partition all rows
+  PASS  fold 1: no inner-fit set touches META_VAL
+  PASS  fold 2: META_FIT and META_VAL are disjoint
+  PASS  fold 2: they partition all rows
+  PASS  fold 2: no inner-fit set touches META_VAL
+  PASS  fold 3: META_FIT and META_VAL are disjoint
+  PASS  fold 3: they partition all rows
+  PASS  fold 3: no inner-fit set touches META_VAL
+  PASS  fold 4: META_FIT and META_VAL are disjoint
+  PASS  fold 4: they partition all rows
+  PASS  fold 4: no inner-fit set touches META_VAL
+
+global vs local index discipline
+  PASS  assembled matrix would be LOCAL to meta_fit, not length n
+  PASS  labels for assembled rows must be gathered as y[meta_fit]
+  PASS  local->global map is a bijection onto META_FIT
+  PASS  reading y at local indices differs from y[meta_fit] (so the bug would be visible)
+
+pre-declared constants
+  PASS  PRIOR_N is fixed at 50
+  PASS  LAMBDA is fixed at 50 and matches PRIOR_N nominally
+  PASS  MIN_N is fixed at 200
+  PASS  ROUNDS is fixed at 900
+  PASS  shrinkage constants are below the +1.5e-5 admission gate in effect
+  PASS  champion uses the champion learning rate 0.02, not the generic 0.03
+  PASS  champion uses num_leaves 127
+  PASS  champion has extra_trees True
+
+quantile binning robustness
+  PASS  constant column bins without raising
+  PASS  two-valued column bins without raising
+  PASS  continuous column produces multiple bins
+
+==============================================================================
+62/62 passed
+==============================================================================

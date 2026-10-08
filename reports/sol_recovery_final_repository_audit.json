@@ -1,0 +1,34 @@
+{
+  "utc": "2026-10-08T11:52:41.604247+00:00",
+  "status": "PASS",
+  "tree_counts": {
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0
+  },
+  "decoded_current_log_counts": {
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0
+  },
+  "decoded_current_log_encodings": {
+    "utf-16": 64,
+    "utf-8-sig": 99
+  },
+  "reachable_history_text_counts": {
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0
+  },
+  "reachable_history_log_counts": {
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0
+  },
+  "history_scanned_head": "fc33684418d0e955a0e87222a06c545d7646be1f",
+  "history_reachable_commits": 126,
+  "history_unique_text_blobs": 1041,
+  "history_unique_log_blobs": 170,
+  "scope": "Reachable history through pre-upload commit, plus final working tree including all post-result report/status/ledger additions and BOM-decoded current logs. This audit contains only whitelisted metadata and redacted findings.",
+  "findings_redacted": []
+}

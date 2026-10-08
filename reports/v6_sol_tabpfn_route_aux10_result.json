@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-08T11:46:02.413081+00:00",
+  "status": "COMPLETE",
+  "candidate": "v6_sol_tabpfn_route_aux10",
+  "kaggle_ref": "56951906",
+  "public_auc": 0.96144,
+  "team_public_rank": 234,
+  "team_count": 1145,
+  "remaining_quota": 9,
+  "public_leader": "0.96200",
+  "pre_upload_commit": "fc33684418d0e955a0e87222a06c545d7646be1f",
+  "csv_sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d",
+  "test_prediction_sha256": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+  "pre_result_manifest_sha256": "05025375d499a395e6ccc8df09c52f8e948975df694690a8170872f396039265",
+  "live_snapshot_sha256": "59bcb2f8adb2371319f29ddcfd0ac39d2a380a2843f34c29856873553bc0fc67",
+  "new_submissions_this_continuation": 1,
+  "additional_uploads_planned": 0,
+  "interpretation": "Public transfer diagnostic on about20percent of test; no weight retuning; actual80percent private ranking remains unknown."
+}

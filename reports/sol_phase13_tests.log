@@ -1,0 +1,68 @@
+====================================================================================
+PHASE 13 -- REGRESSION TESTS
+====================================================================================
+
+1. the aux path cannot reach the competition label
+  PASS  build_aux takes no label argument
+  PASS  build_aux takes the view matrices and names, nothing else
+  PASS  build_aux never references the target column or the y array
+  PASS  the runner records a structural label-free proof rather than a flip test
+  PASS  no label-flip test remains in the aux path
+
+2/3. fit rows are cross-fitted and val rows are unseen
+  PASS  an inner StratifiedKFold cross-fit is used for the fit rows
+  PASS  the validation rows are predicted by a model fitted on ALL fit rows
+  PASS  both sides therefore come from out-of-sample predictions
+  PASS  the inner cross-fit produces disjoint train/apply splits for every rating
+  PASS  in-sample aux accuracy exceeds cross-fitted accuracy, so memorisation is real
+  PASS  neither accuracy is perfect, so the demo is not trivially satisfied
+  PASS  cross-fitted accuracy is well above the 1/6 chance rate, so the mechanism carries signal
+
+4. the feature is sum_k k * P(k) over a 6-class multiclass model
+  PASS  there are 13 ratings
+  PASS  the model is 6-class, matching the 0..5 rating scale
+  PASS  the expected value is the probability vector dotted with 0..5
+  PASS  objective is multiclass
+  PASS  the prediction shape is asserted rather than assumed
+  PASS  expected value of [0.1,0,0.4,0,0.5,0] is 0*0.1+2*0.4+4*0.5 = 2.8
+  PASS  expected value of a point mass on 3 is 3
+
+5. the rating names are the VIEW's spellings
+    [cache] view full: (699635, 237)
+  PASS  every declared rating exists in the full view
+  PASS  three raw-dataset spellings do NOT exist in the view, so they must not be used
+  PASS  none of the raw-only spellings appears in RATINGS
+  PASS  the 13 ratings occupy the first 13 positions of the view, as the audit recorded
+
+6/7. the aux columns are additive, smooth and informative
+  PASS  f0: 13 aux columns added to 285, not replacing any
+  PASS  f0: the te_ block hash is unchanged
+  PASS  f0: the label-free structural proof held
+  PASS  f1: 13 aux columns added to 285, not replacing any
+  PASS  f1: the te_ block hash is unchanged
+  PASS  f1: the label-free structural proof held
+  PASS  f2: 13 aux columns added to 285, not replacing any
+  PASS  f2: the te_ block hash is unchanged
+  PASS  f2: the label-free structural proof held
+  PASS  f3: 13 aux columns added to 285, not replacing any
+  PASS  f3: the te_ block hash is unchanged
+  PASS  f3: the label-free structural proof held
+  PASS  f4: 13 aux columns added to 285, not replacing any
+  PASS  f4: the te_ block hash is unchanged
+  PASS  f4: the label-free structural proof held
+  PASS  every aux feature correlates strongly with the rating it smooths
+  PASS  no aux feature is IDENTICAL to its rating, or cross-fitting was skipped
+  PASS  every aux feature differs numerically from its rating
+
+8. the ensemble marginal is measured from real vectors
+  PASS  the marginal is computed by splicing into the exact v3 slot
+  PASS  the splice is asserted to leave out-of-fold rows untouched
+  PASS  the v3 geometry is reconstructed as expit(mean(logits))
+  PASS  the marginal is read on the fold's own rows
+  PASS  no weight-times-AUC approximation appears
+  PASS  the run record stores a measured marginal per fold
+  PASS  the run record stores the split census on the aux columns
+
+====================================================================================
+48/48 passed
+====================================================================================

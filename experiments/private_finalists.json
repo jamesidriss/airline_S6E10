@@ -1,6 +1,46 @@
 {
-  "updated_utc": "2026-10-08T11:32:43.905686+00:00",
+  "updated_utc": "2026-10-08T11:46:02.413081+00:00",
   "BEST_A": {
+    "name": "v6_sol_tabpfn_route_aux10",
+    "ref": 56951906,
+    "oof": 0.9617656138245795,
+    "public": 0.96144,
+    "status": "CERTIFIED_RECOMMENDED_CHAMPION_A_EXPECTED_PRIVATE_PERFORMER",
+    "primary_report": "reports/sol_route_aux10_primary_final.json",
+    "test_certificate": "reports/sol_route_aux10_primary_final_test_certificate.json",
+    "scorecard": "reports/sol_route_aux10_recovery_scorecard.json",
+    "pre_result_manifest": "reports/v6_sol_tabpfn_route_aux10_pre_result.json",
+    "receipt": "reports/v6_sol_tabpfn_route_aux10_result.json",
+    "test_prediction_sha256": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+    "independent_scope": "Both predeclared shadow folds and fixed primary fold0 seed1202 diagnostic; full shadow and block10 not established",
+    "policy_limitation": "Small100k training pool/20k holdout policy audit has zero-crossing bootstrap interval; five-context fallback remains frozen; no deployment OOF score claimed"
+  },
+  "BEST_B_HEDGE": null,
+  "fallback_B": {
+    "name": "v5_aux_cross",
+    "ref": 56918343,
+    "public": 0.96103,
+    "status": "BANKED_UNCERTIFIED_LEGACY_FALLBACK_NOT_RECOMMENDED_AS_CLEAN_HEDGE"
+  },
+  "final_selection_locked": false,
+  "verified_clean_BEST_A": {
+    "name": "v6_sol_tabpfn_route_aux10",
+    "ref": 56951906,
+    "oof": 0.9617656138245795,
+    "public": 0.96144,
+    "status": "CERTIFIED_RECOMMENDED_CHAMPION_A_EXPECTED_PRIVATE_PERFORMER",
+    "primary_report": "reports/sol_route_aux10_primary_final.json",
+    "test_certificate": "reports/sol_route_aux10_primary_final_test_certificate.json",
+    "scorecard": "reports/sol_route_aux10_recovery_scorecard.json",
+    "pre_result_manifest": "reports/v6_sol_tabpfn_route_aux10_pre_result.json",
+    "receipt": "reports/v6_sol_tabpfn_route_aux10_result.json",
+    "test_prediction_sha256": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+    "independent_scope": "Both predeclared shadow folds and fixed primary fold0 seed1202 diagnostic; full shadow and block10 not established",
+    "policy_limitation": "Small100k training pool/20k holdout policy audit has zero-crossing bootstrap interval; five-context fallback remains frozen; no deployment OOF score claimed"
+  },
+  "candidate_in_confirmation": null,
+  "verified_clean_BEST_B_HEDGE": null,
+  "banked_legacy_previous_best_A": {
     "name": "v5_aux_cross",
     "ref": 56918343,
     "oof": 0.9615234900843839,
@@ -12,136 +52,30 @@
       "six auxiliary XT test configurations collapsed; auxiliary/test iteration mismatch"
     ]
   },
-  "BEST_B_HEDGE": null,
-  "fallback_B": {
-    "name": "v4_fulldata",
-    "ref": 56845975,
-    "public": 0.961,
-    "status": "NOT_A_TRUE_HEDGE; v3 OOF proxy only"
-  },
-  "final_selection_locked": false,
-  "verified_clean_BEST_A": null,
-  "candidate_in_confirmation": {
-    "name": "sol_route_aux10_primary_final",
-    "intended_role": "expected private performance; provisional until confirmation and test certification",
-    "status": "FULL_PRIMARY_DECLARED_CONFIRMATION_AND_TEST_CERTIFIED_ROBUSTNESS_PENDING",
-    "report": "reports/sol_route_aux10_primary_final.json",
-    "report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
-    "folds": [
-      0,
-      1,
-      2,
-      3,
-      4
-    ],
-    "fold_aucs": [
-      0.9617271804553859,
-      0.961935424840251,
-      0.9617875501895332,
-      0.9610173262617477,
-      0.9623964100112486
-    ],
-    "paired_fold_deltas": [
-      0.0003129778662702698,
-      0.00032935307562242944,
-      0.0003452379524859772,
-      0.0004439954949422287,
-      0.0003034257831036058
-    ],
-    "mean_paired_gain": 0.0003469980344849022,
-    "paired_fold_se": 2.5277324554686046e-05,
-    "pooled_oof_auc": 0.9617656138245795,
-    "clean_aux10_pooled_auc": 0.9614187095444636,
-    "test_policy": "five immutable primary FIT-context route predictions averaged in probability space; exact full-label median-tree auxiliary10 refits; fixed50/50 method logits",
-    "predeclared_independent_scope": "shadow folds0/1 and primary fold0 seed1202; partial shadow only; block10 not run",
-    "outstanding": [
-      "private simulation and robustness scorecard",
-      "public transfer diagnostic",
-      "final private-first slot reassessment"
-    ],
-    "shadow_confirmation": {
-      "utc": "2026-10-08T08:54:10.191869+00:00",
-      "status": "PREDECLARED_TWO_SHADOW_FOLD_GATE_PASS_NOT_FULL_SHADOW_OOF",
-      "report": "reports\\sol_route_aux10_shadow_recovery.json",
-      "report_sha256": "d1f5fcc290c26e72c84671c630191c33106ca34e19bd8f0107878658a0c766cd",
-      "folds": [
-        {
-          "fold": 0,
-          "route_auc": 0.9605290365083669,
-          "strict_aux10_auc": 0.9609509438130238,
-          "candidate_auc": 0.9612052540431654,
-          "delta_vs_strict_aux10": 0.0002543102301415523
-        },
-        {
-          "fold": 1,
-          "route_auc": 0.960627702241256,
-          "strict_aux10_auc": 0.9609161581918919,
-          "candidate_auc": 0.9612181434319019,
-          "delta_vs_strict_aux10": 0.0003019852400100165
-        }
-      ],
-      "mean_paired_gain_vs_strict_aux10": 0.0002781477350757844,
-      "paired_fold_se": 2.383750493423209e-05,
-      "scope": "Only predeclared shadow folds 0/1; block10 not run; fixed seed diagnostic and actual test inference still outstanding",
-      "git": "e8514cb209199527a6720782c684d574f87bae1a"
+  "final_selection_reassessed": true,
+  "kaggle_final_selection_updated": false,
+  "continuation_status": "COMPLETE_CERTIFIED_SUBMISSION_SCORED_PRIVATE_UNCERTAINTY_DOCUMENTED",
+  "rejected_hedge_candidates": {
+    "clean_aux10": {
+      "oof_loss_vs_A": 0.00034690428011585617,
+      "test_logit_correlation_vs_A": 0.9989307824350159,
+      "reason": "Trailing expected score and no private simulation reversal; not a credible hedge"
     },
-    "seed_sensitivity": {
-      "seed": 1202,
-      "scope": "primary fold0 only; diagnostic never selects finalist seed",
-      "auc": 0.9611372496955853,
-      "seed1201_auc": 0.9611324459037415,
-      "auc_delta": 4.803791843865923e-06,
-      "report": "reports\\sol_tabpfn35_seed1202_recovery\\route_f0.json",
-      "report_sha256": "65bfc882268f8f74f1a6591341a4e77c90cd0446a84522f74787c40f0d9fad48",
-      "prediction_sha256": "99829c9419f85ac888465ca98d285f912aa83b798ee611950cc5a37c6bb9592b"
+    "route": {
+      "oof_loss_vs_A": 0.0005460130546930397,
+      "test_logit_correlation_vs_A": 0.998927553672569,
+      "reason": "Larger expected score loss and no private simulation reversal; not a credible hedge"
     },
-    "policy_audit": {
-      "report": "reports\\sol_policy_pseudotest_comparison.json",
-      "report_sha256": "82f37c69b4f8edc9452b4011a2c5d858f8080a22fbab448c5017663e51fe850a",
-      "status": "COMPLETE_SMALL_POLICY_COMPARISON_NOT_FINALIST_OOF",
-      "query_rows": 20000,
-      "single_context_rows": 100000,
-      "single_auc": 0.9602431261980358,
-      "five_context_average_auc": 0.9602823011246566,
-      "delta_average_minus_single": 3.91749266208663e-05,
-      "paired_bootstrap_interval": [
-        -0.00028568191066898063,
-        0.00027215107282064507
-      ],
-      "interpretation": "Small fixed-holdout audit is inconclusive about a true gain; frozen averaging policy unchanged; no deployment OOF score claimed",
-      "limitation": "One fixed20k-row shadow holdout with100k-row training pool. Each averaged member uses80percent of that pool. This audits averaging under strict exclusion; it cannot establish full-data transfer or a new full OOF score."
-    },
-    "route_test_verification": {
-      "report": "reports\\sol_recovery_five_route_test_verification.json",
-      "report_sha256": "7d9e5b44905cfd53774ef0561f0d853e46d5f0cd38dc3c43f17d4d4e31ee0060",
-      "test_rows": 299844,
-      "averaged_route_sha256": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
-    },
-    "test_certificate": {
-      "utc": "2026-10-08T11:32:43.905686+00:00",
-      "status": "CERTIFIED_FIXED_OOF_TEST_REQUIRES_ROBUSTNESS_SCORECARD",
-      "certificate": "reports\\sol_route_aux10_primary_final_test_certificate.json",
-      "certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
-      "route_contexts": 5,
-      "route_training_rows_each": 559708,
-      "auxiliary_refits": 10,
-      "auxiliary_training_rows_each": 699635,
-      "test_rows": 299844,
-      "weights": {
-        "route": 0.5,
-        "equal_logit_auxiliary10": 0.5
-      },
-      "foundation_test_policy": "Equal probability average of five exact immutable primary FIT contexts; not a full-data fit",
-      "test_sha256": {
-        "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
-        "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
-        "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
-      },
-      "auxiliary_cache_fingerprint": "7ad17c480b722e7625c3596c8618a46feca1e834cb557015dc1405c6f36be04d",
-      "auxiliary_cache_manifest_report": "reports\\sol_recovery_full_test_aux_cache.json",
-      "auxiliary_cache_manifest_sha256": "da49b58ca2bafd244c985440c0964c08ffd7903dbbb676963d49580f62bf8a3c",
-      "outstanding": "Private robustness scorecard, scientific decision, CSV preflight, upload and exact status, final private-first reassessment"
+    "legacy_v5": {
+      "reason": "Banked historical fallback; validation and inference defects remain; no certified hedge claim"
     }
   },
-  "verified_clean_BEST_B_HEDGE": null
+  "strategic_stop": {
+    "new_submissions": 1,
+    "clean59_replay": "Not started; repairing47 classical and12 neural members requires disproportionate compute after the large replicated clean gain. Preserve infrastructure and historical banks.",
+    "new39_cross": "Not started",
+    "block10": "Not run, as predeclared",
+    "outstanding_required_work": [],
+    "uncertainty": "Unknown private labels, partial shadow scope, one seed fold and deployment-policy sampling uncertainty; competition outcome is not known."
+  }
 }

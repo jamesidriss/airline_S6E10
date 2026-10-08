@@ -1,0 +1,130 @@
+==============================================================================
+NATIVE CATBOOST CATEGORICAL FRAME -- GUARD TESTS
+==============================================================================
+
+1. categorical identity is preserved exactly
+  PASS  twin holds strings, never numeric
+  PASS  twin has the same length as the source
+  PASS  every Gender value round-trips exactly
+  PASS  rating levels are plain integers with no decimal tail
+  PASS  rating level count matches the measured cardinality
+
+1b. twins are NOT ordinal codes
+  PASS  twin values are the original words, not 0/1 codes
+
+2. original numeric columns remain alongside the twins
+  PASS  'Inflight wifi service' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Inflight wifi service' is NOT converted to a string by the twin builder
+  PASS  'Departure/Arrival time convenient' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Departure/Arrival time convenient' is NOT converted to a string by the twin builder
+  PASS  'Ease of Online booking' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Ease of Online booking' is NOT converted to a string by the twin builder
+  PASS  'Gate location' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Gate location' is NOT converted to a string by the twin builder
+  PASS  'Food and drink' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Food and drink' is NOT converted to a string by the twin builder
+  PASS  'Online boarding' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Online boarding' is NOT converted to a string by the twin builder
+  PASS  'Seat comfort' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Seat comfort' is NOT converted to a string by the twin builder
+  PASS  'Inflight entertainment' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Inflight entertainment' is NOT converted to a string by the twin builder
+  PASS  'On-board service' is both a numeric raw column and a categorical twin
+  PASS  numeric 'On-board service' is NOT converted to a string by the twin builder
+  PASS  'Leg room service' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Leg room service' is NOT converted to a string by the twin builder
+  PASS  'Baggage handling' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Baggage handling' is NOT converted to a string by the twin builder
+  PASS  'Checkin service' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Checkin service' is NOT converted to a string by the twin builder
+  PASS  'Cleanliness' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Cleanliness' is NOT converted to a string by the twin builder
+  PASS  META4 numeric twins exist too
+  PASS  twin columns are named distinctly from numeric columns
+
+3. no target anywhere in the twins
+  PASS  no twin column name mentions the target
+  PASS  verify_no_target passes on the CatBoost twin columns
+  PASS  verify_no_target RAISES when the raw frame (which contains the target) is passed
+  PASS  verify_no_target RAISES on a target-named column
+  PASS  flipping every label leaves all twins bit-identical
+
+4. train / apply / test schemas match exactly
+  PASS  val columns are identical to fit columns and in the same order
+  PASS  val rows match the requested index count
+  PASS  test columns are identical to fit columns and in the same order
+  PASS  test rows match the requested index count
+  PASS  every declared cat_feature name resolves in every frame
+  PASS  attach returns one cat name per twin column
+  PASS  attach keeps every numeric column and appends every twin
+  PASS  attach preserves float dtype for the numeric block
+  PASS  attach preserves STRING dtype for the twin block (object or pandas str)
+  PASS  twin VALUES are python strings, which is what CatBoost requires
+  PASS  cat_indices returns one index per twin
+  PASS  cat_indices point at the twin columns, not at column 0
+  PASS  cat_indices are strictly increasing (twins are appended last)
+
+5. missing sentinel cannot collide with a real level
+  PASS  no real level equals the sentinel
+  PASS  sentinel is delimited so it cannot be a rating or a word
+  PASS  NaN becomes the sentinel
+  PASS  non-missing values are untouched by the sentinel logic
+  PASS  NaN in a numeric column becomes the sentinel
+
+6. cardinalities match the measured values
+  PASS  Gender: cardinality 2 == expected 2
+  PASS  Customer Type: cardinality 2 == expected 2
+  PASS  Type of Travel: cardinality 2 == expected 2
+  PASS  Class: cardinality 3 == expected 3
+  PASS  Inflight wifi service: cardinality 6 == expected 6
+  PASS  Departure/Arrival time convenient: cardinality 6 == expected 6
+  PASS  Ease of Online booking: cardinality 6 == expected 6
+  PASS  Gate location: cardinality 6 == expected 6
+  PASS  Food and drink: cardinality 6 == expected 6
+  PASS  Online boarding: cardinality 6 == expected 6
+  PASS  Seat comfort: cardinality 6 == expected 6
+  PASS  Inflight entertainment: cardinality 6 == expected 6
+  PASS  On-board service: cardinality 6 == expected 6
+  PASS  Leg room service: cardinality 6 == expected 6
+  PASS  Baggage handling: cardinality 5 == expected 5
+  PASS  Checkin service: cardinality 6 == expected 6
+  PASS  Cleanliness: cardinality 6 == expected 6
+  PASS  Customer Type is 2 (no 'Neutral Customer' in this data)
+  PASS  Class is 3 (Business/Eco/Plus, no 'First')
+  PASS  Baggage handling is 5 (one rating level unobserved)
+  PASS  no twin is a single level (would waste a CTR slot)
+  PASS  no META4 twin exceeds 4 levels
+
+7. outer-validation labels cannot alter the training frame
+  PASS  perturbing validation-fold labels leaves the FIT frame identical
+  PASS  FIT and VAL row sets are disjoint
+  PASS  twins are built from tr/te by column name only, so no fold statistic enters them
+
+8. arms differ only in the intended mechanism
+  PASS  C0 declares no categorical features
+  PASS  C2 declares exactly the twin columns
+  PASS  C0 and C2 share an identical numeric block
+  PASS  C2 differs from C0 ONLY by appended twin columns
+  PASS  C0 numeric values are unchanged between arms
+  PASS  C1 uses the same frame as C0, so only boosting_type can differ
+  PASS  Age twin is NOT built in this experiment
+  PASS  Flight Distance twin is NOT built in this experiment
+
+9. C0 reproduces the existing numeric control
+  PASS  C0 carries no categorical columns
+  PASS  C0 has exactly the 21 raw numeric columns
+  PASS  C0 numeric block is byte-identical to the raw float32 matrix
+  PASS  C0 numeric block is float32 throughout
+
+11. how CatBoost resolves cat_features (measured, not assumed)
+  PASS  twin names ARE in the frame
+  PASS  source names are NOT in the frame (they are renamed)
+  PASS  twin columns occupy indices 21..37
+  PASS  positional indices and TWIN NAMES give the SAME resolved cat indices
+  PASS  a name that is not in the frame RAISES rather than being silently reinterpreted
+  PASS  cat_indices raises on a name absent from the frame
+  PASS  cat_indices raises when a declared categorical column holds floats
+
+==============================================================================
+101/101 passed
+==============================================================================

@@ -1,0 +1,57 @@
+{
+  "utc": "2026-10-08T11:52:41.604247+00:00",
+  "status": "COMPLETE_CERTIFIED_SUBMISSION_SCORED_FINALISTS_REASSESSED",
+  "pre_closing_commit": "fc33684418d0e955a0e87222a06c545d7646be1f",
+  "evidence_file_sha256": {
+    "reports/sol_recovery_inventory_20261008.json": "534494ec7c64309d8854ce2e0dcf4e5041ddaf9a90a46804f8065255961ab7b6",
+    "research/sol_recovery_scope_20261008.json": "6d2e436d602c2313ad4ee67906b3d281f603b1058361d16e55e4fc08c39f7fd7",
+    "reports/sol_route_aux10_primary_final.json": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+    "reports/sol_route_aux10_shadow_recovery.json": "d1f5fcc290c26e72c84671c630191c33106ca34e19bd8f0107878658a0c766cd",
+    "reports/sol_tabpfn35_seed1202_recovery/route_f0.json": "65bfc882268f8f74f1a6591341a4e77c90cd0446a84522f74787c40f0d9fad48",
+    "reports/sol_policy_pseudotest_comparison.json": "82f37c69b4f8edc9452b4011a2c5d858f8080a22fbab448c5017663e51fe850a",
+    "reports/sol_route_aux10_primary_final_test_certificate.json": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+    "reports/sol_private_sim_recovery.json": "d7ef504cb8ef435cd5434afc3158ab69fcb8d32d0caa607cb897916a98532180",
+    "reports/sol_route_aux10_recovery_scorecard.json": "c5ef63a53db9d767ecc8334afd0262613c188c8777a43f3327164a8a20781716",
+    "reports/sol_route_aux10_recovery_decision.json": "b02573225690fca46e943e86b082569b66e9719009a719286c77e1fb1919b571",
+    "reports/v6_sol_tabpfn_route_aux10_pre_result.json": "05025375d499a395e6ccc8df09c52f8e948975df694690a8170872f396039265",
+    "reports/v6_sol_tabpfn_route_aux10_result.json": "94e1181421e2b573f6b6c2e7902decc45fdc1e7fbb890f0b756aca3f6cc54279",
+    "reports/sol_live_post_v6_20261008.json": "59bcb2f8adb2371319f29ddcfd0ac39d2a380a2843f34c29856873553bc0fc67",
+    "reports/sol_recovery_full_tests_current_20261008.json": "b9af62fb9df658bba8dbf41fcd31142c5fed34461ab976c3c86e951c54a99e6d",
+    "reports/sol_recovery_final_artifact_audit.json": "19e718fdbdf53f9112bb72fb0054d5619bca4444b6016104a9d69e3fe2b67072",
+    "reports/sol_recovery_final_history_audit.json": "c776c3b67ec21e7c5a006aba17c032a7e199a1090e98f5a38a30da38e6fc2f47",
+    "reports/sol_recovery_final_history_log_supplement.json": "1ebad4648358f52be856e748447b459cb7e9ad85e5cbdba06dff6b0d8bfb98e3",
+    "reports/sol_recovery_final_repository_audit.json": "f8ee2630f7dbc18a08a1798e32b66d52ec93a0d13dc3d89d2d916bcb8641bd45",
+    "reports/sol_final_recovery_report_20261008.md": "b45900e2a2f13b9773b2d483d3656b2278242b25cfbfd96180665e5c8e8a8330",
+    "submissions/v6_sol_tabpfn_route_aux10.csv": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d",
+    "experiments/private_finalists.json": "f1f4ba53767c6182c75da9e0dd3552850e598fff040a41414c34c3c8fa006845"
+  },
+  "prediction_array_hashes": {
+    "oof": {
+      "candidate": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+      "aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+      "route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510"
+    },
+    "test": {
+      "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+      "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+      "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+    }
+  },
+  "local_array_roots": [
+    "artifacts/sol_route_aux10_primary_final",
+    "artifacts/sol_route_aux10_primary_final_test"
+  ],
+  "local_weights_preserved": true,
+  "new_submissions": 1,
+  "kaggle_ref": "56951906",
+  "public_auc": 0.96144,
+  "recommended_champion_A": "v6_sol_tabpfn_route_aux10",
+  "credible_champion_B": null,
+  "required_work_remaining": [],
+  "remaining_uncertainty": [
+    "Actual80percent private distribution and result are unknown",
+    "Two shadow folds rather than full shadow OOF; block10 not run",
+    "One fixed seed diagnostic fold",
+    "Small pseudo-test averaging audit has zero-crossing interval"
+  ]
+}

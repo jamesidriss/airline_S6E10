@@ -1,0 +1,115 @@
+==============================================================================
+PHASE 11R -- PROTOCOL GUARD TESTS
+==============================================================================
+
+1/2/12. authoritative v3 geometry
+  PASS  reproduce_finalist averages member LOGITS
+  PASS  reproduce_finalist takes the mean over members
+  PASS  reproduce_finalist stores expit(oof)
+  PASS  reproduce_finalist declares equal_logit in the manifest
+  PASS  store dtype is float32
+  PASS  float32(expit(mean(logits))) reproduces the store BIT-EXACTLY
+  PASS  mean(probabilities) does NOT reproduce the store
+  PASS  float64 expit(mean(logits)) is within float32 eps of the store
+  PASS  the two geometries differ enough that the distinction matters
+
+2. no source file asserts the wrong geometry
+  PASS  every mention of the wrong geometry is quoted, corrected or disproved in context
+  PASS  Phase 11R states the authoritative geometry explicitly
+  PASS  Phase 11R records that the wrong geometry does NOT reproduce the store
+  PASS  Phase 11R records that the float32 cast is bit-exact
+
+3/4. a counterpart is EXACT only on a full match; C2 is never one
+  PASS  ND6 matches z3_cat_d6 on view/seed/depth/lr/l2/scheme
+  PASS  ND10 matches z3_cat_d10 on view/seed/depth/lr/l2/scheme
+  PASS  NCORE3 matches z3_cat_core3 on view/seed/depth/lr/l2/scheme
+  PASS  no slot is an EXACT match for C2 (seed 4 / primary / depth 8 / lr 0.04 / l2 3.0)
+  PASS  z3_cat_d8_s2 has seed 3 != C2's 4, so a C2 swap is approximate
+  PASS  prod5_cat_full_primary has seed 1 != C2's 4, so a C2 swap is approximate
+  PASS  the Phase 11R report labels the C2 swap as a diagnostic, not an exact replacement
+
+5/6/7/8. swap isolation and exact per-slot weight
+  PASS  single-slot swap changes exactly one component
+  PASS  the other 58 components are byte-identical
+  PASS  replacing one column keeps the member count at 59
+  PASS  blend is a mean over 59 columns, so each slot's weight is 1/59 of the total
+  PASS  the mean divides by the member count, not by the number of CHANGED columns
+  PASS  mini-block mixing keeps total weight exactly 1
+  PASS  z3_cat_d10: 50/50 mix still contributes exactly 1/59
+  PASS  z3_cat_d6: 50/50 mix still contributes exactly 1/59
+  PASS  z3_cat_core3: 50/50 mix still contributes exactly 1/59
+  PASS  slot mixing is in LOGIT space, not probability space
+  PASS  alpha=1 returns the native logit exactly
+
+9/10. native category schema and target safety
+  PASS  extra=none: fit and apply schemas identical
+  PASS  extra=none: every twin holds strings
+  PASS  extra=none: row counts match
+  PASS  extra=none: no twin named after the target
+  PASS  extra=none: flipping every label leaves the twins identical
+  PASS  extra=['Age']: fit and apply schemas identical
+  PASS  extra=['Age']: every twin holds strings
+  PASS  extra=['Age']: row counts match
+  PASS  extra=['Age']: no twin named after the target
+  PASS  extra=['Age']: flipping every label leaves the twins identical
+  PASS  extra=['Flight Distance']: fit and apply schemas identical
+  PASS  extra=['Flight Distance']: every twin holds strings
+  PASS  extra=['Flight Distance']: row counts match
+  PASS  extra=['Flight Distance']: no twin named after the target
+  PASS  extra=['Flight Distance']: flipping every label leaves the twins identical
+  PASS  Age has many levels (expect ~75)
+  PASS  Flight Distance has many levels (expect ~3474)
+  PASS  a 200-row sample under-reports Flight Distance badly (why the full column is used)
+
+11. the withdrawn structural-cap claim is not asserted as valid
+  PASS  the cap is explicitly recorded as WITHDRAWN in the corrections record
+  PASS  the withdrawal states AUC is a nonlinear functional
+  PASS  the withdrawal states the VALID Phase 11 conclusion
+  PASS  the previous swaps are relabelled as approximate diagnostics
+  PASS  the v3 geometry correction is recorded
+
+12. the ES carve must be disjoint from the ES model's own training rows
+  PASS  inner-train and ES are disjoint
+  PASS  inner-train + ES partition the outer fit exactly
+  PASS  ES is roughly 10% of the fit rows, matching the declared policy
+  PASS  the fixed ES model's row POSITIONS exclude every ES position
+  PASS  the fixed ES model trains on strictly fewer rows than the outer fit
+  PASS  the buggy call shape trained on every ES row
+  PASS  the harness now trains the ES model on the inner-train carve
+  PASS  the harness refuses to run if the carve sets overlap
+  PASS  the harness refuses to run if the carve does not partition the fit
+  PASS  the contamination is recorded in the corrections record
+  PASS  the arms trained before the fix are named
+
+13. partial-vector splice: shape, weight conservation, and no silent broadcast
+  PASS  stacking a raw partial vector against full members raises (the original crash)
+  PASS  splice leaves every out-of-fold row byte-identical
+  PASS  splice writes the native logit inside the fold
+  PASS  member count is unchanged after the swap
+  PASS  out-of-fold blend logits are bit-identical to the control
+  PASS  in-fold blend logits move by the full native-original difference
+  PASS  a native logit identical to the original changes ZERO fold rows
+  PASS  so demanding n_changed == n_fold would false-alarm (the check that fired)
+  PASS  the other 58 columns are the original array objects, not copies
+  PASS  fancy-indexing the plain list raises (the original TypeError)
+  PASS  alpha=0.0: out-of-fold rows untouched by the mix
+  PASS  alpha=0.0: in-fold rows equal the exact logit mix
+  PASS  alpha=0.0: the mix coefficients sum to 1
+  PASS  alpha=0.25: out-of-fold rows untouched by the mix
+  PASS  alpha=0.25: in-fold rows equal the exact logit mix
+  PASS  alpha=0.25: the mix coefficients sum to 1
+  PASS  alpha=0.5: out-of-fold rows untouched by the mix
+  PASS  alpha=0.5: in-fold rows equal the exact logit mix
+  PASS  alpha=0.5: the mix coefficients sum to 1
+  PASS  alpha=1.0: out-of-fold rows untouched by the mix
+  PASS  alpha=1.0: in-fold rows equal the exact logit mix
+  PASS  alpha=1.0: the mix coefficients sum to 1
+
+14. alpha=0 reproduces the v3 control bit-exactly
+  PASS  alpha=0 mean over the unmutated member logits, cast to float32, is bit-exact
+  PASS  the blend divides by 59 in both the reconstruction and the store
+  PASS  alpha=0 AUC equals the stored v3 AUC to float64 round-off
+
+==============================================================================
+90/90 passed
+==============================================================================

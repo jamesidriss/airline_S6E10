@@ -1,0 +1,77 @@
+==============================================================================
+PHASE 11 NATIVE BLOCK -- PROTOCOL GUARD TESTS
+==============================================================================
+
+1/8. slot mapping is one-to-one and free of duplicates
+  PASS  seven slots
+  PASS  slot indices are 0..6 with no gaps
+  PASS  every slot's exp_id is distinct
+  PASS  every slot's exp_id is in the v3 manifest
+  PASS  every v3 CatBoost member is claimed by exactly one slot
+  PASS  no two slots would be filled by the same native id
+
+2/3/4. block weight is fixed and non-CatBoost slots are untouched
+  PASS  weight per slot is exactly 1/59
+  PASS  CatBoost block weight is 7/59
+  PASS  inventory records the same block weight
+  PASS  non-CatBoost count is 52
+  PASS  alpha=0.00: total weight sums to exactly 1
+  PASS  alpha=0.25: total weight sums to exactly 1
+  PASS  alpha=0.50: total weight sums to exactly 1
+  PASS  alpha=0.75: total weight sums to exactly 1
+  PASS  alpha=1.00: total weight sums to exactly 1
+  PASS  alpha=0 gives every slot weight 1
+  PASS  alpha=1 gives every slot weight 1
+
+5. slot mixing is in logit space
+  PASS  logit-space and probability-space mixes differ
+  PASS  logit mix equals the arithmetic mean of logits
+  PASS  at alpha=0 the logit mix returns the original logit exactly
+  PASS  at alpha=1 the logit mix returns the native logit exactly
+
+6. alpha=0 reconstruction tolerance
+  PASS  the two averaging conventions genuinely differ
+  PASS  but they agree to ~1e-3 or better on a well-behaved blend
+
+9. inventory completeness
+  PASS  slot 0 z3_cat_f10: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  slot 1 z3_cat_d10: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  slot 2 z3_cat_d8_s2: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  slot 3 prod5_cat_full_primary: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  slot 4 z3_cat_d6: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  slot 5 z3_cat_core3: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  slot 6 z3_cat_ogs: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  every slot records that the original had NO categorical treatment
+  PASS  every slot records the original's discarded-carve OOF policy
+  PASS  inventory carries a config hash per slot
+  PASS  inventory carries an overall hash
+  PASS  inventory warns that native-original is not a causal estimate
+  PASS  inventory records the block10 mixing caveat
+  PASS  slot 0 is the only block10 member
+  PASS  no slot uses Ordered boosting
+
+10. OOF / schema consistency of the frame builder
+  PASS  train and apply frames have identical column lists
+  PASS  row counts match the requested index sets
+  PASS  exactly 17 twin columns
+  PASS  every twin holds strings
+  PASS  all twins are prefixed ncat__
+  PASS  no twin collides with a raw column name
+  PASS  META4 twins present
+  PASS  SERVICE13 twins present
+  PASS  Age twin is NOT included (separate arm C4)
+  PASS  Flight Distance twin is NOT included (separate arm C5)
+
+11. the harness refuses to report when the guard fails
+  PASS  the script raises SystemExit on a failed reconstruction guard
+  PASS  the abort message reports the measured probability difference
+  PASS  the abort message reports the float32 storage comparison
+  PASS  the abort message reports the logit correlation
+  PASS  the stop is still raised, not merely warned about
+  PASS  the guard is evaluated BEFORE any candidate is scored
+  PASS  the guard is evaluated before single-slot swaps are computed
+  PASS  alphas are predeclared and include 0 and 1
+
+==============================================================================
+56/56 passed
+==============================================================================

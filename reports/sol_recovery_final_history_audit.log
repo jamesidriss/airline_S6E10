@@ -1,0 +1,22 @@
+History metadata complete: 126 reachable commits; 1041 unique text blobs
+History scan: 250/1041 unique text blobs
+History scan: 500/1041 unique text blobs
+History scan: 750/1041 unique text blobs
+History scan: 1000/1041 unique text blobs
+{
+  "utc": "2026-10-08T11:43:13.763769+00:00",
+  "status": "PASS",
+  "scope": "All unique text blobs in every reachable commit; sensitive filenames checked in every tree; BOM-aware UTF16 and UTF8 decoding; existing redacted repository detectors",
+  "scanned_head": "fc33684418d0e955a0e87222a06c545d7646be1f",
+  "reachable_commits": 126,
+  "unique_text_blobs": 1041,
+  "encodings": {
+    "utf-8-sig": 1040,
+    "utf-16": 1
+  },
+  "counts": {
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0
+  }
+}

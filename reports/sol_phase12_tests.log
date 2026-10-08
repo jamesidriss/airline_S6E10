@@ -1,0 +1,247 @@
+====================================================================================
+PHASE 12 -- REGRESSION TESTS
+====================================================================================
+
+1. champion configuration provenance
+  PASS  the champion member is the extra_trees member recorded in the ledger
+  PASS  the champion view is 'full'
+  PASS  the champion seed is 1
+  PASS  learning_rate appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  num_leaves appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  min_child_samples appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  colsample_bytree appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  subsample appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  subsample_freq appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  reg_lambda appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  max_bin appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  n_estimators appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  extra_trees=True is the champion lever
+  PASS  learning_rate is 0.02, matching run_xt_zoo.py:36
+  PASS  num_leaves is 127, matching run_xt_zoo.py:36
+  PASS  run_xt_zoo.py registers xt_d127_s1 with extra_trees=True, seed 1, full, primary
+  PASS  the champion is NOT taken from src/models/gbdt.py defaults
+  PASS  no CODE line computes CHAMPION_SEED + k
+  PASS  no CODE line adds the fold index to any seed
+  PASS  the runner states the champion seed is fixed on every fold
+  PASS  the inner ES split also uses the fixed seed
+  PASS  run_xt_zoo passes the entry seed straight through, with no + k
+  PASS  the reproduction check runs on EVERY fold, not just the first
+  PASS  run_xt_zoo seeds the target-encoding cross-fit with the FOLD INDEX
+  PASS  the runner passes inner_seed=k to vb.assemble
+  PASS  no code line passes a constant inner_seed=0
+  PASS  fit_arm accepts a categorical index list
+  PASS  the champion params do not silently include a categorical declaration
+
+2. native LightGBM categoricals were never tested before (so this is not a re-run)
+  PASS  no prior lgbm ledger entry declares native categoricals
+  PASS  the feature layer never emits a lightgbm categorical flag
+  PASS  the notebook audit recorded that it used no native categoricals
+
+3/4. declaring a categorical changes HANDLING only
+    [cache] view full: (699635, 237)
+  PASS  the full view has exactly 285 features
+  PASS  the matrix shape matches the declared width
+  PASS  the view carries exactly 48 te_ columns
+  PASS  re-assembly is bit-identical, so the matrix is a fixed input to every arm
+  PASS  te_ columns are byte-identical across assemblies
+  PASS  te_ for fold 0 and fold 1 genuinely differ, so a cross-fold reference is invalid
+  PASS  the runner keys its te_ reference by fold
+  PASS  the runner aborts if one fold's features differ between arms
+  PASS  L0: every declared categorical is an existing view column
+  PASS  L0: no duplicate positions
+  PASS  L0: declaring it would not change the column count
+  PASS  L1: every declared categorical is an existing view column
+  PASS  L1: no duplicate positions
+  PASS  L1: declaring it would not change the column count
+  PASS  L2: every declared categorical is an existing view column
+  PASS  L2: no duplicate positions
+  PASS  L2: declaring it would not change the column count
+  PASS  L3: every declared categorical is an existing view column
+  PASS  L3: no duplicate positions
+  PASS  L3: declaring it would not change the column count
+  PASS  Age, Flight Distance and the delays are NOT categorical in any arm
+  PASS  L0 declares nothing, which is what makes it a clean control
+  PASS  L1 is META4 only
+  PASS  L2 is META4 plus the three irregular surveys
+  PASS  L3 adds all 13 survey ratings on top of META4
+
+5/6/7. category codes are safe and zero is a real level
+    [cache] view full: (699635, 237)
+  PASS  the audited column set is exactly 17
+  PASS  Baggage handling [fit]: no NaN
+  PASS  Baggage handling [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Baggage handling [fit]: all codes integral
+  PASS  Baggage handling [val]: no NaN
+  PASS  Baggage handling [val]: all codes non-negative (LightGBM requirement)
+  PASS  Baggage handling [val]: all codes integral
+  PASS  Baggage handling: no apply-row code absent from fit rows
+  PASS  Checkin service [fit]: no NaN
+  PASS  Checkin service [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Checkin service [fit]: all codes integral
+  PASS  Checkin service [val]: no NaN
+  PASS  Checkin service [val]: all codes non-negative (LightGBM requirement)
+  PASS  Checkin service [val]: all codes integral
+  PASS  Checkin service: no apply-row code absent from fit rows
+  PASS  Class [fit]: no NaN
+  PASS  Class [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Class [fit]: all codes integral
+  PASS  Class [val]: no NaN
+  PASS  Class [val]: all codes non-negative (LightGBM requirement)
+  PASS  Class [val]: all codes integral
+  PASS  Class: no apply-row code absent from fit rows
+  PASS  Cleanliness [fit]: no NaN
+  PASS  Cleanliness [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Cleanliness [fit]: all codes integral
+  PASS  Cleanliness [val]: no NaN
+  PASS  Cleanliness [val]: all codes non-negative (LightGBM requirement)
+  PASS  Cleanliness [val]: all codes integral
+  PASS  Cleanliness: no apply-row code absent from fit rows
+  PASS  Customer Type [fit]: no NaN
+  PASS  Customer Type [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Customer Type [fit]: all codes integral
+  PASS  Customer Type [val]: no NaN
+  PASS  Customer Type [val]: all codes non-negative (LightGBM requirement)
+  PASS  Customer Type [val]: all codes integral
+  PASS  Customer Type: no apply-row code absent from fit rows
+  PASS  Departure/Arrival time convenient [fit]: no NaN
+  PASS  Departure/Arrival time convenient [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Departure/Arrival time convenient [fit]: all codes integral
+  PASS  Departure/Arrival time convenient [val]: no NaN
+  PASS  Departure/Arrival time convenient [val]: all codes non-negative (LightGBM requirement)
+  PASS  Departure/Arrival time convenient [val]: all codes integral
+  PASS  Departure/Arrival time convenient: no apply-row code absent from fit rows
+  PASS  Ease of Online booking [fit]: no NaN
+  PASS  Ease of Online booking [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Ease of Online booking [fit]: all codes integral
+  PASS  Ease of Online booking [val]: no NaN
+  PASS  Ease of Online booking [val]: all codes non-negative (LightGBM requirement)
+  PASS  Ease of Online booking [val]: all codes integral
+  PASS  Ease of Online booking: no apply-row code absent from fit rows
+  PASS  Food and drink [fit]: no NaN
+  PASS  Food and drink [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Food and drink [fit]: all codes integral
+  PASS  Food and drink [val]: no NaN
+  PASS  Food and drink [val]: all codes non-negative (LightGBM requirement)
+  PASS  Food and drink [val]: all codes integral
+  PASS  Food and drink: no apply-row code absent from fit rows
+  PASS  Gate location [fit]: no NaN
+  PASS  Gate location [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Gate location [fit]: all codes integral
+  PASS  Gate location [val]: no NaN
+  PASS  Gate location [val]: all codes non-negative (LightGBM requirement)
+  PASS  Gate location [val]: all codes integral
+  PASS  Gate location: no apply-row code absent from fit rows
+  PASS  Gender [fit]: no NaN
+  PASS  Gender [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Gender [fit]: all codes integral
+  PASS  Gender [val]: no NaN
+  PASS  Gender [val]: all codes non-negative (LightGBM requirement)
+  PASS  Gender [val]: all codes integral
+  PASS  Gender: no apply-row code absent from fit rows
+  PASS  Inflight entertainment [fit]: no NaN
+  PASS  Inflight entertainment [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Inflight entertainment [fit]: all codes integral
+  PASS  Inflight entertainment [val]: no NaN
+  PASS  Inflight entertainment [val]: all codes non-negative (LightGBM requirement)
+  PASS  Inflight entertainment [val]: all codes integral
+  PASS  Inflight entertainment: no apply-row code absent from fit rows
+  PASS  Inflight wifi service [fit]: no NaN
+  PASS  Inflight wifi service [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Inflight wifi service [fit]: all codes integral
+  PASS  Inflight wifi service [val]: no NaN
+  PASS  Inflight wifi service [val]: all codes non-negative (LightGBM requirement)
+  PASS  Inflight wifi service [val]: all codes integral
+  PASS  Inflight wifi service: no apply-row code absent from fit rows
+  PASS  Leg room service [fit]: no NaN
+  PASS  Leg room service [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Leg room service [fit]: all codes integral
+  PASS  Leg room service [val]: no NaN
+  PASS  Leg room service [val]: all codes non-negative (LightGBM requirement)
+  PASS  Leg room service [val]: all codes integral
+  PASS  Leg room service: no apply-row code absent from fit rows
+  PASS  On-board service [fit]: no NaN
+  PASS  On-board service [fit]: all codes non-negative (LightGBM requirement)
+  PASS  On-board service [fit]: all codes integral
+  PASS  On-board service [val]: no NaN
+  PASS  On-board service [val]: all codes non-negative (LightGBM requirement)
+  PASS  On-board service [val]: all codes integral
+  PASS  On-board service: no apply-row code absent from fit rows
+  PASS  Online boarding [fit]: no NaN
+  PASS  Online boarding [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Online boarding [fit]: all codes integral
+  PASS  Online boarding [val]: no NaN
+  PASS  Online boarding [val]: all codes non-negative (LightGBM requirement)
+  PASS  Online boarding [val]: all codes integral
+  PASS  Online boarding: no apply-row code absent from fit rows
+  PASS  Seat comfort [fit]: no NaN
+  PASS  Seat comfort [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Seat comfort [fit]: all codes integral
+  PASS  Seat comfort [val]: no NaN
+  PASS  Seat comfort [val]: all codes non-negative (LightGBM requirement)
+  PASS  Seat comfort [val]: all codes integral
+  PASS  Seat comfort: no apply-row code absent from fit rows
+  PASS  Type of Travel [fit]: no NaN
+  PASS  Type of Travel [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Type of Travel [fit]: all codes integral
+  PASS  Type of Travel [val]: no NaN
+  PASS  Type of Travel [val]: all codes non-negative (LightGBM requirement)
+  PASS  Type of Travel [val]: all codes integral
+  PASS  Type of Travel: no apply-row code absent from fit rows
+  PASS  survey columns expose level 0 as a present code
+  PASS  Online boarding: level 0 present, so it is distinct from missingness
+  PASS  Inflight wifi service: level 0 present, so it is distinct from missingness
+  PASS  Gate location: level 0 present, so it is distinct from missingness
+  PASS  Baggage handling: max code 5 is a plausible level count, not a sentinel
+  PASS  Checkin service: max code 5 is a plausible level count, not a sentinel
+  PASS  Class: max code 2 is a plausible level count, not a sentinel
+  PASS  Cleanliness: max code 5 is a plausible level count, not a sentinel
+  PASS  Customer Type: max code 1 is a plausible level count, not a sentinel
+  PASS  Departure/Arrival time convenient: max code 5 is a plausible level count, not a sentinel
+  PASS  Ease of Online booking: max code 5 is a plausible level count, not a sentinel
+  PASS  Food and drink: max code 5 is a plausible level count, not a sentinel
+  PASS  Gate location: max code 5 is a plausible level count, not a sentinel
+  PASS  Gender: max code 1 is a plausible level count, not a sentinel
+  PASS  Inflight entertainment: max code 5 is a plausible level count, not a sentinel
+  PASS  Inflight wifi service: max code 5 is a plausible level count, not a sentinel
+  PASS  Leg room service: max code 5 is a plausible level count, not a sentinel
+  PASS  On-board service: max code 5 is a plausible level count, not a sentinel
+  PASS  Online boarding: max code 5 is a plausible level count, not a sentinel
+  PASS  Seat comfort: max code 5 is a plausible level count, not a sentinel
+  PASS  Type of Travel: max code 1 is a plausible level count, not a sentinel
+
+8. inner ES carve is disjoint and partitioning
+  PASS  inner-train and ES are disjoint
+  PASS  inner-train + ES partition the fit rows exactly
+  PASS  ES is ~10% of fit rows
+  PASS  the runner trains on the 90% inner-train rows, not the whole fit frame
+  PASS  the runner aborts if the carve overlaps
+  PASS  the runner aborts if the carve does not partition
+
+9/10/11. the treatment is observable and extra_trees does not break it
+  PASS  the detector finds ZERO categorical splits when none is declared
+  PASS  the detector finds categorical splits when one IS declared
+  PASS  undeclared splits are all numerical
+  PASS  extra_trees=True and False give the SAME number of categorical splits
+  PASS  extra_trees does not destroy the categorical search
+  PASS  the declared feature actually receives the splits
+  PASS  no CODE line counts '||' as a split detector
+  PASS  the audit's census keys on decision_type
+  PASS  run_phase12's census keys on decision_type too
+  PASS  detector is exact on ground truth: 0 declared -> 0 found
+  PASS  detector is exact on ground truth: 1 declared -> >0 found
+  PASS  LightGBM exposes its internal missing marker (-1) for a declared categorical
+  PASS  the missing marker means NaN is routed as MISSING, not as a category code
+
+12. categorical hyperparameters are pinned, not library-implicit
+  PASS  cat_smooth is pinned to 10
+  PASS  cat_l2 is pinned to 10
+  PASS  max_cat_threshold is pinned to 32
+  PASS  max_cat_to_onehot is pinned to 4
+  PASS  min_data_per_group is pinned to 100
+  PASS  fit_arm actually applies CAT_PARAMS
+  PASS  the audit also pins them
+  PASS  the fitted model echoes the pinned categorical params back into the run record
+
+====================================================================================
+224/224 passed
+====================================================================================
