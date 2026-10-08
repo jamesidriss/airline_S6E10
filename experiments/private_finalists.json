@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-08T09:11:03.208845+00:00",
+  "updated_utc": "2026-10-08T10:59:37.748556+00:00",
   "BEST_A": {
     "name": "v5_aux_cross",
     "ref": 56918343,
@@ -24,7 +24,7 @@
   "candidate_in_confirmation": {
     "name": "sol_route_aux10_primary_final",
     "intended_role": "expected private performance; provisional until confirmation and test certification",
-    "status": "FULL_PRIMARY_AND_DECLARED_CONFIRMATION_PASS_TEST_INFERENCE_RUNNING",
+    "status": "FIVE_ROUTE_TEST_CONTEXTS_VERIFIED_AUXILIARY_TEST_PENDING",
     "report": "reports/sol_route_aux10_primary_final.json",
     "report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
     "folds": [
@@ -111,6 +111,12 @@
       ],
       "interpretation": "Small fixed-holdout audit is inconclusive about a true gain; frozen averaging policy unchanged; no deployment OOF score claimed",
       "limitation": "One fixed20k-row shadow holdout with100k-row training pool. Each averaged member uses80percent of that pool. This audits averaging under strict exclusion; it cannot establish full-data transfer or a new full OOF score."
+    },
+    "route_test_verification": {
+      "report": "reports\\sol_recovery_five_route_test_verification.json",
+      "report_sha256": "7d9e5b44905cfd53774ef0561f0d853e46d5f0cd38dc3c43f17d4d4e31ee0060",
+      "test_rows": 299844,
+      "averaged_route_sha256": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
     }
   },
   "verified_clean_BEST_B_HEDGE": null
