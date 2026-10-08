@@ -1,0 +1,84 @@
+{
+  "utc": "2026-10-08T19:22:08.445662+00:00",
+  "git": "976eae9e9e840d026b0ff328f00251f16ddeaf4a",
+  "scope": "selected primary folds; not full OOF",
+  "folds": [
+    {
+      "fold": 0,
+      "standalone_auc": 0.9611871325043367,
+      "standalone_gain": 0.000164278837890941,
+      "v6_candidate_auc": 0.9617366928509691,
+      "v6_gain": 9.512395583222144e-06,
+      "joint_candidate_auc": 0.9617939294581072,
+      "joint_gain_vs_raw_stack": 9.252594137421077e-06,
+      "correlation_vs_v6": {
+        "logit": 0.9999969570285636,
+        "spearman": 0.9999701944022642
+      },
+      "correlation_joint_vs_raw_stack": {
+        "logit": 0.9999969475226651,
+        "spearman": 0.9999696544171046
+      },
+      "source_report_sha256": "f66da4a6ed27d8faad086194a32bc9c4bdaff50aab6a5c40f52fe411d3e40f31",
+      "seconds": 1331.5929999999935,
+      "trees": 1504
+    }
+  ],
+  "v6_marginal": {
+    "mean": 9.512395583222144e-06,
+    "se": null,
+    "positive": 1
+  },
+  "raw_stack_marginal": {
+    "mean": 9.252594137421077e-06,
+    "se": null,
+    "positive": 1
+  },
+  "data_sha256": {
+    "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+    "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+  },
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "v6_selected_auc": 0.9617366928509691,
+  "joint_selected_auc": 0.9617939294581072,
+  "v6_bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "v6",
+    "comparisons": {
+      "candidate": {
+        "mean": 9.302077222890226e-06,
+        "percentile_95_interval": [
+          8.194894319996095e-07,
+          1.9044487372538166e-05
+        ],
+        "positive_fraction": 0.985
+      }
+    }
+  },
+  "joint_bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "raw_stack",
+    "comparisons": {
+      "joint": {
+        "mean": 8.99740551775885e-06,
+        "percentile_95_interval": [
+          5.140378962043004e-07,
+          1.8093092793963764e-05
+        ],
+        "positive_fraction": 0.98
+      }
+    }
+  },
+  "source_sha256": {
+    "C:\\Users\\James\\airline_S6E10\\scripts\\evaluate_sol_phase15_native.py": "9f470c611479115d4978342a7975c06ad95376ab7740982fe3b9c4858a333776"
+  },
+  "raw_report_sha256": "3cd818364a88828a5e8afa9fb7741e2cc06ffaf9eda0b1372d507e5b8a87e96b",
+  "combination_protocol_sha256": "0d64acdf893777c9ff6034389c88e2e20f93e789564770ec87b8607c4e8380b5",
+  "verdict": "POSITIVE_PARTIAL_REQUIRES_REPLICATION_OR_ADMISSION"
+}

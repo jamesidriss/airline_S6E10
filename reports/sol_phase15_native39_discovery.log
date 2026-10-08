@@ -1,0 +1,1 @@
+{"scope": "selected primary folds; not full OOF", "v6_marginal": {"mean": 9.512395583222144e-06, "se": null, "positive": 1}, "raw_stack_marginal": {"mean": 9.252594137421077e-06, "se": null, "positive": 1}, "verdict": "POSITIVE_PARTIAL_REQUIRES_REPLICATION_OR_ADMISSION"}
