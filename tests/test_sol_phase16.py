@@ -5,6 +5,7 @@ import numpy as np
 import torch
 from scripts.phase16_common import noise_ceiling, error_pairs, rank_geometry
 from scripts.phase16_tabpfn import probabilities, sequential_predict
+from scripts.phase16_pair_metrics import pair_rescue_damage
 
 
 def test_symmetric_noise_ceiling_matches_explicit_pair_confusion():
@@ -48,6 +49,22 @@ def test_rank_geometry_cannot_use_other_applied_folds():
     assert not np.array_equal(rank_geometry(a, b)[:4], rank_geometry(changed_a, changed_b)[:4])
     assert original[1] == original[2]
     assert np.array_equal(rank_geometry(np.exp(a), b**3, groups), original)
+
+
+def test_rescue_damage_matches_all_pairs_with_dual_ties():
+    y = np.array([1, 0, 1, 0, 0, 1, 1, 0])
+    old = np.array([.3, .3, .7, .9, .1, .7, .6, .7])
+    new = np.array([.6, .4, .6, .6, .7, .8, .1, .8])
+    def credit(a, b):
+        return float(a > b)+.5*float(a == b)
+    changes = [credit(new[i], new[j])-credit(old[i], old[j])
+               for i in np.flatnonzero(y == 1) for j in np.flatnonzero(y == 0)]
+    r = pair_rescue_damage(y, new, old)
+    assert r['rescued_pair_credit'] == sum(max(x, 0) for x in changes)
+    assert r['damaged_pair_credit'] == sum(max(-x, 0) for x in changes)
+    swapped = pair_rescue_damage(y, old, new)
+    assert swapped['rescued_pair_credit'] == r['damaged_pair_credit']
+    assert pair_rescue_damage(y, old, old)['rescued_pair_credit'] == 0
 
 
 def test_sequential_cache_release_and_official_probability_order():

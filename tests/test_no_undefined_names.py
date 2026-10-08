@@ -34,6 +34,8 @@ CRITICAL_SCRIPTS = [
     "scripts/probe_phase16_tabpfn.py",
     "scripts/run_phase16_tabpfn.py",
     "scripts/run_phase16_fast.py",
+    "scripts/evaluate_phase16_fold.py",
+    "scripts/phase16_pair_metrics.py",
     "scripts/audit_sol_phase15.py",
     "scripts/evaluate_sol_phase15_raw.py",
     "scripts/run_sol_phase15_raw_context.py",
