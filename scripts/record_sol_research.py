@@ -37,6 +37,22 @@ def main():
     repair_counts = {k: 0 for k in range(5)}
     now = datetime.now(timezone.utc).isoformat()
     with ledger.open('a', encoding='utf-8') as out:
+        for tag in ('sol_scaling_control','sol_scaling_reuse','sol_tabpfn35_full_context_probe',
+                    'sol_tabpfn35_full_context_scaling','sol_head_views_control','sol_head_views_reuse',
+                    'sol_tabpfn35_full_context_head_views'):
+            path=REPORTS/tag/'probe.json'
+            eid=f'{tag}_numerical_or_resource_probe'
+            if not path.exists() or eid in existing:
+                continue
+            rec=json.loads(path.read_text(encoding='utf-8')); c=rec['contract']
+            if 'prediction_sha256' in rec:
+                assert arr_sha256(np.load(ARTIFACTS/tag/'probe.npy'))==rec['prediction_sha256']
+            out.write(json.dumps({'exp_id':eid,'ts':now,'git':c['git'],
+                'kind':'NUMERICAL_OR_RESOURCE_PROBE','verdict':rec['status'],
+                'paired_fold_deltas':None,'corr_with_champion':None,
+                'reason':'No AUC measured; resource failures are not model-performance evidence',
+                'report':str(path),'report_hash':file_sha256(path),'contract':c,
+                'measurements':{k:v for k,v in rec.items() if k!='contract'}},default=str)+'\n')
         for tag in ('sol_repair', 'sol_b', 'sol_b_xt', 'sol_a_ladder', 'sol_neural_clean', 'sol_neural_clean_compact') + FOUNDATION_TAGS:
             for path in sorted((REPORTS / tag).glob('*.json')):
                 rec = json.loads(path.read_text(encoding='utf-8'))

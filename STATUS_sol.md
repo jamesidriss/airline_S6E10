@@ -1,6 +1,6 @@
 # SOL campaign — audit and continuation
 
-Checkpoint: 8 October 2026, 00:03 UTC. **No clean finalist has yet been fully
+Checkpoint: 8 October 2026, 00:51 UTC. **No clean finalist has yet been fully
 reproduced. No new Kaggle submission was spent. Final slots remain unlocked.**
 The campaign continues; this is not a final decision or research stopping point.
 
@@ -46,7 +46,7 @@ its historical TE priors remain affected. See `reports/sol_neural_audit.json`.
 | Surprise diagnostic | High-surprise pair error rate0.04723 vs0.03771 outside; modest within-margin enrichment | No specialist justified |
 | Full-context TabPFN3.5 raw | Honest f0 AUC 0.960972296; fixed 1/60 append gain +0.000021134; logit correlation 0.994532205; 1030.312 s | Positive discovery only; legacy comparison, no admission |
 | Matched TabPFN3.5 route | Honest f0/f1 AUC 0.961132446/0.961379166; f0 +0.000160150 versus raw; 1/60 legacy append gains +0.000020159/+0.000023193 | Two completed folds; no full-OOF admission |
-| Frozen 50/50 route/strict auxiliary10 | Honest f0 AUC 0.961727180; +0.000312976 versus strict auxiliary10; +0.000217338 versus legacy v5 | Promising candidate; prioritize exact replication |
+| Frozen 50/50 route/strict auxiliary10 | f0/f1 AUC 0.961727180455/0.961935424840; paired gains +0.000312977866/+0.000329353076 versus clean auxiliary10; mean +0.000321165471, SE 0.000008187605, 2/2 positive | Replicated; complete primary and independent confirmation; no finalist claim |
 | Corrected RealMLP recipe | f0 AUC 0.960758172; legacy slot diagnostic −0.000002531; 70.328 s; OOF/test vectors saved | Contract repair only; no improvement/admission claim |
 | Query and activation buffer reuse | Complete-model 100k-context/1024-prediction probes are bit-identical to the reference; raw and route full-FIT now complete | Frozen for primary replication |
 | Decoder linear-projection batching | Max probability gap 0.000226825 vs tolerance 0.000002 | Failed equivalence gate; reject implementation |
@@ -71,12 +71,23 @@ contracts or forecast ranks. A clean candidate needs its own simulation.
 
 ## Resources and verification
 
-Active: `replay_sol_isolated.py`, tag `sol_clean_aux10_isolated`, twenty frozen
-auxiliary role/fold jobs. Twelve XT jobs are complete; native CatBoost and three
-XGB roles remain. One fresh process per fold avoids native allocator retention.
-The new first XT control has bit-identical predictions, FIT/validation matrices
-and718 selected trees compared with corrected SOL-A A0. The remaining controls
-must pass before interpreting the predeclared50/50 portfolio's second fold.
+All twenty frozen auxiliary role/fold jobs are complete under
+`sol_clean_aux10_isolated`. Every one of the ten fold0 controls has identical
+predictions, FIT/validation matrix hashes and selected tree count versus strict
+SOL-A A0. Their verified fixed portfolio is in `reports/sol_route_aux10_twofold.json`.
+Active: frozen route fold2, fresh process, tag `sol_tabpfn35_route_reserve`.
+One fresh process per fold avoids native allocator retention.
+
+The all699635-row context resource probe failed before predictions in14.375s.
+Fresh scaling-output reuse is bit-identical on10,247,168 BF16 values, leaves
+the input query unchanged, and preserves CPU outputs and gradients. Both the
+unmodified100k-context control and complete-model reuse treatment reproduce
+the reference probability SHA exactly, max gap0, each27.812s total.
+The full-context reuse retry also failed before predictions while explicitly
+repeating attention values. Both attempts are resource-invalid, not negative
+performance evidence. The predeclared full-test policy and probability-average
+of five immutable primary-context fallback remain in
+`research/sol_test_inference_contract.md`. No fallback has yet been executed.
 Route fold1 completed in1027.359 s, with13675054592 B peak GPU allocation.
 Its prediction SHA256 is83ca4330f955aef150dab5f45ebd2f1d432109659842e9fb371e88d6d1c0771a.
 The first fold1 FIT succeeded in787.9 s but prediction was refused because the

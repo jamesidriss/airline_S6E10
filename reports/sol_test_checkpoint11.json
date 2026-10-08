@@ -1,0 +1,21 @@
+{
+  "scope": "Focused checks only; GPU whole-model head-view gate pending",
+  "results": [
+    {
+      "test": "test_scaling_reuse_preserves_cpu_and_gradient_paths",
+      "status": "PASS",
+      "seconds": 0.8900000000139698
+    },
+    {
+      "test": "test_head_views_preserve_all_keys_and_alias_guard",
+      "status": "PASS",
+      "seconds": 0.0
+    },
+    {
+      "test": "test_critical_files_have_no_undefined_names",
+      "status": "PASS",
+      "seconds": 0.0940000000409782,
+      "files": 49
+    }
+  ]
+}

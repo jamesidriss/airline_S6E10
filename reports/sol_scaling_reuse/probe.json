@@ -1,0 +1,59 @@
+{
+  "contract": {
+    "git": "9e687321e14115b3607b68a1cb7370b3f6bc970e",
+    "timing_only": true,
+    "train_rows": 100000,
+    "query_rows": 1024,
+    "fit_ids_sha256": "238b9389b2a02ee2252aa2666bf90e70f4ea1cd1d9e159bee61670a73f72a621",
+    "query_ids_sha256": "e6633f1bdb41e814ec625d59cfa09af94c08a1936fde4f26186ffadb591efb22",
+    "params": {
+      "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35\\tabpfn-v3.5-20260909.safetensors",
+      "n_estimators": 1,
+      "auto_scale_n_estimators": false,
+      "random_state": 1201,
+      "device": "cuda",
+      "ignore_pretraining_limits": true,
+      "fit_mode": "fit_with_cache",
+      "kv_cache_precision": "int8",
+      "keep_cache_on_device": true,
+      "inference_precision": "autocast",
+      "categorical_features_indices": [
+        13,
+        14,
+        15,
+        16
+      ],
+      "memory_saving_mode": true,
+      "n_preprocessing_jobs": 1,
+      "tuning_config": null
+    },
+    "reference_sha256": "2f4a2aa5d88a6cff46f67c1a47995caf3aff3fc2c4f6c741b513beaa4b4024f2",
+    "reuse_scaling": true,
+    "data_sha256": {
+      "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+      "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+    },
+    "backend_gate": {
+      "fp16": 0.00048828125,
+      "bf16": 0.0078125
+    },
+    "source_sha256": {
+      "scripts/verify_sol_scaling_reuse.py": "3f291730ff21817fb6eb3b87cc97391b07ee3ff93c263fe209604fe4a6e888cb",
+      "src/models/scaling_reuse.py": "405ebe973f419fd00b3cff7457b7a4dc03c76640266b27669779780d7f846093",
+      "scripts/run_sol_tabpfn.py": "e3d84441b6e2b927cf058dbefe4bd0a3956f12834d75a8ff4a2f85fafc6e5d6b",
+      "src/models/windows_attention.py": "104bed55ad7eb37911a27e22ee37b558b6bda43ae123c0f386303cea4116bc34",
+      "src/models/pointwise_inference.py": "1aedd977666d9a1777692dbfd889d0a50bd303609154cbc68bcfb18c94e8b1ab",
+      "src/models/resource_guard.py": "b91280215a10f688690603b17289e9b80d865488127744826ef0e449721a2049"
+    },
+    "performance_verdict": "none; fixed numerical reference only",
+    "maximum_allowed_probability_gap": 2e-06
+  },
+  "fit_seconds": 27.405999999959022,
+  "seconds": 27.81200000003446,
+  "patched_scaling_modules": 28,
+  "peak_gpu_bytes": 2857153024,
+  "prediction_sha256": "a64dfea84287aad3f6c1675916f5f7e252c055d4eb45e22d79b265a930c3d543",
+  "reference_prediction_sha256": "a64dfea84287aad3f6c1675916f5f7e252c055d4eb45e22d79b265a930c3d543",
+  "maximum_probability_gap": 0.0,
+  "status": "NUMERICAL_GATE_PASS"
+}

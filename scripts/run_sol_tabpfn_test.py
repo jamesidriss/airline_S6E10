@@ -25,6 +25,7 @@ def main():
     ap.add_argument('--reference', default='reports/sol_tabpfn35_route/route_f0.json')
     ap.add_argument('--tag', default='sol_tabpfn35_full_context_probe')
     ap.add_argument('--probe-only', action='store_true')
+    ap.add_argument('--scaling-reuse',action='store_true',help='Use only after the complete-model numerical resource gate passes')
     ap.add_argument('--gpu-fraction', type=float, default=.85)
     args = ap.parse_args()
     reference_path = Path(args.reference)
@@ -41,6 +42,16 @@ def main():
     assert ref['batch_size']==1024
     assert version('tabpfn')==ref['library_version']
     assert 0 < args.gpu_fraction <= 1
+    numerical_gate=None
+    if args.scaling_reuse:
+        gate_path=REPORTS/'sol_scaling_reuse'/'probe.json'
+        gate=json.loads(gate_path.read_text(encoding='utf-8'))
+        assert gate['status']=='NUMERICAL_GATE_PASS' and gate['maximum_probability_gap']<=2e-6
+        assert gate['contract']['reuse_scaling'] and gate['contract']['train_rows']==100000
+        assert gate['contract']['params']['model_path']==ref['params']['model_path']
+        assert all(file_sha256(p)==h for p,h in gate['contract']['source_sha256'].items())
+        assert arr_sha256(np.load(ARTIFACTS/'sol_scaling_reuse'/'probe.npy'))==gate['prediction_sha256']
+        numerical_gate={'report_sha256':file_sha256(gate_path),'maximum_probability_gap':gate['maximum_probability_gap']}
     checkpoint = Path(ref['params']['model_path'])
     assert file_sha256(checkpoint) == ref['checkpoint']['checkpoint_sha256']
     root, reports = ARTIFACTS/args.tag, REPORTS/args.tag
@@ -74,11 +85,14 @@ def main():
         'source_sha256': {p: file_sha256(p) for p in ('scripts/run_sol_tabpfn_test.py',
             'scripts/run_sol_tabpfn.py', 'src/models/windows_attention.py',
             'src/models/pointwise_inference.py', 'src/models/resource_guard.py')},
+        'scaling_reuse':args.scaling_reuse,'scaling_reuse_gate':numerical_gate,
         'backend_reference_gap': backend_gate, 'gpu_fraction': args.gpu_fraction,
         'inference_settings': {k: ref[k] for k in ('batch_size', 'icl_bf16', 'inference_chunk_cells',
             'inference_col_chunk_size', 'decoder_inplace_gelu', 'reuse_query_output')},
         'test_policy': 'entire training set as context; frozen pretrained model and representation',
         'timing_only': args.probe_only, 'performance_verdict': 'none; no OOF or test-label score'}
+    if args.scaling_reuse:
+        contract['source_sha256']['src/models/scaling_reuse.py']=file_sha256('src/models/scaling_reuse.py')
     start = time.monotonic()
     model = None
     save_json({**contract, 'status': 'FITTING'}, root/'progress.json')
@@ -89,6 +103,9 @@ def main():
         with inference_guard(root, contract, min_available_gib=4, max_seconds=2700):
             model = create_model(params, ref['icl_bf16'], ref['inference_chunk_cells'],
                 ref['inference_col_chunk_size'], None, ref['decoder_inplace_gelu'])
+            if args.scaling_reuse:
+                from src.models.scaling_reuse import install_scaling_reuse
+                install_scaling_reuse(model.model_path.model)
             model.fit(x, y)
         fit_seconds = time.monotonic()-start
         gc.collect(); torch.cuda.empty_cache()

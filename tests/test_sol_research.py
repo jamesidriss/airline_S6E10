@@ -138,3 +138,48 @@ def test_decoder_activation_reuse_preserves_matrix_shapes_and_gradients():
         a, b = x.clone().requires_grad_(), x.clone().requires_grad_()
         mlp(a).sum().backward(); reference(b).sum().backward()
     torch.testing.assert_close(a.grad, b.grad, rtol=0, atol=0)
+def test_scaling_reuse_preserves_cpu_and_gradient_paths():
+    import torch
+    from tabpfn.architectures.tabpfn_v3_5 import SoftmaxScalingMLP
+    from src.models.scaling_reuse import install_scaling_reuse
+    torch.manual_seed(51)
+    module=SoftmaxScalingMLP(4,16)
+    with torch.no_grad():
+        module.query_mlp[-1].weight.normal_(0,.03)
+    original=module.forward
+    q=torch.randn(2,17,4,16,requires_grad=True)
+    expected=original(q,699635)
+    expected_grad=torch.autograd.grad(expected.sum(),q)[0]
+    install_scaling_reuse(torch.nn.Sequential(module),min_rows=1)
+    actual=module(q,699635)
+    actual_grad=torch.autograd.grad(actual.sum(),q)[0]
+    assert torch.equal(actual,expected) and torch.equal(actual_grad,expected_grad)
+
+
+def test_head_views_preserve_all_keys_and_alias_guard():
+    from contextlib import nullcontext
+    from unittest.mock import patch
+    from src.models.head_view_attention import HeadViewBackend
+    generator=torch.Generator().manual_seed(73)
+    for reuse in (False,True):
+        q=torch.randn(2,19,4,8,generator=generator)
+        k=torch.randn(2,23,1,8,generator=generator)
+        v=torch.randn(2,23,1,8,generator=generator)
+        old_k,old_v=k.clone(),v.clone()
+        expected=torch.nn.functional.scaled_dot_product_attention(
+            q.permute(0,2,1,3),k.permute(0,2,1,3),v.permute(0,2,1,3),
+            enable_gqa=True).permute(0,2,1,3)
+        with torch.no_grad(),patch('src.models.head_view_attention.sdpa_kernel',return_value=nullcontext()):
+            actual=HeadViewBackend(query_chunk_size=7,reuse_query_output=reuse).run(q,k,v)
+        torch.testing.assert_close(actual,expected)
+        assert torch.equal(k,old_k) and torch.equal(v,old_v)
+        assert (actual.data_ptr()==q.data_ptr())==reuse
+    # A query alias into the single-head key storage must never be overwritten.
+    k=torch.randn(2,19,1,8,generator=generator)
+    q=k.expand(-1,-1,4,-1)
+    v=torch.randn_like(k); old=k.clone()
+    with torch.no_grad(),patch('src.models.head_view_attention.sdpa_kernel',return_value=nullcontext()):
+        actual=HeadViewBackend(query_chunk_size=7,reuse_query_output=True).run(q,k,v)
+    assert actual.untyped_storage().data_ptr()!=k.untyped_storage().data_ptr()
+    assert torch.equal(k,old)
+

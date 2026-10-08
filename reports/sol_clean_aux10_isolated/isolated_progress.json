@@ -1,0 +1,87 @@
+{
+  "utc": "2026-10-08T00:28:16.690084+00:00",
+  "status": "COMPLETED",
+  "completed": [
+    {
+      "member": "xt_xt_d127_ss06",
+      "fold": 0
+    },
+    {
+      "member": "xt_xt_d127_ss06",
+      "fold": 1
+    },
+    {
+      "member": "xt_xt_d127_s1",
+      "fold": 0
+    },
+    {
+      "member": "xt_xt_d127_s1",
+      "fold": 1
+    },
+    {
+      "member": "xt_xt_d255",
+      "fold": 0
+    },
+    {
+      "member": "xt_xt_d255",
+      "fold": 1
+    },
+    {
+      "member": "xt_xt_d127_bin63",
+      "fold": 0
+    },
+    {
+      "member": "xt_xt_d127_bin63",
+      "fold": 1
+    },
+    {
+      "member": "xt_xt_d127_cs05",
+      "fold": 0
+    },
+    {
+      "member": "xt_xt_d127_cs05",
+      "fold": 1
+    },
+    {
+      "member": "xt_xt_d63",
+      "fold": 0
+    },
+    {
+      "member": "xt_xt_d63",
+      "fold": 1
+    },
+    {
+      "member": "z3_cat_d8_s2",
+      "fold": 0
+    },
+    {
+      "member": "z3_cat_d8_s2",
+      "fold": 1
+    },
+    {
+      "member": "prod5_xgb_full_primary",
+      "fold": 0
+    },
+    {
+      "member": "prod5_xgb_full_primary",
+      "fold": 1
+    },
+    {
+      "member": "xt_xgb_lossguide",
+      "fold": 0
+    },
+    {
+      "member": "xt_xgb_lossguide",
+      "fold": 1
+    },
+    {
+      "member": "zoo_xgb_d6",
+      "fold": 0
+    },
+    {
+      "member": "zoo_xgb_d6",
+      "fold": 1
+    }
+  ],
+  "scope": "Only requested folds; no full OOF claim"
+}
