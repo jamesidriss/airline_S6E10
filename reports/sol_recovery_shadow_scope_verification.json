@@ -1,0 +1,26 @@
+{
+  "utc": "2026-10-08T08:54:10.191869+00:00",
+  "status": "PREDECLARED_TWO_SHADOW_FOLD_GATE_PASS_NOT_FULL_SHADOW_OOF",
+  "report": "reports\\sol_route_aux10_shadow_recovery.json",
+  "report_sha256": "d1f5fcc290c26e72c84671c630191c33106ca34e19bd8f0107878658a0c766cd",
+  "folds": [
+    {
+      "fold": 0,
+      "route_auc": 0.9605290365083669,
+      "strict_aux10_auc": 0.9609509438130238,
+      "candidate_auc": 0.9612052540431654,
+      "delta_vs_strict_aux10": 0.0002543102301415523
+    },
+    {
+      "fold": 1,
+      "route_auc": 0.960627702241256,
+      "strict_aux10_auc": 0.9609161581918919,
+      "candidate_auc": 0.9612181434319019,
+      "delta_vs_strict_aux10": 0.0003019852400100165
+    }
+  ],
+  "mean_paired_gain_vs_strict_aux10": 0.0002781477350757844,
+  "paired_fold_se": 2.383750493423209e-05,
+  "scope": "Only predeclared shadow folds 0/1; block10 not run; fixed seed diagnostic and actual test inference still outstanding",
+  "git": "e8514cb209199527a6720782c684d574f87bae1a"
+}

@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-08T07:18:44.154220+00:00",
+  "updated_utc": "2026-10-08T08:54:10.191869+00:00",
   "BEST_A": {
     "name": "v5_aux_cross",
     "ref": 56918343,
@@ -24,7 +24,7 @@
   "candidate_in_confirmation": {
     "name": "sol_route_aux10_primary_final",
     "intended_role": "expected private performance; provisional until confirmation and test certification",
-    "status": "FULL_PRIMARY_ADMISSION_PASS_CONFIRMATION_AND_TEST_PENDING",
+    "status": "FULL_PRIMARY_AND_PREDECLARED_PARTIAL_SHADOW_PASS_SEED_AND_TEST_PENDING",
     "report": "reports/sol_route_aux10_primary_final.json",
     "report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
     "folds": [
@@ -55,14 +55,39 @@
     "test_policy": "five immutable primary FIT-context route predictions averaged in probability space; exact full-label median-tree auxiliary10 refits; fixed50/50 method logits",
     "predeclared_independent_scope": "shadow folds0/1 and primary fold0 seed1202; partial shadow only; block10 not run",
     "outstanding": [
-      "two fixed shadow folds",
       "fixed seed1202 diagnostic",
       "complete certified test predictions",
       "conditional small inference-policy audit",
       "private simulation and robustness scorecard",
       "public transfer diagnostic",
       "final private-first slot reassessment"
-    ]
+    ],
+    "shadow_confirmation": {
+      "utc": "2026-10-08T08:54:10.191869+00:00",
+      "status": "PREDECLARED_TWO_SHADOW_FOLD_GATE_PASS_NOT_FULL_SHADOW_OOF",
+      "report": "reports\\sol_route_aux10_shadow_recovery.json",
+      "report_sha256": "d1f5fcc290c26e72c84671c630191c33106ca34e19bd8f0107878658a0c766cd",
+      "folds": [
+        {
+          "fold": 0,
+          "route_auc": 0.9605290365083669,
+          "strict_aux10_auc": 0.9609509438130238,
+          "candidate_auc": 0.9612052540431654,
+          "delta_vs_strict_aux10": 0.0002543102301415523
+        },
+        {
+          "fold": 1,
+          "route_auc": 0.960627702241256,
+          "strict_aux10_auc": 0.9609161581918919,
+          "candidate_auc": 0.9612181434319019,
+          "delta_vs_strict_aux10": 0.0003019852400100165
+        }
+      ],
+      "mean_paired_gain_vs_strict_aux10": 0.0002781477350757844,
+      "paired_fold_se": 2.383750493423209e-05,
+      "scope": "Only predeclared shadow folds 0/1; block10 not run; fixed seed diagnostic and actual test inference still outstanding",
+      "git": "e8514cb209199527a6720782c684d574f87bae1a"
+    }
   },
   "verified_clean_BEST_B_HEDGE": null
 }

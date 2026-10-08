@@ -1,5 +1,7 @@
 # STATUS — Kaggle Playground S6E10 (Airline Satisfaction)
 
+Recovery checkpoint: 2026-10-08T08:54:10.191869+00:00. The frozen portfolio passes both predeclared shadow folds. Candidate AUCs 0.9612052540431654 and 0.9612181434319019; paired gains over strict auxiliary10 0.0002543102301415523 and 0.0003019852400100165. Mean gain 0.0002781477350757844, paired SE 0.00002383750493423209. All20 fresh auxiliary shadow fits and both route contexts completed. This is partial shadow confirmation only; block10 was not run. Seed1202 is in progress. Actual test inference, private simulation and submission are outstanding. No new submission has been spent.
+
 _Last updated: 2026-10-08, 07:17 UTC._
 
 The recovery continuation has completed the frozen route/clean auxiliary10
