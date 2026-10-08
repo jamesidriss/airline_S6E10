@@ -29,9 +29,11 @@ evidence-bound decision remain required before submission.
 The initial recovery suite returned110 passed,0 failed. A later source review
 found that its static guard had linted pathname strings rather than file
 contents, missing the scorecard's get_scheme import. The import and guard are
-fixed. The corrected64-file check and missing-import fixture pass2/2; earlier
-zero-undefined-name claims are superseded. The final current full suite remains
-outstanding, including the newly added recovery tests.
+fixed. The corrected64-entry source check and missing-import fixture pass2/2;
+earlier zero-undefined-name claims are superseded. The current full suite
+completed at07:22 UTC: **114 passed,0 failed**, including the four new recovery
+checks, actual-data view checks, leakage isolation, source tracking and six
+mocked submission-I/O checks. No real submission was spent by the tests.
 
 Banked v5: public **0.96103**, ref **56918343**. Legacy OOF reconstructs to
 **0.9615234900843839** versus v3 **0.9615085784350211**. Mean paired fold gain

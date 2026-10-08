@@ -1,0 +1,229 @@
+  PASS  tests.test_stochastic_protocol  (69/69 passed)
+  PASS  tests.test_pipeline.test_admission_gate_logic  (0.0s)
+  PASS  tests.test_pipeline.test_blocked_id_scheme_is_contiguous  (0.1s)
+  PASS  tests.test_pipeline.test_crossfit_prior_never_sees_own_label  (0.0s)
+  PASS  tests.test_pipeline.test_crossfit_row_never_sees_own_label  (0.0s)
+  PASS  tests.test_pipeline.test_external_features_use_no_competition_label  (15.6s)
+  PASS  tests.test_pipeline.test_fold_determinism  (0.1s)
+  PASS  tests.test_pipeline.test_fold_no_row_overlap  (0.0s)
+  PASS  tests.test_pipeline.test_fold_safe_te_never_sees_apply_rows  (0.0s)
+  PASS  tests.test_pipeline.test_inner_early_stopping_split_is_disjoint_from_eval  (0.0s)
+  PASS  tests.test_pipeline.test_no_secret_shaped_material_in_repository  (8.9s)
+  PASS  tests.test_pipeline.test_no_source_files_missing_from_git  (0.0s)
+  PASS  tests.test_pipeline.test_oof_coverage_and_store_integrity  (0.7s)
+{'n_original': 129880, 'n_original_rows_exactly_matching_a_competition_row': 21, 'n_competition_rows_matching_some_original_row': 21}
+  PASS  tests.test_pipeline.test_original_overlap_audit_is_small  (2.9s)
+  PASS  tests.test_pipeline.test_sample_submission_schema  (0.1s)
+  PASS  tests.test_pipeline.test_schema  (0.1s)
+  PASS  tests.test_pipeline.test_secret_scan_detectors_are_self_exempt_and_working  (0.0s)
+[submission] wrote C:\Users\James\airline_S6E10\submissions\pytest_ok.csv  rows=299844  sha16=469048eb2dd51855
+  PASS  tests.test_pipeline.test_submission_preflight_rejects_bad_input  (0.6s)
+  PASS  tests.test_pipeline.test_transforms_are_invertible_shape_wise  (0.0s)
+  PASS  tests.test_pipeline.test_twin_vocabulary_is_label_free  (1.5s)
+  PASS  tests.test_pipeline.test_verify_kaggle_facts_never_persists_non_json_bodies  (0.0s)
+  [shim] faiss gpu mode: shim | repeat call: shim-already-installed
+  PASS  tests.test_tabr_retrieval.test_faiss_gpu_shim_is_scoped_additive_and_idempotent  (0.2s)
+  PASS  tests.test_tabr_retrieval.test_shim_reset_clears_database_so_batches_cannot_leak_into_each_other  (0.7s)
+  PASS  tests.test_tabr_retrieval.test_torch_exact_l2_index_depends_on_no_labels  (0.0s)
+  [device/memory] peak extra 222 MiB vs full matrix 586 MiB
+  PASS  tests.test_tabr_retrieval.test_torch_exact_l2_index_device_placement_and_determinism  (0.1s)
+  [fp32 guard] guarded rel err 3.548e-07 vs naive TF32-path 2.006e+00
+  PASS  tests.test_tabr_retrieval.test_torch_exact_l2_index_is_fp32_exact_not_tf32  (0.4s)
+  [l2 vs float64] relative error 2.421e-07
+  PASS  tests.test_tabr_retrieval.test_torch_exact_l2_index_matches_float64_reference  (0.0s)
+  [top-k set overlap] 4800/4800 exact
+  PASS  tests.test_tabr_retrieval.test_torch_exact_l2_index_topk_overlap_is_complete  (0.0s)
+  [d_main guard] correctly rejected 128 vs 265
+  PASS  tests.test_tabr_wiring.test_assert_effective_config_rejects_a_mismatched_model  (0.0s)
+  [d_main] 64 -> 64, 128 -> 128
+  PASS  tests.test_tabr_wiring.test_d_main_flag_reaches_the_parameter_dict  (0.0s)
+W1008 09:18:21.904000 29456 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+  [d_main effective] 64 -> 64, 128 -> 128
+  PASS  tests.test_tabr_wiring.test_d_main_reaches_the_instantiated_pytabkit_model  (2.6s)
+  [registry] find_torch_index tracks the newest index
+  PASS  tests.test_tabr_wiring.test_installed_index_registry_points_at_the_most_recent_index  (0.0s)
+  [autograd] candidate encoding is grad-free only when memory_efficient=True
+  PASS  tests.test_tabr_wiring.test_memory_efficient_actually_suppresses_candidate_autograd  (0.0s)
+  [memory_efficient] production default True; False leaves cand_bs unset
+  PASS  tests.test_tabr_wiring.test_production_config_uses_memory_efficient_true  (0.0s)
+  [query_chunk] retrieval stays exact across a chunk change
+  PASS  tests.test_tabr_wiring.test_query_chunk_reconfiguration_keeps_retrieval_exact  (0.0s)
+  [query_chunk] 128 -> 32 honoured by new and live indexes
+  PASS  tests.test_tabr_wiring.test_query_chunk_reconfiguration_takes_effect_on_new_indexes  (0.0s)
+  PASS  tests.test_tabr_wiring.test_retrieval_width_assertion_rejects_mismatch  (0.0s)
+  [source guard] no _twin_frame(vb.static_*) call sites
+  PASS  tests.test_tabr_wiring.test_runner_source_does_not_use_static_tr_for_validation  (0.0s)
+    [cache] view full: (699635, 237)
+  [width] static=237 assembled=285 (gap 48)
+  PASS  tests.test_tabr_wiring.test_static_view_is_narrower_than_assembled_view  (1.4s)
+  [width guard] accepts assemble() output, rejects static-width mismatches
+  PASS  tests.test_tabr_wiring.test_width_assertion_accepts_real_frames_and_rejects_static  (0.0s)
+  [clean] 64 critical files, 0 undefined names
+  PASS  tests.test_no_undefined_names.test_critical_files_have_no_undefined_names  (0.3s)
+  [ordering] prediction is persisted before diagnostics
+  PASS  tests.test_no_undefined_names.test_prediction_is_persisted_before_diagnostics  (0.0s)
+  [imports] all 19 fold-completion helpers resolve
+  PASS  tests.test_no_undefined_names.test_run_tabr_imports_every_name_it_calls  (0.0s)
+  PASS  tests.test_no_undefined_names.test_static_guard_reads_file_contents_and_detects_missing_imports  (0.0s)
+    [cache] view full: (699635, 237)
+  PASS  tests.test_index_space.test_assemble_returns_local_indexed_matrix  (8.9s)
+  PASS  tests.test_index_space.test_early_stopping_holdout_is_about_ten_percent  (0.1s)
+  PASS  tests.test_index_space.test_fit_and_eval_row_sets_are_disjoint  (0.1s)
+  PASS  tests.test_index_space.test_global_local_index_pairing_is_detectable  (5.5s)
+  PASS  tests.test_index_space.test_inner_es_split_returns_train_first  (0.1s)
+  PASS  tests.test_te_all21.test_apply_transform_uses_only_fit_labels  (0.2s)
+  PASS  tests.test_te_all21.test_exact_values_survive_without_float32_aliasing  (0.0s)
+  PASS  tests.test_te_all21.test_inner_split_is_deterministic_and_independent_of_the_target  (0.1s)
+  PASS  tests.test_te_all21.test_nan_sentinel_is_stable_and_collision_free  (0.1s)
+  PASS  tests.test_te_all21.test_one_fit_row_target_cannot_materially_move_its_own_encoding  (0.1s)
+  PASS  tests.test_te_all21.test_randomising_outer_val_labels_changes_nothing  (0.1s)
+  PASS  tests.test_te_all21.test_unseen_category_maps_to_prior  (0.0s)
+    [cache] view full: (699635, 237)
+    [cache] view core3: (699635, 225)
+  PASS  tests.test_view_composition.test_conditional_and_all21_blocks_are_mutually_exclusive_by_default  (11.5s)
+    [cache] view full: (699635, 237)
+  full             static=237  te=48  tec=0   all21=0   total=285
+    [cache] view full_te21: (699635, 237)
+  full_te21        static=237  te=48  tec=0   all21=21  total=306
+    [cache] view full_all21te: (699635, 237)
+  full_all21te     static=237  te=0   tec=0   all21=21  total=258
+    [cache] view full_tec: (699635, 237)
+  full_tec         static=237  te=48  tec=72  all21=0   total=357
+    [cache] view full_tec_swap: (699635, 237)
+  full_tec_swap    static=237  te=0   tec=72  all21=0   total=309
+    [cache] view core3: (699635, 225)
+  core3            static=225  te=0   tec=0   all21=0   total=225
+    [cache] view core3_te: (699635, 225)
+  core3_te         static=225  te=48  tec=0   all21=0   total=273
+    [cache] view core3_tec: (699635, 225)
+  core3_tec        static=225  te=48  tec=72  all21=0   total=345
+    [cache] view core3_tec_swap: (699635, 225)
+  core3_tec_swap   static=225  te=0   tec=72  all21=0   total=297
+  PASS  tests.test_view_composition.test_view_composition_matches_declared_blocks  (187.9s)
+    realmlp fold0 auc=0.500000
+    realmlp fold1 auc=0.500000
+    realmlp fold2 auc=0.500000
+    realmlp fold3 auc=0.500000
+    realmlp fold4 auc=0.500000
+    realmlp fold0 auc=0.500000
+    realmlp fold1 auc=0.500000
+    realmlp fold2 auc=0.500000
+    realmlp fold3 auc=0.500000
+    realmlp fold4 auc=0.500000
+    realmlp fold0 auc=0.500000 cols=3 ncat=1
+    realmlp fold1 auc=0.500000 cols=3 ncat=1
+    realmlp fold2 auc=0.500000 cols=3 ncat=1
+    realmlp fold3 auc=0.500000 cols=3 ncat=1
+    realmlp fold4 auc=0.500000 cols=3 ncat=1
+    realmlp fold0 auc=0.500000 cols=3 ncat=1
+    realmlp fold1 auc=0.500000 cols=3 ncat=1
+    realmlp fold2 auc=0.500000 cols=3 ncat=1
+    realmlp fold3 auc=0.500000 cols=3 ncat=1
+    realmlp fold4 auc=0.500000 cols=3 ncat=1
+    realmlp fold0 auc=0.500000 cols=2 ncat=0
+    realmlp fold1 auc=0.500000 cols=2 ncat=0
+    realmlp fold2 auc=0.500000 cols=2 ncat=0
+    realmlp fold3 auc=0.500000 cols=2 ncat=0
+    realmlp fold4 auc=0.500000 cols=2 ncat=0
+    realmlp fold0 auc=0.500000 cols=2 ncat=0
+    realmlp fold1 auc=0.500000 cols=2 ncat=0
+    realmlp fold2 auc=0.500000 cols=2 ncat=0
+    realmlp fold3 auc=0.500000 cols=2 ncat=0
+    realmlp fold4 auc=0.500000 cols=2 ncat=0
+    tabm fold0 auc=0.500000
+    tabm fold1 auc=0.500000
+    tabm fold2 auc=0.500000
+    tabm fold3 auc=0.500000
+    tabm fold4 auc=0.500000
+    tabm fold0 auc=0.500000
+    tabm fold1 auc=0.500000
+    tabm fold2 auc=0.500000
+    tabm fold3 auc=0.500000
+    tabm fold4 auc=0.500000
+    tabm fold0 auc=0.500000
+    tabm fold1 auc=0.500000
+    tabm fold2 auc=0.500000
+    tabm fold3 auc=0.500000
+    tabm fold4 auc=0.500000
+    tabm fold0 auc=0.500000
+    tabm fold1 auc=0.500000
+    tabm fold2 auc=0.500000
+    tabm fold3 auc=0.500000
+    tabm fold4 auc=0.500000
+  PASS  tests.test_sol_contracts.test_all_neural_entry_points_isolate_outer_labels_and_respect_no_twin  (0.1s)
+  PASS  tests.test_sol_contracts.test_array_hash_buffer_path_preserves_historical_digests  (0.0s)
+  PASS  tests.test_sol_contracts.test_aux_distribution_arithmetic_and_invalid_inputs  (0.0s)
+  PASS  tests.test_sol_contracts.test_aux_fit_and_apply_rows_are_actually_unseen  (0.0s)
+  PASS  tests.test_sol_contracts.test_banked_predictions_cannot_be_replaced_or_lose_test_sidecar  (0.0s)
+[submission] wrote C:\Users\James\AppData\Local\Temp\tmp28_rdc_j\banked.csv  rows=3  sha16=9ac922a3ec843387
+  PASS  tests.test_sol_contracts.test_banked_submission_cannot_be_overwritten  (0.0s)
+  PASS  tests.test_sol_contracts.test_block10_auxiliary_confirmation_excludes_outer_labels_and_primary_arrays  (0.5s)
+  PASS  tests.test_sol_contracts.test_certified_submission_refuses_unbound_decision_before_loading_data  (0.0s)
+  PASS  tests.test_sol_contracts.test_clean_classical_role_plan_is_frozen_and_retains_original_schemes  (0.0s)
+  PASS  tests.test_sol_contracts.test_clean_portfolio_refuses_missing_test_predictions_before_loading_data  (0.0s)
+  PASS  tests.test_sol_contracts.test_clean_replay_resume_rejects_misaligned_ids_before_writing  (0.0s)
+  PASS  tests.test_sol_contracts.test_fixed_foundation_confirmation_excludes_outer_labels  (0.8s)
+  PASS  tests.test_sol_contracts.test_fixed_vector_bootstrap_matches_sklearn_with_ties  (0.0s)
+  PASS  tests.test_sol_contracts.test_fold_registry_rejects_changed_bytes_ids_and_force  (0.0s)
+  PASS  tests.test_sol_contracts.test_foundation_reader_rejects_ambiguous_completed_vectors_before_scoring  (0.0s)
+  PASS  tests.test_sol_contracts.test_foundation_test_certificate_rejects_partial_primary_before_array_load  (0.0s)
+  PASS  tests.test_sol_contracts.test_full_context_probe_uses_every_training_row_and_reports_no_auc  (0.2s)
+  PASS  tests.test_sol_contracts.test_full_refit_preserves_early_stop_estimator_configuration  (0.3s)
+    lgbm fold0 best_iter=3 auc=0.500000
+    lgbm fold1 best_iter=3 auc=0.500000
+    lgbm fold2 best_iter=3 auc=0.500000
+    lgbm fold3 best_iter=3 auc=0.500000
+    lgbm fold4 best_iter=3 auc=0.500000
+    xgb fold0 best_iter=3 auc=0.500000
+    xgb fold1 best_iter=3 auc=0.500000
+    xgb fold2 best_iter=3 auc=0.500000
+    xgb fold3 best_iter=3 auc=0.500000
+    xgb fold4 best_iter=3 auc=0.500000
+    cat fold0 best_iter=3 auc=0.500000
+    cat fold1 best_iter=3 auc=0.500000
+    cat fold2 best_iter=3 auc=0.500000
+    cat fold3 best_iter=3 auc=0.500000
+    cat fold4 best_iter=3 auc=0.500000
+  PASS  tests.test_sol_contracts.test_generic_gbdt_validation_never_receives_outer_rows  (0.0s)
+  PASS  tests.test_sol_contracts.test_native39_crosses_preserve_literal_identity_and_ignore_target  (0.1s)
+  PASS  tests.test_sol_contracts.test_native_cat_zero_based_first_tree_is_preserved  (0.0s)
+  PASS  tests.test_sol_contracts.test_neural_twins_preserve_values_across_split_vocabularies  (0.0s)
+  PASS  tests.test_sol_contracts.test_partial_shadow_scope_requires_predeclaration_and_never_becomes_full_oof  (0.0s)
+  PASS  tests.test_sol_contracts.test_prediction_store_preserves_unindexed_test_only_artifact  (0.0s)
+  PASS  tests.test_sol_contracts.test_primary_context_test_fallback_excludes_held_fold_labels  (0.4s)
+  PASS  tests.test_sol_contracts.test_shadow_auxiliary_features_never_reuse_primary_fold_arrays  (0.0s)
+  PASS  tests.test_sol_contracts.test_small_policy_audit_contexts_exclude_every_outer_query_row  (0.1s)
+  PASS  tests.test_sol_contracts.test_static_cache_aliases_only_identical_ordered_label_free_blocks  (0.0s)
+  PASS  tests.test_sol_contracts.test_v5_iterations_require_exact_five_treatment_folds  (0.2s)
+  PASS  tests.test_sol_contracts.test_v5_refit_preserves_all_six_xt_configs_and_seeds  (0.0s)
+  PASS  tests.test_sol_contracts.test_zero_based_best_iteration_zero_refits_one_tree  (0.1s)
+  PASS  tests.test_private_sim.test_private_sim_preserves_existing_report_before_loading_data  (0.0s)
+  PASS  tests.test_private_sim.test_private_split_definitions_are_deterministic_and_disjoint  (0.0s)
+  PASS  tests.test_private_sim.test_ranked_auc_matches_sklearn_with_ties_and_bootstrap_weights  (0.0s)
+  PASS  tests.test_masked_encoder.test_masked_loss_has_finite_gradient_and_no_loss_from_unmasked_targets  (0.1s)
+  PASS  tests.test_masked_encoder.test_masking_hides_rating_and_both_numeric_categorical_twins  (0.0s)
+  PASS  tests.test_masked_encoder.test_ssl_preprocessing_refuses_label_or_id_columns  (0.0s)
+  PASS  tests.test_sol_research.test_decoder_activation_reuse_preserves_matrix_shapes_and_gradients  (0.0s)
+  PASS  tests.test_sol_research.test_decoder_projection_chunks_keep_every_context_row  (0.8s)
+  PASS  tests.test_sol_research.test_explicit_head_expansion_matches_grouped_attention  (0.0s)
+  PASS  tests.test_sol_research.test_foundation_frame_ignores_targets_ids_and_poisoned_te  (0.0s)
+  PASS  tests.test_sol_research.test_head_views_preserve_all_keys_and_alias_guard  (0.0s)
+  PASS  tests.test_sol_research.test_invalid_grouped_head_geometry_is_rejected  (0.0s)
+  PASS  tests.test_sol_research.test_opt_in_query_reuse_preserves_keys_values_and_refuses_aliases  (0.0s)
+  PASS  tests.test_sol_research.test_query_activation_reuse_preserves_cpu_outputs_and_gradients  (0.0s)
+  PASS  tests.test_sol_research.test_query_chunks_preserve_full_context_for_mha_and_mqa  (0.0s)
+  PASS  tests.test_sol_research.test_resource_guard_rejects_insufficient_disk_before_fit  (0.0s)
+  PASS  tests.test_sol_research.test_scaling_reuse_preserves_cpu_and_gradient_paths  (0.0s)
+  PASS  tests.test_multitask.test_auxiliary_loss_trains_shared_encoder_without_satisfaction_head  (0.0s)
+  PASS  tests.test_multitask.test_multitask_normalization_excludes_application_rows  (0.0s)
+  PASS  tests.test_kaggle_io.test_ambiguous_upload_still_consumes_budget_and_is_never_retried  (0.0s)
+{"ref": "200", "status": "pending"}
+{"ref": "200", "status": "complete", "publicScore": 0.9617}
+  PASS  tests.test_kaggle_io.test_poll_ignores_old_complete_submission_and_persists_exact_score  (0.0s)
+  PASS  tests.test_kaggle_io.test_poll_rejects_ref_filename_disagreement  (0.0s)
+  PASS  tests.test_kaggle_io.test_remote_zero_quota_does_not_upload_or_reserve  (0.0s)
+  PASS  tests.test_kaggle_io.test_submission_cap_refuses_before_any_api_access  (0.0s)
+{"ref": "56999999", "status": "submitted", "file": "new.csv"}
+  PASS  tests.test_kaggle_io.test_submit_preserves_numeric_ref_and_reserves_before_upload  (0.0s)
+
+114 passed, 0 failed
