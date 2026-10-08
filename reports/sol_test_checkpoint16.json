@@ -1,0 +1,15 @@
+{
+  "checks": [
+    {
+      "test": "critical_names",
+      "files": 59,
+      "undefined_names": 0,
+      "status": "PASS"
+    },
+    {
+      "test": "tracked_sources",
+      "status": "PASS"
+    }
+  ],
+  "submission_io_tests": "reports/sol_submission_io_tests.json"
+}

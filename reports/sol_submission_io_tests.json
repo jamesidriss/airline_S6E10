@@ -1,0 +1,30 @@
+{
+  "passed": 6,
+  "failed": 0,
+  "checks": [
+    {
+      "test": "test_ambiguous_upload_still_consumes_budget_and_is_never_retried",
+      "status": "PASS"
+    },
+    {
+      "test": "test_poll_ignores_old_complete_submission_and_persists_exact_score",
+      "status": "PASS"
+    },
+    {
+      "test": "test_poll_rejects_ref_filename_disagreement",
+      "status": "PASS"
+    },
+    {
+      "test": "test_remote_zero_quota_does_not_upload_or_reserve",
+      "status": "PASS"
+    },
+    {
+      "test": "test_submission_cap_refuses_before_any_api_access",
+      "status": "PASS"
+    },
+    {
+      "test": "test_submit_preserves_numeric_ref_and_reserves_before_upload",
+      "status": "PASS"
+    }
+  ]
+}

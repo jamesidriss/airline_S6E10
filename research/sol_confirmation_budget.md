@@ -6,8 +6,12 @@ SE0.000008187605. All ten fold0 controls reproduce exactly. This exceeds the
 handoff's projected +0.0001 upside condition for extending a promoted branch's
 compute budget. No public score or new weight chooses the continuation.
 
-Complete the third clean auxiliary fold first. Promote the complete primary
-five folds only when the fixed three-fold portfolio still passes promotion.
+The third clean auxiliary fold completed with candidate AUC0.961787550190,
+clean auxiliary AUC0.961442312237 and paired gain+0.000345237952. The fixed
+three-fold portfolio's mean gain is+0.000329189631, SE0.000009313043 and3/3
+positive. Report `sol_route_aux10_threefold.json` proves all ten fold0 controls
+reproduce exactly. The declared promotion condition is now met: complete the
+remaining primary folds without changing recipe or weights.
 Then perform one frozen shadow confirmation and block10 finalist confirmation,
 plus one fixed seed1202/fold0 sensitivity diagnostic. These are independent
 checks, not parameter/weight selection. Per-process maximum remains45 minutes;

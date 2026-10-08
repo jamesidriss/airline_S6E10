@@ -1,0 +1,4 @@
+{"ref": "200", "status": "pending"}
+{"ref": "200", "status": "complete", "publicScore": 0.9617}
+{"ref": "56999999", "status": "submitted", "file": "new.csv"}
+6 passed,0 failed

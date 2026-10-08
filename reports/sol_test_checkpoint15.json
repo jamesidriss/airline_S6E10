@@ -25,6 +25,11 @@
       "test": "test_primary_context_test_fallback_excludes_held_fold_labels",
       "status": "PASS",
       "seconds": 2.547000000020489
+    },
+    {
+      "test": "test_no_source_files_missing_from_git",
+      "status": "PASS",
+      "seconds": 0.0470000000204891
     }
   ]
 }

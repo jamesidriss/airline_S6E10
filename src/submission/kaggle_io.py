@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import json
-import subprocess
+import contextlib
+import io
+import math
 import sys
 from pathlib import Path
 
@@ -13,12 +15,28 @@ from src.common import SUBMISSIONS
 
 LEDGER = SUBMISSIONS / "kaggle_submissions.csv"
 CAP = 10
+COMPETITION = "playground-series-s6e10"
 
 
 def _load() -> pd.DataFrame:
-    return pd.read_csv(LEDGER) if LEDGER.exists() else pd.DataFrame(
+    return pd.read_csv(LEDGER, dtype={"ref": "string"}) if LEDGER.exists() else pd.DataFrame(
         columns=["ts", "file", "description", "ref", "status", "publicScore", "privateScore"]
     )
+
+
+def _save(df: pd.DataFrame) -> None:
+    LEDGER.parent.mkdir(parents=True, exist_ok=True)
+    temporary = LEDGER.with_suffix(".csv.tmp")
+    df.to_csv(temporary, index=False)
+    temporary.replace(LEDGER)
+
+
+def _api():
+    from kaggle.api.kaggle_api_extended import KaggleApi
+    api = KaggleApi()
+    with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+        api.authenticate()
+    return api
 
 
 def used_today() -> int:
@@ -34,11 +52,12 @@ def remaining() -> int:
 
 
 def record(file: str, description: str, ref: str = "", status: str = "submitted",
-           public: float | None = None) -> None:
+           public: float | None = None) -> int:
     df = _load()
     row = {"ts": pd.Timestamp.utcnow().isoformat(), "file": file, "description": description,
            "ref": ref, "status": status, "publicScore": public, "privateScore": None}
-    pd.concat([df, pd.DataFrame([row])], ignore_index=True).to_csv(LEDGER, index=False)
+    _save(pd.concat([df, pd.DataFrame([row])], ignore_index=True))
+    return len(df)
 
 
 def poll(submission_file: str | None = None, tries: int = 12, wait: int = 60) -> pd.DataFrame:
@@ -46,45 +65,77 @@ def poll(submission_file: str | None = None, tries: int = 12, wait: int = 60) ->
     import time
 
     df = _load()
+    if df.empty:
+        raise ValueError("No recorded submission to poll")
+    if tries < 1 or not 0 <= wait <= 60:
+        raise ValueError("Use at least one poll and a wait between0 and60 seconds")
     if submission_file is None:
         submission_file = df.iloc[-1]["file"]
-    ref = df.loc[df["file"] == submission_file, "ref"]
-    ref = ref.iloc[-1] if len(ref) else ""
-    for _ in range(tries):
-        r = subprocess.run(
-            ["kaggle", "competitions", "submissions", "-c", "playground-series-s6e10"],
-            capture_output=True, text=True,
-        )
-        if r.returncode != 0:
-            print(r.stderr[-1500:])
-            return df
-        txt = r.stdout
-        print(txt[:4000])
-        for line in txt.splitlines():
-            if submission_file in line or (ref and str(ref) in line):
-                print("MATCH:", line)
-        # try to parse a numeric score next to the file name
-        if "complete" in txt.lower() or "0.9" in txt:
-            break
-        time.sleep(wait)
-    return df
+    selected = df.loc[df["file"] == submission_file]
+    if selected.empty or pd.isna(selected.iloc[-1]["ref"]):
+        raise ValueError("Polling requires the exact recorded numeric Kaggle ref")
+    ref = str(selected.iloc[-1]["ref"])
+    if not ref.isdecimal() or int(ref) <= 0:
+        raise ValueError("Polling requires the exact recorded numeric Kaggle ref")
+    api = _api()
+    for attempt in range(tries):
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            submissions = api.competition_submissions(COMPETITION, page_size=100) or []
+        matches = [s for s in submissions if s is not None and str(s.ref) == ref]
+        if len(matches) > 1:
+            raise ValueError("Ambiguous Kaggle submission reference")
+        if matches:
+            submission = matches[0]
+            if submission.file_name != Path(submission_file).name:
+                raise ValueError("Kaggle ref and filename disagree")
+            status = getattr(submission.status, "name", str(submission.status)).lower()
+            updates = {"status": status}
+            for field, column in (("public_score", "publicScore"), ("private_score", "privateScore")):
+                value = getattr(submission, field, None)
+                if value not in (None, ""):
+                    score = float(value)
+                    if not math.isfinite(score) or not 0 <= score <= 1:
+                        raise ValueError("Invalid Kaggle AUC score")
+                    updates[column] = score
+            current = _load()
+            mask = current["ref"].fillna("").astype(str) == ref
+            if int(mask.sum()) != 1:
+                raise ValueError("Recorded submission reference is missing or ambiguous")
+            for column, value in updates.items():
+                current.loc[mask, column] = value
+            _save(current)
+            print(json.dumps({"ref": ref, **updates}))
+            if status in {"complete", "error", "cancelled", "canceled"}:
+                return current
+        if attempt + 1 < tries:
+            time.sleep(wait)
+    return _load()
 
 
 def submit(file: Path, description: str) -> str:
     if remaining() <= 0:
         raise SystemExit(f"REFUSING: daily submission cap reached ({used_today()}/{CAP})")
-    cmd = ["kaggle", "competitions", "submit", "-c", "playground-series-s6e10",
-           "-f", str(file), "-m", description]
-    r = subprocess.run(cmd, capture_output=True, text=True)
-    print(r.stdout[-2000:])
-    print(r.stderr[-2000:])
-    if r.returncode != 0:
-        raise SystemExit("submit failed")
-    ref = ""
-    for tok in r.stdout.split():
-        if tok.count("-") >= 2 and any(c.isdigit() for c in tok):
-            ref = tok
-    record(Path(file).name, description, ref=ref)
+    file = Path(file)
+    if not file.is_file():
+        raise FileNotFoundError(file)
+    api = _api()
+    with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+        limits = api.competition_get_submission_limits(COMPETITION)
+    if limits.num_allowed_now <= 0:
+        raise SystemExit("REFUSING: Kaggle reports no submissions available")
+    # Reserve before the network mutation. An uncertain response must still
+    # consume local budget; never automatically retry an upload.
+    row = record(file.name, description, status="upload_started_response_unknown")
+    with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+        response = api.competition_submit(str(file), description, COMPETITION, quiet=True)
+    ref = str(response.ref)
+    if not ref.isdecimal() or int(ref) <= 0:
+        raise RuntimeError("Submission has no confirmed ref; preserve the reserved ledger row and reconcile before retrying")
+    df = _load()
+    df.loc[row, "ref"] = ref
+    df.loc[row, "status"] = "submitted"
+    _save(df)
+    print(json.dumps({"ref": ref, "status": "submitted", "file": file.name}))
     return ref
 
 
