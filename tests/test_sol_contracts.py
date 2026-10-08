@@ -628,3 +628,62 @@ def test_fixed_foundation_confirmation_excludes_outer_labels():
         assert np.array_equal(fits[0][0],fits[1][0]) and np.array_equal(fits[0][1],fits[1][1])
         assert np.array_equal(np.load(folder/'artifacts'/'first'/'route_f0.npy'),np.load(folder/'artifacts'/'flipped'/'route_f0.npy'))
 
+
+def test_block10_auxiliary_confirmation_excludes_outer_labels_and_primary_arrays():
+    import json
+    import tempfile
+    from contextlib import ExitStack,redirect_stdout
+    from io import StringIO
+    from pathlib import Path
+    from unittest.mock import patch
+    import numpy as np
+    import pandas as pd
+    import scripts.run_sol_aux_block10 as runner
+    from scripts.run_sol_a import model_spec
+    tr=pd.DataFrame({'id':np.arange(100),'satisfaction':np.arange(100)%2})
+    te=pd.DataFrame({'id':[1000,1001]}); folds=np.arange(100)//10
+    names=list(runner.RATINGS)+['Gender','Customer Type','Type of Travel','Class','Age','Flight Distance',
+        'Departure Delay in Minutes','Arrival Delay in Minutes']
+    x=np.tile(np.arange(100)[:,None],(1,len(names))).astype('float64')
+    x[:,:13]%=6
+    fits=[]; caches=[]
+    class Builder:
+        def __init__(self,*a):
+            pass
+        def build_static(self):
+            pass
+        def assemble(self,fi,y,va,*a,**k):
+            return x[fi],{'val':x[va]},names
+    def cache(xf,xv,n,fi,va,fh,**kwargs):
+        assert not np.intersect1d(fi,va).size and np.array_equal(fi,tr.id.to_numpy()[folds!=0])
+        assert np.array_equal(va,tr.id.to_numpy()[folds==0])
+        assert fh==runner.arr_sha256(folds)
+        caches.append((fi.copy(),va.copy()))
+        return np.full((len(fi),13,6),1/6),np.full((len(va),13,6),1/6),{'fingerprint':'block10','contract':{}}
+    def fit(xf,yf,xv,seed,params,xe,ye):
+        fits.append((xf.copy(),yf.copy(),xv.copy(),xe.copy(),ye.copy()))
+        return np.full(len(xv),.7),0
+    with tempfile.TemporaryDirectory() as temporary,ExitStack() as stack:
+        folder=Path(temporary); (folder/'artifacts').mkdir(); (folder/'reports').mkdir()
+        stack.enter_context(patch.object(runner,'ARTIFACTS',folder/'artifacts'))
+        stack.enter_context(patch.object(runner,'REPORTS',folder/'reports'))
+        stack.enter_context(patch.object(runner,'load_cached_parquet',side_effect=lambda:(tr.copy(),te.copy())))
+        scheme=stack.enter_context(patch.object(runner,'get_scheme',return_value=type('Scheme',(),{'folds':folds})()))
+        stack.enter_context(patch.object(runner,'ViewBuilder',Builder))
+        stack.enter_context(patch.object(runner,'probability_cache',side_effect=cache))
+        stack.enter_context(patch.object(runner,'file_sha256',return_value='sha'))
+        stack.enter_context(patch.object(runner,'fit_xgb',side_effect=fit))
+        stack.enter_context(patch.object(runner,'guarded_fit',side_effect=lambda root,c,p,fp,fn:fn()))
+        stack.enter_context(patch.object(runner,'complete_role'))
+        for tag in ('first','flipped'):
+            if tag=='flipped':
+                tr.loc[folds==0,'satisfaction']=1-tr.loc[folds==0,'satisfaction']
+            with patch('sys.argv',['block10','--member',model_spec('X2')['member'],'--fold','0','--tag',tag]),redirect_stdout(StringIO()):
+                assert runner.main()==0
+            record=json.loads(next((folder/'reports'/tag).glob('*_f0.json')).read_text())
+            assert record['n_trees']==1 and record['contract']['role']['scheme']=='block10'
+            assert record['contract']['aux']['upstream_fingerprint']=='block10'
+        assert all(call.args[0]=='block10' for call in scheme.call_args_list)
+        assert len(fits)==2 and all(np.array_equal(a,b) for a,b in zip(fits[0],fits[1]))
+        assert len(caches)==2
+

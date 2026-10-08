@@ -1,0 +1,21 @@
+{
+  "utc": "2026-10-08T00:05:54.967062+00:00",
+  "scope": "focused checks; not a rerun of the full suite",
+  "passed": [
+    "test_foundation_reader_rejects_ambiguous_completed_vectors_before_scoring",
+    "test_fixed_foundation_confirmation_excludes_outer_labels",
+    "test_critical_files_have_no_undefined_names"
+  ],
+  "failed": [],
+  "critical_files": 43,
+  "undefined_names": 0,
+  "source_sha256": {
+    "scripts/evaluate_sol_foundation.py": "3739f2eccc159506af05d0c31e0832694a771f0a5068b2a40f7ef57257dcb639",
+    "scripts/run_sol_tabpfn_confirm.py": "7431e72aa00995b14fac318d61cafd1367b822a38f4a127ecbd9b7cdcd46c35b",
+    "tests/test_sol_contracts.py": "878ab99e25c1dba2caa4670b981586cfe82a5153189fca4c4c181a8aa7fbb06a"
+  },
+  "secret_scan": {
+    "report": "reports/sol_secret_scan_checkpoint8.json",
+    "findings": 0
+  }
+}

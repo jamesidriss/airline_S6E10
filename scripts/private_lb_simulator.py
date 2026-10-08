@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from src.common import ARTIFACTS, REPORTS, TARGET, arr_sha256, file_sha256, git_commit, load_cached_parquet, save_json
+from src.common import ARTIFACTS, TARGET, arr_sha256, file_sha256, git_commit, load_cached_parquet, save_json
 from src.validation.compare import logit, spearman
 from src.validation.folds import get_scheme
 from src.validation.private_sim import RankedAUC, summarize
@@ -84,7 +84,11 @@ def main():
     ap.add_argument("--seed", type=int, default=SEED)
     ap.add_argument("--output", default="reports/sol_private_sim.json")
     ap.add_argument("--candidate", action="append", default=[], help="name=full OOF .npy path; probabilities")
+    ap.add_argument("--reference",default="v5_aux_cross_OOF",help="Fixed comparison candidate; does not change partition definitions")
+    ap.add_argument("--portfolio-contract",help="Verified full-primary route/auxiliary10 report for added candidates")
     args = ap.parse_args()
+    if Path(args.output).exists():
+        raise FileExistsError('Preserve the existing simulation report; use a new output name')
     tr, te = load_cached_parquet()
     y = tr[TARGET].to_numpy(dtype="int8")
     folds = get_scheme("primary", y, tr["id"]).folds
@@ -93,9 +97,27 @@ def main():
     # Strongest available distinct family is included as an ineligible diagnostic.
     tm = ["z5_tabm_e25", "z5_tabm_e25_s2"]
     cand["tabm_family_INELIGIBLE"] = np.mean([logit(store.load_oof(e)) for e in tm], axis=0)
+    portfolio=None
+    if args.portfolio_contract:
+        portfolio=json.loads(Path(args.portfolio_contract).read_text(encoding='utf-8'))
+        assert portfolio['scope']=='full primary OOF' and portfolio['scheme']=='primary'
+        assert portfolio['fold_sha256']==arr_sha256(folds)
+        assert portfolio['ordered_train_ids_sha256']==arr_sha256(tr.id.to_numpy())
+        assert portfolio['data_sha256']=={s:file_sha256(f'data/raw/{s}.csv') for s in ('train','test')}
+        assert {r['fold'] for r in portfolio['folds']}==set(range(5)) and len(portfolio['folds'])==5
     for item in args.candidate:
         name, path = item.split("=", 1)
-        cand[name] = logit(np.load(path))
+        assert name not in cand, 'Candidate name would replace a banked diagnostic'
+        pred=np.load(path)
+        assert pred.shape==(len(y),) and np.isfinite(pred).all() and ((pred>=0)&(pred<=1)).all()
+        if portfolio:
+            keys={'candidate_oof':'oof_sha256','aux10_oof':'strict_aux10_oof_sha256','route_oof':'route_oof_sha256'}
+            assert Path(path).stem in keys and arr_sha256(pred)==portfolio[keys[Path(path).stem]]
+            assert np.array_equal(np.load(Path(path).parent/'train_ids.npy'),tr.id.to_numpy())
+        cand[name] = logit(pred)
+    assert args.reference in cand
+    if args.reference!='v5_aux_cross_OOF':
+        assert portfolio is not None, 'A clean-reference simulation requires a verified full-OOF contract'
     aucs = {name: RankedAUC(y, p) for name, p in cand.items()}
     full = {name: a.auc(np.ones(len(y))) for name, a in aucs.items()}
     stress = segments(tr, champion)
@@ -115,7 +137,7 @@ def main():
             defs.update(public_segment_share=float(stress[key][mask == 1].mean()),
                         private_segment_share=float(stress[key][mask == 2].mean()))
         definitions.append(defs)
-        ref = aucs["v5_aux_cross_OOF"]
+        ref = aucs[args.reference]
         pb, pr = ref.auc(mask == 1), ref.auc(mask == 2)
         for name, scorer in aucs.items():
             draws[name].append({"mode": mode, "segment": key,
@@ -124,6 +146,8 @@ def main():
         if (run + 1) % 50 == 0:
             print(f"simulations {run + 1}/{len(plans)}", flush=True)
     report = {"git": git_commit(), "seed": args.seed, "population": args.population,
+              "reference":args.reference,"partition_confidence_reference":"fixed legacy v5; candidate independent",
+              "portfolio_contract_sha256":file_sha256(args.portfolio_contract) if portfolio else None,
               "public_fraction": .2, "stress_odds_multiplier": 4,
               "fold_sha256": arr_sha256(folds), "ids_sha256": arr_sha256(tr["id"].to_numpy()),
               "source_sha256": {p: file_sha256(p) for p in ("scripts/private_lb_simulator.py", "src/validation/private_sim.py")},
@@ -134,16 +158,19 @@ def main():
     ref_test = pd.read_csv("submissions/v5_aux_cross.csv")[TARGET].to_numpy()
     for name, records in draws.items():
         rec = {"oof_auc": full[name], "delta_vs_v5": full[name] - full["v5_aux_cross_OOF"],
+               "delta_vs_reference":full[name]-full[args.reference],
+               "oof_logit_corr_vs_reference":float(np.corrcoef(cand[name],cand[args.reference])[0,1]),
+               "oof_spearman_vs_reference":spearman(cand[name],cand[args.reference]),
                "oof_logit_corr_vs_v5": float(np.corrcoef(cand[name], champion)[0, 1]),
                "oof_spearman_vs_v5": spearman(cand[name], champion), "modes": {}, "stress_segments": {}}
         for mode in ("random_stratified", "fold_aware", "segment_stressed"):
             chosen = [d for d in records if d["mode"] == mode]
             rec["modes"][mode] = summarize([d["public_delta"] for d in chosen],
-                                               [d["private_delta"] for d in chosen], rec["delta_vs_v5"])
+                                               [d["private_delta"] for d in chosen], rec["delta_vs_reference"])
         for key in stress:
             chosen = [d for d in records if d["segment"] == key]
             rec["stress_segments"][key] = summarize([d["public_delta"] for d in chosen],
-                                                    [d["private_delta"] for d in chosen], rec["delta_vs_v5"])
+                                                    [d["private_delta"] for d in chosen], rec["delta_vs_reference"])
         if name in ("v3_final", "v4_fulldata_CV_PROXY", "v5_aux_cross_OOF"):
             actual = name.replace("_CV_PROXY", "").replace("_OOF", "")
             testp = pd.read_csv(f"submissions/{actual}.csv")[TARGET].to_numpy()
@@ -152,8 +179,15 @@ def main():
         report["candidates"][name] = rec
     dest = ARTIFACTS / "private_sim"
     dest.mkdir(exist_ok=True)
-    save_json({"definitions": definitions, "draws": draws}, dest / f"{report['split_definitions_sha256']}.json")
-    report["split_and_draw_artifact"] = str(dest / f"{report['split_definitions_sha256']}.json")
+    draw_key=hashlib.sha256(json.dumps({'splits':report['split_definitions_sha256'],
+        'predictions':report['oof_prediction_sha256'],'reference':args.reference},sort_keys=True).encode()).hexdigest()
+    draw_path=dest/f'{draw_key}.json'
+    payload={"definitions":definitions,"draws":draws}
+    if draw_path.exists():
+        assert json.loads(draw_path.read_text(encoding='utf-8'))==payload, 'Existing simulation artifact differs'
+    else:
+        save_json(payload,draw_path)
+    report["split_and_draw_artifact"] = str(draw_path)
     save_json(report, args.output)
     print(json.dumps({n: r["modes"]["random_stratified"] for n, r in report["candidates"].items()}))
     return 0

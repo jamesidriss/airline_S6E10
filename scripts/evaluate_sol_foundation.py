@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from hashlib import sha256
 from datetime import datetime,timezone
 from pathlib import Path
 import numpy as np
@@ -15,6 +16,7 @@ from src.validation.compare import logit
 from src.ensemble.lab import admission_gate
 from scripts.audit_sol_state import reconstruct_v5
 from scripts.replay_sol_classical import frozen_roles,resolved_params,PROTOCOL
+from scripts.run_views import _inner_es_split
 
 
 def foundation(k,tags,ids,folds,y,data_hash,scheme='primary'):
@@ -33,6 +35,9 @@ def foundation(k,tags,ids,folds,y,data_hash,scheme='primary'):
     assert r['fold_sha256']==arr_sha256(folds) and r['fit_ids_sha256']==arr_sha256(ids[fi])
     assert r['validation_ids_sha256']==arr_sha256(ids[va])
     assert r['data_sha256']==data_hash
+    assert r['seed']==1201 and r['params']['n_estimators']==1 and r['decoder_inplace_gelu']
+    assert r['params']['kv_cache_precision']=='int8' and r['params']['keep_cache_on_device']
+    assert file_sha256(r['params']['model_path'])==r['checkpoint']['checkpoint_sha256']
     if scheme=='primary':
         for file,key in [('scripts/run_sol_tabpfn.py','source_sha256'),
             ('src/models/windows_attention.py','backend_source_sha256'),
@@ -53,14 +58,19 @@ def foundation(k,tags,ids,folds,y,data_hash,scheme='primary'):
 
 def classical(k,tag,roles,ids,folds,y,data_hash):
     va=np.flatnonzero(folds==k); fi=np.flatnonzero(folds!=k)
+    train,es=_inner_es_split(fi,y,1)
+    assert np.array_equal(np.sort(np.concatenate([train,es])),fi)
     total=np.zeros(len(va)); proofs=[]
     for role in roles:
         stem=f'{role["member"]}_f{k}'
         path=REPORTS/tag/(stem+'.json'); r=json.loads(path.read_text(encoding='utf-8')); c=r['contract']
+        assert sha256(json.dumps(c,sort_keys=True).encode()).hexdigest()==r['fingerprint']
         assert c['protocol']==PROTOCOL and c['role']==role and c['params']==resolved_params(role)
         assert c['fold']==k and c['fold_sha256']==arr_sha256(folds)
         assert c['data_sha256']==data_hash
         assert c['outer_fit_ids_sha256']==arr_sha256(ids[fi]) and c['validation_ids_sha256']==arr_sha256(ids[va])
+        assert c['inner_es_seed']==1 and c['train_ids_sha256']==arr_sha256(ids[train])
+        assert c['es_ids_sha256']==arr_sha256(ids[es]) and c['train_rows']==len(train) and c['es_rows']==len(es)
         assert all(file_sha256(s)==h for s,h in c['source_sha256'].items())
         p=np.load(ARTIFACTS/tag/(stem+'.npy'))
         assert p.shape==(len(va),) and arr_sha256(p)==r['prediction_sha256']
@@ -87,7 +97,7 @@ def classical(k,tag,roles,ids,folds,y,data_hash):
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument('--folds',default='0,1')
-    ap.add_argument('--scheme',choices=['primary','shadow'],default='primary')
+    ap.add_argument('--scheme',choices=['primary','shadow','block10'],default='primary')
     ap.add_argument('--classical-tag',default='sol_clean_aux10_isolated')
     ap.add_argument('--foundation-tags',default='sol_tabpfn35_route,sol_tabpfn35_route_reserve')
     ap.add_argument('--name',default='sol_route_aux10_twofold')
@@ -95,11 +105,12 @@ def main():
     output=REPORTS/(args.name+'.json'); root=ARTIFACTS/args.name
     if output.exists() or root.exists():
         raise FileExistsError('Preserve the existing portfolio result; use a new name')
-    ks=list(map(int,args.folds.split(','))); assert len(set(ks))==len(ks) and set(ks)<=set(range(5))
+    count=10 if args.scheme=='block10' else 5
+    ks=list(map(int,args.folds.split(','))); assert len(set(ks))==len(ks) and set(ks)<=set(range(count))
     roles=[r for r in frozen_roles() if r['aux_arm']]; assert len(roles)==10
-    if args.scheme=='shadow':
+    if args.scheme!='primary':
         for role in roles:
-            role.update(source_scheme=role['scheme'],scheme='shadow')
+            role.update(source_scheme=role['scheme'],scheme=args.scheme)
     tr,_=load_cached_parquet(); y=tr.satisfaction.to_numpy(dtype='int8'); ids=tr.id.to_numpy()
     folds=get_scheme(args.scheme,y,ids).folds
     data_hash={s:file_sha256(f'data/raw/{s}.csv') for s in ('train','test')}
@@ -131,18 +142,20 @@ def main():
             'logit_correlation_vs_strict_aux10':float(np.corrcoef(logit(pred),logit(base))[0,1]),
             'foundation':proof,'classical_certificates':certificates})
     deltas=np.array([r['delta_vs_strict_aux10'] for r in records])
-    full=set(ks)==set(range(5))
-    gate=admission_gate(args.name,[r['strict_aux10_auc'] for r in records],[r['candidate_auc'] for r in records]) if full else None
+    full=set(ks)==set(range(count))
+    gate=admission_gate(args.name,[r['strict_aux10_auc'] for r in records],[r['candidate_auc'] for r in records],
+        min_pos=8 if count==10 else 4) if full else None
     report={'hypothesis':'One frozen 50/50 mean-logit vote: route and equal-logit auxiliary10',
         'predeclared_hypothesis_sha256':file_sha256('research/sol_foundation_portfolio.md'),
         'scope':f'full {args.scheme} OOF' if full else f'selected {args.scheme} folds; not full OOF',
         'scheme':args.scheme,
+        'data_sha256':data_hash,'fold_sha256':arr_sha256(folds),
         'folds':records,'mean_paired_gain_vs_strict_aux10':float(deltas.mean()),
         'paired_fold_se':float(deltas.std(ddof=1)/np.sqrt(len(deltas))) if len(deltas)>1 else None,
         'positive_folds':int((deltas>0).sum()),'admission_gate_against_clean_auxiliary_stack':gate,
-        'verdict':('INDEPENDENT_CONFIRMATION_GATE_PASS' if args.scheme=='shadow' and gate and gate['admit'] else
-            'INDEPENDENT_CONFIRMATION_GATE_FAIL' if args.scheme=='shadow' and full else
-            'INDEPENDENT_CONFIRMATION_INCOMPLETE' if args.scheme=='shadow' else
+        'verdict':('INDEPENDENT_CONFIRMATION_GATE_PASS' if args.scheme!='primary' and gate and gate['admit'] else
+            'INDEPENDENT_CONFIRMATION_GATE_FAIL' if args.scheme!='primary' and full else
+            'INDEPENDENT_CONFIRMATION_INCOMPLETE' if args.scheme!='primary' else
             'FULL_PRIMARY_GATE_PASS_REQUIRES_TEST_AND_CONFIRMATION' if gate and gate['admit'] else
             'REPLICATED_PROMOTE_NEXT_FOLD' if not full and len(ks)>=2 and (deltas>0).all() and deltas.mean()>=5e-5 else
             'NO_PROMOTION'),
@@ -170,7 +183,7 @@ def main():
     if args.name not in existing:
         with ledger.open('a',encoding='utf-8') as handle:
             handle.write(json.dumps({'exp_id':args.name,'ts':datetime.now(timezone.utc).isoformat(),'git':git_commit(),
-                'kind':'INDEPENDENT_CONFIRMATION' if args.scheme=='shadow' else 'PREDECLARED_METHOD_BLEND','scope':report['scope'],
+                'kind':'INDEPENDENT_CONFIRMATION' if args.scheme!='primary' else 'PREDECLARED_METHOD_BLEND','scope':report['scope'],
                 'fold_aucs':[r['candidate_auc'] for r in records],
                 'paired_fold_deltas':[r['delta_vs_strict_aux10'] for r in records],
                 'legacy_paired_fold_deltas_diagnostic':[r['delta_vs_legacy_v5_diagnostic'] for r in records],
@@ -179,6 +192,28 @@ def main():
                 'params':{'route':first['params'],'classical_roles':roles,'weights':{'route':.5,'equal_logit_auxiliary10':.5}},
                 'data_hash':data_hash,'fold_hash':arr_sha256(folds),'report':str(output),
                 'report_sha256':file_sha256(output),'verdict':report['verdict']})+'\n')
+    with ledger.open('a',encoding='utf-8') as handle:
+        for k,_,_,_,_,certificates in verified:
+            va=np.flatnonzero(folds==k)
+            for proof in certificates:
+                eid=f'{args.classical_tag}_{proof["member"]}_f{k}'
+                if eid in existing:
+                    continue
+                path=REPORTS/args.classical_tag/f'{proof["member"]}_f{k}.json'
+                record=json.loads(path.read_text(encoding='utf-8')); contract=record['contract']
+                prediction=np.load(ARTIFACTS/args.classical_tag/f'{proof["member"]}_f{k}.npy')
+                correlation=float(np.corrcoef(logit(prediction),legacy[va])[0,1]) if legacy is not None else None
+                handle.write(json.dumps({'exp_id':eid,'ts':datetime.now(timezone.utc).isoformat(),'git':record['git'],
+                    'kind':'FROZEN_AUXILIARY_ROLE_REPLAY','scope':f'single {args.scheme} fold; no full-OOF claim',
+                    'fold':k,'validation_auc':record['auc'],'params':contract['params'],'seed':contract['seed'],
+                    'paired_fold_deltas':[0.] if proof['fold0_control_max_gap']==0 else [],
+                    'comparison':'strict matched SOL-A A0 control on primary f0; no matched discovery comparison on other folds',
+                    'fold0_control_max_gap':proof['fold0_control_max_gap'],'corr_with_champion':correlation,
+                    'correlation_scope':'legacy v5 diagnostic only' if legacy is not None else 'no certified champion on shadow',
+                    'duration_s':record['seconds'],'selected_trees':record['n_trees'],
+                    'prediction_hash':record['prediction_sha256'],'report_hash':file_sha256(path),
+                    'report':str(path),'contract':contract,'verdict':record['status']})+'\n')
+                existing.add(eid)
     print(json.dumps({k:report[k] for k in ('scope','mean_paired_gain_vs_strict_aux10','positive_folds','verdict')},indent=2))
     return 0
 

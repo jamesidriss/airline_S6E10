@@ -1,0 +1,49 @@
+{
+  "utc": "2026-10-08T00:08:59.574259+00:00",
+  "source": "authenticated Kaggle API; whitelisted fields only",
+  "competition": {
+    "ref": "https://www.kaggle.com/competitions/playground-series-s6e10",
+    "title": "Predicting Airline Satisfaction",
+    "entered": true,
+    "user_rank": 326,
+    "team_count": 1087,
+    "deadline": "2026-10-31 23:59:00",
+    "daily_cap": 10
+  },
+  "top5": [
+    {
+      "team_id": 17014681,
+      "team_name": "arif Arda",
+      "score": "0.96184",
+      "submission_date": "2026-10-07 09:16:09.423000"
+    },
+    {
+      "team_id": 17033645,
+      "team_name": "lucataco",
+      "score": "0.96184",
+      "submission_date": "2026-10-07 11:28:29.130000"
+    },
+    {
+      "team_id": 17017356,
+      "team_name": "Haoyu Wang",
+      "score": "0.96183",
+      "submission_date": "2026-10-07 23:44:21.473000"
+    },
+    {
+      "team_id": 17010540,
+      "team_name": "isthereanycode",
+      "score": "0.96183",
+      "submission_date": "2026-10-08 00:01:04.856000"
+    },
+    {
+      "team_id": 17003896,
+      "team_name": "Ahmet Bugrahan ALTUNOK",
+      "score": "0.96183",
+      "submission_date": "2026-10-07 23:16:14.450000"
+    }
+  ],
+  "submissions_used_today_utc": 0,
+  "daily_cap_remaining": 10,
+  "banked_public_score": 0.96103,
+  "selection_role": "transfer diagnostic only; no leaderboard tuning"
+}

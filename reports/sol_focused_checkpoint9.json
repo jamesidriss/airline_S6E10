@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-08T00:12:50.880396+00:00",
+  "scope": "focused checks; full view suite intentionally not rerun during model fits",
+  "passed": [
+    "test_private_sim_preserves_existing_report_before_loading_data",
+    "test_private_split_definitions_are_deterministic_and_disjoint",
+    "test_ranked_auc_matches_sklearn_with_ties_and_bootstrap_weights",
+    "test_foundation_reader_rejects_ambiguous_completed_vectors_before_scoring",
+    "test_critical_files_have_no_undefined_names"
+  ],
+  "failed": [],
+  "critical_files": 44,
+  "undefined_names": 0,
+  "source_sha256": {
+    "scripts/evaluate_sol_foundation.py": "c5e22defe68743a84b7ba112a29dd3a1a25277b738e188dea88a67d8a13b5af3",
+    "scripts/private_lb_simulator.py": "b4ca3aa7c274b05eb431b0a711d07113416d527b06196991615eb1ca7abb6509",
+    "tests/test_private_sim.py": "8bdc79956fdf8585281c42e5d4bbad79f0332cd46ca5584a371eddb7a14e8a38"
+  }
+}

@@ -21,12 +21,16 @@ def main():
     ap.add_argument('--tag',default='sol_clean_aux10_isolated')
     ap.add_argument('--resume-from')
     ap.add_argument('--confirmation-shadow',action='store_true')
+    ap.add_argument('--confirmation-block10',action='store_true')
     args=ap.parse_args()
     plan=json.loads((ROOT/args.plan).read_text(encoding='utf-8'))
     roles=[r for r in plan['roles'] if r['aux_arm']]
     assert len(roles)==10 and len({r['member'] for r in roles})==10
     assert all(r['scheme']=='primary' and r['view']=='full' and r['es_seed_policy']=='1' for r in roles)
-    ks=list(map(int,args.folds.split(','))); assert len(set(ks))==len(ks) and set(ks)<=set(range(5))
+    assert not (args.confirmation_shadow and args.confirmation_block10)
+    ks=list(map(int,args.folds.split(',')))
+    assert len(set(ks))==len(ks) and set(ks)<=set(range(10 if args.confirmation_block10 else 5))
+    assert not (args.confirmation_block10 and args.resume_from), 'Block10 confirmation does not reuse primary predictions'
     folder=ROOT/'reports'/args.tag; folder.mkdir(parents=True,exist_ok=True)
     log=folder/'isolated_workers.log'
     if log.exists():
@@ -41,6 +45,9 @@ def main():
                     command+=['--resume-from',args.resume_from]
                 if args.confirmation_shadow:
                     command+=['--confirmation-shadow']
+                if args.confirmation_block10:
+                    command=[sys.executable,'-u','scripts/run_sol_aux_block10.py',
+                        '--member',role['member'],'--fold',str(k),'--tag',args.tag]
                 progress={'utc':datetime.now(timezone.utc).isoformat(),'status':'RUNNING',
                     'member':role['member'],'fold':k,'completed':completed,'command':command}
                 output.write(json.dumps(progress)+'\n'); output.flush()

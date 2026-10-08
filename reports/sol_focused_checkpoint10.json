@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-08T00:22:55.230862+00:00",
+  "scope": "focused block10 checks; no model CV",
+  "passed": [
+    "test_block10_auxiliary_confirmation_excludes_outer_labels_and_primary_arrays",
+    "test_critical_files_have_no_undefined_names"
+  ],
+  "failed_current": [],
+  "initial_fixture_failure": "Synthetic ratings exceeded0..5; fixture corrected before either check passed; no model run occurred",
+  "critical_files": 45,
+  "undefined_names": 0,
+  "source_sha256": {
+    "scripts/run_sol_aux_block10.py": "dbc81d8274208d01e204d24d0b488fac790090dcceca40465df841df3e97282b",
+    "scripts/evaluate_sol_foundation.py": "04faff2eae5d9afd8d4c41eecd52d70e540d34184693be96b0f4f58eca3114b6",
+    "scripts/replay_sol_isolated.py": "e55d99ba13c354a1f16be72802c5716d68128d7e013511d03ba933a127d1ba55",
+    "tests/test_sol_contracts.py": "fc751ec60b2cfe1cd33b90d7c7dd1c1f39a7960d557d5df0a40f95ab00a4e1c4"
+  }
+}
