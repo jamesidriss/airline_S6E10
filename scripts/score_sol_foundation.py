@@ -13,6 +13,8 @@ from src.validation.compare import logit,spearman
 from src.validation.private_sim import RankedAUC
 from scripts.assemble_sol_foundation_test import verify_primary,checked_probability
 from scripts.audit_sol_state import pair_diagnostic
+from scripts.evaluate_sol_foundation import foundation,classical
+from scripts.replay_sol_classical import frozen_roles
 
 
 def paired_bootstrap(y,vectors,reference='aux10',repeats=200,seed=20261010):
@@ -35,6 +37,27 @@ def correlations(a,b,y=None):
     return result
 
 
+def confirmation_scope(report,recovery=None):
+    """Partial evidence requires the exact recovery scope and remains partial."""
+    scheme=report['scheme']
+    assert scheme in ('shadow','block10')
+    full=report['scope']==f'full {scheme} OOF'
+    if full:
+        assert report['verdict']=='INDEPENDENT_CONFIRMATION_GATE_PASS'
+        assert report['admission_gate_against_clean_auxiliary_stack']['admit']
+        assert sorted(r['fold'] for r in report['folds'])==list(range(10 if scheme=='block10' else 5))
+    else:
+        assert recovery is not None, 'Partial confirmation requires the predeclared recovery scope'
+        assert scheme=='shadow' and report['scope']=='selected shadow folds; not full OOF'
+        assert recovery['shadow_folds']==[0,1]
+        assert sorted(r['fold'] for r in report['folds'])==recovery['shadow_folds']
+        assert report['verdict']=='INDEPENDENT_CONFIRMATION_INCOMPLETE'
+        deltas=np.array([r['delta_vs_strict_aux10'] for r in report['folds']])
+        assert (deltas>0).all() and deltas.mean()>=1.5e-5, 'Partial frozen shadow check contradicts promotion'
+        assert report['admission_gate_against_clean_auxiliary_stack'] is None
+    return full
+
+
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument('--primary-report',default='reports/sol_route_aux10_primary.json')
@@ -43,6 +66,7 @@ def main():
     ap.add_argument('--simulation',default='reports/sol_private_sim_primary.json')
     ap.add_argument('--seed-diagnostic-report',required=True)
     ap.add_argument('--name',default='sol_route_aux10_scorecard')
+    ap.add_argument('--recovery-scope',help='Explicit predeclared bounded scope; partial shadow stays labelled partial')
     args=ap.parse_args()
     output=REPORTS/(args.name+'.json')
     if output.exists():raise FileExistsError('Preserve the existing scorecard')
@@ -58,17 +82,48 @@ def main():
     root=Path(cert['test_artifact_root'])
     tests={n:checked_probability(root/(n+'.npy'),root/'test_ids.npy',h,test_ids) for n,h in cert['test_sha256'].items()}
     confirms=[]
+    recovery=json.loads(Path(args.recovery_scope).read_text(encoding='utf-8')) if args.recovery_scope else None
+    if recovery is not None:
+        assert recovery['primary_name']==Path(args.primary_report).stem
+        assert recovery['shadow_folds']==[0,1] and recovery['block10']['run'] is False
     for path in args.confirmation:
         r=json.loads(Path(path).read_text(encoding='utf-8'))
-        assert r['scheme'] in ('shadow','block10') and r['scope']==f'full {r["scheme"]} OOF'
-        assert r['data_sha256']==data_hash and r['ordered_train_ids_sha256']==arr_sha256(ids)
+        full=confirmation_scope(r,recovery)
+        assert r['data_sha256']==data_hash
+        if full:assert r['ordered_train_ids_sha256']==arr_sha256(ids)
         assert r['predeclared_hypothesis_sha256']==primary['predeclared_hypothesis_sha256']
-        assert r['verdict']=='INDEPENDENT_CONFIRMATION_GATE_PASS'
-        assert r['admission_gate_against_clean_auxiliary_stack']['admit']
+        scheme=get_scheme(r['scheme'],y,ids).folds
+        assert r['fold_sha256']==arr_sha256(scheme)
+        roles=[dict(role,source_scheme=role['scheme'],scheme=r['scheme']) for role in frozen_roles() if role['aux_arm']]
+        folder=ARTIFACTS/Path(path).stem
+        for row in r['folds']:
+            k=row['fold'];va=np.flatnonzero(scheme==k)
+            route,_,proof=foundation(k,[row['foundation']['tag']],ids,scheme,y,data_hash,r['scheme'])
+            assert proof==row['foundation']
+            # The actual role reports are located by their hash, never by AUC.
+            tags=[p.parent.name for p in REPORTS.glob(f'*/{roles[0]["member"]}_f{k}.json')
+                if file_sha256(p)==row['classical_certificates'][0]['report_sha256']]
+            assert tags, 'Missing confirmation classical certificate'
+            aux,proofs=classical(k,tags[0],roles,ids,scheme,y,data_hash)
+            assert proofs==row['classical_certificates']
+            candidate=(1/(1+np.exp(-(logit(route)+aux)/2))).astype('float32')
+            auxiliary=(1/(1+np.exp(-aux))).astype('float32')
+            assert arr_sha256(auxiliary)==row['strict_aux10_sha256']
+            assert abs(float(roc_auc_score(y[va],auxiliary))-row['strict_aux10_auc'])<1e-14
+            stored=checked_probability(folder/f'candidate_f{k}.npy',folder/f'ids_f{k}.npy',row['candidate_sha256'],ids[va])
+            assert np.array_equal(candidate,stored)
+            assert abs(float(roc_auc_score(y[va],stored))-row['candidate_auc'])<1e-14
+            assert abs(row['delta_vs_strict_aux10']-(row['candidate_auc']-row['strict_aux10_auc']))<1e-14
+        gains=np.array([row['delta_vs_strict_aux10'] for row in r['folds']])
+        assert abs(float(gains.mean())-r['mean_paired_gain_vs_strict_aux10'])<1e-14
+        assert abs(float(gains.std(ddof=1)/np.sqrt(len(gains)))-r['paired_fold_se'])<1e-14
         confirms.append({'report':path,'sha256':file_sha256(path),'scheme':r['scheme'],
+            'scope':r['scope'],'full_oof':full,'folds':[row['fold'] for row in r['folds']],
+            'fold_aucs':[row['candidate_auc'] for row in r['folds']],
             'mean_paired_gain':r['mean_paired_gain_vs_strict_aux10'],'paired_se':r['paired_fold_se'],
-            'positive_folds':r['positive_folds'],'pooled_auc':r['pooled_oof_auc']})
-    assert any(r['scheme']=='block10' for r in confirms), 'Finalist contract requires block10 confirmation'
+            'positive_folds':r['positive_folds'],'pooled_auc':r.get('pooled_oof_auc')})
+    if recovery is None:
+        assert any(r['scheme']=='block10' for r in confirms), 'Finalist contract requires block10 confirmation'
     assert any(r['scheme']=='shadow' for r in confirms), 'Master handoff requires frozen shadow confirmation'
     sim=json.loads(Path(args.simulation).read_text(encoding='utf-8'))
     assert sim['portfolio_contract_sha256']==file_sha256(args.primary_report)
@@ -127,6 +182,8 @@ def main():
         'model_seed_stability':seed_evidence,
         'data_sha256':data_hash,'fold_sha256':arr_sha256(folds),'oof_sha256':cert['oof_sha256'],'test_sha256':cert['test_sha256'],
         'source_sha256':{p:file_sha256(p) for p in ('scripts/score_sol_foundation.py','scripts/assemble_sol_foundation_test.py','src/validation/private_sim.py')},
+        'recovery_scope_sha256':file_sha256(args.recovery_scope) if recovery else None,
+        'independent_confirmation_scope':'partial shadow; block10 not run' if recovery else 'full shadow and block10',
         'limitations':['Private simulation conditions on trained OOF vectors; it is not a probability of winning.',
             'The auxiliary reference is a fully corrected fixed ten-role stack; legacy59 is not certified.']}
     save_json(scorecard,output)

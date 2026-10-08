@@ -9,6 +9,29 @@ import pandas as pd
 from src.features.aux_distribution import signatures
 
 
+def test_partial_shadow_scope_requires_predeclaration_and_never_becomes_full_oof():
+    from scripts.score_sol_foundation import confirmation_scope
+    report={'scheme':'shadow','scope':'selected shadow folds; not full OOF',
+            'verdict':'INDEPENDENT_CONFIRMATION_INCOMPLETE',
+            'admission_gate_against_clean_auxiliary_stack':None,
+            'folds':[{'fold':0,'delta_vs_strict_aux10':.0003},
+                     {'fold':1,'delta_vs_strict_aux10':.00031}]}
+    try:
+        confirmation_scope(report)
+    except AssertionError as error:
+        assert 'predeclared' in str(error)
+    else:
+        raise AssertionError('Partial evidence accepted without declared scope')
+    assert confirmation_scope(report,{'shadow_folds':[0,1]}) is False
+    report['folds'][1]['delta_vs_strict_aux10']=-.0001
+    try:
+        confirmation_scope(report,{'shadow_folds':[0,1]})
+    except AssertionError as error:
+        assert 'contradicts' in str(error)
+    else:
+        raise AssertionError('Contradicting partial evidence accepted')
+
+
 def test_aux_fit_and_apply_rows_are_actually_unseen():
     from scripts.run_phase13 import RATINGS, build_aux
     names = RATINGS + ["Gender", "Customer Type", "Type of Travel", "Class", "Age", "Flight Distance",

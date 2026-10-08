@@ -1,0 +1,21 @@
+{
+  "purpose": "Finish the already promoted frozen portfolio under the critical recovery handoff; no new research branch or parameter selection",
+  "declared_utc": "2026-10-08T05:30:00Z",
+  "primary_name": "sol_route_aux10_primary_final",
+  "primary_folds": [0, 1, 2, 3, 4],
+  "primary_existing_vectors_to_reuse": 33,
+  "primary_retry_tag": "sol_tabpfn35_route_recovery",
+  "classical_tag": "sol_clean_aux10_primary",
+  "shadow_folds": [0, 1],
+  "shadow_scope": "Two preselected independent shadow folds, not full shadow OOF",
+  "shadow_requirement": "Both fixed portfolio gains positive and their mean at least0.000015; contrary evidence requires investigation or rejection, never tuning",
+  "seed_diagnostic": {"scheme": "primary", "fold": 0, "seed": 1202, "selection": "diagnostic only; finalist seed remains1201"},
+  "block10": {"run": false, "reason": "Recovery prioritizes feasible shadow and seed checks. Ten larger-context foundation fits plus100 auxiliary fits add disproportionate compute and known GPU resource risk; no block10 robustness claim"},
+  "test_policy": "Five immutable primary FIT-context route predictions, equally averaged in probability space; auxiliary10 uses exact full-data median-tree refits; fixed50/50 method logits",
+  "pseudo_test_policy_check": {"conditional": "After primary promotion, if the continuation budget permits", "outer_holdout": "shadow fold0", "maximum_fit_context_rows": 100000, "maximum_query_rows": 20000, "purpose": "Small leakage-safe inference-policy diagnostic, not a substitute for full primary OOF or a score for the deployment test ensemble"},
+  "operational_budget_hours": 8,
+  "individual_model_limit_seconds": 2700,
+  "resource_reserves_unchanged": true,
+  "maximum_new_submissions": 2,
+  "stop": "After certified submission, score retrieval and private-first comparison; no39-cross or clean59 reconstruction before the promoted finalist is resolved"
+}

@@ -1,0 +1,42 @@
+{
+  "utc": "2026-10-08T01:58:03.257700+00:00",
+  "source": "authenticated Kaggle API; whitelisted submission metadata only",
+  "remaining_now": 10,
+  "submissions": [
+    {
+      "ref": "56918343",
+      "file": "v5_aux_cross.csv",
+      "date": "2026-10-07 18:05:59.993000",
+      "status": "COMPLETE",
+      "public_score": "0.96103"
+    },
+    {
+      "ref": "56845975",
+      "file": "v4_fulldata.csv",
+      "date": "2026-10-05 07:23:04.763000",
+      "status": "COMPLETE",
+      "public_score": "0.96100"
+    },
+    {
+      "ref": "56805526",
+      "file": "v3_final.csv",
+      "date": "2026-10-03 19:38:08.657000",
+      "status": "COMPLETE",
+      "public_score": "0.96098"
+    },
+    {
+      "ref": "56793823",
+      "file": "v2_equal34.csv",
+      "date": "2026-10-03 08:43:18.273000",
+      "status": "COMPLETE",
+      "public_score": "0.96092"
+    },
+    {
+      "ref": "56788249",
+      "file": "v1_equal4.csv",
+      "date": "2026-10-03 03:14:34.997000",
+      "status": "COMPLETE",
+      "public_score": "0.96093"
+    }
+  ]
+}

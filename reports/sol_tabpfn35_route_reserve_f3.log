@@ -1,0 +1,14 @@
+route f3: fit 559708 context rows; 22 columns
+route: fitted in 777.1s; peak GPU 12.736 GiB
+Traceback (most recent call last):
+  File "C:\Users\James\airline_S6E10\scripts\run_sol_tabpfn.py", line 234, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\James\airline_S6E10\scripts\run_sol_tabpfn.py", line 164, in main
+    with prediction_guard:
+  File "C:\Users\James\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\src\models\resource_guard.py", line 21, in inference_guard
+    raise ResourcePreflightError('Full inference requires at least 20 GiB free disk reserve')
+src.models.resource_guard.ResourcePreflightError: Full inference requires at least 20 GiB free disk reserve

@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-07T20:44:09.377793+00:00",
+  "updated_utc": "2026-10-08T01:56:52.224556+00:00",
   "BEST_A": {
     "name": "v5_aux_cross",
     "ref": 56918343,
@@ -20,5 +20,41 @@
     "status": "NOT_A_TRUE_HEDGE; v3 OOF proxy only"
   },
   "final_selection_locked": false,
-  "verified_clean_BEST_A": null
+  "verified_clean_BEST_A": null,
+  "candidate_in_confirmation": {
+    "name": "sol_route_aux10_primary",
+    "intended_role": "expected private performance; provisional only",
+    "status": "THREE_PRIMARY_FOLDS_REPLICATED_PROMOTED_TO_COMPLETE_PRIMARY",
+    "report": "reports\\sol_route_aux10_threefold.json",
+    "report_sha256": "2cde311e55db0960ae39e548fdfc65ed989c3710f82ad45b4c45b4fbd7dbb840",
+    "folds": [
+      0,
+      1,
+      2
+    ],
+    "fold_aucs": [
+      0.9617271804553859,
+      0.961935424840251,
+      0.9617875501895332
+    ],
+    "paired_fold_deltas": [
+      0.0003129778662702698,
+      0.00032935307562242944,
+      0.0003452379524859772
+    ],
+    "mean_paired_gain": 0.0003291896314595588,
+    "paired_fold_se": 9.31304329344963e-06,
+    "test_policy": "predeclared five-primary-context probability average after full-context resource failure",
+    "outstanding": [
+      "full primary admission",
+      "full shadow confirmation",
+      "block10 confirmation",
+      "fixed seed1202 diagnostic",
+      "complete certified test predictions",
+      "private simulation and robustness scorecard",
+      "public transfer diagnostic"
+    ],
+    "git": "671826b092d89ac73750a3c0baac6c21b3c1eb98"
+  },
+  "verified_clean_BEST_B_HEDGE": null
 }
