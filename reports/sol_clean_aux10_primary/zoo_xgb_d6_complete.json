@@ -1,0 +1,74 @@
+{
+  "role": {
+    "member": "zoo_xgb_d6",
+    "family": "xgb",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 8,
+    "overrides": {
+      "learning_rate": 0.04,
+      "max_depth": 6,
+      "min_child_weight": 5,
+      "colsample_bytree": 0.85,
+      "subsample": 0.9,
+      "reg_lambda": 5.0,
+      "reg_alpha": 0.05
+    },
+    "aux_arm": "X2",
+    "es_seed_policy": "1",
+    "te_inner_seed_policy": "fold"
+  },
+  "oof_auc": 0.9609437031866466,
+  "fold_aucs": [
+    0.9609447899020784,
+    0.961064351825182,
+    0.9609875483125956,
+    0.9602362917942007,
+    0.9615361747472342
+  ],
+  "prediction_sha256": "9b0cfc3b8fe810f482153da607ca113d4214a04dac62d4f864ed06e6644ef2d0",
+  "test_sha256": null,
+  "meta": {
+    "family": "xgb",
+    "featureset": "full",
+    "params": {
+      "objective": "binary:logistic",
+      "eval_metric": "auc",
+      "n_estimators": 6000,
+      "learning_rate": 0.04,
+      "max_depth": 6,
+      "min_child_weight": 5,
+      "subsample": 0.9,
+      "colsample_bytree": 0.85,
+      "reg_lambda": 5.0,
+      "max_bin": 256,
+      "tree_method": "hist",
+      "device": "cuda",
+      "n_jobs": 8,
+      "early_stopping_rounds": 250,
+      "reg_alpha": 0.05,
+      "random_state": 8
+    },
+    "seed": 8,
+    "auc": 0.9609437031866466,
+    "fold_aucs": [
+      0.9609447899020784,
+      0.961064351825182,
+      0.9609875483125956,
+      0.9602362917942007,
+      0.9615361747472342
+    ],
+    "training_protocol": "sol_clean_classical_v1_strict_te_exact_refit",
+    "source_role": "zoo_xgb_d6",
+    "fold_reports_sha256": [
+      "20d5b9594ae48b70a2c816e0e252d394ea031c14ca202a7de52943b2f0252151",
+      "9c640b1fdc5791738293f2324d08cd0de7126100f309231ccba59ed4289545d0",
+      "44d91c27ee805af59e4de6b4b5e4d47720234e3bf4fc66ce9bd591c9194ffe9f",
+      "635047a4f263082c95b4237dbb4db53f1dc0a0efa01f522a814821223205caf0",
+      "c6dc1cf6b1f3f0d50707113b9df9ff14c106f15b22e403ceda13096ee75d3fd6"
+    ],
+    "test_policy": "pending",
+    "ordered_train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "ordered_test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71"
+  }
+}

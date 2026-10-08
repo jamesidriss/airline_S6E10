@@ -1,6 +1,17 @@
 # STATUS — Kaggle Playground S6E10 (Airline Satisfaction)
 
-_Last updated: 2026-10-04._
+_Last updated: 2026-10-08, 07:17 UTC._
+
+The recovery continuation has completed the frozen route/clean auxiliary10
+five-fold portfolio: pooled OOF AUC **0.9617656138245795**, versus clean
+auxiliary10 **0.9614187095444636**. All five paired gains are positive; the
+primary admission gate passes. Independent confirmation and complete certified
+test inference remain outstanding. No new Sol submission has been spent.
+Current evidence is in `reports/sol_route_aux10_primary_final.json` and
+`STATUS_sol.md`. The earlier results below are historical: v3/v4/v5 contracts
+have documented validation/inference defects and do not establish clean
+finalist eligibility. The live recovery snapshot at05:35 UTC recorded rank
+336/1106, public leader0.96185 and10 submissions remaining.
 
 ## 1. Verified competition facts
 

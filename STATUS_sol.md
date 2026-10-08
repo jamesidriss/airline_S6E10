@@ -1,6 +1,6 @@
 # SOL campaign — audit and continuation
 
-Checkpoint: 8 October 2026, 06:36 UTC. **No clean finalist has yet been fully
+Checkpoint: 8 October 2026, 07:17 UTC. **No clean finalist has yet been fully
 reproduced. No new Kaggle submission was spent. Final slots remain unlocked.**
 The campaign continues; this is not a final decision or research stopping point.
 
@@ -12,8 +12,14 @@ The earlier fold3 disk refusal remains resource-invalid evidence, without a
 prediction or AUC. Route fold4 completed at AUC0.9618192023035632; all five
 route vectors pass the authoritative source/data/checkpoint/ID/hash/AUC checks.
 Auxiliary rating caches for folds3/4 are complete in735.641s and895.156s.
-The ten frozen auxiliary roles are now reusing verified folds0/1/2 and fitting
-only missing folds3/4. The combined full-primary result remains outstanding.
+All ten frozen auxiliary roles now have complete verified five-fold OOF.
+Thirty existing fold0/1/2 results were reused and twenty missing results fitted.
+`reports/sol_route_aux10_primary_final.json` certifies all699635 ordered rows:
+frozen candidate pooled AUC0.9617656138245795; clean auxiliary10
+0.9614187095444636; route0.9612196007698864. All five paired gains are positive,
+mean0.0003469980344849022, SE0.000025277324554686046. The frozen primary
+admission gate passes. Independent confirmation, certified test inference and
+private diagnostics remain required before submission.
 
 The predeclared recovery scope is two shadow folds0/1 and one fixed primary
 fold0 seed1202 replay; block10 is deferred. These checks cannot establish full

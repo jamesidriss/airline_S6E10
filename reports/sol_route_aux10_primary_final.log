@@ -1,0 +1,6 @@
+{
+  "scope": "full primary OOF",
+  "mean_paired_gain_vs_strict_aux10": 0.0003469980344849022,
+  "positive_folds": 5,
+  "verdict": "FULL_PRIMARY_GATE_PASS_REQUIRES_TEST_AND_CONFIRMATION"
+}

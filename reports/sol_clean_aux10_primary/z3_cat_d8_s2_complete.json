@@ -1,0 +1,63 @@
+{
+  "role": {
+    "member": "z3_cat_d8_s2",
+    "family": "cat",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 3,
+    "overrides": {
+      "learning_rate": 0.04,
+      "depth": 8
+    },
+    "aux_arm": "C1",
+    "es_seed_policy": "1",
+    "te_inner_seed_policy": "fold"
+  },
+  "oof_auc": 0.9611350687312978,
+  "fold_aucs": [
+    0.9610228536664458,
+    0.9613506971934317,
+    0.9612697505286778,
+    0.9602932837265209,
+    0.9617760480897605
+  ],
+  "prediction_sha256": "e00801af8b9d7c2d0a3888f2d79ab0e0e0744ad69f97c46af19872319903b40c",
+  "test_sha256": null,
+  "meta": {
+    "family": "cat",
+    "featureset": "full",
+    "params": {
+      "iterations": 6000,
+      "learning_rate": 0.04,
+      "depth": 8,
+      "l2_leaf_reg": 3.0,
+      "thread_count": 8,
+      "verbose": 0,
+      "allow_writing_files": false,
+      "eval_metric": "AUC",
+      "random_seed": 3,
+      "boosting_type": "Plain"
+    },
+    "seed": 3,
+    "auc": 0.9611350687312978,
+    "fold_aucs": [
+      0.9610228536664458,
+      0.9613506971934317,
+      0.9612697505286778,
+      0.9602932837265209,
+      0.9617760480897605
+    ],
+    "training_protocol": "sol_clean_classical_v1_strict_te_exact_refit",
+    "source_role": "z3_cat_d8_s2",
+    "fold_reports_sha256": [
+      "bd2bee0f809368bba971fc76a39074bdc9abe32169fc1876104417b3d8d2b8d6",
+      "dc3be533bfb5eaa21b8e50f7d51ab428ac96d71b87984603fc26e141fd84041e",
+      "8fe59cc77aa441c98f8e9d96de708c723f59f30da136d2bf6ce9f9be72b431e6",
+      "dd9d4cef3f9cc129b9aaf9a426d4be041af35634c0031e0ca8cf0c403b843a24",
+      "e87ba1f8c8ceda6b8dc863172d71a9038634c1d66375fe1b5c0a61dcb3c5f8b5"
+    ],
+    "test_policy": "pending",
+    "ordered_train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "ordered_test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71"
+  }
+}
