@@ -68,3 +68,54 @@ def test_certificate_rejects_apply_labels_in_fit_context():
         r['contract']['apply_ids_sha256']=arr_sha256(poisoned);path.write_text(json.dumps(r))
         np.save(pred_dir/'ids_test_f2.npy',poisoned)
         reject(lambda:certificate.verify_context(path,ids,y,folds,poisoned,dh,'test',2))
+
+
+def test_full_admission_uses_four_of_five_and_not_partial_replication_rule():
+    from scripts.evaluate_sol_phase15_raw import phase_verdict
+    deltas=[.00003,.00003,.00003,.00003,-.000001]
+    rows=[{'v6_auc':.96,'candidate_auc':.96+d,'delta_vs_v6':d,'discovery_pass':d>=.00001} for d in deltas]
+    partial,_=phase_verdict(rows,False)
+    full,gate=phase_verdict(rows,True)
+    assert partial=='FAILED_REPLICATION_STOP'
+    assert full=='PRIMARY_ADMISSION_GATE_PASS_REQUIRES_INDEPENDENT_AND_TEST' and gate['admit'] and gate['pos_folds']==4
+
+
+@contextmanager
+def auxiliary_fixture():
+    from hashlib import sha256
+    import scripts.sol_phase15_auxpfn as helper
+    from scripts.run_phase13 import RATINGS
+    with TemporaryDirectory() as directory:
+        artifacts=Path(directory)
+        names=list(RATINGS)+['Gender','Customer Type','Type of Travel','Class','Age','Flight Distance',
+                             'Departure Delay in Minutes','Arrival Delay in Minutes']
+        fit=np.zeros((2,21),dtype='float32');apply=np.zeros((1,21),dtype='float32')
+        fit_ids=np.array([10,11]);apply_ids=np.array([12])
+        c={'fit_ids_sha256':arr_sha256(fit_ids),'apply_ids_sha256':arr_sha256(apply_ids),
+           'fit_raw_sha256':arr_sha256(fit),'apply_raw_sha256':arr_sha256(apply),
+           'fold_sha256':'fixture_fold','seed':1,'rounds':250,'inner_folds':3,
+           'builder_sha256':file_sha256('scripts/run_phase13.py'),'raw_names':names}
+        h=sha256(json.dumps(c,sort_keys=True).encode()).hexdigest();root=artifacts/'aux_distribution'/h;root.mkdir(parents=True)
+        pf=np.full((2,13,6),1/6);pa=np.full((1,13,6),1/6)
+        for part,p,ids in [('fit',pf,fit_ids),('apply',pa,apply_ids)]:
+            np.save(root/(part+'.npy'),p);np.save(root/(part+'_ids.npy'),ids)
+        manifest={'contract':c,'fingerprint':h,'fit_probability_sha256':arr_sha256(pf),'apply_probability_sha256':arr_sha256(pa)}
+        (root/'manifest.json').write_text(json.dumps(manifest))
+        aux={'upstream_contract':c,'upstream_fingerprint':h,
+             'fit_expected_values_sha256':arr_sha256(pf@np.arange(6,dtype=float)),
+             'validation_expected_values_sha256':arr_sha256(pa@np.arange(6,dtype=float))}
+        with patch.object(helper,'ARTIFACTS',artifacts):
+            yield helper,aux,fit,apply,names,fit_ids,apply_ids
+
+
+def test_auxiliary_cache_rejects_fit_apply_overlap():
+    with auxiliary_fixture() as (helper,aux,fit,apply,names,fi,ai):
+        helper.expected_values(aux,fit,apply,names,fi,ai,'fixture_fold')
+        reject(lambda:helper.expected_values(aux,fit,apply,names,fi,fi[:1],'fixture_fold'))
+
+
+def test_auxiliary_cache_rejects_raw_covariate_drift():
+    with auxiliary_fixture() as (helper,aux,fit,apply,names,fi,ai):
+        helper.expected_values(aux,fit,apply,names,fi,ai,'fixture_fold')
+        poisoned=apply.copy();poisoned[0,0]=1
+        reject(lambda:helper.expected_values(aux,fit,poisoned,names,fi,ai,'fixture_fold'))

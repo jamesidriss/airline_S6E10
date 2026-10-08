@@ -1,0 +1,9 @@
+private split diagnostics 100/820
+private split diagnostics 200/820
+private split diagnostics 300/820
+private split diagnostics 400/820
+private split diagnostics 500/820
+private split diagnostics 600/820
+private split diagnostics 700/820
+private split diagnostics 800/820
+{"pooled_delta_vs_v6": 2.2408913869953473e-05, "total_draws": 820, "modes": {"random_stratified": {"simulations": 200, "public_quantiles": [-1.8583864390353533e-05, 2.2594917886253896e-05, 6.62780314879152e-05], "private_quantiles": [6.717323812654998e-06, 2.149474896351311e-05, 3.888707259962486e-05], "private_p05": 6.717323812654998e-06, "private_median": 2.149474896351311e-05, "private_worst_5pct_mean": 3.7900140957836116e-07, "public_private_sign_disagreement_rate": 0.22, "private_reversal_vs_full_oof_rate": 0.02, "public_reversal_vs_full_oof_rate": 0.2}, "fold_aware": {"simulations": 200, "public_quantiles": [-2.2657782472196297e-05, 1.9565475746441408e-05, 7.060704386277475e-05], "private_quantiles": [4.9865724197795115e-06, 2.2965337804992103e-05, 3.991007538720058e-05], "private_p05": 4.9865724197795115e-06, "private_median": 2.2965337804992103e-05, "private_worst_5pct_mean": 1.2920022506412999e-06, "public_private_sign_disagreement_rate": 0.25, "private_reversal_vs_full_oof_rate": 0.015, "public_reversal_vs_full_oof_rate": 0.235}, "segment_stressed": {"simulations": 420, "public_quantiles": [-1.7908098257446435e-05, 2.6390451753566246e-05, 6.806187044213207e-05], "private_quantiles": [4.577164640656717e-06, 2.1488675787162403e-05, 3.899860780317563e-05], "private_p05": 4.577164640656717e-06, "private_median": 2.1488675787162403e-05, "private_worst_5pct_mean": 2.1531467999499502e-06, "public_private_sign_disagreement_rate": 0.16428571428571428, "private_reversal_vs_full_oof_rate": 0.011904761904761904, "public_reversal_vs_full_oof_rate": 0.1523809523809524}}}

@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import gc
 import json
+import shutil
 import sys
 import time
 from importlib.metadata import version
@@ -70,6 +71,8 @@ def main():
     register(reuse_query_output=True);contract['backend_reference_gap']=gate
     model=None;start=time.monotonic();save_json({'contract':contract,'status':'FITTING'},root/'progress.json')
     try:
+        if shutil.disk_usage(root).free < 20 * 1024**3:
+            raise ResourcePreflightError('At least20 GiB disk reserve required before this model fit')
         torch.cuda.reset_peak_memory_stats()
         with inference_guard(root,contract,min_available_gib=4,max_seconds=2700):
             model=create_model(source['params'],True,source['inference_chunk_cells'],source['inference_col_chunk_size'],None,True)

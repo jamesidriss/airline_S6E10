@@ -1,0 +1,1 @@
+{"scope": "selected primary folds; not full OOF", "selected_pooled_auc": 0.9618396727648284, "selected_pooled_delta_vs_v6": 2.5728230904964455e-05, "mean_paired_gain": 2.564399902219942e-05, "paired_se": 1.643079252293115e-05, "verdict": "POSITIVE_REPLICATION"}

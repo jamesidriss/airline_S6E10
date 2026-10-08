@@ -1,0 +1,57 @@
+{
+  "scope": "Read-only existing-cache provenance check; no classifier fit, AUC or new performance result",
+  "fold": 0,
+  "fit_shape": [
+    559708,
+    13
+  ],
+  "apply_shape": [
+    139927,
+    13
+  ],
+  "proof": {
+    "upstream_contract": {
+      "fit_ids_sha256": "4f6cafdf586649e3589d97fa657ce942699627c12053770d519e4d9d1004c338",
+      "apply_ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+      "fit_raw_sha256": "1dbf549a15729e18f4abb6e36a2f8a1ed293b77577ba1cb1ba4fcde435b5722e",
+      "apply_raw_sha256": "cff543e17f12c549139c256aeb1ffaf04c31513aa82bfd8d595e65f1d7e2d581",
+      "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+      "seed": 1,
+      "rounds": 250,
+      "inner_folds": 3,
+      "builder_sha256": "906e1ccbfeba8a6440bb02e755726b7b498ade40cc46206de9d15680b26b7674",
+      "raw_names": [
+        "Inflight wifi service",
+        "Departure/Arrival time convenient",
+        "Ease of Online booking",
+        "Gate location",
+        "Food and drink",
+        "Online boarding",
+        "Seat comfort",
+        "Inflight entertainment",
+        "On-board service",
+        "Leg room service",
+        "Baggage handling",
+        "Checkin service",
+        "Cleanliness",
+        "Gender",
+        "Customer Type",
+        "Type of Travel",
+        "Class",
+        "Age",
+        "Flight Distance",
+        "Departure Delay in Minutes",
+        "Arrival Delay in Minutes"
+      ]
+    },
+    "upstream_fingerprint": "5454f223e84bed6bd45b58a614f3824d478172cf67a34b44b8b239dd5b323603",
+    "cache_manifest_sha256": "abaa526b38abeb84426ace328d7211b487b8adea978df3d8fe83d95e5c9f0740",
+    "fit_probability_sha256": "064991750b91dd05bb6cb8c1d6bcb0b38f52df0bb4a6dea76b1d8b18fb459bca",
+    "apply_probability_sha256": "ff03200edb79abf00321414b695d652f30f6cfe1ca30e8749676a1af9ce87883",
+    "fit_ev_sha256": "218f7cc344938bb8a30af6c3be626e6b84ea53fedbd90feb310ea23eb3ae1c02",
+    "apply_ev_sha256": "62691854e30ccbf68fcc16ab6b5ec0e1590f2508ae439d0757cb636061d6c1dd",
+    "provenance": "aux_* covariate targets only; FIT innerOOS, apply outer-FIT-only; no satisfaction or id input"
+  },
+  "helper_source_sha256": "49488f43df4b0a8ea59c4800b12ca169f50ad86b64724ccfaf9dfea3ca2f21ec",
+  "status": "PASS"
+}

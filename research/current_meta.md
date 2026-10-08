@@ -3,6 +3,20 @@
 _Live research log. Every claim is tagged VERIFIED / PROMISING HYPOTHESIS / UNVERIFIED / INVALID-LEAKY._
 _Re-verified from official Kaggle sources on 2026-10-03 (`research/raw/kaggle_pages.json`)._
 
+Phase15 refresh, 2026-10-08: **INVALID-LEAKY for our OOF admission contract** —
+both inspected author-linked notebooks from discussions
+[747358](https://www.kaggle.com/competitions/playground-series-s6e10/discussion/747358)
+and [747182](https://www.kaggle.com/competitions/playground-series-s6e10/discussion/747182)
+select boosting checkpoints using outer evaluation labels. Their reported OOF
+scores are rejected as promotion evidence. The second notebook excludes its
+separate pseudo-test population, which supports a limited transfer diagnostic,
+not admission of its inner OOF. The original
+[39-cross pseudocode](https://www.kaggle.com/competitions/playground-series-s6e10/discussion/745892)
+also uses outer early stopping; our test keeps the inner10percent FIT-only split.
+Exact source hashes and classifications are preserved in
+`reports/sol_phase15_notebook_protocol_audit_20261008.json` and
+`research/sol_phase15_refresh_20261008.md`. No competitor prediction CSV used.
+
 ---
 
 ## 1. Official facts (VERIFIED)

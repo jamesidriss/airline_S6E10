@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-08T20:03:10.621247+00:00",
+  "source_report": "reports\\sol_phase15_native39_twofold.json",
+  "source_report_sha256": "37e8f62dedf7fae9c8e5fca27007eb7837ebe8a5a64a74eef5430735e845bafa",
+  "standalone_gains": [
+    0.000164278837890941,
+    5.4006243026316625e-05
+  ],
+  "portfolio_gains": [
+    9.512395583222144e-06,
+    -2.573588228083068e-06
+  ],
+  "mean_portfolio_gain": 3.469403677569538e-06,
+  "paired_se": 6.042991905652605e-06,
+  "verdict": "STANDALONE_REPLICATED_PORTFOLIO_NOT_REPLICATED_COST_STOP",
+  "reason": "Both standalone gains exceed50 micro-AUC, but actual frozen portfolio gain changes sign, mean3.47 micro-AUC versusSE6.04; no competitive independent hedge established. No further CatBoost folds or tuning in this cycle.",
+  "new_submission": false
+}

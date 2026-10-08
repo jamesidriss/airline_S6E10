@@ -1,0 +1,104 @@
+{
+  "utc": "2026-10-08T20:00:02.267759+00:00",
+  "git": "b207dbf4e490855741124056b86ecba12489be08",
+  "scope": "selected primary folds; not full OOF",
+  "folds": [
+    {
+      "fold": 0,
+      "standalone_auc": 0.9611871325043367,
+      "standalone_gain": 0.000164278837890941,
+      "v6_candidate_auc": 0.9617366928509691,
+      "v6_gain": 9.512395583222144e-06,
+      "joint_candidate_auc": 0.9617939294581072,
+      "joint_gain_vs_raw_stack": 9.252594137421077e-06,
+      "correlation_vs_v6": {
+        "logit": 0.9999969570285636,
+        "spearman": 0.9999701944022642
+      },
+      "correlation_joint_vs_raw_stack": {
+        "logit": 0.9999969475226651,
+        "spearman": 0.9999696544171046
+      },
+      "source_report_sha256": "f66da4a6ed27d8faad086194a32bc9c4bdaff50aab6a5c40f52fe411d3e40f31",
+      "seconds": 1331.5929999999935,
+      "trees": 1504
+    },
+    {
+      "fold": 1,
+      "standalone_auc": 0.961404703436458,
+      "standalone_gain": 5.4006243026316625e-05,
+      "v6_candidate_auc": 0.9619328512520229,
+      "v6_gain": -2.573588228083068e-06,
+      "joint_candidate_auc": 0.9619499069387434,
+      "joint_gain_vs_raw_stack": -2.2343265172475313e-06,
+      "correlation_vs_v6": {
+        "logit": 0.9999957981427369,
+        "spearman": 0.9999603221702305
+      },
+      "correlation_joint_vs_raw_stack": {
+        "logit": 0.9999957826205969,
+        "spearman": 0.9999593345071738
+      },
+      "source_report_sha256": "3a86758ffb78540017788851d7c138a164770bf2e2fee57061a22d789f47e46d",
+      "seconds": 1037.484000000055,
+      "trees": 1106
+    }
+  ],
+  "v6_marginal": {
+    "mean": 3.469403677569538e-06,
+    "se": 6.042991905652605e-06,
+    "positive": 1
+  },
+  "raw_stack_marginal": {
+    "mean": 3.509133810086773e-06,
+    "se": 5.743460327334304e-06,
+    "positive": 1
+  },
+  "data_sha256": {
+    "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+    "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+  },
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "v6_selected_auc": 0.9618313190639508,
+  "joint_selected_auc": 0.9618687676584524,
+  "v6_bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "v6",
+    "comparisons": {
+      "candidate": {
+        "mean": 3.2156111249709296e-06,
+        "percentile_95_interval": [
+          -3.445033124221952e-06,
+          1.018579147201715e-05
+        ],
+        "positive_fraction": 0.79
+      }
+    }
+  },
+  "joint_bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "raw_stack",
+    "comparisons": {
+      "joint": {
+        "mean": 3.278556286961942e-06,
+        "percentile_95_interval": [
+          -3.3279298854577144e-06,
+          1.0339421409466535e-05
+        ],
+        "positive_fraction": 0.785
+      }
+    }
+  },
+  "source_sha256": {
+    "C:\\Users\\James\\airline_S6E10\\scripts\\evaluate_sol_phase15_native.py": "9f470c611479115d4978342a7975c06ad95376ab7740982fe3b9c4858a333776"
+  },
+  "raw_report_sha256": "3dfff2551eea92c40f4468b853ad30ddb5792d3897f1f4de24b2401374b33f2e",
+  "combination_protocol_sha256": "0d64acdf893777c9ff6034389c88e2e20f93e789564770ec87b8607c4e8380b5",
+  "verdict": "NOT_REPLICATED_FOR_V6_ADMISSION"
+}

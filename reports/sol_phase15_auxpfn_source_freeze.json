@@ -1,0 +1,15 @@
+{
+  "utc": "2026-10-08T20:27:59.853769+00:00",
+  "git": "b207dbf4e490855741124056b86ecba12489be08",
+  "scope": "Conditional preparation only; no timing or performance fit executed; raw primary fold4 still running",
+  "source_sha256": {
+    "scripts/run_sol_phase15_auxpfn.py": "e03b249434bf3aadaf05f4790537c89beeb793f7ee2445bbe291133645571808",
+    "scripts/sol_phase15_auxpfn.py": "49488f43df4b0a8ea59c4800b12ca169f50ad86b64724ccfaf9dfea3ca2f21ec",
+    "research/sol_phase15_auxpfn_protocol.md": "e93af4317a992c4e9c0af8a6f69b7e941dd20d66fc9cb12ad4ecd45ad9a32dc8"
+  },
+  "target_blend": {
+    "new_tabpfn": 0.125,
+    "v6": 0.875
+  },
+  "cache_preflight_report_sha256": "a194591c02e8b86c3b1b4b4acee0e0b9575954b96afbeba49c3ed595373db0b3"
+}

@@ -1,0 +1,14 @@
+{
+  "utc": "2026-10-08T20:36:53.103240+00:00",
+  "execute": "route_plus13_auxiliary_EV_TabPFN",
+  "raw_report_sha256": "e09d8444969ce69bfcf835ab8f902841d81b1972c3d6cf13c7ec3aecef48741f",
+  "audit_report_sha256": "a255bae4c8b02e0271ea71f8d294a1b5340848e75c5329923325499ba6bd1d8a",
+  "classical_replay_trigger_pass": false,
+  "raw_rejection_reason": "PRIMARY_ADMISSION_GATE_FAIL",
+  "raw_gain": 2.2408913869953473e-05,
+  "raw_fold_mean_over_se": 2.403295784999156,
+  "materiality30_pass": false,
+  "remaining_branch_limit": 1,
+  "source_protocol_sha256": "e93af4317a992c4e9c0af8a6f69b7e941dd20d66fc9cb12ad4ecd45ad9a32dc8",
+  "first_action": "Timing100kFIT/1024apply; no AUC. No classifier fit until idle resources and full tests checked."
+}

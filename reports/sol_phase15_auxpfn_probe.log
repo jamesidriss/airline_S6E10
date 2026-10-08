@@ -1,0 +1,2 @@
+auxpfn f0: 1024/1024
+{"fit_seconds": 29.01500000001397, "seconds": 29.453000000095926, "peak_gpu_bytes": 2865543680, "prediction_sha256": "bfebad92a20fe384e4eee684e7478ccfec884907d44ea4f8f6e237d0ab5b2de1", "status": "TIMING_ONLY_NO_PERFORMANCE_MEASUREMENT"}

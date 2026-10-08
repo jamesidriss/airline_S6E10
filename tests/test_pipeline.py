@@ -200,35 +200,33 @@ def test_oof_coverage_and_store_integrity():
 
 def test_submission_preflight_rejects_bad_input():
     """The pre-flight gate must refuse anything malformed, and must not leave litter behind."""
-    from src.submission.make import build
+    from tempfile import TemporaryDirectory
+    from unittest.mock import patch
+    import src.submission.make as make
 
+    # Keep the real sample/test ID validation, but never round-trip the
+    # production manifest through pandas: doing so changes recorded floats.
     n = len(pd.read_csv(TEST_CSV, usecols=[ID_COL]))
     good = np.full(n, 0.5)
-    p = build(good, "pytest_ok", notes="pytest artifact", oof_auc=0.5)
-    assert p.exists()
-    try:
-        build(np.full(n - 1, 0.5), "pytest_bad")
-        raise AssertionError("pre-flight failed to reject a wrong-length prediction")
-    except ValueError as exc:
-        assert "REJECTED" in str(exc)
-    try:
-        bad = good.copy()
-        bad[0] = np.nan
-        build(bad, "pytest_nan")
-        raise AssertionError("pre-flight failed to reject NaN")
-    except ValueError as exc:
-        assert "REJECTED" in str(exc)
-    # clean up: a test must not leave files in submissions/
-    p.unlink(missing_ok=True)
-    (p.parent / "pytest_bad.csv").unlink(missing_ok=True)
-    (p.parent / "pytest_nan.csv").unlink(missing_ok=True)
-    import pandas as _pd
-
-    man = p.parent / "manifest.csv"
-    if man.exists():
-        df = _pd.read_csv(man)
-        df = df[~df["name"].astype(str).str.startswith("pytest")]
-        df.to_csv(man, index=False)
+    with TemporaryDirectory() as directory:
+        root = Path(directory)
+        with patch.object(make, "SUBMISSIONS", root), patch.object(make, "MANIFEST", root / "manifest.csv"):
+            p = make.build(good, "pytest_ok", notes="pytest artifact", oof_auc=0.5)
+            assert p.exists()
+            try:
+                make.build(np.full(n - 1, 0.5), "pytest_bad")
+                raise AssertionError("pre-flight failed to reject a wrong-length prediction")
+            except ValueError as exc:
+                assert "REJECTED" in str(exc)
+            try:
+                bad = good.copy()
+                bad[0] = np.nan
+                make.build(bad, "pytest_nan")
+                raise AssertionError("pre-flight failed to reject NaN")
+            except ValueError as exc:
+                assert "REJECTED" in str(exc)
+            assert not (root / "pytest_bad.csv").exists()
+            assert not (root / "pytest_nan.csv").exists()
 
 
 def test_transforms_are_invertible_shape_wise():

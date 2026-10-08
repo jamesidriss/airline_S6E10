@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-08T20:36:53.103240+00:00",
+  "git": "b207dbf4e490855741124056b86ecba12489be08",
+  "scope": "Final producer freeze before any B2 timing/performance fit; corrections since v1 cover trigger certification and recording invalid/probe attempts; no mechanism, parameter or gate changes",
+  "previous_freeze_sha256": "4f9a61cf2547056d5087d4798919ed00d75d47f1760752dedbe3a4bbed5f00b1",
+  "source_sha256": {
+    "scripts/run_sol_phase15_auxpfn.py": "aafdff1d6c18dddd2d0090b31565998d621dde748939f80522cde18a3b046898",
+    "scripts/sol_phase15_auxpfn.py": "49488f43df4b0a8ea59c4800b12ca169f50ad86b64724ccfaf9dfea3ca2f21ec",
+    "research/sol_phase15_auxpfn_protocol.md": "e93af4317a992c4e9c0af8a6f69b7e941dd20d66fc9cb12ad4ecd45ad9a32dc8"
+  },
+  "third_branch_decision_sha256": "71c7c12beff1bce435e37f186e51a46900a4b89367373549f4c8bf285652f206"
+}

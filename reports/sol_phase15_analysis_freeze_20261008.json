@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-08T20:18:07.764934+00:00",
+  "git": "b207dbf4e490855741124056b86ecba12489be08",
+  "declared_before_full_primary_assembled": "Fold4 started; no full raw/route measurement",
+  "source_sha256": {
+    "scripts/evaluate_sol_phase15_raw.py": "484a337fcea066e8c5f83ce3900386ae405e1b6c26d3ba8892c065ecd64f90eb",
+    "scripts/run_sol_phase15_raw_context.py": "69b2c9482d6dcbb8e76b20f1a2155f9b6407386448bc98697161c315e52dab35",
+    "scripts/certify_sol_phase15_raw.py": "259953024967e3294d29098aa4df0a09a91db120d5791fcf785629d7d31a3194",
+    "scripts/simulate_sol_phase15_raw.py": "0bc34f9432e0582732d1909dc405382e5363ab75999c23dddf5612c7d8a07b2f",
+    "scripts/run_sol_tabpfn.py": "e3d84441b6e2b927cf058dbefe4bd0a3956f12834d75a8ff4a2f85fafc6e5d6b",
+    "scripts/run_sol_native_crosses.py": "a0905b07689c9c161e6ec66d75ad65c05af19cf3bd9e4a62a43314e664b8b581",
+    "research/sol_phase15_scope_20261008.json": "80e41b9b48eb9df14edf731f7f545faa343d4660a3c6a64255b0104c0d1a816a",
+    "research/sol_phase15_raw_protocol.md": "6215b08c87c5879dad0f60d0b7c1706ed29e007dd624a471f46cded287b36809",
+    "research/sol_phase15_auxpfn_protocol.md": "e93af4317a992c4e9c0af8a6f69b7e941dd20d66fc9cb12ad4ecd45ad9a32dc8"
+  },
+  "gate": "Mean15 micro-AUC,2.5 paired foldSE,4/5 positive; performance test certificate materiality30 micro-AUC; no retrospective relaxation",
+  "max_new_submissions": 2
+}

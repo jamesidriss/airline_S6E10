@@ -1,0 +1,150 @@
+{
+  "utc": "2026-10-08T19:37:44.117877+00:00",
+  "git": "b207dbf4e490855741124056b86ecba12489be08",
+  "scope": "selected primary folds; not full OOF",
+  "folds": [
+    {
+      "fold": 0,
+      "raw_proof": {
+        "tag": "sol_tabpfn35_predict_guard",
+        "report_sha256": "64f760fca6c6974a7eb50cae771cc70101e008e5652e6b0dd9ac8c9c8e884e43",
+        "prediction_sha256": "ecaa1b1ad54cc0fa247054936370727249b40e81016209153fe610b999c6393d",
+        "auc": 0.9609722955394799
+      },
+      "candidate_auc": 0.9617846768639697,
+      "v6_auc": 0.9617271804553859,
+      "delta_vs_v6": 5.7496408583879166e-05,
+      "standalone_gain": 0.00019201034010996043,
+      "candidate_sha256": "a9adc2ed29e8b3b491294211a42243e0ad5b9ae04a6f8e34c680d542b800ab39",
+      "ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+      "discovery_pass": true,
+      "candidate_correlation_vs_v6": {
+        "logit": 0.9999374291506734,
+        "spearman": 0.9996316569271168
+      },
+      "raw_route_correlation": {
+        "logit": 0.9959476404648687,
+        "spearman": 0.9755238829477223
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.017890747516989023,
+        "damage_rate": 0.000632707384532202,
+        "rescue_count": 1369,
+        "damage_count": 1217,
+        "sampled_delta_with_ties": 7.599999662488699e-05,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      }
+    },
+    {
+      "fold": 1,
+      "raw_proof": {
+        "tag": "sol_phase15_raw",
+        "report_sha256": "fed4e7201c2a764ec065bc8d11b30ebd257c550e0d836fff2fe247d729e83694",
+        "prediction_sha256": "e31151b05dafa7409038ba71da72299e2cd7f661ad10804c63df409701127c91",
+        "auc": 0.960916239722306
+      },
+      "candidate_auc": 0.9619521412652606,
+      "v6_auc": 0.961935424840251,
+      "delta_vs_v6": 1.6716425009666303e-05,
+      "standalone_gain": 0.00012562646987379633,
+      "candidate_sha256": "e903e87d260558e3861144f2d0d5ebb49e0b33a068fa3c2be6d78a97802cf0d6",
+      "ids_sha256": "2d0d8882d4ebd7f52b328d670a425eea2103354e2ed7d1fadf6d4a008431784e",
+      "discovery_pass": true,
+      "candidate_correlation_vs_v6": {
+        "logit": 0.9999340504490397,
+        "spearman": 0.999643204200887
+      },
+      "raw_route_correlation": {
+        "logit": 0.9957159876047024,
+        "spearman": 0.9756747911576751
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.016429296056705445,
+        "damage_rate": 0.0006756409103689571,
+        "rescue_count": 1247,
+        "damage_count": 1300,
+        "sampled_delta_with_ties": -2.6499999876250513e-05,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      }
+    },
+    {
+      "fold": 2,
+      "raw_proof": {
+        "tag": "sol_phase15_raw",
+        "report_sha256": "7970ef263f40978a762ab43b80637820d09b7b388a64fc6f207556731e45ca20",
+        "prediction_sha256": "d77121c155b5d05540fbef6ddb2c0e7ca1dad9d7f7739bcb9f1dbe960d734c42",
+        "auc": 0.9606098860868393
+      },
+      "candidate_auc": 0.9617902693530063,
+      "v6_auc": 0.9617875501895332,
+      "delta_vs_v6": 2.719163473052788e-06,
+      "standalone_gain": 9.270504731373475e-05,
+      "candidate_sha256": "2f654cf1c8c5e1373ccbbd41bd7ba40e59fba538d9e6b98223476198f460e03c",
+      "ids_sha256": "4f5bf9d9f2eb987d420afadff4b46ea3aea9890160f4f1c946e630a1a7e7b808",
+      "discovery_pass": true,
+      "candidate_correlation_vs_v6": {
+        "logit": 0.9999352804430218,
+        "spearman": 0.9996082139656599
+      },
+      "raw_route_correlation": {
+        "logit": 0.9958310243668536,
+        "spearman": 0.9746361301357197
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.018572212209074523,
+        "damage_rate": 0.0007023895803027294,
+        "rescue_count": 1422,
+        "damage_count": 1351,
+        "sampled_delta_with_ties": 3.550000110408291e-05,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      }
+    }
+  ],
+  "weights": {
+    "route": 0.375,
+    "raw": 0.125,
+    "aux10": 0.5
+  },
+  "data_sha256": {
+    "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+    "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+  },
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "selected_ids_sha256": "15debfdbabde015deb3a8227f02bc167d410e9aa00db5e7b9d534ac2a54fd3cb",
+  "selected_oof_sha256": "b42bbd1cf07d244cc2c143846f17346c26dc263f46f319e38990ba2ae1b2ecc4",
+  "scope_sha256": "80e41b9b48eb9df14edf731f7f545faa343d4660a3c6a64255b0104c0d1a816a",
+  "source_sha256": {
+    "scripts/evaluate_sol_phase15_raw.py": "68a3a921628c281652e71be931dfb3db867b7e1696fb9f23cb68b530b2c20b66",
+    "scripts/run_sol_tabpfn.py": "e3d84441b6e2b927cf058dbefe4bd0a3956f12834d75a8ff4a2f85fafc6e5d6b"
+  },
+  "selected_pooled_auc": 0.9618396727648284,
+  "selected_pooled_delta_vs_v6": 2.5728230904964455e-05,
+  "mean_paired_gain": 2.564399902219942e-05,
+  "paired_se": 1.643079252293115e-05,
+  "positive_folds": 3,
+  "paired_bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "v6",
+    "comparisons": {
+      "candidate": {
+        "mean": 2.5393225346344028e-05,
+        "percentile_95_interval": [
+          4.9325433212288324e-06,
+          4.2023116410369605e-05
+        ],
+        "positive_fraction": 0.99
+      }
+    }
+  },
+  "verdict": "POSITIVE_REPLICATION",
+  "test_policy_if_admitted": "Equal probability average of five exact primary FIT contexts separately for raw and route, then frozen method-logit mixture; never699635-row GPU context"
+}

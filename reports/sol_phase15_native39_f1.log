@@ -1,0 +1,3 @@
+    [cache] view full: (699635, 237)
+clean fold1: aux probability cache b6962eddf3a5
+{"auc": 0.961404703436458, "standalone_delta": 5.4006243026316625e-05, "fixed_portfolio_delta": -2.573588228083068e-06, "seconds": 1037.484000000055, "status": "POSITIVE_UNCONFIRMED"}

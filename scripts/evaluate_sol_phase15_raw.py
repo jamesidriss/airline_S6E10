@@ -12,6 +12,7 @@ from sklearn.metrics import roc_auc_score
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from src.common import ARTIFACTS, REPORTS, arr_sha256, file_sha256, git_commit, load_cached_parquet, save_json
 from src.validation.compare import logit
+from src.ensemble.lab import admission_gate
 from scripts.assemble_sol_foundation_test import checked_probability, verify_primary
 from scripts.run_sol_tabpfn import frames
 from scripts.score_sol_foundation import paired_bootstrap, correlations
@@ -41,6 +42,17 @@ def verify_raw(k, tag, tr, te, ids, y, folds, data_hash):
     p=checked_probability(ARTIFACTS/tag/f'raw_f{k}.npy',ARTIFACTS/tag/f'ids_f{k}.npy',r['prediction_sha256'],ids[va])
     assert abs(float(roc_auc_score(y[va],p))-r['auc'])<1e-14
     return p,{'tag':tag,'report_sha256':file_sha256(path),'prediction_sha256':arr_sha256(p),'auc':r['auc']}
+
+
+def phase_verdict(records, full):
+    if full:
+        assert len(records)==5
+        gate=admission_gate('frozen raw/route versus v6',[r['v6_auc'] for r in records],[r['candidate_auc'] for r in records])
+        return ('PRIMARY_ADMISSION_GATE_PASS_REQUIRES_INDEPENDENT_AND_TEST' if gate['admit']
+                else 'PRIMARY_ADMISSION_GATE_FAIL_NO_PERFORMANCE_PROMOTION'),gate
+    positive=all(r['delta_vs_v6']>0 for r in records)
+    return ('POSITIVE_REPLICATION' if positive and all(r['discovery_pass'] for r in records)
+            else 'FAILED_REPLICATION_STOP'),None
 
 
 def main():
@@ -73,6 +85,7 @@ def main():
     full=len(ks)==5
     if full:
         np.save(root/'candidate_oof.npy',oof);np.save(root/'raw_oof.npy',raw_oof);np.save(root/'train_ids.npy',ids)
+    verdict,gate=phase_verdict(records,full)
     result={'utc':datetime.now(timezone.utc).isoformat(),'git':git_commit(),'scope':'full primary OOF' if full else 'selected primary folds; not full OOF',
         'folds':records,'weights':{'route':.375,'raw':.125,'aux10':.5},'data_sha256':dh,'fold_sha256':arr_sha256(folds),
         'selected_ids_sha256':arr_sha256(ids[mask]),'selected_oof_sha256':arr_sha256(oof[mask]),
@@ -82,7 +95,7 @@ def main():
         'selected_pooled_delta_vs_v6':float(roc_auc_score(y[mask],oof[mask])-roc_auc_score(y[mask],vectors['candidate'][mask])),
         'mean_paired_gain':float(ds.mean()),'paired_se':float(ds.std(ddof=1)/np.sqrt(len(ds))) if len(ds)>1 else None,
         'positive_folds':int((ds>0).sum()),'paired_bootstrap':bootstrap,
-        'verdict':'POSITIVE_REPLICATION' if (ds>0).all() and all(r['discovery_pass'] for r in records) else 'FAILED_REPLICATION_STOP',
+        'verdict':verdict,'admission_gate':gate,
         'test_policy_if_admitted':'Equal probability average of five exact primary FIT contexts separately for raw and route, then frozen method-logit mixture; never699635-row GPU context'}
     save_json(result,path)
     with Path('experiments/ledger.jsonl').open('a',encoding='utf-8') as f:

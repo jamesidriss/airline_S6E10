@@ -1,0 +1,15 @@
+{
+  "utc": "2026-10-08T20:48:34.862815+00:00",
+  "probe_report_sha256": "26856e14be8a92ab02c78d3ad34a19532195ba86006dfaa33344360b64cf7f42",
+  "historical_matched_settings_probe_sha256": "2f4a2aa5d88a6cff46f67c1a47995caf3aff3fc2c4f6c741b513beaa4b4024f2",
+  "full_raw_reference_sha256": "64f760fca6c6974a7eb50cae771cc70101e008e5652e6b0dd9ac8c9c8e884e43",
+  "probe_fit_seconds": 29.01500000001397,
+  "probe_total_seconds": 29.453000000095926,
+  "probe_peak_gpu_bytes": 2865543680,
+  "conservative_time_estimate_seconds": 1243.9558664474755,
+  "time_formula": "FIT scales quadratically in context rows; apply scales linearly in context and query rows. Estimate only, not guarantee.",
+  "rough_peak_gpu_estimate_bytes": 13680205312,
+  "memory_formula": "Use historical100k-to559708 raw-context peak increment on the new100k probe; uncertain across representations, no full-context feasibility guarantee.",
+  "guards": "Unchanged:45-minute hard limit,85percentGPU cap,4/2GiBhost and20GiBdisk preflight; resource failure invalid, not negative",
+  "decision": "ONE_GUARDED_FULL_PRIMARY_FOLD0; no tuning or fourth mechanism"
+}

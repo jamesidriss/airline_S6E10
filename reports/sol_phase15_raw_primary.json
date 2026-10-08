@@ -1,0 +1,232 @@
+{
+  "utc": "2026-10-08T20:35:38.608729+00:00",
+  "git": "b207dbf4e490855741124056b86ecba12489be08",
+  "scope": "full primary OOF",
+  "folds": [
+    {
+      "fold": 0,
+      "raw_proof": {
+        "tag": "sol_tabpfn35_predict_guard",
+        "report_sha256": "64f760fca6c6974a7eb50cae771cc70101e008e5652e6b0dd9ac8c9c8e884e43",
+        "prediction_sha256": "ecaa1b1ad54cc0fa247054936370727249b40e81016209153fe610b999c6393d",
+        "auc": 0.9609722955394799
+      },
+      "candidate_auc": 0.9617846768639697,
+      "v6_auc": 0.9617271804553859,
+      "delta_vs_v6": 5.7496408583879166e-05,
+      "standalone_gain": 0.00019201034010996043,
+      "candidate_sha256": "a9adc2ed29e8b3b491294211a42243e0ad5b9ae04a6f8e34c680d542b800ab39",
+      "ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+      "discovery_pass": true,
+      "candidate_correlation_vs_v6": {
+        "logit": 0.9999374291506734,
+        "spearman": 0.9996316569271168
+      },
+      "raw_route_correlation": {
+        "logit": 0.9959476404648687,
+        "spearman": 0.9755238829477223
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.017890747516989023,
+        "damage_rate": 0.000632707384532202,
+        "rescue_count": 1369,
+        "damage_count": 1217,
+        "sampled_delta_with_ties": 7.599999662488699e-05,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      }
+    },
+    {
+      "fold": 1,
+      "raw_proof": {
+        "tag": "sol_phase15_raw",
+        "report_sha256": "fed4e7201c2a764ec065bc8d11b30ebd257c550e0d836fff2fe247d729e83694",
+        "prediction_sha256": "e31151b05dafa7409038ba71da72299e2cd7f661ad10804c63df409701127c91",
+        "auc": 0.960916239722306
+      },
+      "candidate_auc": 0.9619521412652606,
+      "v6_auc": 0.961935424840251,
+      "delta_vs_v6": 1.6716425009666303e-05,
+      "standalone_gain": 0.00012562646987379633,
+      "candidate_sha256": "e903e87d260558e3861144f2d0d5ebb49e0b33a068fa3c2be6d78a97802cf0d6",
+      "ids_sha256": "2d0d8882d4ebd7f52b328d670a425eea2103354e2ed7d1fadf6d4a008431784e",
+      "discovery_pass": true,
+      "candidate_correlation_vs_v6": {
+        "logit": 0.9999340504490397,
+        "spearman": 0.999643204200887
+      },
+      "raw_route_correlation": {
+        "logit": 0.9957159876047024,
+        "spearman": 0.9756747911576751
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.016429296056705445,
+        "damage_rate": 0.0006756409103689571,
+        "rescue_count": 1247,
+        "damage_count": 1300,
+        "sampled_delta_with_ties": -2.6499999876250513e-05,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      }
+    },
+    {
+      "fold": 2,
+      "raw_proof": {
+        "tag": "sol_phase15_raw",
+        "report_sha256": "7970ef263f40978a762ab43b80637820d09b7b388a64fc6f207556731e45ca20",
+        "prediction_sha256": "d77121c155b5d05540fbef6ddb2c0e7ca1dad9d7f7739bcb9f1dbe960d734c42",
+        "auc": 0.9606098860868393
+      },
+      "candidate_auc": 0.9617902693530063,
+      "v6_auc": 0.9617875501895332,
+      "delta_vs_v6": 2.719163473052788e-06,
+      "standalone_gain": 9.270504731373475e-05,
+      "candidate_sha256": "2f654cf1c8c5e1373ccbbd41bd7ba40e59fba538d9e6b98223476198f460e03c",
+      "ids_sha256": "4f5bf9d9f2eb987d420afadff4b46ea3aea9890160f4f1c946e630a1a7e7b808",
+      "discovery_pass": true,
+      "candidate_correlation_vs_v6": {
+        "logit": 0.9999352804430218,
+        "spearman": 0.9996082139656599
+      },
+      "raw_route_correlation": {
+        "logit": 0.9958310243668536,
+        "spearman": 0.9746361301357197
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.018572212209074523,
+        "damage_rate": 0.0007023895803027294,
+        "rescue_count": 1422,
+        "damage_count": 1351,
+        "sampled_delta_with_ties": 3.550000110408291e-05,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      }
+    },
+    {
+      "fold": 3,
+      "raw_proof": {
+        "tag": "sol_phase15_raw",
+        "report_sha256": "14016692cc0a4085a3d8d95c51f3cad12a365ec11dde47ba5057fe4a6497587d",
+        "prediction_sha256": "13d4de8544bd9c72b6f56bae9b034ea121007fe524b5dcf1b04f9704267d2a70",
+        "auc": 0.9601414134647154
+      },
+      "candidate_auc": 0.9610388446005331,
+      "v6_auc": 0.9610173262617477,
+      "delta_vs_v6": 2.151833878538678e-05,
+      "standalone_gain": 0.00014373387824517803,
+      "candidate_sha256": "b74d8ec40506b78a80a6e09e73e25bef625954b6cfdd9769d390baeed9d4636c",
+      "ids_sha256": "03c776639effb9e12822d4d118cbdffdad05efe3e4a2580fcdb8ef1dd747c45e",
+      "discovery_pass": true,
+      "candidate_correlation_vs_v6": {
+        "logit": 0.9999364718074436,
+        "spearman": 0.9996363469116852
+      },
+      "raw_route_correlation": {
+        "logit": 0.9959023814020685,
+        "spearman": 0.9757527294381959
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.0175940293148331,
+        "damage_rate": 0.0006831358066699653,
+        "rescue_count": 1372,
+        "damage_count": 1313,
+        "sampled_delta_with_ties": 2.950000089185778e-05,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      }
+    },
+    {
+      "fold": 4,
+      "raw_proof": {
+        "tag": "sol_phase15_raw",
+        "report_sha256": "ea9132f11b2165061826340f6561c7ec1bea3fdf3d2b5075e5ee940cc7013ef4",
+        "prediction_sha256": "560a5812cdf6b35c2e528642ccd6ecf03cf0488545a614fcc925842bc4033771",
+        "auc": 0.9612651697195912
+      },
+      "candidate_auc": 0.9624098174188618,
+      "v6_auc": 0.9623964100112486,
+      "delta_vs_v6": 1.340740761313075e-05,
+      "standalone_gain": 9.608524862481094e-05,
+      "candidate_sha256": "75d486c38b7b85c139a5daa1f7758beec3094c5876175a57e3168f2680ff6d06",
+      "ids_sha256": "3ddf6cd49a08b55bc014113100cce4b75563e67b8e592d043533a441ebc20b35",
+      "discovery_pass": true,
+      "candidate_correlation_vs_v6": {
+        "logit": 0.9999363525495844,
+        "spearman": 0.9996597337112557
+      },
+      "raw_route_correlation": {
+        "logit": 0.995866525620279,
+        "spearman": 0.9762134901433509
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.015620437956204379,
+        "damage_rate": 0.000646870859636817,
+        "rescue_count": 1177,
+        "damage_count": 1245,
+        "sampled_delta_with_ties": -3.400000059627928e-05,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      }
+    }
+  ],
+  "weights": {
+    "route": 0.375,
+    "raw": 0.125,
+    "aux10": 0.5
+  },
+  "data_sha256": {
+    "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+    "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+  },
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "selected_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+  "selected_oof_sha256": "2ef69d070561dfa6d762e7bd51d158156c564868f7c41dd86bf74146de0500c6",
+  "scope_sha256": "80e41b9b48eb9df14edf731f7f545faa343d4660a3c6a64255b0104c0d1a816a",
+  "source_sha256": {
+    "scripts/evaluate_sol_phase15_raw.py": "484a337fcea066e8c5f83ce3900386ae405e1b6c26d3ba8892c065ecd64f90eb",
+    "scripts/run_sol_tabpfn.py": "e3d84441b6e2b927cf058dbefe4bd0a3956f12834d75a8ff4a2f85fafc6e5d6b"
+  },
+  "selected_pooled_auc": 0.9617880227384494,
+  "selected_pooled_delta_vs_v6": 2.2408913869953473e-05,
+  "mean_paired_gain": 2.237154869302316e-05,
+  "paired_se": 9.308695514160782e-06,
+  "positive_folds": 5,
+  "paired_bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "v6",
+    "comparisons": {
+      "candidate": {
+        "mean": 2.2200234658949492e-05,
+        "percentile_95_interval": [
+          8.62786175439556e-06,
+          3.476593912659365e-05
+        ],
+        "positive_fraction": 1.0
+      }
+    }
+  },
+  "verdict": "PRIMARY_ADMISSION_GATE_FAIL_NO_PERFORMANCE_PROMOTION",
+  "admission_gate": {
+    "name": "frozen raw/route versus v6",
+    "mean_units": 2.237,
+    "fold_se_units": 0.931,
+    "pos_folds": 5,
+    "admit": false,
+    "per_fold_units": [
+      5.75,
+      1.67,
+      0.27,
+      2.15,
+      1.34
+    ]
+  },
+  "test_policy_if_admitted": "Equal probability average of five exact primary FIT contexts separately for raw and route, then frozen method-logit mixture; never699635-row GPU context"
+}
