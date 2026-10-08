@@ -1,0 +1,77 @@
+{
+  "role": {
+    "member": "xt_xt_d127_cs05",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 5,
+    "overrides": {
+      "learning_rate": 0.02,
+      "num_leaves": 127,
+      "colsample_bytree": 0.5,
+      "extra_trees": true
+    },
+    "aux_arm": "xt_xt_d127_cs05",
+    "es_seed_policy": "1",
+    "te_inner_seed_policy": "fold"
+  },
+  "oof_auc": 0.9612231609363941,
+  "fold_aucs": [
+    0.9612786111696345,
+    0.9613467940800474,
+    0.9611892350025484,
+    0.9604011748481374,
+    0.9619513377561274
+  ],
+  "prediction_sha256": "b9e96f1d7226f123008426d2c4d9ef9ba7cb4f8436e57877eb408135107508da",
+  "test_sha256": null,
+  "meta": {
+    "family": "lgbm",
+    "featureset": "full",
+    "params": {
+      "objective": "binary",
+      "metric": "auc",
+      "n_estimators": 6000,
+      "learning_rate": 0.02,
+      "num_leaves": 127,
+      "min_child_samples": 40,
+      "colsample_bytree": 0.5,
+      "subsample": 0.8,
+      "subsample_freq": 1,
+      "reg_lambda": 1.0,
+      "max_bin": 255,
+      "verbose": -1,
+      "n_jobs": 8,
+      "extra_trees": true,
+      "cat_smooth": 10,
+      "cat_l2": 10,
+      "max_cat_threshold": 32,
+      "max_cat_to_onehot": 4,
+      "min_data_per_group": 100,
+      "random_state": 5,
+      "bagging_seed": 6,
+      "feature_fraction_seed": 7
+    },
+    "seed": 5,
+    "auc": 0.9612231609363941,
+    "fold_aucs": [
+      0.9612786111696345,
+      0.9613467940800474,
+      0.9611892350025484,
+      0.9604011748481374,
+      0.9619513377561274
+    ],
+    "training_protocol": "sol_clean_classical_v1_strict_te_exact_refit",
+    "source_role": "xt_xt_d127_cs05",
+    "fold_reports_sha256": [
+      "53f053024f5dedf64ddbd586b1713b816e35802dfed16046b50e8bd82963440a",
+      "704b0cb2f4bbf45b10e57456bb8f97d7e0cb606c937cf4eb67104583f1fd0f92",
+      "b924de0b63a9a98b1d1174a5c4b06fb19f0119dbef0b9ef9cf8b21d413ee87b8",
+      "3ae7d6cdedb1e3c938ff7ae55322047d4b2ba87ab776082043435aee0e3a456d",
+      "f9950606314e34e01e4f43f351177dfb4cc19203848f41889d4383a740260679"
+    ],
+    "test_policy": "pending",
+    "ordered_train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "ordered_test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "role": {
+    "member": "xt_xt_d63",
+    "family": "lgbm",
+    "view": "full",
+    "scheme": "primary",
+    "seed": 3,
+    "overrides": {
+      "learning_rate": 0.03,
+      "num_leaves": 63,
+      "extra_trees": true
+    },
+    "aux_arm": "xt_xt_d63",
+    "es_seed_policy": "1",
+    "te_inner_seed_policy": "fold"
+  },
+  "oof_auc": 0.9612008975316464,
+  "fold_aucs": [
+    0.9611866550118352,
+    0.9614374237230725,
+    0.9611743626341036,
+    0.96039766790221,
+    0.9618481284254304
+  ],
+  "prediction_sha256": "ec960adf0c88e0c4bce030a13604be5316e550436736c052acb00c4819fe8d49",
+  "test_sha256": null,
+  "meta": {
+    "family": "lgbm",
+    "featureset": "full",
+    "params": {
+      "objective": "binary",
+      "metric": "auc",
+      "n_estimators": 6000,
+      "learning_rate": 0.03,
+      "num_leaves": 63,
+      "min_child_samples": 40,
+      "colsample_bytree": 0.8,
+      "subsample": 0.8,
+      "subsample_freq": 1,
+      "reg_lambda": 1.0,
+      "max_bin": 255,
+      "verbose": -1,
+      "n_jobs": 8,
+      "extra_trees": true,
+      "cat_smooth": 10,
+      "cat_l2": 10,
+      "max_cat_threshold": 32,
+      "max_cat_to_onehot": 4,
+      "min_data_per_group": 100,
+      "random_state": 3,
+      "bagging_seed": 4,
+      "feature_fraction_seed": 5
+    },
+    "seed": 3,
+    "auc": 0.9612008975316464,
+    "fold_aucs": [
+      0.9611866550118352,
+      0.9614374237230725,
+      0.9611743626341036,
+      0.96039766790221,
+      0.9618481284254304
+    ],
+    "training_protocol": "sol_clean_classical_v1_strict_te_exact_refit",
+    "source_role": "xt_xt_d63",
+    "fold_reports_sha256": [
+      "9eacf841a4764797bc54f66bdb1d449401db57c6774aacb18560116e89da7b08",
+      "4d1744a9265e8a18e3d51e9dbb495a27464883d989f7a20b92ec054a1b43afc8",
+      "60b09d3fdbf8f80989cec1d4087f4d6bddfd90747875ee479e48f0be7f6fa209",
+      "88e2cf67a7a0da9b3167a62a823d92cdb2b51bd0212e83edcd99cfe66428280c",
+      "cd263eda999b62269611733d85985d43c5b29a64033559e6a8fa5627c54d0a22"
+    ],
+    "test_policy": "pending",
+    "ordered_train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "ordered_test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71"
+  }
+}
