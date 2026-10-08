@@ -1,0 +1,9 @@
+{
+  "utc": "2026-10-08T18:33:27.670383+00:00",
+  "report_sha256": "a255bae4c8b02e0271ea71f8d294a1b5340848e75c5329923325499ba6bd1d8a",
+  "source_sha256": {
+    "scripts/audit_sol_phase15.py": "eefa0ee498add750f0f820d0833d9f9e2e78fe2f499859037961c64f3e034e1b"
+  },
+  "scope_sha256": "80e41b9b48eb9df14edf731f7f545faa343d4660a3c6a64255b0104c0d1a816a",
+  "artifact_classification": "fixed-vector audit; no fitted weights, no promotion from historical artifacts"
+}

@@ -7,6 +7,7 @@ import sys
 import time
 from datetime import datetime,timezone
 from hashlib import sha256
+from importlib.metadata import version
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -27,7 +28,7 @@ from scripts.sol_native_crosses import cross_frame
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument('--fold',type=int,default=0)
-    ap.add_argument('--baseline-tag',default='sol_clean_aux10_isolated')
+    ap.add_argument('--baseline-tag',default='sol_clean_aux10_primary')
     ap.add_argument('--tag',default='sol_native39')
     args=ap.parse_args()
     root,folder=ARTIFACTS/args.tag,REPORTS/args.tag
@@ -46,6 +47,7 @@ def main():
     route,_,route_proof=foundation(args.fold,['sol_tabpfn35_route','sol_tabpfn35_route_reserve'],ids,folds,y,data_hash)
     control_path=REPORTS/args.baseline_tag/f'{role["member"]}_f{args.fold}.json'
     control=json.loads(control_path.read_text(encoding='utf-8'));cc=control['contract']
+    assert cc['libraries']=={p:version(p) for p in cc['libraries']}
     baseline=np.load(ARTIFACTS/args.baseline_tag/f'{role["member"]}_f{args.fold}.npy')
     assert arr_sha256(baseline)==control['prediction_sha256']
     vb=ViewBuilder(tr,te,'full');vb.build_static()
@@ -55,11 +57,16 @@ def main():
     assert arr_sha256(xf)==cc['feature_fit_sha256'] and arr_sha256(xv)==cc['feature_val_sha256']
     assert names==cc['feature_names'] and resolved_params(role)==cc['params']
     native=default_cat_cols(True)
+    assert native==cc['native_categorical_columns']
     def frame(matrix,rows):
         cats=pd.concat([cat_frame(tr,native,rows),cross_frame(tr,rows)],axis=1)
         return attach(matrix,names,cats)
     f,cn=frame(xf[tl],train);e,_=frame(xf[el],es);v,_=frame(xv,va)
     assert len(cn)==len(native)+39
+    assert list(f.columns)==list(e.columns)==list(v.columns)
+    assert len(f.columns)==cc['model_feature_count']+39
+    assert cn[-39:]==list(cross_frame(tr,va[:1]).columns)
+    assert args.fold in range(5) and not np.intersect1d(train,va).size and not np.intersect1d(es,va).size
     cat_hash={n:arr_sha256(pd.util.hash_pandas_object(frame[cn],index=False).to_numpy()) for n,frame in [('train',f),('es',e),('validation',v)]}
     contract={'hypothesis':'explicit39 native rating/context categories, same C1 settings',
         'protocol_sha256':file_sha256('research/sol_native_cross_protocol.md'),'role':role,'params':resolved_params(role),
@@ -76,6 +83,7 @@ def main():
     del xf,xv;gc.collect();start=time.monotonic()
     def fit():return fit_cat(f,y[train],v,3,role['overrides'],cn,e,y[es])
     fingerprint=sha256(json.dumps(contract,sort_keys=True).encode()).hexdigest()
+    save_json({'contract':contract,'fingerprint':fingerprint,'status':'FITTING'},root/f'progress_f{args.fold}.json')
     prediction,best=guarded_fit(root,contract,path,fingerprint,fit)
     prediction=np.asarray(prediction,dtype='float32')
     assert prediction.shape==(len(va),) and np.isfinite(prediction).all() and ((prediction>=0)&(prediction<=1)).all()
@@ -89,8 +97,9 @@ def main():
         'standalone_delta':delta,'fixed_portfolio_delta':gain,'n_trees':int(best)+1,'seconds':time.monotonic()-start,
         'prediction_sha256':arr_sha256(prediction),'portfolio_prediction_sha256':arr_sha256(candidate),
         'logit_correlation_vs_fixed_portfolio':float(np.corrcoef(logit(prediction),logit(original))[0,1]),
-        'status':'POSITIVE_UNCONFIRMED' if delta>=5e-5 or gain>=5e-6 else 'NEGATIVE_OR_NULL_NO_PROMOTION'}
+        'status':'POSITIVE_UNCONFIRMED' if delta>=5e-5 or gain>=1e-5 else 'NEGATIVE_OR_NULL_NO_PROMOTION'}
     save_json(r,path)
+    save_json({'status':'COMPLETE','report_sha256':file_sha256(path)},root/f'progress_f{args.fold}.json')
     ledger=Path('experiments/ledger.jsonl');eid=f'{args.tag}_f{args.fold}'
     existing={r.get('exp_id',r.get('id')) for r in map(json.loads,ledger.read_text().splitlines())}
     assert eid not in existing

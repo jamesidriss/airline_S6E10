@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-08T18:59:56.500308+00:00",
+  "declared_before_reading_native39_result": true,
+  "source_scope_sha256": "80e41b9b48eb9df14edf731f7f545faa343d4660a3c6a64255b0104c0d1a816a",
+  "mechanisms": "Only ranked hypotheses1 and2; no new training mechanism or weight search",
+  "fixed_combination": "If both mechanisms independently replicate, evaluate the frozen raw/route/aux mixture with only C1 replaced by native39; treatment slot remains0.05",
+  "combined_logit_formula": "candidate_raw_route_logit +0.05*(native39_logit-clean_C1_logit)",
+  "gate": "Native39 must pass the same repository admission rule against the admitted raw/route stack: mean>=0.000015,>=2.5SE,>=4/5 positive; full validation, independent check and full test certificate still required",
+  "no_relaxed_gate": true
+}

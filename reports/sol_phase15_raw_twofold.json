@@ -1,0 +1,116 @@
+{
+  "utc": "2026-10-08T18:48:54.726530+00:00",
+  "git": "8d973f689ccd16575bcbfbf1fc1b8b63a0875a1c",
+  "scope": "selected primary folds; not full OOF",
+  "folds": [
+    {
+      "fold": 0,
+      "raw_proof": {
+        "tag": "sol_tabpfn35_predict_guard",
+        "report_sha256": "64f760fca6c6974a7eb50cae771cc70101e008e5652e6b0dd9ac8c9c8e884e43",
+        "prediction_sha256": "ecaa1b1ad54cc0fa247054936370727249b40e81016209153fe610b999c6393d",
+        "auc": 0.9609722955394799
+      },
+      "candidate_auc": 0.9617846768639697,
+      "v6_auc": 0.9617271804553859,
+      "delta_vs_v6": 5.7496408583879166e-05,
+      "standalone_gain": 0.00019201034010996043,
+      "candidate_sha256": "a9adc2ed29e8b3b491294211a42243e0ad5b9ae04a6f8e34c680d542b800ab39",
+      "ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+      "discovery_pass": true,
+      "candidate_correlation_vs_v6": {
+        "logit": 0.9999374291506734,
+        "spearman": 0.9996316569271168
+      },
+      "raw_route_correlation": {
+        "logit": 0.9959476404648687,
+        "spearman": 0.9755238829477223
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.017890747516989023,
+        "damage_rate": 0.000632707384532202,
+        "rescue_count": 1369,
+        "damage_count": 1217,
+        "sampled_delta_with_ties": 7.599999662488699e-05,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      }
+    },
+    {
+      "fold": 1,
+      "raw_proof": {
+        "tag": "sol_phase15_raw",
+        "report_sha256": "fed4e7201c2a764ec065bc8d11b30ebd257c550e0d836fff2fe247d729e83694",
+        "prediction_sha256": "e31151b05dafa7409038ba71da72299e2cd7f661ad10804c63df409701127c91",
+        "auc": 0.960916239722306
+      },
+      "candidate_auc": 0.9619521412652606,
+      "v6_auc": 0.961935424840251,
+      "delta_vs_v6": 1.6716425009666303e-05,
+      "standalone_gain": 0.00012562646987379633,
+      "candidate_sha256": "e903e87d260558e3861144f2d0d5ebb49e0b33a068fa3c2be6d78a97802cf0d6",
+      "ids_sha256": "2d0d8882d4ebd7f52b328d670a425eea2103354e2ed7d1fadf6d4a008431784e",
+      "discovery_pass": true,
+      "candidate_correlation_vs_v6": {
+        "logit": 0.9999340504490397,
+        "spearman": 0.999643204200887
+      },
+      "raw_route_correlation": {
+        "logit": 0.9957159876047024,
+        "spearman": 0.9756747911576751
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.016429296056705445,
+        "damage_rate": 0.0006756409103689571,
+        "rescue_count": 1247,
+        "damage_count": 1300,
+        "sampled_delta_with_ties": -2.6499999876250513e-05,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      }
+    }
+  ],
+  "weights": {
+    "route": 0.375,
+    "raw": 0.125,
+    "aux10": 0.5
+  },
+  "data_sha256": {
+    "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+    "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+  },
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "selected_ids_sha256": "81c20b14b1c47b1e04ca816c0042a5d607569312898fe36f429b9e6b851fe0b5",
+  "selected_oof_sha256": "53b51d0db4c19726f9d92646f30872feaa48ad26c06f0945a8d22dcaeeb3b01e",
+  "scope_sha256": "80e41b9b48eb9df14edf731f7f545faa343d4660a3c6a64255b0104c0d1a816a",
+  "source_sha256": {
+    "scripts/evaluate_sol_phase15_raw.py": "68a3a921628c281652e71be931dfb3db867b7e1696fb9f23cb68b530b2c20b66",
+    "scripts/run_sol_tabpfn.py": "e3d84441b6e2b927cf058dbefe4bd0a3956f12834d75a8ff4a2f85fafc6e5d6b"
+  },
+  "selected_pooled_auc": 0.961865690578676,
+  "selected_pooled_delta_vs_v6": 3.741763255205033e-05,
+  "mean_paired_gain": 3.7106416796772734e-05,
+  "paired_se": 2.0389991787106432e-05,
+  "positive_folds": 2,
+  "paired_bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "v6",
+    "comparisons": {
+      "candidate": {
+        "mean": 3.6350010410879376e-05,
+        "percentile_95_interval": [
+          1.4184557053009696e-05,
+          5.659179163088891e-05
+        ],
+        "positive_fraction": 1.0
+      }
+    }
+  },
+  "verdict": "POSITIVE_REPLICATION",
+  "test_policy_if_admitted": "Equal probability average of five exact primary FIT contexts separately for raw and route, then frozen method-logit mixture; never699635-row GPU context"
+}

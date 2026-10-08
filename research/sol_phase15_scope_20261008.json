@@ -1,0 +1,96 @@
+{
+  "phase": "15",
+  "declared_utc": "2026-10-08T18:28:08.133978+00:00",
+  "start_utc": "2026-10-08T18:26:54+00:00",
+  "baseline_commit": "8d973f689ccd16575bcbfbf1fc1b8b63a0875a1c",
+  "v6_immutable": true,
+  "budget_hours": 8,
+  "audit_max_minutes": 30,
+  "max_new_submissions": 2,
+  "audit": {
+    "route_weights": [
+      0.35,
+      0.5,
+      0.65
+    ],
+    "historical_classical_weights": [
+      0.1,
+      0.2
+    ],
+    "historical_eligibility": "DIAGNOSTIC_ONLY",
+    "raw_route_weights": {
+      "route": 0.375,
+      "raw": 0.125,
+      "aux10": 0.5
+    },
+    "bootstrap_repeats": 200,
+    "seed": 20261010,
+    "pair_samples": 2000000,
+    "segment_columns": [
+      "Class",
+      "Type of Travel",
+      "Customer Type",
+      "Gender"
+    ]
+  },
+  "ranked_hypotheses": [
+    {
+      "priority": 1,
+      "mechanism": "TabPFN raw/route representation complement",
+      "control": "certified v6 matched primary fold0",
+      "sequence": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "discovery": {
+        "standalone_gain": 5e-05,
+        "v6_gain": 1e-05
+      },
+      "replication": "direction consistent on fold1 before fold2; positive three-fold expected value before folds3/4"
+    },
+    {
+      "priority": 2,
+      "mechanism": "39 literal rating/context native categories",
+      "control": "exact frozen clean C1 Plain CatBoost without39; matrix/IDs/source/settings proven before fit",
+      "sequence": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "discovery": {
+        "standalone_gain": 5e-05,
+        "v6_gain": 1e-05
+      },
+      "representation": "13 ratings x Class/Type of Travel/Customer Type; label-free ix_*",
+      "replacement_weight": 0.05
+    },
+    {
+      "priority": 3,
+      "conditional_choice": "compact classical replay iff A2 pooled gain>=0.00003 and >=4/5 positive; otherwise if B1 fails one route+13 fold-safe auxiliary EV TabPFN representation",
+      "fallback_mechanism": "Predicted covariate ratings convey conditional denoising unseen by current TabPFN; FIT probabilities inner OOS and applied probabilities outer-FIT-only; no satisfaction or ID in upstream models",
+      "probe": "100000 label-agnostic FIT rows/1024 apply rows; no AUC; unchanged checkpoint, categorical maps, seed1201 and resource guards",
+      "v6_append_weights": {
+        "new_tabpfn": 0.125,
+        "v6": 0.875
+      },
+      "no_fourth_branch": true
+    }
+  ],
+  "weight_policy": "sensitivity only; freeze50/50 if gains<0.00003 or inconsistent; selected alternative requires fresh independent confirmation with base-level exclusion, not meta-only CV",
+  "serious_finalist_gate": {
+    "full_primary": true,
+    "mean_gain": 1.5e-05,
+    "paired_se_multiple": 2.5,
+    "positive_folds": 4,
+    "prefer_pooled_gain": 3e-05,
+    "independent_check": "untouched shadow fold(s), exact frozen recipe; observed shadow0/1 not treated as new holdout",
+    "test_certificate": true,
+    "private_simulation": true
+  },
+  "termination": "No automatic fourth branch; close falsified mechanisms. Resource-invalid controls or jobs are not negative evidence."
+}

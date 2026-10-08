@@ -1,0 +1,21 @@
+{
+  "utc": "2026-10-08T18:45:37.581955+00:00",
+  "retrieval": "Authenticated Kaggle API code-only pull; no notebook execution or prediction import",
+  "notebooks": [
+    {
+      "path": "research/raw/sol_phase15_notebooks/s6e10-feature-ladder-what-helps-lightgbm.ipynb",
+      "sha256": "8b615344e734e03a34dcd196de7a619cf3b6e50d8de65b2e6e2f4bbc27473e4f",
+      "code_lines": 573,
+      "classification": "OUTER_EVALUATION_EARLY_STOPPING_OOF_INELIGIBLE",
+      "note": "Round-selection path uses evaluation fold; fixed rounds selected on those same folds do not remove selection dependence."
+    },
+    {
+      "path": "research/raw/sol_phase15_notebooks/s6e10-why-your-oof-blend-gain-vanishes-on-test.ipynb",
+      "sha256": "0cce8d5682213ccb960d6db659eb04138313ac30d636abfb219a9eb4439923ea",
+      "code_lines": 93,
+      "classification": "OUTER_EVALUATION_EARLY_STOPPING_OOF_INELIGIBLE",
+      "note": "Seed-transfer notebook has a separately excluded fake-test population; its inner OOF still uses outer checkpoint selection. Mechanism comparison only."
+    }
+  ],
+  "status": "PRIMARY_CODE_INSPECTED"
+}
