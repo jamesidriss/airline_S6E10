@@ -9,15 +9,15 @@ class HeadViewBackend(WindowsMQABackend):
     name = 'sol_windows_mqa_head_views'
 
     def run(self,q,k,v,**kwargs):
-        if k is None or v is None or k.shape[2]!=1 or q.shape[2]==1 or torch.is_grad_enabled():
+        if k is None or v is None or k.shape[2] not in (1,q.shape[2]) or torch.is_grad_enabled():
             return super().run(q,k,v,**kwargs)
         if k.shape!=v.shape:
             raise ValueError('Invalid grouped attention geometry')
         if torch.is_autocast_enabled('cuda'):
             dtype=torch.get_autocast_dtype('cuda')
             q,k,v=q.to(dtype),k.to(dtype),v.to(dtype)
-        # Zero head stride implements repetition as a view. The query, key,
-        # value and SDPA logical dimensions match the audited materialized path.
+        # MHA needs only a permutation view; MQA uses a zero head stride.
+        # Logical SDPA dimensions match the materialized original path.
         key=k.permute(0,2,1,3).expand(-1,q.shape[2],-1,-1)
         value=v.permute(0,2,1,3).expand(-1,q.shape[2],-1,-1)
         independent=q.untyped_storage().data_ptr() not in {

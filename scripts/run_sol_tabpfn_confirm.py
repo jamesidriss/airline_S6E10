@@ -24,10 +24,14 @@ from scripts.run_sol_tabpfn import frames,create_model
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument('--reference',default='reports/sol_tabpfn35_route/route_f0.json')
-    ap.add_argument('--scheme',choices=['shadow','block10'],required=True)
+    ap.add_argument('--scheme',choices=['primary','shadow','block10'],required=True)
     ap.add_argument('--fold',type=int,required=True)
     ap.add_argument('--tag',required=True)
+    ap.add_argument('--seed-diagnostic',action='store_true')
+    ap.add_argument('--head-views',action='store_true',help='Only after the complete-model numerical resource gate passes')
     args=ap.parse_args()
+    assert (args.scheme=='primary')==args.seed_diagnostic
+    assert not args.seed_diagnostic or args.fold==0
     ref_path=Path(args.reference); ref=json.loads(ref_path.read_text(encoding='utf-8'))
     assert ref['prediction_sha256'] and ref['full_intended_population'] and not ref['timing_only']
     assert ref['arm']=='route' and ref['seed']==1201 and ref['params']['n_estimators']==1
@@ -41,6 +45,17 @@ def main():
     assert ref['icl_bf16'] and ref['windows_mqa_backend'] and ref['reuse_query_output']
     assert ref['decoder_inplace_gelu'] and ref['decoder_chunk_rows'] is None
     assert file_sha256(ref['params']['model_path'])==ref['checkpoint']['checkpoint_sha256']
+    resource_gate=None
+    if args.head_views:
+        gate_path=REPORTS/'sol_head_views_reuse'/'probe.json'
+        gate=json.loads(gate_path.read_text(encoding='utf-8'))
+        assert gate['status']=='NUMERICAL_GATE_PASS' and gate['maximum_probability_gap']<=2e-6
+        assert gate['contract']['head_views'] and gate['contract']['reuse_scaling'] and gate['contract']['train_rows']==100000
+        expected=dict(ref['params'],categorical_features_indices=gate['contract']['params']['categorical_features_indices'])
+        assert gate['contract']['params']==expected
+        assert all(file_sha256(p)==h for p,h in gate['contract']['source_sha256'].items())
+        assert arr_sha256(np.load(ARTIFACTS/'sol_head_views_reuse'/'probe.npy'))==gate['prediction_sha256']
+        resource_gate={'report_sha256':file_sha256(gate_path),'maximum_probability_gap':gate['maximum_probability_gap']}
     root,folder=ARTIFACTS/args.tag,REPORTS/args.tag
     root.mkdir(exist_ok=True); folder.mkdir(exist_ok=True)
     report_path=folder/f'route_f{args.fold}.json'
@@ -51,6 +66,9 @@ def main():
     backend_gate={'fp16':verify_gpu_equivalence(reuse_query_output=True),
         'bf16':verify_gpu_equivalence(torch.bfloat16,reuse_query_output=True)}
     register(reuse_query_output=True)
+    if args.head_views:
+        from src.models.head_view_attention import register_head_views
+        register_head_views()
     tr,te=load_cached_parquet(); y=tr.satisfaction.to_numpy(dtype='int8'); ids=tr.id.to_numpy()
     folds=get_scheme(args.scheme,y,ids).folds
     assert args.fold in folds
@@ -63,8 +81,10 @@ def main():
     assert cats==ref['params']['categorical_features_indices']
     settings={k:ref[k] for k in ('batch_size','precision','icl_bf16','inference_chunk_cells',
         'inference_col_chunk_size','decoder_inplace_gelu','reuse_query_output')}
+    params=dict(ref['params'])
+    if args.seed_diagnostic:params['random_state']=1202
     contract={**settings,'git':git_commit(),'scheme':args.scheme,'fold':args.fold,'arm':'route',
-        'model_family':ref['model_family'],'params':ref['params'],'seed':ref['seed'],
+        'model_family':ref['model_family'],'params':params,'seed':1202 if args.seed_diagnostic else ref['seed'],
         'library_version':version('tabpfn'),'feature_names':names,'label_free_category_maps':maps,
         'train_rows':len(fi),'validation_rows':len(va),'full_intended_population':True,'timing_only':False,
         'fit_ids_sha256':arr_sha256(ids[fi]),'validation_ids_sha256':arr_sha256(ids[va]),
@@ -73,14 +93,23 @@ def main():
         'source_sha256':{**dependencies,'scripts/run_sol_tabpfn_confirm.py':file_sha256(__file__)},
         'checkpoint':ref['checkpoint'],'backend_max_reference_gap':backend_gate,
         'early_stopping':'none; every context label belongs to confirmation FIT',
-        'test_policy':ref['test_policy'],'purpose':'independent confirmation only; never tune on this scheme'}
+        'test_policy':ref['test_policy'],'head_views':args.head_views,'resource_numerical_gate':resource_gate,
+        'seed_diagnostic':args.seed_diagnostic,
+        'purpose':'fixed seed1202 sensitivity diagnostic; never select seeds' if args.seed_diagnostic else 'independent confirmation only; never tune on this scheme'}
+    if args.head_views:
+        for path in ('src/models/scaling_reuse.py','src/models/head_view_attention.py'):
+            contract['source_sha256'][path]=file_sha256(path)
+    if args.seed_diagnostic:contract['seed_protocol_sha256']=file_sha256('research/sol_seed_diagnostic.md')
     start=time.monotonic(); model=None
     save_json({**contract,'status':'FITTING'},root/'progress.json')
     try:
         torch.cuda.reset_peak_memory_stats()
         with inference_guard(root,contract,min_available_gib=4):
-            model=create_model(ref['params'],ref['icl_bf16'],ref['inference_chunk_cells'],
+            model=create_model(params,ref['icl_bf16'],ref['inference_chunk_cells'],
                 ref['inference_col_chunk_size'],None,ref['decoder_inplace_gelu'])
+            if args.head_views:
+                from src.models.scaling_reuse import install_scaling_reuse
+                install_scaling_reuse(model.model_path.model)
             model.fit(x[fi],y[fi])
         fit_seconds=time.monotonic()-start
         gc.collect(); torch.cuda.empty_cache()
@@ -100,7 +129,8 @@ def main():
         auc=float(roc_auc_score(y[va],prediction))
         save_json({**contract,'prediction_sha256':arr_sha256(prediction),'auc':auc,
             'fit_seconds':fit_seconds,'seconds':time.monotonic()-start,
-            'peak_gpu_bytes':torch.cuda.max_memory_allocated(),'status':'FROZEN_INDEPENDENT_CONFIRMATION_PARTIAL'},report_path)
+            'peak_gpu_bytes':torch.cuda.max_memory_allocated(),
+            'status':'FIXED_SEED_SENSITIVITY_DIAGNOSTIC_ONLY' if args.seed_diagnostic else 'FROZEN_INDEPENDENT_CONFIRMATION_PARTIAL'},report_path)
         print(f'{args.scheme} f{args.fold}: AUC{auc:.9f}; {time.monotonic()-start:.1f}s',flush=True)
     except Exception as error:
         resource=isinstance(error,(ResourcePreflightError,torch.cuda.OutOfMemoryError))

@@ -13,7 +13,7 @@ from src.common import ARTIFACTS,REPORTS,arr_sha256,file_sha256,git_commit,load_
 from src.validation.folds import get_scheme
 from src.models.resource_guard import inference_guard,ResourcePreflightError
 from src.models.scaling_reuse import install_scaling_reuse
-from src.models.head_view_attention import register_head_views
+from src.models.head_view_attention import register_head_views,HeadViewBackend
 from scripts.run_sol_tabpfn import frames,create_model
 
 
@@ -41,6 +41,24 @@ def main():
     backend_gate={'fp16':verify_gpu_equivalence(reuse_query_output=True),
         'bf16':verify_gpu_equivalence(torch.bfloat16,reuse_query_output=True)}
     register(reuse_query_output=True)
+    primitive=[]
+    if args.reuse:
+        from src.models.windows_attention import WindowsMQABackend
+        for dtype in (torch.float16,torch.bfloat16):
+            generator=torch.Generator(device='cuda').manual_seed(79)
+            for heads in (1,16):
+                q=torch.randn(1,1007,16,64,generator=generator,device='cuda',dtype=dtype)
+                k=torch.randn(1,2009,heads,64,generator=generator,device='cuda',dtype=dtype)
+                v=torch.randn_like(k);old_k,old_v=k.clone(),v.clone()
+                with torch.no_grad():
+                    expected=WindowsMQABackend(query_chunk_size=257,reuse_query_output=True).run(q.clone(),k,v)
+                    actual=HeadViewBackend(query_chunk_size=257,reuse_query_output=True).run(q.clone(),k,v)
+                assert torch.equal(k,old_k) and torch.equal(v,old_v)
+                primitive.append({'dtype':str(dtype),'kv_heads':heads,'query_shape':list(q.shape),
+                    'key_shape':list(k.shape),'maximum_output_gap':float((actual-expected).abs().max()),
+                    'bit_equal':torch.equal(actual,expected),'all_keys_retained':True,'keys_values_unchanged':True})
+        del q,k,v,old_k,old_v,expected,actual
+        gc.collect();torch.cuda.empty_cache()
     tr,te=load_cached_parquet(); y=tr.satisfaction.to_numpy(dtype='int8'); ids=tr.id.to_numpy()
     folds=get_scheme('primary',y,ids).folds; fi=np.flatnonzero(folds!=0); va=np.flatnonzero(folds==0)[:1024]
     fit=np.sort(np.random.default_rng(1201).choice(fi,100000,replace=False))
@@ -56,7 +74,7 @@ def main():
     contract={'git':git_commit(),'timing_only':True,'train_rows':len(fit),'query_rows':len(va),
         'fit_ids_sha256':arr_sha256(ids[fit]),'query_ids_sha256':arr_sha256(ids[va]),
         'params':ref['params'],'reference_sha256':file_sha256(reference_path),'reuse_scaling':args.reuse,'head_views':args.reuse,
-        'data_sha256':data_hash,'backend_gate':backend_gate,'source_sha256':{p:file_sha256(p) for p in
+        'data_sha256':data_hash,'backend_gate':backend_gate,'head_view_primitive':primitive,'source_sha256':{p:file_sha256(p) for p in
             ('scripts/verify_sol_head_views.py','src/models/head_view_attention.py','src/models/scaling_reuse.py','scripts/run_sol_tabpfn.py',
              'src/models/windows_attention.py','src/models/pointwise_inference.py','src/models/resource_guard.py')},
         'performance_verdict':'none; fixed numerical reference only','maximum_allowed_probability_gap':2e-6}

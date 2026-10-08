@@ -1,0 +1,70 @@
+{
+  "utc": "2026-10-08T00:52:50.235069+00:00",
+  "algorithm": "LZX",
+  "files": [
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\catboost\\_catboost.pyd",
+      "sha256_before": "6b3c4fc0016a9c038d81747afd63e3acd1fa324eef1cc461df43c6a7a93fb2ed",
+      "sha256_after": "6b3c4fc0016a9c038d81747afd63e3acd1fa324eef1cc461df43c6a7a93fb2ed",
+      "logical_bytes": 336922624,
+      "allocated_before": 336922624,
+      "allocated_after": 91570176,
+      "native_returncode": 0,
+      "reversal_command": "compact.exe /u /exe \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\catboost\\_catboost.pyd\""
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\_polars_runtime_32\\_polars_runtime.pyd",
+      "sha256_before": "be609702dbe5a346607f4d6ab4497339f2d337466074f9b25517b6ec063b2d8e",
+      "sha256_after": "be609702dbe5a346607f4d6ab4497339f2d337466074f9b25517b6ec063b2d8e",
+      "logical_bytes": 175884800,
+      "allocated_before": 175884800,
+      "allocated_after": 51417088,
+      "native_returncode": 0,
+      "reversal_command": "compact.exe /u /exe \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\_polars_runtime_32\\_polars_runtime.pyd\""
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\xgboost\\lib\\xgboost.dll",
+      "sha256_before": "1205afc24b10eacaf0f40cbc7cffa5e5cfe34d90bb364ebf0fb4f90bd9d18ee6",
+      "sha256_after": "1205afc24b10eacaf0f40cbc7cffa5e5cfe34d90bb364ebf0fb4f90bd9d18ee6",
+      "logical_bytes": 143588352,
+      "allocated_before": 143588352,
+      "allocated_after": 101130240,
+      "native_returncode": 0,
+      "reversal_command": "compact.exe /u /exe \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\xgboost\\lib\\xgboost.dll\""
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cusolver64_11.dll",
+      "sha256_before": "3d4f7a66b5f352db56d4bb5962bb453a42d5feb2d831779f4a0bebc9971c36fb",
+      "sha256_after": "3d4f7a66b5f352db56d4bb5962bb453a42d5feb2d831779f4a0bebc9971c36fb",
+      "logical_bytes": 225683456,
+      "allocated_before": 225683456,
+      "allocated_after": 155197440,
+      "native_returncode": 0,
+      "reversal_command": "compact.exe /u /exe \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cusolver64_11.dll\""
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cusolverMg64_11.dll",
+      "sha256_before": "c3377f10606ff0606be2f08401d54aff6c37f137b78d6b6e21be356a5b4d6cc2",
+      "sha256_after": "c3377f10606ff0606be2f08401d54aff6c37f137b78d6b6e21be356a5b4d6cc2",
+      "logical_bytes": 157071360,
+      "allocated_before": 157071360,
+      "allocated_after": 99557376,
+      "native_returncode": 0,
+      "reversal_command": "compact.exe /u /exe \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cusolverMg64_11.dll\""
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cudnn_ops64_9.dll",
+      "sha256_before": "922897bd15a66acecde7c026ecc835b0fc5662c9ae08c120fd89f0f73affa7da",
+      "sha256_after": "922897bd15a66acecde7c026ecc835b0fc5662c9ae08c120fd89f0f73affa7da",
+      "logical_bytes": 105604208,
+      "allocated_before": 105604208,
+      "allocated_after": 79499264,
+      "native_returncode": 0,
+      "reversal_command": "compact.exe /u /exe \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cudnn_ops64_9.dll\""
+    }
+  ],
+  "disk_free_before": 21440987136,
+  "disk_free_after": 21998792704,
+  "allocated_bytes_saved": 566383216,
+  "preserved": "All bytes; no package or model file deleted"
+}

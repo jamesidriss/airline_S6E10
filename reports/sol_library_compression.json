@@ -1,0 +1,80 @@
+{
+  "utc": "2026-10-08T00:51:08.360573+00:00",
+  "algorithm": "LZX",
+  "files": [
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\torch_cuda.dll",
+      "sha256_before": "e1d79bfc639a86b211a388b903f2836e84b30a1958515ca04469064738ba0102",
+      "sha256_after": "e1d79bfc639a86b211a388b903f2836e84b30a1958515ca04469064738ba0102",
+      "logical_bytes": 811561984,
+      "allocated_before": 811561984,
+      "allocated_after": 525287424,
+      "native_returncode": 0,
+      "reversal_command": "compact.exe /u /exe \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\torch_cuda.dll\""
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cublasLt64_12.dll",
+      "sha256_before": "b199d1ff892a81b7fd3d57ba1781549609b41500b36008fef326038393ad46c7",
+      "sha256_after": "b199d1ff892a81b7fd3d57ba1781549609b41500b36008fef326038393ad46c7",
+      "logical_bytes": 674667520,
+      "allocated_before": 674667520,
+      "allocated_after": 479805440,
+      "native_returncode": 0,
+      "reversal_command": "compact.exe /u /exe \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cublasLt64_12.dll\""
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cudnn_engines_precompiled64_9.dll",
+      "sha256_before": "3a97df241beb2b75eb5d6152996a9a90d2155c2d4da1aeac5bd66850ed2446c1",
+      "sha256_after": "3a97df241beb2b75eb5d6152996a9a90d2155c2d4da1aeac5bd66850ed2446c1",
+      "logical_bytes": 481015408,
+      "allocated_before": 481015408,
+      "allocated_after": 341680128,
+      "native_returncode": 0,
+      "reversal_command": "compact.exe /u /exe \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cudnn_engines_precompiled64_9.dll\""
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cusparse64_12.dll",
+      "sha256_before": "f4688daa6163c47a0b5293926ec7ae367de6b4af54ea201638b308831b322a0e",
+      "sha256_after": "f4688daa6163c47a0b5293926ec7ae367de6b4af54ea201638b308831b322a0e",
+      "logical_bytes": 379535872,
+      "allocated_before": 379535872,
+      "allocated_after": 283320320,
+      "native_returncode": 0,
+      "reversal_command": "compact.exe /u /exe \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cusparse64_12.dll\""
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\torch_cpu.dll",
+      "sha256_before": "82a212f3d4168b669fc5d3d9af8f98aa034123aefc801947036916c35390325e",
+      "sha256_after": "82a212f3d4168b669fc5d3d9af8f98aa034123aefc801947036916c35390325e",
+      "logical_bytes": 265966080,
+      "allocated_before": 265966080,
+      "allocated_after": 76767232,
+      "native_returncode": 0,
+      "reversal_command": "compact.exe /u /exe \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\torch_cpu.dll\""
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cufft64_11.dll",
+      "sha256_before": "f4fea9227b14843894ad5436725f9638b172171142c95291fc6ae7a493248221",
+      "sha256_after": "f4fea9227b14843894ad5436725f9638b172171142c95291fc6ae7a493248221",
+      "logical_bytes": 276121600,
+      "allocated_before": 276121600,
+      "allocated_after": 195944448,
+      "native_returncode": 0,
+      "reversal_command": "compact.exe /u /exe \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cufft64_11.dll\""
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cudnn_adv64_9.dll",
+      "sha256_before": "a8aed3390144ea20d96c0d618462a12cbc7897620380e60438489329b9722531",
+      "sha256_after": "a8aed3390144ea20d96c0d618462a12cbc7897620380e60438489329b9722531",
+      "logical_bytes": 269016688,
+      "allocated_before": 269016688,
+      "allocated_after": 194650112,
+      "native_returncode": 0,
+      "reversal_command": "compact.exe /u /exe \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\lib\\cudnn_adv64_9.dll\""
+    }
+  ],
+  "disk_free_before": 20378136576,
+  "disk_free_after": 21425491968,
+  "allocated_bytes_saved": 1060430048,
+  "preserved": "All bytes; no package or model file deleted"
+}

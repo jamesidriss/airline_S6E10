@@ -615,17 +615,21 @@ def test_fixed_foundation_confirmation_excludes_outer_labels():
         stack.enter_context(patch.object(runner.torch.cuda,'max_memory_allocated',return_value=100))
         stack.enter_context(patch('src.models.windows_attention.register'))
         stack.enter_context(patch('src.models.windows_attention.verify_gpu_equivalence',return_value=0))
-        for tag in ('first','flipped'):
-            if tag=='flipped':
+        for tag,kind,seed_replay in (('first','shadow',False),('flipped','shadow',False),('seedfirst','primary',True),('seedflipped','primary',True)):
+            if tag in ('flipped','seedflipped'):
                 tr.loc[folds==0,'satisfaction']=1-tr.loc[folds==0,'satisfaction']
-            with patch('sys.argv',['confirm','--reference',str(reference),'--scheme','shadow','--fold','0','--tag',tag]),redirect_stdout(StringIO()):
+            argv=['confirm','--reference',str(reference),'--scheme',kind,'--fold','0','--tag',tag]
+            if seed_replay:argv+=['--seed-diagnostic']
+            with patch('sys.argv',argv),redirect_stdout(StringIO()):
                 assert runner.main()==0
             report=json.loads((folder/'reports'/tag/'route_f0.json').read_text())
-            assert report['scheme']=='shadow' and report['train_rows']==6 and report['validation_rows']==4
+            assert report['scheme']==kind and report['train_rows']==6 and report['validation_rows']==4
             assert report['fit_ids_sha256']==runner.arr_sha256(tr.id.to_numpy()[folds!=0])
-        assert all(call.args[0]=='shadow' for call in scheme.call_args_list)
+            assert report['seed']==(1202 if seed_replay else 1201)
+        assert [call.args[0] for call in scheme.call_args_list]==['shadow','shadow','primary','primary']
         assert np.array_equal(fits[0][0],x[folds!=0]) and np.array_equal(fits[0][1],tr.satisfaction.to_numpy()[folds!=0])
         assert np.array_equal(fits[0][0],fits[1][0]) and np.array_equal(fits[0][1],fits[1][1])
+        assert np.array_equal(fits[2][0],fits[3][0]) and np.array_equal(fits[2][1],fits[3][1])
         assert np.array_equal(np.load(folder/'artifacts'/'first'/'route_f0.npy'),np.load(folder/'artifacts'/'flipped'/'route_f0.npy'))
 
 
@@ -686,4 +690,38 @@ def test_block10_auxiliary_confirmation_excludes_outer_labels_and_primary_arrays
         assert all(call.args[0]=='block10' for call in scheme.call_args_list)
         assert len(fits)==2 and all(np.array_equal(a,b) for a,b in zip(fits[0],fits[1]))
         assert len(caches)==2
+
+
+def test_foundation_test_certificate_rejects_partial_primary_before_array_load():
+    import json
+    import tempfile
+    from pathlib import Path
+    from unittest.mock import patch
+    import numpy as np
+    import scripts.assemble_sol_foundation_test as runner
+    with tempfile.TemporaryDirectory() as temporary:
+        path=Path(temporary)/'partial.json'
+        path.write_text(json.dumps({'scope':'selected primary folds; not full OOF','scheme':'primary'}))
+        with patch.object(runner.np,'load') as load,patch.object(runner,'get_scheme') as scheme:
+            try:runner.verify_primary(path,np.arange(4),np.array([0,1,0,1]),{})
+            except AssertionError:pass
+            else:raise AssertionError('Partial primary results were certified')
+            load.assert_not_called();scheme.assert_not_called()
+
+
+def test_fixed_vector_bootstrap_matches_sklearn_with_ties():
+    import numpy as np
+    from sklearn.metrics import roc_auc_score
+    from scripts.score_sol_foundation import paired_bootstrap
+    y=np.tile([0,1],50)
+    a=np.repeat([.1,.2,.3,.4,.5],20)
+    b=a.copy();b[::3]+=.01
+    actual=paired_bootstrap(y,{'aux10':a,'candidate':b},repeats=20,seed=31)
+    rng=np.random.default_rng(31);deltas=[]
+    for _ in range(20):
+        idx=rng.integers(0,len(y),size=len(y))
+        deltas.append(roc_auc_score(y[idx],b[idx])-roc_auc_score(y[idx],a[idx]))
+    expected=np.quantile(deltas,[.025,.975])
+    assert abs(actual['comparisons']['candidate']['mean']-np.mean(deltas))<1e-14
+    np.testing.assert_allclose(actual['comparisons']['candidate']['percentile_95_interval'],expected,atol=1e-14,rtol=0)
 

@@ -161,14 +161,14 @@ def test_head_views_preserve_all_keys_and_alias_guard():
     from unittest.mock import patch
     from src.models.head_view_attention import HeadViewBackend
     generator=torch.Generator().manual_seed(73)
-    for reuse in (False,True):
+    for reuse,heads in ((False,1),(True,1),(False,4),(True,4)):
         q=torch.randn(2,19,4,8,generator=generator)
-        k=torch.randn(2,23,1,8,generator=generator)
-        v=torch.randn(2,23,1,8,generator=generator)
+        k=torch.randn(2,23,heads,8,generator=generator)
+        v=torch.randn(2,23,heads,8,generator=generator)
         old_k,old_v=k.clone(),v.clone()
         expected=torch.nn.functional.scaled_dot_product_attention(
             q.permute(0,2,1,3),k.permute(0,2,1,3),v.permute(0,2,1,3),
-            enable_gqa=True).permute(0,2,1,3)
+            enable_gqa=heads==1).permute(0,2,1,3)
         with torch.no_grad(),patch('src.models.head_view_attention.sdpa_kernel',return_value=nullcontext()):
             actual=HeadViewBackend(query_chunk_size=7,reuse_query_output=reuse).run(q,k,v)
         torch.testing.assert_close(actual,expected)

@@ -1,0 +1,35 @@
+{
+  "scope": "Focused checks; head views unverified on GPU",
+  "results": [
+    {
+      "test": "test_head_views_preserve_all_keys_and_alias_guard",
+      "status": "PASS",
+      "seconds": 0.015000000013969839
+    },
+    {
+      "test": "test_critical_files_have_no_undefined_names",
+      "status": "PASS",
+      "seconds": 0.03200000000651926
+    },
+    {
+      "test": "test_foundation_test_certificate_rejects_partial_primary_before_array_load",
+      "status": "PASS",
+      "seconds": 0.7029999999795109
+    },
+    {
+      "test": "test_fixed_vector_bootstrap_matches_sklearn_with_ties",
+      "status": "PASS",
+      "seconds": 0.0470000000204891
+    },
+    {
+      "test": "test_full_context_probe_uses_every_training_row_and_reports_no_auc",
+      "status": "PASS",
+      "seconds": 2.0780000000959262
+    },
+    {
+      "test": "test_fixed_foundation_confirmation_excludes_outer_labels",
+      "status": "PASS",
+      "seconds": 0.39099999994505197
+    }
+  ]
+}

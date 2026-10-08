@@ -1,6 +1,6 @@
 # SOL campaign — audit and continuation
 
-Checkpoint: 8 October 2026, 00:51 UTC. **No clean finalist has yet been fully
+Checkpoint: 8 October 2026, 01:01 UTC. **No clean finalist has yet been fully
 reproduced. No new Kaggle submission was spent. Final slots remain unlocked.**
 The campaign continues; this is not a final decision or research stopping point.
 
@@ -122,6 +122,25 @@ NTFS compression saved874403714 B; stronger LZX compression subsequently saved
 2986467556 B in allocated storage. Before/after file SHA256 values agree for
 every processed file. Free disk recovered to about40.5 GiB. No file was deleted;
 compression reports include exact reversal commands.
+
+Additional lossless LZX compression of13 named dependency binaries recovered
+1626813264 B. Every before/after file SHA256 agrees; package bytes, version and
+model behavior are unchanged. The reports record exact reversal commands.
+Current disk reserve is about20.4 GiB during the active route fold2.
+
+The all-row failure included unnecessary MHA key/value copies even with16
+matching heads. A separate opt-in backend now uses permutation/expansion views
+without changing logical SDPA dimensions. CPU MHA/MQA, query alias protection
+and key/value preservation checks pass. Whole-model GPU equivalence is pending;
+this implementation has not been used for scored CV or final test inference.
+The primary runner and original attention/activation helper bytes remain intact.
+
+New test certification and robustness scorecard runners are prepared. They
+require complete primary admission, all ten median-capacity test refits, ordered
+IDs, vector/source hashes, full block10 confirmation, paired bootstrap, private
+simulation and one fixed seed1202 sensitivity replay. Seed1202 cannot replace
+the frozen seed1201 portfolio. No test certificate, confirmation scorecard or
+new submission has yet been produced.
 
 Generic test refits also drifted from CV defaults: LightGBM changed leaf-size
 and regularization defaults and omitted explicit bagging/feature seeds; CatBoost
