@@ -1,0 +1,71 @@
+{
+  "status": "COMPLETE_SMALL_POLICY_COMPARISON_NOT_FINALIST_OOF",
+  "query_rows": 20000,
+  "single_context_rows": 100000,
+  "single_auc": 0.9602431261980358,
+  "five_context_average_auc": 0.9602823011246566,
+  "delta_average_minus_single": 3.91749266208663e-05,
+  "correlations": {
+    "logit": 0.9992390880513905,
+    "spearman": 0.9947157841313147,
+    "probability_residual": 0.9987689611105616
+  },
+  "paired_bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "single",
+    "comparisons": {
+      "average": {
+        "mean": 2.0598467033636213e-05,
+        "percentile_95_interval": [
+          -0.00028568191066898063,
+          0.00027215107282064507
+        ],
+        "positive_fraction": 0.595
+      }
+    }
+  },
+  "prediction_sha256": "81b50feb6f5a9719dd34a3921d6bed976b6fd6c7166ca00eb29097a09aa31ebd",
+  "query_ids_sha256": "e7f3603838602d690c14bfc577ed4f2cbea9f31dd60b720ec2966c872bcf824d",
+  "proofs": [
+    {
+      "context": "all",
+      "report_sha256": "03399bc8f6247fbf43baa9145fd27ddc4b714354da3cbf7f0a96c7f914862c57",
+      "fit_rows": 100000,
+      "prediction_sha256": "ca3cb8d76076389100d7b94f6b675618decd1aca3eecf0a60223105cc6f0a224"
+    },
+    {
+      "context": "0",
+      "report_sha256": "9335bc2cc2eb7c17ea322b09a609fddafa3ffe0339925175a6f350c4d25f8f56",
+      "fit_rows": 80298,
+      "prediction_sha256": "07a14905490799c035007801600ab5c7c7afc70d7487130e9287e0e682266b50"
+    },
+    {
+      "context": "1",
+      "report_sha256": "de82ceb0849989dfadc57d0395712229448ef3b1c7ee51081141dfbcfbee232e",
+      "fit_rows": 80034,
+      "prediction_sha256": "89cd2a2d2006d502be4cf6fcc4838e54564b1597bad2e79885ad5869a6d60d81"
+    },
+    {
+      "context": "2",
+      "report_sha256": "43e2b6f5b097aa4fbb721a0e85aa7c44da047c70c9a339edee6dd69378da59c5",
+      "fit_rows": 79933,
+      "prediction_sha256": "89ebe0b65bee1604f7eb9787dc3d296448e334f0bbd1d5a685536f72de686ced"
+    },
+    {
+      "context": "3",
+      "report_sha256": "42e6ae4a56635001b84750599da7e931b35ecdefb93ca78de7fbd44459b522d3",
+      "fit_rows": 79729,
+      "prediction_sha256": "454de3e9004f00014690305ced925b7ace543b23d429e9ffe7688753ef7c4f33"
+    },
+    {
+      "context": "4",
+      "report_sha256": "217907b15db03f9e6a4773e85a7a11c1a9df841a694f486032c60ae97c4e839f",
+      "fit_rows": 80006,
+      "prediction_sha256": "18a916d5c7cbe6844e3b8453f6fb818c6c7c45324a67198547008aa0eb440fbe"
+    }
+  ],
+  "limitation": "One fixed20k-row shadow holdout with100k-row training pool. Each averaged member uses80percent of that pool. This audits averaging under strict exclusion; it cannot establish full-data transfer or a new full OOF score."
+}

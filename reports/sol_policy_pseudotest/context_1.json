@@ -1,0 +1,76 @@
+{
+  "contract": {
+    "git": "cf223966dbaa984abcb4b1746dff7e1247f308ec",
+    "purpose": "Small leakage-safe inference-policy audit, not full OOF or deployment test AUC",
+    "context": "1",
+    "outer_scheme": "shadow",
+    "outer_holdout": 0,
+    "train_rows": 80034,
+    "query_rows": 20000,
+    "fit_ids_sha256": "b9881fc935a9245b9c432d86ac58f8a4fe200be33d2ef735dabe2eff1ab1b36f",
+    "query_ids_sha256": "e7f3603838602d690c14bfc577ed4f2cbea9f31dd60b720ec2966c872bcf824d",
+    "primary_fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+    "shadow_fold_sha256": "5d181e32357e67b2ad8381c33549ef905bb45b969de7b8e09a3e4e7cb24af758",
+    "data_sha256": {
+      "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+      "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+    },
+    "seed": 1201,
+    "partition_seed": 20261010,
+    "params": {
+      "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35\\tabpfn-v3.5-20260909.safetensors",
+      "n_estimators": 1,
+      "auto_scale_n_estimators": false,
+      "random_state": 1201,
+      "device": "cuda",
+      "ignore_pretraining_limits": true,
+      "fit_mode": "fit_with_cache",
+      "kv_cache_precision": "int8",
+      "keep_cache_on_device": true,
+      "inference_precision": "autocast",
+      "categorical_features_indices": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        21
+      ],
+      "memory_saving_mode": true,
+      "n_preprocessing_jobs": 1,
+      "tuning_config": null
+    },
+    "checkpoint": {
+      "accessed_utc": "2026-10-07T18:55:06.560314+00:00",
+      "source": "https://huggingface.co/Prior-Labs/tabpfn_3_5",
+      "revision": "06bf2ba35c80a92a3b9abb436b99cf49e7a0365e",
+      "checkpoint_sha256": "ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3",
+      "license_sha256": "9570fdd687bb76ed45499412ad57d6ba949848e6d731f1242572bb57f2f73ae1",
+      "license": "TabPFN-3.5 Non-Commercial License v1.0; section 1.c includes data science competitions; no commercial deployment",
+      "usage": "own fold-safe full-context inference, no imported competition predictions",
+      "rule_section": "2.6 external public models"
+    },
+    "reference_report_sha256": "fa03f11f7e283dac771fa97230257e761d7618d321ac29f7d69154e95b785bf2",
+    "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+    "policy_scope_sha256": "6d2e436d602c2313ad4ee67906b3d281f603b1058361d16e55e4fc08c39f7fd7",
+    "feature_fit_sha256": "c6cab7b4dbc402f661a2324cd5643fc5190d6c0f785339d36b66da9fe888a2f3",
+    "feature_query_sha256": "ab1066e2f1a682bb7946c543f1f956beb1d03f99f1e47eb2288f14b83ae161b4",
+    "source_sha256": {
+      "scripts/run_sol_tabpfn.py": "e3d84441b6e2b927cf058dbefe4bd0a3956f12834d75a8ff4a2f85fafc6e5d6b",
+      "src/models/windows_attention.py": "104bed55ad7eb37911a27e22ee37b558b6bda43ae123c0f386303cea4116bc34",
+      "src/models/pointwise_inference.py": "1aedd977666d9a1777692dbfd889d0a50bd303609154cbc68bcfb18c94e8b1ab",
+      "src/models/resource_guard.py": "b91280215a10f688690603b17289e9b80d865488127744826ef0e449721a2049",
+      "scripts/run_sol_policy_pseudotest.py": "c82ebc431b128c69ab7fe1348afd881753b51cbb885f562383df5c0ed50dc4fb"
+    },
+    "backend_reference_gap": {
+      "fp16": 0.00048828125,
+      "bf16": 0.0078125
+    },
+    "outer_query_labels_used_in_fit": false,
+    "early_stopping": "none"
+  },
+  "prediction_sha256": "89cd2a2d2006d502be4cf6fcc4838e54564b1597bad2e79885ad5869a6d60d81",
+  "auc_on_fixed_small_outer_query": 0.9602598677062323,
+  "seconds": 23.718999999924563,
+  "status": "COMPLETE_SMALL_POLICY_AUDIT_NOT_FULL_OOF"
+}

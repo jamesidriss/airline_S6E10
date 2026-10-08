@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-08T09:07:56.234291+00:00",
+  "updated_utc": "2026-10-08T09:11:03.208845+00:00",
   "BEST_A": {
     "name": "v5_aux_cross",
     "ref": 56918343,
@@ -56,7 +56,6 @@
     "predeclared_independent_scope": "shadow folds0/1 and primary fold0 seed1202; partial shadow only; block10 not run",
     "outstanding": [
       "complete certified test predictions",
-      "conditional small inference-policy audit",
       "private simulation and robustness scorecard",
       "public transfer diagnostic",
       "final private-first slot reassessment"
@@ -96,6 +95,22 @@
       "report": "reports\\sol_tabpfn35_seed1202_recovery\\route_f0.json",
       "report_sha256": "65bfc882268f8f74f1a6591341a4e77c90cd0446a84522f74787c40f0d9fad48",
       "prediction_sha256": "99829c9419f85ac888465ca98d285f912aa83b798ee611950cc5a37c6bb9592b"
+    },
+    "policy_audit": {
+      "report": "reports\\sol_policy_pseudotest_comparison.json",
+      "report_sha256": "82f37c69b4f8edc9452b4011a2c5d858f8080a22fbab448c5017663e51fe850a",
+      "status": "COMPLETE_SMALL_POLICY_COMPARISON_NOT_FINALIST_OOF",
+      "query_rows": 20000,
+      "single_context_rows": 100000,
+      "single_auc": 0.9602431261980358,
+      "five_context_average_auc": 0.9602823011246566,
+      "delta_average_minus_single": 3.91749266208663e-05,
+      "paired_bootstrap_interval": [
+        -0.00028568191066898063,
+        0.00027215107282064507
+      ],
+      "interpretation": "Small fixed-holdout audit is inconclusive about a true gain; frozen averaging policy unchanged; no deployment OOF score claimed",
+      "limitation": "One fixed20k-row shadow holdout with100k-row training pool. Each averaged member uses80percent of that pool. This audits averaging under strict exclusion; it cannot establish full-data transfer or a new full OOF score."
     }
   },
   "verified_clean_BEST_B_HEDGE": null
