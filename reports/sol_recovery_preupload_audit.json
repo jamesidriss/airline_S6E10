@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-08T11:38:32.378740+00:00",
+  "status": "PASS",
+  "tree_scan_counts": {
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0
+  },
+  "decoded_report_log_counts": {
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0
+  },
+  "decoded_log_encodings": {
+    "utf-16": 64,
+    "utf-8-sig": 98
+  },
+  "tree_scan_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "findings_redacted": []
+}

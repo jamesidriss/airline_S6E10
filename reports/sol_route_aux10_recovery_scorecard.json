@@ -1,0 +1,531 @@
+{
+  "utc": "2026-10-08T11:35:05.061688+00:00",
+  "git": "713b95cdc92a2c759d3d3ebaddb9b7bfe57158c1",
+  "status": "COMPLETE_FIXED_PORTFOLIO_ROBUSTNESS_EVIDENCE_REQUIRES_SCIENTIFIC_DECISION",
+  "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+  "test_certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+  "simulation_report_sha256": "d7ef504cb8ef435cd5434afc3158ab69fcb8d32d0caa607cb897916a98532180",
+  "confirmations": [
+    {
+      "report": "reports/sol_route_aux10_shadow_recovery.json",
+      "sha256": "d1f5fcc290c26e72c84671c630191c33106ca34e19bd8f0107878658a0c766cd",
+      "scheme": "shadow",
+      "scope": "selected shadow folds; not full OOF",
+      "full_oof": false,
+      "folds": [
+        0,
+        1
+      ],
+      "fold_aucs": [
+        0.9612052540431654,
+        0.9612181434319019
+      ],
+      "mean_paired_gain": 0.0002781477350757844,
+      "paired_se": 2.383750493423209e-05,
+      "positive_folds": 2,
+      "pooled_auc": null
+    }
+  ],
+  "candidate_auc": 0.9617656138245795,
+  "paired_fold_deltas": [
+    0.0003129778662702698,
+    0.00032935307562242944,
+    0.0003452379524859772,
+    0.0004439954949422287,
+    0.0003034257831036058
+  ],
+  "mean_paired_gain": 0.0003469980344849022,
+  "paired_se": 2.5277324554686046e-05,
+  "admission_gate": {
+    "name": "sol_route_aux10_primary_final",
+    "mean_units": 34.7,
+    "fold_se_units": 2.528,
+    "pos_folds": 5,
+    "admit": true,
+    "per_fold_units": [
+      31.3,
+      32.94,
+      34.52,
+      44.4,
+      30.34
+    ]
+  },
+  "comparisons": {
+    "aux10": {
+      "pooled_auc": 0.9614187095444636,
+      "delta_candidate_minus_component": 0.00034690428011585617,
+      "oof_correlations": {
+        "logit": 0.9986456775256314,
+        "spearman": 0.9923291343272964,
+        "probability_residual": 0.9977977553959824
+      },
+      "test_correlations": {
+        "logit": 0.9989307824350159,
+        "spearman": 0.9938636483982572
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.08230926448141153,
+        "damage_rate": 0.003022841908280777,
+        "rescue_count": 6363,
+        "damage_count": 5812,
+        "sampled_delta_with_ties": 0.00027550000231713057,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      }
+    },
+    "route": {
+      "pooled_auc": 0.9612196007698864,
+      "delta_candidate_minus_component": 0.0005460130546930397,
+      "oof_correlations": {
+        "logit": 0.9986445344357213,
+        "spearman": 0.9909557029338023,
+        "probability_residual": 0.9978762759563171
+      },
+      "test_correlations": {
+        "logit": 0.998927553672569,
+        "spearman": 0.9925459823110871
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.09287062842758248,
+        "damage_rate": 0.0031741638359673707,
+        "rescue_count": 7231,
+        "damage_count": 6101,
+        "sampled_delta_with_ties": 0.0005675000138580799,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      }
+    }
+  },
+  "method_component_correlations": {
+    "oof": {
+      "logit": 0.9945840956389675,
+      "spearman": 0.9687261125621667,
+      "probability_residual": 0.991503003539466
+    },
+    "test": {
+      "logit": 0.9957189680072582,
+      "spearman": 0.9743491228948457
+    }
+  },
+  "paired_bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "aux10",
+    "comparisons": {
+      "candidate": {
+        "mean": 0.0003452829632984444,
+        "percentile_95_interval": [
+          0.0002823551826645038,
+          0.00040949183996077666
+        ],
+        "positive_fraction": 1.0
+      },
+      "route": {
+        "mean": -0.00020456646072539275,
+        "percentile_95_interval": [
+          -0.000346211454465134,
+          -8.481674168590857e-05
+        ],
+        "positive_fraction": 0.005
+      }
+    }
+  },
+  "private_simulation": {
+    "oof_auc": 0.9614187095444636,
+    "delta_vs_v5": -0.00010478053992024616,
+    "delta_vs_reference": -0.00034690428011585617,
+    "oof_logit_corr_vs_reference": 0.9986456775256314,
+    "oof_spearman_vs_reference": 0.9923291343272963,
+    "oof_logit_corr_vs_v5": 0.9996199969870759,
+    "oof_spearman_vs_v5": 0.9972037295716123,
+    "modes": {
+      "random_stratified": {
+        "simulations": 200,
+        "public_quantiles": [
+          -0.0005264872451900771,
+          -0.0003318241822009016,
+          -0.00013707701811250256
+        ],
+        "private_quantiles": [
+          -0.0004253774426593693,
+          -0.00034245292883433587,
+          -0.0002635807128674561
+        ],
+        "private_p05": -0.0004253774426593693,
+        "private_median": -0.00034245292883433587,
+        "private_worst_5pct_mean": -0.0004417088563255289,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "fold_aware": {
+        "simulations": 200,
+        "public_quantiles": [
+          -0.0005174969616127012,
+          -0.0003483100818635898,
+          -0.0002050564391227085
+        ],
+        "private_quantiles": [
+          -0.00041819039650511366,
+          -0.0003378453595844766,
+          -0.0002634686988512603
+        ],
+        "private_p05": -0.00041819039650511366,
+        "private_median": -0.0003378453595844766,
+        "private_worst_5pct_mean": -0.00044228801906476267,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "segment_stressed": {
+        "simulations": 420,
+        "public_quantiles": [
+          -0.000644589044333077,
+          -0.0003658763961829625,
+          -0.00016109340229995006
+        ],
+        "private_quantiles": [
+          -0.0004243926287086419,
+          -0.00034324488863074487,
+          -0.00027003734778676693
+        ],
+        "private_p05": -0.0004243926287086419,
+        "private_median": -0.00034324488863074487,
+        "private_worst_5pct_mean": -0.00044667042343720417,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      }
+    },
+    "stress_segments": {
+      "Class=Business": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.0006454549251410646,
+          -0.0003747227840754097,
+          -0.00021579728053838234
+        ],
+        "private_quantiles": [
+          -0.0003885596684665649,
+          -0.00033580556449225307,
+          -0.00025621398695074296
+        ],
+        "private_p05": -0.0003885596684665649,
+        "private_median": -0.00033580556449225307,
+        "private_worst_5pct_mean": -0.0004080180074735318,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "Class=Eco": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.0005514632437616407,
+          -0.0004120601796416823,
+          -0.000251321151095868
+        ],
+        "private_quantiles": [
+          -0.00039326394380764795,
+          -0.00035575101976975665,
+          -0.0002692310640960094
+        ],
+        "private_p05": -0.00039326394380764795,
+        "private_median": -0.00035575101976975665,
+        "private_worst_5pct_mean": -0.00040294752136033063,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "Class=Eco Plus": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.0005130364770250029,
+          -0.000373003865761945,
+          -0.00022412371183586646
+        ],
+        "private_quantiles": [
+          -0.0004263972046591735,
+          -0.00034715048671424276,
+          -0.00028607866958445526
+        ],
+        "private_p05": -0.0004263972046591735,
+        "private_median": -0.00034715048671424276,
+        "private_worst_5pct_mean": -0.0004468882371307381,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "Type of Travel=Business travel": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.0005618079042838565,
+          -0.00038644229759704496,
+          -0.0001600251831474943
+        ],
+        "private_quantiles": [
+          -0.0003876745795917735,
+          -0.00033271366641585143,
+          -0.00026200964376374425
+        ],
+        "private_p05": -0.0003876745795917735,
+        "private_median": -0.00033271366641585143,
+        "private_worst_5pct_mean": -0.0003962500401109015,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "Type of Travel=Personal Travel": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.0004994118173037631,
+          -0.00034620868098911295,
+          -0.00014351221678817754
+        ],
+        "private_quantiles": [
+          -0.00041715305221971534,
+          -0.0003359850136501197,
+          -0.0002511717789547785
+        ],
+        "private_p05": -0.00041715305221971534,
+        "private_median": -0.0003359850136501197,
+        "private_worst_5pct_mean": -0.0004305932185140193,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "Customer Type=Loyal Customer": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.0005456793920450953,
+          -0.00040290341193915946,
+          -0.00020505904039113678
+        ],
+        "private_quantiles": [
+          -0.00038302610529897805,
+          -0.00034179905018322243,
+          -0.00028030926121550004
+        ],
+        "private_p05": -0.00038302610529897805,
+        "private_median": -0.00034179905018322243,
+        "private_worst_5pct_mean": -0.0004174934123848395,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "Customer Type=disloyal Customer": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.0004796577759648979,
+          -0.0003392482306728284,
+          -0.00022418629477046758
+        ],
+        "private_quantiles": [
+          -0.00042279091558941053,
+          -0.000338167730825234,
+          -0.0002687122528863273
+        ],
+        "private_p05": -0.00042279091558941053,
+        "private_median": -0.000338167730825234,
+        "private_worst_5pct_mean": -0.0004527600656576425,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "departure_delay_zero": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.0005042740212409747,
+          -0.000309028446887627,
+          -7.959169176581239e-05
+        ],
+        "private_quantiles": [
+          -0.00040652876957984475,
+          -0.000358902628611546,
+          -0.0002784991078830568
+        ],
+        "private_p05": -0.00040652876957984475,
+        "private_median": -0.000358902628611546,
+        "private_worst_5pct_mean": -0.00040785904868445577,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "distance_lower_quartile": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.0005431332636568753,
+          -0.00036027237886643304,
+          -0.00027233515984020353
+        ],
+        "private_quantiles": [
+          -0.00039022865829675956,
+          -0.00033246111029777703,
+          -0.00026790164579816876
+        ],
+        "private_p05": -0.00039022865829675956,
+        "private_median": -0.00033246111029777703,
+        "private_worst_5pct_mean": -0.0003986790641938298,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "distance_upper_quartile": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.0005448193414204549,
+          -0.0004319495544640173,
+          -0.0002987849555375456
+        ],
+        "private_quantiles": [
+          -0.0003971049673035687,
+          -0.00031999536138044293,
+          -0.00027186584739281595
+        ],
+        "private_p05": -0.0003971049673035687,
+        "private_median": -0.00031999536138044293,
+        "private_worst_5pct_mean": -0.0004009152077171785,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "survey_any_zero": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.0004846548909085313,
+          -0.0003035762396597086,
+          -0.00018391879550268004
+        ],
+        "private_quantiles": [
+          -0.0004507709261370507,
+          -0.0003571586588183573,
+          -0.00029691320734903106
+        ],
+        "private_p05": -0.0004507709261370507,
+        "private_median": -0.0003571586588183573,
+        "private_worst_5pct_mean": -0.0004546978313876293,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "survey_many_zeros": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.0005812867722339188,
+          -0.00032505947958705317,
+          -0.00017388474011165172
+        ],
+        "private_quantiles": [
+          -0.0004236620960102411,
+          -0.0003537972877472595,
+          -0.0002944762300457482
+        ],
+        "private_p05": -0.0004236620960102411,
+        "private_median": -0.0003537972877472595,
+        "private_worst_5pct_mean": -0.0004521953834831782,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "champion_low_confidence": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.0008235119641582022,
+          -0.0006671121129547819,
+          -0.00044434897439378236
+        ],
+        "private_quantiles": [
+          -0.0003988663468689702,
+          -0.00031755616252687746,
+          -0.0002630135855794136
+        ],
+        "private_p05": -0.0003988663468689702,
+        "private_median": -0.00031755616252687746,
+        "private_worst_5pct_mean": -0.0004174250583451333,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "champion_high_confidence": {
+        "simulations": 30,
+        "public_quantiles": [
+          -0.00037265013980589676,
+          -0.00022205337710756723,
+          -6.0589744081268794e-05
+        ],
+        "private_quantiles": [
+          -0.0004537177439523976,
+          -0.00039103545248647675,
+          -0.0002983641243802515
+        ],
+        "private_p05": -0.0004537177439523976,
+        "private_median": -0.00039103545248647675,
+        "private_worst_5pct_mean": -0.0004711389054941617,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      }
+    }
+  },
+  "model_seed_stability": {
+    "report_sha256": "65bfc882268f8f74f1a6591341a4e77c90cd0446a84522f74787c40f0d9fad48",
+    "fold": 0,
+    "seeds": [
+      1201,
+      1202
+    ],
+    "scope": "One fixed seed replay; no seed selection or five-fold seed-robustness claim",
+    "route_auc_seed1202_minus1201": 4.803791843865923e-06,
+    "candidate_auc_seed1202_minus1201": 2.659845338104372e-05,
+    "route_correlation": {
+      "logit": 0.996666484079656,
+      "spearman": 0.9785742111234782,
+      "probability_residual": 0.9950323002433136
+    },
+    "candidate_correlation": {
+      "logit": 0.9991642370467129,
+      "spearman": 0.9943655541649529,
+      "probability_residual": 0.9987286860406569
+    },
+    "candidate_pair_rescue_damage": {
+      "seed": 20261010,
+      "pairs": 2000000,
+      "rescue_rate": 0.0689231573444851,
+      "damage_rate": 0.002719030091292865,
+      "rescue_count": 5274,
+      "damage_count": 5230,
+      "sampled_delta_with_ties": 2.2250000256462954e-05,
+      "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+    },
+    "common_f32_auxiliary_recomposition_max_gap": 5.960464477539063e-08
+  },
+  "data_sha256": {
+    "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+    "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+  },
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "oof_sha256": {
+    "candidate": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+    "aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+    "route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510"
+  },
+  "test_sha256": {
+    "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+    "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+    "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+  },
+  "source_sha256": {
+    "scripts/score_sol_foundation.py": "14ce84bca5e360f66ced708db83c3502ad5089fa738b49305037a6a2f6c48d4c",
+    "scripts/assemble_sol_foundation_test.py": "b7e9ed9f75a29b5be0120e00f6932815f65b22671e45d171e9fb82b69c2d1822",
+    "src/validation/private_sim.py": "84785b34accf20f4717a84b8fa4e4d2178455d1040d5bcbf3e04e5c2a40c620f"
+  },
+  "recovery_scope_sha256": "6d2e436d602c2313ad4ee67906b3d281f603b1058361d16e55e4fc08c39f7fd7",
+  "independent_confirmation_scope": "partial shadow; block10 not run",
+  "limitations": [
+    "Private simulation conditions on trained OOF vectors; it is not a probability of winning.",
+    "The auxiliary reference is a fully corrected fixed ten-role stack; legacy59 is not certified."
+  ]
+}

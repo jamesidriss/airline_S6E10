@@ -1,0 +1,23 @@
+{
+  "utc": "2026-10-08T11:36:42.407954+00:00",
+  "verdict": "SUBMIT_FROZEN_CERTIFIED_CANDIDATE",
+  "candidate_name": "v6_sol_tabpfn_route_aux10",
+  "scorecard_sha256": "c5ef63a53db9d767ecc8334afd0262613c188c8777a43f3327164a8a20781716",
+  "git": "713b95cdc92a2c759d3d3ebaddb9b7bfe57158c1",
+  "intended_role": "expectedprivateperformer",
+  "reason": "The unchanged50/50 portfolio passes all5 primary folds (pooled gain0.00034690428011585617 vs fully corrected auxiliary10; mean paired gain0.0003469980344849022, SE0.000025277324554686046), both predeclared shadow folds (mean gain0.0002781477350757844), and source/data/ID/test certificates. The200 paired-row bootstrap95percent interval is positive [0.0002823551826645038,0.00040949183996077666]. Fixed private simulations show no private ordering reversal versus clean components or legacyv3/v5 across820 draws; legacy comparisons remain diagnostic. The fixed seed1202 check is consistent; finalist seed stays1201. The small inference-policy audit has a zero-crossing interval and remains inconclusive; the predeclared five-context probability-average fallback is unchanged. No public-score weight or model selection is used.",
+  "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+  "test_certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+  "simulation_report_sha256": "d7ef504cb8ef435cd5434afc3158ab69fcb8d32d0caa607cb897916a98532180",
+  "independent_scope": "partial shadow; block10 not run",
+  "recovery_scope_sha256": "6d2e436d602c2313ad4ee67906b3d281f603b1058361d16e55e4fc08c39f7fd7",
+  "policy_audit_sha256": "82f37c69b4f8edc9452b4011a2c5d858f8080a22fbab448c5017663e51fe850a",
+  "seed": 1201,
+  "weights": {
+    "route": 0.5,
+    "equal_logit_auxiliary10": 0.5
+  },
+  "hedge_assessment": "No credible clean hedge identified: clean auxiliary10 loses0.00034690428011585617 OOF with test logit correlation0.9989307824350159; pure route loses0.0005460130546930397 with correlation0.998927553672569. Both lose every simulated private comparison. Legacy59 has documented validation/inference defects and remains uncertified. No arbitrary alternative blend is constructed.",
+  "new_submissions_authorized_maximum": 2,
+  "new_submissions_planned": 1
+}
