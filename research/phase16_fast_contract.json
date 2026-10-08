@@ -1,0 +1,17 @@
+{
+  "trigger": "Both100k native2 equivalence attempts failed at Windows batched attention kernel; no AUC verdict for internal ensemble",
+  "checkpoint": "tabpfn-v3.5-fast-20260909.safetensors",
+  "checkpoint_sha256": "14e0b81285bca7a6d1ef121169f27f651f76dff49cad6c0b8779d5c836018550",
+  "revision": "06bf2ba35c80a92a3b9abb436b99cf49e7a0365e",
+  "seed": 1201,
+  "n_estimators": 1,
+  "representation": "Unchanged certified route22, exact category maps and categorical indices; no new feature",
+  "inference": "Certified bf16 ICL, autocast, int8 KV, query chunks1024, Windows efficient MQA, reused decoder GELU; one exact primary FIT context; no encoder SAT or id input",
+  "probe": "100000 label-free RNG1201 FIT subset and first1024 applied fold0 rows; timings and memory only, no AUC",
+  "matched_full_control": "Native original route1 fullfold0 hash9cb5e530334f834c826ed7bc9127b59f8abe2a99ff6067f4e780ed803eb6b41d must match before Fast fullfold0",
+  "operational_portfolio": "50% Fast route logits plus50% immutable auxiliary10 logits",
+  "discovery_and_replication": "Unchanged numeric Phase16 scope gates; no checkpoint/weight/seed selection",
+  "test": "Only after full5primary and untouched shadow2; five exact primary FIT contexts and equal probability context averaging before fixed method logits",
+  "resource_limits": "Unchanged4GiB FIT/2GiB prediction reserves,20GiB disk preflight,85% GPU,2700s single fit+prediction guard",
+  "one_checkpoint_only": true
+}

@@ -26,12 +26,13 @@ def main() -> int:
     import tests.test_multitask as TC
     import tests.test_kaggle_io as TK
     import tests.test_sol_phase15 as T15
+    import tests.test_sol_phase16 as T16
 
     # NOTE: test_stochastic_protocol.py has its own __main__ runner with per-assertion reporting, so
     # it is invoked as a subprocess rather than imported here -- importing it would only pick up its
     # module-level helpers. It is registered explicitly so the aggregate count stays honest; a test
     # file that silently stops being run is worse than no test file.
-    mods = (T, TR, TW, TN, TI, TE, TV, TS, TP, TM, TQ, TC, TK, T15)
+    mods = (T, TR, TW, TN, TI, TE, TV, TS, TP, TM, TQ, TC, TK, T15, T16)
     fns = [(mod.__name__, getattr(mod, n)) for mod in mods
            for n in sorted(dir(mod)) if n.startswith("test_")]
     ok = fail = 0

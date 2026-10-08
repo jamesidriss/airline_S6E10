@@ -1,0 +1,66 @@
+# Cell 0
+# 🚀 **High-Scoring OOF & Submission Files**
+**Playground Series - Season 6 Episode 10: Predicting Airline Satisfaction**
+🔗 [Competition Link](https://www.kaggle.com/competitions/playground-series-s6e10)
+
+Welcome! This notebook does not train models from scratch. Instead, it loads my Out-of-Fold (OOF) predictions and test submission files generated from my private blending strategy. 
+
+My goal is to share these outputs with the community so you can use them as inputs for your own stacking models or ensembles! 
+
+### ⚙️ **Cross-Validation Setup (No Data Leakage!)**
+To ensure these OOF files align perfectly with your own pipelines and are safe for stacking, I standardized the cross-validation strategy across all models. 
+
+Every single model in this blend strictly uses the exact same setup:
+**`StratifiedKFold(n_splits=5, shuffle=True, random_state=42)`**
+
+---
+
+### 🙏 **Acknowledgments & Credits**
+
+My blending strategy incorporates predictions, features, and insights from the following fantastic public notebooks. Please make sure to check them out and give them an upvote!
+
+* **[Vladimir's PS|S6|E10: RealMLP · PyTabKit](https://www.kaggle.com/code/yekenot/ps-s6-e10-realmlp-pytabkit)**
+* **[Maxim's XGBoost Baseline](https://www.kaggle.com/code/ektarr/xgboost-baseline)**
+* **[goodpjw2008's S6E10 | Auxiliary-Task Features | LB 0.96129](https://www.kaggle.com/code/goodpjw2008/s6e10-auxiliary-task-features-lb-0-96129)**
+* **[Дворкин's S6E10 LightGBM CV 5 folds 0.96047](https://www.kaggle.com/code/evgendvorkin/s6e10-lightgbm-cv-5-folds-0-96047)**
+* **[Ákos's Airline | LGBM/CatB/XGB/HGBC | Baseline](https://www.kaggle.com/code/kospintr/airline-lgbm-catb-xgb-hgbc-baseline)**
+* **[goodpjw2008's S6E10 | TabPFN + Route Categories | LB 0.96160](https://www.kaggle.com/code/goodpjw2008/s6e10-tabpfn-route-categories-lb-0-96160)**
+* **[Deotte's Stacking TFMs with Public OOF](https://www.kaggle.com/code/cdeotte/stacking-tfms-with-public-oof) and [Tabular Foundation Models (TFMs) - Intro, Dataset, and Starter!](https://www.kaggle.com/competitions/playground-series-s6e10/discussion/746363)**
+---
+
+### 📄 **Usage & License**
+
+You are completely free to use, reproduce, and include these OOF and submission CSV files in your own pipelines and ensembles. I only ask that you comply with standard Kaggle rules and kindly provide credit or a link back to this notebook if you use them in a public blend.
+
+**If you find these predictions helpful for your pipeline or ensemble, please consider leaving an upvote! 👍 It really helps keep me motivated to share more datasets and baselines with the community.**
+
+# Cell 1
+import pandas as pd
+from sklearn.metrics import roc_auc_score
+import matplotlib.pyplot as plt
+
+BLEND = '04'
+TARGET = 'satisfaction'
+
+# Load Train Data and Target
+train_df = pd.read_csv("/kaggle/input/competitions/playground-series-s6e10/train.csv")
+train_df[TARGET] = train_df[TARGET].astype(int)
+y = train_df[TARGET].values
+
+oof_data = pd.read_csv(f'/kaggle/input/s6e10-oof/{BLEND}_blend_oof.csv')
+submission = pd.read_csv(f'/kaggle/input/s6e10-oof/{BLEND}_submission.csv')
+
+ensemble_auc = roc_auc_score(y, oof_data[TARGET])
+
+# Cell 2
+print(f"✅ OOF Train Shapes: {oof_data.shape}")
+print(f"✅ Test Submission Shapes: {submission.shape}\n")
+print(f"🔥 Validated OOF ROC-AUC Score: {ensemble_auc:.5f}\n")
+
+# Cell 3
+print("Out-of-Fold Predictions for Stacking:")
+display(oof_data.head())
+
+submission.to_csv("submission.csv", index=False)
+print("\nSubmission head:")
+display(submission.head())

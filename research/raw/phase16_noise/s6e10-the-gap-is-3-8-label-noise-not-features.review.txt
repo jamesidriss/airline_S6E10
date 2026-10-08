@@ -1,0 +1,895 @@
+CELL 0 markdown
+# S6E10: the gap is label noise, not features
+
+The competition rows were generated from a real survey: Arseniy Shutko's
+[Airline Satisfaction Data](https://www.kaggle.com/datasets/arseniyshutko/binary-aviation-satisfaction-129k)
+(129,880 rows, CC0). A [companion notebook](https://www.kaggle.com/code/dariushafshar/s6e10-91-of-delays-are-zero-original-56) shows that a model predicts the
+original far better than the competition rows, and what the generator changed in the
+delays and the rating zeros. This notebook asks what that gap is made of: the
+passengers the generator produced, or the answers it gave them? And how much of it can
+any model win back?
+
+**What changed in this version (October 8).** I added section 8. It stacks all 135 public OOF members on this notebook's folds, measures that frontier against the noise ceiling from section 7, and finds where its remaining errors are. It also corrects one claim from the October 1 version: a margin over the ceiling this small is inside my uncertainty about the flip rate, so on its own it cannot prove the noise is non-random (item 6, section 8.1).
+
+**What I found.**
+
+1. **The original is close to deterministic.** 59.0% of its rows get an
+   out-of-fold prediction below 0.001 or at least 0.999, and of those 76,693
+   predictions, 1 turned out wrong.
+2. **The competition never is.** Cross-validated on all 699,635 rows, the same model's
+   out-of-fold predictions never go above 0.9941. They are calibrated, and its most
+   confident rows still go the other way: 3.28% of the rows it puts below 0.05
+   are satisfied, and 3.93% of the rows it puts at 0.95 or above are not.
+3. **The original's sure rows, in the competition.** Where a model trained only on the
+   original is at least 99.9% sure, the competition disagrees: 3.49% of the rows
+   it is sure are "not satisfied" are labelled satisfied, and 4.76% of the rows it
+   is sure are "satisfied" are not. Split by class, travel
+   type, loyalty, gender and age band, every group with at least 10,000 rows in those
+   regions sits between 2.96% and 3.85%, and between 4.45% and
+   5.04%.
+4. **The gap is worth 3.8% random label flips.** Flip a random 3.8% of the
+   original's labels and its cross-validated AUC falls from 0.995063 to 0.955971;
+   the competition, at the same size and with the same model, scores 0.956215.
+5. **It is the answers, not the passengers.** Re-weighted to look like the competition's passengers, the original scores 0.996079, slightly above its unweighted 0.995063: the change in who is on the plane costs nothing, and the change in what they answered costs 0.0399.
+6. **Headroom.** If the competition's labels were the original's with 3.8%
+   flipped at random, a model that ranked every true label perfectly would score
+   0.9613 in cross-validation. The best stack published by October 1 (goodpjw2008's) was already 0.0002 above that in cross-validation. On its own that margin is smaller than my uncertainty about the flip rate (section 8.1), so it does not prove the noise is non-random. Inside the original's sure rows, a
+   model trained on competition rows still separates the disagreeing labels a little (AUC
+   0.5711 and 0.5966), and that skill is worth 0.0031 of its AUC.
+   Scores above the random-noise ceiling can only come from a non-random part like that.
+7. **The frontier, against the ceiling.** Stacked on this notebook's folds, all 135 public OOF members reach a nested CV of 0.962061, 0.0008 above the random-noise ceiling.
+   But that is the ceiling for 3.69% random flips instead of section 4's 3.77%, only 0.9 standard errors away, so the ceiling alone does not prove much.
+   The direct test says more: inside the original's sure rows, the stack separates the
+   disagreeing labels at AUC 0.6021 and 0.6522, up from 0.5711 and
+   0.5966 for the section 2 LightGBM.
+   Three new members do not move it: another TabPFN-3.5, a LightGBM with auxiliary-task features and that LightGBM on 10 folds add 0.000009 together, and none is a real change on its own. Foundation models and 10-fold members were what still moved Kratosyan's stack.
+   Pairs that involve one of the 2.6% of rows whose label contradicts a near-certain original are 5.1% of all pairs, but 67.0% of the pairs the stack still orders wrongly, about the same share as for the LightGBM (69.0%). Of the 0.00323 the stack gains over that LightGBM, 0.00296 comes from pairs that involve one of those rows.
+
+The model in section 2 writes `submission.csv`. Scored once, it is 0.95840 on the public board, 0.00043 below its out-of-fold AUC. Everything runs on
+CPU; section 8, which fits a logistic regression 35 times, 30 of them on 135 or more
+columns, takes most of the time. Every number in this text is printed by the cell that computes it.
+
+CELL 1 code
+import os, json, time, warnings
+from collections import deque
+
+import numpy as np
+import pandas as pd
+import lightgbm as lgb
+import matplotlib.pyplot as plt
+from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import StratifiedKFold
+
+warnings.filterwarnings("ignore")
+pd.set_option("display.width", 160)
+T0 = time.time()
+SEARCH_ROOT = os.environ.get("SMOKE_ROOT", "/kaggle/input")
+WORK = os.environ.get("SMOKE_WORK", "/kaggle/working")
+SMOKE_ROWS = int(os.environ.get("SMOKE_ROWS", "0"))    # local correctness runs only; 0 = full size
+os.makedirs(WORK, exist_ok=True)
+
+
+def find_file(name, root=SEARCH_ROOT, max_depth=6, required=True):
+    queue, hits = deque([(root, 0)]), []
+    while queue:
+        d, depth = queue.popleft()
+        try:
+            entries = sorted(os.scandir(d), key=lambda e: e.name)
+        except OSError:
+            continue
+        for e in entries:
+            try:
+                if e.is_file() and e.name == name:
+                    hits.append(e.path)
+                elif e.is_dir() and depth < max_depth:
+                    queue.append((e.path, depth + 1))
+            except OSError:
+                continue
+    if not hits:
+        if required:
+            raise FileNotFoundError(f"{name!r} not found under {root}")
+        return None
+    return sorted(hits, key=len)[0]
+
+
+TARGET, ID = "satisfaction", "id"
+train = pd.read_csv(find_file("train.csv"))
+test = pd.read_csv(find_file("test.csv"))
+orig = pd.read_csv(find_file("original_aligned.csv"))
+if SMOKE_ROWS:
+    train = train.sample(SMOKE_ROWS, random_state=0)
+    SMOKE_IDX = train.index.to_numpy()                 # lets section 8 take the same rows of the OOF files
+    train = train.reset_index(drop=True)
+    orig = orig.sample(min(len(orig), SMOKE_ROWS // 4), random_state=0).reset_index(drop=True)
+FEATURES = [c for c in train.columns if c not in (ID, TARGET)]
+CATS = [c for c in FEATURES if not pd.api.types.is_numeric_dtype(train[c])]
+LEVELS = {c: sorted(set(train[c].dropna()) | set(orig[c].dropna()) | set(test[c].dropna())) for c in CATS}
+y = train[TARGET].astype(int).to_numpy()
+yo = orig[TARGET].astype(int).to_numpy()
+
+
+def frame(df):
+    X = df[FEATURES].copy()
+    for c in CATS:
+        X[c] = pd.Categorical(df[c], categories=LEVELS[c])
+    return X.reset_index(drop=True)
+
+
+# one LightGBM configuration for every model in this notebook, never tuned per experiment
+P = {"objective": "binary", "learning_rate": 0.05, "num_leaves": 63, "min_data_in_leaf": 100,
+     "feature_fraction": 0.8, "bagging_fraction": 0.9, "bagging_freq": 1, "lambda_l2": 1.0,
+     "num_threads": 4, "seed": 42, "deterministic": True, "force_row_wise": True, "verbose": -1}
+ROUNDS = 600
+
+
+def fit(X, yy, rounds=ROUNDS):
+    return lgb.train(P, lgb.Dataset(X, yy), num_boost_round=rounds)
+
+
+def cv_oof(X, yy, rounds=ROUNDS):
+    oof = np.zeros(len(yy))
+    for a, b in StratifiedKFold(5, shuffle=True, random_state=42).split(X, yy):
+        oof[b] = fit(X.iloc[a], yy[a], rounds).predict(X.iloc[b])
+    return oof
+
+
+EDGES = [0, 0.001, 0.01, 0.05, 0.5, 0.95, 0.99, 0.999, 1 + 1e-9]
+
+
+def calib(p, yy):
+    t = pd.DataFrame({"bin": pd.cut(p, EDGES, right=False), "p": p, "y": yy})
+    t = t.groupby("bin", observed=True).agg(rows=("y", "size"), mean_prediction=("p", "mean"),
+                                            share_satisfied=("y", "mean"))
+    t.insert(1, "share_of_rows", t["rows"] / len(yy))
+    return t.to_string(formatters={"share_of_rows": "{:.2%}".format, "mean_prediction": "{:.4f}".format,
+                                   "share_satisfied": "{:.4f}".format})
+
+
+def pct(v, d=2):
+    return f"{100 * v:.{d}f}%"
+
+
+print(f"train {train.shape}  test {test.shape}  original {orig.shape}"
+      + (f"   [SMOKE_ROWS={SMOKE_ROWS}]" if SMOKE_ROWS else ""))
+print(f"satisfied: train {y.mean():.4f}, original {yo.mean():.4f}")
+print(f"categorical columns: {CATS}")
+
+CELL 2 markdown
+## 1. The original is close to deterministic
+
+Five-fold cross-validation on the 129,880 original rows. The table groups rows by
+their out-of-fold prediction and shows how often they are actually satisfied. On a
+calibrated model the last two columns match; what matters here is how many rows land
+in the outer bins, and how rarely those are wrong.
+
+CELL 3 code
+Xo = frame(orig)
+oof_o = cv_oof(Xo, yo)
+AUC_ORIG = roc_auc_score(yo, oof_o)
+print(f"original, 5-fold CV AUC: {AUC_ORIG:.6f}   ({len(yo):,} rows, {ROUNDS} rounds)\n")
+print(calib(oof_o, yo))
+
+o_lo, o_hi = oof_o < 0.001, oof_o >= 0.999
+ORIG_SURE_N = int(o_lo.sum() + o_hi.sum())
+ORIG_SURE_WRONG = int(yo[o_lo].sum() + (1 - yo[o_hi]).sum())
+print(f"\npredicted below 0.001: {o_lo.sum():,} rows, of which satisfied: {int(yo[o_lo].sum())}")
+print(f"predicted 0.999 or above: {o_hi.sum():,} rows, of which not satisfied: {int((1 - yo[o_hi]).sum())}")
+print(f"together: {ORIG_SURE_N:,} rows = {pct(ORIG_SURE_N / len(yo), 1)} of the original; "
+      f"wrong: {ORIG_SURE_WRONG}")
+print(f"[{time.time() - T0:.0f}s]")
+
+CELL 4 markdown
+## 2. The competition never is
+
+The same configuration on the competition's 699,635 rows, five folds (stratified,
+shuffled, seed 42). If the OOF library is mounted, the cell first checks that these
+are the library's frozen folds. The test predictions are averaged into `submission.csv`.
+
+CELL 5 code
+X, Xte = frame(train), frame(test)
+fold = np.zeros(len(y), dtype=int)
+for k, (_, b) in enumerate(StratifiedKFold(5, shuffle=True, random_state=42).split(X, y)):
+    fold[b] = k
+lib_folds = find_file("folds_seed42.npy", required=False)
+if lib_folds and not SMOKE_ROWS:
+    assert (np.load(lib_folds) == fold).all(), "folds differ from the OOF library's frozen folds"
+    print("folds: identical to the OOF library's frozen folds")
+
+oof_t, pred_te = np.zeros(len(y)), np.zeros(len(test))
+for k in range(5):
+    m = fit(X[fold != k], y[fold != k])
+    oof_t[fold == k] = m.predict(X[fold == k])
+    pred_te += m.predict(Xte) / 5
+AUC_TRAIN = roc_auc_score(y, oof_t)
+print(f"competition, 5-fold CV AUC: {AUC_TRAIN:.6f}   ({len(y):,} rows, {ROUNDS} rounds)\n")
+print(calib(oof_t, y))
+
+MAX_P_TRAIN = float(oof_t.max())
+t_lo, t_hi = oof_t < 0.05, oof_t >= 0.95
+PLATEAU_LO, PLATEAU_HI = float(y[t_lo].mean()), float(1 - y[t_hi].mean())
+print(f"\nhighest OOF prediction: {MAX_P_TRAIN:.4f}; lowest: {oof_t.min():.4f}")
+print(f"rows predicted 0.99 or above: {int((oof_t >= 0.99).sum()):,} of {len(y):,}")
+print(f"predicted below 0.05: {t_lo.sum():,} rows ({pct(t_lo.mean(), 1)}), satisfied {pct(PLATEAU_LO)}")
+print(f"predicted 0.95 or above: {t_hi.sum():,} rows ({pct(t_hi.mean(), 1)}), not satisfied {pct(PLATEAU_HI)}")
+
+sub = pd.DataFrame({ID: test[ID], TARGET: pred_te})
+sub.to_csv(os.path.join(WORK, "submission.csv"), index=False)
+print(f"\nwrote submission.csv ({len(sub):,} rows)   [{time.time() - T0:.0f}s]")
+
+fig, ax = plt.subplots(1, 2, figsize=(12, 3.6))
+for a, (name, p, c) in zip(ax, (("original, out-of-fold", oof_o, "#4c72b0"),
+                                ("competition, out-of-fold", oof_t, "#dd8452"))):
+    a.hist(p, bins=np.linspace(0, 1, 101), color=c)
+    a.set_yscale("log")
+    a.set_title(name)
+    a.set_xlabel("predicted probability of satisfied")
+ax[0].set_ylabel("rows (log scale)")
+plt.tight_layout()
+plt.show()
+
+CELL 6 markdown
+### Is it this model? The OOF library says no
+
+Our public [OOF library](https://www.kaggle.com/datasets/dariushafshar/s6e10-golem-oof-library)
+holds out-of-fold predictions from several model families on these same folds. If the
+ceiling on confidence were a property of one LightGBM, a different model would break
+through it. Some members do predict above 0.99, but the last column shows that their
+most confident rows go the other way just as often: the extra confidence is
+miscalibration, not extra knowledge. The table reads every member that is mounted.
+
+CELL 7 code
+man = find_file("manifest.csv", required=False)
+if man is None or SMOKE_ROWS:
+    print("OOF library not mounted (or a smoke run); skipping")
+else:
+    lib_dir = os.path.dirname(man)
+    rows = []
+    for f in sorted(os.listdir(lib_dir)):
+        if f.startswith("oof_") and f.endswith(".npy"):
+            p = np.load(os.path.join(lib_dir, f))
+            if len(p) != len(y):
+                continue
+            rows.append({"member": f[4:-4], "oof_auc": roc_auc_score(y, p), "max_prediction": p.max(),
+                         "rows_at_0.99_or_above": int((p >= 0.99).sum()),
+                         "satisfied_below_0.05": y[p < 0.05].mean(),
+                         "not_satisfied_at_0.95_or_above": 1 - y[p >= 0.95].mean()})
+    lib = pd.DataFrame(rows)
+    print(lib.to_string(index=False, formatters={
+        "oof_auc": "{:.6f}".format, "max_prediction": "{:.4f}".format,
+        "satisfied_below_0.05": "{:.2%}".format, "not_satisfied_at_0.95_or_above": "{:.2%}".format}))
+
+CELL 8 markdown
+## 3. The original's sure rows, in the competition
+
+Train the same configuration on the full original, then score every competition
+training row with it. This model never sees a competition label. Where it is nearly
+certain, the original itself was almost never wrong (section 1), so the competition
+label tells us how often the generator disagreed with the source. Then the same rates,
+split by passenger group.
+
+CELL 9 code
+oracle = fit(Xo, yo)
+q = oracle.predict(X)
+AUC_ORACLE = roc_auc_score(y, q)
+print(f"trained on the original only, scored on the competition rows: AUC {AUC_ORACLE:.6f}\n")
+print(calib(q, y))
+
+q_lo, q_hi = q < 0.001, q >= 0.999
+ORACLE_LO, ORACLE_HI = float(y[q_lo].mean()), float(1 - y[q_hi].mean())
+print(f"\noriginal model below 0.001: {q_lo.sum():,} competition rows ({pct(q_lo.mean(), 1)}); "
+      f"satisfied anyway: {pct(ORACLE_LO)}")
+print(f"original model 0.999 or above: {q_hi.sum():,} competition rows ({pct(q_hi.mean(), 1)}); "
+      f"not satisfied anyway: {pct(ORACLE_HI)}")
+print(f"(the same confidence on the original's own rows, section 1: "
+      f"{int(yo[o_lo].sum())} of {o_lo.sum():,} and {int((1 - yo[o_hi]).sum())} of {o_hi.sum():,})")
+
+groups = {c: train[c] for c in ["Class", "Type of Travel", "Customer Type", "Gender"]}
+groups["Age band"] = pd.cut(train["Age"], [0, 25, 40, 55, 120]).astype(str)
+out = []
+for col, g in groups.items():
+    for lvl in sorted(g.unique()):
+        sel = (g == lvl).to_numpy()
+        out.append({"column": col, "level": lvl,
+                    "rows_below_0.001": int((sel & q_lo).sum()), "satisfied_anyway": y[sel & q_lo].mean(),
+                    "rows_0.999_or_above": int((sel & q_hi).sum()),
+                    "not_satisfied_anyway": 1 - y[sel & q_hi].mean()})
+grp = pd.DataFrame(out)
+print("\n" + grp.to_string(index=False, formatters={"satisfied_anyway": "{:.2%}".format,
+                                                    "not_satisfied_anyway": "{:.2%}".format}))
+big_lo = grp[grp["rows_below_0.001"] >= 10000]
+big_hi = grp[grp["rows_0.999_or_above"] >= 10000]
+if len(big_lo) and len(big_hi):
+    print(f"\ngroups with at least 10,000 rows in the bin: satisfied anyway "
+          f"{pct(big_lo['satisfied_anyway'].min())} to {pct(big_lo['satisfied_anyway'].max())}; "
+          f"not satisfied anyway {pct(big_hi['not_satisfied_anyway'].min())} to "
+          f"{pct(big_hi['not_satisfied_anyway'].max())}")
+else:
+    print("\nno group has 10,000 rows in a bin at this sample size")
+GRP = {"grp_lo_min": pct(big_lo["satisfied_anyway"].min()), "grp_lo_max": pct(big_lo["satisfied_anyway"].max()),
+       "grp_hi_min": pct(big_hi["not_satisfied_anyway"].min()),
+       "grp_hi_max": pct(big_hi["not_satisfied_anyway"].max())} if len(big_lo) and len(big_hi) else {}
+print(f"[{time.time() - T0:.0f}s]")
+
+CELL 10 markdown
+## 4. The equivalence test: flip the original's labels
+
+If the competition labels behave like the original's with a share of them flipped at
+random, then flipping that share of the original's labels should reproduce the
+competition's AUC. The test, at equal size and with the same model:
+
+* the competition, on a random 129,880-row sample, 5-fold CV;
+* the original with an exact count of labels flipped at random, 5-fold CV, scored
+  against the flipped labels (what a leaderboard would see) and against the true ones.
+
+The flipped sets are nested (the 4% set contains the 3% set), so the curve is not
+re-drawn at every step. For a model whose scores do not depend on which rows were
+flipped, the AUC against flipped labels is fixed by arithmetic:
+`AUC_flipped = 0.5 + (a - b) * (AUC_true - 0.5)`, where `a` is the share of rows labelled
+positive that are truly positive and `b` the share of rows labelled negative that are
+truly positive. The table prints that prediction next to the measurement.
+
+CELL 11 code
+samp = train.sample(len(orig), random_state=42).reset_index(drop=True)
+ys = samp[TARGET].astype(int).to_numpy()
+oof_s = cv_oof(frame(samp), ys)
+AUC_SAMPLE = roc_auc_score(ys, oof_s)
+print(f"competition sample, {len(ys):,} rows, 5-fold CV AUC: {AUC_SAMPLE:.6f}\n")
+
+order = np.random.RandomState(2026).permutation(len(yo))
+KEEP = {}                                              # flipped labels + OOF per run (section 8 uses them)
+
+
+def run(k):
+    yn = yo.copy()
+    yn[order[:k]] = 1 - yn[order[:k]]
+    oof = oof_o if k == 0 else cv_oof(Xo, yn)          # k = 0 is section 1's run
+    KEEP[k] = (yn, oof)
+    a = ((yo == 1) & (yn == 1)).sum() / (yn == 1).sum()
+    b = ((yo == 1) & (yn == 0)).sum() / (yn == 0).sum()
+    auc_true = roc_auc_score(yo, oof)
+    return {"flipped": k, "share_flipped": k / len(yo), "auc_vs_flipped": roc_auc_score(yn, oof),
+            "auc_vs_true": auc_true, "formula": 0.5 + (a - b) * (auc_true - 0.5)}
+
+
+GRID = [0.0, 0.02, 0.03, 0.035, 0.04, 0.05]
+inj = pd.DataFrame([run(int(round(e * len(yo)))) for e in GRID])
+fmt = {"share_flipped": "{:.2%}".format, "auc_vs_flipped": "{:.6f}".format,
+       "auc_vs_true": "{:.6f}".format, "formula": "{:.6f}".format}
+print(inj.to_string(index=False, formatters=fmt))
+
+# where the measured curve crosses the competition's AUC (linear between grid points)
+s, v = inj["share_flipped"].to_numpy(), inj["auc_vs_flipped"].to_numpy()
+cross = np.where((v[:-1] >= AUC_SAMPLE) & (v[1:] < AUC_SAMPLE))[0]
+assert len(cross) or SMOKE_ROWS, "the flip curve never crosses the competition's AUC on this grid"
+i = int(cross[0]) if len(cross) else int(np.argmin(np.abs(v[:-1] - AUC_SAMPLE)))
+EPS_STAR = s[i] + (v[i] - AUC_SAMPLE) / (v[i] - v[i + 1]) * (s[i + 1] - s[i])
+K_STAR = int(round(EPS_STAR * len(yo)))
+star = run(K_STAR)
+AUC_STAR, CLEAN_STAR = star["auc_vs_flipped"], star["auc_vs_true"]
+print(f"\nthe curve crosses the competition's {AUC_SAMPLE:.6f} at {pct(EPS_STAR)} flipped")
+print(f"check run, {K_STAR:,} labels flipped ({pct(K_STAR / len(yo))}): AUC vs flipped labels {AUC_STAR:.6f}, "
+      f"vs true labels {CLEAN_STAR:.6f}   (nothing flipped: {AUC_ORIG:.6f})")
+print(f"[{time.time() - T0:.0f}s]")
+
+fig, ax = plt.subplots(figsize=(8, 4))
+ax.plot(100 * inj["share_flipped"], inj["auc_vs_flipped"], "o-", label="original, scored on flipped labels")
+ax.plot(100 * inj["share_flipped"], inj["auc_vs_true"], "s--", label="same models, scored on true labels")
+ax.axhline(AUC_SAMPLE, color="#dd8452", lw=1.5, label=f"competition, same size ({AUC_SAMPLE:.4f})")
+ax.axvline(100 * EPS_STAR, color="grey", lw=0.8, ls=":")
+ax.set_xlabel("labels flipped at random (%)")
+ax.set_ylabel("5-fold CV AUC")
+ax.legend(loc="lower left")
+plt.tight_layout()
+plt.show()
+
+CELL 12 markdown
+## 5. The passengers or their answers?
+
+The generator changed two things: which passengers appear (the distribution of the
+features) and what they answered (the label given the features). The first can be
+measured on its own. Train a classifier to tell original rows from competition rows;
+its odds turn into a weight for every original row, `w = p(competition | x) / p(original | x)`,
+that re-weights the original so its passengers look like the competition's. The
+original's own labels and out-of-fold predictions stay as they are. If a
+competition-shaped mix of passengers were harder to rank, the weighted AUC would drop.
+Weights are capped at their 99.9th percentile.
+
+CELL 13 code
+comp = train.sample(len(orig), random_state=7)
+A = pd.concat([Xo, frame(comp)], ignore_index=True)
+z = np.r_[np.zeros(len(orig)), np.ones(len(comp))].astype(int)
+oof_z = cv_oof(A, z, 300)
+AUC_ADV = roc_auc_score(z, oof_z)
+s_o = np.clip(oof_z[:len(orig)], 1e-6, 1 - 1e-6)       # out-of-fold P(competition | x) for each original row
+w = s_o / (1 - s_o)
+w = np.minimum(w, np.quantile(w, 0.999))
+w = w / w.mean()
+ESS = w.sum() ** 2 / (w ** 2).sum()
+AUC_W = roc_auc_score(yo, oof_o, sample_weight=w)
+COST_X, COST_Y = AUC_ORIG - AUC_W, AUC_W - AUC_SAMPLE
+print(f"original vs competition rows, 5-fold CV AUC of the classifier: {AUC_ADV:.4f}")
+print(f"effective sample size after weighting: {ESS:,.0f} of {len(orig):,}")
+print(f"satisfied rate, original {yo.mean():.4f} -> re-weighted {np.average(yo, weights=w):.4f} "
+      f"(competition {y.mean():.4f})\n")
+print(f"original, as is:                                    {AUC_ORIG:.6f}")
+print(f"original, re-weighted to the competition's passengers: {AUC_W:.6f}   change {-COST_X:+.6f}")
+print(f"competition, same size:                             {AUC_SAMPLE:.6f}   change {-COST_Y:+.6f}")
+if COST_X > 0:
+    print(f"\nshare of the gap from who the passengers are: {pct(COST_X / (COST_X + COST_Y), 1)}; "
+          f"from what they answered: {pct(COST_Y / (COST_X + COST_Y), 1)}")
+else:
+    print("\nthe competition's mix of passengers is not harder to rank than the original's; "
+          "the whole gap is in what they answered")
+print(f"[{time.time() - T0:.0f}s]")
+
+CELL 14 markdown
+## 6. How much of the disagreement can a model learn?
+
+Random flips cannot be predicted from the features. If the competition's disagreement
+with the original were purely random, a model trained on competition rows could not
+tell, inside the original's near-certain rows, which ones went the other way: its AUC
+there would be 0.5. The cell measures that AUC for the section 2 model, and what the
+skill is worth: the same out-of-fold predictions, flattened to one value inside each
+near-certain region, score lower, and the difference is what the within-region
+ranking contributes.
+
+CELL 15 code
+rows = []
+for name, sel in (("original below 0.001", q_lo), ("original 0.999 or above", q_hi),
+                  ("everything in between", ~(q_lo | q_hi))):
+    rows.append({"region": name, "rows": int(sel.sum()), "share_of_rows": sel.mean(),
+                 "share_satisfied": y[sel].mean(), "auc_inside_region": roc_auc_score(y[sel], oof_t[sel])})
+reg = pd.DataFrame(rows)
+print(reg.to_string(index=False, formatters={"share_of_rows": "{:.2%}".format, "share_satisfied": "{:.4f}".format,
+                                             "auc_inside_region": "{:.4f}".format}))
+WITHIN_LO, WITHIN_HI = float(reg["auc_inside_region"][0]), float(reg["auc_inside_region"][1])
+
+flat = oof_t.copy()
+flat[q_lo], flat[q_hi] = oof_t[q_lo].mean(), oof_t[q_hi].mean()
+AUC_FLAT = roc_auc_score(y, flat)
+WITHIN_WORTH = AUC_TRAIN - AUC_FLAT
+print(f"\nsection 2 model: {AUC_TRAIN:.6f}; flattened inside both near-certain regions: {AUC_FLAT:.6f}; "
+      f"the within-region skill is worth {WITHIN_WORTH:.4f}")
+
+CELL 16 markdown
+## 7. Headroom: the ceiling if the noise were purely random
+
+Apply the arithmetic from section 4 to the competition itself. If its labels were true
+labels with a share `e` flipped at random, then with the competition's satisfied rate
+the AUC any model can reach is `0.5 + (a - b) * (AUC_true - 0.5)`, which peaks when
+`AUC_true = 1`, a model that ranks every true label perfectly. It is a cross-validation
+number: compare it with out-of-fold scores, not with the public board, which uses part
+of the test set.
+
+CELL 17 code
+PI_OBS = float(y.mean())
+
+
+def ceiling(e, auc_true=1.0):
+    pi = (PI_OBS - e) / (1 - 2 * e)            # satisfied rate before flipping
+    a = pi * (1 - e) / PI_OBS                   # share of rows labelled satisfied that truly are
+    b = pi * e / (1 - PI_OBS)                   # share of rows labelled not satisfied that truly are
+    return 0.5 + (a - b) * (auc_true - 0.5)
+
+
+CEILING = ceiling(EPS_STAR)
+print(f"flip rate from section 4: {pct(EPS_STAR)}")
+print(f"ceiling, a perfect ranker of the true labels:            {CEILING:.4f}")
+print(f"ceiling, the original's own cross-validated skill ({AUC_ORIG:.4f}): {ceiling(EPS_STAR, AUC_ORIG):.4f}")
+for e in (0.03, 0.035, 0.04):
+    print(f"  if the flip rate were {pct(e, 1)}: ceiling {ceiling(e):.4f}")
+
+# cross-validated scores to compare against, same folds (SKF 5, shuffle, seed 42)
+FRONTIER_OOF = 0.961459      # goodpjw2008's 13-model stack, 5-fold CV as stated in their notebook (read 2026-10-01 06:30 UTC)
+FRONTIER_PUBLIC = 0.96108    # the same stack's public score, as stated there
+BOARD_TOP = 0.96127          # public leaderboard #1, 2026-10-01 06:29 UTC; no published CV
+print(f"\nthis notebook's model, OOF:             {AUC_TRAIN:.6f}")
+print(f"best published stack on Oct 1, 5-fold CV: {FRONTIER_OOF:.6f}   (public {FRONTIER_PUBLIC:.5f})")
+print(f"public leaderboard #1:                  {BOARD_TOP:.5f}")
+print(f"random-noise ceiling minus that stack's CV: {CEILING - FRONTIER_OOF:+.4f}")
+LB_PUBLIC = 0.95840       # this notebook's submission.csv, submission 56745393, read 2026-10-01 06:41 UTC
+print(f"\nthis notebook's submission.csv on the public board: {LB_PUBLIC:.5f}; OOF minus public: {round(AUC_TRAIN, 6) - LB_PUBLIC:+.5f}")
+
+CELL 18 markdown
+## 8. Where the frontier sits against the noise ceiling
+
+*New in this version.* Section 7 compared the ceiling with one published stack. Since then the
+best public notebooks have mostly stopped training new models; they stack everyone's
+out-of-fold predictions. Kratosyan collected every public OOF library into one 124-member
+stack, and Chris Deotte packaged those 124 pairs as a dataset, plus a second dataset with 11
+more (nine tabular foundation models, an XGBoost and a RealMLP):
+[124 public pairs](https://www.kaggle.com/datasets/cdeotte/s6e10-124-public-oof-and-test-predictions),
+[TFM pairs](https://www.kaggle.com/datasets/cdeotte/s6e10-tfm-oof-and-test-predictions).
+That is 135 members, the 14 members of our library's version 4 among them. Their notes say
+the pairs come from the same `StratifiedKFold(5, shuffle=True, random_state=42)` split this
+notebook uses; ten of them (with `k10` in the name) were trained on 10 folds instead.
+
+The stack is the one they use: a logistic regression on the members' logits, fit on four folds
+and scored on the fifth, so no row's stack prediction comes from a stacker that saw its label.
+I run the solver to convergence. At scikit-learn's default tolerance it stops early on 135
+correlated columns, and the stack's AUC moves in the fifth decimal; the cell prints both.
+
+Three questions:
+
+1. How far above the random-noise ceiling is the frontier now, and is that gap bigger than my
+   uncertainty about the ceiling?
+2. Do new members still move it? Version 5 of our
+   [OOF library](https://www.kaggle.com/datasets/dariushafshar/s6e10-golem-oof-library) added
+   three: another TabPFN-3.5 (o), a LightGBM with goodpjw2008's auxiliary-task expected
+   values (p), and the same LightGBM trained on 10 folds (q). Kratosyan found that
+   foundation-model and 10-fold members were the ones still moving the 124-member stack.
+3. Where do the errors the frontier still makes live, measured with section 3's regions?
+
+CELL 19 code
+import glob
+from joblib import Parallel, delayed
+from sklearn.linear_model import LogisticRegression
+
+POOL = {"s6e10-124-public-oof-and-test-predictions": "", "s6e10-tfm-oof-and-test-predictions": "tfm_"}
+TOL = 1e-8                                   # lbfgs to convergence (the default is 1e-4)
+N_JOBS = min(5, os.cpu_count() or 1)
+
+
+def find_dir(name, root=SEARCH_ROOT, max_depth=5):
+    queue, hits = deque([(root, 0)]), []
+    while queue:
+        d, depth = queue.popleft()
+        try:
+            entries = sorted(os.scandir(d), key=lambda e: e.name)
+        except OSError:
+            continue
+        for e in entries:
+            if e.is_dir():
+                if e.name == name:
+                    hits.append(e.path)
+                elif depth < max_depth:
+                    queue.append((e.path, depth + 1))
+    return sorted(hits, key=len)[0] if hits else None
+
+
+def member(path):
+    # Chris Deotte's rule: probabilities -> logits; pairs already on the logit scale are kept as they are
+    a = np.load(path).astype(np.float64)
+    if a.min() >= 0 and a.max() <= 1:
+        a = np.clip(a, 1e-15, 1 - 1e-15)
+        a = np.log(a / (1 - a))
+    if SMOKE_ROWS:
+        a = a[SMOKE_IDX]
+    return np.clip(a, -30, 30).astype(np.float32)
+
+
+def lr_fold(Z, yy, ff, k, tol):
+    a, b = ff != k, ff == k
+    return k, LogisticRegression(C=1.0, tol=tol, max_iter=20000).fit(Z[a], yy[a]).decision_function(Z[b])
+
+
+def nested(Z, tol=TOL):
+    out = np.zeros(len(y))
+    for k, z in Parallel(n_jobs=N_JOBS)(delayed(lr_fold)(Z, y, fold, k, tol) for k in range(5)):
+        out[fold == k] = z
+    return out
+
+
+def fold_aucs(s):
+    return np.array([roc_auc_score(y[fold == k], s[fold == k]) for k in range(5)])
+
+
+dirs = {slug: find_dir(slug) for slug in POOL}
+assert all(dirs.values()), f"attach both of Chris Deotte's datasets: {dirs}"
+lib_dir = os.path.dirname(find_file("manifest.csv"))
+if not SMOKE_ROWS:                           # every stack below is fit and scored on these folds
+    assert (np.load(os.path.join(lib_dir, "folds_seed42.npy")) == fold).all(), "not the frozen folds"
+names, cols = [], []
+for slug, prefix in POOL.items():
+    files = sorted(glob.glob(os.path.join(dirs[slug], "**", "oof_*.npy"), recursive=True))
+    print(f"{slug}: {len(files)} members" + (f" ({', '.join(os.path.basename(f)[4:-4] for f in files)})"
+                                             if prefix else ""))
+    for f in files:
+        names.append(prefix + os.path.basename(f)[4:-4])
+        cols.append(member(f))
+ZP = np.column_stack(cols)
+del cols
+man = pd.read_csv(os.path.join(lib_dir, "manifest.csv"))
+ZL = np.column_stack([member(os.path.join(lib_dir, f)) for f in man["oof_file"]])
+NEW = {r.wide_column: member(os.path.join(lib_dir, r.oof_file)) for r in man.itertuples() if r.added_in_version == "v5"}
+print(f"public pool: {ZP.shape[1]} members, {sum(n.startswith('gl_') for n in names)} of them from our library v4, "
+      f"{sum('k10' in n for n in names)} trained on 10 folds (k10 in the name: "
+      f"{', '.join(n for n in names if 'k10' in n)})")
+print(f"our library v5: {ZL.shape[1]} members, new in v5: {list(NEW)}")
+
+t = time.time()
+S_POOL = nested(ZP)
+AUC_POOL, POOL_F = roc_auc_score(y, S_POOL), fold_aucs(S_POOL)
+AUC_POOL_DEFAULT = roc_auc_score(y, nested(ZP, tol=1e-4))
+S_LIB = nested(ZL)
+AUC_LIB = roc_auc_score(y, S_LIB)
+print(f"stacks fitted in {time.time() - t:.0f}s ({N_JOBS} jobs)\n")
+print(f"our library, all {ZL.shape[1]} members:            {AUC_LIB:.6f}")
+print(f"public pool, {ZP.shape[1]} members:                 {AUC_POOL:.6f}   "
+      f"(folds {' '.join(f'{x:.6f}' for x in POOL_F)})")
+print(f"public pool, solver at its default tolerance: {AUC_POOL_DEFAULT:.6f}\n")
+
+# what each new family adds on top of the pool: paired fold deltas, the library's rule for "real"
+ADD = {}
+for name, extra in [*((n, [z]) for n, z in NEW.items()), ("all three", list(NEW.values()))]:
+    s = nested(np.column_stack([ZP] + extra))
+    d = fold_aucs(s) - POOL_F
+    se = d.std(ddof=1) / np.sqrt(5)
+    ADD[name] = {"stack": roc_auc_score(y, s), "delta": d.mean(), "se": se, "up": int((d > 0).sum()),
+                 "real": bool(d.mean() > 2 * se and (d > 0).sum() >= 4)}
+add = pd.DataFrame(ADD).T
+print("added to the public pool (mean paired fold delta; real = above 2 SE and positive in 4 of 5 folds)")
+print(add.to_string(formatters={"stack": "{:.6f}".format, "delta": "{:+.6f}".format, "se": "{:.6f}".format}))
+mv = find_file("marginal_value.csv", required=False)
+if mv:
+    pub = pd.read_csv(mv).set_index("wide_column")["adds_to_public_pool_alone"].dropna()
+    print("\nthe corresponding deltas published in the library's marginal_value.csv (solver at its default tolerance):")
+    print("  " + "   ".join(f"{k} {v:+.6f}" for k, v in pub.items()))
+MAX_ADD = float(add["delta"].abs().max())
+print(f"\nlargest change from any new member or the set: {MAX_ADD:.6f}   [{time.time() - T0:.0f}s]")
+
+CELL 20 markdown
+### 8.1 The frontier against the ceiling
+
+Section 7's ceiling depends on the flip rate from section 4, and that rate is itself measured: on
+a 129,880-row sample of the competition and one draw of flips on the original. So the cell asks
+two things. Which flip rate would make the ceiling equal the pool stack's score? And how far is
+that from section 4's rate, counted in standard errors? The standard error has two parts:
+section 4's estimate (DeLong standard errors of the two AUCs it matches, divided by the slope of
+the flip curve) and the pool stack's own AUC (its DeLong standard error, turned into a flip rate).
+
+CELL 21 code
+def delong_se(yy, s):
+    pos, neg = s[yy == 1], s[yy == 0]
+    sn, sp = np.sort(neg), np.sort(pos)
+    v10 = (np.searchsorted(sn, pos, "left") + np.searchsorted(sn, pos, "right")) / 2 / len(neg)
+    v01 = 1 - (np.searchsorted(sp, neg, "left") + np.searchsorted(sp, neg, "right")) / 2 / len(pos)
+    return float(np.sqrt(v10.var(ddof=1) / len(pos) + v01.var(ddof=1) / len(neg)))
+
+
+def flip_rate_for(auc):
+    lo, hi = 1e-6, 0.3                       # the ceiling falls as the flip rate rises
+    for _ in range(100):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if ceiling(mid) > auc else (lo, mid)
+    return (lo + hi) / 2
+
+
+E_EFF = flip_rate_for(AUC_POOL)
+sh, va = inj["share_flipped"].to_numpy(), inj["auc_vs_flipped"].to_numpy()
+j = int(np.searchsorted(sh, EPS_STAR)) - 1
+assert j == i, (j, i)                                      # the segment section 4 interpolated on
+SLOPE = (va[j] - va[j + 1]) / (sh[j + 1] - sh[j])         # AUC lost per unit of flip share near EPS_STAR
+SE_SAMPLE, SE_STAR = delong_se(ys, oof_s), delong_se(*KEEP[K_STAR])
+SE_EPS = np.hypot(SE_SAMPLE, SE_STAR) / SLOPE
+SE_POOL = delong_se(y, S_POOL)
+SE_GAP = np.hypot(SE_EPS, SE_POOL / ((ceiling(E_EFF - 1e-5) - ceiling(E_EFF + 1e-5)) / 2e-5))
+Z_GAP = (EPS_STAR - E_EFF) / SE_GAP
+
+print(f"random-noise ceiling at {pct(EPS_STAR)} flipped (section 7): {CEILING:.6f}")
+print(f"public pool stack, nested CV:                {AUC_POOL:.6f}   minus the ceiling: {AUC_POOL - CEILING:+.4f}")
+print(f"section 7's frontier (goodpjw2008's stack):  {FRONTIER_OOF:.6f}   minus the ceiling: {FRONTIER_OOF - CEILING:+.4f}")
+print(f"\nflip rate whose ceiling equals the pool stack: {pct(E_EFF)}   (section 4: {pct(EPS_STAR)})")
+print(f"section 4's rate, standard error from sampling: {pct(SE_EPS)}  "
+      f"(AUC SEs {SE_SAMPLE:.5f} and {SE_STAR:.5f}, slope {SLOPE:.3f} AUC per unit flipped)")
+print(f"pool stack's AUC, standard error: {SE_POOL:.6f}")
+print(f"gap between the two flip rates: {100 * (EPS_STAR - E_EFF):.3f} points; its standard error "
+      f"(both sources): {100 * SE_GAP:.3f} points; ratio {Z_GAP:.1f}")
+
+# a leak sanity check that needs no audit of 135 members: does the pool's CV fall further on the public board?
+POOL_CV_PUB, POOL_LB_PUB = 0.96205, 0.96167   # Kratosyan's 124-member stack, as stated in their notebook (read 2026-10-07)
+BOARD_TOP_NOW = 0.96200                     # public leaderboard #1, 2026-10-08 06:19 UTC; no published CV
+print(f"\nKratosyan's 124-member stack: nested CV {POOL_CV_PUB:.5f}, public {POOL_LB_PUB:.5f}, "
+      f"drop {POOL_CV_PUB - POOL_LB_PUB:.5f}")
+if "LB_PUBLIC" in globals():
+    print(f"this notebook's LightGBM:     OOF {AUC_TRAIN:.6f}, public {LB_PUBLIC:.5f}, "
+          f"drop {round(AUC_TRAIN, 6) - LB_PUBLIC:.5f}")
+print(f"public leaderboard #1 now: {BOARD_TOP_NOW:.5f} (a public score, not a CV, so not comparable with the ceiling)")
+
+CELL 22 markdown
+### 8.2 Where the remaining errors live
+
+Using section 3's original-only model, I split the competition rows into three groups: rows
+where that model is at least 99.9% sure and the competition label **agrees** with it, rows
+where it is that sure and the label **contradicts** it, and rows where it is **unsure**.
+
+AUC is the share of (satisfied, not satisfied) pairs a model puts in the right order, so the
+pairs it puts in the wrong order are exactly what it loses. The cell counts those pairs for
+three models and asks which groups the two rows come from; a pair counts as "contradicts" if
+either of its rows does. The baseline is the same count over all pairs, right or wrong. Even
+random flips would put many errors on contradicting rows, so the interesting parts are the
+comparison across models and the AUC inside the sure regions. The cell also repeats section 6's test on
+each model: the AUC inside the original's sure regions (0.5 would mean the disagreements cannot
+be predicted at all), and what that ranking is worth (the AUC lost when the predictions are
+flattened inside both regions).
+
+Last, the pool stack's confident mistakes (below 0.05 but satisfied, or 0.95 and above but
+not), with the baseline that keeps that count honest: where its confident rows are in the first
+place.
+
+CELL 23 code
+SURE = q_lo | q_hi
+CONTRA = (q_lo & (y == 1)) | (q_hi & (y == 0))
+CAT = np.where(CONTRA, 0, np.where(~SURE, 1, 2))      # 0 contradicts, 1 unsure, 2 agrees
+GROUPS = ["involves a row whose label contradicts the original", "else involves a row where the original is unsure",
+          "both rows agree with the original"]
+
+
+def by_group(M):
+    # a pair counts as "contradicts" if either row does; else "unsure" if either row is; else "agrees"
+    tot = M.sum()
+    return (M[0].sum() + M[:, 0].sum() - M[0, 0]) / tot, (M[1, 1] + M[1, 2] + M[2, 1]) / tot, M[2, 2] / tot
+
+
+def misordered(s):
+    # misordered (satisfied, not satisfied) pairs, by the groups of the two rows; ties count half
+    M = np.zeros((3, 3))
+    for cp in range(3):
+        sp = s[(y == 1) & (CAT == cp)]
+        for cn in range(3):
+            sn = np.sort(s[(y == 0) & (CAT == cn)])
+            M[cp, cn] = (len(sn) - (np.searchsorted(sn, sp, "left") + np.searchsorted(sn, sp, "right")) / 2).sum()
+    assert abs(M.sum() / ((y == 1).sum() * (y == 0).sum()) - (1 - roc_auc_score(y, s))) < 1e-9
+    return by_group(M)
+
+
+# the baseline for those shares: every (satisfied, not satisfied) pair, misordered or not
+ALL_PAIRS = by_group(np.outer([((y == 1) & (CAT == c)).sum() for c in range(3)],
+                              [((y == 0) & (CAT == c)).sum() for c in range(3)]).astype(float))
+print(f"all (satisfied, not satisfied) pairs: involve a contradicting row {ALL_PAIRS[0]:.1%}, "
+      f"else an unsure row {ALL_PAIRS[1]:.1%}, both rows agree {ALL_PAIRS[2]:.1%}")
+
+
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
+
+
+rows = []
+for name, p in (("section 2 LightGBM", oof_t), ("our library stack", sigmoid(S_LIB)), ("public pool stack", sigmoid(S_POOL))):
+    flat = p.copy()
+    flat[q_lo], flat[q_hi] = p[q_lo].mean(), p[q_hi].mean()
+    m = misordered(p)
+    rows.append({"model": name, "cv_auc": roc_auc_score(y, p), "auc_in_lo": roc_auc_score(y[q_lo], p[q_lo]),
+                 "auc_in_hi": roc_auc_score(y[q_hi], p[q_hi]), "flattened": roc_auc_score(y, flat),
+                 "worth": roc_auc_score(y, p) - roc_auc_score(y, flat),
+                 "pairs_contradicts": m[0], "pairs_unsure_only": m[1], "pairs_agrees_only": m[2]})
+ev = pd.DataFrame(rows).set_index("model")
+print(f"rows: contradicts {pct(CONTRA.mean(), 1)}, unsure {pct((~SURE).mean(), 1)}, agrees {pct((SURE & ~CONTRA).mean(), 1)}"
+      f"   (auc_in_lo / auc_in_hi = AUC inside the original's below-0.001 / 0.999-or-above rows)\n")
+print(ev.to_string(formatters={"cv_auc": "{:.6f}".format, "auc_in_lo": "{:.4f}".format, "auc_in_hi": "{:.4f}".format,
+                               "flattened": "{:.6f}".format, "worth": "{:.4f}".format,
+                               "pairs_contradicts": "{:.1%}".format, "pairs_unsure_only": "{:.1%}".format,
+                               "pairs_agrees_only": "{:.1%}".format}))
+lg, pl = ev.loc["section 2 LightGBM"], ev.loc["public pool stack"]
+# 1 - AUC is the share of misordered pairs, so the AUC gain splits exactly over the pair groups
+GAIN = pl["cv_auc"] - lg["cv_auc"]
+GAIN_CONTRA = lg["pairs_contradicts"] * (1 - lg["cv_auc"]) - pl["pairs_contradicts"] * (1 - pl["cv_auc"])
+GAIN_REST = GAIN - GAIN_CONTRA
+print(f"\npool stack minus LightGBM: {GAIN:+.5f} of AUC, of which pairs that involve a row whose label contradicts "
+      f"the original: {GAIN_CONTRA:+.5f}; all other pairs: {GAIN_REST:+.5f}")
+
+# confident mistakes of the pool stack, at section 2's thresholds
+P_POOL = sigmoid(S_POOL)
+conf = (P_POOL < 0.05) | (P_POOL >= 0.95)
+CM = ((P_POOL < 0.05) & (y == 1)) | ((P_POOL >= 0.95) & (y == 0))
+CM_CONTRA, CONF_SURE = CONTRA[CM].mean(), SURE[conf].mean()
+ERR_SURE, ERR_ELSE = CM[conf & SURE].mean(), CM[conf & ~SURE].mean()
+print(f"\npool stack below 0.05 or at 0.95 and above: {conf.sum():,} rows; wrong: {CM.sum():,} ({pct(CM.sum() / conf.sum())})")
+print(f"of those mistakes, label contradicts the original: {pct(CM_CONTRA, 1)}; original unsure: {pct(CM[~SURE].sum() / CM.sum(), 1)}")
+print(f"for comparison, share of the confident rows inside the original's sure regions: {pct(CONF_SURE, 1)}; "
+      f"error rate there {pct(ERR_SURE)}, elsewhere {pct(ERR_ELSE)}")
+
+shares = np.array([list(ALL_PAIRS),
+                   [lg["pairs_contradicts"], lg["pairs_unsure_only"], lg["pairs_agrees_only"]],
+                   [pl["pairs_contradicts"], pl["pairs_unsure_only"], pl["pairs_agrees_only"]]])
+labels = ["all pairs", "pairs the section 2 LightGBM misorders", "pairs the public pool stack misorders"]
+colors, ink = ["#dd8452", "#4c72b0", "#c9c9c9"], ["white", "white", "#333333"]
+fig, ax = plt.subplots(figsize=(10, 3.2))
+left = np.zeros(3)
+for g in range(3):
+    ax.barh(labels, shares[:, g], left=left, color=colors[g], label=GROUPS[g])
+    for r in range(3):
+        if shares[r, g] >= 0.04:
+            ax.text(left[r] + shares[r, g] / 2, r, f"{shares[r, g]:.0%}", ha="center", va="center", color=ink[g])
+    left += shares[:, g]
+ax.invert_yaxis()
+ax.set_xlim(0, 1)
+ax.set_xlabel("share of (satisfied, not satisfied) pairs")
+ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.3), ncol=2, frameon=False, fontsize=9)
+ax.set_title(f"Pairs that involve a row whose label contradicts a sure original: {ALL_PAIRS[0]:.0%} of all pairs, "
+             f"{pl['pairs_contradicts']:.0%} of the pool stack's errors", fontsize=10)
+plt.tight_layout()
+plt.show()
+
+CELL 24 markdown
+**Confident mistakes.** These are a weaker count. 77.5% of the stack's confident mistakes are rows whose label contradicts the original, but 77.5% of its confident rows sit in the original's sure regions to begin with, and its error rate is 3.20% inside them and 3.19% outside. A calibrated model's confident mistakes follow its confident rows, so the misordered pairs, set against all pairs, are the fairer count.
+
+CELL 25 code
+HEADLINE = {
+    "eps_pct": pct(EPS_STAR, 1),
+    "auc_orig": f"{AUC_ORIG:.6f}", "auc_orig_3": f"{AUC_ORIG:.3f}",
+    "auc_sample": f"{AUC_SAMPLE:.6f}", "auc_sample_3": f"{AUC_SAMPLE:.3f}",
+    "auc_star": f"{AUC_STAR:.6f}", "clean_star": f"{CLEAN_STAR:.6f}",
+    "orig_sure_share": pct(ORIG_SURE_N / len(yo), 1), "orig_sure_n": f"{ORIG_SURE_N:,}",
+    "orig_sure_wrong": f"{ORIG_SURE_WRONG}",
+    "auc_train": f"{AUC_TRAIN:.6f}", "max_p_train": f"{MAX_P_TRAIN:.4f}",
+    "plateau_lo": pct(PLATEAU_LO), "plateau_hi": pct(PLATEAU_HI),
+    "auc_oracle": f"{AUC_ORACLE:.6f}", "oracle_lo": pct(ORACLE_LO), "oracle_hi": pct(ORACLE_HI),
+    "auc_adv": f"{AUC_ADV:.4f}", "auc_w": f"{AUC_W:.6f}", "cost_x": f"{COST_X:.4f}", "cost_y": f"{COST_Y:.4f}",
+    "within_lo": f"{WITHIN_LO:.4f}", "within_hi": f"{WITHIN_HI:.4f}", "within_worth": f"{WITHIN_WORTH:.4f}",
+    "ceiling": f"{CEILING:.4f}", "room": f"{CEILING - FRONTIER_OOF:+.4f}",
+    "k_star": f"{K_STAR:,}", **GRP,
+    # section 8 (version 2)
+    "pool_n": f"{ZP.shape[1]}", "lib_n": f"{ZL.shape[1]}",
+    "auc_pool": f"{AUC_POOL:.6f}", "auc_pool_default": f"{AUC_POOL_DEFAULT:.6f}", "auc_lib": f"{AUC_LIB:.6f}",
+    "ceiling6": f"{CEILING:.6f}", "pool_above": f"{AUC_POOL - CEILING:+.4f}",
+    "frontier_above": f"{FRONTIER_OOF - CEILING:+.4f}",
+    "e_eff": pct(E_EFF), "eps_star2": pct(EPS_STAR), "se_eps": pct(SE_EPS), "z_gap": f"{Z_GAP:.1f}",
+    "add_o": f"{ADD['o_tabpfn35']['delta']:+.6f}", "add_p": f"{ADD['p_lgbm_auxev']['delta']:+.6f}",
+    "add_q": f"{ADD['q_lgbm_auxev_10fold']['delta']:+.6f}", "add_set": f"{ADD['all three']['delta']:+.6f}",
+    "add_set_se": f"{ADD['all three']['se']:.6f}", "add_set_up": f"{ADD['all three']['up']}",
+    "add_any_real": str(any(v["real"] for v in ADD.values())), "max_add": f"{MAX_ADD:.6f}",
+    "contra_rows": pct(CONTRA.mean(), 1), "unsure_rows": pct((~SURE).mean(), 1),
+    "pool_in_lo": f"{pl['auc_in_lo']:.4f}", "pool_in_hi": f"{pl['auc_in_hi']:.4f}", "pool_worth": f"{pl['worth']:.4f}",
+    "pool_flat": f"{pl['flattened']:.6f}", "gain": f"{GAIN:+.5f}", "gain_contra": f"{GAIN_CONTRA:+.5f}",
+    "gain_rest": f"{GAIN_REST:+.5f}", "err_sure": pct(ERR_SURE), "err_else": pct(ERR_ELSE),
+    "pairs_contra_pool": f"{pl['pairs_contradicts']:.1%}", "pairs_unsure_pool": f"{pl['pairs_unsure_only']:.1%}",
+    "pairs_contra_lgbm": f"{lg['pairs_contradicts']:.1%}",
+    "pairs_contra_lib": f"{ev.loc['our library stack', 'pairs_contradicts']:.1%}",
+    "cm_n": f"{CM.sum():,}", "cm_contra": pct(CM_CONTRA, 1), "conf_sure": pct(CONF_SURE, 1),
+    "pairs_agree_pool": f"{pl['pairs_agrees_only']:.1%}", "pairs_contra_all": f"{ALL_PAIRS[0]:.1%}", "pool_drop": f"{POOL_CV_PUB - POOL_LB_PUB:.5f}",
+    **({"lgbm_drop": f"{round(AUC_TRAIN, 6) - LB_PUBLIC:.5f}"} if "LB_PUBLIC" in globals() else {}),
+}
+if SMOKE_ROWS:
+    HEADLINE["_smoke_rows"] = SMOKE_ROWS
+json.dump(HEADLINE, open(os.path.join(WORK, "headline.json"), "w"), indent=1)
+for k, v in HEADLINE.items():
+    print(f"{k:16s} {v}")
+print(f"\ntotal runtime {time.time() - T0:.0f}s")
+
+CELL 26 markdown
+## What this means for a model
+
+* **The gap between the original and the competition is in the answers.** At equal
+  size, flipping 3.8% of the original's labels at random costs what the
+  competition costs: 0.995063 becomes 0.955971 against the competition's
+  0.956215. Re-weighting the original to the competition's passengers does not lower its AUC at all (0.996079).
+* **Cleaning the training labels has little to win.** Trained on labels with
+  3.8% flipped, the model still ranks the true labels at 0.994145, against
+  0.995063 with nothing flipped. The noise costs the model's learning very little;
+  it costs the score that measures it.
+* **Calibrated probabilities stop well short of 0 and 1.** The section 2 model never
+  goes above 0.9941. A model that predicts 0.999 on this data is not more
+  confident, it is miscalibrated; that does not move AUC, but it matters if you blend
+  probabilities.
+* **The headroom is small, and it is not random.** A purely random version of this
+  noise would cap cross-validated AUC at 0.9613. The best stack published by October 1 (goodpjw2008's) was already 0.0002 above that in cross-validation. On its own that margin is smaller than my uncertainty about the flip rate (section 8.1), so it does not prove the noise is non-random. The evidence that the top of the board also learns a part of the noise that is not random is section 6's test, which does not need the ceiling: ranking inside the original's sure rows is worth 0.0031 of AUC for a plain LightGBM, and 0.0048 for the public pool stack (section 8).
+* **Three new members do not move the frontier, and most of what is left involves rows whose label contradicts the original.** Pairs that involve such a row are 5.1% of all pairs but 67.0% of the pairs the 135-member stack still misorders, and they account for 0.00296 of its 0.00323 lead over a single LightGBM. The rest of its errors involve rows where the original itself is unsure. So a member that helps this stack has to rank one of those two groups better than 135 members already do. Its margin over the random-noise ceiling is too small to count on by itself (section 8.1).
+
+**Measurement notes.** One LightGBM configuration for every model (600 rounds, never
+tuned to an experiment). The flip test uses one random draw of nested flip sets (seed
+2026); a different draw moves its AUCs in the fourth decimal. The ceiling in section 7
+assumes the flips are random and equally likely in both classes; section 6 shows they
+are not entirely random, so read it as the ceiling of that model of the noise, not of
+the competition. The frontier's OOF in section 7 is goodpjw2008's published number, not
+computed here; the one in section 8 is computed here.
+
+Section 8 uses other people's out-of-fold predictions as they were published. I did not
+audit all 135 members for leaks, so the pool's CV is only as clean as they are. One check needs no audit: Kratosyan's 124-member stack fell 0.00038 from nested CV to the public board, about what this notebook's plain LightGBM fell (0.00043). A CV inflated by a large leak would fall further. The check cannot see a leak as small as the margins in section 8, and it does not cover the 11 members Chris Deotte added.
+"Contradicts the original" means the label
+disagrees with what section 3's original-only model predicts for that passenger; the
+competition's passengers are not the original's (section 5), so some of those rows may
+be the original model's mistakes rather than the generator's. The standard errors in 8.1
+count sampling only.
+
+Credit: the source rows are Arseniy Shutko's
+[Airline Satisfaction Data](https://www.kaggle.com/datasets/arseniyshutko/binary-aviation-satisfaction-129k) (CC0).
+The frontier stack in section 7 is goodpjw2008's
+[Route-ID FE + OG-Model Stack](https://www.kaggle.com/code/goodpjw2008/s6e10-route-id-fe-og-model-stack-lb-0-96108).
+The public pool in section 8 was collected by Kratosyan
+([Stacking every public OOF library](https://www.kaggle.com/code/kratosyan/s6e10-stacking-every-public-oof-library))
+and packaged with 11 more members by Chris Deotte
+([Stacking TFMs with Public OOF](https://www.kaggle.com/code/cdeotte/stacking-tfms-with-public-oof));
+their notebooks list every source library, and those authors deserve the upvotes too. The
+library's new members use goodpjw2008's auxiliary-task idea and TabPFN input set, and
+Hemingweb's TabPFN-3.5 worker.

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "C:\Users\James\airline_S6E10\scripts\audit_phase16_noise.py", line 95, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\James\airline_S6E10\scripts\audit_phase16_noise.py", line 37, in main
+    tr,te,y,folds,vectors,tests,proof=bank()
+                                      ^^^^^^
+  File "C:\Users\James\airline_S6E10\scripts\phase16_common.py", line 32, in bank
+    assert all(file_sha256(p) == h for p, h in r['source_sha256'].items())
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'items'

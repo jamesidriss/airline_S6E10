@@ -1,0 +1,1059 @@
+{
+  "utc": "2026-10-08T22:21:41.646080+00:00",
+  "scope_sha256": "ed06c57103ea2a952ec3d2085af3e7caccb8e7dabb2da1e2276dd61a2355bc52",
+  "notebook_source_sha256": "c6c2b89d5325617c4f45c4edb12738cb53c6cc5468651f73c885b420fbbb49f7",
+  "bank": {
+    "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+    "test_certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+    "data_sha256": {
+      "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+      "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+    },
+    "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+    "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+    "oof_sha256": {
+      "candidate": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+      "aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+      "route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510"
+    },
+    "test_sha256": {
+      "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+      "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+      "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+    },
+    "v6_csv_sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d"
+  },
+  "teacher_probability_sha256": "c970622420517f1afafce729788ddfea208895f3e835570c8e8cb64a6365b001",
+  "teacher_cache_sha256": "ed6207e4b26f411ba61f3c87f1dc919afcf3b3b8e93dcc662546e753074e13e9",
+  "teacher_builder_sha256": "554e6ee2965f6ecae9bbee6971c4622a6591afd6c6adcdfd79950a9adebdeddd",
+  "teacher_view_sha256": "cf79ea875bb779764d666356d3057176e0719e96e30a356c52065908ccf96166",
+  "teacher_recipe": "5 original-only LightGBM models,600 trees,num_leaves63,seeds0..4; no competition labels; exact overlaps excluded",
+  "teacher_limitations": "Existing original-only5-model recipe differs from author single63leaf600round config; source-domain confidence is a proxy, not latent truth. Original OOF/flip-curve fits are not stored and not reproduced.",
+  "original_data_sha256": "2ad76465f6115f93d16121891a6b1235acb8007a4ab065cae0dc46b60ad116e3",
+  "original_positive_rate": 0.43446258084385586,
+  "original_overlap_audit": {
+    "n_original": 129880,
+    "n_original_rows_exactly_matching_a_competition_row": 21,
+    "n_competition_rows_matching_some_original_row": 21
+  },
+  "observed_positive_rate": 0.44357272006117476,
+  "original_teacher_auc_on_competition": 0.9550409602155728,
+  "near_certain_rows": 405733,
+  "discordant_rows": 16418,
+  "discordant_row_fraction": 0.023466521829239532,
+  "models": {
+    "candidate": {
+      "full_auc": 0.9617656138245795,
+      "full_conditional_auc_se": 0.00024285187960403458,
+      "near_certain_original_low": {
+        "rows": 195401,
+        "satisfied": 6753,
+        "positive_rate": 0.03455970030859617,
+        "positive_rate_wilson95": [
+          0.03375890480350466,
+          0.035378795971773916
+        ],
+        "auc": 0.5917582304806042,
+        "conditional_auc_se": 0.0034830391284793407,
+        "normal_auc95": [
+          0.5849314737887846,
+          0.5985849871724237
+        ]
+      },
+      "near_certain_original_high": {
+        "rows": 210332,
+        "satisfied": 200667,
+        "positive_rate": 0.9540488370766217,
+        "positive_rate_wilson95": [
+          0.9531457081496846,
+          0.9549353810040826
+        ],
+        "auc": 0.643125778219756,
+        "conditional_auc_se": 0.0028320049895886293,
+        "normal_auc95": [
+          0.6375750484401623,
+          0.6486765079993497
+        ]
+      },
+      "other": {
+        "rows": 293902,
+        "satisfied": 102919,
+        "positive_rate": 0.35018135296799613,
+        "positive_rate_wilson95": [
+          0.34845871721634536,
+          0.3519079050906879
+        ],
+        "auc": 0.9336751114521832,
+        "conditional_auc_se": 0.0005042436899504606,
+        "normal_auc95": [
+          0.9326867938198803,
+          0.9346634290844861
+        ]
+      },
+      "errors": 4619238859.5,
+      "total_pairs": 120813731344,
+      "pairs_involving_discordance_fraction": 0.0460467077385428,
+      "errors_involving_discordance": 2925891759.0,
+      "error_fraction_involving_discordance": 0.6334142589276509,
+      "flattened_auc": 0.9577854887497994,
+      "flattening_loss": 0.003980125074780072,
+      "perfold_region_auc": [
+        {
+          "fold": 0,
+          "low": {
+            "rows": 39184,
+            "satisfied": 1344,
+            "positive_rate": 0.03429971416904859,
+            "positive_rate_wilson95": [
+              0.03254285322069664,
+              0.0361478773378959
+            ],
+            "auc": 0.5950340130436425,
+            "conditional_auc_se": 0.007733322778462315,
+            "normal_auc95": [
+              0.5798767003978563,
+              0.6101913256894286
+            ]
+          },
+          "high": {
+            "rows": 42024,
+            "satisfied": 40102,
+            "positive_rate": 0.9542642299638302,
+            "positive_rate_wilson95": [
+              0.9522249840366683,
+              0.9562204339229752
+            ],
+            "auc": 0.640952232836444,
+            "conditional_auc_se": 0.006408457579859335,
+            "normal_auc95": [
+              0.6283916559799196,
+              0.6535128096929683
+            ]
+          }
+        },
+        {
+          "fold": 1,
+          "low": {
+            "rows": 39211,
+            "satisfied": 1349,
+            "positive_rate": 0.03440361123154217,
+            "positive_rate_wilson95": [
+              0.03264470174302406,
+              0.03625373972225343
+            ],
+            "auc": 0.5939261339187425,
+            "conditional_auc_se": 0.007945233047130205,
+            "normal_auc95": [
+              0.5783534771463673,
+              0.6094987906911177
+            ]
+          },
+          "high": {
+            "rows": 42022,
+            "satisfied": 40093,
+            "positive_rate": 0.9540954737994384,
+            "positive_rate_wilson95": [
+              0.9520526902760568,
+              0.9560552422538665
+            ],
+            "auc": 0.6342137824012256,
+            "conditional_auc_se": 0.006426802025862623,
+            "normal_auc95": [
+              0.6216172504305348,
+              0.6468103143719164
+            ]
+          }
+        },
+        {
+          "fold": 2,
+          "low": {
+            "rows": 39037,
+            "satisfied": 1367,
+            "positive_rate": 0.03501805978943054,
+            "positive_rate_wilson95": [
+              0.033239787035810764,
+              0.036887837178142244
+            ],
+            "auc": 0.5909875426474355,
+            "conditional_auc_se": 0.007672155078807269,
+            "normal_auc95": [
+              0.5759501186929732,
+              0.6060249666018978
+            ]
+          },
+          "high": {
+            "rows": 42178,
+            "satisfied": 40209,
+            "positive_rate": 0.9533168950637774,
+            "positive_rate_wilson95": [
+              0.9512620030085333,
+              0.955289220871324
+            ],
+            "auc": 0.6436563723463138,
+            "conditional_auc_se": 0.006222224275950862,
+            "normal_auc95": [
+              0.6314608127654501,
+              0.6558519319271775
+            ]
+          }
+        },
+        {
+          "fold": 3,
+          "low": {
+            "rows": 38914,
+            "satisfied": 1366,
+            "positive_rate": 0.03510304774631238,
+            "positive_rate_wilson95": [
+              0.033319895763185156,
+              0.03697797678751916
+            ],
+            "auc": 0.5839077274402575,
+            "conditional_auc_se": 0.007758900810893579,
+            "normal_auc95": [
+              0.5687002818509062,
+              0.5991151730296089
+            ]
+          },
+          "high": {
+            "rows": 42172,
+            "satisfied": 40234,
+            "positive_rate": 0.9540453381390496,
+            "positive_rate_wilson95": [
+              0.9520052327416271,
+              0.9560027328467093
+            ],
+            "auc": 0.6443613939978474,
+            "conditional_auc_se": 0.006314491099740202,
+            "normal_auc95": [
+              0.6319849914423566,
+              0.6567377965533382
+            ]
+          }
+        },
+        {
+          "fold": 4,
+          "low": {
+            "rows": 39055,
+            "satisfied": 1327,
+            "positive_rate": 0.03397772372295481,
+            "positive_rate_wilson95": [
+              0.032226258060284715,
+              0.03582085648669506
+            ],
+            "auc": 0.5962978649219928,
+            "conditional_auc_se": 0.00782596898850081,
+            "normal_auc95": [
+              0.5809589657045312,
+              0.6116367641394543
+            ]
+          },
+          "high": {
+            "rows": 41936,
+            "satisfied": 40029,
+            "positive_rate": 0.9545259442960702,
+            "positive_rate_wilson95": [
+              0.9524899453246473,
+              0.9564786791140191
+            ],
+            "auc": 0.6528244670752142,
+            "conditional_auc_se": 0.006285244827688189,
+            "normal_auc95": [
+              0.6405053872129454,
+              0.6651435469374831
+            ]
+          }
+        }
+      ]
+    },
+    "aux10": {
+      "full_auc": 0.9614187095444636,
+      "full_conditional_auc_se": 0.00024427961556477886,
+      "near_certain_original_low": {
+        "rows": 195401,
+        "satisfied": 6753,
+        "positive_rate": 0.03455970030859617,
+        "positive_rate_wilson95": [
+          0.03375890480350466,
+          0.035378795971773916
+        ],
+        "auc": 0.5893316404246446,
+        "conditional_auc_se": 0.0034848718977436646,
+        "normal_auc95": [
+          0.582501291505067,
+          0.5961619893442222
+        ]
+      },
+      "near_certain_original_high": {
+        "rows": 210332,
+        "satisfied": 200667,
+        "positive_rate": 0.9540488370766217,
+        "positive_rate_wilson95": [
+          0.9531457081496846,
+          0.9549353810040826
+        ],
+        "auc": 0.6394709053996076,
+        "conditional_auc_se": 0.002843059875095123,
+        "normal_auc95": [
+          0.6338985080444212,
+          0.645043302754794
+        ]
+      },
+      "other": {
+        "rows": 293902,
+        "satisfied": 102919,
+        "positive_rate": 0.35018135296799613,
+        "positive_rate_wilson95": [
+          0.34845871721634536,
+          0.3519079050906879
+        ],
+        "auc": 0.9328029709396549,
+        "conditional_auc_se": 0.0005080804484934487,
+        "normal_auc95": [
+          0.9318071332606077,
+          0.9337988086187021
+        ]
+      },
+      "errors": 4661149660.0,
+      "total_pairs": 120813731344,
+      "pairs_involving_discordance_fraction": 0.0460467077385428,
+      "errors_involving_discordance": 2939770604.0,
+      "error_fraction_involving_discordance": 0.6306964629837696,
+      "flattened_auc": 0.9576094306290596,
+      "flattening_loss": 0.0038092789154040574,
+      "perfold_region_auc": [
+        {
+          "fold": 0,
+          "low": {
+            "rows": 39184,
+            "satisfied": 1344,
+            "positive_rate": 0.03429971416904859,
+            "positive_rate_wilson95": [
+              0.03254285322069664,
+              0.0361478773378959
+            ],
+            "auc": 0.5929858174770966,
+            "conditional_auc_se": 0.007645819991406471,
+            "normal_auc95": [
+              0.5780000102939399,
+              0.6079716246602532
+            ]
+          },
+          "high": {
+            "rows": 42024,
+            "satisfied": 40102,
+            "positive_rate": 0.9542642299638302,
+            "positive_rate_wilson95": [
+              0.9522249840366683,
+              0.9562204339229752
+            ],
+            "auc": 0.6385093402043311,
+            "conditional_auc_se": 0.006428255150676931,
+            "normal_auc95": [
+              0.6259099601090043,
+              0.6511087202996579
+            ]
+          }
+        },
+        {
+          "fold": 1,
+          "low": {
+            "rows": 39211,
+            "satisfied": 1349,
+            "positive_rate": 0.03440361123154217,
+            "positive_rate_wilson95": [
+              0.03264470174302406,
+              0.03625373972225343
+            ],
+            "auc": 0.5931727737878721,
+            "conditional_auc_se": 0.007928549664669715,
+            "normal_auc95": [
+              0.5776328164451195,
+              0.6087127311306247
+            ]
+          },
+          "high": {
+            "rows": 42022,
+            "satisfied": 40093,
+            "positive_rate": 0.9540954737994384,
+            "positive_rate_wilson95": [
+              0.9520526902760568,
+              0.9560552422538665
+            ],
+            "auc": 0.6297967386531343,
+            "conditional_auc_se": 0.006408578236882903,
+            "normal_auc95": [
+              0.6172359253088439,
+              0.6423575519974248
+            ]
+          }
+        },
+        {
+          "fold": 2,
+          "low": {
+            "rows": 39037,
+            "satisfied": 1367,
+            "positive_rate": 0.03501805978943054,
+            "positive_rate_wilson95": [
+              0.033239787035810764,
+              0.036887837178142244
+            ],
+            "auc": 0.5901052512200725,
+            "conditional_auc_se": 0.0077821655654293906,
+            "normal_auc95": [
+              0.5748522067118309,
+              0.6053582957283141
+            ]
+          },
+          "high": {
+            "rows": 42178,
+            "satisfied": 40209,
+            "positive_rate": 0.9533168950637774,
+            "positive_rate_wilson95": [
+              0.9512620030085333,
+              0.955289220871324
+            ],
+            "auc": 0.6396632950881416,
+            "conditional_auc_se": 0.006270976411311672,
+            "normal_auc95": [
+              0.6273721813219707,
+              0.6519544088543124
+            ]
+          }
+        },
+        {
+          "fold": 3,
+          "low": {
+            "rows": 38914,
+            "satisfied": 1366,
+            "positive_rate": 0.03510304774631238,
+            "positive_rate_wilson95": [
+              0.033319895763185156,
+              0.03697797678751916
+            ],
+            "auc": 0.5791725195946358,
+            "conditional_auc_se": 0.007761964062448137,
+            "normal_auc95": [
+              0.5639590700322374,
+              0.5943859691570341
+            ]
+          },
+          "high": {
+            "rows": 42172,
+            "satisfied": 40234,
+            "positive_rate": 0.9540453381390496,
+            "positive_rate_wilson95": [
+              0.9520052327416271,
+              0.9560027328467093
+            ],
+            "auc": 0.6394543289147547,
+            "conditional_auc_se": 0.00634722658019978,
+            "normal_auc95": [
+              0.6270137648175632,
+              0.6518948930119463
+            ]
+          }
+        },
+        {
+          "fold": 4,
+          "low": {
+            "rows": 39055,
+            "satisfied": 1327,
+            "positive_rate": 0.03397772372295481,
+            "positive_rate_wilson95": [
+              0.032226258060284715,
+              0.03582085648669506
+            ],
+            "auc": 0.5920468060596996,
+            "conditional_auc_se": 0.007841309072041279,
+            "normal_auc95": [
+              0.5766778402784987,
+              0.6074157718409006
+            ]
+          },
+          "high": {
+            "rows": 41936,
+            "satisfied": 40029,
+            "positive_rate": 0.9545259442960702,
+            "positive_rate_wilson95": [
+              0.9524899453246473,
+              0.9564786791140191
+            ],
+            "auc": 0.6501313618942469,
+            "conditional_auc_se": 0.006330602504477388,
+            "normal_auc95": [
+              0.6377233809854712,
+              0.6625393428030226
+            ]
+          }
+        }
+      ]
+    },
+    "route": {
+      "full_auc": 0.9612196007698864,
+      "full_conditional_auc_se": 0.00024558382201108394,
+      "near_certain_original_low": {
+        "rows": 195401,
+        "satisfied": 6753,
+        "positive_rate": 0.03455970030859617,
+        "positive_rate_wilson95": [
+          0.03375890480350466,
+          0.035378795971773916
+        ],
+        "auc": 0.5837841442233639,
+        "conditional_auc_se": 0.0035099262364889547,
+        "normal_auc95": [
+          0.5769046887998456,
+          0.5906635996468822
+        ]
+      },
+      "near_certain_original_high": {
+        "rows": 210332,
+        "satisfied": 200667,
+        "positive_rate": 0.9540488370766217,
+        "positive_rate_wilson95": [
+          0.9531457081496846,
+          0.9549353810040826
+        ],
+        "auc": 0.6344887374326229,
+        "conditional_auc_se": 0.0028453654827894728,
+        "normal_auc95": [
+          0.6289118210863556,
+          0.6400656537788902
+        ]
+      },
+      "other": {
+        "rows": 293902,
+        "satisfied": 102919,
+        "positive_rate": 0.35018135296799613,
+        "positive_rate_wilson95": [
+          0.34845871721634536,
+          0.3519079050906879
+        ],
+        "auc": 0.932861470171761,
+        "conditional_auc_se": 0.0005085785670266681,
+        "normal_auc95": [
+          0.9318646561803887,
+          0.9338582841631333
+        ]
+      },
+      "errors": 4685204734.0,
+      "total_pairs": 120813731344,
+      "pairs_involving_discordance_fraction": 0.0460467077385428,
+      "errors_involving_discordance": 2932581204.0,
+      "error_fraction_involving_discordance": 0.6259238113371205,
+      "flattened_auc": 0.9575757067555009,
+      "flattening_loss": 0.0036438940143855847,
+      "perfold_region_auc": [
+        {
+          "fold": 0,
+          "low": {
+            "rows": 39184,
+            "satisfied": 1344,
+            "positive_rate": 0.03429971416904859,
+            "positive_rate_wilson95": [
+              0.03254285322069664,
+              0.0361478773378959
+            ],
+            "auc": 0.5851343257638679,
+            "conditional_auc_se": 0.007901118104920415,
+            "normal_auc95": [
+              0.5696481342782239,
+              0.6006205172495119
+            ]
+          },
+          "high": {
+            "rows": 42024,
+            "satisfied": 40102,
+            "positive_rate": 0.9542642299638302,
+            "positive_rate_wilson95": [
+              0.9522249840366683,
+              0.9562204339229752
+            ],
+            "auc": 0.630834491194177,
+            "conditional_auc_se": 0.0064899148687492135,
+            "normal_auc95": [
+              0.6181142580514285,
+              0.6435547243369255
+            ]
+          }
+        },
+        {
+          "fold": 1,
+          "low": {
+            "rows": 39211,
+            "satisfied": 1349,
+            "positive_rate": 0.03440361123154217,
+            "positive_rate_wilson95": [
+              0.03264470174302406,
+              0.03625373972225343
+            ],
+            "auc": 0.5860160140691182,
+            "conditional_auc_se": 0.007932719652688276,
+            "normal_auc95": [
+              0.5704678835498491,
+              0.6015641445883873
+            ]
+          },
+          "high": {
+            "rows": 42022,
+            "satisfied": 40093,
+            "positive_rate": 0.9540954737994384,
+            "positive_rate_wilson95": [
+              0.9520526902760568,
+              0.9560552422538665
+            ],
+            "auc": 0.6281847659091524,
+            "conditional_auc_se": 0.006456011302343608,
+            "normal_auc95": [
+              0.6155309837565589,
+              0.6408385480617459
+            ]
+          }
+        },
+        {
+          "fold": 2,
+          "low": {
+            "rows": 39037,
+            "satisfied": 1367,
+            "positive_rate": 0.03501805978943054,
+            "positive_rate_wilson95": [
+              0.033239787035810764,
+              0.036887837178142244
+            ],
+            "auc": 0.5812568392708481,
+            "conditional_auc_se": 0.007677438359971366,
+            "normal_auc95": [
+              0.5662090600853042,
+              0.596304618456392
+            ]
+          },
+          "high": {
+            "rows": 42178,
+            "satisfied": 40209,
+            "positive_rate": 0.9533168950637774,
+            "positive_rate_wilson95": [
+              0.9512620030085333,
+              0.955289220871324
+            ],
+            "auc": 0.6352829826270484,
+            "conditional_auc_se": 0.006219971005947206,
+            "normal_auc95": [
+              0.6230918394553919,
+              0.6474741257987049
+            ]
+          }
+        },
+        {
+          "fold": 3,
+          "low": {
+            "rows": 38914,
+            "satisfied": 1366,
+            "positive_rate": 0.03510304774631238,
+            "positive_rate_wilson95": [
+              0.033319895763185156,
+              0.03697797678751916
+            ],
+            "auc": 0.5791119724000717,
+            "conditional_auc_se": 0.007779465445752751,
+            "normal_auc95": [
+              0.5638642201263964,
+              0.5943597246737471
+            ]
+          },
+          "high": {
+            "rows": 42172,
+            "satisfied": 40234,
+            "positive_rate": 0.9540453381390496,
+            "positive_rate_wilson95": [
+              0.9520052327416271,
+              0.9560027328467093
+            ],
+            "auc": 0.6363759622308566,
+            "conditional_auc_se": 0.006316687468966397,
+            "normal_auc95": [
+              0.6239952547916824,
+              0.6487566696700308
+            ]
+          }
+        },
+        {
+          "fold": 4,
+          "low": {
+            "rows": 39055,
+            "satisfied": 1327,
+            "positive_rate": 0.03397772372295481,
+            "positive_rate_wilson95": [
+              0.032226258060284715,
+              0.03582085648669506
+            ],
+            "auc": 0.5890348849305193,
+            "conditional_auc_se": 0.007946604458283426,
+            "normal_auc95": [
+              0.5734595401922837,
+              0.6046102296687548
+            ]
+          },
+          "high": {
+            "rows": 41936,
+            "satisfied": 40029,
+            "positive_rate": 0.9545259442960702,
+            "positive_rate_wilson95": [
+              0.9524899453246473,
+              0.9564786791140191
+            ],
+            "auc": 0.6422736345200595,
+            "conditional_auc_se": 0.006318852474843085,
+            "normal_auc95": [
+              0.629888683669367,
+              0.6546585853707519
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "segments": [
+    {
+      "column": "Class",
+      "value": "Business",
+      "low": {
+        "rows": 10735,
+        "satisfied": 420,
+        "positive_rate": 0.03912435957149511,
+        "positive_rate_wilson95": [
+          0.035618385941060864,
+          0.042960058675753705
+        ],
+        "auc": 0.6172353022643862,
+        "conditional_auc_se": 0.013656725308359402,
+        "normal_auc95": [
+          0.5904681206600018,
+          0.6440024838687706
+        ]
+      },
+      "high": {
+        "rows": 189995,
+        "satisfied": 181152,
+        "positive_rate": 0.9534566699123661,
+        "positive_rate_wilson95": [
+          0.9525002353098341,
+          0.9543947682438866
+        ],
+        "auc": 0.6432967023538828,
+        "conditional_auc_se": 0.0029382187455582673,
+        "normal_auc95": [
+          0.6375377936125886,
+          0.6490556110951771
+        ]
+      }
+    },
+    {
+      "column": "Class",
+      "value": "Eco",
+      "low": {
+        "rows": 172741,
+        "satisfied": 5923,
+        "positive_rate": 0.03428832761185822,
+        "positive_rate_wilson95": [
+          0.03344051253983018,
+          0.03515685545535529
+        ],
+        "auc": 0.5875900097197646,
+        "conditional_auc_se": 0.003728721699684588,
+        "normal_auc95": [
+          0.5802817151883828,
+          0.5948983042511464
+        ]
+      },
+      "high": {
+        "rows": 17762,
+        "satisfied": 17044,
+        "positive_rate": 0.9595766242540255,
+        "positive_rate_wilson95": [
+          0.9565794617866197,
+          0.9623750407536573
+        ],
+        "auc": 0.6198245128616807,
+        "conditional_auc_se": 0.011310499650744923,
+        "normal_auc95": [
+          0.5976559335462207,
+          0.6419930921771407
+        ]
+      }
+    },
+    {
+      "column": "Class",
+      "value": "Eco Plus",
+      "low": {
+        "rows": 11925,
+        "satisfied": 410,
+        "positive_rate": 0.034381551362683435,
+        "positive_rate_wilson95": [
+          0.03125830937191234,
+          0.03780468066485362
+        ],
+        "auc": 0.618129269351747,
+        "conditional_auc_se": 0.013766298315667974,
+        "normal_auc95": [
+          0.5911473246530378,
+          0.6451112140504561
+        ]
+      },
+      "high": {
+        "rows": 2575,
+        "satisfied": 2471,
+        "positive_rate": 0.9596116504854368,
+        "positive_rate_wilson95": [
+          0.9512980124563212,
+          0.96655600757422
+        ],
+        "auc": 0.6677730909317311,
+        "conditional_auc_se": 0.030778758160467237,
+        "normal_auc95": [
+          0.6074467249372153,
+          0.7280994569262469
+        ]
+      }
+    },
+    {
+      "column": "Type of Travel",
+      "value": "Business travel",
+      "low": {
+        "rows": 36957,
+        "satisfied": 1142,
+        "positive_rate": 0.03090077657818546,
+        "positive_rate_wilson95": [
+          0.02918466544240433,
+          0.032714397688224185
+        ],
+        "auc": 0.6352265717506753,
+        "conditional_auc_se": 0.008377313026954202,
+        "normal_auc95": [
+          0.6188070382178451,
+          0.6516461052835055
+        ]
+      },
+      "high": {
+        "rows": 205103,
+        "satisfied": 195708,
+        "positive_rate": 0.9541937465566082,
+        "positive_rate_wilson95": [
+          0.9532804289148241,
+          0.955090050952402
+        ],
+        "auc": 0.6430787509969264,
+        "conditional_auc_se": 0.0028644545538116925,
+        "normal_auc95": [
+          0.6374644200714554,
+          0.6486930819223973
+        ]
+      }
+    },
+    {
+      "column": "Type of Travel",
+      "value": "Personal Travel",
+      "low": {
+        "rows": 158444,
+        "satisfied": 5611,
+        "positive_rate": 0.03541314281386484,
+        "positive_rate_wilson95": [
+          0.03451430225010188,
+          0.03633451055457239
+        ],
+        "auc": 0.5790119462086489,
+        "conditional_auc_se": 0.0038688779196637303,
+        "normal_auc95": [
+          0.571428945486108,
+          0.5865949469311899
+        ]
+      },
+      "high": {
+        "rows": 5229,
+        "satisfied": 4959,
+        "positive_rate": 0.9483648881239243,
+        "positive_rate_wilson95": [
+          0.9420310171618231,
+          0.9540404646324567
+        ],
+        "auc": 0.6465169949138492,
+        "conditional_auc_se": 0.018537324238244796,
+        "normal_auc95": [
+          0.6101838394068894,
+          0.682850150420809
+        ]
+      }
+    },
+    {
+      "column": "Customer Type",
+      "value": "Loyal Customer",
+      "low": {
+        "rows": 165958,
+        "satisfied": 5878,
+        "positive_rate": 0.035418599886718326,
+        "positive_rate_wilson95": [
+          0.034540027657164664,
+          0.03631867911211765
+        ],
+        "auc": 0.5813356198304387,
+        "conditional_auc_se": 0.0037725714339439877,
+        "normal_auc95": [
+          0.5739413798199084,
+          0.5887298598409689
+        ]
+      },
+      "high": {
+        "rows": 198601,
+        "satisfied": 189471,
+        "positive_rate": 0.9540284288598748,
+        "positive_rate_wilson95": [
+          0.9530985650433016,
+          0.9549407288396344
+        ],
+        "auc": 0.643769056017572,
+        "conditional_auc_se": 0.0029173152897720477,
+        "normal_auc95": [
+          0.6380511180496188,
+          0.6494869939855251
+        ]
+      }
+    },
+    {
+      "column": "Customer Type",
+      "value": "disloyal Customer",
+      "low": {
+        "rows": 29443,
+        "satisfied": 875,
+        "positive_rate": 0.029718439017763134,
+        "positive_rate_wilson95": [
+          0.027839315345515897,
+          0.03172026292957063
+        ],
+        "auc": 0.6366454374524942,
+        "conditional_auc_se": 0.00957146002653956,
+        "normal_auc95": [
+          0.6178853758004768,
+          0.6554054991045117
+        ]
+      },
+      "high": {
+        "rows": 11731,
+        "satisfied": 11196,
+        "positive_rate": 0.9543943397834797,
+        "positive_rate_wilson95": [
+          0.9504679589014207,
+          0.9580232241632194
+        ],
+        "auc": 0.6323126083080406,
+        "conditional_auc_se": 0.011874959207739426,
+        "normal_auc95": [
+          0.6090376882608713,
+          0.6555875283552098
+        ]
+      }
+    },
+    {
+      "column": "Gender",
+      "value": "Female",
+      "low": {
+        "rows": 96736,
+        "satisfied": 3300,
+        "positive_rate": 0.03411346344690704,
+        "positive_rate_wilson95": [
+          0.0329879577838586,
+          0.035275969045417355
+        ],
+        "auc": 0.5904489379863967,
+        "conditional_auc_se": 0.004944334218035948,
+        "normal_auc95": [
+          0.5807580429190463,
+          0.6001398330537472
+        ]
+      },
+      "high": {
+        "rows": 103441,
+        "satisfied": 98659,
+        "positive_rate": 0.9537707485426475,
+        "positive_rate_wilson95": [
+          0.9524741870460481,
+          0.9550336081819096
+        ],
+        "auc": 0.6451183276563476,
+        "conditional_auc_se": 0.004014343110224039,
+        "normal_auc95": [
+          0.6372502151603084,
+          0.6529864401523867
+        ]
+      }
+    },
+    {
+      "column": "Gender",
+      "value": "Male",
+      "low": {
+        "rows": 98665,
+        "satisfied": 3453,
+        "positive_rate": 0.0349972127907566,
+        "positive_rate_wilson95": [
+          0.033868502080154,
+          0.03616213126527254
+        ],
+        "auc": 0.592866735885285,
+        "conditional_auc_se": 0.00491237403395744,
+        "normal_auc95": [
+          0.5832384827787285,
+          0.6024949889918416
+        ]
+      },
+      "high": {
+        "rows": 106891,
+        "satisfied": 102008,
+        "positive_rate": 0.9543179500612774,
+        "positive_rate_wilson95": [
+          0.9530498491179961,
+          0.9555533975355449
+        ],
+        "auc": 0.6411175494493667,
+        "conditional_auc_se": 0.003994203762800954,
+        "normal_auc95": [
+          0.6332889100742769,
+          0.6489461888244565
+        ]
+      }
+    }
+  ],
+  "symmetric_flip_sensitivity": [
+    {
+      "assumed_flip_rate": 0.03,
+      "conditional_perfect_clean_ranker_auc_ceiling": 0.9692012697740082
+    },
+    {
+      "assumed_flip_rate": 0.035,
+      "conditional_perfect_clean_ranker_auc_ceiling": 0.9640629831659497
+    },
+    {
+      "assumed_flip_rate": 0.0377,
+      "conditional_perfect_clean_ranker_auc_ceiling": 0.9612876447694751
+    },
+    {
+      "assumed_flip_rate": 0.038,
+      "conditional_perfect_clean_ranker_auc_ceiling": 0.9609792446105803
+    },
+    {
+      "assumed_flip_rate": 0.04,
+      "conditional_perfect_clean_ranker_auc_ceiling": 0.9589230925505229
+    }
+  ],
+  "equivalent_flip_rate_for_v6_ceiling": 0.03723503850715802,
+  "equivalent_flip_rate_for_stretch_ceiling": 0.036909744255151186,
+  "distance_v6_to_stretch": 0.0003343861754204758,
+  "v6_gain_vs_aux10": 0.00034690428011585617,
+  "v6_gain_on_pairs_involving_original_discordance": 0.00011487804279864475,
+  "fraction_of_gain_on_those_pairs": 0.33115199028469394,
+  "uncertainty": "Wilson and DeLong intervals condition on fixed models/regions and independent-row approximation; no refitting/domain-shift or flip-rate identification uncertainty included. Derived ceilings are sensitivity scenarios, not estimated competition bounds.",
+  "source_sha256": {
+    "scripts/audit_phase16_noise.py": "d12ed2fe3f16dd122a82101452679a69e8d9dbdf6055c1a8d777d5f5bbf1f5fc",
+    "scripts/phase16_common.py": "46671da65f02f8c954b6c76250f777d12df3f4ef1b394150c2ace3db18630aca"
+  },
+  "verdict": "SOURCE_MODEL_DISAGREEMENT_NOT_IDENTIFIED_IRREDUCIBLE_NOISE",
+  "seconds": 10.734000000054948
+}

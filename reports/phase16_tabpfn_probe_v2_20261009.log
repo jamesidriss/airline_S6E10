@@ -1,0 +1,87 @@
+Traceback (most recent call last):
+  File "C:\Users\James\airline_S6E10\scripts\probe_phase16_tabpfn.py", line 105, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\James\airline_S6E10\scripts\probe_phase16_tabpfn.py", line 73, in main
+    p = np.concatenate([native.predict_proba(x[va[b:b+args.native_query_rows]])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\scripts\probe_phase16_tabpfn.py", line 73, in <listcomp>
+    p = np.concatenate([native.predict_proba(x[va[b:b+args.native_query_rows]])
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\classifier.py", line 1704, in predict_proba
+    return self._predict_proba(X)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 81, in inner
+    return func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\classifier.py", line 1718, in _predict_proba
+    self._raw_predict(X, return_logits=False).float().detach().cpu().numpy()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\classifier.py", line 1630, in _raw_predict
+    return self.forward(
+           ^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\classifier.py", line 1991, in forward
+    for output, config in tqdm(
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tqdm\std.py", line 1175, in __iter__
+    yield from iterable
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\inference.py", line 1362, in iter_outputs
+    for output, ensemble_member in zip(
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\inference.py", line 272, in _yield_in_member_order
+    for group_index, member_outputs in enumerate(group_outputs):
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\inference.py", line 72, in __next__
+    value = next(self._inner)
+            ^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\parallel_execute.py", line 86, in parallel_execute
+    yield from _execute_in_current_thread(devices[0], functions)
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\parallel_execute.py", line 97, in _execute_in_current_thread
+    yield function(device=device)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\inference.py", line 1466, in _call_model
+    output = run(X)
+             ^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\inference.py", line 1450, in run
+    return model(
+           ^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\tabpfn_v3_5.py", line 2392, in forward
+    x_BRiD, _ = block(
+                ^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\tabpfn_v3_5.py", line 1636, in forward
+    x_BRE = chunked_evaluate_maybe_inplace(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\shared\chunked_evaluate.py", line 70, in chunked_evaluate_maybe_inplace
+    x_chunk.add_(f(x_chunk, *args, **kwargs))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\tabpfn_v3_5.py", line 1629, in _attn_fn_cached
+    out, _ = self.icl_attention(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\tabpfn_v3_5.py", line 1317, in forward
+    out = _batched_scaled_dot_product_attention(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\tabpfn_v3_5.py", line 1096, in _batched_scaled_dot_product_attention
+    return scaled_dot_product_attention(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\shared\scaled_dot_product_attention.py", line 72, in scaled_dot_product_attention
+    return backend.run(q_BSHD, k_BSJD, v_BSJD, quantized_kv=quantized_kv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\src\models\windows_attention.py", line 59, in run
+    out = torch.nn.functional.scaled_dot_product_attention(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: No available kernel. Aborting execution.

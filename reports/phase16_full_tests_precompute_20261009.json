@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-08T22:42:17.952362+00:00",
+  "passed": 124,
+  "failed": 0,
+  "log_sha256": "0780448aca56366d749bfcb721f44da34aaf4d4e6d53f39e01103ee3326939ca",
+  "source_sha256": {
+    "scripts\\audit_phase16_geometry.py": "608252ecdad6352e883e53d35a365aec61de8d71abbf34c09e25a0310523bdfe",
+    "scripts\\audit_phase16_noise.py": "d12ed2fe3f16dd122a82101452679a69e8d9dbdf6055c1a8d777d5f5bbf1f5fc",
+    "scripts\\phase16_common.py": "46671da65f02f8c954b6c76250f777d12df3f4ef1b394150c2ace3db18630aca",
+    "scripts\\phase16_tabpfn.py": "548f9de2cd4eeb3661829f2696e7f2a2cd32a1ad2277ad828eb8fcc5371749ab",
+    "scripts\\probe_phase16_tabpfn.py": "d54cf9fc4d62bafd0bc4004db5bfa23d03009e29b61702d0733680f5165ea853",
+    "scripts\\run_phase16_fast.py": "010689c3ea0d896abf32894fca99c8caf06cd0ad91c68c3cc9607e2d740919a0",
+    "scripts\\run_phase16_tabpfn.py": "0b3be5ea6a19890d23bad197fdfa3b832363cbad5311463ee03248ccf465dde1",
+    "tests\\run_tests.py": "d55266381ab7ea517ed73d3ca238e30bef632f7b2dc68b897a8586bd6ebf62d7",
+    "tests\\test_sol_phase16.py": "160cca086d1ac0b3afa75538c6de88fb68cc74a2c2f92cc09588f64926050534",
+    "tests\\test_no_undefined_names.py": "61392eb62dbea526387a8d0e17bf8433cbcbbea5a25796d8ba486e142b80db1b"
+  },
+  "additional_latest_static_check": "80 critical files,0 undefined names, including single Fast producer;4 numeric/control tests independently repeated"
+}

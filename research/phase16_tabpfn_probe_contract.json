@@ -1,0 +1,15 @@
+{
+  "context_rows": 100000,
+  "context_selection": "sorted label-free random choice from primary fold0 FIT; RNG seed1201",
+  "applied_rows": "first1024 primary fold0 evaluation IDs; no labels supplied to prediction or equivalence",
+  "seed": 1201,
+  "native_n_estimators": 2,
+  "maximum_absolute_probability_gap": 0.000002,
+  "comparison": "official native2 predict_proba vs official2 configurations/preprocessing and single-member engines, public raw-logit conversion, official final normalization",
+  "no_auc": true,
+  "configuration_audit_counts": [1,2,4],
+  "full_control": "Original native1 fullfold0; saved prediction SHA must match; otherwise stop",
+  "no_library_or_producer_changes": true,
+  "memory": "one cache during sequential execution; native2 only on100k probe",
+  "maximum_probe_seconds": 1800
+}

@@ -1,0 +1,105 @@
+{
+  "phase": 16,
+  "declared_utc": "2026-10-08T22:19:38.899408+00:00",
+  "start_utc": "2026-10-08T22:15:34+00:00",
+  "start_local": "2026-10-09T00:15:34+02:00",
+  "baseline_commit": "5173285e25eace8bf64316e8403c7df65731f8ee",
+  "stretch_auc": 0.9621,
+  "heavy_compute_budget_hours": 8,
+  "extension": "Only after meaningful validated improvement; record numerical justification before extension",
+  "max_new_submissions": 2,
+  "immutable_v6": true,
+  "noise_audit": {
+    "maximum_minutes": 60,
+    "confidence_thresholds": [
+      0.001,
+      0.999
+    ],
+    "existing_source_teacher": "5 original-only LightGBM models,600 trees,num_leaves63,seeds0..4; no competition labels; exact overlaps excluded",
+    "no_competitor_predictions": true,
+    "symmetric_flip_rates": [
+      0.03,
+      0.035,
+      0.0377,
+      0.038,
+      0.04
+    ],
+    "measurement_scope": "Original-model disagreement and conditional observed-label ranking; not direct measurement of irreducible flips"
+  },
+  "ranked_hypotheses": [
+    {
+      "priority": 1,
+      "mechanism": "Official TabPFN3.5 internal estimator configurations on frozen route22",
+      "B0": "Exact route fold0 replay and identical prediction SHA required",
+      "B1": "Official n_estimators2; sequential caches only after small-context equivalence; same seed1201/checkpoint/precision/preprocessing policy",
+      "B2": "Official n_estimators4 only if B1 fold0 portfolio gain>=30micro and discovery passes; no8/16/32",
+      "method_weights": {
+        "route": 0.5,
+        "aux10": 0.5
+      }
+    },
+    {
+      "priority": 2,
+      "mechanism": "Aggregation geometry only; no weight search",
+      "G0": "Immutable v6 mean logits",
+      "G1": "Equal probability average",
+      "G2": "Equal average of midrank percentiles; fit independently within each applied primary-fold population, and within full test population; label-free; no pooled OOF reference that mixes models trained on apply labels",
+      "promotion": "Full primary gate plus untouched independent confirmation; selection from fixed OOF alone not finalist proof"
+    },
+    {
+      "priority": 3,
+      "mechanism": "One official TabPFN3.5 Fast checkpoint",
+      "trigger": "Internal ensembling fails discovery or proven incompatible with unchanged resource guards",
+      "conditions": "License/Kaggle eligibility, official immutable revision/checksum, one timing/memory probe then frozen matched fold",
+      "portfolio": "50/50 Fast route and unchanged auxiliary10 logits; no append-weight search",
+      "no_other_foundation_checkpoint": true
+    }
+  ],
+  "discovery": {
+    "standalone_route_gain": 0.0001,
+    "standalone_path_requires_positive_portfolio": true,
+    "portfolio_gain": 3e-05,
+    "hedge_path": {
+      "portfolio_gain_min": 0,
+      "portfolio_oof_spearman_max": 0.999,
+      "exact_rescued_pair_fraction_min": 0.0001,
+      "later_confirmation_and_full_gate_required": true
+    }
+  },
+  "replication": "Fold1 actual portfolio gain>=15micro OR standalone gain>=50micro with positive portfolio; no tuning",
+  "threefold_continuation": "All3 portfolio deltas positive and mean>=30micro; otherwise stop before3/4",
+  "full_promotion": {
+    "mean_fold_gain": 1.5e-05,
+    "fold_se_multiple": 2.5,
+    "positive_folds": 4,
+    "performance_pooled_gain": 3e-05,
+    "bootstrap_repeats": 200,
+    "independent": "Untouched shadow2; same frozen recipe; actual portfolio gain>=10micro",
+    "full_test_certificate": true,
+    "private_simulation_draws": 820
+  },
+  "geometry": {
+    "maximum_minutes": 30,
+    "bootstrap_repeats": 200,
+    "pair_samples": 2000000,
+    "segment_columns": [
+      "Class",
+      "Type of Travel",
+      "Customer Type",
+      "Gender"
+    ]
+  },
+  "guards": {
+    "gpu_fraction": 0.85,
+    "prefit_host_gib": 4,
+    "predict_host_gib": 2,
+    "prefit_disk_gib": 20,
+    "kill_own_worker_host_gib": 1,
+    "kill_own_worker_disk_gib": 8,
+    "full_single_context_rows_max": 559709,
+    "full_job_seconds_limit": 4500,
+    "single_estimator_guard_seconds": 2700,
+    "no_simultaneous_full_caches": true
+  },
+  "stop": "Three ranked hypotheses maximum; no automatic Phase17; resource invalidity is not a model-performance negative"
+}

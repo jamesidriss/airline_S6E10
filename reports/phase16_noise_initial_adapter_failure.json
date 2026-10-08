@@ -1,0 +1,6 @@
+{
+  "utc": "2026-10-08T22:21:30.462544+00:00",
+  "status": "INVALID_SOFTWARE_PREFLIGHT_NO_METRICS",
+  "log": "reports/phase16_noise_reproduction_20261009.log",
+  "reason": "The authoritative legacy route report has scalar producer SHA plus separate backend hashes. Reader initially expected a mapping. Adapter corrected; no model, prediction or gate changed."
+}

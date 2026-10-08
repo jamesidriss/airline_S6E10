@@ -1,0 +1,8 @@
+{
+  "reason": "Initial100k sequential official2 completed; native2 cache fit completed but native predict1024 failed No available kernel in frozen efficient attention backend",
+  "scientific_verdict": "INVALID implementation, not modelling negative",
+  "one_bounded_retry": "Same100k context/configuration/checkpoint; native predict64-row query chunks only; sequential path stays1024",
+  "equivalence_tolerance_unchanged": 0.000002,
+  "no_frozen_source_or_library_mutation": true,
+  "stop_if_retry_fails": "No full internal-ensemble fit without verified equivalence; close capability branch and consider the one authorized Fast checkpoint"
+}

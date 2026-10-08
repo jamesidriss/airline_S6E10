@@ -1,0 +1,84 @@
+{
+  "utc": "2026-10-08T22:15:34.479352+00:00",
+  "source": "authenticated Kaggle SDK; whitelisted fields",
+  "competition": {
+    "title": "Predicting Airline Satisfaction",
+    "deadline": "2026-10-31 23:59:00",
+    "entered": true,
+    "user_rank": 246,
+    "team_count": 1203
+  },
+  "remaining_now": 9,
+  "top5": [
+    {
+      "team_id": 17022251,
+      "team_name": "Christoffer Thimsen",
+      "score": "0.96200"
+    },
+    {
+      "team_id": 17015127,
+      "team_name": "Laurent Pourchot",
+      "score": "0.96186"
+    },
+    {
+      "team_id": 17012058,
+      "team_name": "Maher el Ouahabi",
+      "score": "0.96186"
+    },
+    {
+      "team_id": 17024637,
+      "team_name": "CHEN Xiang",
+      "score": "0.96185"
+    },
+    {
+      "team_id": 17026434,
+      "team_name": "tine.sh agent",
+      "score": "0.96185"
+    }
+  ],
+  "submissions": [
+    {
+      "ref": "56951906",
+      "file": "v6_sol_tabpfn_route_aux10.csv",
+      "status": "COMPLETE",
+      "date": "2026-10-08 11:39:18.930000",
+      "public_score": "0.96144"
+    },
+    {
+      "ref": "56918343",
+      "file": "v5_aux_cross.csv",
+      "status": "COMPLETE",
+      "date": "2026-10-07 18:05:59.993000",
+      "public_score": "0.96103"
+    },
+    {
+      "ref": "56845975",
+      "file": "v4_fulldata.csv",
+      "status": "COMPLETE",
+      "date": "2026-10-05 07:23:04.763000",
+      "public_score": "0.96100"
+    },
+    {
+      "ref": "56805526",
+      "file": "v3_final.csv",
+      "status": "COMPLETE",
+      "date": "2026-10-03 19:38:08.657000",
+      "public_score": "0.96098"
+    },
+    {
+      "ref": "56793823",
+      "file": "v2_equal34.csv",
+      "status": "COMPLETE",
+      "date": "2026-10-03 08:43:18.273000",
+      "public_score": "0.96092"
+    },
+    {
+      "ref": "56788249",
+      "file": "v1_equal4.csv",
+      "status": "COMPLETE",
+      "date": "2026-10-03 03:14:34.997000",
+      "public_score": "0.96093"
+    }
+  ],
+  "selection_role": "Transfer diagnostic; never selects weights or parameters"
+}

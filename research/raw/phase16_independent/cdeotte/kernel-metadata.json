@@ -1,0 +1,26 @@
+{
+  "id": "cdeotte/stacking-tfms-with-public-oof",
+  "id_no": 137393164,
+  "title": "Stacking TFMs with Public OOF",
+  "code_file": "stacking-tfms-with-public-oof.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "cdeotte/s6e10-124-public-oof-and-test-predictions",
+    "cdeotte/s6e10-tfm-oof-and-test-predictions"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "playground-series-s6e10"
+  ],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-private-byod/python@sha256:2757e0c7d1e0a9cb43da657b97e223c321a98f5014bdf64f44f2f6b083ad2b2f",
+  "machine_shape": "NvidiaTeslaT4"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "najiama/high-scoring-oof-cv-0-96208-lb-0-96177",
+  "id_no": 136806961,
+  "title": "\ud83d\ude80High-Scoring OOF CV: 0.96208 LB: 0.96177",
+  "code_file": "high-scoring-oof-cv-0-96208-lb-0-96177.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [
+    "najiama/s6e10-oof"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "playground-series-s6e10"
+  ],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-images/python@sha256:81b1e7c4b4f0f2a7e0a33943c95754b1b7af6b30d65221633a284b6b601cd84a",
+  "machine_shape": "None"
+}

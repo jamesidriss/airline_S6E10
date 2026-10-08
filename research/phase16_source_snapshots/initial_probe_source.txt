@@ -1,0 +1,97 @@
+"""100k timing/equivalence probe; no validation AUC or checkpoint selection."""
+from __future__ import annotations
+import gc
+import json
+import sys
+import time
+from pathlib import Path
+import numpy as np
+import torch
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from src.common import ARTIFACTS, arr_sha256, file_sha256, save_json
+from src.models.resource_guard import inference_guard
+from scripts.run_sol_tabpfn import frames, create_model
+from scripts.phase16_common import bank, SCOPE
+from scripts.phase16_tabpfn import prepare, sequential_predict, release, library_sources
+
+
+def main():
+    path = Path('reports/phase16_tabpfn_probe_20261009.json')
+    root = ARTIFACTS/'phase16_tabpfn_probe'
+    if path.exists() or root.exists():
+        raise FileExistsError('Preserve prior probe')
+    contract_path = Path('research/phase16_tabpfn_probe_contract.json')
+    contract = json.loads(contract_path.read_text())
+    start = time.monotonic()
+    tr, te, y, folds, _, _, proof = bank()
+    fi = np.flatnonzero(folds != 0)
+    fi = np.sort(np.random.default_rng(1201).choice(fi, 100000, replace=False))
+    va = np.flatnonzero(folds == 0)[:1024]
+    assert not np.intersect1d(tr.id.to_numpy()[fi], tr.id.to_numpy()[va]).size
+    x, _, names, cats, maps = frames(tr, te, True)
+    ref = json.loads(Path('reports/sol_tabpfn35_route/route_f0.json').read_text())
+    assert names == ref['feature_names'] and cats == ref['params']['categorical_features_indices']
+    assert maps == ref['label_free_category_maps']
+    root.mkdir()
+    torch.cuda.set_per_process_memory_fraction(.85)
+    from src.models.windows_attention import register, verify_gpu_equivalence
+    gaps = {'fp16': verify_gpu_equivalence(reuse_query_output=True),
+            'bf16': verify_gpu_equivalence(torch.bfloat16, reuse_query_output=True)}
+    register(reuse_query_output=True)
+    base = create_model(ref['params'], True, ref['inference_chunk_cells'],
+                        ref['inference_col_chunk_size'], None, True)
+    kwargs = {**ref['params'], 'model_path': base.model_path}
+    result = {'contract': contract, 'contract_sha256': file_sha256(contract_path),
+        'scope_sha256': file_sha256(SCOPE), 'bank': proof, 'library_source_sha256': library_sources(),
+        'source_sha256': {p: file_sha256(p) for p in ('scripts/phase16_tabpfn.py', __file__)},
+        'fit_ids_sha256': arr_sha256(tr.id.to_numpy()[fi]),
+        'apply_ids_sha256': arr_sha256(tr.id.to_numpy()[va]),
+        'feature_fit_sha256': arr_sha256(x[fi]), 'feature_apply_sha256': arr_sha256(x[va]),
+        'backend_reference_gaps': gaps, 'timing_only': True, 'members': {}}
+    try:
+        with inference_guard(root, result, max_seconds=1800, min_available_gib=4):
+            for n in (1, 2, 4):
+                clf = type(base)(**{**kwargs, 'n_estimators': n})
+                prepared = prepare(clf, x[fi], y[fi])
+                result['members'][str(n)] = prepared[-1]
+                if n == 2:
+                    serial, raw, stats = sequential_predict(clf, prepared, x[va])
+                    np.save(root/'sequential.npy', serial); np.save(root/'raw_logits.npy', raw)
+                    result['sequential_stats'] = stats
+                del prepared, clf
+                gc.collect(); torch.cuda.empty_cache()
+            native = type(base)(**{**kwargs, 'n_estimators': 2})
+            torch.cuda.reset_peak_memory_stats(); t = time.monotonic()
+            native.fit(x[fi], y[fi]); fit_seconds = time.monotonic()-t
+            p = native.predict_proba(x[va]).astype('float32')
+            result['native_stats'] = {'fit_seconds': fit_seconds, 'total_seconds': time.monotonic()-t,
+                'peak_gpu_bytes': torch.cuda.max_memory_allocated()}
+            np.save(root/'native.npy', p)
+            result['max_absolute_probability_gap'] = float(np.max(np.abs(p-serial)))
+            result['native_prediction_sha256'] = arr_sha256(p)
+            result['sequential_prediction_sha256'] = arr_sha256(serial)
+            result['native_config_match'] = [__import__('scripts.phase16_tabpfn', fromlist=['config_hash']).config_hash(c)
+                for c in native.ensemble_configs_] == [m['config_sha256'] for m in result['members']['2']['members']]
+            release(native); del native
+        one = result['members']['1']['members'][0]
+        result['original_config_retained_in_two'] = any(m['config_sha256'] == one['config_sha256']
+            and m['pipeline_seed'] == one['pipeline_seed'] for m in result['members']['2']['members'])
+        result['original_config_retained_in_four'] = any(m['config_sha256'] == one['config_sha256']
+            and m['pipeline_seed'] == one['pipeline_seed'] for m in result['members']['4']['members'])
+        timings = result['sequential_stats']['members']
+        # Context attention is quadratic; this is an estimate, not a deadline promise.
+        result['estimated_full_two_fit_seconds_quadratic'] = sum(m['fit_seconds'] for m in timings)*(559708/100000)**2
+        result['status'] = 'PASS_REQUIRES_EXACT_FULL_B0' if result['native_config_match'] and result['max_absolute_probability_gap'] <= contract['maximum_absolute_probability_gap'] else 'INVALID_EQUIVALENCE_STOP'
+    except Exception as error:
+        result.update(status='INVALID_PROBE_NO_MODELLING_VERDICT', error=repr(error))
+        raise
+    finally:
+        result['seconds'] = time.monotonic()-start
+        save_json(result, path)
+    print(json.dumps({k: result[k] for k in ('status', 'seconds', 'max_absolute_probability_gap',
+        'original_config_retained_in_two', 'original_config_retained_in_four', 'estimated_full_two_fit_seconds_quadratic')}))
+    return 0 if result['status'] == 'PASS_REQUIRES_EXACT_FULL_B0' else 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

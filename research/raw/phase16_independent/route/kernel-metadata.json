@@ -1,0 +1,26 @@
+{
+  "id": "goodpjw2008/s6e10-tabpfn-route-categories-lb-0-96160",
+  "id_no": 137003482,
+  "title": "S6E10 | TabPFN + Route Categories | LB 0.96160",
+  "code_file": "s6e10-tabpfn-route-categories-lb-0-96160.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "teejmahal20/airline-passenger-satisfaction",
+    "goodpjw2008/s6e10-tabpfn-member"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "playground-series-s6e10"
+  ],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-private-byod/python@sha256:2757e0c7d1e0a9cb43da657b97e223c321a98f5014bdf64f44f2f6b083ad2b2f",
+  "machine_shape": "NvidiaTeslaT4"
+}
