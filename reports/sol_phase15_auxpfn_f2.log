@@ -1,0 +1,9 @@
+auxpfn f2: 1024/139927
+auxpfn f2: 21504/139927
+auxpfn f2: 41984/139927
+auxpfn f2: 62464/139927
+auxpfn f2: 82944/139927
+auxpfn f2: 103424/139927
+auxpfn f2: 123904/139927
+auxpfn f2: 139927/139927
+{"fit_seconds": 780.6870000000345, "seconds": 1017.875, "peak_gpu_bytes": 13706197504, "prediction_sha256": "8c67b1e6fa74e4900ccdc8f5899a76f6ee5e62d9326f95f9f6ffbeea0ee6e865", "auc": 0.9605824752097898, "standalone_gain_vs_route": -0.0006170895306990554, "candidate_auc": 0.9617913243855368, "v6_gain": 3.774196003614172e-06, "portfolio_prediction_sha256": "639391a92e9d97a221e80bdcb7ba722b86c03b3ded303f304506db6fb9eae34c", "status": "DISCOVERY_FAIL_STOP"}

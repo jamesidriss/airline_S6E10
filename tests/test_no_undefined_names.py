@@ -35,6 +35,7 @@ CRITICAL_SCRIPTS = [
     "scripts/simulate_sol_phase15_raw.py",
     "scripts/run_sol_phase15_auxpfn.py",
     "scripts/sol_phase15_auxpfn.py",
+    "scripts/evaluate_sol_phase15_auxpfn.py",
     "scripts/prepare_sol_submission.py",
     "scripts/cache_sol_aux.py",
     "scripts/snapshot_sol_kaggle.py",

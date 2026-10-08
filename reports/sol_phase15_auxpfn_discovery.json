@@ -1,0 +1,73 @@
+{
+  "utc": "2026-10-08T21:06:59.874096+00:00",
+  "git": "a49ad505f5ad0ec06742f714b501aef1e9886618",
+  "scope": "selected primary folds; not full OOF",
+  "folds": [
+    {
+      "fold": 0,
+      "v6_auc": 0.9617271804553859,
+      "candidate_auc": 0.9617378896344506,
+      "delta_vs_v6": 1.0709179064760654e-05,
+      "standalone_gain_vs_route": -0.00042438985180415223,
+      "standalone_auc": 0.9607080560519373,
+      "matched_append_route_control_auc": 0.9617054415616617,
+      "gain_vs_matched_append_control": 3.244807278890427e-05,
+      "correlation_vs_v6": {
+        "logit": 0.9999423098230859,
+        "spearman": 0.9996127093911923
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.01723732357553581,
+        "damage_rate": 0.000681577141431156,
+        "rescue_count": 1319,
+        "damage_count": 1311,
+        "sampled_delta_with_ties": 3.999999989900971e-06,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      },
+      "source_report_sha256": "6583b7fe60c1a1478e6169c2fc577d84150ce9007cd0d962930c15ea709c7aa6",
+      "candidate_sha256": "59952c08139e72b4c8ea3263f50d6a1847060826130a30ee4e216374ec13c5d2",
+      "ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4"
+    }
+  ],
+  "weights": {
+    "new_tabpfn": 0.125,
+    "v6": 0.875
+  },
+  "data_sha256": {
+    "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+    "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+  },
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "ordered_selected_ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+  "candidate_sha256": "59952c08139e72b4c8ea3263f50d6a1847060826130a30ee4e216374ec13c5d2",
+  "selected_pooled_auc": 0.9617378896344506,
+  "selected_pooled_delta_vs_v6": 1.0709179064760654e-05,
+  "mean_paired_gain": 1.0709179064760654e-05,
+  "paired_se": null,
+  "positive_folds": 1,
+  "admission_gate": null,
+  "verdict": "DISCOVERY_PASS_REQUIRES_REPLICATION",
+  "paired_bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "v6",
+    "comparisons": {
+      "candidate": {
+        "mean": 8.45444520097105e-06,
+        "percentile_95_interval": [
+          -2.9143425222172278e-05,
+          3.626519041320942e-05
+        ],
+        "positive_fraction": 0.705
+      }
+    }
+  },
+  "source_sha256": {
+    "scripts/evaluate_sol_phase15_auxpfn.py": "a42a9f41bde672d1d6a263e04cbea00f2cf4b03cf144fc2eec451e3696475ba8"
+  },
+  "matched_append_control_protocol_sha256": "6113161291699356ff01cb6a77c39b8e79ff19d5612567984307207a5ef96a87"
+}

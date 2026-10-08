@@ -1,0 +1,127 @@
+{
+  "utc": "2026-10-08T21:49:53.719131+00:00",
+  "git": "a49ad505f5ad0ec06742f714b501aef1e9886618",
+  "scope": "selected primary folds; not full OOF",
+  "folds": [
+    {
+      "fold": 0,
+      "v6_auc": 0.9617271804553859,
+      "candidate_auc": 0.9617378896344506,
+      "delta_vs_v6": 1.0709179064760654e-05,
+      "standalone_gain_vs_route": -0.00042438985180415223,
+      "standalone_auc": 0.9607080560519373,
+      "matched_append_route_control_auc": 0.9617054415616617,
+      "gain_vs_matched_append_control": 3.244807278890427e-05,
+      "correlation_vs_v6": {
+        "logit": 0.9999423098230859,
+        "spearman": 0.9996127093911923
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.01723732357553581,
+        "damage_rate": 0.000681577141431156,
+        "rescue_count": 1319,
+        "damage_count": 1311,
+        "sampled_delta_with_ties": 3.999999989900971e-06,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      },
+      "source_report_sha256": "6583b7fe60c1a1478e6169c2fc577d84150ce9007cd0d962930c15ea709c7aa6",
+      "candidate_sha256": "59952c08139e72b4c8ea3263f50d6a1847060826130a30ee4e216374ec13c5d2",
+      "ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4"
+    },
+    {
+      "fold": 1,
+      "v6_auc": 0.961935424840251,
+      "candidate_auc": 0.961939858108258,
+      "delta_vs_v6": 4.433268007031366e-06,
+      "standalone_gain_vs_route": -0.0005297688016053792,
+      "standalone_auc": 0.9608493968880311,
+      "matched_append_route_control_auc": 0.9619163950414699,
+      "gain_vs_matched_append_control": 2.3463066788131925e-05,
+      "correlation_vs_v6": {
+        "logit": 0.9999417793819884,
+        "spearman": 0.9996278256644837
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.017088048905811518,
+        "damage_rate": 0.0007208568789859566,
+        "rescue_count": 1297,
+        "damage_count": 1387,
+        "sampled_delta_with_ties": -4.5000000682193786e-05,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      },
+      "source_report_sha256": "5ff3fd41e7ec7931bab405d0877f31e9125ef3293589dff4f511eb7ebd8a55d8",
+      "candidate_sha256": "67a5e4a1fd6e126e24688adf66c6ef7422f14a886a46cd420e342bbefc0b71bb",
+      "ids_sha256": "2d0d8882d4ebd7f52b328d670a425eea2103354e2ed7d1fadf6d4a008431784e"
+    },
+    {
+      "fold": 2,
+      "v6_auc": 0.9617875501895332,
+      "candidate_auc": 0.9617913243855368,
+      "delta_vs_v6": 3.774196003614172e-06,
+      "standalone_gain_vs_route": -0.0006170895306990554,
+      "standalone_auc": 0.9605824752097898,
+      "matched_append_route_control_auc": 0.9617668168396473,
+      "gain_vs_matched_append_control": 2.450754588956272e-05,
+      "correlation_vs_v6": {
+        "logit": 0.999943317447872,
+        "spearman": 0.9996325593011159
+      },
+      "pair_rescue_damage": {
+        "seed": 20261010,
+        "pairs": 2000000,
+        "rescue_rate": 0.01686127001541154,
+        "damage_rate": 0.0006847128625156881,
+        "rescue_count": 1291,
+        "damage_count": 1317,
+        "sampled_delta_with_ties": -1.2999999853491317e-05,
+        "warning": "Monte Carlo pair diagnostic, not exact AUC arithmetic"
+      },
+      "source_report_sha256": "65eb1f9c516cb1ed0ff5667734d253ddc5ae46285c74e51e1a0423a0294bfc8d",
+      "candidate_sha256": "639391a92e9d97a221e80bdcb7ba722b86c03b3ded303f304506db6fb9eae34c",
+      "ids_sha256": "4f5bf9d9f2eb987d420afadff4b46ea3aea9890160f4f1c946e630a1a7e7b808"
+    }
+  ],
+  "weights": {
+    "new_tabpfn": 0.125,
+    "v6": 0.875
+  },
+  "data_sha256": {
+    "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+    "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+  },
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "ordered_selected_ids_sha256": "15debfdbabde015deb3a8227f02bc167d410e9aa00db5e7b9d534ac2a54fd3cb",
+  "candidate_sha256": "4fd10988809a1eca2c63b2bdba0e3104c9aa95475a2e679a9e4effc8754c9175",
+  "selected_pooled_auc": 0.9618209185073832,
+  "selected_pooled_delta_vs_v6": 6.9739734597229486e-06,
+  "mean_paired_gain": 6.305547691802064e-06,
+  "paired_se": 2.2100204318890323e-06,
+  "positive_folds": 3,
+  "admission_gate": null,
+  "verdict": "THREE_FOLD_CONTINUATION_FAIL_STOP",
+  "paired_bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "v6",
+    "comparisons": {
+      "candidate": {
+        "mean": 6.604337079169631e-06,
+        "percentile_95_interval": [
+          -1.0570962550007778e-05,
+          2.3552697173928608e-05
+        ],
+        "positive_fraction": 0.74
+      }
+    }
+  },
+  "source_sha256": {
+    "scripts/evaluate_sol_phase15_auxpfn.py": "a42a9f41bde672d1d6a263e04cbea00f2cf4b03cf144fc2eec451e3696475ba8"
+  },
+  "matched_append_control_protocol_sha256": "6113161291699356ff01cb6a77c39b8e79ff19d5612567984307207a5ef96a87"
+}

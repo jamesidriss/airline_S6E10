@@ -111,7 +111,20 @@ def auxiliary_fixture():
 def test_auxiliary_cache_rejects_fit_apply_overlap():
     with auxiliary_fixture() as (helper,aux,fit,apply,names,fi,ai):
         helper.expected_values(aux,fit,apply,names,fi,ai,'fixture_fold')
-        reject(lambda:helper.expected_values(aux,fit,apply,names,fi,fi[:1],'fixture_fold'))
+        # Forge fully agreeing metadata, hashes and sidecars. Only the
+        # logical exclusion check can catch the apply row being inside FIT.
+        from hashlib import sha256
+        forged=deepcopy(aux);c=forged['upstream_contract'];c['apply_ids_sha256']=arr_sha256(fi[:1])
+        h=sha256(json.dumps(c,sort_keys=True).encode()).hexdigest();forged['upstream_fingerprint']=h
+        old=helper.ARTIFACTS/'aux_distribution'/aux['upstream_fingerprint'];new=helper.ARTIFACTS/'aux_distribution'/h
+        assert new.resolve().is_relative_to(helper.ARTIFACTS.resolve());new.mkdir()
+        for p in old.iterdir():(new/p.name).write_bytes(p.read_bytes())
+        m=json.loads((new/'manifest.json').read_text());m.update(contract=c,fingerprint=h)
+        (new/'manifest.json').write_text(json.dumps(m));np.save(new/'apply_ids.npy',fi[:1])
+        # Mutation check: suppressing exclusion would admit this bad cache.
+        with patch.object(helper.np,'intersect1d',return_value=np.array([],dtype='int64')):
+            helper.expected_values(forged,fit,apply,names,fi,fi[:1],'fixture_fold')
+        reject(lambda:helper.expected_values(forged,fit,apply,names,fi,fi[:1],'fixture_fold'))
 
 
 def test_auxiliary_cache_rejects_raw_covariate_drift():

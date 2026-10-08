@@ -1,0 +1,9 @@
+{
+  "utc": "2026-10-08T20:57:49.006969+00:00",
+  "declared_before_reading_new_full_fold0_result": true,
+  "purpose": "Matched mechanism attribution only; no new trained representation, weight or submission candidate",
+  "formula": "0.125 frozen original route +0.875 frozen v6, in logit space",
+  "treatment_formula": "0.125 route_plus13_auxEV +0.875 frozen v6",
+  "admission_reference": "v6 remains the actual promotion reference; matched append control cannot replace or relax any gate",
+  "scope_sha256": "80e41b9b48eb9df14edf731f7f545faa343d4660a3c6a64255b0104c0d1a816a"
+}

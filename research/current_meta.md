@@ -370,3 +370,6 @@ may be reimplemented with inner FIT selection and matched controls.
 does not establish fully nested base-model training. Its reported0.96200 is
 not comparable to our immutable, independently generated OOF. No shared
 predictions have been adopted. See `sol_public_refresh_20261008.md`.
+
+
+Phase 15 measured closure (2026-10-08): the raw/route portfolio reached full five-fold OOF 0.961788023, gaining 22.409 millionths versus v6 with five positive folds, but its mean/SE ratio of 2.403 fell below 2.5. Native39 standalone gains were 164.279 and 54.006 millionths; v6 slot gains were +9.512 and -2.574 millionths, so the portfolio benefit did not replicate. Route plus 13 fold-safe expected ratings gave a three-fold TabPFN portfolio mean gain of 6.306 millionths, below the 15-millionth continuation gate. The historical 20% classical diagnostic gained 19.079 millionths, below the 30-millionth clean-replay trigger. No new submission or qualified B emerged; v6 remains A. Details are in reports/sol_phase15_final_report_20261008.md and the append-only experiment ledger. No fourth branch was started.

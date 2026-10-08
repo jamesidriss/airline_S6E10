@@ -1,0 +1,23 @@
+{
+  "utc": "2026-10-08T21:56:18.358169+00:00",
+  "git": "a49ad505f5ad0ec06742f714b501aef1e9886618",
+  "cycle_deadline_utc": "2026-10-09T02:26:54+00:00",
+  "active_worker": null,
+  "banked_A": "v6_sol_tabpfn_route_aux10",
+  "phase15_new_uploads": 0,
+  "raw_primary": "reports/sol_phase15_raw_primary.json",
+  "raw_status": "FULL5_MODEST_POSITIVE; admission FAIL t2.403<2.5 and pool22.41micro<30",
+  "native39_status": "standalone2/2 positive; portfolio sign changes; closed for cycle",
+  "third_hypothesis_discovery_report": "reports/sol_phase15_auxpfn_discovery.json",
+  "third_hypothesis_discovery_delta": 1.0709179064760654e-05,
+  "recipe": "route22+13 verified innerOOS/outerFIT-only rating expectations; same checkpoint/seed1201/settings;0.125new+0.875v6 logits",
+  "next": "No further training queued; completed bounded cycle. Closing chat supplies verified pushed Git HEAD.",
+  "tests": "Final fullv5=120passed0failed including73criticalsources and stronger overlap regression",
+  "source_contract_freeze": "reports/sol_phase15_auxpfn_source_freeze_v2.json",
+  "private_strategy": "Updated Phase15 decision; original bytes preserved in reports/sol_phase15_private_strategy_before.json",
+  "status": "THREE_BRANCHES_CLOSED_NO_ELIGIBLE_NEW_FINALIST",
+  "decision_report": "reports/sol_phase15_cycle_decision_20261008.json",
+  "third_hypothesis_final_report": "reports/sol_phase15_auxpfn_threefold.json",
+  "third_hypothesis_status": "THREE_FOLD_CONTINUATION_FAIL_STOP",
+  "final_report": "reports/sol_phase15_final_report_20261008.md"
+}

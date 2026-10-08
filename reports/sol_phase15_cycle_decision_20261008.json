@@ -1,0 +1,68 @@
+{
+  "utc": "2026-10-08T21:51:15.765429+00:00",
+  "status": "THREE_BRANCHES_CLOSED_NO_ELIGIBLE_NEW_FINALIST",
+  "banked_A": "v6_sol_tabpfn_route_aux10",
+  "champion_B": null,
+  "new_submissions": 0,
+  "raw_primary": {
+    "pooled_delta": 2.2408913869953473e-05,
+    "mean_paired_delta": 2.237154869302316e-05,
+    "paired_se": 9.308695514160782e-06,
+    "positive_folds": 5,
+    "gate_pass": false,
+    "reason": "mean/SE=2.40329 below2.5; pooled gain22.408914micro below frozen30micro performance floor"
+  },
+  "native39": {
+    "portfolio_mean_delta": 3.469403677569538e-06,
+    "portfolio_positive_folds": 1,
+    "evaluated_folds": 2,
+    "reason": "Standalone replicated; v6 marginal changed sign; no portfolio promotion"
+  },
+  "expected_rating_pfn": {
+    "selected_pooled_delta": 6.9739734597229486e-06,
+    "mean_paired_delta": 6.305547691802064e-06,
+    "paired_se": 2.2100204318890323e-06,
+    "positive_folds": 3,
+    "evaluated_folds": 3,
+    "gate_pass": false,
+    "reason": "Threefold mean6.305548micro below frozen15micro continuation threshold"
+  },
+  "heavy_job_seconds": {
+    "reports/sol_phase15_raw/raw_f1.json": 1027.344000000041,
+    "reports/sol_phase15_raw/raw_f2.json": 1046.375,
+    "reports/sol_phase15_raw/raw_f3.json": 1034.25,
+    "reports/sol_phase15_raw/raw_f4.json": 1023.7660000000615,
+    "reports/sol_phase15_native39/cross_f0.json": 1331.5929999999935,
+    "reports/sol_phase15_native39/cross_f1.json": 1037.484000000055,
+    "reports/sol_phase15_auxpfn/auxpfn_f0.json": 1026.405999999959,
+    "reports/sol_phase15_auxpfn/auxpfn_f1.json": 1016.6870000000345,
+    "reports/sol_phase15_auxpfn/auxpfn_f2.json": 1017.875,
+    "reports/sol_phase15_auxpfn_probe/timing_f0.json": 29.453000000095926
+  },
+  "heavy_compute_seconds": 9591.23300000024,
+  "heavy_compute_hours": 2.6642313888889557,
+  "wall_hours_to_model_close": 3.4060459525,
+  "eight_hour_deadline_utc": "2026-10-09T02:26:54+00:00",
+  "unused_wall_hours_at_model_close": 4.5939540475000005,
+  "scope": "9 new full model folds plus one timing-only probe; historical raw0/route/aux/cache models reused; analysis/tests not included in heavy job seconds",
+  "fourth_branch_started": false,
+  "queued_training": null,
+  "remaining_hypotheses_in_cycle": [],
+  "next_cycle_condition": "New evidence-backed mechanism and fresh bounded scope; no automatic fourth branch or weight tuning",
+  "finalist_reservation_recommendation": [
+    "v6_sol_tabpfn_route_aux10",
+    null
+  ],
+  "actual_kaggle_final_selection_changed": false,
+  "evidence_file_sha256": {
+    "reports/sol_phase15_zero_training_20261008.json": "a255bae4c8b02e0271ea71f8d294a1b5340848e75c5329923325499ba6bd1d8a",
+    "reports/sol_phase15_raw_primary.json": "e09d8444969ce69bfcf835ab8f902841d81b1972c3d6cf13c7ec3aecef48741f",
+    "reports/sol_phase15_raw_private_sim.json": "ce594505744307051f2a099209e87afbadf8e08a5a312dd7da7e71b2c08d3c3d",
+    "reports/sol_phase15_native39_twofold.json": "37e8f62dedf7fae9c8e5fca27007eb7837ebe8a5a64a74eef5430735e845bafa",
+    "reports/sol_phase15_native39_decision.json": "5d688dd5ce8c01d78f9b32b75f4d2357b43d542cb6507db8ecf0b83cb0c6438a",
+    "reports/sol_phase15_auxpfn_threefold.json": "71e5b15961b5120af648ebf43cec82fc9119e215f4c05c82754b6b6d55051082",
+    "reports/sol_phase15_kaggle_close_20261008.json": "10b8102ad74c6a1250b530b637ba9cb94c77b6552af9d83aa81173f0d3a0fdf8",
+    "reports/sol_phase15_banked_proof_audit_20261008.json": "fe115dfe610d3f2446d185b37c23b21d5b46a8ceed8f6ae76b174b636a18fd53"
+  },
+  "uncertainty": "Honest full raw OOF modestly beatsv6; no candidate has passed all frozen promotion/independent/test requirements; unknown private leaderboard remains unknown."
+}

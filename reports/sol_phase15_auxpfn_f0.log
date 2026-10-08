@@ -1,0 +1,9 @@
+auxpfn f0: 1024/139927
+auxpfn f0: 21504/139927
+auxpfn f0: 41984/139927
+auxpfn f0: 62464/139927
+auxpfn f0: 82944/139927
+auxpfn f0: 103424/139927
+auxpfn f0: 123904/139927
+auxpfn f0: 139927/139927
+{"fit_seconds": 786.7189999999246, "seconds": 1026.405999999959, "peak_gpu_bytes": 13706197504, "prediction_sha256": "71c109883621bf428bb1ecddc0b1ce96902aa46b291dd1704549914bd2b2e1bd", "auc": 0.9607080560519373, "standalone_gain_vs_route": -0.00042438985180415223, "candidate_auc": 0.9617378896344506, "v6_gain": 1.0709179064760654e-05, "portfolio_prediction_sha256": "59952c08139e72b4c8ea3263f50d6a1847060826130a30ee4e216374ec13c5d2", "status": "DISCOVERY_PASS_UNCONFIRMED"}

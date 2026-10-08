@@ -1,0 +1,206 @@
+{
+  "contract": {
+    "utc": "2026-10-08T21:32:41.087846+00:00",
+    "git": "a49ad505f5ad0ec06742f714b501aef1e9886618",
+    "arm": "route_plus13_auxEV",
+    "scheme": "primary",
+    "fold": 2,
+    "timing_only": false,
+    "train_rows": 559708,
+    "apply_rows": 139927,
+    "seed": 1201,
+    "params": {
+      "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35\\tabpfn-v3.5-20260909.safetensors",
+      "n_estimators": 1,
+      "auto_scale_n_estimators": false,
+      "random_state": 1201,
+      "device": "cuda",
+      "ignore_pretraining_limits": true,
+      "fit_mode": "fit_with_cache",
+      "kv_cache_precision": "int8",
+      "keep_cache_on_device": true,
+      "inference_precision": "autocast",
+      "categorical_features_indices": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        21
+      ],
+      "memory_saving_mode": true,
+      "n_preprocessing_jobs": 1,
+      "tuning_config": null
+    },
+    "fit_ids_sha256": "2483e17d0b36dc4114f6a6453f06339a7d4c51a656f1fb484fafab31a2aba05a",
+    "apply_ids_sha256": "4f5bf9d9f2eb987d420afadff4b46ea3aea9890160f4f1c946e630a1a7e7b808",
+    "feature_fit_sha256": "e701464ad1269e75de8eef29481947a9bbe9948cb27016fb5b8a0e324e97ba04",
+    "feature_apply_sha256": "fe741ef3eb86d71bf0675c23808ab787e4cc2574358cf189400233a656380f5f",
+    "feature_names": [
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Cleanliness",
+      "Gender",
+      "Customer Type",
+      "Type of Travel",
+      "Class",
+      "Age",
+      "Flight Distance",
+      "Departure Delay in Minutes",
+      "Arrival Delay in Minutes",
+      "Flight Distance coarse10",
+      "aux_ev_0",
+      "aux_ev_1",
+      "aux_ev_2",
+      "aux_ev_3",
+      "aux_ev_4",
+      "aux_ev_5",
+      "aux_ev_6",
+      "aux_ev_7",
+      "aux_ev_8",
+      "aux_ev_9",
+      "aux_ev_10",
+      "aux_ev_11",
+      "aux_ev_12"
+    ],
+    "categorical_indices": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      21
+    ],
+    "label_free_category_maps": {
+      "Gender": [
+        "Female",
+        "Male"
+      ],
+      "Customer Type": [
+        "Loyal Customer",
+        "disloyal Customer"
+      ],
+      "Type of Travel": [
+        "Business travel",
+        "Personal Travel"
+      ],
+      "Class": [
+        "Business",
+        "Eco",
+        "Eco Plus"
+      ]
+    },
+    "auxiliary": {
+      "upstream_contract": {
+        "fit_ids_sha256": "2483e17d0b36dc4114f6a6453f06339a7d4c51a656f1fb484fafab31a2aba05a",
+        "apply_ids_sha256": "4f5bf9d9f2eb987d420afadff4b46ea3aea9890160f4f1c946e630a1a7e7b808",
+        "fit_raw_sha256": "e2b2fef749aed08c422d79896616bdc2243e088b6c9c7a6748dd4571e9878f4b",
+        "apply_raw_sha256": "e83ed08b0eb4464357832646c821fcd072565c4b05685d0af58601068cb6fda8",
+        "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+        "seed": 1,
+        "rounds": 250,
+        "inner_folds": 3,
+        "builder_sha256": "906e1ccbfeba8a6440bb02e755726b7b498ade40cc46206de9d15680b26b7674",
+        "raw_names": [
+          "Inflight wifi service",
+          "Departure/Arrival time convenient",
+          "Ease of Online booking",
+          "Gate location",
+          "Food and drink",
+          "Online boarding",
+          "Seat comfort",
+          "Inflight entertainment",
+          "On-board service",
+          "Leg room service",
+          "Baggage handling",
+          "Checkin service",
+          "Cleanliness",
+          "Gender",
+          "Customer Type",
+          "Type of Travel",
+          "Class",
+          "Age",
+          "Flight Distance",
+          "Departure Delay in Minutes",
+          "Arrival Delay in Minutes"
+        ]
+      },
+      "upstream_fingerprint": "42a61b7165c82daaf3804254c7d369d2f2a0f9f4f2e018fff59e07e9b895afab",
+      "cache_manifest_sha256": "3f5434b3bfc746bea2fe0b5a5aa4dc45ff1a12ba7264c84b5cef631d99680749",
+      "fit_probability_sha256": "d91c9caa81575dee5ccbeb29b54baa83b7c5d1aa9b412c4659a4fc606f0dd4d2",
+      "apply_probability_sha256": "43fb842a86b1c234ca99f13ab4d90c62c32c5fff90c19e2e7e4251370fa972bd",
+      "fit_ev_sha256": "6b3b50d472d1d529ef45a672a6c8f800cf3a4eb816d2706256ec4a79eccda044",
+      "apply_ev_sha256": "578d53e619125763c5ee1f15ba15a5f60ac44fa7b9c0a7a4fd5dc19730f95032",
+      "provenance": "aux_* covariate targets only; FIT innerOOS, apply outer-FIT-only; no satisfaction or id input"
+    },
+    "control_report_sha256": "8fe59cc77aa441c98f8e9d96de708c723f59f30da136d2bf6ce9f9be72b431e6",
+    "route_reference_sha256": "fa03f11f7e283dac771fa97230257e761d7618d321ac29f7d69154e95b785bf2",
+    "checkpoint": {
+      "accessed_utc": "2026-10-07T18:55:06.560314+00:00",
+      "source": "https://huggingface.co/Prior-Labs/tabpfn_3_5",
+      "revision": "06bf2ba35c80a92a3b9abb436b99cf49e7a0365e",
+      "checkpoint_sha256": "ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3",
+      "license_sha256": "9570fdd687bb76ed45499412ad57d6ba949848e6d731f1242572bb57f2f73ae1",
+      "license": "TabPFN-3.5 Non-Commercial License v1.0; section 1.c includes data science competitions; no commercial deployment",
+      "usage": "own fold-safe full-context inference, no imported competition predictions",
+      "rule_section": "2.6 external public models"
+    },
+    "data_sha256": {
+      "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+      "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+    },
+    "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+    "source_sha256": {
+      "scripts/run_sol_tabpfn.py": "e3d84441b6e2b927cf058dbefe4bd0a3956f12834d75a8ff4a2f85fafc6e5d6b",
+      "src/models/windows_attention.py": "104bed55ad7eb37911a27e22ee37b558b6bda43ae123c0f386303cea4116bc34",
+      "src/models/pointwise_inference.py": "1aedd977666d9a1777692dbfd889d0a50bd303609154cbc68bcfb18c94e8b1ab",
+      "src/models/resource_guard.py": "b91280215a10f688690603b17289e9b80d865488127744826ef0e449721a2049",
+      "scripts/run_sol_phase15_auxpfn.py": "aafdff1d6c18dddd2d0090b31565998d621dde748939f80522cde18a3b046898",
+      "scripts/sol_phase15_auxpfn.py": "49488f43df4b0a8ea59c4800b12ca169f50ad86b64724ccfaf9dfea3ca2f21ec",
+      "scripts/run_phase13.py": "906e1ccbfeba8a6440bb02e755726b7b498ade40cc46206de9d15680b26b7674"
+    },
+    "library_versions": {
+      "tabpfn": "9.1.0",
+      "torch": "2.11.0+cu128",
+      "numpy": "2.4.6",
+      "scikit-learn": "1.9.1"
+    },
+    "protocol_sha256": "e93af4317a992c4e9c0af8a6f69b7e941dd20d66fc9cb12ad4ecd45ad9a32dc8",
+    "scope_sha256": "80e41b9b48eb9df14edf731f7f545faa343d4660a3c6a64255b0104c0d1a816a",
+    "decision_sha256": "71c7c12beff1bce435e37f186e51a46900a4b89367373549f4c8bf285652f206",
+    "weights": {
+      "new_tabpfn": 0.125,
+      "v6": 0.875
+    },
+    "early_stopping": "none; classifier context labels are outer FIT only",
+    "test_policy_if_admitted": "five exact primary FIT contexts, equal probability average, frozen method logits",
+    "backend_reference_gap": {
+      "fp16": 0.00048828125,
+      "bf16": 0.0078125
+    }
+  },
+  "fit_seconds": 780.6870000000345,
+  "seconds": 1017.875,
+  "peak_gpu_bytes": 13706197504,
+  "prediction_sha256": "8c67b1e6fa74e4900ccdc8f5899a76f6ee5e62d9326f95f9f6ffbeea0ee6e865",
+  "auc": 0.9605824752097898,
+  "standalone_gain_vs_route": -0.0006170895306990554,
+  "candidate_auc": 0.9617913243855368,
+  "v6_gain": 3.774196003614172e-06,
+  "portfolio_prediction_sha256": "639391a92e9d97a221e80bdcb7ba722b86c03b3ded303f304506db6fb9eae34c",
+  "correlation_vs_v6": {
+    "logit": 0.999943317447872,
+    "spearman": 0.9996325593011159
+  },
+  "status": "DISCOVERY_FAIL_STOP"
+}

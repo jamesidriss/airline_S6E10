@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-08T21:51:15.765429+00:00",
+  "updated_utc": "2026-10-08T11:46:02.413081+00:00",
   "BEST_A": {
     "name": "v6_sol_tabpfn_route_aux10",
     "ref": 56951906,
@@ -54,7 +54,7 @@
   },
   "final_selection_reassessed": true,
   "kaggle_final_selection_updated": false,
-  "continuation_status": "THREE_BRANCHES_CLOSED_NO_ELIGIBLE_NEW_FINALIST",
+  "continuation_status": "COMPLETE_CERTIFIED_SUBMISSION_SCORED_PRIVATE_UNCERTAINTY_DOCUMENTED",
   "rejected_hedge_candidates": {
     "clean_aux10": {
       "oof_loss_vs_A": 0.00034690428011585617,
@@ -68,45 +68,14 @@
     },
     "legacy_v5": {
       "reason": "Banked historical fallback; validation and inference defects remain; no certified hedge claim"
-    },
-    "phase15_raw_route": {
-      "report": "reports/sol_phase15_raw_primary.json",
-      "reason": "Admission mean/SE below2.5; no independent/test confirmation; OOF Spearman.999636 and12/820 private simulation reversals do not establish a complementary finalist"
-    },
-    "phase15_native39": {
-      "report": "reports/sol_phase15_native39_twofold.json",
-      "reason": "Actual v6 improvement not directionally replicated"
-    },
-    "phase15_expected_rating_pfn": {
-      "report": "reports/sol_phase15_auxpfn_threefold.json",
-      "reason": "Threefold gain below frozen continuation threshold"
     }
   },
   "strategic_stop": {
-    "phase": 15,
-    "new_submissions": 0,
-    "raw_route": "FULL5_MODEST_POSITIVE_ADMISSION_FAIL",
-    "native39": "STANDALONE_POSITIVE2_OF2_PORTFOLIO_NOT_REPLICATED",
-    "expected_rating_pfn": "THREEFOLD_POSITIVE_SMALL_CONTINUATION_FAIL",
-    "clean_classical_replay": "A2 historical gain19.079359micro below predeclared30micro replay trigger",
-    "heavy_compute_hours": 2.6642313888889557,
-    "report": "reports\\sol_phase15_cycle_decision_20261008.json",
-    "outstanding_required_work": [],
-    "next_research": "Fresh evidence and bounded scope required before a fourth hypothesis",
-    "uncertainty": "Honest full raw OOF modestly beatsv6; no candidate has passed all frozen promotion/independent/test requirements; unknown private leaderboard remains unknown."
-  },
-  "previous_campaign_stop": {
     "new_submissions": 1,
     "clean59_replay": "Not started; repairing47 classical and12 neural members requires disproportionate compute after the large replicated clean gain. Preserve infrastructure and historical banks.",
     "new39_cross": "Not started",
     "block10": "Not run, as predeclared",
     "outstanding_required_work": [],
     "uncertainty": "Unknown private labels, partial shadow scope, one seed fold and deployment-policy sampling uncertainty; competition outcome is not known."
-  },
-  "phase15_decision_report": "reports\\sol_phase15_cycle_decision_20261008.json",
-  "historical_strategy_archive": "reports/sol_phase15_private_strategy_before.json",
-  "finalist_reservations": [
-    "v6_sol_tabpfn_route_aux10",
-    null
-  ]
+  }
 }
