@@ -1,0 +1,133 @@
+{
+  "batch_size": 1024,
+  "precision": "autocast",
+  "icl_bf16": true,
+  "inference_chunk_cells": 262144,
+  "inference_col_chunk_size": 1,
+  "decoder_inplace_gelu": true,
+  "reuse_query_output": true,
+  "git": "f60cd768feedafe83445c9c40b8dfc8e10340887",
+  "scheme": "shadow",
+  "fold": 0,
+  "arm": "route",
+  "model_family": "TabPFN-3.5",
+  "params": {
+    "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35\\tabpfn-v3.5-20260909.safetensors",
+    "n_estimators": 1,
+    "auto_scale_n_estimators": false,
+    "random_state": 1201,
+    "device": "cuda",
+    "ignore_pretraining_limits": true,
+    "fit_mode": "fit_with_cache",
+    "kv_cache_precision": "int8",
+    "keep_cache_on_device": true,
+    "inference_precision": "autocast",
+    "categorical_features_indices": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      21
+    ],
+    "memory_saving_mode": true,
+    "n_preprocessing_jobs": 1,
+    "tuning_config": null
+  },
+  "seed": 1201,
+  "library_version": "9.1.0",
+  "feature_names": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "label_free_category_maps": {
+    "Gender": [
+      "Female",
+      "Male"
+    ],
+    "Customer Type": [
+      "Loyal Customer",
+      "disloyal Customer"
+    ],
+    "Type of Travel": [
+      "Business travel",
+      "Personal Travel"
+    ],
+    "Class": [
+      "Business",
+      "Eco",
+      "Eco Plus"
+    ]
+  },
+  "train_rows": 559708,
+  "validation_rows": 139927,
+  "full_intended_population": true,
+  "timing_only": false,
+  "fit_ids_sha256": "1850b0c8e8462366f0214fe7426dc5f82fde318e581ebf389e684766412cadca",
+  "validation_ids_sha256": "aef05e02096f6882e992dec09fc72b6ee99fdd35503e901c1885ee7b0857d498",
+  "fold_sha256": "5d181e32357e67b2ad8381c33549ef905bb45b969de7b8e09a3e4e7cb24af758",
+  "data_sha256": {
+    "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+    "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+  },
+  "feature_fit_sha256": "4a4e1aed7bedc4a13a58be11ed59976ec1da92a722d74c75ebcf0a8beb1537e4",
+  "feature_val_sha256": "359962c8f66df4b17e4507d803532085d5256858de5d51bca002d8e19f7042d9",
+  "reference_report_sha256": "fa03f11f7e283dac771fa97230257e761d7618d321ac29f7d69154e95b785bf2",
+  "source_sha256": {
+    "scripts/run_sol_tabpfn.py": "e3d84441b6e2b927cf058dbefe4bd0a3956f12834d75a8ff4a2f85fafc6e5d6b",
+    "src/models/windows_attention.py": "104bed55ad7eb37911a27e22ee37b558b6bda43ae123c0f386303cea4116bc34",
+    "src/models/pointwise_inference.py": "1aedd977666d9a1777692dbfd889d0a50bd303609154cbc68bcfb18c94e8b1ab",
+    "src/models/resource_guard.py": "b91280215a10f688690603b17289e9b80d865488127744826ef0e449721a2049",
+    "scripts/run_sol_tabpfn_confirm.py": "496ccea68ba55aff3ad4a854683804836c13e618b71df7c6e039d0979d556564"
+  },
+  "checkpoint": {
+    "accessed_utc": "2026-10-07T18:55:06.560314+00:00",
+    "source": "https://huggingface.co/Prior-Labs/tabpfn_3_5",
+    "revision": "06bf2ba35c80a92a3b9abb436b99cf49e7a0365e",
+    "checkpoint_sha256": "ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3",
+    "license_sha256": "9570fdd687bb76ed45499412ad57d6ba949848e6d731f1242572bb57f2f73ae1",
+    "license": "TabPFN-3.5 Non-Commercial License v1.0; section 1.c includes data science competitions; no commercial deployment",
+    "usage": "own fold-safe full-context inference, no imported competition predictions",
+    "rule_section": "2.6 external public models"
+  },
+  "backend_max_reference_gap": {
+    "fp16": 0.00048828125,
+    "bf16": 0.0078125
+  },
+  "early_stopping": "none; every context label belongs to confirmation FIT",
+  "test_policy": "same representation; entire competition training set as context; no new gradient fitting",
+  "head_views": false,
+  "resource_numerical_gate": null,
+  "seed_diagnostic": false,
+  "query_activation_reuse": false,
+  "query_activation_gate": null,
+  "allocator_policy": "",
+  "allocator_numerical_gate": null,
+  "purpose": "independent confirmation only; never tune on this scheme",
+  "prediction_sha256": "581e7f18e22a00de33d58c649bbb19f37d912e4582296c564e615bf18de89826",
+  "auc": 0.9605290365083669,
+  "fit_seconds": 775.140000000014,
+  "seconds": 1012.015000000014,
+  "peak_gpu_bytes": 13675054592,
+  "status": "FROZEN_INDEPENDENT_CONFIRMATION_PARTIAL"
+}

@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-08T07:41:27.766772+00:00",
+  "status": "ONE_FULL_SHADOW_ROUTE_FOLD_VERIFIED_MATCHING_AUX10_PENDING",
+  "scope": "shadow fold0 only; not full shadow OOF or portfolio confirmation",
+  "auc": 0.9605290365083669,
+  "rows": 139927,
+  "train_rows": 559708,
+  "proof": {
+    "tag": "sol_tabpfn35_shadow_recovery",
+    "report_sha256": "b682b67c067c439403d0adec7d4efdec41141f02d6de9bc28247ab677d30740e",
+    "prediction_sha256": "581e7f18e22a00de33d58c649bbb19f37d912e4582296c564e615bf18de89826"
+  },
+  "fold_sha256": "5d181e32357e67b2ad8381c33549ef905bb45b969de7b8e09a3e4e7cb24af758",
+  "data_sha256": {
+    "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+    "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+  }
+}
