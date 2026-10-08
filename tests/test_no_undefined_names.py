@@ -101,7 +101,7 @@ CRITICAL_MODULES = [
 def _pyflakes(paths):
     """Return {path: [messages]} for pyflakes-reported undefined names."""
     try:
-        from pyflakes.api import check
+        from pyflakes.api import checkPath
         from pyflakes.reporter import Reporter
     except ImportError:  # pragma: no cover
         return None
@@ -110,10 +110,7 @@ def _pyflakes(paths):
     out = io.StringIO()
     reporter = Reporter(out, out)
     for p in paths:
-        try:
-            check(str(p), str(p), reporter)
-        except TypeError:                      # older pyflakes signature
-            check(str(p), reporter)
+        checkPath(str(p), reporter)
     msgs = []
     for line in out.getvalue().splitlines():
         # keep only name-resolution problems, not style/import-order noise
@@ -134,6 +131,19 @@ def test_critical_files_have_no_undefined_names():
         return
     assert not msgs, "undefined names in critical files:\n  " + "\n  ".join(msgs)
     print(f"  [clean] {len(present)} critical files, 0 undefined names")
+
+
+def test_static_guard_reads_file_contents_and_detects_missing_imports():
+    """A pathname passed as source can silently miss every undefined name."""
+    from tempfile import TemporaryDirectory
+    with TemporaryDirectory() as directory:
+        sample = Path(directory) / "sample.py"
+        sample.write_text("def run():\n    return missing_helper()\n", encoding="utf-8")
+        messages = _pyflakes([sample])
+        assert messages is not None, "pyflakes is required for this regression check"
+        assert len(messages) == 1 and "undefined name 'missing_helper'" in messages[0]
+        sample.write_text("def missing_helper():\n    return 1\ndef run():\n    return missing_helper()\n", encoding="utf-8")
+        assert _pyflakes([sample]) == []
 
 
 def test_run_tabr_imports_every_name_it_calls():

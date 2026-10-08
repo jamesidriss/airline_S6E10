@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "fold": 3,
+  "auc": 0.9606084962415924,
+  "seconds": 1013.0320000000065,
+  "fit_seconds": 776.1570000000065,
+  "predict_seconds": 236.73499999998603,
+  "train_rows": 559708,
+  "validation_rows": 139927,
+  "peak_gpu_bytes": 13675054592,
+  "proof": {
+    "tag": "sol_tabpfn35_route_recovery",
+    "report_sha256": "e5f0bff60aa5a46d3233fc3b23f817054cb8c095d97b342391543546c1632cd8",
+    "prediction_sha256": "09403f0cdedb6da75772407093b45c35221d992a9f34dbe8494dae6b04a4527c"
+  }
+}

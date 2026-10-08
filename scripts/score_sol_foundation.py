@@ -10,6 +10,7 @@ from sklearn.metrics import roc_auc_score
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from src.common import ARTIFACTS,REPORTS,arr_sha256,file_sha256,git_commit,load_cached_parquet,save_json
 from src.validation.compare import logit,spearman
+from src.validation.folds import get_scheme
 from src.validation.private_sim import RankedAUC
 from scripts.assemble_sol_foundation_test import verify_primary,checked_probability
 from scripts.audit_sol_state import pair_diagnostic

@@ -1,8 +1,27 @@
 # SOL campaign — audit and continuation
 
-Checkpoint: 8 October 2026, 05:38 UTC. **No clean finalist has yet been fully
+Checkpoint: 8 October 2026, 06:06 UTC. **No clean finalist has yet been fully
 reproduced. No new Kaggle submission was spent. Final slots remain unlocked.**
 The campaign continues; this is not a final decision or research stopping point.
+
+Recovery reused all33 verified vectors for primary folds0/1/2. Route fold3
+completed under the unchanged frozen recipe: AUC0.9606084962415924,
+559708 FIT rows,139927 validation rows and prediction SHA
+09403f0cdedb6da75772407093b45c35221d992a9f34dbe8494dae6b04a4527c.
+The earlier fold3 disk refusal remains resource-invalid evidence, without a
+prediction or AUC. Route fold4 is predicting; strict auxiliary folds3/4 remain.
+
+The predeclared recovery scope is two shadow folds0/1 and one fixed primary
+fold0 seed1202 replay; block10 is deferred. These checks cannot establish full
+shadow OOF. Primary admission, complete test inference, robustness and an
+evidence-bound decision remain required before submission.
+
+The initial recovery suite returned110 passed,0 failed. A later source review
+found that its static guard had linted pathname strings rather than file
+contents, missing the scorecard's get_scheme import. The import and guard are
+fixed. The corrected64-file check and missing-import fixture pass2/2; earlier
+zero-undefined-name claims are superseded. The final current full suite remains
+outstanding, including the newly added recovery tests.
 
 Banked v5: public **0.96103**, ref **56918343**. Legacy OOF reconstructs to
 **0.9615234900843839** versus v3 **0.9615085784350211**. Mean paired fold gain

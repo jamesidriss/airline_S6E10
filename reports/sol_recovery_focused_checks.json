@@ -1,0 +1,12 @@
+{
+  "passed": 5,
+  "failed": 0,
+  "static_files": 64,
+  "checks": [
+    "test_partial_shadow_scope_requires_predeclaration_and_never_becomes_full_oof",
+    "test_small_policy_audit_contexts_exclude_every_outer_query_row",
+    "test_certified_submission_refuses_unbound_decision_before_loading_data",
+    "test_critical_files_have_no_undefined_names",
+    "test_no_source_files_missing_from_git"
+  ]
+}

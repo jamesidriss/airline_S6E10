@@ -1,0 +1,15 @@
+{
+  "utc": "2026-10-08T06:05:44.048218+00:00",
+  "status": "CORRECTED_STATIC_GUARD_FOCUSED_PASS_FINAL_FULL_SUITE_OUTSTANDING",
+  "problem": "pyflakes check received pathname as source; earlier zero-undefined claims did not inspect code",
+  "detected": "scripts/score_sol_foundation.py missing get_scheme import",
+  "repair": "import immutable-fold helper; checkPath reads actual source; fixture detects missing import and accepts defined helper",
+  "passed": 2,
+  "failed": 0,
+  "critical_files": 64,
+  "log_sha256": "8b43e0a5b2f591a8121a72f29e361edeb13d8ea0da252ac1e0aa863586acc84a",
+  "source_sha256": {
+    "scripts/score_sol_foundation.py": "14ce84bca5e360f66ced708db83c3502ad5089fa738b49305037a6a2f6c48d4c",
+    "tests/test_no_undefined_names.py": "c9996e50c59ca1ff8b8093726a73081b6a7b35f95a492f40ccd69dbb90adfb77"
+  }
+}
