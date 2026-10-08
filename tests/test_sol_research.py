@@ -183,3 +183,19 @@ def test_head_views_preserve_all_keys_and_alias_guard():
     assert actual.untyped_storage().data_ptr()!=k.untyped_storage().data_ptr()
     assert torch.equal(k,old)
 
+
+def test_query_activation_reuse_preserves_cpu_outputs_and_gradients():
+    from copy import deepcopy
+    from tabpfn.architectures.tabpfn_v3_5 import SoftmaxScalingMLP
+    from src.models.query_activation_reuse import install_query_activation_reuse
+    torch.manual_seed(83)
+    module=SoftmaxScalingMLP(4,16)
+    with torch.no_grad():module.query_mlp[-1].weight.normal_(0,.03)
+    reference=deepcopy(module)
+    assert install_query_activation_reuse(torch.nn.Sequential(module),rows=7)==1
+    a=torch.randn(2,19,4,16,requires_grad=True);b=a.detach().clone().requires_grad_()
+    actual,expected=module(a,699635),reference(b,699635)
+    assert torch.equal(actual,expected)
+    actual.sum().backward();expected.sum().backward()
+    assert torch.equal(a.grad,b.grad)
+

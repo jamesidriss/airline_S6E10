@@ -7,6 +7,7 @@ from __future__ import annotations
 import argparse
 import gc
 import json
+import os
 import sys
 import time
 from importlib.metadata import version
@@ -29,7 +30,10 @@ def main():
     ap.add_argument('--tag',required=True)
     ap.add_argument('--seed-diagnostic',action='store_true')
     ap.add_argument('--head-views',action='store_true',help='Only after the complete-model numerical resource gate passes')
+    ap.add_argument('--query-activation-reuse',action='store_true')
     args=ap.parse_args()
+    allocator=os.environ.get('PYTORCH_ALLOC_CONF','')
+    assert allocator in ('','expandable_segments:True'), 'Undeclared allocator policy'
     assert (args.scheme=='primary')==args.seed_diagnostic
     assert not args.seed_diagnostic or args.fold==0
     ref_path=Path(args.reference); ref=json.loads(ref_path.read_text(encoding='utf-8'))
@@ -56,6 +60,30 @@ def main():
         assert all(file_sha256(p)==h for p,h in gate['contract']['source_sha256'].items())
         assert arr_sha256(np.load(ARTIFACTS/'sol_head_views_reuse'/'probe.npy'))==gate['prediction_sha256']
         resource_gate={'report_sha256':file_sha256(gate_path),'maximum_probability_gap':gate['maximum_probability_gap']}
+    query_gate=None
+    if args.query_activation_reuse:
+        assert args.head_views
+        gate_path=REPORTS/'sol_query_activation_reuse'/'probe.json'
+        gate=json.loads(gate_path.read_text(encoding='utf-8'))
+        assert gate['status']=='NUMERICAL_GATE_PASS' and gate['maximum_probability_gap']<=2e-6
+        assert gate['contract']['query_activation_reuse'] and gate['contract']['train_rows']==100000
+        expected=dict(ref['params'],categorical_features_indices=gate['contract']['params']['categorical_features_indices'])
+        assert gate['contract']['params']==expected
+        assert all(file_sha256(p)==h for p,h in gate['contract']['source_sha256'].items())
+        assert arr_sha256(np.load(ARTIFACTS/'sol_query_activation_reuse'/'probe.npy'))==gate['prediction_sha256']
+        query_gate={'report_sha256':file_sha256(gate_path),'maximum_probability_gap':gate['maximum_probability_gap']}
+    allocator_gate=None
+    if allocator:
+        assert args.query_activation_reuse and args.head_views
+        gate_path=REPORTS/'sol_allocator_expandable'/'probe.json'
+        gate=json.loads(gate_path.read_text(encoding='utf-8'))
+        assert gate['status']=='NUMERICAL_GATE_PASS' and gate['maximum_probability_gap']<=2e-6
+        assert gate['contract']['allocator_policy']==allocator and gate['contract']['train_rows']==100000
+        expected=dict(ref['params'],categorical_features_indices=gate['contract']['params']['categorical_features_indices'])
+        assert gate['contract']['params']==expected
+        assert all(file_sha256(p)==h for p,h in gate['contract']['source_sha256'].items())
+        assert arr_sha256(np.load(ARTIFACTS/'sol_allocator_expandable'/'probe.npy'))==gate['prediction_sha256']
+        allocator_gate={'report_sha256':file_sha256(gate_path),'maximum_probability_gap':gate['maximum_probability_gap']}
     root,folder=ARTIFACTS/args.tag,REPORTS/args.tag
     root.mkdir(exist_ok=True); folder.mkdir(exist_ok=True)
     report_path=folder/f'route_f{args.fold}.json'
@@ -95,11 +123,14 @@ def main():
         'early_stopping':'none; every context label belongs to confirmation FIT',
         'test_policy':ref['test_policy'],'head_views':args.head_views,'resource_numerical_gate':resource_gate,
         'seed_diagnostic':args.seed_diagnostic,
+        'query_activation_reuse':args.query_activation_reuse,'query_activation_gate':query_gate,
+        'allocator_policy':allocator,'allocator_numerical_gate':allocator_gate,
         'purpose':'fixed seed1202 sensitivity diagnostic; never select seeds' if args.seed_diagnostic else 'independent confirmation only; never tune on this scheme'}
     if args.head_views:
         for path in ('src/models/scaling_reuse.py','src/models/head_view_attention.py'):
             contract['source_sha256'][path]=file_sha256(path)
     if args.seed_diagnostic:contract['seed_protocol_sha256']=file_sha256('research/sol_seed_diagnostic.md')
+    if args.query_activation_reuse:contract['source_sha256']['src/models/query_activation_reuse.py']=file_sha256('src/models/query_activation_reuse.py')
     start=time.monotonic(); model=None
     save_json({**contract,'status':'FITTING'},root/'progress.json')
     try:
@@ -110,6 +141,9 @@ def main():
             if args.head_views:
                 from src.models.scaling_reuse import install_scaling_reuse
                 install_scaling_reuse(model.model_path.model)
+            if args.query_activation_reuse:
+                from src.models.query_activation_reuse import install_query_activation_reuse
+                install_query_activation_reuse(model.model_path.model)
             model.fit(x[fi],y[fi])
         fit_seconds=time.monotonic()-start
         gc.collect(); torch.cuda.empty_cache()

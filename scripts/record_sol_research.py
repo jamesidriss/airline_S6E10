@@ -39,7 +39,9 @@ def main():
     with ledger.open('a', encoding='utf-8') as out:
         for tag in ('sol_scaling_control','sol_scaling_reuse','sol_tabpfn35_full_context_probe',
                     'sol_tabpfn35_full_context_scaling','sol_head_views_control','sol_head_views_reuse',
-                    'sol_tabpfn35_full_context_head_views'):
+                    'sol_tabpfn35_full_context_head_views','sol_query_activation_reuse',
+                    'sol_tabpfn35_full_context_query_activation','sol_allocator_expandable',
+                    'sol_tabpfn35_full_context_expandable'):
             path=REPORTS/tag/'probe.json'
             eid=f'{tag}_numerical_or_resource_probe'
             if not path.exists() or eid in existing:

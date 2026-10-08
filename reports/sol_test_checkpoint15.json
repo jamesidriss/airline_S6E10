@@ -1,0 +1,30 @@
+{
+  "scope": "Focused default/allocator gate paths and fallback source checks; no fallback model fitted",
+  "results": [
+    {
+      "test": "test_full_context_probe_uses_every_training_row_and_reports_no_auc",
+      "status": "PASS",
+      "seconds": 4.329000000027008
+    },
+    {
+      "test": "test_fixed_foundation_confirmation_excludes_outer_labels",
+      "status": "PASS",
+      "seconds": 0.6709999999729916
+    },
+    {
+      "test": "test_foundation_test_certificate_rejects_partial_primary_before_array_load",
+      "status": "PASS",
+      "seconds": 0.01600000006146729
+    },
+    {
+      "test": "test_critical_files_have_no_undefined_names",
+      "status": "PASS",
+      "seconds": 0.030999999959021807
+    },
+    {
+      "test": "test_primary_context_test_fallback_excludes_held_fold_labels",
+      "status": "PASS",
+      "seconds": 2.547000000020489
+    }
+  ]
+}

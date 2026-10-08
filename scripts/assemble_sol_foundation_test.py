@@ -36,11 +36,36 @@ def verify_primary(path,ids,y,data_hash):
     return r,vectors,folds
 
 
+def context_average_test(tag,primary,folds,ids,test_ids,data_hash):
+    total=np.zeros(len(test_ids));proofs=[]
+    for k in range(5):
+        path=REPORTS/tag/f'test_f{k}.json'
+        r=json.loads(path.read_text(encoding='utf-8'));c=r['contract']
+        assert r['status']=='COMPLETE_ONE_PRIMARY_CONTEXT_TEST_REQUIRES_ALL_FIVE'
+        assert c['fold']==k and c['scheme']=='primary' and not c['entire_competition_training_context']
+        assert not c['timing_only'] and c['seed']==1201
+        assert c['train_rows']==int((folds!=k).sum()) and c['test_rows']==len(test_ids)
+        assert c['fit_ids_sha256']==arr_sha256(ids[folds!=k]) and c['test_ids_sha256']==arr_sha256(test_ids)
+        assert c['data_sha256']==data_hash and c['fold_sha256']==arr_sha256(folds)
+        assert all(file_sha256(p)==h for p,h in c['source_sha256'].items())
+        proof=next(f for f in primary['folds'] if f['fold']==k)['foundation']
+        assert c['reference_report_sha256']==proof['report_sha256']
+        reference=json.loads((REPORTS/proof['tag']/f'route_f{k}.json').read_text(encoding='utf-8'))
+        assert c['params']==reference['params'] and c['feature_fit_sha256']==reference['feature_fit_sha256']
+        assert c['checkpoint']==reference['checkpoint'] and c['test_policy_sha256']==file_sha256('research/sol_test_inference_contract.md')
+        p=checked_probability(ARTIFACTS/tag/f'test_f{k}.npy',ARTIFACTS/tag/f'test_ids_f{k}.npy',r['test_prediction_sha256'],test_ids)
+        total+=p/5
+        proofs.append({'fold':k,'report_sha256':file_sha256(path),'prediction_sha256':arr_sha256(p),
+            'fit_ids_sha256':c['fit_ids_sha256'],'train_rows':c['train_rows']})
+    return total.astype('float32'),proofs
+
+
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument('--primary-report',default='reports/sol_route_aux10_primary.json')
     ap.add_argument('--classical-tag',default='sol_clean_aux10_primary')
     ap.add_argument('--foundation-tag',required=True)
+    ap.add_argument('--foundation-policy',choices=['full','context_average'],default='full')
     ap.add_argument('--name',default='sol_route_aux10_primary')
     args=ap.parse_args()
     output=REPORTS/(args.name+'_test_certificate.json')
@@ -68,16 +93,22 @@ def main():
             assert old['report_sha256']==index[entry['store_id']]['meta']['fold_reports_sha256'][k]
         aux_logit+=logit(test)/10
         proofs.append({**proof,'test_report_sha256':file_sha256(rp),'median_trees':int(np.median(counts))})
-    rp=REPORTS/args.foundation_tag/'test.json';r=json.loads(rp.read_text(encoding='utf-8'));c=r['contract']
-    assert r['status']=='COMPLETE_TEST_REQUIRES_FULL_OOF_SCORECARD' and not c['timing_only']
-    assert c['entire_competition_training_context'] and c['train_rows']==len(tr) and c['test_rows']==len(te)
-    assert c['fit_ids_sha256']==arr_sha256(ids) and c['test_ids_sha256']==arr_sha256(test_ids)
-    assert c['data_sha256']==data_hash and all(file_sha256(p)==h for p,h in c['source_sha256'].items())
-    first=next(s for s in primary['folds'] if s['fold']==0)
-    assert c['reference_report_sha256']==first['foundation']['report_sha256']
-    reference=json.loads((REPORTS/first['foundation']['tag']/'route_f0.json').read_text())
-    assert c['params']==reference['params'] and c['seed']==reference['seed']
-    route=checked_probability(ARTIFACTS/args.foundation_tag/'test.npy',ARTIFACTS/args.foundation_tag/'test_ids.npy',r['test_prediction_sha256'],test_ids)
+    if args.foundation_policy=='full':
+        rp=REPORTS/args.foundation_tag/'test.json';r=json.loads(rp.read_text(encoding='utf-8'));c=r['contract']
+        assert r['status']=='COMPLETE_TEST_REQUIRES_FULL_OOF_SCORECARD' and not c['timing_only']
+        assert c['entire_competition_training_context'] and c['train_rows']==len(tr) and c['test_rows']==len(te)
+        assert c['fit_ids_sha256']==arr_sha256(ids) and c['test_ids_sha256']==arr_sha256(test_ids)
+        assert c['data_sha256']==data_hash and all(file_sha256(p)==h for p,h in c['source_sha256'].items())
+        first=next(s for s in primary['folds'] if s['fold']==0)
+        assert c['reference_report_sha256']==first['foundation']['report_sha256']
+        reference=json.loads((REPORTS/first['foundation']['tag']/'route_f0.json').read_text())
+        assert c['params']==reference['params'] and c['seed']==reference['seed']
+        route=checked_probability(ARTIFACTS/args.foundation_tag/'test.npy',ARTIFACTS/args.foundation_tag/'test_ids.npy',r['test_prediction_sha256'],test_ids)
+        foundation_proofs=[{'report_sha256':file_sha256(rp),'prediction_sha256':arr_sha256(route)}]
+        foundation_policy=c['test_policy']
+    else:
+        route,foundation_proofs=context_average_test(args.foundation_tag,primary,folds,ids,test_ids,data_hash)
+        foundation_policy='Equal probability average of five exact immutable primary FIT contexts; not a full-data fit'
     test=(1/(1+np.exp(-(logit(route)+aux_logit)/2))).astype('float32')
     auxiliary=(1/(1+np.exp(-aux_logit))).astype('float32')
     root=ARTIFACTS/(args.name+'_test');root.mkdir(exist_ok=False)
@@ -86,14 +117,14 @@ def main():
         'primary_report_sha256':file_sha256(args.primary_report),'data_sha256':data_hash,
         'fold_sha256':arr_sha256(folds),'ordered_train_ids_sha256':arr_sha256(ids),'ordered_test_ids_sha256':arr_sha256(test_ids),
         'weights':{'route':.5,'equal_logit_auxiliary10':.5},'classical_proofs':proofs,
-        'foundation_report_sha256':file_sha256(rp),'foundation_test_policy':c['test_policy'],
+        'foundation_reports':foundation_proofs,'foundation_test_policy':foundation_policy,
         'oof_sha256':{n:arr_sha256(p) for n,p in vectors.items()},
         'test_sha256':{n:arr_sha256(p) for n,p in [('candidate',test),('aux10',auxiliary),('route',route)]},
         'test_artifact_root':str(root),'test_policy_sha256':file_sha256('research/sol_test_inference_contract.md')}
     save_json(certificate,output)
     store.save(args.name,vectors['candidate'],test,fold_scheme='primary',meta={
         'family':'blend','auc':primary['pooled_oof_auc'],'training_protocol':'sol_route_aux10_fixed_50_50_v1',
-        'geometry':primary['hypothesis'],'test_policy':c['test_policy'],'ordered_train_ids_sha256':arr_sha256(ids),
+        'geometry':primary['hypothesis'],'test_policy':foundation_policy,'ordered_train_ids_sha256':arr_sha256(ids),
         'ordered_test_ids_sha256':arr_sha256(test_ids),'certificate_sha256':file_sha256(output)})
     print(f'Certified {len(test)} test rows; robustness scorecard still required')
     return 0

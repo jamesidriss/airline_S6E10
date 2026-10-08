@@ -725,3 +725,74 @@ def test_fixed_vector_bootstrap_matches_sklearn_with_ties():
     assert abs(actual['comparisons']['candidate']['mean']-np.mean(deltas))<1e-14
     np.testing.assert_allclose(actual['comparisons']['candidate']['percentile_95_interval'],expected,atol=1e-14,rtol=0)
 
+
+def test_native39_crosses_preserve_literal_identity_and_ignore_target():
+    import json
+    import numpy as np
+    import pandas as pd
+    from scripts.sol_native_crosses import cross_frame,CONTEXT3,RATINGS
+    frame=pd.DataFrame({c:[0,1,0,1] for c in RATINGS})
+    frame['Class']=['a|b','a|b','a','a'];frame['Type of Travel']=['Business','Personal','Business','Personal']
+    frame['Customer Type']=['x','y','x','y'];frame['satisfaction']=[0,1,0,1];frame['id']=[0,1,2,3]
+    frame.loc[1,RATINGS[0]]=np.nan
+    original=cross_frame(frame,np.arange(4))
+    frame['satisfaction']=1-frame['satisfaction'];frame['id']+=1000
+    assert original.equals(cross_frame(frame,np.arange(4)))
+    assert original.iloc[[2,0]].reset_index(drop=True).equals(cross_frame(frame,np.array([2,0])))
+    assert len(original.columns)==len(RATINGS)*len(CONTEXT3)==39
+    key=f'ix_pair_{RATINGS[0]}_Class__cat'
+    assert json.loads(original.loc[0,key])==['0','a|b']
+    assert json.loads(original.loc[2,key])==['0','a']
+
+
+def test_primary_context_test_fallback_excludes_held_fold_labels():
+    import json
+    import tempfile
+    from contextlib import ExitStack,nullcontext,redirect_stdout
+    from io import StringIO
+    from pathlib import Path
+    from importlib.metadata import version
+    from unittest.mock import patch
+    import numpy as np
+    import pandas as pd
+    import scripts.run_sol_tabpfn_fold_test as runner
+    tr=pd.DataFrame({'id':np.arange(100),'satisfaction':np.arange(100)%2})
+    te=pd.DataFrame({'id':np.arange(1000,1003)});folds=np.arange(100)//20;fi=np.flatnonzero(folds!=0)
+    x=np.arange(2200).reshape(100,22).astype('float32');xt=np.zeros((3,22),dtype='float32');names=[f'c{i}' for i in range(22)]
+    ref={'source_sha256':'sha','backend_source_sha256':'sha','decoder_chunk_source_sha256':'sha',
+        'resource_guard_source_sha256':'sha','library_version':version('tabpfn'),'seed':1201,
+        'params':{'model_path':'dummy','n_estimators':1,'categorical_features_indices':[18,21]},
+        'checkpoint':{'checkpoint_sha256':'sha'},'batch_size':1024,'icl_bf16':True,
+        'decoder_inplace_gelu':True,'reuse_query_output':True,'decoder_chunk_rows':None,
+        'windows_mqa_backend':True,'precision':'autocast','gpu_memory_fraction':.85,
+        'fit_ids_sha256':runner.arr_sha256(tr.id.to_numpy()[fi]),'train_rows':80,
+        'feature_names':names,'label_free_category_maps':{},'feature_fit_sha256':runner.arr_sha256(x[fi]),
+        'inference_chunk_cells':262144,'inference_col_chunk_size':1}
+    fits=[]
+    class Model:
+        def fit(self,features,labels):fits.append((features.copy(),labels.copy()))
+        def predict_proba(self,features):return np.tile([.3,.7],(len(features),1))
+    with tempfile.TemporaryDirectory() as temporary,ExitStack() as stack:
+        root=Path(temporary);art=root/'artifacts';reports=root/'reports';art.mkdir();reports.mkdir();(reports/'reference').mkdir()
+        (reports/'reference'/'route_f0.json').write_text(json.dumps(ref))
+        primary={'folds':[{'fold':0,'foundation':{'tag':'reference','report_sha256':'sha'}}]}
+        for name,value in [('ARTIFACTS',art),('REPORTS',reports)]:stack.enter_context(patch.object(runner,name,value))
+        stack.enter_context(patch.object(runner,'load_cached_parquet',side_effect=lambda:(tr.copy(),te.copy())))
+        stack.enter_context(patch.object(runner,'verify_primary',return_value=(primary,{},folds)))
+        stack.enter_context(patch.object(runner,'file_sha256',return_value='sha'))
+        stack.enter_context(patch.object(runner,'frames',return_value=(x,xt,names,[18,21],{})))
+        stack.enter_context(patch.object(runner,'create_model',side_effect=lambda *a:Model()))
+        stack.enter_context(patch.object(runner,'inference_guard',side_effect=lambda *a,**k:nullcontext()))
+        for name in ('set_per_process_memory_fraction','reset_peak_memory_stats','empty_cache'):stack.enter_context(patch.object(runner.torch.cuda,name))
+        stack.enter_context(patch.object(runner.torch.cuda,'max_memory_allocated',return_value=100))
+        stack.enter_context(patch('src.models.windows_attention.register'))
+        stack.enter_context(patch('src.models.windows_attention.verify_gpu_equivalence',return_value=0))
+        for tag in ('first','flipped'):
+            if tag=='flipped':tr.loc[folds==0,'satisfaction']=1-tr.loc[folds==0,'satisfaction']
+            with patch('sys.argv',['fallback','--fold','0','--tag',tag]),redirect_stdout(StringIO()):assert runner.main()==0
+            rec=json.loads((reports/tag/'test_f0.json').read_text())
+            assert rec['contract']['train_rows']==80 and not rec['contract']['entire_competition_training_context']
+            assert 'auc' not in rec
+        assert len(fits)==2 and all(np.array_equal(a,b) for a,b in zip(fits[0],fits[1]))
+        assert np.array_equal(fits[0][0],x[fi]) and np.array_equal(fits[0][1],tr.satisfaction.to_numpy()[fi])
+

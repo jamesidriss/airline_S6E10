@@ -1,0 +1,25 @@
+{
+  "scope": "Focused query activation opt-in/default/label-safety/static checks",
+  "results": [
+    {
+      "test": "test_full_context_probe_uses_every_training_row_and_reports_no_auc",
+      "status": "PASS",
+      "seconds": 2.297000000020489
+    },
+    {
+      "test": "test_fixed_foundation_confirmation_excludes_outer_labels",
+      "status": "PASS",
+      "seconds": 0.42099999997299165
+    },
+    {
+      "test": "test_critical_files_have_no_undefined_names",
+      "status": "PASS",
+      "seconds": 0.01600000006146729
+    },
+    {
+      "test": "test_query_activation_reuse_preserves_cpu_outputs_and_gradients",
+      "status": "PASS",
+      "seconds": 0.9530000000959262
+    }
+  ]
+}

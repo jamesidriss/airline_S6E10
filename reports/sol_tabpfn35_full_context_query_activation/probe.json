@@ -1,0 +1,119 @@
+{
+  "contract": {
+    "git": "a0b445346269745cb84c49378456de18f869a098",
+    "reference_report_sha256": "fa03f11f7e283dac771fa97230257e761d7618d321ac29f7d69154e95b785bf2",
+    "primary_report_sha256": null,
+    "library_versions": {
+      "tabpfn": "9.1.0",
+      "torch": "2.11.0+cu128",
+      "numpy": "2.4.6",
+      "scikit-learn": "1.9.1",
+      "safetensors": "0.8.0"
+    },
+    "model_family": "TabPFN-3.5",
+    "arm": "route",
+    "params": {
+      "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35\\tabpfn-v3.5-20260909.safetensors",
+      "n_estimators": 1,
+      "auto_scale_n_estimators": false,
+      "random_state": 1201,
+      "device": "cuda",
+      "ignore_pretraining_limits": true,
+      "fit_mode": "fit_with_cache",
+      "kv_cache_precision": "int8",
+      "keep_cache_on_device": true,
+      "inference_precision": "autocast",
+      "categorical_features_indices": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        21
+      ],
+      "memory_saving_mode": true,
+      "n_preprocessing_jobs": 1,
+      "tuning_config": null
+    },
+    "seed": 1201,
+    "train_rows": 699635,
+    "test_rows": 1024,
+    "entire_competition_training_context": true,
+    "fit_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "test_ids_sha256": "0f91eb11fcabe3dd471fef480ea6c849057eca08502b66b2b9a0f97f4983af10",
+    "feature_names": [
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Cleanliness",
+      "Gender",
+      "Customer Type",
+      "Type of Travel",
+      "Class",
+      "Age",
+      "Flight Distance",
+      "Departure Delay in Minutes",
+      "Arrival Delay in Minutes",
+      "Flight Distance coarse10"
+    ],
+    "feature_fit_sha256": "7b5a557af8cb8101ca17efa9bbe2ede8bc6ab7bb703928fd7f1526f55cb5f9dc",
+    "feature_test_sha256": "d4a4fb4fe90f9cbef4e6d8e284c4f92ab2d03ddca35e872b365a7c539e2c0367",
+    "data_sha256": {
+      "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+      "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+    },
+    "source_sha256": {
+      "scripts/run_sol_tabpfn_test.py": "9628dc552e0f727ecd8f6a1dab1bf9dc1f620e3c9cb03aa1253db6aeb657b4ec",
+      "scripts/run_sol_tabpfn.py": "e3d84441b6e2b927cf058dbefe4bd0a3956f12834d75a8ff4a2f85fafc6e5d6b",
+      "src/models/windows_attention.py": "104bed55ad7eb37911a27e22ee37b558b6bda43ae123c0f386303cea4116bc34",
+      "src/models/pointwise_inference.py": "1aedd977666d9a1777692dbfd889d0a50bd303609154cbc68bcfb18c94e8b1ab",
+      "src/models/resource_guard.py": "b91280215a10f688690603b17289e9b80d865488127744826ef0e449721a2049",
+      "src/models/scaling_reuse.py": "405ebe973f419fd00b3cff7457b7a4dc03c76640266b27669779780d7f846093",
+      "src/models/head_view_attention.py": "a0b37dd138c0be8ea6bc6e83210a95024676d625e267adff26882c564fd5674e",
+      "src/models/query_activation_reuse.py": "49f40d3d5b4a932e9882e735fc2260ca88b8fbc8491b56a067db109fe54e5984"
+    },
+    "scaling_reuse": true,
+    "scaling_reuse_gate": {
+      "report_sha256": "72aa9b686d834dd933c216f413eb211f04cca681f57f3601a16e9cee355d00bb",
+      "maximum_probability_gap": 0.0
+    },
+    "head_views": true,
+    "head_view_gate": {
+      "report_sha256": "43f94b0c46023f50af5b79908c4ef17155c59f397943f6742c0450d3fe42bae6",
+      "maximum_probability_gap": 0.0
+    },
+    "query_activation_reuse": true,
+    "query_activation_gate": {
+      "report_sha256": "9b68a5b41bc50773788135668f94237f707087263d3c289af4f1e369c8c1a61a",
+      "maximum_probability_gap": 0.0
+    },
+    "backend_reference_gap": {
+      "fp16": 0.00048828125,
+      "bf16": 0.0078125
+    },
+    "gpu_fraction": 0.85,
+    "inference_settings": {
+      "batch_size": 1024,
+      "icl_bf16": true,
+      "inference_chunk_cells": 262144,
+      "inference_col_chunk_size": 1,
+      "decoder_inplace_gelu": true,
+      "reuse_query_output": true
+    },
+    "test_policy": "entire training set as context; frozen pretrained model and representation",
+    "timing_only": true,
+    "performance_verdict": "none; no OOF or test-label score"
+  },
+  "seconds": 112.875,
+  "error": "OutOfMemoryError('CUDA out of memory. Tried to allocate 1.34 GiB. GPU 0 has a total capacity of 15.92 GiB of which 1.29 GiB is free. 13.53 GiB allowed; Of the allocated memory 11.36 GiB is allocated by PyTorch, and 1.30 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)')",
+  "status": "INVALID_RESOURCE_LIMIT_NOT_NEGATIVE"
+}

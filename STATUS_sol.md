@@ -1,6 +1,6 @@
 # SOL campaign — audit and continuation
 
-Checkpoint: 8 October 2026, 01:01 UTC. **No clean finalist has yet been fully
+Checkpoint: 8 October 2026, 01:26 UTC. **No clean finalist has yet been fully
 reproduced. No new Kaggle submission was spent. Final slots remain unlocked.**
 The campaign continues; this is not a final decision or research stopping point.
 
@@ -45,7 +45,7 @@ its historical TE priors remain affected. See `reports/sol_neural_audit.json`.
 | SSL+aux A0 | f0 −0.000028034 standalone; slot −0.000001512 | No promotion |
 | Surprise diagnostic | High-surprise pair error rate0.04723 vs0.03771 outside; modest within-margin enrichment | No specialist justified |
 | Full-context TabPFN3.5 raw | Honest f0 AUC 0.960972296; fixed 1/60 append gain +0.000021134; logit correlation 0.994532205; 1030.312 s | Positive discovery only; legacy comparison, no admission |
-| Matched TabPFN3.5 route | Honest f0/f1 AUC 0.961132446/0.961379166; f0 +0.000160150 versus raw; 1/60 legacy append gains +0.000020159/+0.000023193 | Two completed folds; no full-OOF admission |
+| Matched TabPFN3.5 route | Honest f0/f1/f2 AUC 0.961132446/0.961379166/0.961199565; f0 +0.000160150 versus raw; 1/60 legacy append gains +0.000020159/+0.000023193/+0.000023564 | Three route folds complete; fixed blend has only two complete auxiliary folds; no full-OOF admission |
 | Frozen 50/50 route/strict auxiliary10 | f0/f1 AUC 0.961727180455/0.961935424840; paired gains +0.000312977866/+0.000329353076 versus clean auxiliary10; mean +0.000321165471, SE 0.000008187605, 2/2 positive | Replicated; complete primary and independent confirmation; no finalist claim |
 | Corrected RealMLP recipe | f0 AUC 0.960758172; legacy slot diagnostic −0.000002531; 70.328 s; OOF/test vectors saved | Contract repair only; no improvement/admission claim |
 | Query and activation buffer reuse | Complete-model 100k-context/1024-prediction probes are bit-identical to the reference; raw and route full-FIT now complete | Frozen for primary replication |
@@ -75,7 +75,11 @@ All twenty frozen auxiliary role/fold jobs are complete under
 `sol_clean_aux10_isolated`. Every one of the ten fold0 controls has identical
 predictions, FIT/validation matrix hashes and selected tree count versus strict
 SOL-A A0. Their verified fixed portfolio is in `reports/sol_route_aux10_twofold.json`.
-Active: frozen route fold2, fresh process, tag `sol_tabpfn35_route_reserve`.
+Active: `replay_sol_isolated.py`, tag `sol_clean_aux10_threefold`, folds0/1/2.
+It verifies and reuses the twenty completed folds0/1 records, and fits the ten
+remaining fold2 roles in separate processes. Five new XT fits are in progress
+or complete; native CatBoost and three XGB roles remain. Interpret the fixed
+three-fold portfolio only after all ten complete, before promotion to five folds.
 One fresh process per fold avoids native allocator retention.
 
 The all699635-row context resource probe failed before predictions in14.375s.
@@ -131,13 +135,31 @@ Current disk reserve is about20.4 GiB during the active route fold2.
 The all-row failure included unnecessary MHA key/value copies even with16
 matching heads. A separate opt-in backend now uses permutation/expansion views
 without changing logical SDPA dimensions. CPU MHA/MQA, query alias protection
-and key/value preservation checks pass. Whole-model GPU equivalence is pending;
-this implementation has not been used for scored CV or final test inference.
+and key/value preservation checks pass. Whole-model GPU equivalence now passes;
+this implementation has not produced scored CV or final test predictions.
 The primary runner and original attention/activation helper bytes remain intact.
+
+The complete-model100k head-view gate is bit-identical, max probability gap0;
+peak GPU allocation falls2857153024→2663518720 B. Four FP16/BF16 MHA/MQA
+GPU primitive comparisons are also bit-identical and preserve keys/values.
+Full699635-row head-view inference failed in63.218s at a query-scaling GELU.
+Reusing that fresh activation passes the complete-model100k gate again, gap0,
+27.797s and2663518720 B peak, but all-row inference still failed in112.875s
+at a full-size linear output. All failed probes produced no predictions or AUC.
+One allocator-policy gate/probe remains prepared, not executed. If it cannot
+make full-context inference feasible, the frozen five-context fallback runner
+is ready. Its toy held-label flip check passes; no fallback model has been fitted.
+
+The lower-priority native39 probe is implemented and protocol-frozen, not fitted.
+It adds exact label-free rating/context categorical tuples to the unchanged
+strict C1 control and changes only the existing0.05-weight slot. Literal tuple
+identity, split-vocabulary consistency and target/ID independence checks pass.
+Recent focused checks cover58 critical files with0 undefined names, full-context
+default paths, confirmation/seed/fallback label exclusion and bootstrap ties.
 
 New test certification and robustness scorecard runners are prepared. They
 require complete primary admission, all ten median-capacity test refits, ordered
-IDs, vector/source hashes, full block10 confirmation, paired bootstrap, private
+IDs, vector/source hashes, full shadow and block10 confirmation, paired bootstrap, private
 simulation and one fixed seed1202 sensitivity replay. Seed1202 cannot replace
 the frozen seed1201 portfolio. No test certificate, confirmation scorecard or
 new submission has yet been produced.

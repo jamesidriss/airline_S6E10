@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-08T00:49:23.245688+00:00",
+  "updated_utc": "2026-10-08T01:26:31.663393+00:00",
   "verified_records": [
     {
       "exp_id": "sol_repair_C1_A0_f0",
@@ -319,6 +319,16 @@
         2.3192712762187817e-05
       ],
       "corr_with_champion": 0.9948759247148701,
+      "verdict": "POSITIVE_UNCONFIRMED"
+    },
+    {
+      "exp_id": "sol_tabpfn35_route_reserve_route_f2",
+      "fold": 2,
+      "validation_auc": 0.9611995647404888,
+      "paired_fold_deltas": [
+        2.3563738226095587e-05
+      ],
+      "corr_with_champion": 0.9948934935876961,
       "verdict": "POSITIVE_UNCONFIRMED"
     }
   ],

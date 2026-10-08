@@ -1,0 +1,15 @@
+{
+  "scope": "Focused native39 safety/static checks; no scored native39 experiment yet",
+  "results": [
+    {
+      "test": "test_native39_crosses_preserve_literal_identity_and_ignore_target",
+      "status": "PASS",
+      "seconds": 0.859000000054948
+    },
+    {
+      "test": "test_critical_files_have_no_undefined_names",
+      "status": "PASS",
+      "seconds": 0.015999999945051968
+    }
+  ]
+}

@@ -7,6 +7,7 @@ from __future__ import annotations
 import argparse
 import gc
 import json
+import os
 import shutil
 import sys
 import time
@@ -28,8 +29,11 @@ def main():
     ap.add_argument('--probe-only', action='store_true')
     ap.add_argument('--scaling-reuse',action='store_true',help='Use only after the complete-model numerical resource gate passes')
     ap.add_argument('--head-views',action='store_true',help='Use only after its complete-model numerical gate passes')
+    ap.add_argument('--query-activation-reuse',action='store_true')
     ap.add_argument('--gpu-fraction', type=float, default=.85)
     args = ap.parse_args()
+    allocator=os.environ.get('PYTORCH_ALLOC_CONF','')
+    assert allocator in ('','expandable_segments:True'), 'Undeclared allocator policy'
     reference_path = Path(args.reference)
     ref = json.loads(reference_path.read_text(encoding='utf-8'))
     assert ref['full_intended_population'] and ref['prediction_sha256']
@@ -67,6 +71,30 @@ def main():
         assert all(file_sha256(p)==h for p,h in gate['contract']['source_sha256'].items())
         assert arr_sha256(np.load(ARTIFACTS/'sol_head_views_reuse'/'probe.npy'))==gate['prediction_sha256']
         head_gate={'report_sha256':file_sha256(gate_path),'maximum_probability_gap':gate['maximum_probability_gap']}
+    query_gate=None
+    if args.query_activation_reuse:
+        assert args.head_views and args.scaling_reuse
+        gate_path=REPORTS/'sol_query_activation_reuse'/'probe.json'
+        gate=json.loads(gate_path.read_text(encoding='utf-8'))
+        assert gate['status']=='NUMERICAL_GATE_PASS' and gate['maximum_probability_gap']<=2e-6
+        assert gate['contract']['query_activation_reuse'] and gate['contract']['train_rows']==100000
+        expected=dict(ref['params'],categorical_features_indices=gate['contract']['params']['categorical_features_indices'])
+        assert gate['contract']['params']==expected
+        assert all(file_sha256(p)==h for p,h in gate['contract']['source_sha256'].items())
+        assert arr_sha256(np.load(ARTIFACTS/'sol_query_activation_reuse'/'probe.npy'))==gate['prediction_sha256']
+        query_gate={'report_sha256':file_sha256(gate_path),'maximum_probability_gap':gate['maximum_probability_gap']}
+    allocator_gate=None
+    if allocator:
+        assert args.query_activation_reuse and args.head_views and args.scaling_reuse
+        gate_path=REPORTS/'sol_allocator_expandable'/'probe.json'
+        gate=json.loads(gate_path.read_text(encoding='utf-8'))
+        assert gate['status']=='NUMERICAL_GATE_PASS' and gate['maximum_probability_gap']<=2e-6
+        assert gate['contract']['allocator_policy']==allocator and gate['contract']['train_rows']==100000
+        expected=dict(ref['params'],categorical_features_indices=gate['contract']['params']['categorical_features_indices'])
+        assert gate['contract']['params']==expected
+        assert all(file_sha256(p)==h for p,h in gate['contract']['source_sha256'].items())
+        assert arr_sha256(np.load(ARTIFACTS/'sol_allocator_expandable'/'probe.npy'))==gate['prediction_sha256']
+        allocator_gate={'report_sha256':file_sha256(gate_path),'maximum_probability_gap':gate['maximum_probability_gap']}
     checkpoint = Path(ref['params']['model_path'])
     assert file_sha256(checkpoint) == ref['checkpoint']['checkpoint_sha256']
     root, reports = ARTIFACTS/args.tag, REPORTS/args.tag
@@ -113,6 +141,8 @@ def main():
             'src/models/pointwise_inference.py', 'src/models/resource_guard.py')},
         'scaling_reuse':args.scaling_reuse,'scaling_reuse_gate':numerical_gate,
         'head_views':args.head_views,'head_view_gate':head_gate,
+        'query_activation_reuse':args.query_activation_reuse,'query_activation_gate':query_gate,
+        'allocator_policy':allocator,'allocator_numerical_gate':allocator_gate,
         'backend_reference_gap': backend_gate, 'gpu_fraction': args.gpu_fraction,
         'inference_settings': {k: ref[k] for k in ('batch_size', 'icl_bf16', 'inference_chunk_cells',
             'inference_col_chunk_size', 'decoder_inplace_gelu', 'reuse_query_output')},
@@ -122,6 +152,8 @@ def main():
         contract['source_sha256']['src/models/scaling_reuse.py']=file_sha256('src/models/scaling_reuse.py')
     if args.head_views:
         contract['source_sha256']['src/models/head_view_attention.py']=file_sha256('src/models/head_view_attention.py')
+    if args.query_activation_reuse:
+        contract['source_sha256']['src/models/query_activation_reuse.py']=file_sha256('src/models/query_activation_reuse.py')
     start = time.monotonic()
     model = None
     save_json({**contract, 'status': 'FITTING'}, root/'progress.json')
@@ -135,6 +167,9 @@ def main():
             if args.scaling_reuse:
                 from src.models.scaling_reuse import install_scaling_reuse
                 install_scaling_reuse(model.model_path.model)
+            if args.query_activation_reuse:
+                from src.models.query_activation_reuse import install_query_activation_reuse
+                install_query_activation_reuse(model.model_path.model)
             model.fit(x, y)
         fit_seconds = time.monotonic()-start
         gc.collect(); torch.cuda.empty_cache()

@@ -69,6 +69,7 @@ def main():
             'mean_paired_gain':r['mean_paired_gain_vs_strict_aux10'],'paired_se':r['paired_fold_se'],
             'positive_folds':r['positive_folds'],'pooled_auc':r['pooled_oof_auc']})
     assert any(r['scheme']=='block10' for r in confirms), 'Finalist contract requires block10 confirmation'
+    assert any(r['scheme']=='shadow' for r in confirms), 'Master handoff requires frozen shadow confirmation'
     sim=json.loads(Path(args.simulation).read_text(encoding='utf-8'))
     assert sim['portfolio_contract_sha256']==file_sha256(args.primary_report)
     assert sim['reference']=='route_aux10' and sim['population']==len(te) and sim['seed']==20261010
