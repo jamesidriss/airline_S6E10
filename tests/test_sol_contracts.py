@@ -50,6 +50,24 @@ def test_small_policy_audit_contexts_exclude_every_outer_query_row():
         assert np.array_equal(fit,fits_again[str(k)])
 
 
+def test_certified_submission_refuses_unbound_decision_before_loading_data():
+    import tempfile
+    from pathlib import Path
+    import scripts.prepare_sol_submission as runner
+    with tempfile.TemporaryDirectory() as directory:
+        folder=Path(directory);score=folder/'score.json';decision=folder/'decision.json'
+        score.write_text(json.dumps({'status':'not yet certified'}),encoding='utf-8')
+        decision.write_text(json.dumps({'verdict':'SUBMIT_FROZEN_CERTIFIED_CANDIDATE',
+            'scorecard_sha256':'wrong hash','candidate_name':'candidate'}),encoding='utf-8')
+        with patch.object(runner,'REPORTS',folder),patch.object(runner,'SUBMISSIONS',folder), \
+             patch.object(runner.sys,'argv',['prepare','--scorecard',str(score),'--decision',str(decision),'--name','candidate']), \
+             patch.object(runner,'load_cached_parquet') as load,patch.object(runner,'build') as build:
+            try:runner.main()
+            except AssertionError:pass
+            else:raise AssertionError('Unbound decision accepted')
+            load.assert_not_called();build.assert_not_called()
+
+
 def test_aux_fit_and_apply_rows_are_actually_unseen():
     from scripts.run_phase13 import RATINGS, build_aux
     names = RATINGS + ["Gender", "Customer Type", "Type of Travel", "Class", "Age", "Flight Distance",
