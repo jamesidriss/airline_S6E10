@@ -24,7 +24,7 @@
     0.9617400953498443
   ],
   "prediction_sha256": "207001ef2ad6373131afa93cc3ed3c09d9761a9e57d31dc6631aae21a10999fe",
-  "test_sha256": null,
+  "test_sha256": "a4ba22018d9477fb64a241b24a48b416db0e2fbde23c862059904614e74c0caf",
   "meta": {
     "family": "lgbm",
     "featureset": "full",
@@ -70,7 +70,7 @@
       "4d9a4ef2c41489529e8c2d90278357eb2712a8c62b8689b8c430a0a4af6645c0",
       "0ead06155b0d0df916b4d8420cef1d5f2691af63a8ff1c9996eaea4a4785bdbb"
     ],
-    "test_policy": "pending",
+    "test_policy": "full-label fixed-count same configuration",
     "ordered_train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
     "ordered_test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71"
   }

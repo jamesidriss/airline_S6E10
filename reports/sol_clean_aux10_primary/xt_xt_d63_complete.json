@@ -23,7 +23,7 @@
     0.9618481284254304
   ],
   "prediction_sha256": "ec960adf0c88e0c4bce030a13604be5316e550436736c052acb00c4819fe8d49",
-  "test_sha256": null,
+  "test_sha256": "31289c4c0bed92a8516f75d1dced47da80291dd3733f75313e6fcaf3fffff2ac",
   "meta": {
     "family": "lgbm",
     "featureset": "full",
@@ -69,7 +69,7 @@
       "88e2cf67a7a0da9b3167a62a823d92cdb2b51bd0212e83edcd99cfe66428280c",
       "cd263eda999b62269611733d85985d43c5b29a64033559e6a8fa5627c54d0a22"
     ],
-    "test_policy": "pending",
+    "test_policy": "full-label fixed-count same configuration",
     "ordered_train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
     "ordered_test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71"
   }

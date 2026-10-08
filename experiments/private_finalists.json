@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-08T10:59:37.748556+00:00",
+  "updated_utc": "2026-10-08T11:32:43.905686+00:00",
   "BEST_A": {
     "name": "v5_aux_cross",
     "ref": 56918343,
@@ -24,7 +24,7 @@
   "candidate_in_confirmation": {
     "name": "sol_route_aux10_primary_final",
     "intended_role": "expected private performance; provisional until confirmation and test certification",
-    "status": "FIVE_ROUTE_TEST_CONTEXTS_VERIFIED_AUXILIARY_TEST_PENDING",
+    "status": "FULL_PRIMARY_DECLARED_CONFIRMATION_AND_TEST_CERTIFIED_ROBUSTNESS_PENDING",
     "report": "reports/sol_route_aux10_primary_final.json",
     "report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
     "folds": [
@@ -55,7 +55,6 @@
     "test_policy": "five immutable primary FIT-context route predictions averaged in probability space; exact full-label median-tree auxiliary10 refits; fixed50/50 method logits",
     "predeclared_independent_scope": "shadow folds0/1 and primary fold0 seed1202; partial shadow only; block10 not run",
     "outstanding": [
-      "complete certified test predictions",
       "private simulation and robustness scorecard",
       "public transfer diagnostic",
       "final private-first slot reassessment"
@@ -117,6 +116,31 @@
       "report_sha256": "7d9e5b44905cfd53774ef0561f0d853e46d5f0cd38dc3c43f17d4d4e31ee0060",
       "test_rows": 299844,
       "averaged_route_sha256": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+    },
+    "test_certificate": {
+      "utc": "2026-10-08T11:32:43.905686+00:00",
+      "status": "CERTIFIED_FIXED_OOF_TEST_REQUIRES_ROBUSTNESS_SCORECARD",
+      "certificate": "reports\\sol_route_aux10_primary_final_test_certificate.json",
+      "certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+      "route_contexts": 5,
+      "route_training_rows_each": 559708,
+      "auxiliary_refits": 10,
+      "auxiliary_training_rows_each": 699635,
+      "test_rows": 299844,
+      "weights": {
+        "route": 0.5,
+        "equal_logit_auxiliary10": 0.5
+      },
+      "foundation_test_policy": "Equal probability average of five exact immutable primary FIT contexts; not a full-data fit",
+      "test_sha256": {
+        "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+        "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+        "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+      },
+      "auxiliary_cache_fingerprint": "7ad17c480b722e7625c3596c8618a46feca1e834cb557015dc1405c6f36be04d",
+      "auxiliary_cache_manifest_report": "reports\\sol_recovery_full_test_aux_cache.json",
+      "auxiliary_cache_manifest_sha256": "da49b58ca2bafd244c985440c0964c08ffd7903dbbb676963d49580f62bf8a3c",
+      "outstanding": "Private robustness scorecard, scientific decision, CSV preflight, upload and exact status, final private-first reassessment"
     }
   },
   "verified_clean_BEST_B_HEDGE": null

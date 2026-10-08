@@ -19,7 +19,7 @@
     0.9616750813627802
   ],
   "prediction_sha256": "f3f1f7eef6a172936d8d75e2c613a352e33a157b69e88c11fe7441a1fce24b53",
-  "test_sha256": null,
+  "test_sha256": "31b7f764d7b91fb13afcb9e8bf78a703f1e35f7f7d0d8dbcb777a2e11dde3b6e",
   "meta": {
     "family": "xgb",
     "featureset": "full",
@@ -58,7 +58,7 @@
       "e56192ffb4bf525413b3dda6b52276b60051f533616c7d084b7e97a32c538ad6",
       "35a06778aa86b55a86aa68b67db8c0faabd57168930d5ed5860961e59777e8ed"
     ],
-    "test_policy": "pending",
+    "test_policy": "full-label fixed-count same configuration",
     "ordered_train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
     "ordered_test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71"
   }
