@@ -344,3 +344,15 @@ iteration indices are zero based and refit counts require +1; XGB index zero
 must not be replaced by the maximum 6000-round budget. Parameter-identity and
 first-tree regression checks pass. No leaderboard improvement is inferred from
 these implementation changes; clean OOF/test replay remains necessary.
+
+## Direct public-topic refresh, 7 October 23:58 UTC
+
+[The39 categorical rating-context cross experiment](https://www.kaggle.com/competitions/playground-series-s6e10/discussion/745892)
+explicitly early-stops and restores checkpoints using the outer evaluation
+targets. Its reported0.000336522/0.000284399 OOF gains are rejected as honest
+admission evidence. Only its deterministic, label-free categorical mechanism
+may be reimplemented with inner FIT selection and matched controls.
+[The119-member public stack](https://www.kaggle.com/competitions/playground-series-s6e10/discussion/746148)
+does not establish fully nested base-model training. Its reported0.96200 is
+not comparable to our immutable, independently generated OOF. No shared
+predictions have been adopted. See `sol_public_refresh_20261008.md`.

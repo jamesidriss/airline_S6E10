@@ -567,3 +567,64 @@ def test_foundation_reader_rejects_ambiguous_completed_vectors_before_scoring():
                 raise AssertionError('Ambiguous completed predictions were silently selected')
             load.assert_not_called(); score.assert_not_called()
 
+
+def test_fixed_foundation_confirmation_excludes_outer_labels():
+    import json
+    import tempfile
+    from contextlib import ExitStack,nullcontext,redirect_stdout
+    from io import StringIO
+    from pathlib import Path
+    from importlib.metadata import version
+    from unittest.mock import patch
+    import numpy as np
+    import pandas as pd
+    import scripts.run_sol_tabpfn_confirm as runner
+    tr=pd.DataFrame({'id':np.arange(10),'satisfaction':np.arange(10)%2})
+    te=pd.DataFrame({'id':np.arange(100,103)})
+    folds=np.array([0,0,0,0,1,1,1,1,1,1]); x=np.arange(220).reshape(10,22).astype('float32')
+    names=[f'column{i}' for i in range(22)]
+    ref={'prediction_sha256':'sha','full_intended_population':True,'timing_only':False,
+        'arm':'route','seed':1201,'model_family':'TabPFN-3.5','library_version':version('tabpfn'),
+        'source_sha256':'sha','backend_source_sha256':'sha','decoder_chunk_source_sha256':'sha',
+        'resource_guard_source_sha256':'sha','batch_size':1024,'precision':'autocast',
+        'icl_bf16':True,'windows_mqa_backend':True,'reuse_query_output':True,
+        'decoder_inplace_gelu':True,'decoder_chunk_rows':None,'inference_chunk_cells':262144,
+        'inference_col_chunk_size':1,'gpu_memory_fraction':.85,'checkpoint':{'checkpoint_sha256':'sha'},
+        'params':{'model_path':'dummy','n_estimators':1,'categorical_features_indices':[18,21]},
+        'feature_names':names,'label_free_category_maps':{},'data_sha256':{'train':'sha','test':'sha'},
+        'test_policy':'full training context'}
+    fits=[]
+    class Model:
+        def fit(self,features,labels):
+            fits.append((features.copy(),labels.copy()))
+        def predict_proba(self,features):
+            return np.tile([.3,.7],(len(features),1))
+    with tempfile.TemporaryDirectory() as temporary,ExitStack() as stack:
+        folder=Path(temporary); (folder/'artifacts').mkdir(); (folder/'reports').mkdir()
+        reference=folder/'reference.json'; reference.write_text(json.dumps(ref))
+        stack.enter_context(patch.object(runner,'ARTIFACTS',folder/'artifacts'))
+        stack.enter_context(patch.object(runner,'REPORTS',folder/'reports'))
+        stack.enter_context(patch.object(runner,'file_sha256',return_value='sha'))
+        stack.enter_context(patch.object(runner,'load_cached_parquet',side_effect=lambda:(tr.copy(),te.copy())))
+        scheme=stack.enter_context(patch.object(runner,'get_scheme',return_value=type('Scheme',(),{'folds':folds})()))
+        stack.enter_context(patch.object(runner,'frames',return_value=(x,np.zeros((3,22)),names,[18,21],{})))
+        stack.enter_context(patch.object(runner,'create_model',side_effect=lambda *a:Model()))
+        stack.enter_context(patch.object(runner,'inference_guard',side_effect=lambda *a,**k:nullcontext()))
+        for name in ('set_per_process_memory_fraction','reset_peak_memory_stats','empty_cache'):
+            stack.enter_context(patch.object(runner.torch.cuda,name))
+        stack.enter_context(patch.object(runner.torch.cuda,'max_memory_allocated',return_value=100))
+        stack.enter_context(patch('src.models.windows_attention.register'))
+        stack.enter_context(patch('src.models.windows_attention.verify_gpu_equivalence',return_value=0))
+        for tag in ('first','flipped'):
+            if tag=='flipped':
+                tr.loc[folds==0,'satisfaction']=1-tr.loc[folds==0,'satisfaction']
+            with patch('sys.argv',['confirm','--reference',str(reference),'--scheme','shadow','--fold','0','--tag',tag]),redirect_stdout(StringIO()):
+                assert runner.main()==0
+            report=json.loads((folder/'reports'/tag/'route_f0.json').read_text())
+            assert report['scheme']=='shadow' and report['train_rows']==6 and report['validation_rows']==4
+            assert report['fit_ids_sha256']==runner.arr_sha256(tr.id.to_numpy()[folds!=0])
+        assert all(call.args[0]=='shadow' for call in scheme.call_args_list)
+        assert np.array_equal(fits[0][0],x[folds!=0]) and np.array_equal(fits[0][1],tr.satisfaction.to_numpy()[folds!=0])
+        assert np.array_equal(fits[0][0],fits[1][0]) and np.array_equal(fits[0][1],fits[1][1])
+        assert np.array_equal(np.load(folder/'artifacts'/'first'/'route_f0.npy'),np.load(folder/'artifacts'/'flipped'/'route_f0.npy'))
+

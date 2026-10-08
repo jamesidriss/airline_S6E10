@@ -11,7 +11,7 @@ run a model catalogue.
 | 2 | Satisfaction + masked-rating multitask encoder, matched reconstruction weight 0 vs small/moderate | High objective novelty; 0–0.0002 vs the matched network | Medium/high, but only if standalone gap to A becomes <=0.0003 | Neural optimization medium/high; 0.5–2 h | Conditional on replicated SSL/distribution evidence. SSL B1 mean three-fold standalone gain +0.0001217, but actual v5 replacement negative in all three; SSL+aux fold0 negative. Plain soft-target and seed branches remain closed. |
 | 3 | Nested disagreement specialist on high auxiliary surprise | Medium/high: tests concentration of known A pair errors; 0–0.0001 ensemble | Medium, conditional on error concentration and stable segment performance | Nested selection high; 0.5–2 h | First a label-free segmented diagnostic. Train only if errors concentrate materially. Fit every label-dependent correction inside outer FIT; existing local reliability result is a warning, not support. |
 | 4 | Field-aware factorization of raw answers and auxiliary residuals | Medium/high pair-interaction inductive bias; 0–0.0002 standalone | Medium; pointwise sparse interaction model differs from trees | Capacity and optimization medium; 0.5–1.5 h | Not a generic MLP rerun. Compare a fixed second-order interaction arm to a matched linear control. Lower EV until auxiliary block replicates. |
-| 5 | ModernNCA learned metric with sampled candidate objective | Medium objective novelty; 0–0.0002 standalone | Medium/high if it closes the standalone gap | Retrieval scale and implementation high; 2–4 h | Substantial overlap with rejected TabR/kNN; only new evidence justifies execution. No default rerun. |
+| 5 | Exact native categorical rating-by-passenger-context crosses | Medium mechanism novelty; 0–0.0003 standalone is a planning range | Medium if different pair errors survive an honest blend | Categorical processing medium; matched first-fold control before expansion | Public39-cross claims use outer ES and are rejected. Existing numeric products/original-label multi-TE are not exact native competition-trained crosses. Reimplement only after current frozen portfolio replication; no imported predictions or score-based weight grid. |
 
 The measured branches already in progress are not additional queue entries:
 distribution A1 failed fold1; A2 failed fold2 with −0.000201215 standalone and
@@ -19,7 +19,7 @@ three-fold mean −0.000001304. A3/A4 lose standalone. The frozen SSL encoder wa
 evaluated on three folds, with adverse actual v5 slot deltas, and its XT check
 lost −0.000044376. Multitask and field-factorization conditions are unmet; the
 surprise diagnostic does not justify a specialist. Full-context foundation
-inference is still the only eligible new mechanism. Neural replay is mandatory
+inference has priority among eligible new mechanisms. Neural replay is mandatory
 repair of withdrawn outer-selected CV, not a new model/seed search.
 
 Own full-context discovery is now positive, not a resource-only result: raw f0
@@ -30,6 +30,12 @@ classical component. This single-fold result promotes exact replication; it
 does not admit a finalist. Route f1 and the current-code auxiliary counterpart
 replay take priority. Full699635-row test-context feasibility is a separate
 resource gate before committing to a larger finalist run.
+
+The direct23:58 UTC topic refresh adds the39-cross mechanism as a lower-priority
+own experiment, replacing the unsupported ModernNCA rerun in this five-entry
+queue. ModernNCA remains closed without new evidence. Details and rejected
+outer-ES/nesting claims are in `sol_public_refresh_20261008.md`; the active
+route/auxiliary10 recipe and its fixed50/50 weight remain unchanged.
 
 Primary sources:
 

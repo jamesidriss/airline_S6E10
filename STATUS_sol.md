@@ -1,6 +1,6 @@
 # SOL campaign — audit and continuation
 
-Checkpoint: 7 October 2026, 23:12 UTC. **No clean finalist has yet been fully
+Checkpoint: 8 October 2026, 00:03 UTC. **No clean finalist has yet been fully
 reproduced. No new Kaggle submission was spent. Final slots remain unlocked.**
 The campaign continues; this is not a final decision or research stopping point.
 
@@ -45,10 +45,10 @@ its historical TE priors remain affected. See `reports/sol_neural_audit.json`.
 | SSL+aux A0 | f0 −0.000028034 standalone; slot −0.000001512 | No promotion |
 | Surprise diagnostic | High-surprise pair error rate0.04723 vs0.03771 outside; modest within-margin enrichment | No specialist justified |
 | Full-context TabPFN3.5 raw | Honest f0 AUC 0.960972296; fixed 1/60 append gain +0.000021134; logit correlation 0.994532205; 1030.312 s | Positive discovery only; legacy comparison, no admission |
-| Matched TabPFN3.5 route | Honest f0 AUC 0.961132446; +0.000160150 versus raw; 1/60 append gain +0.000020159 | Promote to fold1, not admitted |
+| Matched TabPFN3.5 route | Honest f0/f1 AUC 0.961132446/0.961379166; f0 +0.000160150 versus raw; 1/60 legacy append gains +0.000020159/+0.000023193 | Two completed folds; no full-OOF admission |
 | Frozen 50/50 route/strict auxiliary10 | Honest f0 AUC 0.961727180; +0.000312976 versus strict auxiliary10; +0.000217338 versus legacy v5 | Promising candidate; prioritize exact replication |
 | Corrected RealMLP recipe | f0 AUC 0.960758172; legacy slot diagnostic −0.000002531; 70.328 s; OOF/test vectors saved | Contract repair only; no improvement/admission claim |
-| Query and activation buffer reuse | Complete-model 100k-context/1024-prediction probes are bit-identical to the reference; raw full-FIT now completes | Route f0 active in a fresh process |
+| Query and activation buffer reuse | Complete-model 100k-context/1024-prediction probes are bit-identical to the reference; raw and route full-FIT now complete | Frozen for primary replication |
 | Decoder linear-projection batching | Max probability gap 0.000226825 vs tolerance 0.000002 | Failed equivalence gate; reject implementation |
 
 Attention reference gaps: FP16 **0.00048828125**, BF16 **0.0078125**, within
@@ -71,7 +71,14 @@ contracts or forecast ranks. A clean candidate needs its own simulation.
 
 ## Resources and verification
 
-Active: route fold1, fresh tag `sol_tabpfn35_route_reserve`.
+Active: `replay_sol_isolated.py`, tag `sol_clean_aux10_isolated`, twenty frozen
+auxiliary role/fold jobs. Twelve XT jobs are complete; native CatBoost and three
+XGB roles remain. One fresh process per fold avoids native allocator retention.
+The new first XT control has bit-identical predictions, FIT/validation matrices
+and718 selected trees compared with corrected SOL-A A0. The remaining controls
+must pass before interpreting the predeclared50/50 portfolio's second fold.
+Route fold1 completed in1027.359 s, with13675054592 B peak GPU allocation.
+Its prediction SHA256 is83ca4330f955aef150dab5f45ebd2f1d432109659842e9fb371e88d6d1c0771a.
 The first fold1 FIT succeeded in787.9 s but prediction was refused because the
 Windows pagefile expansion left less than20 GiB free disk. No fold1 CV vector or
 performance score was produced. This attempt remains preserved as resource-invalid.
@@ -128,12 +135,22 @@ findings. All nine actual-data view compositions and activation-reuse checks pas
 The complete-model GPU activation probe has max probability
 gap **0**, retaining SHA a64dfea84287aad3f6c1675916f5f7e252c055d4eb45e22d79b265a930c3d543.
 
+Three current focused checks pass: ambiguous completed foundation vectors are
+rejected before scoring; flipping shadow evaluation labels leaves all FIT
+inputs and predictions unchanged;43 critical files contain0 undefined names.
+The separate frozen confirmation runner preserves the primary source bytes and
+supports immutable shadow/block10 folds. No confirmation model has been fitted.
+Direct public-topic refresh and rejected outer-ES/public-stack claims are in
+`research/sol_public_refresh_20261008.md`. The39-cross mechanism replaces the
+unsupported ModernNCA rerun in the five-entry queue; active weights stay fixed.
+
 ```powershell
 .\.venv\Scripts\python.exe scripts\audit_sol_state.py
 .\.venv\Scripts\python.exe scripts\audit_sol_neural.py
 .\.venv\Scripts\python.exe scripts\replay_sol_neural.py --members z3_rm_bs256_e6 --folds 0 --save-test --tag sol_neural_clean_compact
-.\.venv\Scripts\python.exe scripts\run_sol_tabpfn.py --folds 1 --arms route --batch-size 1024 --windows-mqa --reuse-query-output --decoder-inplace-gelu --memory-saving on --icl-bf16 --chunk-cells 262144 --col-chunk 1 --host-reserve-gib 4 --prediction-host-reserve-gib 2 --tag sol_tabpfn35_route
-.\.venv\Scripts\python.exe scripts\replay_sol_classical.py --members aux10 --folds 0,1 --tag sol_clean_classical
+.\.venv\Scripts\python.exe scripts\replay_sol_isolated.py --folds 0,1 --tag sol_clean_aux10_isolated
+.\.venv\Scripts\python.exe scripts\evaluate_sol_foundation.py --folds 0,1 --classical-tag sol_clean_aux10_isolated --name sol_route_aux10_twofold
+.\.venv\Scripts\python.exe scripts\run_sol_tabpfn_test.py --probe-only --tag sol_tabpfn35_full_context_probe
 .\.venv\Scripts\python.exe tests\run_tests.py
 ```
 
