@@ -1,0 +1,16 @@
+{
+  "all_positive_negative_pairs": 4832536620,
+  "rescued_pair_credit": 15924819.5,
+  "damaged_pair_credit": 14412342.5,
+  "rescued_pair_fraction": 0.0032953334350521693,
+  "damaged_pair_fraction": 0.002982355568782012,
+  "net_auc_gain": 0.00031297786627015775,
+  "baseline_error_pair_credit": 186467279.0,
+  "candidate_error_pair_credit": 184954802.0,
+  "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling",
+  "seconds": 0.5,
+  "prediction_sha256": "4c2a0d68de89fd80a831385a32ec30dab6e82aa32b2cf17b3f61944698f114a0",
+  "baseline_sha256": "24f878ad09337a488827e9c20d7682aaf6d9b04f0745d9316b5db05ebf479c00",
+  "source_sha256": "f8e998569676f8b8b574637c92335ae6a7445b647e17bfee377a5dfd7216b9ea",
+  "purpose": "Existing v6 vs existing aux10 numerical audit; no candidate selection"
+}

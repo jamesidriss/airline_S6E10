@@ -1,0 +1,154 @@
+{
+  "contract": {
+    "git": "d6ecc2ca1ddb46421901b129b3cb9ac5d917938c",
+    "fold": 0,
+    "scheme": "primary",
+    "params": {
+      "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35_fast\\tabpfn-v3.5-fast-20260909.safetensors",
+      "n_estimators": 1,
+      "auto_scale_n_estimators": false,
+      "random_state": 1201,
+      "device": "cuda",
+      "ignore_pretraining_limits": true,
+      "fit_mode": "fit_with_cache",
+      "kv_cache_precision": "int8",
+      "keep_cache_on_device": true,
+      "inference_precision": "autocast",
+      "categorical_features_indices": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        21
+      ],
+      "memory_saving_mode": true,
+      "n_preprocessing_jobs": 1,
+      "tuning_config": null
+    },
+    "seed": 1201,
+    "train_rows": 559708,
+    "apply_rows": 139927,
+    "fit_ids_sha256": "4f6cafdf586649e3589d97fa657ce942699627c12053770d519e4d9d1004c338",
+    "apply_ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+    "bank": {
+      "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+      "test_certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+      "data_sha256": {
+        "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+        "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+      },
+      "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+      "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+      "test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+      "oof_sha256": {
+        "candidate": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+        "aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+        "route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510"
+      },
+      "test_sha256": {
+        "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+        "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+        "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+      },
+      "v6_csv_sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d"
+    },
+    "feature_fit_sha256": "157be074349b4d6c105a35200ed37da2ca3f14e601f9df30feba469fbc807dd0",
+    "feature_apply_sha256": "c39a7ee7e2065404bb6d4ab1cccc75a5659d5283103376d12b14d537dd097445",
+    "feature_names": [
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Cleanliness",
+      "Gender",
+      "Customer Type",
+      "Type of Travel",
+      "Class",
+      "Age",
+      "Flight Distance",
+      "Departure Delay in Minutes",
+      "Arrival Delay in Minutes",
+      "Flight Distance coarse10"
+    ],
+    "label_free_category_maps": {
+      "Gender": [
+        "Female",
+        "Male"
+      ],
+      "Customer Type": [
+        "Loyal Customer",
+        "disloyal Customer"
+      ],
+      "Type of Travel": [
+        "Business travel",
+        "Personal Travel"
+      ],
+      "Class": [
+        "Business",
+        "Eco",
+        "Eco Plus"
+      ]
+    },
+    "timing_only": false,
+    "reference_report_sha256": "fa03f11f7e283dac771fa97230257e761d7618d321ac29f7d69154e95b785bf2",
+    "scope_sha256": "ed06c57103ea2a952ec3d2085af3e7caccb8e7dabb2da1e2276dd61a2355bc52",
+    "policy_sha256": "a0cb8f04b3954a87c19edbd1311d32662f3cecd190ac9954ebd3ded49f7f9036",
+    "checkpoint": {
+      "completed_utc": "2026-10-08T22:39:00.361811+00:00",
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35_fast\\tabpfn-v3.5-fast-20260909.safetensors",
+      "checkpoint_sha256": "14e0b81285bca7a6d1ef121169f27f651f76dff49cad6c0b8779d5c836018550",
+      "size": 334181708,
+      "predownload_provenance_sha256": "6911d494be9ba92661ed65dc7b06c8c12a3494fe35619f6783b5da04765fc052",
+      "revision": "06bf2ba35c80a92a3b9abb436b99cf49e7a0365e"
+    },
+    "provenance_sha256": "6911d494be9ba92661ed65dc7b06c8c12a3494fe35619f6783b5da04765fc052",
+    "download_certificate_sha256": "e137c2b616bb75d8e802f6bfba7b58a06c7784209dea61e170d04bd28c7138d7",
+    "source_sha256": {
+      "scripts/phase16_tabpfn.py": "548f9de2cd4eeb3661829f2696e7f2a2cd32a1ad2277ad828eb8fcc5371749ab",
+      "scripts/run_phase16_fast.py": "010689c3ea0d896abf32894fca99c8caf06cd0ad91c68c3cc9607e2d740919a0",
+      "scripts/phase16_common.py": "46671da65f02f8c954b6c76250f777d12df3f4ef1b394150c2ace3db18630aca",
+      "scripts/run_sol_tabpfn.py": "e3d84441b6e2b927cf058dbefe4bd0a3956f12834d75a8ff4a2f85fafc6e5d6b",
+      "src/models/windows_attention.py": "104bed55ad7eb37911a27e22ee37b558b6bda43ae123c0f386303cea4116bc34",
+      "src/models/pointwise_inference.py": "1aedd977666d9a1777692dbfd889d0a50bd303609154cbc68bcfb18c94e8b1ab",
+      "src/models/resource_guard.py": "b91280215a10f688690603b17289e9b80d865488127744826ef0e449721a2049"
+    },
+    "library_versions": {
+      "tabpfn": "9.1.0",
+      "torch": "2.11.0+cu128",
+      "numpy": "2.4.6",
+      "scikit-learn": "1.9.1"
+    },
+    "library_source_sha256": {
+      "classifier.py": "946f31f593d50fb1ab64fc948451bc2d5071c6d119ecb1c9ac419e633d7c3708",
+      "inference.py": "7b24edcee231de2d40c616415aa5b72ea19ec020b9b6889c6f1209b98f178444",
+      "base.py": "3537d7939bc6122c2339b464371d5f7428d4342cf6b9b58f3ccfa96022af3304",
+      "inference_config.py": "9861965d5082b55be5f1182563b7043a4c413783ce87db57a0925fc3ea05cf38",
+      "preprocessing/ensemble.py": "6c795ffa8715aa1a6692eaa99c745cc1209c8cf46564b9fc16b0cb427fa9ebff",
+      "preprocessing/datamodel.py": "bdbba1fb6881fe71826fb8ed9e97f367e471f599ce268088f0154202332acd06"
+    },
+    "backend_reference_gaps": {
+      "fp16": 0.00048828125,
+      "bf16": 0.0078125
+    },
+    "outer_labels_used_for_fit_or_configuration": false,
+    "entire_training_context": false
+  },
+  "status": "COMPLETE_FROZEN_PRIMARY_FOLD",
+  "prediction_sha256": "53b415c82c5f8a126e80971f0f72f2ad85a97e7ae8064bd2ff51db3bc634ff6c",
+  "fit_seconds": 264.6719999999041,
+  "peak_gpu_bytes": 12258150912,
+  "configuration_hashes": [
+    "f6d0f81c08f90360435aea009f5e73467c3984a9c16545d948cae051c4c17d59"
+  ],
+  "auc": 0.9596645993962483,
+  "seconds": 349.56199999991804
+}

@@ -1,0 +1,40 @@
+# Phase16 — bounded cycle closed, v6 preserved
+
+Champion A remains **v6_sol_tabpfn_route_aux10**, honest full-primary OOF **0.9617656138245795**, certified test inference, Kaggle ref56951906 and public0.96144. The stretch0.962100 was not reached; the remaining gap is0.0003343861754204758. No new upload or qualified Champion B emerged. Stop this cycle; no automatic Phase17.
+
+Delta values below are **millionths of operational portfolio AUC**. Partial fold0 scores are explicitly marked; they are not full pooled OOF. Test correlations are Spearman. Geometry timings are shared across the three fixed-vector comparisons.
+
+| Candidate | Mechanism | Folds | OOF AUC | Δ vs v6 | Shadow | Test corr | Runtime | Verdict |
+|---|---|---|---|---|---|---|---|---|
+| v6 / G0 | Frozen50/50 route + auxiliary10 logits | 5 | 0.961765614 | 0 | Existing2 positive folds | 1 reference | Banked; geometry20.9s | Champion A |
+| G1 | Equal probabilities | 5 | 0.961755422 | −10.192 | Gate failed | 0.999920 | Shared20.9s | Reject;1/5 positive |
+| G2 | Applied-fold midranks, equal weights | 5 | 0.961749600 | −16.013 | Gate failed | 0.999764 | Shared20.9s | Reject;0/5 positive |
+| B0 | Exact original route control, unchanged portfolio | 1: fold0 | 0.961727180 portfolio;0.961132446 route | 0 | Control only | Not refit | 1011.625s | Exact prediction SHA match |
+| B1 | Official2 configs, sequential caches | 0 scored | — | — | Not triggered | Not triggered | Two100k probes229.218s | INVALID native Windows equivalence; no modelling verdict |
+| Fast + auxiliary10 | Official8-layer checkpoint, frozen50/50 logits | 1: fold0 | 0.961385741 portfolio;0.959664599 route | −341.440 | Discovery failed | Not triggered | Probe10.719s; full349.562s | Reject;all9 segments negative |
+
+1. **What the3.8% notebook establishes.** It injects nested random label flips into original-data training and interpolates the corruption needed for one LightGBM recipe to match its competition-domain AUC: approximately3.77%, rounded3.8%. This is model/domain-equivalent corruption, not observed irreducible competition flips. The later imported135-member OOF stack is not fully nested and is rejected as local admission evidence. Our existing original-only teacher found near-certain-region disagreements of3.456% and4.595%; v6 still ranks observed labels within those regions at AUC0.591758 and0.643126. The exact author flip-grid training was not rerun; our cached teacher has a documented different recipe and excludes21 exact original/competition covariate overlaps. See [noise frontier](phase16_noise_frontier.md) and its numeric reproduction.
+
+2. **Is0.9621 plausible?** It remains unruled out, not demonstrated attainable. Under actual symmetric independent3.8% flips and observed prevalence0.44357272, even a perfect clean ranker has population AUC ceiling0.960979245. Those noise assumptions are not verified. A perfect-ranker ceiling0.9621 corresponds to equivalent flips0.036909744; this is a conditional calculation, not a measured rate. Structured noise, original-model approximation error, generator/domain shift and finite-sample uncertainty remain distinct unresolved explanations. No arbitrary label cleaning follows from the proxy.
+
+3. **Internal ensembling.** The checkpoint default is8, while the certified route requests1 explicitly. Official2 and4 change feature shifts/class permutations/pipeline seeds; neither preserves the complete original config/seed combination. Each sequential100k member completed at about2.66GiB peak, but native2 prediction failed twice with `No available kernel`, including a predeclared64-row query retry. Probability equivalence was therefore unverified, and no full B1/B2 model was run. This is an implementation invalidity, not evidence that internal ensembling hurts. B0 independently reproduced authoritative prediction SHA9cb5e530334f834c826ed7bc9127b59f8abe2a99ff6067f4e780ed803eb6b41d, the exact route AUC and13,675,054,592-byte peak allocation.
+
+4. **Aggregation geometry.** Neither alternative helps. G1 paired-bootstrap95% interval is[−17.862,−2.504]micro; G2 is[−32.470,−2.358]micro. Ranking transforms accept no labels and use separate applied-fold populations, avoiding a pooled OOF reference that would mix models trained on apply labels. No weights were tuned.
+
+5. **Different foundation checkpoint.** Official Fast uses83,534,985 stored tensor elements versus218,987,657 in the original, the same architecture family/width/preprocessing, and8 versus24 layers. Its100k probe was valid at2.22GiB; fullfold0 finished2.89× faster than B0. Route AUC lost1467.847micro and the operational portfolio lost341.440micro. Portfolio OOF Spearman was0.989713 and logit correlation0.998169. Exact pair credits rescued15,781,150.5 and damaged17,431,171.0 out of4,832,536,620 pairs. Its paired-bootstrap interval[−510.016,−199.305]micro is entirely negative; all9 checked segments lose. Diverse errors do not make this a competitive hedge. Official checksum, immutable HF revision, matching license and fresh Kaggle external-model rule2.6 were checked before download/execution.
+
+6. **Convincing v6 improvement.** None. Only G1/G2 have new complete5fold scores; both lose. Fast is a valid negative discovery result, not a new full OOF score. Exact auxiliary10 member logits were reconstructed and matched the immutable auxiliary and v6 vectors byte-for-byte before the replacement comparison.
+
+7. **Credible private hedge.** None qualified. Geometry lacks gains/diversity; Fast has materially worse score and segment robustness. B1 remains unmeasured. Champion B stays empty.
+
+8. **Submissions.** Zero new submissions; v6 was not resubmitted. The CSV SHA remains828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d.
+
+9. **Public results.** Existing v6 remains0.96144, ref56951906. Final read-only snapshot at2026-10-08T23:08:20Z: rank249/1205, top public0.96200,9 submissions remaining. No model, weight or seed was selected from this snapshot.
+
+10. **Private finalists.** A is certified v6. No second clean, competitive finalist is recommended. Legacy v5 remains preserved with documented validation/inference defects. Final Kaggle selection is not locked; recheck rules near the deadline.
+
+11. **Git/tests/evidence.** Model and probe code was committed and pushed before full runs: control code7670cd7, exact comparison code d6ecc2c. The precompute full suite passed124/0; the final suite passed125/0 with82 critical files and0 undefined names. Final byte/secret audit results are recorded in adjacent certificates and the final proof index. Final evidence HEAD is reported after the closing push. Source notebooks, invalid runs, predeclarations and exact data/source/config/ID/prediction hashes are preserved. The historical phase15 strategy was archived before updating the current strategy; its proof files and immutable v6 bank still pass. No secrets, bulk data, weights or prediction arrays belong in Git.
+
+12. **Further research or stop?** Stop this authorized cycle. The three-item queue is closed: geometry negative, official internal ensemble capability invalid, Fast negative. B1/B2 full folds, Fast further folds, new shadow2, seed perturbation, test inference, candidate820-draw privateSIM and uploads were not triggered by the frozen gates. No candidate is promoted from partial or imported OOF. Measured model/probe job wall time totaled0.444757hours, within the8-hour initial budget; no extension was used. Internal ensembling remains a future research question requiring a verified native comparison on a compatible backend. The private leaderboard and actual irreducible-noise rate remain unknown.
+
+Numeric evidence: phase16_geometry_20261009.json; phase16_noise_reproduction_20261009.json; phase16_tabpfn_probe_20261009.json; phase16_tabpfn_probe_v2_20261009.json; phase16_B0_f0.json; phase16_fast_probe_f0.json; phase16_fast_f0_evaluation.json; phase16_cycle_decision_20261009.json. Independent source audit: research/phase16_independent_audit.md. Final strategy: experiments/private_finalists.json. Experiment ledger is append-only.

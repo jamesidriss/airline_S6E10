@@ -1,0 +1,150 @@
+{
+  "contract": {
+    "git": "7670cd7d37cfa3439dc6e68fbf9f80205dafbf24",
+    "fold": 0,
+    "scheme": "primary",
+    "params": {
+      "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35\\tabpfn-v3.5-20260909.safetensors",
+      "n_estimators": 1,
+      "auto_scale_n_estimators": false,
+      "random_state": 1201,
+      "device": "cuda",
+      "ignore_pretraining_limits": true,
+      "fit_mode": "fit_with_cache",
+      "kv_cache_precision": "int8",
+      "keep_cache_on_device": true,
+      "inference_precision": "autocast",
+      "categorical_features_indices": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        21
+      ],
+      "memory_saving_mode": true,
+      "n_preprocessing_jobs": 1,
+      "tuning_config": null
+    },
+    "seed": 1201,
+    "train_rows": 559708,
+    "apply_rows": 139927,
+    "fit_ids_sha256": "4f6cafdf586649e3589d97fa657ce942699627c12053770d519e4d9d1004c338",
+    "apply_ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+    "bank": {
+      "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+      "test_certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+      "data_sha256": {
+        "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+        "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+      },
+      "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+      "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+      "test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+      "oof_sha256": {
+        "candidate": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+        "aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+        "route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510"
+      },
+      "test_sha256": {
+        "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+        "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+        "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+      },
+      "v6_csv_sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d"
+    },
+    "feature_fit_sha256": "157be074349b4d6c105a35200ed37da2ca3f14e601f9df30feba469fbc807dd0",
+    "feature_apply_sha256": "c39a7ee7e2065404bb6d4ab1cccc75a5659d5283103376d12b14d537dd097445",
+    "feature_names": [
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Cleanliness",
+      "Gender",
+      "Customer Type",
+      "Type of Travel",
+      "Class",
+      "Age",
+      "Flight Distance",
+      "Departure Delay in Minutes",
+      "Arrival Delay in Minutes",
+      "Flight Distance coarse10"
+    ],
+    "label_free_category_maps": {
+      "Gender": [
+        "Female",
+        "Male"
+      ],
+      "Customer Type": [
+        "Loyal Customer",
+        "disloyal Customer"
+      ],
+      "Type of Travel": [
+        "Business travel",
+        "Personal Travel"
+      ],
+      "Class": [
+        "Business",
+        "Eco",
+        "Eco Plus"
+      ]
+    },
+    "reference_report_sha256": "fa03f11f7e283dac771fa97230257e761d7618d321ac29f7d69154e95b785bf2",
+    "scope_sha256": "ed06c57103ea2a952ec3d2085af3e7caccb8e7dabb2da1e2276dd61a2355bc52",
+    "probe_report_sha256": "d2595d6f9f6e6225dfc8e1501e582dc65fb7bcd83f304c2772e1dfabb856ea72",
+    "checkpoint": {
+      "accessed_utc": "2026-10-07T18:55:06.560314+00:00",
+      "source": "https://huggingface.co/Prior-Labs/tabpfn_3_5",
+      "revision": "06bf2ba35c80a92a3b9abb436b99cf49e7a0365e",
+      "checkpoint_sha256": "ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3",
+      "license_sha256": "9570fdd687bb76ed45499412ad57d6ba949848e6d731f1242572bb57f2f73ae1",
+      "license": "TabPFN-3.5 Non-Commercial License v1.0; section 1.c includes data science competitions; no commercial deployment",
+      "usage": "own fold-safe full-context inference, no imported competition predictions",
+      "rule_section": "2.6 external public models"
+    },
+    "source_sha256": {
+      "scripts/phase16_tabpfn.py": "548f9de2cd4eeb3661829f2696e7f2a2cd32a1ad2277ad828eb8fcc5371749ab",
+      "scripts/run_phase16_tabpfn.py": "0b3be5ea6a19890d23bad197fdfa3b832363cbad5311463ee03248ccf465dde1",
+      "scripts/phase16_common.py": "46671da65f02f8c954b6c76250f777d12df3f4ef1b394150c2ace3db18630aca"
+    },
+    "library_versions": {
+      "tabpfn": "9.1.0",
+      "torch": "2.11.0+cu128",
+      "numpy": "2.4.6",
+      "scikit-learn": "1.9.1"
+    },
+    "library_source_sha256": {
+      "classifier.py": "946f31f593d50fb1ab64fc948451bc2d5071c6d119ecb1c9ac419e633d7c3708",
+      "inference.py": "7b24edcee231de2d40c616415aa5b72ea19ec020b9b6889c6f1209b98f178444",
+      "base.py": "3537d7939bc6122c2339b464371d5f7428d4342cf6b9b58f3ccfa96022af3304",
+      "inference_config.py": "9861965d5082b55be5f1182563b7043a4c413783ce87db57a0925fc3ea05cf38",
+      "preprocessing/ensemble.py": "6c795ffa8715aa1a6692eaa99c745cc1209c8cf46564b9fc16b0cb427fa9ebff",
+      "preprocessing/datamodel.py": "bdbba1fb6881fe71826fb8ed9e97f367e471f599ce268088f0154202332acd06"
+    },
+    "backend_reference_gaps": {
+      "fp16": 0.00048828125,
+      "bf16": 0.0078125
+    },
+    "test_policy": "Five exact primary FIT-context predictions, native estimator aggregation then equal probability context average",
+    "outer_labels_used_for_fit_or_configuration": false,
+    "entire_training_context": false
+  },
+  "fit_seconds": 774.655999999959,
+  "peak_gpu_bytes": 13675054592,
+  "configuration_hashes": [
+    "f6d0f81c08f90360435aea009f5e73467c3984a9c16545d948cae051c4c17d59"
+  ],
+  "status": "EXACT_B0_HASH_MATCH",
+  "prediction_sha256": "9cb5e530334f834c826ed7bc9127b59f8abe2a99ff6067f4e780ed803eb6b41d",
+  "auc": 0.9611324459037415,
+  "seconds": 1011.625
+}

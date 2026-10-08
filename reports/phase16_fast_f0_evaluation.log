@@ -1,0 +1,1 @@
+{"standalone_auc": 0.9596645993962483, "standalone_delta": -0.001467846507493209, "portfolio_auc": 0.9613857406216612, "portfolio_delta": -0.0003414398337246993, "discovery_pass": false, "replication_pass": false, "verdict": "DISCOVERY_FAIL_CLOSE_NO_PROMOTION"}

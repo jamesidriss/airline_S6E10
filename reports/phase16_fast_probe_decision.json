@@ -1,0 +1,11 @@
+{
+  "probe_report_sha256": "3ef9d5831a85465b3ec6cbca2a6a28b22dd6ef679aadcdaadc869cec1e3d1c20",
+  "original_control_report_sha256": "7ddb065422f852b286125e71456f2cd12921e0a92fb411693f74ba0dbd04eb24",
+  "configuration_hash_match": true,
+  "original_full_fit_seconds": 774.655999999959,
+  "probe_fit_seconds": 10.437999999965541,
+  "probe_peak_gpu_gib": 2.217763900756836,
+  "estimated_full_fit_seconds_quadratic_upper": 326.99440464548366,
+  "basis": "Quadratic context-attention scaling; initial model setup also scaled, so conservative; prediction timing/shape different at full fold; no AUC",
+  "decision": "Proceed with one frozen fullfold0 under unchanged guards"
+}

@@ -10,6 +10,10 @@ tests/test_no_undefined_names.py -text
 tests/run_tests.py -text
 .gitattributes -text
 experiments/private_finalists.json -text
+experiments/ledger.jsonl -text
+STATUS.md -text
+STATUS_sol.md -text
+research/current_meta.md -text
 scripts/sol_native_crosses.py -text
 scripts/assemble_sol_foundation_test.py -text
 scripts/evaluate_sol_foundation.py -text

@@ -1,0 +1,42 @@
+{
+  "policy": "Read header only, no weights executed or AUC",
+  "checkpoints": {
+    "artifacts/tabpfn35/tabpfn-v3.5-20260909.safetensors": {
+      "checkpoint_sha256": "ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3",
+      "tensor_count": 595,
+      "stored_tensor_elements": 218987657,
+      "metadata_keys": [
+        "architecture_name",
+        "config",
+        "inference_config"
+      ],
+      "metadata_sha256": "0896a11caa3b3974e1f48a27ed5dc8efba41a3c948b887d548c174e08beb72e2"
+    },
+    "artifacts/tabpfn35_fast/tabpfn-v3.5-fast-20260909.safetensors": {
+      "checkpoint_sha256": "14e0b81285bca7a6d1ef121169f27f651f76dff49cad6c0b8779d5c836018550",
+      "tensor_count": 307,
+      "stored_tensor_elements": 83534985,
+      "metadata_keys": [
+        "architecture_name",
+        "config",
+        "inference_config"
+      ],
+      "metadata_sha256": "96367ba4722a5170cf916d7166e649437d7cf1a6663b33603335bf46cc0a3c29"
+    }
+  },
+  "header_differences": {
+    "architecture_name": null,
+    "config": {
+      "nlayers": [
+        24,
+        8
+      ]
+    },
+    "inference_config": {
+      "N_ESTIMATORS": [
+        8,
+        4
+      ]
+    }
+  }
+}

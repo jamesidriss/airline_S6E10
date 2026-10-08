@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-08T23:13:41.219817+00:00",
+  "passed": 125,
+  "failed": 0,
+  "log_sha256": "a5f80e6e180678fc592b738e05cce3b0c401f4f88f676ac551322731cabbf044",
+  "source_sha256": {
+    "scripts\\audit_phase16_geometry.py": "608252ecdad6352e883e53d35a365aec61de8d71abbf34c09e25a0310523bdfe",
+    "scripts\\audit_phase16_noise.py": "d12ed2fe3f16dd122a82101452679a69e8d9dbdf6055c1a8d777d5f5bbf1f5fc",
+    "scripts\\evaluate_phase16_fold.py": "3bb3dbab1b14e968bf386d3701d167aafc25ceada974396e73845f3556056e5a",
+    "scripts\\phase16_common.py": "46671da65f02f8c954b6c76250f777d12df3f4ef1b394150c2ace3db18630aca",
+    "scripts\\phase16_pair_metrics.py": "f8e998569676f8b8b574637c92335ae6a7445b647e17bfee377a5dfd7216b9ea",
+    "scripts\\phase16_tabpfn.py": "548f9de2cd4eeb3661829f2696e7f2a2cd32a1ad2277ad828eb8fcc5371749ab",
+    "scripts\\probe_phase16_tabpfn.py": "d54cf9fc4d62bafd0bc4004db5bfa23d03009e29b61702d0733680f5165ea853",
+    "scripts\\run_phase16_fast.py": "010689c3ea0d896abf32894fca99c8caf06cd0ad91c68c3cc9607e2d740919a0",
+    "scripts\\run_phase16_tabpfn.py": "0b3be5ea6a19890d23bad197fdfa3b832363cbad5311463ee03248ccf465dde1",
+    "tests\\run_tests.py": "d55266381ab7ea517ed73d3ca238e30bef632f7b2dc68b897a8586bd6ebf62d7",
+    "tests\\test_sol_phase16.py": "9c07a01e547dfa683edb4b902bc2c0ecaf6bf0e30f5299b2179588f97e34412d",
+    "tests\\test_no_undefined_names.py": "063f13fb289b0e96aa99720969ccf028789aea2bb0eca4aa92d1f43d1f9f9dac"
+  },
+  "critical_files": 82,
+  "undefined_names": 0
+}
