@@ -1,5 +1,7 @@
 # STATUS — Kaggle Playground S6E10 (Airline Satisfaction)
 
+Phase17 2026-10-09 12:28UTC: B1 fullprimary passed (+87.308991micro,5/5positive); matched shadow2/3 begins. B2 remains only positivefold0; fold1 fourthFIT repeatedly hit a genuine transient disk reserve18.494GiB<20GiB at prediction. Final bounded recovery failed; count4 resource branch closed without model rejection. V6 remains certifiedA; B unresolved; zero new uploads.
+
 Phase17 update 2026-10-09 10:50UTC: official2 full5 primary OOF0.9618529228157235, route0.9615159787196581, delta v6 +87.308991micro; mean paired87.860799micro, pairedSE9.368950micro,5/5positive, bootstrap95% [59.349370,113.723725]micro. All9 pooled segments positive; Eco Plus +17.752492micro despite preserved fold3 loss459.898148micro. PRIMARY_ADMISSION_PASS; matched shadow and certified test/private820 remain required. Stretch gap247.077184micro. Official4 remains only discovery, replication next. v6 still certified A, B open,0uploads.
 
 

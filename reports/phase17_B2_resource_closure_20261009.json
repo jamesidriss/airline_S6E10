@@ -1,0 +1,44 @@
+{
+  "utc": "2026-10-09T12:28:39.532914+00:00",
+  "status": "FOUR_ESTIMATOR_RESOURCE_BRANCH_CLOSED_NO_MODEL_REJECTION",
+  "run_report_sha256": "1d19966ade97411c43e697cce85f31cf29a0f17f9fc111e60a88153d52d1b771",
+  "guard_evidence": {
+    "entry": {
+      "utc": "2026-10-09T12:27:00.568498+00:00",
+      "pid": 2672,
+      "cwd": "C:\\Users\\James\\airline_S6E10",
+      "absolute_guard_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\phase17_B2_resume1_v3\\f1\\member_3_predict",
+      "disk_free_bytes": 19859001344,
+      "disk_total_bytes": 999029731328,
+      "host_available_bytes": 4317286400,
+      "process_rss_bytes": 5422510080
+    },
+    "limits": {
+      "max_seconds": 1926.375,
+      "min_available_gib": 2
+    },
+    "exception": "ResourcePreflightError('Full inference requires at least 20 GiB free disk reserve')",
+    "after_exception": {
+      "utc": "2026-10-09T12:27:00.569499+00:00",
+      "pid": 2672,
+      "cwd": "C:\\Users\\James\\airline_S6E10",
+      "absolute_guard_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\phase17_B2_resume1_v3\\f1\\member_3_predict",
+      "disk_free_bytes": 19859001344,
+      "disk_total_bytes": 999029731328,
+      "host_available_bytes": 4317167616,
+      "process_rss_bytes": 5422510080
+    }
+  },
+  "guard_evidence_sha256": "814692c056eaaa06bff6da1cdb349feb2cc4a48d036fe6c9047325514ccff71c",
+  "last_fit_telemetry": {
+    "elapsed_seconds": 765.5,
+    "host_available_bytes": 5036695552,
+    "disk_free_bytes": 36533440512,
+    "process_rss_bytes": 4705243136
+  },
+  "postexit_disk_gib": 34.01390075683594,
+  "cause": "Actual transient disk reservation at factory completion; responsible allocator/process not established. Original20GiB guard correctly refused at18.494GiB. No host settings, data deletions or guard relaxation.",
+  "first3_members_remain_hash_verified": true,
+  "performance_scope": "Only fold0 complete; fold1 incomplete; no full4-estimator OOF/shadow/test or submission",
+  "next_action": "Continue already qualified B1 matched shadow2/3, exact five-context test if confirmed, frozen820stress, gated submission"
+}

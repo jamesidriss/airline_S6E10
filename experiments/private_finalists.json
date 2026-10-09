@@ -211,7 +211,7 @@
     "champion_A": "v6_sol_tabpfn_route_aux10",
     "champion_B": null,
     "new_submissions": 0,
-    "next_gate": "Complete exact resumed B2fold1; resource guard unchanged, performance not yet measured",
+    "next_gate": "B1 independent matched shadow folds2/3; then certified test/stress only if positive",
     "initial_heavy_budget_hours": 8,
     "extension_used": false,
     "B2_fold0_portfolio_delta": 0.00010445218312693516,
@@ -219,7 +219,7 @@
     "extension_declared": true,
     "revised_heavy_budget_hours": 28,
     "extension_contract": "research\\phase17_compute_extension_20261009.json",
-    "four_estimator_replication": "Second recovery disk preflight failure after FIT; final bounded diagnostic recovery pending; no AUC",
+    "four_estimator_replication": "FOUR_ESTIMATOR_RESOURCE_BRANCH_CLOSED_NO_MODEL_REJECTION",
     "resume_tag": "phase17_B2_resume1_v3"
   }
 }

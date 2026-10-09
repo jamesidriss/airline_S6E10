@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "C:\Users\James\airline_S6E10\scripts\resume_phase17_context.py", line 131, in <module>
+    main()
+  File "C:\Users\James\airline_S6E10\scripts\resume_phase17_context.py", line 113, in main
+    probs, metadata = resume_predict(clf, prepared, applied, prefix, context, progress, complete)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\scripts\phase17_resume.py", line 44, in resume_predict
+    with context(i, 'predict'):
+  File "C:\Users\James\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\scripts\phase17_resource_diagnostics.py", line 28, in diagnosed_guard
+    with inference_guard(directory, contract, **limits):
+  File "C:\Users\James\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\src\models\resource_guard.py", line 21, in inference_guard
+    raise ResourcePreflightError('Full inference requires at least 20 GiB free disk reserve')
+src.models.resource_guard.ResourcePreflightError: Full inference requires at least 20 GiB free disk reserve
