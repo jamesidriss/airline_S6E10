@@ -3,6 +3,7 @@ import numpy as np
 import torch
 from unittest.mock import patch
 from scripts.phase17_contracts import equivalence
+from scripts.phase17_four_contracts import equivalence_four
 from scripts.probe_phase17_tabpfn import tensor_description
 
 
@@ -48,3 +49,13 @@ def test_official_zero_budget_produces_separate_member_caches_in_order():
     assert _cache_builds([0,1],100000,22,EstimatorBatchBudget(rows=0,cells=4000000))==[[[0]],[[1]]]
     # A small positive budget still concatenates separately built caches; zero is essential.
     assert _cache_builds([0,1],100000,22,EstimatorBatchBudget(rows=100000,cells=4000000))==[[[0],[1]]]
+
+
+def test_four_estimator_gate_checks_every_configuration_and_class_column():
+    p=np.array([[.8,.2],[.3,.7]],dtype='float32'); ids=np.array([7,9]); cfg=['a','b','c','d']
+    assert equivalence_four(p,p,ids,ids,cfg,cfg)['passes']
+    assert not equivalence_four(p,p[:,::-1],ids,ids,cfg,cfg)['passes']
+    for wrong in (cfg[:2],['a','b','d','c']):
+        try: equivalence_four(p,p,ids,ids,cfg,wrong)
+        except ValueError: continue
+        raise AssertionError('Last two configurations escaped validation')

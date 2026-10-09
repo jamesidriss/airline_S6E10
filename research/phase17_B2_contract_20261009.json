@@ -1,0 +1,12 @@
+{
+  "declared_utc": "2026-10-09T07:18:00Z",
+  "count": 4,
+  "trigger": "B1 fold0 performance discovery passes, fold1 portfolio delta positive, first2 mean>=30micro; no run on contradictory replication",
+  "numerical_reference": "Same frozen100k FIT and1024 apply IDs; official native4 with supported max_batched_estimator_rows=0 and memory_saving_mode=True; exact manual sequential4 configs/CPU preprocessing/class unpermutation/temperature/probability mean/final normalization",
+  "tolerance": 0.000002,
+  "reproducibility": "Repeat native4 prediction against its unchanged cache and require bit-identical output; manual4 config hashes and pipeline seeds must match Phase16 count4 audit",
+  "fit_rows": "Every559708 primary fold0 outer-FIT row for full run; one estimator cache at a time; no subsampling",
+  "unchanged": "Checkpoint original, seed1201, route22, precision, guards and50/50 exact aux10 logits",
+  "no_auc_before_equivalence": true,
+  "full_admission": "Same Phase17 discovery/replication/three-fold/full-primary/shadow/test gates; no8/16/32"
+}

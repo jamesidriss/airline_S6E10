@@ -1,0 +1,9 @@
+{
+  "declared_utc": "2026-10-09T07:18:00Z",
+  "known": "Only B1 fold0 is scored; no B2 or test metric observed",
+  "eligibility": "Every new candidate must independently pass original Phase17 gates against immutable v6; this contract adds requirements for choosing two new finalists, never relaxes those gates",
+  "A": "Higher robust performance after full primary admission and independent confirmation, segment/private820 stress tests and exact test certificate; public score never selects",
+  "B_comparison_to_chosen_A": {"full_pooled_auc_loss_max": 0.000100, "mean_paired_fold_auc_loss_max": 0.000100, "oof_spearman_max": 0.999, "test_spearman_max": 0.999, "rescued_pair_fraction_min": 0.0001, "rescue_damage_ratio_min": 0.95, "worst_segment_delta_min": -0.0002, "private_simulation_5th_delta_min": -0.0002},
+  "requirements": "Both recipes clean reproducible and independently confirmed; baseline-relative original hedge/performance gates still hold. Slightly weaker competitive B must materially rescue A errors and have stable test diversity. If thresholds fail, no genuine B claim",
+  "scope": "Official internal2 and conditional4 only; no seed/weight/configuration selection on public scores; immutable v6 bank retained"
+}
