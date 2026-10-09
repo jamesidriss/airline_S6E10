@@ -263,3 +263,17 @@ def test_resource_diagnostics_preserve_original_disk_preflight():
         assert evidence['entry']['disk_free_bytes']==19*1024**3
         assert evidence['after_exception']['absolute_guard_path']==str(root.resolve())
         assert evidence['limits']=={'max_seconds':2700,'min_available_gib':2}
+
+
+def test_oof_stress_rejects_changed_or_truncated_banked_partitions():
+    import json
+    from pathlib import Path
+    from scripts.diagnose_phase17_oof_private import verify_definitions
+    old=json.loads(Path('reports/sol_private_sim_recovery.json').read_text())
+    definitions=json.loads(Path(old['split_and_draw_artifact']).read_text())['definitions']
+    verify_definitions(definitions)
+    changed=[dict(d) for d in definitions];changed[0]['seed']+=1
+    for bad in (changed,definitions[:-1],definitions[::-1]):
+        try:verify_definitions(bad)
+        except AssertionError:pass
+        else:raise AssertionError('Modified private-stress population definitions accepted')
