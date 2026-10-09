@@ -1,0 +1,8 @@
+{
+  "utc": "2026-10-09T14:34:13.0277611Z",
+  "disk_free_gib": 32.038333892822266,
+  "ram_free_gib": 9.211040496826172,
+  "gpu": "NVIDIA GeForce RTX 5070 Ti, 1408 MiB, 16303 MiB, 0 %",
+  "campaign_workers": [],
+  "capacity_restored_for_full_context": false
+}
