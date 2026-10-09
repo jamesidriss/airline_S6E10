@@ -1,0 +1,97 @@
+[W1009 08:06:15.000000000 sdp_utils.cpp:797] Warning: Torch was not compiled with flash attention. (function can_use_flash_attention)
+[W1009 08:06:15.000000000 sdp_utils_cpp.h:406] Warning: For dense inputs, both fused kernels require query, key and value to have the same batch_size. Query.sizes(): [1, 16, 1024, 64], Key.sizes(): [2, 16, 100000, 64], Value.sizes(): [2, 16, 100000, 64] instead. To broadcast dense inputs, try using unsqueeze and expand_to before passing them into the kernel. (function check_batch_size_and_num_heads_dense)
+[W1009 08:06:15.000000000 sdp_utils.cpp:706] Warning: cuDNN attention has been runtime disabled. (function check_runtime_disabled_cudnn)
+[W1009 08:06:15.000000000 sdp_utils.cpp:797] Warning: Torch was not compiled with flash attention. (function can_use_flash_attention)
+[W1009 08:06:15.000000000 sdp_utils.cpp:706] Warning: cuDNN attention has been runtime disabled. (function check_runtime_disabled_cudnn)
+[W1009 08:06:15.000000000 sdp_utils.cpp:797] Warning: Torch was not compiled with flash attention. (function can_use_flash_attention)
+[W1009 08:06:15.000000000 sdp_utils_cpp.h:406] Warning: For dense inputs, both fused kernels require query, key and value to have the same batch_size. Query.sizes(): [1, 16, 1, 64], Key.sizes(): [2, 16, 100000, 64], Value.sizes(): [2, 16, 100000, 64] instead. To broadcast dense inputs, try using unsqueeze and expand_to before passing them into the kernel. (function check_batch_size_and_num_heads_dense)
+[W1009 08:06:15.000000000 sdp_utils.cpp:706] Warning: cuDNN attention has been runtime disabled. (function check_runtime_disabled_cudnn)
+[W1009 08:06:15.000000000 sdp_utils.cpp:797] Warning: Torch was not compiled with flash attention. (function can_use_flash_attention)
+[W1009 08:06:15.000000000 sdp_utils_cpp.h:406] Warning: For dense inputs, both fused kernels require query, key and value to have the same batch_size. Query.sizes(): [1, 1, 1024, 64], Key.sizes(): [2, 1, 100000, 64], Value.sizes(): [2, 1, 100000, 64] instead. To broadcast dense inputs, try using unsqueeze and expand_to before passing them into the kernel. (function check_batch_size_and_num_heads_dense)
+[W1009 08:06:15.000000000 sdp_utils.cpp:706] Warning: cuDNN attention has been runtime disabled. (function check_runtime_disabled_cudnn)
+Traceback (most recent call last):
+  File "C:\Users\James\airline_S6E10\scripts\probe_phase17_tabpfn.py", line 107, in main
+    p=clf.predict_proba(x[va]).astype('float32')
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\classifier.py", line 1704, in predict_proba
+    return self._predict_proba(X)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 81, in inner
+    return func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\classifier.py", line 1718, in _predict_proba
+    self._raw_predict(X, return_logits=False).float().detach().cpu().numpy()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\classifier.py", line 1630, in _raw_predict
+    return self.forward(
+           ^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\classifier.py", line 1991, in forward
+    for output, config in tqdm(
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tqdm\std.py", line 1175, in __iter__
+    yield from iterable
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\inference.py", line 1362, in iter_outputs
+    for output, ensemble_member in zip(
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\inference.py", line 272, in _yield_in_member_order
+    for group_index, member_outputs in enumerate(group_outputs):
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\inference.py", line 72, in __next__
+    value = next(self._inner)
+            ^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\parallel_execute.py", line 86, in parallel_execute
+    yield from _execute_in_current_thread(devices[0], functions)
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\parallel_execute.py", line 97, in _execute_in_current_thread
+    yield function(device=device)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\inference.py", line 1466, in _call_model
+    output = run(X)
+             ^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\inference.py", line 1450, in run
+    return model(
+           ^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\tabpfn_v3_5.py", line 2392, in forward
+    x_BRiD, _ = block(
+                ^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\tabpfn_v3_5.py", line 1636, in forward
+    x_BRE = chunked_evaluate_maybe_inplace(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\shared\chunked_evaluate.py", line 70, in chunked_evaluate_maybe_inplace
+    x_chunk.add_(f(x_chunk, *args, **kwargs))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\tabpfn_v3_5.py", line 1629, in _attn_fn_cached
+    out, _ = self.icl_attention(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\tabpfn_v3_5.py", line 1317, in forward
+    out = _batched_scaled_dot_product_attention(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\tabpfn_v3_5.py", line 1096, in _batched_scaled_dot_product_attention
+    return scaled_dot_product_attention(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\.venv\Lib\site-packages\tabpfn\architectures\shared\scaled_dot_product_attention.py", line 72, in scaled_dot_product_attention
+    return backend.run(q_BSHD, k_BSJD, v_BSJD, quantized_kv=quantized_kv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\src\models\windows_attention.py", line 59, in run
+    out = torch.nn.functional.scaled_dot_product_attention(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\scripts\probe_phase17_tabpfn.py", line 79, in diagnostic_sdpa
+    try: return original_sdpa(q,k,v,*a,**kw)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: No available kernel. Aborting execution.
+
+{"status": "DIAGNOSIS_CAPTURED", "probes": [{"name": "P0", "n_estimators": 1, "fit_seconds": 28.031000000075437, "status": "PASS_NATIVE", "prediction_sha256": "d8d7084fb35cd4a4ae9b4b706b8876c5bf23e68e4ce554586e456b7ddafb592c", "configuration_hashes": ["f6d0f81c08f90360435aea009f5e73467c3984a9c16545d948cae051c4c17d59"], "seconds": 28.406000000075437, "peak_gpu_bytes": 2858856448, "allocated_after_release": 479719936}, {"name": "P1", "n_estimators": 2, "fit_seconds": 53.95299999997951, "status": "INVALID_TECHNICAL_BLOCKER", "error": "RuntimeError('No available kernel. Aborting execution.')", "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\James\\airline_S6E10\\scripts\\probe_phase17_tabpfn.py\", line 107, in main\n    p=clf.predict_proba(x[va]).astype('float32')\n      ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\classifier.py\", line 1704, in predict_proba\n    return self._predict_proba(X)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\contextlib.py\", line 81, in inner\n    return func(*args, **kwds)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\classifier.py\", line 1718, in _predict_proba\n    self._raw_predict(X, return_logits=False).float().detach().cpu().numpy()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\classifier.py\", line 1630, in _raw_predict\n    return self.forward(\n           ^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\classifier.py\", line 1991, in forward\n    for output, config in tqdm(\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tqdm\\std.py\", line 1175, in __iter__\n    yield from iterable\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\inference.py\", line 1362, in iter_outputs\n    for output, ensemble_member in zip(\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\inference.py\", line 272, in _yield_in_member_order\n    for group_index, member_outputs in enumerate(group_outputs):\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\inference.py\", line 72, in __next__\n    value = next(self._inner)\n            ^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\parallel_execute.py\", line 86, in parallel_execute\n    yield from _execute_in_current_thread(devices[0], functions)\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\parallel_execute.py\", line 97, in _execute_in_current_thread\n    yield function(device=device)\n          ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\inference.py\", line 1466, in _call_model\n    output = run(X)\n             ^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\inference.py\", line 1450, in run\n    return model(\n           ^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\architectures\\tabpfn_v3_5.py\", line 2392, in forward\n    x_BRiD, _ = block(\n                ^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\architectures\\tabpfn_v3_5.py\", line 1636, in forward\n    x_BRE = chunked_evaluate_maybe_inplace(\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\architectures\\shared\\chunked_evaluate.py\", line 70, in chunked_evaluate_maybe_inplace\n    x_chunk.add_(f(x_chunk, *args, **kwargs))\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\architectures\\tabpfn_v3_5.py\", line 1629, in _attn_fn_cached\n    out, _ = self.icl_attention(\n             ^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\architectures\\tabpfn_v3_5.py\", line 1317, in forward\n    out = _batched_scaled_dot_product_attention(\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\architectures\\tabpfn_v3_5.py\", line 1096, in _batched_scaled_dot_product_attention\n    return scaled_dot_product_attention(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\.venv\\Lib\\site-packages\\tabpfn\\architectures\\shared\\scaled_dot_product_attention.py\", line 72, in scaled_dot_product_attention\n    return backend.run(q_BSHD, k_BSJD, v_BSJD, quantized_kv=quantized_kv)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\src\\models\\windows_attention.py\", line 59, in run\n    out = torch.nn.functional.scaled_dot_product_attention(\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\James\\airline_S6E10\\scripts\\probe_phase17_tabpfn.py\", line 79, in diagnostic_sdpa\n    try: return original_sdpa(q,k,v,*a,**kw)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: No available kernel. Aborting execution.\n", "seconds": 54.03200000000652, "peak_gpu_bytes": 2868456960, "allocated_after_release": 479719936}], "failed_operator": {"q": {"shape": [1, 16, 1024, 64], "stride": [1048576, 65536, 64, 1], "dtype": "torch.bfloat16", "device": "cuda:0", "contiguous": true, "storage_offset": 0}, "k": {"shape": [2, 16, 100000, 64], "stride": [102400000, 6400000, 64, 1], "dtype": "torch.bfloat16", "device": "cuda:0", "contiguous": true, "storage_offset": 0}, "v": {"shape": [2, 16, 100000, 64], "stride": [102400000, 6400000, 64, 1], "dtype": "torch.bfloat16", "device": "cuda:0", "contiguous": true, "storage_offset": 0}, "kwargs": {"dropout_p": "0.0"}, "capabilities": {"flash": false, "efficient": false, "cudnn": false}, "free_gpu_bytes": 9610199040, "autocast": false, "backend_enabled": {"efficient": true, "flash": false, "math": false, "cudnn": false}, "one_batch": {"q": {"shape": [1, 16, 1024, 64], "stride": [1048576, 65536, 64, 1], "dtype": "torch.bfloat16", "device": "cuda:0", "contiguous": true, "storage_offset": 0}, "k": {"shape": [1, 16, 100000, 64], "stride": [102400000, 6400000, 64, 1], "dtype": "torch.bfloat16", "device": "cuda:0", "contiguous": true, "storage_offset": 0}, "capabilities": {"flash": false, "efficient": true, "cudnn": false}}, "one_query": {"q": {"shape": [1, 16, 1, 64], "stride": [1024, 64, 64, 1], "dtype": "torch.bfloat16", "device": "cuda:0", "contiguous": true, "storage_offset": 0}, "k": {"shape": [2, 16, 100000, 64], "stride": [102400000, 6400000, 64, 1], "dtype": "torch.bfloat16", "device": "cuda:0", "contiguous": true, "storage_offset": 0}, "capabilities": {"flash": false, "efficient": false, "cudnn": false}}, "one_head": {"q": {"shape": [1, 1, 1024, 64], "stride": [1048576, 65536, 64, 1], "dtype": "torch.bfloat16", "device": "cuda:0", "contiguous": true, "storage_offset": 0}, "k": {"shape": [2, 1, 100000, 64], "stride": [102400000, 6400000, 64, 1], "dtype": "torch.bfloat16", "device": "cuda:0", "contiguous": false, "storage_offset": 0}, "capabilities": {"flash": false, "efficient": false, "cudnn": false}}}}

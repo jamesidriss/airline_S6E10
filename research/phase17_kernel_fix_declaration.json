@@ -1,0 +1,11 @@
+{
+  "declared_utc": "2026-10-09T06:09:00Z",
+  "evidence": "reports/phase17_attention_diagnosis_20261009.json",
+  "root_cause": "Official cached ICL block chunks query batch2 into1 with memory_saving_mode=True but retains unsliced batch2 KV closure; fused efficient kernel rejects different dense batch sizes. All inputs are contiguous bf16, head64, no mask/dropout/causality; GPU has9.61GB free. One-batch capability succeeds; smaller query does not",
+  "isolated_change": "Official native2 public memory_saving_mode='auto' for100k reference only; fit heuristic should retain memory saving while small-query heuristic disables batch splitting",
+  "sequential_model_policy": "Frozen memory_saving_mode=True and one complete estimator cache at a time; no certified source/backend/model files modified",
+  "tolerance": 0.000002,
+  "required": "Native reference must complete; identical official configs/preprocessing/order and final normalized probabilities; sequential equals prior Phase16 serial bytes; otherwise no full AUC",
+  "risk": "Native batch computation may produce larger numerical differences; cannot silently relax tolerance or broadcast an incorrectly paired cache",
+  "linux": "Not required if supported Windows change verifies semantics; existing Docker daemon absent and Kaggle GPU quota exhausted41.08h of30h until2026-10-10"
+}
