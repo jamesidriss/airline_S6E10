@@ -1,0 +1,39 @@
+B4: member0 1024/139927
+B4: member0 20480/139927
+B4: member0 40960/139927
+B4: member0 61440/139927
+B4: member0 81920/139927
+B4: member0 102400/139927
+B4: member0 122880/139927
+B4: member0 139927/139927
+B4: member1 1024/139927
+B4: member1 20480/139927
+B4: member1 40960/139927
+B4: member1 61440/139927
+B4: member1 81920/139927
+B4: member1 102400/139927
+B4: member1 122880/139927
+B4: member1 139927/139927
+B4: member2 1024/139927
+B4: member2 20480/139927
+B4: member2 40960/139927
+B4: member2 61440/139927
+B4: member2 81920/139927
+B4: member2 102400/139927
+B4: member2 122880/139927
+B4: member2 139927/139927
+Traceback (most recent call last):
+  File "C:\Users\James\airline_S6E10\scripts\run_phase17_tabpfn.py", line 170, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\James\airline_S6E10\scripts\run_phase17_tabpfn.py", line 149, in main
+    probabilities, _, metadata = sequential_predict(clf, prepared, x[va],
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\scripts\phase16_tabpfn.py", line 133, in sequential_predict
+    with guard:
+  File "C:\Users\James\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\src\models\resource_guard.py", line 23, in inference_guard
+    raise ResourcePreflightError(f'Inference requires at least {min_available_gib} GiB available host RAM')
+src.models.resource_guard.ResourcePreflightError: Inference requires at least 4 GiB available host RAM
