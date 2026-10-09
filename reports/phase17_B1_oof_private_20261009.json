@@ -1,0 +1,1816 @@
+{
+  "utc": "2026-10-09T13:53:09.479745+00:00",
+  "git": "6520043f3429f120dfc84a4f73f57596f8646b89",
+  "bank": {
+    "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+    "test_certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+    "data_sha256": {
+      "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+      "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+    },
+    "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+    "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+    "oof_sha256": {
+      "candidate": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+      "aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+      "route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510"
+    },
+    "test_sha256": {
+      "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+      "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+      "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+    },
+    "v6_csv_sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d"
+  },
+  "status": "COMPLETE_OOF_ONLY_820_STRESS_NOT_SUBMISSION_ELIGIBLE",
+  "primary_tag": "phase17_B1",
+  "primary_report_sha256": "c63f5a172c7bdbaa160ce7aa022a1214daf03d5e0daac0540f7b9f2aa116f449",
+  "reference": "v6",
+  "total_draws": 820,
+  "every_original_mask_hash_matched": true,
+  "split_definitions_sha256": "7003ac1c9a0594d3e28f152cc9b556704ef9f1dc1545a1486dd76b164ed64472",
+  "old_report_sha256": "d7ef504cb8ef435cd5434afc3158ab69fcb8d32d0caa607cb897916a98532180",
+  "candidates": {
+    "v6": {
+      "oof_auc": 0.9617656138245795,
+      "pooled_delta_vs_v6": 0.0,
+      "all_820": {
+        "simulations": 820,
+        "public_quantiles": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "private_quantiles": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "private_p05": 0.0,
+        "private_median": 0.0,
+        "private_worst_5pct_mean": 0.0,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "modes": {
+        "random_stratified": {
+          "simulations": 200,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "fold_aware": {
+          "simulations": 200,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "segment_stressed": {
+          "simulations": 420,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        }
+      },
+      "stress_segments": {
+        "Class=Business": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Class=Eco": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Class=Eco Plus": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Type of Travel=Business travel": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Type of Travel=Personal Travel": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Customer Type=Loyal Customer": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Customer Type=disloyal Customer": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "departure_delay_zero": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "distance_lower_quartile": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "distance_upper_quartile": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "survey_any_zero": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "survey_many_zeros": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "champion_low_confidence": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "champion_high_confidence": {
+          "simulations": 30,
+          "public_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_quantiles": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "private_p05": 0.0,
+          "private_median": 0.0,
+          "private_worst_5pct_mean": 0.0,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        }
+      },
+      "test_correlation_vs_v6": null,
+      "eligibility": "OOF diagnostic only; independent confirmation and test certificate still required"
+    },
+    "unchanged_aux10": {
+      "oof_auc": 0.9614187095444636,
+      "pooled_delta_vs_v6": -0.00034690428011585617,
+      "all_820": {
+        "simulations": 820,
+        "public_quantiles": [
+          -0.0005845556180386069,
+          -0.00035221771297627713,
+          -0.00016153173632763032
+        ],
+        "private_quantiles": [
+          -0.00042472743323761496,
+          -0.00034214353130646025,
+          -0.000265408569948955
+        ],
+        "private_p05": -0.00042472743323761496,
+        "private_median": -0.00034214353130646025,
+        "private_worst_5pct_mean": -0.00044446579285898263,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "modes": {
+        "random_stratified": {
+          "simulations": 200,
+          "public_quantiles": [
+            -0.0005264872451900771,
+            -0.0003318241822009016,
+            -0.00013707701811250256
+          ],
+          "private_quantiles": [
+            -0.0004253774426593693,
+            -0.00034245292883433587,
+            -0.0002635807128674561
+          ],
+          "private_p05": -0.0004253774426593693,
+          "private_median": -0.00034245292883433587,
+          "private_worst_5pct_mean": -0.0004417088563255289,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "fold_aware": {
+          "simulations": 200,
+          "public_quantiles": [
+            -0.0005174969616127012,
+            -0.0003483100818635898,
+            -0.0002050564391227085
+          ],
+          "private_quantiles": [
+            -0.00041819039650511366,
+            -0.0003378453595844766,
+            -0.0002634686988512603
+          ],
+          "private_p05": -0.00041819039650511366,
+          "private_median": -0.0003378453595844766,
+          "private_worst_5pct_mean": -0.00044228801906476267,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "segment_stressed": {
+          "simulations": 420,
+          "public_quantiles": [
+            -0.000644589044333077,
+            -0.0003658763961829625,
+            -0.00016109340229995006
+          ],
+          "private_quantiles": [
+            -0.0004243926287086419,
+            -0.00034324488863074487,
+            -0.00027003734778676693
+          ],
+          "private_p05": -0.0004243926287086419,
+          "private_median": -0.00034324488863074487,
+          "private_worst_5pct_mean": -0.00044667042343720417,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        }
+      },
+      "stress_segments": {
+        "Class=Business": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0006454549251410646,
+            -0.0003747227840754097,
+            -0.00021579728053838234
+          ],
+          "private_quantiles": [
+            -0.0003885596684665649,
+            -0.00033580556449225307,
+            -0.00025621398695074296
+          ],
+          "private_p05": -0.0003885596684665649,
+          "private_median": -0.00033580556449225307,
+          "private_worst_5pct_mean": -0.0004080180074735318,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Class=Eco": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0005514632437616407,
+            -0.0004120601796416823,
+            -0.000251321151095868
+          ],
+          "private_quantiles": [
+            -0.00039326394380764795,
+            -0.00035575101976975665,
+            -0.0002692310640960094
+          ],
+          "private_p05": -0.00039326394380764795,
+          "private_median": -0.00035575101976975665,
+          "private_worst_5pct_mean": -0.00040294752136033063,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Class=Eco Plus": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0005130364770250029,
+            -0.000373003865761945,
+            -0.00022412371183586646
+          ],
+          "private_quantiles": [
+            -0.0004263972046591735,
+            -0.00034715048671424276,
+            -0.00028607866958445526
+          ],
+          "private_p05": -0.0004263972046591735,
+          "private_median": -0.00034715048671424276,
+          "private_worst_5pct_mean": -0.0004468882371307381,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Type of Travel=Business travel": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0005618079042838565,
+            -0.00038644229759704496,
+            -0.0001600251831474943
+          ],
+          "private_quantiles": [
+            -0.0003876745795917735,
+            -0.00033271366641585143,
+            -0.00026200964376374425
+          ],
+          "private_p05": -0.0003876745795917735,
+          "private_median": -0.00033271366641585143,
+          "private_worst_5pct_mean": -0.0003962500401109015,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Type of Travel=Personal Travel": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0004994118173037631,
+            -0.00034620868098911295,
+            -0.00014351221678817754
+          ],
+          "private_quantiles": [
+            -0.00041715305221971534,
+            -0.0003359850136501197,
+            -0.0002511717789547785
+          ],
+          "private_p05": -0.00041715305221971534,
+          "private_median": -0.0003359850136501197,
+          "private_worst_5pct_mean": -0.0004305932185140193,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Customer Type=Loyal Customer": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0005456793920450953,
+            -0.00040290341193915946,
+            -0.00020505904039113678
+          ],
+          "private_quantiles": [
+            -0.00038302610529897805,
+            -0.00034179905018322243,
+            -0.00028030926121550004
+          ],
+          "private_p05": -0.00038302610529897805,
+          "private_median": -0.00034179905018322243,
+          "private_worst_5pct_mean": -0.0004174934123848395,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Customer Type=disloyal Customer": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0004796577759648979,
+            -0.0003392482306728284,
+            -0.00022418629477046758
+          ],
+          "private_quantiles": [
+            -0.00042279091558941053,
+            -0.000338167730825234,
+            -0.0002687122528863273
+          ],
+          "private_p05": -0.00042279091558941053,
+          "private_median": -0.000338167730825234,
+          "private_worst_5pct_mean": -0.0004527600656576425,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "departure_delay_zero": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0005042740212409747,
+            -0.000309028446887627,
+            -7.959169176581239e-05
+          ],
+          "private_quantiles": [
+            -0.00040652876957984475,
+            -0.000358902628611546,
+            -0.0002784991078830568
+          ],
+          "private_p05": -0.00040652876957984475,
+          "private_median": -0.000358902628611546,
+          "private_worst_5pct_mean": -0.00040785904868445577,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "distance_lower_quartile": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0005431332636568753,
+            -0.00036027237886643304,
+            -0.00027233515984020353
+          ],
+          "private_quantiles": [
+            -0.00039022865829675956,
+            -0.00033246111029777703,
+            -0.00026790164579816876
+          ],
+          "private_p05": -0.00039022865829675956,
+          "private_median": -0.00033246111029777703,
+          "private_worst_5pct_mean": -0.0003986790641938298,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "distance_upper_quartile": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0005448193414204549,
+            -0.0004319495544640173,
+            -0.0002987849555375456
+          ],
+          "private_quantiles": [
+            -0.0003971049673035687,
+            -0.00031999536138044293,
+            -0.00027186584739281595
+          ],
+          "private_p05": -0.0003971049673035687,
+          "private_median": -0.00031999536138044293,
+          "private_worst_5pct_mean": -0.0004009152077171785,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "survey_any_zero": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0004846548909085313,
+            -0.0003035762396597086,
+            -0.00018391879550268004
+          ],
+          "private_quantiles": [
+            -0.0004507709261370507,
+            -0.0003571586588183573,
+            -0.00029691320734903106
+          ],
+          "private_p05": -0.0004507709261370507,
+          "private_median": -0.0003571586588183573,
+          "private_worst_5pct_mean": -0.0004546978313876293,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "survey_many_zeros": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0005812867722339188,
+            -0.00032505947958705317,
+            -0.00017388474011165172
+          ],
+          "private_quantiles": [
+            -0.0004236620960102411,
+            -0.0003537972877472595,
+            -0.0002944762300457482
+          ],
+          "private_p05": -0.0004236620960102411,
+          "private_median": -0.0003537972877472595,
+          "private_worst_5pct_mean": -0.0004521953834831782,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "champion_low_confidence": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0008235119641582022,
+            -0.0006671121129547819,
+            -0.00044434897439378236
+          ],
+          "private_quantiles": [
+            -0.0003988663468689702,
+            -0.00031755616252687746,
+            -0.0002630135855794136
+          ],
+          "private_p05": -0.0003988663468689702,
+          "private_median": -0.00031755616252687746,
+          "private_worst_5pct_mean": -0.0004174250583451333,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "champion_high_confidence": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.00037265013980589676,
+            -0.00022205337710756723,
+            -6.0589744081268794e-05
+          ],
+          "private_quantiles": [
+            -0.0004537177439523976,
+            -0.00039103545248647675,
+            -0.0002983641243802515
+          ],
+          "private_p05": -0.0004537177439523976,
+          "private_median": -0.00039103545248647675,
+          "private_worst_5pct_mean": -0.0004711389054941617,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        }
+      },
+      "test_correlation_vs_v6": null,
+      "eligibility": "OOF diagnostic only; independent confirmation and test certificate still required"
+    },
+    "original_route": {
+      "oof_auc": 0.9612196007698864,
+      "pooled_delta_vs_v6": -0.0005460130546930397,
+      "all_820": {
+        "simulations": 820,
+        "public_quantiles": [
+          -0.0007868526724312431,
+          -0.0005691174333086191,
+          -0.0003702370916901454
+        ],
+        "private_quantiles": [
+          -0.0006316497255754617,
+          -0.0005479923818070276,
+          -0.0004623804997799797
+        ],
+        "private_p05": -0.0006316497255754617,
+        "private_median": -0.0005479923818070276,
+        "private_worst_5pct_mean": -0.0006591004905138131,
+        "public_private_sign_disagreement_rate": 0.0,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.0
+      },
+      "modes": {
+        "random_stratified": {
+          "simulations": 200,
+          "public_quantiles": [
+            -0.0007478892753386201,
+            -0.000558894051866432,
+            -0.00035257312884057207
+          ],
+          "private_quantiles": [
+            -0.0006275618301023189,
+            -0.0005452814215153312,
+            -0.00046668462673546407
+          ],
+          "private_p05": -0.0006275618301023189,
+          "private_median": -0.0005452814215153312,
+          "private_worst_5pct_mean": -0.0006584034562023055,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "fold_aware": {
+          "simulations": 200,
+          "public_quantiles": [
+            -0.000719472564486856,
+            -0.0005432974243791966,
+            -0.0003493998755109695
+          ],
+          "private_quantiles": [
+            -0.0006453023104535327,
+            -0.000550777663694213,
+            -0.000462668762654267
+          ],
+          "private_p05": -0.0006453023104535327,
+          "private_median": -0.000550777663694213,
+          "private_worst_5pct_mean": -0.0006657012700513442,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "segment_stressed": {
+          "simulations": 420,
+          "public_quantiles": [
+            -0.0008280362427812326,
+            -0.0005902857870039302,
+            -0.0003845197453428484
+          ],
+          "private_quantiles": [
+            -0.0006303790833020795,
+            -0.0005489142195597707,
+            -0.0004614015213595391
+          ],
+          "private_p05": -0.0006303790833020795,
+          "private_median": -0.0005489142195597707,
+          "private_worst_5pct_mean": -0.0006542398697560221,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        }
+      },
+      "stress_segments": {
+        "Class=Business": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.000944949670297085,
+            -0.0007346033858856571,
+            -0.00045580517204930074
+          ],
+          "private_quantiles": [
+            -0.0006048592812774479,
+            -0.0005125605557414481,
+            -0.00045435914882752115
+          ],
+          "private_p05": -0.0006048592812774479,
+          "private_median": -0.0005125605557414481,
+          "private_worst_5pct_mean": -0.0006135164621051681,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Class=Eco": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0007796141195517914,
+            -0.0005747606001656469,
+            -0.00039226076426692743
+          ],
+          "private_quantiles": [
+            -0.0006309033515687123,
+            -0.0005560901086729131,
+            -0.0005001156052526767
+          ],
+          "private_p05": -0.0006309033515687123,
+          "private_median": -0.0005560901086729131,
+          "private_worst_5pct_mean": -0.0006541422269958352,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Class=Eco Plus": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0007291895677396188,
+            -0.0005446058778468821,
+            -0.000396065958776326
+          ],
+          "private_quantiles": [
+            -0.0005988323191823131,
+            -0.0005409907136391112,
+            -0.00046583479572990806
+          ],
+          "private_p05": -0.0005988323191823131,
+          "private_median": -0.0005409907136391112,
+          "private_worst_5pct_mean": -0.0006014474764376998,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Type of Travel=Business travel": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0009034423698620009,
+            -0.0006141523608274579,
+            -0.00041386576208173894
+          ],
+          "private_quantiles": [
+            -0.0006108363271441041,
+            -0.000544268961409855,
+            -0.00047935094186093985
+          ],
+          "private_p05": -0.0006108363271441041,
+          "private_median": -0.000544268961409855,
+          "private_worst_5pct_mean": -0.0006234886528398986,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Type of Travel=Personal Travel": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0008896255675759745,
+            -0.000662429658922159,
+            -0.00040384736650702654
+          ],
+          "private_quantiles": [
+            -0.0006436327115454055,
+            -0.0005571821009832112,
+            -0.0004627799017810187
+          ],
+          "private_p05": -0.0006436327115454055,
+          "private_median": -0.0005571821009832112,
+          "private_worst_5pct_mean": -0.0006590967066394393,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Customer Type=Loyal Customer": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0006843651746201107,
+            -0.0005294986616422581,
+            -0.00032947222426736334
+          ],
+          "private_quantiles": [
+            -0.0006073335161972338,
+            -0.0005481389653991253,
+            -0.0004746513437457689
+          ],
+          "private_p05": -0.0006073335161972338,
+          "private_median": -0.0005481389653991253,
+          "private_worst_5pct_mean": -0.000627565637719818,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Customer Type=disloyal Customer": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0007256922181781255,
+            -0.0005745330258583592,
+            -0.00042185243733118284
+          ],
+          "private_quantiles": [
+            -0.0006133969067882328,
+            -0.0005600747460657862,
+            -0.0004572528078664984
+          ],
+          "private_p05": -0.0006133969067882328,
+          "private_median": -0.0005600747460657862,
+          "private_worst_5pct_mean": -0.0006216542367279976,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "departure_delay_zero": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0007491993485227888,
+            -0.0005772008276386797,
+            -0.0003865662523652114
+          ],
+          "private_quantiles": [
+            -0.0006276483843072334,
+            -0.0005553181111431216,
+            -0.0005014198242695556
+          ],
+          "private_p05": -0.0006276483843072334,
+          "private_median": -0.0005553181111431216,
+          "private_worst_5pct_mean": -0.0006475609458534426,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "distance_lower_quartile": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0006424149492399334,
+            -0.0005566476005363086,
+            -0.0003697298094069659
+          ],
+          "private_quantiles": [
+            -0.0006261503570311411,
+            -0.0005643055495391236,
+            -0.0004829335948325909
+          ],
+          "private_p05": -0.0006261503570311411,
+          "private_median": -0.0005643055495391236,
+          "private_worst_5pct_mean": -0.0006427397416242098,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "distance_upper_quartile": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0007602378290308964,
+            -0.0006725907954115429,
+            -0.0005295151100822627
+          ],
+          "private_quantiles": [
+            -0.000601213539446005,
+            -0.0005541864231440319,
+            -0.0004717325100706826
+          ],
+          "private_p05": -0.000601213539446005,
+          "private_median": -0.0005541864231440319,
+          "private_worst_5pct_mean": -0.0006151754426366174,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "survey_any_zero": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0008166102381526486,
+            -0.0006050296729407378,
+            -0.00037535286635616034
+          ],
+          "private_quantiles": [
+            -0.0006105400142307149,
+            -0.0005142497613273567,
+            -0.0004421486687137932
+          ],
+          "private_p05": -0.0006105400142307149,
+          "private_median": -0.0005142497613273567,
+          "private_worst_5pct_mean": -0.000616444683678663,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "survey_many_zeros": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.000684363710032937,
+            -0.000588146644845855,
+            -0.0003549573358560379
+          ],
+          "private_quantiles": [
+            -0.0005920284429251632,
+            -0.0005506028970433396,
+            -0.00046445331710834873
+          ],
+          "private_p05": -0.0005920284429251632,
+          "private_median": -0.0005506028970433396,
+          "private_worst_5pct_mean": -0.0006255618768071236,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "champion_low_confidence": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0008799459422694112,
+            -0.0006981058747059232,
+            -0.000520533980174265
+          ],
+          "private_quantiles": [
+            -0.0006021618492061398,
+            -0.0005266559227030121,
+            -0.0004562884226725794
+          ],
+          "private_p05": -0.0006021618492061398,
+          "private_median": -0.0005266559227030121,
+          "private_worst_5pct_mean": -0.0006601756900300182,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "champion_high_confidence": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0006637027231162773,
+            -0.0005114752271486722,
+            -0.0004084482824678881
+          ],
+          "private_quantiles": [
+            -0.0006638778895168618,
+            -0.000590499440689507,
+            -0.0004945385422995275
+          ],
+          "private_p05": -0.0006638778895168618,
+          "private_median": -0.000590499440689507,
+          "private_worst_5pct_mean": -0.0006969110309761328,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        }
+      },
+      "test_correlation_vs_v6": null,
+      "eligibility": "OOF diagnostic only; independent confirmation and test certificate still required"
+    },
+    "phase17_B1": {
+      "oof_auc": 0.9618529228157235,
+      "pooled_delta_vs_v6": 8.730899114406387e-05,
+      "all_820": {
+        "simulations": 820,
+        "public_quantiles": [
+          2.3412805300709884e-05,
+          9.139586968948121e-05,
+          0.0001645381957157743
+        ],
+        "private_quantiles": [
+          5.586951140424401e-05,
+          8.606747059097808e-05,
+          0.0001184793102690207
+        ],
+        "private_p05": 5.586951140424401e-05,
+        "private_median": 8.606747059097808e-05,
+        "private_worst_5pct_mean": 4.822835249580601e-05,
+        "public_private_sign_disagreement_rate": 0.015853658536585366,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.015853658536585366
+      },
+      "modes": {
+        "random_stratified": {
+          "simulations": 200,
+          "public_quantiles": [
+            2.4860324353687124e-05,
+            9.121279629870083e-05,
+            0.00016691837511659252
+          ],
+          "private_quantiles": [
+            5.484373783991581e-05,
+            8.568243121187535e-05,
+            0.00011540051617087153
+          ],
+          "private_p05": 5.484373783991581e-05,
+          "private_median": 8.568243121187535e-05,
+          "private_worst_5pct_mean": 4.747952921073662e-05,
+          "public_private_sign_disagreement_rate": 0.01,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.01
+        },
+        "fold_aware": {
+          "simulations": 200,
+          "public_quantiles": [
+            2.9325653344886016e-05,
+            8.594197255334945e-05,
+            0.00015290706439402557
+          ],
+          "private_quantiles": [
+            6.015935495305991e-05,
+            8.591101148608393e-05,
+            0.0001183369620572694
+          ],
+          "private_p05": 6.015935495305991e-05,
+          "private_median": 8.591101148608393e-05,
+          "private_worst_5pct_mean": 5.608528695822956e-05,
+          "public_private_sign_disagreement_rate": 0.02,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.02
+        },
+        "segment_stressed": {
+          "simulations": 420,
+          "public_quantiles": [
+            1.8434786320015163e-05,
+            9.630392646975405e-05,
+            0.0001694310433221153
+          ],
+          "private_quantiles": [
+            5.444497132207626e-05,
+            8.618425161055487e-05,
+            0.00012062940656566988
+          ],
+          "private_p05": 5.444497132207626e-05,
+          "private_median": 8.618425161055487e-05,
+          "private_worst_5pct_mean": 4.5678378513457406e-05,
+          "public_private_sign_disagreement_rate": 0.016666666666666666,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.016666666666666666
+        }
+      },
+      "stress_segments": {
+        "Class=Business": {
+          "simulations": 30,
+          "public_quantiles": [
+            5.358372257333044e-05,
+            9.62960402313695e-05,
+            0.0001732245211343408
+          ],
+          "private_quantiles": [
+            6.466355698153681e-05,
+            8.828157464552122e-05,
+            0.00010771462283385433
+          ],
+          "private_p05": 6.466355698153681e-05,
+          "private_median": 8.828157464552122e-05,
+          "private_worst_5pct_mean": 6.271748068192862e-05,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Class=Eco": {
+          "simulations": 30,
+          "public_quantiles": [
+            1.4696033368949432e-05,
+            0.00011035157021899167,
+            0.0001730462076517835
+          ],
+          "private_quantiles": [
+            5.787989119891979e-05,
+            7.837740348554112e-05,
+            0.00010824974888348768
+          ],
+          "private_p05": 5.787989119891979e-05,
+          "private_median": 7.837740348554112e-05,
+          "private_worst_5pct_mean": 4.824517190965549e-05,
+          "public_private_sign_disagreement_rate": 0.06666666666666667,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.06666666666666667
+        },
+        "Class=Eco Plus": {
+          "simulations": 30,
+          "public_quantiles": [
+            1.0153588232575397e-05,
+            7.37523828945319e-05,
+            0.00015348608328131228
+          ],
+          "private_quantiles": [
+            5.40157456243473e-05,
+            7.971656527061555e-05,
+            0.00012212517180366643
+          ],
+          "private_p05": 5.40157456243473e-05,
+          "private_median": 7.971656527061555e-05,
+          "private_worst_5pct_mean": 5.011607988980593e-05,
+          "public_private_sign_disagreement_rate": 0.03333333333333333,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.03333333333333333
+        },
+        "Type of Travel=Business travel": {
+          "simulations": 30,
+          "public_quantiles": [
+            3.1441249448388445e-05,
+            0.00011082953259455852,
+            0.00013861001835637762
+          ],
+          "private_quantiles": [
+            5.4182270358898996e-05,
+            7.983537068229074e-05,
+            0.0001093283942886325
+          ],
+          "private_p05": 5.4182270358898996e-05,
+          "private_median": 7.983537068229074e-05,
+          "private_worst_5pct_mean": 4.694179785641461e-05,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Type of Travel=Personal Travel": {
+          "simulations": 30,
+          "public_quantiles": [
+            1.6176899944175817e-05,
+            9.44509421040296e-05,
+            0.00018592646280097267
+          ],
+          "private_quantiles": [
+            6.125387159238715e-05,
+            8.208170657991731e-05,
+            0.000114898539101832
+          ],
+          "private_p05": 6.125387159238715e-05,
+          "private_median": 8.208170657991731e-05,
+          "private_worst_5pct_mean": 5.463387175053125e-05,
+          "public_private_sign_disagreement_rate": 0.03333333333333333,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.03333333333333333
+        },
+        "Customer Type=Loyal Customer": {
+          "simulations": 30,
+          "public_quantiles": [
+            1.3491945595517364e-05,
+            8.405885149093129e-05,
+            0.00014903762520717122
+          ],
+          "private_quantiles": [
+            5.9847276425939455e-05,
+            8.922179035786293e-05,
+            0.00011716315437995671
+          ],
+          "private_p05": 5.9847276425939455e-05,
+          "private_median": 8.922179035786293e-05,
+          "private_worst_5pct_mean": 4.8787849822151674e-05,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Customer Type=disloyal Customer": {
+          "simulations": 30,
+          "public_quantiles": [
+            2.8921427298100877e-05,
+            9.031066695941448e-05,
+            0.00015018955114693975
+          ],
+          "private_quantiles": [
+            6.021615763535104e-05,
+            8.366280962712747e-05,
+            0.00012449470692391107
+          ],
+          "private_p05": 6.021615763535104e-05,
+          "private_median": 8.366280962712747e-05,
+          "private_worst_5pct_mean": 5.542877131631263e-05,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "departure_delay_zero": {
+          "simulations": 30,
+          "public_quantiles": [
+            4.3554032778519994e-05,
+            9.149388436635597e-05,
+            0.00015248585476965724
+          ],
+          "private_quantiles": [
+            4.7048493882595466e-05,
+            8.821156588534329e-05,
+            0.00011986849566321122
+          ],
+          "private_p05": 4.7048493882595466e-05,
+          "private_median": 8.821156588534329e-05,
+          "private_worst_5pct_mean": 3.683682460270399e-05,
+          "public_private_sign_disagreement_rate": 0.03333333333333333,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.03333333333333333
+        },
+        "distance_lower_quartile": {
+          "simulations": 30,
+          "public_quantiles": [
+            3.1618548986028784e-05,
+            9.026475778595167e-05,
+            0.00017537340842981304
+          ],
+          "private_quantiles": [
+            6.828152943427201e-05,
+            8.685972964528332e-05,
+            0.00010647324798929157
+          ],
+          "private_p05": 6.828152943427201e-05,
+          "private_median": 8.685972964528332e-05,
+          "private_worst_5pct_mean": 6.36225951954339e-05,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "distance_upper_quartile": {
+          "simulations": 30,
+          "public_quantiles": [
+            1.9649633175961025e-05,
+            6.865195822824965e-05,
+            0.00013051561145780428
+          ],
+          "private_quantiles": [
+            6.254034109139384e-05,
+            9.009979562057957e-05,
+            0.00013359151530404343
+          ],
+          "private_p05": 6.254034109139384e-05,
+          "private_median": 9.009979562057957e-05,
+          "private_worst_5pct_mean": 5.7662573586247934e-05,
+          "public_private_sign_disagreement_rate": 0.03333333333333333,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.03333333333333333
+        },
+        "survey_any_zero": {
+          "simulations": 30,
+          "public_quantiles": [
+            4.664498757764313e-05,
+            0.00011619104808113789,
+            0.00019054850261475127
+          ],
+          "private_quantiles": [
+            5.694071584803062e-05,
+            8.903883812144686e-05,
+            0.00011466738872981105
+          ],
+          "private_p05": 5.694071584803062e-05,
+          "private_median": 8.903883812144686e-05,
+          "private_worst_5pct_mean": 5.2535527717778585e-05,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "survey_many_zeros": {
+          "simulations": 30,
+          "public_quantiles": [
+            2.2990102924030923e-05,
+            9.177581738806229e-05,
+            0.0001524540563299703
+          ],
+          "private_quantiles": [
+            5.700351601193865e-05,
+            8.198650734059232e-05,
+            0.00011552220326062622
+          ],
+          "private_p05": 5.700351601193865e-05,
+          "private_median": 8.198650734059232e-05,
+          "private_worst_5pct_mean": 4.8741676078656315e-05,
+          "public_private_sign_disagreement_rate": 0.03333333333333333,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.03333333333333333
+        },
+        "champion_low_confidence": {
+          "simulations": 30,
+          "public_quantiles": [
+            7.740041593908843e-05,
+            0.0001357768027262507,
+            0.00019763316118531765
+          ],
+          "private_quantiles": [
+            3.764161200364158e-05,
+            7.567702284316802e-05,
+            9.890645580126754e-05
+          ],
+          "private_p05": 3.764161200364158e-05,
+          "private_median": 7.567702284316802e-05,
+          "private_worst_5pct_mean": 3.635567060694678e-05,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "champion_high_confidence": {
+          "simulations": 30,
+          "public_quantiles": [
+            1.94577159321252e-05,
+            8.207658914616278e-05,
+            0.00018483844355723922
+          ],
+          "private_quantiles": [
+            5.892257635879972e-05,
+            0.00010036263625196051,
+            0.00012821082894745595
+          ],
+          "private_p05": 5.892257635879972e-05,
+          "private_median": 0.00010036263625196051,
+          "private_worst_5pct_mean": 4.9159193748538055e-05,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        }
+      },
+      "test_correlation_vs_v6": null,
+      "eligibility": "OOF diagnostic only; independent confirmation and test certificate still required"
+    },
+    "phase17_B1_route_component": {
+      "oof_auc": 0.9615159787196581,
+      "pooled_delta_vs_v6": -0.0002496351049213752,
+      "all_820": {
+        "simulations": 820,
+        "public_quantiles": [
+          -0.00047029976835818446,
+          -0.00025974818826290935,
+          -5.165815664935352e-05
+        ],
+        "private_quantiles": [
+          -0.00033641401578446417,
+          -0.0002536013029744155,
+          -0.00017127355177760096
+        ],
+        "private_p05": -0.00033641401578446417,
+        "private_median": -0.0002536013029744155,
+        "private_worst_5pct_mean": -0.0003585456645241147,
+        "public_private_sign_disagreement_rate": 0.01951219512195122,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.01951219512195122
+      },
+      "modes": {
+        "random_stratified": {
+          "simulations": 200,
+          "public_quantiles": [
+            -0.00045677177138733207,
+            -0.0002575963717931784,
+            -2.720611412221392e-05
+          ],
+          "private_quantiles": [
+            -0.00033641401578446417,
+            -0.00024861969647649307,
+            -0.0001731490630493771
+          ],
+          "private_p05": -0.00033641401578446417,
+          "private_median": -0.00024861969647649307,
+          "private_worst_5pct_mean": -0.0003626001790379751,
+          "public_private_sign_disagreement_rate": 0.04,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.04
+        },
+        "fold_aware": {
+          "simulations": 200,
+          "public_quantiles": [
+            -0.00043143497535149674,
+            -0.00023380025786651215,
+            -4.862054661979324e-05
+          ],
+          "private_quantiles": [
+            -0.00033653146925427535,
+            -0.00025550745298069666,
+            -0.0001715743095520362
+          ],
+          "private_p05": -0.00033653146925427535,
+          "private_median": -0.00025550745298069666,
+          "private_worst_5pct_mean": -0.00036047068401157123,
+          "public_private_sign_disagreement_rate": 0.01,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.01
+        },
+        "segment_stressed": {
+          "simulations": 420,
+          "public_quantiles": [
+            -0.0004897000555758923,
+            -0.00027558769803054384,
+            -5.6165874171826426e-05
+          ],
+          "private_quantiles": [
+            -0.00033615746721301075,
+            -0.0002555827251602971,
+            -0.00017122673903034461
+          ],
+          "private_p05": -0.00033615746721301075,
+          "private_median": -0.0002555827251602971,
+          "private_worst_5pct_mean": -0.0003556982673806304,
+          "public_private_sign_disagreement_rate": 0.014285714285714285,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.014285714285714285
+        }
+      },
+      "stress_segments": {
+        "Class=Business": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0006070145264781446,
+            -0.000367021027352199,
+            -0.00015750384007983122
+          ],
+          "private_quantiles": [
+            -0.000313228920534131,
+            -0.00023263548366031506,
+            -0.0001642578572127962
+          ],
+          "private_p05": -0.000313228920534131,
+          "private_median": -0.00023263548366031506,
+          "private_worst_5pct_mean": -0.0003184734057896099,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Class=Eco": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.000482777149387309,
+            -0.00017542289457556093,
+            -2.6902775596332514e-05
+          ],
+          "private_quantiles": [
+            -0.0003508290201772402,
+            -0.0002768773409596026,
+            -0.00022631091480119779
+          ],
+          "private_p05": -0.0003508290201772402,
+          "private_median": -0.0002768773409596026,
+          "private_worst_5pct_mean": -0.0003588762411005364,
+          "public_private_sign_disagreement_rate": 0.03333333333333333,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.03333333333333333
+        },
+        "Class=Eco Plus": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.00047722295619817003,
+            -0.00026974624860881535,
+            -8.606178704633212e-05
+          ],
+          "private_quantiles": [
+            -0.00031883837376103785,
+            -0.00025007838541302174,
+            -0.00017986617034013164
+          ],
+          "private_p05": -0.00031883837376103785,
+          "private_median": -0.00025007838541302174,
+          "private_worst_5pct_mean": -0.0003340853769054908,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Type of Travel=Business travel": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0005327056849711409,
+            -0.0002866613849599742,
+            -0.00013411649606300815
+          ],
+          "private_quantiles": [
+            -0.00034096952295031293,
+            -0.0002683351808104306,
+            -0.00020120141304855733
+          ],
+          "private_p05": -0.00034096952295031293,
+          "private_median": -0.0002683351808104306,
+          "private_worst_5pct_mean": -0.0003503543952861343,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Type of Travel=Personal Travel": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0005297370795272982,
+            -0.0002922318857633832,
+            -4.2954988478843966e-05
+          ],
+          "private_quantiles": [
+            -0.0003441050669204415,
+            -0.00027620459145327736,
+            -0.0001900277473576074
+          ],
+          "private_p05": -0.0003441050669204415,
+          "private_median": -0.00027620459145327736,
+          "private_worst_5pct_mean": -0.0003737743235416868,
+          "public_private_sign_disagreement_rate": 0.03333333333333333,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.03333333333333333
+        },
+        "Customer Type=Loyal Customer": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0004087110350313061,
+            -0.00024331298584695515,
+            -3.743129813312822e-05
+          ],
+          "private_quantiles": [
+            -0.00030518917225825224,
+            -0.00023443127789157803,
+            -0.00018968391051910063
+          ],
+          "private_p05": -0.00030518917225825224,
+          "private_median": -0.00023443127789157803,
+          "private_worst_5pct_mean": -0.00031656579470040747,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "Customer Type=disloyal Customer": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0004511820901255625,
+            -0.00026603014042797524,
+            -7.98886931359101e-05
+          ],
+          "private_quantiles": [
+            -0.0003147802386122278,
+            -0.0002500677353501901,
+            -0.00015033925664956207
+          ],
+          "private_p05": -0.0003147802386122278,
+          "private_median": -0.0002500677353501901,
+          "private_worst_5pct_mean": -0.00032014143447367527,
+          "public_private_sign_disagreement_rate": 0.03333333333333333,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.03333333333333333
+        },
+        "departure_delay_zero": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.00041429581555920135,
+            -0.00026402534597352867,
+            -0.0001101229538016614
+          ],
+          "private_quantiles": [
+            -0.0003311600757376021,
+            -0.00023962086867446164,
+            -0.0001825300503127292
+          ],
+          "private_p05": -0.0003311600757376021,
+          "private_median": -0.00023962086867446164,
+          "private_worst_5pct_mean": -0.0003452719740611454,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "distance_lower_quartile": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.00038444747360112387,
+            -0.0001945202657444023,
+            -5.6662904345419386e-06
+          ],
+          "private_quantiles": [
+            -0.00035401070796510227,
+            -0.0002740508318870294,
+            -0.0001855709829973962
+          ],
+          "private_p05": -0.00035401070796510227,
+          "private_median": -0.0002740508318870294,
+          "private_worst_5pct_mean": -0.00035936197198277453,
+          "public_private_sign_disagreement_rate": 0.06666666666666667,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.06666666666666667
+        },
+        "distance_upper_quartile": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0005124215475880323,
+            -0.00037853296381396007,
+            -0.00022573782767446602
+          ],
+          "private_quantiles": [
+            -0.00031261875290949925,
+            -0.00024040103418632164,
+            -0.00016208413538003626
+          ],
+          "private_p05": -0.00031261875290949925,
+          "private_median": -0.00024040103418632164,
+          "private_worst_5pct_mean": -0.00034506522201499523,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "survey_any_zero": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.0004246695143377832,
+            -0.00024805233345637223,
+            -7.585265716346662e-05
+          ],
+          "private_quantiles": [
+            -0.00029557221480941973,
+            -0.0002249405228070822,
+            -0.00015658374231722347
+          ],
+          "private_p05": -0.00029557221480941973,
+          "private_median": -0.0002249405228070822,
+          "private_worst_5pct_mean": -0.00030638475711364244,
+          "public_private_sign_disagreement_rate": 0.03333333333333333,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.03333333333333333
+        },
+        "survey_many_zeros": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.00040535803179712616,
+            -0.0002515293196237445,
+            -6.996248205461414e-05
+          ],
+          "private_quantiles": [
+            -0.0003125757530607898,
+            -0.0002618834255562752,
+            -0.00018662433934423794
+          ],
+          "private_p05": -0.0003125757530607898,
+          "private_median": -0.0002618834255562752,
+          "private_worst_5pct_mean": -0.0003391849438513783,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "champion_low_confidence": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.00042163472082187847,
+            -0.0002599878735791705,
+            -0.0001421162117708486
+          ],
+          "private_quantiles": [
+            -0.00032993567938176537,
+            -0.00027067423386656353,
+            -0.00020834486787948414
+          ],
+          "private_p05": -0.00032993567938176537,
+          "private_median": -0.00027067423386656353,
+          "private_worst_5pct_mean": -0.00033751401060477804,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        },
+        "champion_high_confidence": {
+          "simulations": 30,
+          "public_quantiles": [
+            -0.000396954259033333,
+            -0.000267087178020986,
+            -0.00012172763805960441
+          ],
+          "private_quantiles": [
+            -0.0003438915815700827,
+            -0.0002674332525140488,
+            -0.0001384072131867975
+          ],
+          "private_p05": -0.0003438915815700827,
+          "private_median": -0.0002674332525140488,
+          "private_worst_5pct_mean": -0.00036305710370071465,
+          "public_private_sign_disagreement_rate": 0.0,
+          "private_reversal_vs_full_oof_rate": 0.0,
+          "public_reversal_vs_full_oof_rate": 0.0
+        }
+      },
+      "test_correlation_vs_v6": null,
+      "eligibility": "OOF diagnostic only; independent confirmation and test certificate still required"
+    }
+  },
+  "prediction_sha256": {
+    "v6": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+    "unchanged_aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+    "original_route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510",
+    "phase17_B1": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+    "phase17_B1_route_component": "bcb2811329d3686882450e93435647f8f7ab65abfc48c1a1b51db1e9d1ef95e0"
+  },
+  "draws_artifact": "C:\\Users\\James\\airline_S6E10\\artifacts\\phase17_B1_oof_private_20261009\\draws.json",
+  "draws_file_sha256": "400910c015b28c998656e9d6b49328243d4ba2ab2c12e5b5e1260cdb4ea6779b",
+  "source_sha256": {
+    "scripts/diagnose_phase17_oof_private.py": "007053df05bf0a5a5788efdadb932a5f0b64452c670a1c247f7022a2435ba102",
+    "scripts/private_lb_simulator.py": "b4ca3aa7c274b05eb431b0a711d07113416d527b06196991615eb1ca7abb6509",
+    "src/validation/private_sim.py": "84785b34accf20f4717a84b8fa4e4d2178455d1040d5bcbf3e04e5c2a40c620f",
+    "scripts/phase17_primary_io.py": "3df7f007daf5cf14135c4606b78791c9db75dec8c00a525a4d086959bfe3aa3e",
+    "scripts/audit_sol_state.py": "1a6ca7cdd78d20592146be78c9b0da62b1bdb97c93d2eb5d5fc15d50a8993321"
+  },
+  "test_certified": false,
+  "independent_confirmation_passed": false,
+  "submission_eligible": false,
+  "limitation": "Conditional resampling of existing OOF only; no private labels, refitting uncertainty or unknown shift. Fixed legacyv5 defines confidence partitions, never an eligible model score."
+}

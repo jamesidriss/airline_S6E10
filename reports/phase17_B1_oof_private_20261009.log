@@ -1,0 +1,9 @@
+OOF-only fixed stress 100/820
+OOF-only fixed stress 200/820
+OOF-only fixed stress 300/820
+OOF-only fixed stress 400/820
+OOF-only fixed stress 500/820
+OOF-only fixed stress 600/820
+OOF-only fixed stress 700/820
+OOF-only fixed stress 800/820
+{"simulations": 820, "public_quantiles": [2.3412805300709884e-05, 9.139586968948121e-05, 0.0001645381957157743], "private_quantiles": [5.586951140424401e-05, 8.606747059097808e-05, 0.0001184793102690207], "private_p05": 5.586951140424401e-05, "private_median": 8.606747059097808e-05, "private_worst_5pct_mean": 4.822835249580601e-05, "public_private_sign_disagreement_rate": 0.015853658536585366, "private_reversal_vs_full_oof_rate": 0.0, "public_reversal_vs_full_oof_rate": 0.015853658536585366}

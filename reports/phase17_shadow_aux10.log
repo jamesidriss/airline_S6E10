@@ -1,0 +1,84 @@
+    [cache] view full: (699635, 237)
+clean fold2: aux 1/13 Inflight wifi service 31.4s
+clean fold2: aux 2/13 Departure/Arrival time convenient 31.4s
+clean fold2: aux 3/13 Ease of Online booking 31.0s
+clean fold2: aux 4/13 Gate location 31.1s
+clean fold2: aux 5/13 Food and drink 31.5s
+clean fold2: aux 6/13 Online boarding 32.0s
+clean fold2: aux 7/13 Seat comfort 31.1s
+clean fold2: aux 8/13 Inflight entertainment 31.2s
+clean fold2: aux 9/13 On-board service 32.3s
+clean fold2: aux 10/13 Leg room service 31.6s
+clean fold2: aux 11/13 Baggage handling 27.3s
+clean fold2: aux 12/13 Checkin service 34.8s
+clean fold2: aux 13/13 Cleanliness 34.0s
+xt_xt_d127_ss06_f2: AUC0.961678706; 703 trees; 27.8s
+    [cache] view full: (699635, 237)
+clean fold3: aux 1/13 Inflight wifi service 31.6s
+clean fold3: aux 2/13 Departure/Arrival time convenient 31.9s
+clean fold3: aux 3/13 Ease of Online booking 30.6s
+clean fold3: aux 4/13 Gate location 31.0s
+clean fold3: aux 5/13 Food and drink 30.8s
+clean fold3: aux 6/13 Online boarding 32.3s
+clean fold3: aux 7/13 Seat comfort 31.3s
+clean fold3: aux 8/13 Inflight entertainment 32.5s
+clean fold3: aux 9/13 On-board service 31.6s
+clean fold3: aux 10/13 Leg room service 31.4s
+clean fold3: aux 11/13 Baggage handling 29.3s
+clean fold3: aux 12/13 Checkin service 31.0s
+clean fold3: aux 13/13 Cleanliness 30.9s
+xt_xt_d127_ss06_f3: AUC0.961662956; 639 trees; 35.2s
+    [cache] view full: (699635, 237)
+clean fold2: aux probability cache 28880ad73ed6
+xt_xt_d127_s1_f2: AUC0.961665835; 889 trees; 39.9s
+    [cache] view full: (699635, 237)
+clean fold3: aux probability cache c7942955a429
+xt_xt_d127_s1_f3: AUC0.961717830; 775 trees; 33.4s
+    [cache] view full: (699635, 237)
+clean fold2: aux probability cache 28880ad73ed6
+xt_xt_d255_f2: AUC0.961608174; 523 trees; 30.9s
+    [cache] view full: (699635, 237)
+clean fold3: aux probability cache c7942955a429
+xt_xt_d255_f3: AUC0.961694004; 551 trees; 34.8s
+    [cache] view full: (699635, 237)
+clean fold2: aux probability cache 28880ad73ed6
+xt_xt_d127_bin63_f2: AUC0.961556722; 1126 trees; 41.3s
+    [cache] view full: (699635, 237)
+clean fold3: aux probability cache c7942955a429
+xt_xt_d127_bin63_f3: AUC0.961633797; 620 trees; 33.8s
+    [cache] view full: (699635, 237)
+clean fold2: aux probability cache 28880ad73ed6
+xt_xt_d127_cs05_f2: AUC0.961730904; 857 trees; 39.0s
+    [cache] view full: (699635, 237)
+clean fold3: aux probability cache c7942955a429
+xt_xt_d127_cs05_f3: AUC0.961538718; 791 trees; 37.2s
+    [cache] view full: (699635, 237)
+clean fold2: aux probability cache 28880ad73ed6
+xt_xt_d63_f2: AUC0.961401498; 1095 trees; 34.5s
+    [cache] view full: (699635, 237)
+clean fold3: aux probability cache c7942955a429
+xt_xt_d63_f3: AUC0.961625084; 537 trees; 27.3s
+    [cache] view full: (699635, 237)
+clean fold2: aux probability cache 28880ad73ed6
+z3_cat_d8_s2_f2: AUC0.961441286; 1488 trees; 559.1s
+    [cache] view full: (699635, 237)
+clean fold3: aux probability cache c7942955a429
+z3_cat_d8_s2_f3: AUC0.961293239; 1627 trees; 608.2s
+    [cache] view full: (699635, 237)
+clean fold2: aux probability cache 28880ad73ed6
+prod5_xgb_full_primary_f2: AUC0.961398435; 508 trees; 9.8s
+    [cache] view full: (699635, 237)
+clean fold3: aux probability cache c7942955a429
+prod5_xgb_full_primary_f3: AUC0.961401819; 462 trees; 9.2s
+    [cache] view full: (699635, 237)
+clean fold2: aux probability cache 28880ad73ed6
+xt_xgb_lossguide_f2: AUC0.961281877; 468 trees; 27.0s
+    [cache] view full: (699635, 237)
+clean fold3: aux probability cache c7942955a429
+xt_xgb_lossguide_f3: AUC0.961545262; 335 trees; 22.4s
+    [cache] view full: (699635, 237)
+clean fold2: aux probability cache 28880ad73ed6
+zoo_xgb_d6_f2: AUC0.961253062; 807 trees; 8.8s
+    [cache] view full: (699635, 237)
+clean fold3: aux probability cache c7942955a429
+zoo_xgb_d6_f3: AUC0.961418471; 488 trees; 6.8s
