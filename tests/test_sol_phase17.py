@@ -4,6 +4,7 @@ import torch
 from unittest.mock import patch
 from scripts.phase17_contracts import equivalence
 from scripts.phase17_four_contracts import equivalence_four
+from scripts.assemble_phase17_primary import scatter_predictions
 from scripts.probe_phase17_tabpfn import tensor_description
 
 
@@ -59,3 +60,13 @@ def test_four_estimator_gate_checks_every_configuration_and_class_column():
         try: equivalence_four(p,p,ids,ids,cfg,wrong)
         except ValueError: continue
         raise AssertionError('Last two configurations escaped validation')
+
+
+def test_full_primary_assembly_rejects_missing_fold_and_swapped_ids():
+    ids=np.arange(10);folds=np.arange(10)%5;p=np.linspace(.1,.9,10,dtype='float32')
+    parts={k:(p[folds==k],ids[folds==k]) for k in range(5)}
+    assert np.array_equal(scatter_predictions(parts,ids,folds),p)
+    for bad in ({k:v for k,v in parts.items() if k!=4},{**parts,4:(parts[4][0],parts[4][1][::-1])}):
+        try:scatter_predictions(bad,ids,folds)
+        except ValueError:continue
+        raise AssertionError('Incomplete/misaligned OOF was accepted')
