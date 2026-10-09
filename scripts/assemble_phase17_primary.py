@@ -41,13 +41,17 @@ def main():
     if root.exists() or path.exists(): raise FileExistsError('Preserve completed assembly')
     tr,_,y,folds,vectors,_,proof=bank();ids=tr.id.to_numpy()
     scope_path=Path('research/phase17_scope_20261009.json');scope=json.loads(scope_path.read_text())
-    route_parts={};portfolio_parts={};evidence=[];counts=[];deltas=[]
+    route_parts={};portfolio_parts={};evidence=[];counts=[];deltas=[];frozen_recipe=None
     for k in range(5):
         rp=Path('reports')/(tags[k]+f'_f{k}.json');ep=Path('reports')/(tags[k]+f'_f{k}_evaluation.json')
         r=json.loads(rp.read_text());e=json.loads(ep.read_text());c=r['contract'];folder=ARTIFACTS/tags[k]/f'f{k}'
         assert r['status']=='COMPLETE_FROZEN_PRIMARY_FOLD' and c['scheme']=='primary' and c['fold']==k
         assert c['scope_sha256']==file_sha256(scope_path) and c['bank']==proof
         assert c['seed']==1201 and not c['outer_labels_used_for_fit_or_configuration']
+        recipe={s:c[s] for s in ('params','seed','feature_names','label_free_category_maps','checkpoint',
+            'library_versions','library_source_sha256','test_policy')}
+        if frozen_recipe is None:frozen_recipe=recipe
+        else:assert recipe==frozen_recipe,'Recipe/library drift between primary folds'
         assert all(file_sha256(s)==h for s,h in c['source_sha256'].items())
         assert e['source_report_sha256']==file_sha256(rp) and e['scope_sha256']==file_sha256(scope_path)
         assert all(file_sha256(s)==h for s,h in e['source_sha256'].items())

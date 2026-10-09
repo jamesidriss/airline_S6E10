@@ -1,0 +1,46 @@
+{
+  "utc": "2026-10-09T08:16:12.812819+00:00",
+  "source_configuration_sha256": [
+    "abcd8f59e7db868641d9d0af882e53c3bb1b0c9fe7efc37b5caa3c36a938c69f",
+    "c99ee92a72cf5fdb1eff9ca5b67f6ce2e70b6416c41ce2ad7c93d350eac8eb82"
+  ],
+  "members": [
+    {
+      "index": 0,
+      "same_configuration": false,
+      "same_prepared_x": true,
+      "same_prepared_y": true,
+      "configuration_differences": {
+        "feature_shift_count": [
+          908,
+          909
+        ]
+      }
+    },
+    {
+      "index": 1,
+      "same_configuration": false,
+      "same_prepared_x": true,
+      "same_prepared_y": false,
+      "configuration_differences": {
+        "feature_shift_count": [
+          907,
+          908
+        ],
+        "class_permutation": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    }
+  ],
+  "first_member_raw_sha_match": true,
+  "verdict": "REJECT_CROSS_COUNT_REUSE_CONFIGURATIONS_DIFFER",
+  "action": "Continue the original complete official4 experiment; only identical full contracts can resume"
+}

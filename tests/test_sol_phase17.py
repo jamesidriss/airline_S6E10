@@ -164,3 +164,32 @@ def test_resume_skips_completed_fit_and_preserves_official_member_aggregation():
     assert fitted==[1] and completed==[(0,arr_sha256(values[0])),(1,arr_sha256(values[1]))]
     assert np.array_equal(p,probabilities(clf,np.concatenate(values)).astype('float32'))
     assert [m['raw_logits_sha256'] for m in metadata['members']]==[arr_sha256(v) for v in values]
+
+
+def test_submission_boundary_rejects_partial_certificate_even_with_valid_vectors():
+    import json
+    from pathlib import Path
+    from tempfile import TemporaryDirectory
+    from src.common import arr_sha256,file_sha256
+    import scripts.decide_phase17_submission as d
+    ids=np.array([1,2]);test_ids=np.array([3,4]);p=np.array([.2,.8],dtype='float32')
+    with TemporaryDirectory() as directory:
+        root=Path(directory);reports=root/'reports';reports.mkdir();artifact=root/'prediction';artifact.mkdir()
+        np.save(artifact/'candidate.npy',p);np.save(artifact/'test_ids.npy',test_ids)
+        pp=reports/'toy_primary.json';pp.write_text('{}')
+        sp=reports/'toy_shadow_confirmation.json';sp.write_text(json.dumps({'status':'MATCHED_SHADOW_CONFIRMATION_PASS',
+            'primary_report_sha256':file_sha256(pp),'source_sha256':{},'mean_paired_delta':.0001,'paired_fold_deltas':[.0001,.0001]}))
+        csv=root/'toy.csv';csv.write_text('id,satisfaction\n3,0.2\n4,0.8\n')
+        cert={'status':'CERTIFIED_PHASE17_TEST_REQUIRES_ROBUSTNESS_DECISION','bank':{},'source_sha256':{},
+            'primary_tag':'toy','primary_report_sha256':file_sha256(pp),'shadow_report_sha256':file_sha256(sp),
+            'test_artifact_root':str(artifact),'test_sha256':{'candidate':arr_sha256(p)},'oof_sha256':{'candidate':arr_sha256(p)},
+            'submission_path':str(csv),'submission_sha256':file_sha256(csv)}
+        cp=root/'certificate.json'
+        real_path=Path
+        def test_path(value):return reports if str(value)=='reports' else real_path(value)
+        with patch.object(d,'Path',test_path),patch.object(d,'load_primary',return_value=({}, {'candidate':p})):
+            cp.write_text(json.dumps(cert));d.checked_certificate(cp,{},ids,test_ids)
+            cp.write_text(json.dumps({**cert,'status':'PRIMARY_FOLD0_ONLY'}))
+            try:d.checked_certificate(cp,{},ids,test_ids)
+            except AssertionError:pass
+            else:raise AssertionError('Partial-fold candidate crossed the submission boundary')

@@ -1,0 +1,9 @@
+{
+  "declared_utc": "2026-10-09T08:22:00Z",
+  "known": "B1 primary0/1 positive; no complete primary, shadow, new test or B2 AUC observed",
+  "original_gates": "All original Phase17 admission/independent/test requirements remain mandatory; no relaxed thresholds",
+  "A": {"performance_admission_required": true, "matched_shadow_required": true, "certified_test_required": true, "private_820_median_delta_strictly_positive": true, "private_820_p05_delta_min": -0.0002, "worst_primary_segment_delta_min": -0.0002},
+  "B": "Original v6-relative performance or full hedge eligibility, plus the earlier joint-finalist contract against chosen A; actual OOF and test rankings and exact pair credit, not public score",
+  "scope": "Use predeclared200micro severe-loss bounds; no candidate weights, seeds, members or partition selection; public never selects",
+  "submission": "Decision/manifest/source committed before upload; max2 this phase; exact numeric reference polling"
+}

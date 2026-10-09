@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-09T08:43:18.936866+00:00",
+  "scope": "Frozen100k context and1024 applied rows, no applied labels or AUC",
+  "fit_ids_sha256": "238b9389b2a02ee2252aa2666bf90e70f4ea1cd1d9e159bee61670a73f72a621",
+  "apply_ids_sha256": "e6633f1bdb41e814ec625d59cfa09af94c08a1936fde4f26186ffadb591efb22",
+  "source_reports_sha256": [
+    "36ff05a4e2bc870abc701de9deba89276af5b1b189cbdda73f02a8e634833808",
+    "f2b2593b2d9ebbff6481b90cccbd01d09568aa5e1c93605fd0dfd00ec43afbf9"
+  ],
+  "prediction_sha256": [
+    "f8f0739e7d2e9fb99e6ec9b6d15abf5a09a8cec61e2fe44a9604a7f747da8149",
+    "63effcd8d7eb30bd6313ec42610cc51b5aa9f2483504a85b5fd89b923a4cd77b"
+  ],
+  "max_absolute_probability_gap": 0.11532670259475708,
+  "positive_column_spearman": 0.99555281217465,
+  "identical_probabilities": false,
+  "no_performance_or_reuse_verdict": true
+}
