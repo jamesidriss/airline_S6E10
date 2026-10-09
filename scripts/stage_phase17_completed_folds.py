@@ -26,6 +26,11 @@ def complete_record(run, evaluation, run_path, fold):
         assert all(file_sha256(p) == h for p, h in record['source_sha256'].items())
 
 
+def verify_fold_registry(contract, folds):
+    # Original primary producers record the immutable fold SHA in bank.
+    assert contract['bank']['fold_sha256'] == arr_sha256(folds)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--tag', required=True)
@@ -53,7 +58,8 @@ def main():
         assert c['library_source_sha256'] == library_sources()
         fi, va = np.flatnonzero(folds != k), np.flatnonzero(folds == k)
         folder = ARTIFACTS/tag/f'f{k}'
-        assert c['train_rows'] == len(fi) and c['apply_rows'] == len(va) and c['fold_sha256'] == arr_sha256(folds)
+        assert c['train_rows'] == len(fi) and c['apply_rows'] == len(va)
+        verify_fold_registry(c, folds)
         configuration = json.loads((folder/'configuration.json').read_text())
         assert configuration['contract'] == c
         for field in ('config_sha256','pipeline_seed','prepared_x_sha256','prepared_y_sha256'):

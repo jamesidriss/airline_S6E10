@@ -221,7 +221,13 @@ def test_completed_fold_staging_rejects_failed_or_mismatched_report():
     from pathlib import Path
     from tempfile import TemporaryDirectory
     from src.common import file_sha256
-    from scripts.stage_phase17_completed_folds import complete_record
+    from scripts.stage_phase17_completed_folds import complete_record, verify_fold_registry
+    from src.common import arr_sha256
+    folds=np.array([0,1,2,3,4],dtype='int8')
+    verify_fold_registry({'bank':{'fold_sha256':arr_sha256(folds)}},folds)
+    try:verify_fold_registry({'bank':{'fold_sha256':'wrong'}},folds)
+    except AssertionError:pass
+    else:raise AssertionError('Wrong immutable bank fold SHA accepted')
     c={'scheme':'primary','fold':1,'seed':1201,'params':{'random_state':1201,
         'n_estimators':4,'memory_saving_mode':True},'outer_labels_used_for_fit_or_configuration':False,
         'entire_training_context':False,'bank':{},'scope_sha256':'scope','source_sha256':{}}
