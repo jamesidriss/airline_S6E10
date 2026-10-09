@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-09T14:27:14.0661795Z",
+  "disk_free_gib": 32.03104019165039,
+  "ram_free_gib": 9.20748519897461,
+  "gpu": "NVIDIA GeForce RTX 5070 Ti, 1407 MiB, 16303 MiB, 1 %",
+  "campaign_workers": [],
+  "pagefile": [
+    {
+      "Name": "C:\\pagefile.sys",
+      "AllocatedBaseSize": 29998,
+      "CurrentUsage": 2445,
+      "PeakUsage": 14564
+    }
+  ],
+  "required_prediction_disk_gib": 20,
+  "observed_failed_prediction_disk_gib": 18.495136260986328,
+  "resource_status": "AWAITING_MORE_DISK_HEADROOM_NO_FULL_CONTEXT_RETRY",
+  "requested_additional_free_gib": 8
+}

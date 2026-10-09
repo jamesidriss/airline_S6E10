@@ -1,0 +1,226 @@
+{
+  "updated_utc": "2026-10-09T08:00:07.783292+00:00",
+  "BEST_A": {
+    "name": "v6_sol_tabpfn_route_aux10",
+    "ref": 56951906,
+    "oof": 0.9617656138245795,
+    "public": 0.96144,
+    "status": "CERTIFIED_RECOMMENDED_CHAMPION_A_EXPECTED_PRIVATE_PERFORMER",
+    "primary_report": "reports/sol_route_aux10_primary_final.json",
+    "test_certificate": "reports/sol_route_aux10_primary_final_test_certificate.json",
+    "scorecard": "reports/sol_route_aux10_recovery_scorecard.json",
+    "pre_result_manifest": "reports/v6_sol_tabpfn_route_aux10_pre_result.json",
+    "receipt": "reports/v6_sol_tabpfn_route_aux10_result.json",
+    "test_prediction_sha256": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+    "independent_scope": "Both predeclared shadow folds and fixed primary fold0 seed1202 diagnostic; full shadow and block10 not established",
+    "policy_limitation": "Small100k training pool/20k holdout policy audit has zero-crossing bootstrap interval; five-context fallback remains frozen; no deployment OOF score claimed"
+  },
+  "BEST_B_HEDGE": null,
+  "fallback_B": {
+    "name": "v5_aux_cross",
+    "ref": 56918343,
+    "public": 0.96103,
+    "status": "BANKED_UNCERTIFIED_LEGACY_FALLBACK_NOT_RECOMMENDED_AS_CLEAN_HEDGE"
+  },
+  "final_selection_locked": false,
+  "verified_clean_BEST_A": {
+    "name": "v6_sol_tabpfn_route_aux10",
+    "ref": 56951906,
+    "oof": 0.9617656138245795,
+    "public": 0.96144,
+    "status": "CERTIFIED_RECOMMENDED_CHAMPION_A_EXPECTED_PRIVATE_PERFORMER",
+    "primary_report": "reports/sol_route_aux10_primary_final.json",
+    "test_certificate": "reports/sol_route_aux10_primary_final_test_certificate.json",
+    "scorecard": "reports/sol_route_aux10_recovery_scorecard.json",
+    "pre_result_manifest": "reports/v6_sol_tabpfn_route_aux10_pre_result.json",
+    "receipt": "reports/v6_sol_tabpfn_route_aux10_result.json",
+    "test_prediction_sha256": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+    "independent_scope": "Both predeclared shadow folds and fixed primary fold0 seed1202 diagnostic; full shadow and block10 not established",
+    "policy_limitation": "Small100k training pool/20k holdout policy audit has zero-crossing bootstrap interval; five-context fallback remains frozen; no deployment OOF score claimed"
+  },
+  "candidate_in_confirmation": {
+    "name": "phase17_B1",
+    "status": "PRIMARY_PARTIAL_2FOLD_REPLICATED_NOT_YET_FULL_ADMISSION",
+    "internal_estimators": 2,
+    "complete_primary_folds": [
+      0,
+      1
+    ],
+    "paired_fold_deltas": [
+      0.0001006337950936187,
+      5.353630502968887e-05,
+      0.00010374848677385806,
+      8.215554972856864e-05,
+      9.92298601477648e-05
+    ],
+    "mean_paired_delta": 8.786079935469981e-05,
+    "full_oof_auc": null,
+    "test_certificate": null,
+    "uploaded": false,
+    "complete_folds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "full_pooled_oof_auc": 0.9618529228157235,
+    "verdict": "PRIMARY_PASS_REQUIRES_INDEPENDENT_CONFIRMATION_AND_TEST",
+    "observed_risk": {
+      "fold": 3,
+      "segment": "Class/Eco Plus",
+      "rows": 6058,
+      "delta": -0.00045989814828217845,
+      "pooled_segment_delta": 1.7752492166511757e-05,
+      "policy": "Fold loss preserved; full pooled segment positive; shadow confirmation remains required"
+    },
+    "pooled_delta": 8.730899114406387e-05,
+    "paired_se": 9.368949671537106e-06,
+    "primary_report": "reports/phase17_B1_primary.json",
+    "primary_performance_admission": true
+  },
+  "verified_clean_BEST_B_HEDGE": null,
+  "banked_legacy_previous_best_A": {
+    "name": "v5_aux_cross",
+    "ref": 56918343,
+    "oof": 0.9615234900843839,
+    "public": 0.96103,
+    "status": "BANKED_LEGACY_ONLY; OOF_AND_TEST_CONTRACT_REPAIR_REQUIRED",
+    "limitations": [
+      "12 neural members select checkpoints on outer labels",
+      "historical TE prior sees each fit row label",
+      "six auxiliary XT test configurations collapsed; auxiliary/test iteration mismatch"
+    ]
+  },
+  "final_selection_reassessed": true,
+  "kaggle_final_selection_updated": false,
+  "continuation_status": "PHASE17_ACTIVE_B1_FULL_PRIMARY_ADMITTED_B2_REPLICATION_PENDING",
+  "rejected_hedge_candidates": {
+    "clean_aux10": {
+      "oof_loss_vs_A": 0.00034690428011585617,
+      "test_logit_correlation_vs_A": 0.9989307824350159,
+      "reason": "Trailing expected score and no private simulation reversal; not a credible hedge"
+    },
+    "route": {
+      "oof_loss_vs_A": 0.0005460130546930397,
+      "test_logit_correlation_vs_A": 0.998927553672569,
+      "reason": "Larger expected score loss and no private simulation reversal; not a credible hedge"
+    },
+    "legacy_v5": {
+      "reason": "Banked historical fallback; validation and inference defects remain; no certified hedge claim"
+    },
+    "phase15_raw_route": {
+      "report": "reports/sol_phase15_raw_primary.json",
+      "reason": "Admission mean/SE below2.5; no independent/test confirmation; OOF Spearman.999636 and12/820 private simulation reversals do not establish a complementary finalist"
+    },
+    "phase15_native39": {
+      "report": "reports/sol_phase15_native39_twofold.json",
+      "reason": "Actual v6 improvement not directionally replicated"
+    },
+    "phase15_expected_rating_pfn": {
+      "report": "reports/sol_phase15_auxpfn_threefold.json",
+      "reason": "Threefold gain below frozen continuation threshold"
+    },
+    "phase16_fast": {
+      "report": "reports/phase16_fast_f0_evaluation.json",
+      "reason": "Fold0 actual portfolio loss341.439834micro; bootstrap entirely negative; all9 checked segments negative; no full5/independent/test certification"
+    }
+  },
+  "previous_campaign_stop": {
+    "new_submissions": 1,
+    "clean59_replay": "Not started; repairing47 classical and12 neural members requires disproportionate compute after the large replicated clean gain. Preserve infrastructure and historical banks.",
+    "new39_cross": "Not started",
+    "block10": "Not run, as predeclared",
+    "outstanding_required_work": [],
+    "uncertainty": "Unknown private labels, partial shadow scope, one seed fold and deployment-policy sampling uncertainty; competition outcome is not known."
+  },
+  "phase15_decision_report": "reports\\sol_phase15_cycle_decision_20261008.json",
+  "historical_strategy_archive": "reports/sol_phase15_private_strategy_before.json",
+  "finalist_reservations": [
+    "v6_sol_tabpfn_route_aux10",
+    null
+  ],
+  "previous_phase15_strategic_stop": {
+    "phase": 15,
+    "new_submissions": 0,
+    "raw_route": "FULL5_MODEST_POSITIVE_ADMISSION_FAIL",
+    "native39": "STANDALONE_POSITIVE2_OF2_PORTFOLIO_NOT_REPLICATED",
+    "expected_rating_pfn": "THREEFOLD_POSITIVE_SMALL_CONTINUATION_FAIL",
+    "clean_classical_replay": "A2 historical gain19.079359micro below predeclared30micro replay trigger",
+    "heavy_compute_hours": 2.6642313888889557,
+    "report": "reports\\sol_phase15_cycle_decision_20261008.json",
+    "outstanding_required_work": [],
+    "next_research": "Fresh evidence and bounded scope required before a fourth hypothesis",
+    "uncertainty": "Honest full raw OOF modestly beatsv6; no candidate has passed all frozen promotion/independent/test requirements; unknown private leaderboard remains unknown."
+  },
+  "phase16_decision_report": "reports\\phase16_cycle_decision_20261009.json",
+  "phase16_strategy_archive": "reports/phase16_private_strategy_before.json",
+  "previous_phase16_strategic_stop": {
+    "utc": "2026-10-08T23:09:53.973625+00:00",
+    "phase": 16,
+    "status": "CLOSED_BOUNDED_CYCLE",
+    "stretch_auc": 0.9621,
+    "certified_auc": 0.9617656138245795,
+    "remaining_gap": 0.0003343861754204758,
+    "champion_A": "v6_sol_tabpfn_route_aux10",
+    "champion_B": null,
+    "new_submissions": 0,
+    "internal_ensemble": "INVALID_NATIVE2_KERNEL_EQUIVALENCE_UNVERIFIED; no fullB1/B2 performance claim",
+    "B0": "EXACT_HASH_MATCH; fullfold0 native1 AUC0.9611324459037415",
+    "geometry": "G1/G2 full5 negative, neither promoted",
+    "fast": "Official matchedfold0 route loss1467.846507micro, portfolio loss341.439834micro; fixed discovery and hedge gates fail",
+    "fast_bootstrap_95": [
+      -0.0005100155043640281,
+      -0.00019930538324059994
+    ],
+    "fast_oof_spearman": 0.9897128556622539,
+    "fast_rescued_pair_fraction": 0.0032656039138302486,
+    "fast_damaged_pair_fraction": 0.0036070437475546743,
+    "fast_segments_negative": true,
+    "model_and_probe_job_wall_hours": 0.4447566666666535,
+    "budget_hours": 8,
+    "budget_interpretation": "Sum of model/probe wall times; not GPU-active time or full research elapsed time",
+    "extension_used": false,
+    "downstream_work_not_triggered": [
+      "B1/B2 fullfold0",
+      "Fast fold1..4",
+      "new shadow2",
+      "seed perturbation",
+      "new test inference and certification",
+      "candidate privateSIM",
+      "uploads"
+    ],
+    "outstanding_required_work": [],
+    "scientific_uncertainty": "Actual label flips, irreducible Bayes noise and unknown private labels are not observed. Official internal ensemble full-context performance remains unmeasured; native Windows equivalence failed twice. Stretch remains plausible but unachieved.",
+    "next_action": "Stop this cycle; no automatic Phase17 or checkpoint sweep",
+    "scope_sha256": "ed06c57103ea2a952ec3d2085af3e7caccb8e7dabb2da1e2276dd61a2355bc52",
+    "evidence_sha256": {
+      "reports\\phase16_tabpfn_probe_20261009.json": "571ee2dcd24b9b05ac95638d1605deb8c421e4ea6f99e12ed288a41a214b0fd6",
+      "reports\\phase16_tabpfn_probe_v2_20261009.json": "d2595d6f9f6e6225dfc8e1501e582dc65fb7bcd83f304c2772e1dfabb856ea72",
+      "reports\\phase16_B0_f0.json": "7ddb065422f852b286125e71456f2cd12921e0a92fb411693f74ba0dbd04eb24",
+      "reports\\phase16_fast_probe_f0.json": "3ef9d5831a85465b3ec6cbca2a6a28b22dd6ef679aadcdaadc869cec1e3d1c20",
+      "reports\\phase16_fast_f0.json": "d40d54819de7da268321a3df4c4181d9c3e0a18c94f70dd462bab68180d0304b",
+      "reports\\phase16_fast_f0_evaluation.json": "ed86d1fb4494b8f7ff00afdf46c92104b24ecf3d3502d2efdf6fcea6d515db4d",
+      "reports\\phase16_geometry_20261009.json": "9426828cc758fc2ffd24c73fad822e97482ad697ca919d68cd492cf9be6e8917",
+      "reports\\phase16_noise_reproduction_20261009.json": "da8c8eb28e971c2eef2933a1e6b3fe6c1eadb120fc0e46a6c9e21c44c61e7fc9"
+    }
+  },
+  "phase17_activity": {
+    "scope": "research/phase17_scope_20261009.json",
+    "four_estimator_discovery": "DISCOVERY_PASS_REQUIRES_FROZEN_REPLICATION",
+    "champion_A": "v6_sol_tabpfn_route_aux10",
+    "champion_B": null,
+    "new_submissions": 0,
+    "next_gate": "Disk headroom needed for matched TabPFN shadow/test. Fresh aux10shadow work and checks proceeding; user requested8GiB additional free capacity.",
+    "initial_heavy_budget_hours": 8,
+    "extension_used": false,
+    "B2_fold0_portfolio_delta": 0.00010445218312693516,
+    "B2_fold0_report": "reports/phase17_B2_f0_evaluation.json",
+    "extension_declared": true,
+    "revised_heavy_budget_hours": 28,
+    "extension_contract": "research\\phase17_compute_extension_20261009.json",
+    "four_estimator_replication": "FOUR_ESTIMATOR_RESOURCE_BRANCH_CLOSED_NO_MODEL_REJECTION",
+    "resume_tag": "phase17_B2_resume1_v3",
+    "resource_status": "Full-context prediction blocked at18.495136GiB<20GiB; compression25logicalhashespass but netcapacitystill33.6GiB"
+  }
+}

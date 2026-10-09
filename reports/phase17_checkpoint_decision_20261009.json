@@ -1,0 +1,264 @@
+{
+  "utc": "2026-10-09T14:31:38.999961+00:00",
+  "evidence_commit": "a0f12722e00c13989f35b2bc8d3daec544d1dd3d",
+  "status": "B1_PRIMARY_PASS_QUALIFICATION_RESOURCE_BLOCKED",
+  "goal_achieved": false,
+  "champion_A": "v6_sol_tabpfn_route_aux10",
+  "champion_B": null,
+  "candidate": "phase17_B1",
+  "candidate_internal_estimators": 2,
+  "candidate_primary_auc": 0.9618529228157235,
+  "pooled_delta_vs_v6": 8.730899114406387e-05,
+  "paired_fold_deltas": [
+    0.0001006337950936187,
+    5.353630502968887e-05,
+    0.00010374848677385806,
+    8.215554972856864e-05,
+    9.92298601477648e-05
+  ],
+  "mean_paired_gain": 8.786079935469981e-05,
+  "paired_se": 9.368949671537106e-06,
+  "positive_folds": 5,
+  "bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "v6",
+    "comparisons": {
+      "candidate": {
+        "mean": 8.647908725301079e-05,
+        "percentile_95_interval": [
+          5.9349370008857094e-05,
+          0.00011372372512356565
+        ],
+        "positive_fraction": 1.0
+      }
+    }
+  },
+  "oof_correlation_vs_v6": {
+    "logit": 0.9998244792314533,
+    "spearman": 0.9988084279012514,
+    "probability_residual": 0.9997279027392092
+  },
+  "pair_rescue_damage": {
+    "all_positive_negative_pairs": 120813731344,
+    "rescued_pair_credit": 148033941.5,
+    "damaged_pair_credit": 137485816.5,
+    "rescued_pair_fraction": 0.0012253072548392228,
+    "damaged_pair_fraction": 0.0011379982636951142,
+    "net_auc_gain": 8.73089911441085e-05,
+    "baseline_error_pair_credit": 4619238859.5,
+    "candidate_error_pair_credit": 4608690734.5,
+    "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+  },
+  "segments": [
+    {
+      "column": "Class",
+      "value": "Business",
+      "rows": 342212,
+      "delta": 0.00014853953292859323
+    },
+    {
+      "column": "Class",
+      "value": "Eco",
+      "rows": 327404,
+      "delta": 0.0002025420962225022
+    },
+    {
+      "column": "Class",
+      "value": "Eco Plus",
+      "rows": 30019,
+      "delta": 1.7752492166511757e-05
+    },
+    {
+      "column": "Type of Travel",
+      "value": "Business travel",
+      "rows": 497441,
+      "delta": 9.838851139643001e-05
+    },
+    {
+      "column": "Type of Travel",
+      "value": "Personal Travel",
+      "rows": 202194,
+      "delta": 0.00039151373519830113
+    },
+    {
+      "column": "Customer Type",
+      "value": "Loyal Customer",
+      "rows": 576990,
+      "delta": 8.452735000130662e-05
+    },
+    {
+      "column": "Customer Type",
+      "value": "disloyal Customer",
+      "rows": 122645,
+      "delta": 0.00017123314328759687
+    },
+    {
+      "column": "Gender",
+      "value": "Female",
+      "rows": 347952,
+      "delta": 8.83457037196278e-05
+    },
+    {
+      "column": "Gender",
+      "value": "Male",
+      "rows": 351683,
+      "delta": 8.629197962672919e-05
+    }
+  ],
+  "fold3_eco_plus_delta": -0.00045989814828217845,
+  "fixed_820_oof_stress": {
+    "simulations": 820,
+    "public_quantiles": [
+      2.3412805300709884e-05,
+      9.139586968948121e-05,
+      0.0001645381957157743
+    ],
+    "private_quantiles": [
+      5.586951140424401e-05,
+      8.606747059097808e-05,
+      0.0001184793102690207
+    ],
+    "private_p05": 5.586951140424401e-05,
+    "private_median": 8.606747059097808e-05,
+    "private_worst_5pct_mean": 4.822835249580601e-05,
+    "public_private_sign_disagreement_rate": 0.015853658536585366,
+    "private_reversal_vs_full_oof_rate": 0.0,
+    "public_reversal_vs_full_oof_rate": 0.015853658536585366
+  },
+  "stress_scope": "Conditional saved-primary-OOF resampling only; no test/independent/private-label certification",
+  "independent_confirmation_passed": false,
+  "matched_shadow_auxiliary_completed_fits": 20,
+  "matched_shadow_candidate_and_control_predictions_complete": false,
+  "test_predictions_complete": false,
+  "test_certificate": null,
+  "candidate_submission_eligible": false,
+  "new_submissions": 0,
+  "four_estimator_status": "RESOURCE_BRANCH_CLOSED_NO_MODEL_REJECTION",
+  "resource_intervention_pending": "User requested to free at least8GiB; no response received at checkpoint; actual restored capacity can resolve prerequisite",
+  "required_disk_reserve_gib": 20,
+  "observed_failed_prediction_disk_gib": 18.495136260986328,
+  "checkpoint_resources": {
+    "utc": "2026-10-09T14:27:14.0661795Z",
+    "disk_free_gib": 32.03104019165039,
+    "ram_free_gib": 9.20748519897461,
+    "gpu": "NVIDIA GeForce RTX 5070 Ti, 1407 MiB, 16303 MiB, 1 %",
+    "campaign_workers": [],
+    "pagefile": [
+      {
+        "Name": "C:\\pagefile.sys",
+        "AllocatedBaseSize": 29998,
+        "CurrentUsage": 2445,
+        "PeakUsage": 14564
+      }
+    ],
+    "required_prediction_disk_gib": 20,
+    "observed_failed_prediction_disk_gib": 18.495136260986328,
+    "resource_status": "AWAITING_MORE_DISK_HEADROOM_NO_FULL_CONTEXT_RETRY",
+    "requested_additional_free_gib": 8
+  },
+  "compute": {
+    "utc": "2026-10-09T14:15:58.955408+00:00",
+    "unique_model_and_probe_seconds": {
+      "reports\\phase17_attention_diagnosis_20261009.json": 88.35999999998603,
+      "reports\\phase17_B0_f0.json": 1010.6879999999655,
+      "reports\\phase17_internal2_equivalence_20261009.json": 109.90599999995902,
+      "reports\\phase17_internal2_serial_equivalence_20261009.json": 110.31300000008196,
+      "reports\\phase17_internal4_equivalence_20261009.json": 220.96900000004098,
+      "reports\\phase17_B2_f0.json": 4049.9379999999655,
+      "reports\\phase17_B1_f0.json": 2022.671999999904,
+      "reports\\phase17_B1_f1.json": 2023.7029999999795,
+      "reports\\phase17_B1_f2.json": 2024.5779999999795,
+      "reports\\phase17_B1_f3.json": 2024.875,
+      "reports\\phase17_B1_f4.json": 2024.8279999999795,
+      "reports/phase17_B2_f1.json": 3037.125,
+      "reports/phase17_B2_resume1_v2_f1.json": 775.5310000000754,
+      "reports/phase17_B2_resume1_v3_f1.json": 775.1560000000754,
+      "reports/phase17_shadow_B0/route_f2.json": 774.640000000014,
+      "reports\\phase17_shadow_aux10\\prod5_xgb_full_primary_f2.json": 9.812000000034459,
+      "reports\\phase17_shadow_aux10\\prod5_xgb_full_primary_f3.json": 9.219000000040978,
+      "reports\\phase17_shadow_aux10\\xt_xgb_lossguide_f2.json": 26.969000000040978,
+      "reports\\phase17_shadow_aux10\\xt_xgb_lossguide_f3.json": 22.43799999996554,
+      "reports\\phase17_shadow_aux10\\xt_xt_d127_bin63_f2.json": 41.296999999904074,
+      "reports\\phase17_shadow_aux10\\xt_xt_d127_bin63_f3.json": 33.82799999997951,
+      "reports\\phase17_shadow_aux10\\xt_xt_d127_cs05_f2.json": 39.04700000002049,
+      "reports\\phase17_shadow_aux10\\xt_xt_d127_cs05_f3.json": 37.18700000003446,
+      "reports\\phase17_shadow_aux10\\xt_xt_d127_s1_f2.json": 39.875,
+      "reports\\phase17_shadow_aux10\\xt_xt_d127_s1_f3.json": 33.35899999993853,
+      "reports\\phase17_shadow_aux10\\xt_xt_d127_ss06_f2.json": 27.81299999996554,
+      "reports\\phase17_shadow_aux10\\xt_xt_d127_ss06_f3.json": 35.21799999999348,
+      "reports\\phase17_shadow_aux10\\xt_xt_d255_f2.json": 30.938000000081956,
+      "reports\\phase17_shadow_aux10\\xt_xt_d255_f3.json": 34.75,
+      "reports\\phase17_shadow_aux10\\xt_xt_d63_f2.json": 34.53100000007544,
+      "reports\\phase17_shadow_aux10\\xt_xt_d63_f3.json": 27.280999999959022,
+      "reports\\phase17_shadow_aux10\\z3_cat_d8_s2_f2.json": 559.140000000014,
+      "reports\\phase17_shadow_aux10\\z3_cat_d8_s2_f3.json": 608.25,
+      "reports\\phase17_shadow_aux10\\zoo_xgb_d6_f2.json": 8.76500000001397,
+      "reports\\phase17_shadow_aux10\\zoo_xgb_d6_f3.json": 6.780999999959022,
+      "artifacts\\aux_distribution\\28880ad73ed6b7f8d71af6ace9ec0238ad017741a4948b4ff1768e986f7af20d\\manifest.json": 411.469000000041,
+      "artifacts\\aux_distribution\\c7942955a42920c36a2fc0ba518744494b96f2c2a02cd20e005bb6785208d8cd\\manifest.json": 407.25
+    },
+    "source_provenance_report_sha256": "b9dd3998e7c068d02e6caa52db928840a6f649e3e829c6bc8fa1792efa3414b1",
+    "completed_model_and_probe_hours": 6.544027500000019,
+    "failed_resource_attempts_included": true,
+    "reused_prefix_and_staged_copies_counted_only_once": true,
+    "initial_hours": 8,
+    "revised_total_ceiling_hours": 28,
+    "extension_declared": true,
+    "extension_used": false,
+    "separate_nonmodel_diagnostics": "OOF820 diagnostic, tests, source audits and125.109s cache compression are not included in model/probe total; not idle/research elapsed"
+  },
+  "full_tests": {
+    "passed": 142,
+    "failed": 0,
+    "source": "reports/phase17_current_full_tests_20261009.log"
+  },
+  "integrity_at_evidence_commit": {
+    "status": "PHASE17_INTEGRITY_PASS",
+    "historical_files_verified": 75,
+    "all_dynamic_snapshots_match_baseline_git": true,
+    "ledger_prefix_bitexact": true,
+    "new_ledger_rows": 19,
+    "secret_scan_files": 1266,
+    "changed_git_blobs_scanned": 154,
+    "secret_findings": [],
+    "git_blob_secret_findings": [],
+    "committed_working_byte_mismatches": []
+  },
+  "kaggle_checkpoint": {
+    "utc": "2026-10-09T14:02:18.967038+00:00",
+    "rank": 270,
+    "teams": 1296,
+    "remaining_daily": 10,
+    "existing_v6_reference": 56951906,
+    "existing_v6_public": 0.96144
+  },
+  "outstanding_required_work": [
+    "Restore enough disk headroom while retaining all guards",
+    "Matched B0 and B1 shadow folds2/3 with the completed unchanged auxiliary10",
+    "Pass frozen shadow gate",
+    "Five exact primary-FIT context test predictions over299844 IDs",
+    "Saved-member replay and complete test/CSV certification",
+    "Certificate-dependent fixed820 robustness and admission decision",
+    "Only qualified upload, then verified receipt and private-finalist update"
+  ],
+  "next_action": "Complete frozen B1 qualification after disk capacity changes; no new hypothesis/seed/weight search",
+  "automatic_phase18": false,
+  "evidence_sha256": {
+    "reports/phase17_B1_primary.json": "c63f5a172c7bdbaa160ce7aa022a1214daf03d5e0daac0540f7b9f2aa116f449",
+    "reports/phase17_B1_oof_private_20261009.json": "e91186991a4845be9cd0e9186b97ec879dc261a789b8a55221fc3198795916d5",
+    "reports/phase17_shadow_aux10_verification_20261009.json": "ef982d26c298d7f32ea93087a277d4a5a2eb3d4e50b81d21324b14897caf3415",
+    "reports/phase17_compute_account_checkpoint_20261009.json": "af73c13d250faff7027db89794becd3f61fda64c536669ccb3acd68394b9094e",
+    "reports/phase17_checkpoint_integrity_20261009.json": "baad4228fce4f6c5ea06bb5447d7e3752544e1d46070e0162baa6f97df45a26a",
+    "reports/phase17_checkpoint_resources_20261009.json": "524ad9cca3362ef0279fd3b0ac7cadd31eb3f88c85e361f424e59042b47bf5d7",
+    "reports/phase17_current_full_tests_20261009.log": "dd73ac716ef42549537230294249a6e91389c2b9e378b9a31b094d363ce8e8a2",
+    "reports/phase17_B2_resource_closure_20261009.json": "a31bbeab24cc9b18473f08a72588cb52c88ba768c248685dc884d8bae575b9f6",
+    "reports/phase17_kaggle_checkpoint_20261009.json": "18ff86e92c790dcdd117362659704c0c8b4eb58c9cb1d28d8318ca4988f311c9",
+    "research/raw/phase17_rules_current_20261009.json": "770e3fd4b68d851650dd631e13c44fc1dd03acdbf856f74f9eab1a3ccc4da313",
+    "reports/phase17_technical_resolution_20261009.json": "58c13f6accb67bad81321c50c9c6abe03c722bc5fca839d22c77745c9b94a006",
+    "reports/phase17_primary_loader_controls_20261009.json": "1314ff2950a646fecb22de85b1eb2730d4eea6dfaf5902ac65cf4808c6a604bf",
+    "reports/phase17_certification_controls_20261009.json": "3cdd3f7a10db1297198ec6e3357fbd39ef998ec1cd3e9027f8110e6d0e65ba9a"
+  }
+}

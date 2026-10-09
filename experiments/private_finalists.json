@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-09T08:00:07.783292+00:00",
+  "updated_utc": "2026-10-09T14:31:38.999961+00:00",
   "BEST_A": {
     "name": "v6_sol_tabpfn_route_aux10",
     "ref": 56951906,
@@ -40,11 +40,14 @@
   },
   "candidate_in_confirmation": {
     "name": "phase17_B1",
-    "status": "PRIMARY_PARTIAL_2FOLD_REPLICATED_NOT_YET_FULL_ADMISSION",
+    "status": "FULL_PRIMARY_PASS_AWAITS_MATCHED_SHADOW_AND_CERTIFIED_TEST",
     "internal_estimators": 2,
     "complete_primary_folds": [
       0,
-      1
+      1,
+      2,
+      3,
+      4
     ],
     "paired_fold_deltas": [
       0.0001006337950936187,
@@ -54,7 +57,7 @@
       9.92298601477648e-05
     ],
     "mean_paired_delta": 8.786079935469981e-05,
-    "full_oof_auc": null,
+    "full_oof_auc": 0.9618529228157235,
     "test_certificate": null,
     "uploaded": false,
     "complete_folds": [
@@ -77,7 +80,11 @@
     "pooled_delta": 8.730899114406387e-05,
     "paired_se": 9.368949671537106e-06,
     "primary_report": "reports/phase17_B1_primary.json",
-    "primary_performance_admission": true
+    "primary_performance_admission": true,
+    "independent_confirmation_passed": false,
+    "test_predictions_complete": false,
+    "oof_stress_report": "reports/phase17_B1_oof_private_20261009.json",
+    "matched_shadow_auxiliary_report": "reports/phase17_shadow_aux10_verification_20261009.json"
   },
   "verified_clean_BEST_B_HEDGE": null,
   "banked_legacy_previous_best_A": {
@@ -94,7 +101,7 @@
   },
   "final_selection_reassessed": true,
   "kaggle_final_selection_updated": false,
-  "continuation_status": "PHASE17_ACTIVE_B1_FULL_PRIMARY_ADMITTED_B2_REPLICATION_PENDING",
+  "continuation_status": "PHASE17_B1_QUALIFICATION_RESOURCE_BLOCKED_B2_RESOURCE_BRANCH_CLOSED",
   "rejected_hedge_candidates": {
     "clean_aux10": {
       "oof_loss_vs_A": 0.00034690428011585617,
@@ -211,7 +218,7 @@
     "champion_A": "v6_sol_tabpfn_route_aux10",
     "champion_B": null,
     "new_submissions": 0,
-    "next_gate": "Disk headroom needed for matched TabPFN shadow/test. Fresh aux10shadow work and checks proceeding; user requested8GiB additional free capacity.",
+    "next_gate": "Restore capacity, then exact matched B1/B0 shadow2/3; shared20auxiliary fits and OOF820 diagnostics complete",
     "initial_heavy_budget_hours": 8,
     "extension_used": false,
     "B2_fold0_portfolio_delta": 0.00010445218312693516,
@@ -219,8 +226,14 @@
     "extension_declared": true,
     "revised_heavy_budget_hours": 28,
     "extension_contract": "research\\phase17_compute_extension_20261009.json",
-    "four_estimator_replication": "FOUR_ESTIMATOR_RESOURCE_BRANCH_CLOSED_NO_MODEL_REJECTION",
+    "four_estimator_replication": "RESOURCE_BRANCH_CLOSED_NO_MODEL_REJECTION",
     "resume_tag": "phase17_B2_resume1_v3",
-    "resource_status": "Full-context prediction blocked at18.495136GiB<20GiB; compression25logicalhashespass but netcapacitystill33.6GiB"
+    "resource_status": "Full-context prediction refused18.495136GiB<20GiB; currentCfree32.031040GiB;8GiBadditional requested",
+    "status": "B1_PRIMARY_PASS_QUALIFICATION_RESOURCE_BLOCKED",
+    "completed_model_and_probe_hours": 6.544027500000019,
+    "checkpoint_report": "reports/phase17_checkpoint_report_20261009.md",
+    "checkpoint_decision": "reports/phase17_checkpoint_decision_20261009.json",
+    "full_tests_passed": 142,
+    "full_tests_failed": 0
   }
 }
