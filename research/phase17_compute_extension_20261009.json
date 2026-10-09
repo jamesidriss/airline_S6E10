@@ -1,0 +1,45 @@
+{
+  "declared_utc": "2026-10-09T10:53:58.780426+00:00",
+  "git": "285ff6cf5e59f1fc02de88a66b7429a60958d4a6",
+  "original_scope_sha256": "a15ea75d25a8268c80fb3042f19d37e3761315fc49df24f0f6deaeedad06474a",
+  "primary_evidence_sha256": "c63f5a172c7bdbaa160ce7aa022a1214daf03d5e0daac0540f7b9f2aa116f449",
+  "status": "FINITE_QUALIFIED_COMPLETION_EXTENSION_DECLARED",
+  "initial_heavy_hours": 8,
+  "revised_total_heavy_hours_max": 28,
+  "budget_unit": "Sum of model/probe and fresh auxiliary job wall times; no double counting of reused caches or evaluation reports",
+  "completed_heavy_hours_at_declaration": 4.3641194444444,
+  "currently_running": "phase17_B2 primaryfold1, still within initial budget",
+  "meaningful_replication": {
+    "candidate": "phase17_B1",
+    "full_primary_auc": 0.9618529228157235,
+    "delta_vs_v6": 8.730899114406387e-05,
+    "positive_folds": 5,
+    "mean_paired_gain": 8.786079935469981e-05,
+    "paired_se": 9.368949671537106e-06,
+    "bootstrap_95": [
+      5.9349370008857094e-05,
+      0.00011372372512356565
+    ]
+  },
+  "expected_benefit": "B1 has verified87.308991micro OOF improvement; complete independent confirmation and certified inference to determine A eligibility. B2 can become a better A or genuine B only through its own frozen replication/full admission and complementarity evidence; its first-fold104.452183micro is discovery only. Private benefit remains unknown.",
+  "remaining_completion_projection_hours": {
+    "B2_primary_folds1_to4_including_current_run": 4.4999311111111115,
+    "shared_matched_shadow_B0_two_folds": 0.5614933333333333,
+    "B1_shadow_two_folds": 1.1249044444444445,
+    "B2_shadow_two_folds_if_qualified": 2.2499655555555558,
+    "shared_auxiliary10_shadow_two_folds_with_feature_preparation_allowance": 2.0,
+    "B1_five_context_test_if_shadow_positive": 3.56,
+    "B2_five_context_test_if_shadow_positive": 7.12
+  },
+  "projected_total_model_hours_if_both_qualify": 25.480413888888847,
+  "diagnostics_and_retry_allowance": "Remaining ceiling margin approximately2.5hours for fixed diagnostics and verified-prefix recovery; no new scientific searches",
+  "conditions": [
+    "B2 fold1 positive or its already-declared hedge gate; first3 and full-primary gates before confirmation",
+    "Each admitted candidate must pass matched shadow2/3 before any test inference",
+    "Both use unchanged original checkpoint, seed1201, route and50/50 weights",
+    "Test diversity and fixed820 robustness decide eligibility; maximum2 scientifically justified uploads",
+    "Stop negative/non-hedge, contradictory, technically invalid or near-clone negligible-gain branches",
+    "Do not exceed28 total heavy hours; preserve incomplete verified work and report the specific limitation if completion becomes impossible"
+  ],
+  "prohibited": "No8/16/32 estimator tests, seed or weight selection, fallback model families, host/driver/OS changes, automatic next phase"
+}

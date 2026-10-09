@@ -215,6 +215,9 @@
     "initial_heavy_budget_hours": 8,
     "extension_used": false,
     "B2_fold0_portfolio_delta": 0.00010445218312693516,
-    "B2_fold0_report": "reports/phase17_B2_f0_evaluation.json"
+    "B2_fold0_report": "reports/phase17_B2_f0_evaluation.json",
+    "extension_declared": true,
+    "revised_heavy_budget_hours": 28,
+    "extension_contract": "research\\phase17_compute_extension_20261009.json"
   }
 }
