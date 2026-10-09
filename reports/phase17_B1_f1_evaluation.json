@@ -1,0 +1,215 @@
+{
+  "utc": "2026-10-09T07:49:04.117957+00:00",
+  "source_report_sha256": "b268a1498a041ce206034470846e1bcdd7993c0e028d86e0e43786a5a85938dc",
+  "scope_sha256": "a15ea75d25a8268c80fb3042f19d37e3761315fc49df24f0f6deaeedad06474a",
+  "bank": {
+    "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+    "test_certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+    "data_sha256": {
+      "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+      "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+    },
+    "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+    "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+    "oof_sha256": {
+      "candidate": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+      "aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+      "route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510"
+    },
+    "test_sha256": {
+      "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+      "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+      "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+    },
+    "v6_csv_sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d"
+  },
+  "fold": 1,
+  "complete_folds": [
+    1
+  ],
+  "full_pooled_oof_auc": null,
+  "standalone_auc": 0.9616162935885816,
+  "standalone_delta": 0.0002371278989451442,
+  "portfolio_auc": 0.9619889611452807,
+  "portfolio_delta": 5.353630502968887e-05,
+  "oof_correlation_vs_v6": {
+    "logit": 0.9998342913854943,
+    "spearman": 0.9989102945800354,
+    "probability_residual": 0.9997188055515908
+  },
+  "route_correlation_vs_B0": {
+    "logit": 0.9993379875524471,
+    "spearman": 0.9956887479598209,
+    "probability_residual": 0.9988856133393865
+  },
+  "exact_pair_rescue_damage_vs_v6": {
+    "all_positive_negative_pairs": 4832552412,
+    "rescued_pair_credit": 5646898.0,
+    "damaged_pair_credit": 5388181.0,
+    "rescued_pair_fraction": 0.0011685125206253014,
+    "damaged_pair_fraction": 0.0011149762155957762,
+    "net_auc_gain": 5.3536305029525256e-05,
+    "baseline_error_pair_credit": 183949054.5,
+    "candidate_error_pair_credit": 183690337.5,
+    "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+  },
+  "exact_route_pair_rescue_damage": {
+    "all_positive_negative_pairs": 4832552412,
+    "rescued_pair_credit": 11656201.5,
+    "damaged_pair_credit": 10510268.5,
+    "rescued_pair_fraction": 0.002412017606069991,
+    "damaged_pair_fraction": 0.0021748897071248155,
+    "net_auc_gain": 0.00023712789894517547,
+    "baseline_error_pair_credit": 186637206.0,
+    "candidate_error_pair_credit": 185491273.0,
+    "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+  },
+  "bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "v6",
+    "comparisons": {
+      "candidate": {
+        "mean": 5.367069348698517e-05,
+        "percentile_95_interval": [
+          -2.7749612791838578e-06,
+          0.0001108334959017271
+        ],
+        "positive_fraction": 0.965
+      }
+    }
+  },
+  "segments": {
+    "Class": {
+      "Business": {
+        "rows": 68184,
+        "auc": 0.9415593415841607,
+        "delta": 5.147173049302456e-05
+      },
+      "Eco": {
+        "rows": 65672,
+        "auc": 0.9070512177993191,
+        "delta": 0.00014359845796396709
+      },
+      "Eco Plus": {
+        "rows": 6071,
+        "auc": 0.9365217007319873,
+        "delta": 0.00038746668652334115
+      }
+    },
+    "Type of Travel": {
+      "Business travel": {
+        "rows": 99133,
+        "auc": 0.9586646258521259,
+        "delta": 5.1029885195896796e-05
+      },
+      "Personal Travel": {
+        "rows": 40794,
+        "auc": 0.8365815655170066,
+        "delta": 0.0004243238116447001
+      }
+    },
+    "Customer Type": {
+      "Loyal Customer": {
+        "rows": 115696,
+        "auc": 0.9623743484676623,
+        "delta": 5.239720245975299e-05
+      },
+      "disloyal Customer": {
+        "rows": 24231,
+        "auc": 0.9272743040994288,
+        "delta": 0.00011496535998389845
+      }
+    },
+    "Gender": {
+      "Female": {
+        "rows": 69741,
+        "auc": 0.9624980533648767,
+        "delta": 6.609024521486706e-05
+      },
+      "Male": {
+        "rows": 70186,
+        "auc": 0.961455585191781,
+        "delta": 3.975103273345937e-05
+      }
+    }
+  },
+  "worst_segment_delta": 3.975103273345937e-05,
+  "performance_discovery_pass": true,
+  "discovery_pass": true,
+  "hedge_discovery_pass": true,
+  "replication_pass": true,
+  "portfolio_prediction_sha256": "2afc11738be61b5f5684a4a01b935e498439de13f13fb5be7426c00df10a949e",
+  "exact_auxiliary_logits_sha256": "26d80e666d4000522f6b662baa83dc3d3591b15b3ce1334938027a4a65b5198e",
+  "unchanged_auxiliary_proofs": [
+    {
+      "member": "xt_xt_d127_ss06",
+      "report_sha256": "ddd35282fcc788978871eef22af952c0c481bf3fcbfb67619114cc1724fdb4ae",
+      "prediction_sha256": "125a7b1413f962e871ae8cf46bc7f7b2cfb7187a90715bdcb902838b2d8cf916",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d127_s1",
+      "report_sha256": "917eec0c3e81ad38439de4f88f137417ec66b49d8be657f287909fd65abb3a8a",
+      "prediction_sha256": "b1bf8e4d6d9910dda748deb082dff44bc5c189209554192fab9500f8dc7262eb",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d255",
+      "report_sha256": "0d183002cab264f7875a5001b7a4c5422ab40985c79de953c917785e64a19a28",
+      "prediction_sha256": "c097d4c9a03a53194dfd20da218ce7d457c345c9e4fd7a09ec15519076db32ff",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d127_bin63",
+      "report_sha256": "0f3b19efa271dbfcea83c1d338add0e1e97c69cc1963d20a8af0570162454414",
+      "prediction_sha256": "768896bee9245d2a0f27c18d4824381bc6cef8facaccc4838a943b4e544b02c1",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d127_cs05",
+      "report_sha256": "704b0cb2f4bbf45b10e57456bb8f97d7e0cb606c937cf4eb67104583f1fd0f92",
+      "prediction_sha256": "ca7e907e288197ba0cba1a7dd6b92fa11b66a4f91c23abddadeecab593a2bfbc",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d63",
+      "report_sha256": "4d1744a9265e8a18e3d51e9dbb495a27464883d989f7a20b92ec054a1b43afc8",
+      "prediction_sha256": "d2e4089d8362dfd289f0220bea30bbec00eb24bba43d30425fa3e2d65238c019",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "z3_cat_d8_s2",
+      "report_sha256": "dc3be533bfb5eaa21b8e50f7d51ab428ac96d71b87984603fc26e141fd84041e",
+      "prediction_sha256": "b957897a8e0dc4861267c36b1d8370f8d0858c0624fed645a8bf73af8ae5bd83",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "prod5_xgb_full_primary",
+      "report_sha256": "10ae3f7646edda3e8aaab12dedf5a1b56522fd22e139dd6fb577564424166498",
+      "prediction_sha256": "4476cbbdcf8d6aa9f00416b446b77a1a38c823596bee4c2e105a0809b1e3308f",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xgb_lossguide",
+      "report_sha256": "9a195c1d6e5a8e2bcdcf7d0417dcdd2f238e509f8c9406a500faf1e42ee7f409",
+      "prediction_sha256": "32f6cdd7bfabff05fcc1380e735077d5aed5b24bcd4a96adf12ecc9c29da746f",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "zoo_xgb_d6",
+      "report_sha256": "9c640b1fdc5791738293f2324d08cd0de7126100f309231ccba59ed4289545d0",
+      "prediction_sha256": "c296e2ab884172d23b1b80ab269b1822a711b2ba830807d2d8a817f6df81440f",
+      "fold0_control_max_gap": null
+    }
+  ],
+  "runtime_seconds": 2023.7029999999795,
+  "source_sha256": {
+    "scripts/evaluate_phase17_fold.py": "f3f4b630ffb736f7382c376d9073dca108980b4cb62d7577db222cd4298f6826",
+    "scripts/phase16_pair_metrics.py": "f8e998569676f8b8b574637c92335ae6a7445b647e17bfee377a5dfd7216b9ea"
+  },
+  "verdict": "DISCOVERY_PASS_REQUIRES_FROZEN_REPLICATION"
+}
