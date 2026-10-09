@@ -1,5 +1,8 @@
 # SOL campaign — audit and continuation
 
+Phase17 update 2026-10-09 10:50UTC: official2 full5 primary OOF0.9618529228157235, route0.9615159787196581, delta v6 +87.308991micro; mean paired87.860799micro, pairedSE9.368950micro,5/5positive, bootstrap95% [59.349370,113.723725]micro. All9 pooled segments positive; Eco Plus +17.752492micro despite preserved fold3 loss459.898148micro. PRIMARY_ADMISSION_PASS; matched shadow and certified test/private820 remain required. Stretch gap247.077184micro. Official4 remains only discovery, replication next. v6 still certified A, B open,0uploads.
+
+
 Phase17 update 2026-10-09 10:15UTC: official2 primaryfold3 COMPLETE, route AUC0.9608864257673363, portfolio AUC0.9610994818114763, delta v6 +82.155550micro; bootstrap95% [25.370943,139.818673]micro. Four paired gains are positive, mean85.018534micro. Risk: Eco Plus6058rows loses459.898148micro on fold3; other8 segments positive. Full pooled segment and matched shadow checks remain mandatory. Final primaryfold4 next; no fullOOF, promotion, test or upload claim. v6 remains A, B open.
 
 

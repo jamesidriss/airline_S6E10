@@ -1,0 +1,23 @@
+{
+  "utc": "2026-10-09T10:50:43.495350+00:00",
+  "git_at_full_primary_assembly": "ef827b1b43cd32c1b65fcc8b810b351257e148a9",
+  "primary_report_sha256": "c63f5a172c7bdbaa160ce7aa022a1214daf03d5e0daac0540f7b9f2aa116f449",
+  "completed_model_and_probe_seconds": {
+    "reports\\phase17_attention_diagnosis_20261009.json": 88.35999999998603,
+    "reports\\phase17_B0_f0.json": 1010.6879999999655,
+    "reports\\phase17_internal2_equivalence_20261009.json": 109.90599999995902,
+    "reports\\phase17_internal2_serial_equivalence_20261009.json": 110.31300000008196,
+    "reports\\phase17_internal4_equivalence_20261009.json": 220.96900000004098,
+    "reports\\phase17_B2_f0.json": 4049.9379999999655,
+    "reports\\phase17_B1_f0.json": 2022.671999999904,
+    "reports\\phase17_B1_f1.json": 2023.7029999999795,
+    "reports\\phase17_B1_f2.json": 2024.5779999999795,
+    "reports\\phase17_B1_f3.json": 2024.875,
+    "reports\\phase17_B1_f4.json": 2024.8279999999795
+  },
+  "completed_heavy_hours": 4.3641194444444,
+  "budget_interpretation": "Sum of completed model/probe wall times, excluding duplicate evaluation reports and idle/research elapsed time",
+  "initial_budget_hours": 8,
+  "extension_used": false,
+  "status": "FULL_PRIMARY_PASS_DOWNSTREAM_NOT_YET_QUALIFIED"
+}

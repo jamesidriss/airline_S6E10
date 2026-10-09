@@ -1,0 +1,1 @@
+{"status": "PRIMARY_PASS_REQUIRES_INDEPENDENT_CONFIRMATION_AND_TEST", "full_pooled_oof_auc": 0.9618529228157235, "pooled_delta": 8.730899114406387e-05, "mean_paired_gain": 8.786079935469981e-05, "paired_se": 9.368949671537106e-06, "positive_folds": 5, "distance_to_stretch": 0.0002470771842764119}

@@ -1,0 +1,205 @@
+{
+  "utc": "2026-10-09T10:49:35.606500+00:00",
+  "bank": {
+    "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+    "test_certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+    "data_sha256": {
+      "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+      "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+    },
+    "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+    "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+    "oof_sha256": {
+      "candidate": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+      "aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+      "route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510"
+    },
+    "test_sha256": {
+      "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+      "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+      "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+    },
+    "v6_csv_sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d"
+  },
+  "scope_sha256": "a15ea75d25a8268c80fb3042f19d37e3761315fc49df24f0f6deaeedad06474a",
+  "internal_estimators": 2,
+  "folds": [
+    {
+      "fold": 0,
+      "source_tag": "phase17_B1",
+      "run_report_path": "reports\\phase17_B1_f0.json",
+      "evaluation_path": "reports\\phase17_B1_f0_evaluation.json",
+      "run_report_sha256": "5e3549a820fc5495f970f3536e8d7d19e26886350ee005799b47b0ae042ea528",
+      "evaluation_sha256": "258dfc6f5fe85d2a03f0e29375e46700952222548ba2058b59a5bae18d18cee2",
+      "route_auc": 0.9614576551310231,
+      "portfolio_auc": 0.9618278142504795,
+      "delta": 0.0001006337950936187,
+      "seconds": 2022.671999999904
+    },
+    {
+      "fold": 1,
+      "source_tag": "phase17_B1",
+      "run_report_path": "reports\\phase17_B1_f1.json",
+      "evaluation_path": "reports\\phase17_B1_f1_evaluation.json",
+      "run_report_sha256": "b268a1498a041ce206034470846e1bcdd7993c0e028d86e0e43786a5a85938dc",
+      "evaluation_sha256": "23d592632d1d01f950ea538972b8175ad35581f76b1acb9a7474891af88e1f85",
+      "route_auc": 0.9616162935885816,
+      "portfolio_auc": 0.9619889611452807,
+      "delta": 5.353630502968887e-05,
+      "seconds": 2023.7029999999795
+    },
+    {
+      "fold": 2,
+      "source_tag": "phase17_B1",
+      "run_report_path": "reports\\phase17_B1_f2.json",
+      "evaluation_path": "reports\\phase17_B1_f2_evaluation.json",
+      "run_report_sha256": "77a6133925232f7d352fe7a8992e4bc3411e32a5684371e27900dd1b55b34a6a",
+      "evaluation_sha256": "822f7926b0b00fadf85a44c95bd8248758a921d2e7e2d50b324138f0a14cc4bc",
+      "route_auc": 0.9615299662268825,
+      "portfolio_auc": 0.9618912986763071,
+      "delta": 0.00010374848677385806,
+      "seconds": 2024.5779999999795
+    },
+    {
+      "fold": 3,
+      "source_tag": "phase17_B1",
+      "run_report_path": "reports\\phase17_B1_f3.json",
+      "evaluation_path": "reports\\phase17_B1_f3_evaluation.json",
+      "run_report_sha256": "a51495969d474ddd1e9e67d2db318ba77242ebbc45d64f4e3d29b5537a00a8dc",
+      "evaluation_sha256": "0aca1aabcc22384a0dd65327fb16109ea2b0cc2a4bb07ec02334d1be36382345",
+      "route_auc": 0.9608864257673363,
+      "portfolio_auc": 0.9610994818114763,
+      "delta": 8.215554972856864e-05,
+      "seconds": 2024.875
+    },
+    {
+      "fold": 4,
+      "source_tag": "phase17_B1",
+      "run_report_path": "reports\\phase17_B1_f4.json",
+      "evaluation_path": "reports\\phase17_B1_f4_evaluation.json",
+      "run_report_sha256": "bcc6ebc75924f10b25db881a4a995ac4a66c86f0b9394ee28b9c352dd1332e26",
+      "evaluation_sha256": "1526a2ed6a09178a85ef4d3ce0a8e86e7e401765464644347d53608494766d2a",
+      "route_auc": 0.9621354781283643,
+      "portfolio_auc": 0.9624956398713964,
+      "delta": 9.92298601477648e-05,
+      "seconds": 2024.8279999999795
+    }
+  ],
+  "full_pooled_route_auc": 0.9615159787196581,
+  "full_pooled_oof_auc": 0.9618529228157235,
+  "pooled_delta": 8.730899114406387e-05,
+  "paired_fold_deltas": [
+    0.0001006337950936187,
+    5.353630502968887e-05,
+    0.00010374848677385806,
+    8.215554972856864e-05,
+    9.92298601477648e-05
+  ],
+  "mean_paired_gain": 8.786079935469981e-05,
+  "paired_se": 9.368949671537106e-06,
+  "positive_folds": 5,
+  "correlation_vs_v6": {
+    "logit": 0.9998244792314533,
+    "spearman": 0.9988084279012514,
+    "probability_residual": 0.9997279027392092
+  },
+  "pair_rescue_damage": {
+    "all_positive_negative_pairs": 120813731344,
+    "rescued_pair_credit": 148033941.5,
+    "damaged_pair_credit": 137485816.5,
+    "rescued_pair_fraction": 0.0012253072548392228,
+    "damaged_pair_fraction": 0.0011379982636951142,
+    "net_auc_gain": 8.73089911441085e-05,
+    "baseline_error_pair_credit": 4619238859.5,
+    "candidate_error_pair_credit": 4608690734.5,
+    "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+  },
+  "segments": [
+    {
+      "column": "Class",
+      "value": "Business",
+      "rows": 342212,
+      "delta": 0.00014853953292859323
+    },
+    {
+      "column": "Class",
+      "value": "Eco",
+      "rows": 327404,
+      "delta": 0.0002025420962225022
+    },
+    {
+      "column": "Class",
+      "value": "Eco Plus",
+      "rows": 30019,
+      "delta": 1.7752492166511757e-05
+    },
+    {
+      "column": "Type of Travel",
+      "value": "Business travel",
+      "rows": 497441,
+      "delta": 9.838851139643001e-05
+    },
+    {
+      "column": "Type of Travel",
+      "value": "Personal Travel",
+      "rows": 202194,
+      "delta": 0.00039151373519830113
+    },
+    {
+      "column": "Customer Type",
+      "value": "Loyal Customer",
+      "rows": 576990,
+      "delta": 8.452735000130662e-05
+    },
+    {
+      "column": "Customer Type",
+      "value": "disloyal Customer",
+      "rows": 122645,
+      "delta": 0.00017123314328759687
+    },
+    {
+      "column": "Gender",
+      "value": "Female",
+      "rows": 347952,
+      "delta": 8.83457037196278e-05
+    },
+    {
+      "column": "Gender",
+      "value": "Male",
+      "rows": 351683,
+      "delta": 8.629197962672919e-05
+    }
+  ],
+  "bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "v6",
+    "comparisons": {
+      "candidate": {
+        "mean": 8.647908725301079e-05,
+        "percentile_95_interval": [
+          5.9349370008857094e-05,
+          0.00011372372512356565
+        ],
+        "positive_fraction": 1.0
+      }
+    }
+  },
+  "performance_admission": true,
+  "hedge_primary_admission": true,
+  "test_and_shadow_required": true,
+  "distance_to_stretch": 0.0002470771842764119,
+  "stretch_reached": false,
+  "route_sha256": "bcb2811329d3686882450e93435647f8f7ab65abfc48c1a1b51db1e9d1ef95e0",
+  "portfolio_sha256": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+  "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+  "source_sha256": {
+    "C:\\Users\\James\\airline_S6E10\\scripts\\assemble_phase17_primary.py": "096964130946af5662bb4c1eefb9474436343e9ed5b9301ba8c802d0425d7030",
+    "scripts/phase16_pair_metrics.py": "f8e998569676f8b8b574637c92335ae6a7445b647e17bfee377a5dfd7216b9ea",
+    "scripts/score_sol_foundation.py": "14ce84bca5e360f66ced708db83c3502ad5089fa738b49305037a6a2f6c48d4c"
+  },
+  "status": "PRIMARY_PASS_REQUIRES_INDEPENDENT_CONFIRMATION_AND_TEST"
+}

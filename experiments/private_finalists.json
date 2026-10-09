@@ -50,9 +50,10 @@
       0.0001006337950936187,
       5.353630502968887e-05,
       0.00010374848677385806,
-      8.215554972856864e-05
+      8.215554972856864e-05,
+      9.92298601477648e-05
     ],
-    "mean_paired_delta": 8.501853415643357e-05,
+    "mean_paired_delta": 8.786079935469981e-05,
     "full_oof_auc": null,
     "test_certificate": null,
     "uploaded": false,
@@ -60,17 +61,23 @@
       0,
       1,
       2,
-      3
+      3,
+      4
     ],
-    "full_pooled_oof_auc": null,
-    "verdict": "FOUR_POSITIVE_FOLDS_REQUIRES_FULL_PRIMARY_AND_MATCHED_SHADOW",
+    "full_pooled_oof_auc": 0.9618529228157235,
+    "verdict": "PRIMARY_PASS_REQUIRES_INDEPENDENT_CONFIRMATION_AND_TEST",
     "observed_risk": {
       "fold": 3,
       "segment": "Class/Eco Plus",
       "rows": 6058,
       "delta": -0.00045989814828217845,
-      "policy": "Check complete pooled segments and matched shadow; no partial-result promotion"
-    }
+      "pooled_segment_delta": 1.7752492166511757e-05,
+      "policy": "Fold loss preserved; full pooled segment positive; shadow confirmation remains required"
+    },
+    "pooled_delta": 8.730899114406387e-05,
+    "paired_se": 9.368949671537106e-06,
+    "primary_report": "reports/phase17_B1_primary.json",
+    "primary_performance_admission": true
   },
   "verified_clean_BEST_B_HEDGE": null,
   "banked_legacy_previous_best_A": {
@@ -87,7 +94,7 @@
   },
   "final_selection_reassessed": true,
   "kaggle_final_selection_updated": false,
-  "continuation_status": "PHASE17_ACTIVE_B1_FOUR_POSITIVE_FOLDS_FINAL_PRIMARY_PENDING",
+  "continuation_status": "PHASE17_ACTIVE_B1_FULL_PRIMARY_ADMITTED_B2_REPLICATION_PENDING",
   "rejected_hedge_candidates": {
     "clean_aux10": {
       "oof_loss_vs_A": 0.00034690428011585617,
@@ -204,7 +211,7 @@
     "champion_A": "v6_sol_tabpfn_route_aux10",
     "champion_B": null,
     "new_submissions": 0,
-    "next_gate": "B1 final primaryfold4 and full admission/pooled segment checks; B2 still requires its own replication",
+    "next_gate": "B2 primaryfold1 replication, then its own frozen three-fold/full-primary gates; matched shadow2/3 before any new test or upload",
     "initial_heavy_budget_hours": 8,
     "extension_used": false,
     "B2_fold0_portfolio_delta": 0.00010445218312693516,

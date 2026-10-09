@@ -1,0 +1,215 @@
+{
+  "utc": "2026-10-09T10:49:24.958587+00:00",
+  "source_report_sha256": "bcc6ebc75924f10b25db881a4a995ac4a66c86f0b9394ee28b9c352dd1332e26",
+  "scope_sha256": "a15ea75d25a8268c80fb3042f19d37e3761315fc49df24f0f6deaeedad06474a",
+  "bank": {
+    "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+    "test_certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+    "data_sha256": {
+      "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+      "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+    },
+    "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+    "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+    "oof_sha256": {
+      "candidate": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+      "aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+      "route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510"
+    },
+    "test_sha256": {
+      "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+      "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+      "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+    },
+    "v6_csv_sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d"
+  },
+  "fold": 4,
+  "complete_folds": [
+    4
+  ],
+  "full_pooled_oof_auc": null,
+  "standalone_auc": 0.9621354781283643,
+  "standalone_delta": 0.0003162758248010933,
+  "portfolio_auc": 0.9624956398713964,
+  "portfolio_delta": 9.92298601477648e-05,
+  "oof_correlation_vs_v6": {
+    "logit": 0.9998160165575937,
+    "spearman": 0.9988033949427436,
+    "probability_residual": 0.9997252203342301
+  },
+  "route_correlation_vs_B0": {
+    "logit": 0.999261096862171,
+    "spearman": 0.9949403333179445,
+    "probability_residual": 0.9989089731762093
+  },
+  "exact_pair_rescue_damage_vs_v6": {
+    "all_positive_negative_pairs": 4832552412,
+    "rescued_pair_credit": 5869057.0,
+    "damaged_pair_credit": 5389523.5,
+    "rescued_pair_fraction": 0.0012144838792490266,
+    "damaged_pair_fraction": 0.001115254019101159,
+    "net_auc_gain": 9.922986014786755e-05,
+    "baseline_error_pair_credit": 181721319.5,
+    "candidate_error_pair_credit": 181241786.0,
+    "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+  },
+  "exact_route_pair_rescue_damage": {
+    "all_positive_negative_pairs": 4832552412,
+    "rescued_pair_credit": 12450040.5,
+    "damaged_pair_credit": 10921621.0,
+    "rescued_pair_fraction": 0.0025762866987401024,
+    "damaged_pair_fraction": 0.0022600108739389705,
+    "net_auc_gain": 0.00031627582480113205,
+    "baseline_error_pair_credit": 184510706.0,
+    "candidate_error_pair_credit": 182982286.5,
+    "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+  },
+  "bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "v6",
+    "comparisons": {
+      "candidate": {
+        "mean": 0.0001017407198057113,
+        "percentile_95_interval": [
+          4.36181422567905e-05,
+          0.00015991470830605258
+        ],
+        "positive_fraction": 1.0
+      }
+    }
+  },
+  "segments": {
+    "Class": {
+      "Business": {
+        "rows": 68374,
+        "auc": 0.9433153586919263,
+        "delta": 0.00021434974562517528
+      },
+      "Eco": {
+        "rows": 65614,
+        "auc": 0.9072068089958227,
+        "delta": 0.00022802378335406992
+      },
+      "Eco Plus": {
+        "rows": 5939,
+        "auc": 0.9358798868884444,
+        "delta": 0.000163616606159378
+      }
+    },
+    "Type of Travel": {
+      "Business travel": {
+        "rows": 99507,
+        "auc": 0.959620561537682,
+        "delta": 0.00013493500161665395
+      },
+      "Personal Travel": {
+        "rows": 40420,
+        "auc": 0.8352610832953046,
+        "delta": 7.597278558035825e-05
+      }
+    },
+    "Customer Type": {
+      "Loyal Customer": {
+        "rows": 115344,
+        "auc": 0.9631057744605132,
+        "delta": 9.225346665964196e-05
+      },
+      "disloyal Customer": {
+        "rows": 24583,
+        "auc": 0.9254148614469762,
+        "delta": 0.00022244630245249475
+      }
+    },
+    "Gender": {
+      "Female": {
+        "rows": 69565,
+        "auc": 0.9626465128535748,
+        "delta": 9.390105445117314e-05
+      },
+      "Male": {
+        "rows": 70362,
+        "auc": 0.9623288915729593,
+        "delta": 0.0001095480884040212
+      }
+    }
+  },
+  "worst_segment_delta": 7.597278558035825e-05,
+  "performance_discovery_pass": true,
+  "discovery_pass": true,
+  "hedge_discovery_pass": true,
+  "replication_pass": true,
+  "portfolio_prediction_sha256": "50edaaf1e01da1f09cb196f46e87df1480bae4170ebe2cb9101f6b19c03f56a7",
+  "exact_auxiliary_logits_sha256": "320da909b94f1d75eb5a19a07e0378689add34961276d0af8f92e9a5a587f17c",
+  "unchanged_auxiliary_proofs": [
+    {
+      "member": "xt_xt_d127_ss06",
+      "report_sha256": "5875e2e1c718769093cb0116686a7e97d5a15ec7215800f89a74da1f422da583",
+      "prediction_sha256": "8a12a176203d61829dddf2516605f557486d9a5aa12fdbe803cad9f78424d465",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d127_s1",
+      "report_sha256": "f0f39f9c9fdcdd7d5cbc26f497923c993b7336c29764b0975509c207f120d0e7",
+      "prediction_sha256": "42b9fb375b53f53984f3e130501028eb80a6b07bffb544a9c7c7a389034492be",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d255",
+      "report_sha256": "0ead06155b0d0df916b4d8420cef1d5f2691af63a8ff1c9996eaea4a4785bdbb",
+      "prediction_sha256": "eebf1183c9888364756bb4cecfbdcbb1d2ea58671cb6959174988cea09e51337",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d127_bin63",
+      "report_sha256": "703bb36e6e9eca73a70cd6870a832cde480d273b44fd75b84479900724a31c45",
+      "prediction_sha256": "7206b7919e51335a2154866aad090d501e8d774f631d7c8a231352faf167aef9",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d127_cs05",
+      "report_sha256": "f9950606314e34e01e4f43f351177dfb4cc19203848f41889d4383a740260679",
+      "prediction_sha256": "764686c366240f1369be8194f789fcd36c172b1b87c96be90f016e2ca070497a",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d63",
+      "report_sha256": "cd263eda999b62269611733d85985d43c5b29a64033559e6a8fa5627c54d0a22",
+      "prediction_sha256": "510d20ad37517a266361b0d24d7612e50e317c61a85ed0e6cd4b04cb72c22ef0",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "z3_cat_d8_s2",
+      "report_sha256": "e87ba1f8c8ceda6b8dc863172d71a9038634c1d66375fe1b5c0a61dcb3c5f8b5",
+      "prediction_sha256": "17a96796434573cea29054c17000808a1a1ef47cf1069aedc7237d3786bf612b",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "prod5_xgb_full_primary",
+      "report_sha256": "35a06778aa86b55a86aa68b67db8c0faabd57168930d5ed5860961e59777e8ed",
+      "prediction_sha256": "74a57e20127ccb2861e778a57f76c7d6fcf46ea529b40941377968fad8f6c8fb",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xgb_lossguide",
+      "report_sha256": "666468beb14dc83b2fff509f76b67e7ec8402b4ce28ceb48cf5b50d7ffb5b4c9",
+      "prediction_sha256": "eef468226679fea062beac506a659e347c35b7f9b9f003416bbf5da9d59fcb2b",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "zoo_xgb_d6",
+      "report_sha256": "c6dc1cf6b1f3f0d50707113b9df9ff14c106f15b22e403ceda13096ee75d3fd6",
+      "prediction_sha256": "d78c318e6608b0456b7f1852bc60245899b95d0a4f8af8e2d8fc7fe6f8225523",
+      "fold0_control_max_gap": null
+    }
+  ],
+  "runtime_seconds": 2024.8279999999795,
+  "source_sha256": {
+    "scripts/evaluate_phase17_fold.py": "f3f4b630ffb736f7382c376d9073dca108980b4cb62d7577db222cd4298f6826",
+    "scripts/phase16_pair_metrics.py": "f8e998569676f8b8b574637c92335ae6a7445b647e17bfee377a5dfd7216b9ea"
+  },
+  "verdict": "DISCOVERY_PASS_REQUIRES_FROZEN_REPLICATION"
+}
