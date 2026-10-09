@@ -1,0 +1,14 @@
+{
+  "utc": "2026-10-09T12:58:38.908338+00:00",
+  "status": "LOGICAL_INTEGRITY_PASS_CAPACITY_STILL_BLOCKED",
+  "compression_report_sha256": "c44f7b30a5e495a1ac3a2cd7c3f74ed595f1cc8629c79ba183e2cb5f36892e79",
+  "files_checked": 25,
+  "allocated_saving_bytes": 493708144,
+  "disk_before_bytes": 36502831104,
+  "disk_after_bytes": 36075970560,
+  "current_disk_bytes": 35822215168,
+  "full_context_gpu_jobs_paused": true,
+  "user_action_requested": "At least8GiB additional C drive free space; no deletion/host setting/guard relaxation authorized",
+  "independent_work": "Fresh shadow2/3 auxiliary10 fits, then full tests/integrity/leakage/source checks",
+  "B2_closed": true
+}

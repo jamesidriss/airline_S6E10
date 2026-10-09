@@ -211,7 +211,7 @@
     "champion_A": "v6_sol_tabpfn_route_aux10",
     "champion_B": null,
     "new_submissions": 0,
-    "next_gate": "B1 independent matched shadow folds2/3; then certified test/stress only if positive",
+    "next_gate": "Disk headroom needed for matched TabPFN shadow/test. Fresh aux10shadow work and checks proceeding; user requested8GiB additional free capacity.",
     "initial_heavy_budget_hours": 8,
     "extension_used": false,
     "B2_fold0_portfolio_delta": 0.00010445218312693516,
@@ -220,6 +220,7 @@
     "revised_heavy_budget_hours": 28,
     "extension_contract": "research\\phase17_compute_extension_20261009.json",
     "four_estimator_replication": "FOUR_ESTIMATOR_RESOURCE_BRANCH_CLOSED_NO_MODEL_REJECTION",
-    "resume_tag": "phase17_B2_resume1_v3"
+    "resume_tag": "phase17_B2_resume1_v3",
+    "resource_status": "Full-context prediction blocked at18.495136GiB<20GiB; compression25logicalhashespass but netcapacitystill33.6GiB"
   }
 }
