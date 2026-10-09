@@ -39,6 +39,3 @@ src/features/s6e10.py -text
 src/models/windows_attention.py -text
 src/models/pointwise_inference.py -text
 src/models/resource_guard.py -text
-# Preserve byte-hashed Phase17 evidence on Windows and clean checkouts.
-**/*phase17* -text
-**/*phase17*/** -text

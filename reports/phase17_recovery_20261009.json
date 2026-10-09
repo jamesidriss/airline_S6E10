@@ -1,0 +1,36 @@
+{
+  "phase16_proof_sha256": "3a2aa9b73a7c721dfda582641c1ef77c6f8c89198e3963c0ebb0afa34f427266",
+  "verified_files": 75,
+  "bank": {
+    "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+    "test_certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+    "data_sha256": {
+      "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+      "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+    },
+    "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+    "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+    "oof_sha256": {
+      "candidate": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+      "aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+      "route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510"
+    },
+    "test_sha256": {
+      "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+      "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+      "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+    },
+    "v6_csv_sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d"
+  },
+  "archived_dynamic_paths": [
+    ".gitattributes",
+    "STATUS.md",
+    "STATUS_sol.md",
+    "experiments/ledger.jsonl",
+    "experiments/private_finalists.json",
+    "research/current_meta.md",
+    "tests/run_tests.py",
+    "tests/test_no_undefined_names.py"
+  ]
+}

@@ -27,8 +27,6 @@ sys.path.insert(0, str(ROOT))
 # Scripts on the critical path: anything that trains, submits, or validates. A late NameError in
 # any of these costs real GPU hours or a submission.
 CRITICAL_SCRIPTS = [
-    "scripts/probe_phase17_tabpfn.py",
-    "scripts/phase17_contracts.py",
     "scripts/audit_phase16_geometry.py",
     "scripts/audit_phase16_noise.py",
     "scripts/phase16_common.py",
