@@ -1,0 +1,12 @@
+{
+  "declared_utc": "2026-10-09T06:14:00Z",
+  "previous": "Native2 auto completes but differs from frozen sequential2 by0.000166118145 max probability,498/1024 rows above2e-6; INVALID_EQUIVALENCE_STOP and no AUC",
+  "evidence": "Installed tabpfn/settings.py max_batched_estimator_rows field explicitly documents0 as every estimator in its own forward and cache. inference.py _cache_builds with zero budget returns separate caches. This avoids unsupported query/cache batch mismatch without changing precision, preprocessing, member configs, FIT rows or averaging",
+  "isolated_change": "Official native classifier n_estimators2 memory_saving_mode=True plus supported settings.tabpfn.max_batched_estimator_rows=0; assert native cache_groups=[[0],[1]]. No library edits",
+  "reference_scope": "Exact official native API under supported unbatched scheduling; not bit-identical equivalence to default batched auto outputs, which failed the gate",
+  "manual": "Original frozen one-cache sequential implementation with default batching setting restored; require prior Phase16 serial bytes and exact official config/seed order",
+  "tolerance": 0.000002,
+  "no_auc_before_pass": true,
+  "full_context": "Native2 reference holds two small100k caches only. Full559708 inference remains one member cache at a time",
+  "remaining_technical_budget": "Within original90min; no extension"
+}

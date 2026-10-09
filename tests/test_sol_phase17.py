@@ -1,6 +1,7 @@
 """Numerical gate rejects semantic drift even when rankings look plausible."""
 import numpy as np
 import torch
+from unittest.mock import patch
 from scripts.phase17_contracts import equivalence
 from scripts.probe_phase17_tabpfn import tensor_description
 
@@ -30,3 +31,20 @@ def test_attention_diagnostic_preserves_actual_strides_dtype_and_shape():
     d=tensor_description(t)
     assert d['shape']==[2,8,3,5] and d['stride']==list(t.stride())
     assert not d['contiguous'] and d['dtype']=='torch.float32'
+
+
+def test_supported_auto_memory_retains_fit_saving_without_splitting_small_query():
+    from tabpfn.memory import should_save_peak_mem
+    with patch('tabpfn.memory._get_free_cuda_memory_bytes',return_value=12e9):
+        devices=[torch.device('cuda')]
+        assert should_save_peak_mem('auto',(100000,22),(0,22),devices,2)
+        assert not should_save_peak_mem('auto',(0,22),(1024,22),devices,2)
+        assert should_save_peak_mem(True,(0,22),(1024,22),devices,2)
+
+
+def test_official_zero_budget_produces_separate_member_caches_in_order():
+    from tabpfn.inference import _cache_builds
+    from tabpfn.architectures.interface import EstimatorBatchBudget
+    assert _cache_builds([0,1],100000,22,EstimatorBatchBudget(rows=0,cells=4000000))==[[[0]],[[1]]]
+    # A small positive budget still concatenates separately built caches; zero is essential.
+    assert _cache_builds([0,1],100000,22,EstimatorBatchBudget(rows=100000,cells=4000000))==[[[0],[1]]]

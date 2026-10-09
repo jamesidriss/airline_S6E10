@@ -1,0 +1,28 @@
+{
+  "os": "Windows-10-10.0.26200-SP0",
+  "python": "3.11.9",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "driver": "591.86",
+  "gpu": "NVIDIA GeForce RTX 5070 Ti",
+  "compute_capability": [
+    12,
+    0
+  ],
+  "host_available_bytes": 8245981184,
+  "disk_free_bytes": 37102604288,
+  "pagefile_allocated_MiB": 29998,
+  "pagefile_current_MiB": 2315,
+  "pagefile_peak_MiB": 14564,
+  "pagefile_automatic": true,
+  "wsl2_distros": [
+    {
+      "name": "docker-desktop",
+      "state": "Stopped"
+    }
+  ],
+  "docker_daemon": "Unavailable; existing executable but no running Linux engine",
+  "kaggle_gpu_quota": "Exhausted; reports/phase17_kaggle_gpu_quota_20261009.json",
+  "installed_settings_source_sha256": "abc4e3be5584cbede6fe4c4a7d24773b140049c02d5ecf0dc3f3b845a43c51c7",
+  "certified_sources_unchanged": true
+}
