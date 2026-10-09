@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "C:\Users\James\airline_S6E10\scripts\resume_phase17_context.py", line 122, in <module>
+    main()
+  File "C:\Users\James\airline_S6E10\scripts\resume_phase17_context.py", line 36, in main
+    assert not same_workspace, 'Another Phase17 worker is active; do not duplicate a live job'
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: Another Phase17 worker is active; do not duplicate a live job

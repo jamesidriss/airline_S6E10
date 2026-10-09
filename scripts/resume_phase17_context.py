@@ -18,22 +18,31 @@ from scripts.phase17_resume import completed_prefix, resume_predict
 from scripts.run_sol_tabpfn import frames, create_model
 
 
+def assert_no_other_workers():
+    import os
+    import psutil
+    # Windows venv launchers and the command shell are ancestors of this worker,
+    # and can carry its exact script arguments without running a second fit.
+    own_chain = {os.getpid(), *(p.pid for p in psutil.Process().parents())}
+    producers = {'run_phase17_tabpfn.py', 'run_phase17_confirmation.py', 'resume_phase17_context.py'}
+    for proc in psutil.process_iter(['pid', 'cmdline']):
+        if proc.info['pid'] in own_chain:
+            continue
+        if any(Path(token).name in producers for token in (proc.info['cmdline'] or [])):
+            try:
+                same_workspace = Path(proc.cwd()).resolve() == Path.cwd().resolve()
+            except (psutil.AccessDenied, psutil.NoSuchProcess):
+                same_workspace = False
+            assert not same_workspace, 'Another Phase17 worker is active; do not duplicate a live job'
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--origin', required=True); ap.add_argument('--tag', required=True)
     ap.add_argument('--fold', type=int, choices=range(5), required=True)
     args = ap.parse_args()
     assert args.tag != args.origin and all(Path(t).name == t for t in (args.origin, args.tag))
-    import os
-    import psutil
-    producers = {'run_phase17_tabpfn.py', 'run_phase17_confirmation.py', 'resume_phase17_context.py'}
-    for proc in psutil.process_iter(['pid', 'cmdline']):
-        if proc.info['pid'] == os.getpid(): continue
-        cmd = proc.info['cmdline'] or []
-        if any(Path(token).name in producers for token in cmd):
-            try: same_workspace = Path(proc.cwd()).resolve() == Path.cwd().resolve()
-            except (psutil.AccessDenied, psutil.NoSuchProcess): same_workspace = False
-            assert not same_workspace, 'Another Phase17 worker is active; do not duplicate a live job'
+    assert_no_other_workers()
     origin = ARTIFACTS/args.origin/f'f{args.fold}'; config_path = origin/'configuration.json'
     previous = json.loads(config_path.read_text()); old = previous['contract']; count = old['params']['n_estimators']
     assert count in (2, 4) and old['fold'] == args.fold and old['seed'] == old['params']['random_state'] == 1201

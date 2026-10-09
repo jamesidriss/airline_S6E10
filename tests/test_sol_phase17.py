@@ -193,3 +193,24 @@ def test_submission_boundary_rejects_partial_certificate_even_with_valid_vectors
             try:d.checked_certificate(cp,{},ids,test_ids)
             except AssertionError:pass
             else:raise AssertionError('Partial-fold candidate crossed the submission boundary')
+
+
+def test_resume_worker_guard_skips_own_launcher_but_blocks_separate_worker():
+    import os
+    from pathlib import Path
+    from types import SimpleNamespace
+    import psutil
+    from scripts.resume_phase17_context import assert_no_other_workers
+    make = lambda pid, cwd: SimpleNamespace(info={'pid':pid,
+        'cmdline':['python.exe','scripts/resume_phase17_context.py']}, cwd=lambda:cwd)
+    launcher, sibling = make(99,Path.cwd()), make(200,Path.cwd())
+    with patch.object(os,'getpid',return_value=100), patch.object(psutil,'Process',
+            return_value=SimpleNamespace(parents=lambda:[SimpleNamespace(pid=99)])):
+        with patch.object(psutil,'process_iter',return_value=[launcher]):
+            assert_no_other_workers()
+        with patch.object(psutil,'process_iter',return_value=[launcher,sibling]):
+            try:assert_no_other_workers()
+            except AssertionError:pass
+            else:raise AssertionError('A separate live workspace worker escaped detection')
+        with patch.object(psutil,'process_iter',return_value=[make(201,Path.cwd().parent)]):
+            assert_no_other_workers()
