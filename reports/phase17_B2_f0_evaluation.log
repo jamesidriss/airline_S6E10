@@ -1,0 +1,1 @@
+{"standalone_auc": 0.961511076454088, "standalone_delta": 0.0003786305503464815, "portfolio_auc": 0.9618316326385128, "portfolio_delta": 0.00010445218312693516, "discovery_pass": true, "replication_pass": true, "verdict": "DISCOVERY_PASS_REQUIRES_FROZEN_REPLICATION"}

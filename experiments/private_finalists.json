@@ -70,7 +70,7 @@
   },
   "final_selection_reassessed": true,
   "kaggle_final_selection_updated": false,
-  "continuation_status": "PHASE17_ACTIVE_INTERNAL2_REPLICATED_2FOLD_INTERNAL4_DISCOVERY_RUNNING",
+  "continuation_status": "PHASE17_ACTIVE_B1_TWO_FOLDS_B2_POSITIVE_DISCOVERY",
   "rejected_hedge_candidates": {
     "clean_aux10": {
       "oof_loss_vs_A": 0.00034690428011585617,
@@ -183,12 +183,14 @@
   },
   "phase17_activity": {
     "scope": "research/phase17_scope_20261009.json",
-    "four_estimator_discovery": "phase17_B2_f0",
+    "four_estimator_discovery": "DISCOVERY_PASS_REQUIRES_FROZEN_REPLICATION",
     "champion_A": "v6_sol_tabpfn_route_aux10",
     "champion_B": null,
     "new_submissions": 0,
-    "next_gate": "B2fold0 and B1fold2; five primary folds and matched independent shadow required before test/upload",
+    "next_gate": "B1 primaryfold2 next, then its frozen three-fold gate; B2 primaryfold1 conditional replication",
     "initial_heavy_budget_hours": 8,
-    "extension_used": false
+    "extension_used": false,
+    "B2_fold0_portfolio_delta": 0.00010445218312693516,
+    "B2_fold0_report": "reports/phase17_B2_f0_evaluation.json"
   }
 }
