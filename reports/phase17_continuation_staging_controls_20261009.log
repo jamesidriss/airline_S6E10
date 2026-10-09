@@ -1,0 +1,2 @@
+  [clean] 102 critical files, 0 undefined names
+PASS: complete-fold staging rejects resource failures, wrong report hashes and wrong folds; launcher guard and syntax/undefined-name checks passed

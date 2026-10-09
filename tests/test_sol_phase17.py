@@ -214,3 +214,24 @@ def test_resume_worker_guard_skips_own_launcher_but_blocks_separate_worker():
             else:raise AssertionError('A separate live workspace worker escaped detection')
         with patch.object(psutil,'process_iter',return_value=[make(201,Path.cwd().parent)]):
             assert_no_other_workers()
+
+
+def test_completed_fold_staging_rejects_failed_or_mismatched_report():
+    import json
+    from pathlib import Path
+    from tempfile import TemporaryDirectory
+    from src.common import file_sha256
+    from scripts.stage_phase17_completed_folds import complete_record
+    c={'scheme':'primary','fold':1,'seed':1201,'params':{'random_state':1201,
+        'n_estimators':4,'memory_saving_mode':True},'outer_labels_used_for_fit_or_configuration':False,
+        'entire_training_context':False,'bank':{},'scope_sha256':'scope','source_sha256':{}}
+    with TemporaryDirectory() as directory:
+        p=Path(directory)/'run.json';r={'contract':c,'status':'COMPLETE_FROZEN_PRIMARY_FOLD'}
+        p.write_text(json.dumps(r));e={'fold':1,'source_report_sha256':file_sha256(p),
+            'bank':{},'scope_sha256':'scope','source_sha256':{}}
+        complete_record(r,e,p,1)
+        for run,ev in (({**r,'status':'INVALID_RESOURCE_NO_MODELLING_VERDICT'},e),
+                       (r,{**e,'source_report_sha256':'wrong'}),(r,{**e,'fold':2})):
+            try:complete_record(run,ev,p,1)
+            except AssertionError:pass
+            else:raise AssertionError('Incomplete or mismatched fold accepted for continuation')

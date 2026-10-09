@@ -1,0 +1,2 @@
+  [clean] 102 critical files, 0 undefined names
+PASS: complete-fold staging rejects failed/mismatched evidence; launcher guard and all critical-file syntax checks passed
