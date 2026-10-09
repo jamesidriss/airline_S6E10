@@ -70,3 +70,32 @@ def test_full_primary_assembly_rejects_missing_fold_and_swapped_ids():
         try:scatter_predictions(bad,ids,folds)
         except ValueError:continue
         raise AssertionError('Incomplete/misaligned OOF was accepted')
+
+
+def test_saved_official_member_replay_rejects_tampering_and_wrong_aggregation():
+    import json
+    from pathlib import Path
+    from tempfile import TemporaryDirectory
+    from src.common import arr_sha256
+    from scripts.phase17_certification import replay_members
+    params={'n_estimators':2,'device':'cpu','average_before_softmax':False,'balance_probabilities':False}
+    values=[np.array([[[4.,0.],[0.,2.]]],dtype='float32'),
+            np.array([[[0.,1.],[1.,0.]]],dtype='float32')]
+    metadata={'n_estimators_resolved':2,'row_subsampling':None,'balance_probabilities':False,
+        'average_before_softmax':False,'softmax_temperature':1.,
+        'official_inference_config':{'USE_SKLEARN_16_DECIMAL_PRECISION':False},
+        'members':[{'index':i,'raw_logits_sha256':arr_sha256(v)} for i,v in enumerate(values)]}
+    with TemporaryDirectory() as directory:
+        folder=Path(directory)
+        for i,v in enumerate(values):
+            np.save(folder/f'member_{i}_raw_logits.npy',v)
+            (folder/f'member_{i}_stats.json').write_text(json.dumps(metadata['members'][i]))
+        p=replay_members(folder,metadata,params,2)
+        expected=torch.softmax(torch.from_numpy(np.concatenate(values,axis=0)),dim=-1).mean(0).numpy()[:,1]
+        wrong=torch.softmax(torch.from_numpy(np.concatenate(values,axis=0)).mean(0),dim=-1).numpy()[:,1]
+        assert np.allclose(p,expected,atol=1e-7,rtol=0) and np.max(np.abs(p-wrong))>.1
+        damaged=values[1].copy();damaged[0,0,0]+=1
+        np.save(folder/'member_1_raw_logits.npy',damaged)
+        try:replay_members(folder,metadata,params,2)
+        except AssertionError:pass
+        else:raise AssertionError('Altered member logits escaped certification')
