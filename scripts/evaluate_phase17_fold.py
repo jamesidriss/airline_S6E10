@@ -88,8 +88,7 @@ def main():
         'source_sha256': {p: file_sha256(p) for p in ('scripts/evaluate_phase17_fold.py', 'scripts/phase16_pair_metrics.py')},
         'verdict': 'DISCOVERY_PASS_REQUIRES_FROZEN_REPLICATION' if discovery else 'DISCOVERY_FAIL_CLOSE_NO_PROMOTION'}
     np.save(root/'portfolio.npy', p); save_json(result, path)
-    with Path('experiments/ledger.jsonl').open('a', encoding='utf-8', newline='
-') as f:
+    with Path('experiments/ledger.jsonl').open('a', encoding='utf-8', newline='\n') as f:
         f.write(json.dumps({'exp_id': args.tag+f'_f{args.fold}', 'kind': 'FROZEN_PRIMARY_DISCOVERY',
             'ts': result['utc'], 'report': str(path), 'report_sha256': file_sha256(path),
             'paired_fold_deltas': [portfolio_gain], 'correlation_with_champion': corr,

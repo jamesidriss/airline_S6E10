@@ -124,18 +124,27 @@ CRITICAL_MODULES = [
 
 def _pyflakes(paths):
     """Return {path: [messages]} for pyflakes-reported undefined names."""
+    import ast
+    syntax_errors = []
+    valid = []
+    for p in paths:
+        try:
+            ast.parse(Path(p).read_text(encoding='utf-8-sig'), filename=str(p))
+            valid.append(p)
+        except SyntaxError as error:
+            syntax_errors.append(f'{p}:{error.lineno}: syntax error: {error.msg}')
     try:
         from pyflakes.api import checkPath
         from pyflakes.reporter import Reporter
     except ImportError:  # pragma: no cover
-        return None
+        return syntax_errors or None
     import io
 
     out = io.StringIO()
     reporter = Reporter(out, out)
-    for p in paths:
+    for p in valid:
         checkPath(str(p), reporter)
-    msgs = []
+    msgs = list(syntax_errors)
     for line in out.getvalue().splitlines():
         # keep only name-resolution problems, not style/import-order noise
         if "undefined name" in line or "may be undefined, or defined from star imports" in line:
@@ -168,6 +177,15 @@ def test_static_guard_reads_file_contents_and_detects_missing_imports():
         assert len(messages) == 1 and "undefined name 'missing_helper'" in messages[0]
         sample.write_text("def missing_helper():\n    return 1\ndef run():\n    return missing_helper()\n", encoding="utf-8")
         assert _pyflakes([sample]) == []
+
+
+def test_static_guard_rejects_unterminated_literal_before_expensive_runs():
+    from tempfile import TemporaryDirectory
+    with TemporaryDirectory() as directory:
+        sample=Path(directory)/'broken.py'
+        sample.write_text("def run():\n    return 'broken\n",encoding='utf-8')
+        messages=_pyflakes([sample])
+        assert len(messages)==1 and 'syntax error' in messages[0]
 
 
 def test_run_tabr_imports_every_name_it_calls():

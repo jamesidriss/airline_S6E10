@@ -1,0 +1,39 @@
+{
+  "utc": "2026-10-09T06:23:10.138672+00:00",
+  "status": "SOLVED_WITH_SUPPORTED_OFFICIAL_UNBATCHED_SCHEDULING",
+  "engineering_start_utc": "2026-10-09T06:04:00Z",
+  "equivalence_complete_utc": "2026-10-09T06:20:27Z",
+  "engineering_minutes_to_resolution": 16.45,
+  "budget_minutes": 90,
+  "extension_used": false,
+  "native_api": "Official classifier native2; settings.tabpfn.max_batched_estimator_rows=0, memory_saving_mode=True",
+  "sequential": "Same original official2 configurations/preprocessing; frozen one-cache reconstruction; original backend/precision",
+  "reference_scope": "Supported official unbatched scheduling; default batched-auto outputs are not certified equivalent",
+  "probability_gap": 1.1920928955078125e-07,
+  "tolerance": 2e-06,
+  "native_cache_groups": [
+    [
+      0
+    ],
+    [
+      1
+    ]
+  ],
+  "native_peak_gpu_bytes": 2868769280,
+  "native_seconds": 55.39100000006147,
+  "probe_total_seconds": 110.31300000008196,
+  "sequential_matches_phase16_bytes": true,
+  "config_hashes": [
+    "de5090d76d9f4b3fb04e72fdb6eef98f41ae1dc508b9642da948987615d99c01",
+    "6781d617213a0411bf6ad94f64d095fbf9a490d54db61050c7451f56f3e22827"
+  ],
+  "source_commit": "2bd134b9622430132f335469283a9f520b179d9c",
+  "evidence_sha256": {
+    "reports\\phase17_internal2_serial_equivalence_20261009.json": "36ff05a4e2bc870abc701de9deba89276af5b1b189cbdda73f02a8e634833808",
+    "reports/phase17_attention_diagnosis_20261009.json": "df179fd0b48319be0d59885ce38d3fba8552b8c628ae8a81a8143b2985724cbb",
+    "reports/phase17_internal2_equivalence_20261009.json": "77f733aba179dda186950734c1ef539afec701ad204db93ef40c74380b4b67bf"
+  },
+  "OS_changes": false,
+  "Linux_required": false,
+  "unresolved": "Default batched-cache memory-saving path is invalid; auto-batched native rounding/implementation gap exceeds2e-6. No relaxed gate or scientific claim about that path."
+}
