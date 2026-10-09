@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-09T10:57:44.105161+00:00",
+  "status": "COMPLETE_PRIMARY_LOADER_CONTROLS_PASS",
+  "rows": 699635,
+  "primary_report_sha256": "c63f5a172c7bdbaa160ce7aa022a1214daf03d5e0daac0540f7b9f2aa116f449",
+  "source_sha256": "3df7f007daf5cf14135c4606b78791c9db75dec8c00a525a4d086959bfe3aa3e",
+  "verified_folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+  "vector_sha256": {
+    "route": "bcb2811329d3686882450e93435647f8f7ab65abfc48c1a1b51db1e9d1ef95e0",
+    "candidate": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552"
+  },
+  "new_performance_measurement": false
+}
