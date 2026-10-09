@@ -1,0 +1,215 @@
+{
+  "utc": "2026-10-09T09:39:07.938037+00:00",
+  "source_report_sha256": "77a6133925232f7d352fe7a8992e4bc3411e32a5684371e27900dd1b55b34a6a",
+  "scope_sha256": "a15ea75d25a8268c80fb3042f19d37e3761315fc49df24f0f6deaeedad06474a",
+  "bank": {
+    "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+    "test_certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+    "data_sha256": {
+      "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+      "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+    },
+    "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+    "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+    "oof_sha256": {
+      "candidate": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+      "aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+      "route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510"
+    },
+    "test_sha256": {
+      "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+      "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+      "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+    },
+    "v6_csv_sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d"
+  },
+  "fold": 2,
+  "complete_folds": [
+    2
+  ],
+  "full_pooled_oof_auc": null,
+  "standalone_auc": 0.9615299662268825,
+  "standalone_delta": 0.00033040148639362776,
+  "portfolio_auc": 0.9618912986763071,
+  "portfolio_delta": 0.00010374848677385806,
+  "oof_correlation_vs_v6": {
+    "logit": 0.9998217475167881,
+    "spearman": 0.9987333649556478,
+    "probability_residual": 0.9997261558936951
+  },
+  "route_correlation_vs_B0": {
+    "logit": 0.999291215447149,
+    "spearman": 0.9950023937788334,
+    "probability_residual": 0.9989233162031136
+  },
+  "exact_pair_rescue_damage_vs_v6": {
+    "all_positive_negative_pairs": 4832552412,
+    "rescued_pair_credit": 6115427.5,
+    "damaged_pair_credit": 5614057.5,
+    "rescued_pair_fraction": 0.0012654653232139637,
+    "damaged_pair_fraction": 0.0011617168364401796,
+    "net_auc_gain": 0.00010374848677378401,
+    "baseline_error_pair_credit": 184663666.5,
+    "candidate_error_pair_credit": 184162296.5,
+    "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+  },
+  "exact_route_pair_rescue_damage": {
+    "all_positive_negative_pairs": 4832552412,
+    "rescued_pair_credit": 12612639.5,
+    "damaged_pair_credit": 11015957.0,
+    "rescued_pair_fraction": 0.002609933307434142,
+    "damaged_pair_fraction": 0.0022795318210404956,
+    "net_auc_gain": 0.0003304014863936462,
+    "baseline_error_pair_credit": 187505137.0,
+    "candidate_error_pair_credit": 185908454.5,
+    "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+  },
+  "bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "v6",
+    "comparisons": {
+      "candidate": {
+        "mean": 0.00010564728498706877,
+        "percentile_95_interval": [
+          4.5575419124802007e-05,
+          0.00016406500601311714
+        ],
+        "positive_fraction": 1.0
+      }
+    }
+  },
+  "segments": {
+    "Class": {
+      "Business": {
+        "rows": 68612,
+        "auc": 0.9418213897830515,
+        "delta": 0.00020749597520863805
+      },
+      "Eco": {
+        "rows": 65344,
+        "auc": 0.9067477069566071,
+        "delta": 0.00016330308785983405
+      },
+      "Eco Plus": {
+        "rows": 5971,
+        "auc": 0.9288962869597677,
+        "delta": 3.522023187563228e-05
+      }
+    },
+    "Type of Travel": {
+      "Business travel": {
+        "rows": 99444,
+        "auc": 0.9586765511767958,
+        "delta": 0.00013581251118266469
+      },
+      "Personal Travel": {
+        "rows": 40483,
+        "auc": 0.8350861137026917,
+        "delta": 0.0003057658902614335
+      }
+    },
+    "Customer Type": {
+      "Loyal Customer": {
+        "rows": 115384,
+        "auc": 0.9620910296454411,
+        "delta": 9.248895861224682e-05
+      },
+      "disloyal Customer": {
+        "rows": 24543,
+        "auc": 0.9286635600323778,
+        "delta": 0.00026124079103628794
+      }
+    },
+    "Gender": {
+      "Female": {
+        "rows": 69551,
+        "auc": 0.9627645558542213,
+        "delta": 9.058537818718015e-05
+      },
+      "Male": {
+        "rows": 70376,
+        "auc": 0.9609975236184979,
+        "delta": 0.00011457455379138004
+      }
+    }
+  },
+  "worst_segment_delta": 3.522023187563228e-05,
+  "performance_discovery_pass": true,
+  "discovery_pass": true,
+  "hedge_discovery_pass": true,
+  "replication_pass": true,
+  "portfolio_prediction_sha256": "7f4ee446790982a076d609ab119d51f018e9ff565009fe8755e444aca7cf4b75",
+  "exact_auxiliary_logits_sha256": "098fbe6984698f39b40f8622d07432024ed19f1288a115f4bd2a1e9deda2885c",
+  "unchanged_auxiliary_proofs": [
+    {
+      "member": "xt_xt_d127_ss06",
+      "report_sha256": "1a39181a1b96882aedebe1afc44a03f336a9c360e8167b7db9c67a694ff5e26b",
+      "prediction_sha256": "0c577b44a5d51ac79e81378af3b66a05c03596d20ba22c632cd3a34c6c45b83d",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d127_s1",
+      "report_sha256": "704edba8f334e1cce42521a9fdb7f797bc15c50bfdfb0848a021782c9ad2069f",
+      "prediction_sha256": "e77e0666d523534bcb624956577d8f933171d1a43ccc38f8b95993e31fcbe282",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d255",
+      "report_sha256": "d4c5b6ef1ec11c315a07e74053cbeb1bdde0f66838430933b6d636a3f238dded",
+      "prediction_sha256": "553f38ae2a6299483974016c9059cc3175c07b63abe23f40f51a9ca4833010d0",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d127_bin63",
+      "report_sha256": "09620f627ab6c563f578058e41e25c26b8eaefda737bd242c37de0fe8df2f51d",
+      "prediction_sha256": "bc49c3eccbac62e3de869efa602029dd4d3686030c81a9bbaedf678ec9e41b1b",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d127_cs05",
+      "report_sha256": "b924de0b63a9a98b1d1174a5c4b06fb19f0119dbef0b9ef9cf8b21d413ee87b8",
+      "prediction_sha256": "482ac3fa45da07db25c25a61afa5d28049571b00cadf34ed06fb4b6405203ad2",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d63",
+      "report_sha256": "60b09d3fdbf8f80989cec1d4087f4d6bddfd90747875ee479e48f0be7f6fa209",
+      "prediction_sha256": "13d209de55d9b9a95de36e8627178e27f2af0001749ec5d77ccbf418c100bc4c",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "z3_cat_d8_s2",
+      "report_sha256": "8fe59cc77aa441c98f8e9d96de708c723f59f30da136d2bf6ce9f9be72b431e6",
+      "prediction_sha256": "030921ec77e6855ad49437228034213dbbfed69fdc484275f5e316f816832f99",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "prod5_xgb_full_primary",
+      "report_sha256": "9a8971bf29138e44deb9a092d85e544982264f19bf436f3a802c55e4634e530e",
+      "prediction_sha256": "0c71b62dbd31b97bbd203887a1936cb73e53a6ff3cb263603909d63dd8d0c49a",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xgb_lossguide",
+      "report_sha256": "fa7b5612633c79485590737dad88e3206313148adc11d8431a56e2a503a425f3",
+      "prediction_sha256": "65a146645ee987466e1d88927c21b58b765c6d4132b6da19cb5c6bf848743b28",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "zoo_xgb_d6",
+      "report_sha256": "44d91c27ee805af59e4de6b4b5e4d47720234e3bf4fc66ce9bd591c9194ffe9f",
+      "prediction_sha256": "2e28f39e54f360de913656708c51e6efc7ef2c50a45aaacfa2cc74418eff94ce",
+      "fold0_control_max_gap": null
+    }
+  ],
+  "runtime_seconds": 2024.5779999999795,
+  "source_sha256": {
+    "scripts/evaluate_phase17_fold.py": "f3f4b630ffb736f7382c376d9073dca108980b4cb62d7577db222cd4298f6826",
+    "scripts/phase16_pair_metrics.py": "f8e998569676f8b8b574637c92335ae6a7445b647e17bfee377a5dfd7216b9ea"
+  },
+  "verdict": "DISCOVERY_PASS_REQUIRES_FROZEN_REPLICATION"
+}

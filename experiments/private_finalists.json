@@ -48,12 +48,20 @@
     ],
     "paired_fold_deltas": [
       0.0001006337950936187,
-      5.353630502968887e-05
+      5.353630502968887e-05,
+      0.00010374848677385806
     ],
-    "mean_paired_delta": 7.708505006165378e-05,
+    "mean_paired_delta": 8.597286229905521e-05,
     "full_oof_auc": null,
     "test_certificate": null,
-    "uploaded": false
+    "uploaded": false,
+    "complete_folds": [
+      0,
+      1,
+      2
+    ],
+    "full_pooled_oof_auc": null,
+    "verdict": "THREE_FOLD_PASS_REQUIRES_FULL_PRIMARY_AND_MATCHED_SHADOW"
   },
   "verified_clean_BEST_B_HEDGE": null,
   "banked_legacy_previous_best_A": {
@@ -70,7 +78,7 @@
   },
   "final_selection_reassessed": true,
   "kaggle_final_selection_updated": false,
-  "continuation_status": "PHASE17_ACTIVE_B1_TWO_FOLDS_B2_POSITIVE_DISCOVERY",
+  "continuation_status": "PHASE17_ACTIVE_B1_THREE_FOLD_CONTINUATION_PASS",
   "rejected_hedge_candidates": {
     "clean_aux10": {
       "oof_loss_vs_A": 0.00034690428011585617,
@@ -187,7 +195,7 @@
     "champion_A": "v6_sol_tabpfn_route_aux10",
     "champion_B": null,
     "new_submissions": 0,
-    "next_gate": "B1 primaryfold2 next, then its frozen three-fold gate; B2 primaryfold1 conditional replication",
+    "next_gate": "B1 frozen primaryfolds3/4, full admission; B2 still only discovery and requires its own replication",
     "initial_heavy_budget_hours": 8,
     "extension_used": false,
     "B2_fold0_portfolio_delta": 0.00010445218312693516,
