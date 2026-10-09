@@ -73,7 +73,9 @@ def main():
     assert all(file_sha256(s) == h for s, h in dependencies.items())
     assert file_sha256(ref['params']['model_path']) == ref['checkpoint']['checkpoint_sha256']
     params = {**ref['params'], 'n_estimators': count}
-    primary_fold_path = Path('reports')/(args.primary_tag+f'_f{args.fold}.json')
+    fold_evidence = next(f for f in primary['folds'] if f['fold'] == args.fold)
+    primary_fold_path = Path(fold_evidence.get('run_report_path', Path('reports')/(args.primary_tag+f'_f{args.fold}.json')))
+    assert file_sha256(primary_fold_path) == fold_evidence['run_report_sha256']
     primary_fold = json.loads(primary_fold_path.read_text())
     assert primary_fold['contract']['params'] == params
     assert all(file_sha256(s) == h for s, h in primary_fold['contract']['source_sha256'].items())

@@ -1,0 +1,17 @@
+# Phase17 validation and completion cost
+
+The native API with its documented zero estimator-row batching budget creates one cache per official estimator. The verified sequential implementation retains one full-context cache at a time and uses the official probability postprocessor. It matches native2 and native4 within 1.1920928955078125e-7. This does not establish equivalence to the invalid default batched memory=True run or the rejected batched memory-auto run.
+
+Primary folds0/1 of internal2 improve the operational 50/50 portfolio by 100.633795 and 53.536305 micro-AUC; the mean is77.085050. This is replicated partial-CV evidence, not full OOF admission or private generalization. The fold1 bootstrap95% interval[-2.774961,110.833496]micro includes zero. No seed or weight has been selected.
+
+The original single configuration is not preserved exactly by either official multi-estimator recipe. Results compare complete recipes, rather than isolate the causal effect of adding an estimator.
+
+Shadow folds2/3 are predeclared alternative split confirmations for this new foundation recipe. They are not globally untouched competition labels: historical feature/model discovery already used other shadow experiments. Auxiliary10 must be rebuilt on the shadow FIT rows, including rating-stratified inner-OOS auxiliary predictions and inner10% satisfaction early stopping. Both candidates use the identical newly matched auxiliary mean logits. No primary auxiliary cache may substitute for a shadow cache.
+
+Test inference requires all five exact primary FIT contexts. Each context uses all FIT rows and the official member configuration list. Internal probabilities are aggregated first, then the five context probabilities are equally averaged. The unchanged auxiliary10 test vote is reconstructed from its ten certified member logits; it reproduces the immutable v6 test portfolio bit-for-bit. The certificate also reconstructs each new context prediction from saved raw member logits. A local CSV is not authorization to bypass the robustness/submission gate.
+
+The private simulator replays the banked820 definitions from sol_private_sim_recovery.json, checking every original mask hash. Public/private sizes are59969/239875 from a299844-row population. Historical v5 confidence partitions stay fixed; its model score remains an ineligible diagnostic. These conditional stress tests do not reveal private labels or simulate model refitting and unknown shift.
+
+Measured full-context cost is approximately774seconds FIT plus237seconds prediction per estimator on a139927-row validation fold. A two-estimator primary fold costs2023seconds (33.7minutes), and four estimators are projected4045seconds (67.4minutes). Test prediction has299844rows, so a conservative per-estimator projection is774+237*(299844/139927)=1282seconds (21.4minutes). Five test contexts therefore cost about3.56hours for internal2 or7.12hours for internal4. Matched shadow B0 costs about0.56hours for two folds; candidate shadow costs about1.12/2.25hours for internal2/4, plus auxiliary10 rebuilding.
+
+The initial8-hour heavy-compute budget remains in force. An extension has not been used. Any extension must first record a meaningful replicated result, the selected qualifying recipe, expected benefit, remaining completion cost, and a finite revised bound. The current positive two-fold result permits a conditional four-estimator discovery, not an unconditional full four-estimator campaign.

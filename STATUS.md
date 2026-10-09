@@ -1,5 +1,7 @@
 # STATUS — Kaggle Playground S6E10 (Airline Satisfaction)
 
+Phase17 ACTIVE: original native kernel failure solved by the supported official zero estimator-row batching budget; native2/serial2 and native4/serial4 gaps1.1920928955078125e-7<=2e-6. B0 fullfold0 is byte-exact. B1/count2 portfolio fold0+100.633795micro and fold1+53.536305micro, mean77.085050micro; full OOF and independent confirmation not yet established. Conditional B2/count4 fullfold0 is running, one cache at a time. V6 remains certified A; no new uploads or B claim. See research/phase17_scope_20261009.json and reports/phase17_B1_f1_evaluation.json.
+
 Phase16 active checkpoint: CLOSED bounded queue; G1/G2 full5 losses10.192/16.013micro; B0 exact native1 prediction SHA match; native2 equivalence INVALID Windows kernel (no model verdict); official Fast fold0 portfolio loss341.440micro, all9 segments negative. V6 immutable A; B open; 0 new uploads; final full suite125passed0failed. See reports/phase16_final_report_20261009.md. No automatic Phase17.
 
 Phase15 active checkpoint: CLOSED all3 branches; raw full5 +22.41micro but gate2.403<2.5; native39 standalone2/2 positive, v6 marginal sign changes; auxEV-PFN3fold mean+6.31micro<15 continuation. V6 immutable A; B open; 0 new uploads; final full suite120passed0failed; reports/source evidence preserved.

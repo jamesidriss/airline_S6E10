@@ -29,15 +29,22 @@ def scatter_predictions(parts,ids,folds):
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--tag',required=True);args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--tag',required=True)
+    ap.add_argument('--fold-tags',help='JSON mapping of fold number to a verified resumed run tag')
+    args=ap.parse_args()
+    tags={k:args.tag for k in range(5)}
+    if args.fold_tags:
+        overrides=json.loads(Path(args.fold_tags).read_text())
+        assert all(str(k) in ('0','1','2','3','4') for k in overrides)
+        tags.update({int(k):v for k,v in overrides.items()})
     root=ARTIFACTS/args.tag/'primary';path=Path('reports')/(args.tag+'_primary.json')
     if root.exists() or path.exists(): raise FileExistsError('Preserve completed assembly')
     tr,_,y,folds,vectors,_,proof=bank();ids=tr.id.to_numpy()
     scope_path=Path('research/phase17_scope_20261009.json');scope=json.loads(scope_path.read_text())
     route_parts={};portfolio_parts={};evidence=[];counts=[];deltas=[]
     for k in range(5):
-        rp=Path('reports')/(args.tag+f'_f{k}.json');ep=Path('reports')/(args.tag+f'_f{k}_evaluation.json')
-        r=json.loads(rp.read_text());e=json.loads(ep.read_text());c=r['contract'];folder=ARTIFACTS/args.tag/f'f{k}'
+        rp=Path('reports')/(tags[k]+f'_f{k}.json');ep=Path('reports')/(tags[k]+f'_f{k}_evaluation.json')
+        r=json.loads(rp.read_text());e=json.loads(ep.read_text());c=r['contract'];folder=ARTIFACTS/tags[k]/f'f{k}'
         assert r['status']=='COMPLETE_FROZEN_PRIMARY_FOLD' and c['scheme']=='primary' and c['fold']==k
         assert c['scope_sha256']==file_sha256(scope_path) and c['bank']==proof
         assert c['seed']==1201 and not c['outer_labels_used_for_fit_or_configuration']
@@ -51,7 +58,8 @@ def main():
         assert abs(d-e['portfolio_delta'])<1e-14
         counts.append(c['params']['n_estimators']);deltas.append(d)
         route_parts[k]=(route,aid);portfolio_parts[k]=(p,aid)
-        evidence.append({'fold':k,'run_report_sha256':file_sha256(rp),'evaluation_sha256':file_sha256(ep),
+        evidence.append({'fold':k,'source_tag':tags[k],'run_report_path':str(rp),'evaluation_path':str(ep),
+            'run_report_sha256':file_sha256(rp),'evaluation_sha256':file_sha256(ep),
             'route_auc':r['auc'],'portfolio_auc':e['portfolio_auc'],'delta':d,'seconds':r['seconds']})
     assert len(set(counts))==1 and counts[0] in (2,4)
     route=scatter_predictions(route_parts,ids,folds);p=scatter_predictions(portfolio_parts,ids,folds)

@@ -13,7 +13,8 @@ from src.submission.make import build
 from src.validation.compare import logit
 from scripts.phase16_common import bank
 from scripts.phase16_tabpfn import library_sources
-from scripts.phase17_certification import load_primary, replay_members, unchanged_auxiliary_test
+from scripts.phase17_certification import replay_members, unchanged_auxiliary_test
+from scripts.phase17_primary_io import load_primary
 from scripts.score_sol_foundation import correlations
 
 
@@ -49,7 +50,10 @@ def main():
         assert c['fit_ids_sha256'] == arr_sha256(ids[folds != k]) and c['apply_ids_sha256'] == arr_sha256(test_ids)
         assert c['fold_sha256'] == arr_sha256(folds) and c['library_source_sha256'] == library_sources()
         assert all(file_sha256(s) == h for s, h in c['source_sha256'].items())
-        original_path = Path('reports')/(args.primary_tag+f'_f{k}.json'); original = json.loads(original_path.read_text())
+        fold_evidence = next(f for f in primary['folds'] if f['fold'] == k)
+        original_path = Path(fold_evidence.get('run_report_path', Path('reports')/(args.primary_tag+f'_f{k}.json')))
+        assert file_sha256(original_path) == fold_evidence['run_report_sha256']
+        original = json.loads(original_path.read_text())
         assert c['primary_fold_report_sha256'] == file_sha256(original_path)
         for field in ('params', 'train_rows', 'feature_fit_sha256', 'fit_ids_sha256', 'feature_names', 'label_free_category_maps', 'checkpoint'):
             assert c[field] == original['contract'][field]
@@ -95,7 +99,7 @@ def main():
         'exact_auxiliary_logits_sha256': arr_sha256(aux), 'original_test_portfolio_reproduced_bitexact': True,
         'test_correlation_vs_v6': correlations(p, tests['candidate']),
         'submission_path': str(csv_path), 'submission_sha256': file_sha256(csv_path),
-        'source_sha256': {s: file_sha256(s) for s in ('scripts/assemble_phase17_test.py', 'scripts/phase17_certification.py',
+        'source_sha256': {s: file_sha256(s) for s in ('scripts/assemble_phase17_test.py', 'scripts/phase17_certification.py', 'scripts/phase17_primary_io.py',
             'scripts/assemble_sol_clean.py', 'src/submission/make.py', 'scripts/phase16_tabpfn.py')},
         'uploaded': False}
     save_json(certificate, output)

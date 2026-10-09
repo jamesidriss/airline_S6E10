@@ -99,3 +99,68 @@ def test_saved_official_member_replay_rejects_tampering_and_wrong_aggregation():
         try:replay_members(folder,metadata,params,2)
         except AssertionError:pass
         else:raise AssertionError('Altered member logits escaped certification')
+
+
+def test_secret_scan_checks_untruncated_contents_without_returning_secret_values():
+    from scripts.audit_phase17_integrity import scan_bytes
+    secret='sk-'+'a'*36
+    findings=scan_bytes(('safe line\n'+'x'*300000+'\n'+secret).encode())
+    assert findings==[{'kind':'openai_token','line':3}]
+    assert secret not in str(findings)
+    assert scan_bytes(b'{"token": "placeholder"}')==[]
+
+
+def test_resume_rejects_missing_noncontiguous_and_tampered_member_contributions():
+    import json
+    from pathlib import Path
+    from tempfile import TemporaryDirectory
+    from src.common import arr_sha256
+    from scripts.phase17_resume import completed_prefix
+    v=np.zeros((1,2,2),dtype='float32')
+    with TemporaryDirectory() as directory:
+        p=Path(directory)
+        np.save(p/'member_1_raw_logits.npy',v)
+        stats={'index':1,'raw_logits_sha256':arr_sha256(v),'gpu_allocated_after_release':0}
+        (p/'member_1_stats.json').write_text(json.dumps(stats))
+        try:completed_prefix(p,2,2)
+        except ValueError:pass
+        else:raise AssertionError('Noncontiguous completed member accepted')
+        np.save(p/'member_0_raw_logits.npy',v)
+        try:completed_prefix(p,2,2)
+        except ValueError:pass
+        else:raise AssertionError('Incomplete member accepted')
+        (p/'member_0_stats.json').write_text(json.dumps({**stats,'index':0}))
+        assert len(completed_prefix(p,2,2))==2
+        changed=v.copy();changed[0,0,0]=1
+        np.save(p/'member_1_raw_logits.npy',changed)
+        try:completed_prefix(p,2,2)
+        except ValueError:pass
+        else:raise AssertionError('Tampered saved member accepted')
+
+
+def test_resume_skips_completed_fit_and_preserves_official_member_aggregation():
+    from contextlib import nullcontext
+    from types import SimpleNamespace
+    from tabpfn import TabPFNClassifier
+    from src.common import arr_sha256
+    from scripts.phase16_tabpfn import probabilities
+    from scripts.phase17_resume import resume_predict
+    values=[np.array([[[4.,0.],[0.,2.]]],dtype='float32'),np.array([[[0.,1.],[1.,0.]]],dtype='float32')]
+    clf=TabPFNClassifier(n_estimators=2,device='cpu',average_before_softmax=False,balance_probabilities=False)
+    clf.executor_=None;clf.n_classes_=2;clf.softmax_temperature_=1.
+    clf.inference_config_=SimpleNamespace(USE_SKLEARN_16_DECIMAL_PRECISION=False)
+    clf.predict_raw_logits=lambda a:values[clf.executor_.index][:,a[:,0].astype(int)]
+    fitted=[];completed=[]
+    def factory(**kw):
+        i=kw['ensemble_preprocessor'].member.index;fitted.append(i);return SimpleNamespace(index=i)
+    def release_cpu(model):model.executor_=None
+    stats={'index':0,'fit_seconds':1.,'total_seconds':2.,'peak_gpu_bytes':0,
+           'raw_logits_sha256':arr_sha256(values[0]),'gpu_allocated_after_release':0}
+    prepared=(factory,{'ensemble_preprocessor':None},[SimpleNamespace(index=0),SimpleNamespace(index=1)],
+              {'members':[{'index':0},{'index':1}]})
+    with patch('scripts.phase17_resume.release',release_cpu),patch('torch.cuda.reset_peak_memory_stats'):
+        p,metadata=resume_predict(clf,prepared,np.array([[0],[1]]),[(values[0],stats)],
+            lambda *_:nullcontext(),lambda *_:None,lambda i,v,s:completed.append((i,arr_sha256(v))))
+    assert fitted==[1] and completed==[(0,arr_sha256(values[0])),(1,arr_sha256(values[1]))]
+    assert np.array_equal(p,probabilities(clf,np.concatenate(values)).astype('float32'))
+    assert [m['raw_logits_sha256'] for m in metadata['members']]==[arr_sha256(v) for v in values]

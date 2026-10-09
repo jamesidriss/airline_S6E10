@@ -1,3 +1,5 @@
+Phase17 active evidence (2026-10-09T08:00:07.783292+00:00): official internal2 replacement has positive operational portfolio effects on primary folds0/1 (+100.633795/+53.536305micro), no full-OOF or private claim. Internal4 own native/serial numerical gate passed at1.1921e-7; fullfold0 running. Native memory=True cached batch2 was sliced to querybatch1 while KV remainedbatch2; supported max_batched_estimator_rows=0 gives one native cache per estimator and matches manual sequential semantics. Batched memory-auto was numerically different and rejected. No seed/weight selection; future shadow2/3 uses freshly rebuilt auxiliary10. V6 and original1 configuration remain immutable.
+
 # S6E10 — Verified Competition Meta
 
 _Live research log. Every claim is tagged VERIFIED / PROMISING HYPOTHESIS / UNVERIFIED / INVALID-LEAKY._
