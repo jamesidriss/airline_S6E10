@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "C:\Users\James\airline_S6E10\scripts\run_sol_tabpfn_confirm.py", line 181, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\James\airline_S6E10\scripts\run_sol_tabpfn_confirm.py", line 151, in main
+    with inference_guard(root,contract,min_available_gib=2,max_seconds=max(1,2700-fit_seconds)):
+  File "C:\Users\James\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\src\models\resource_guard.py", line 21, in inference_guard
+    raise ResourcePreflightError('Full inference requires at least 20 GiB free disk reserve')
+src.models.resource_guard.ResourcePreflightError: Full inference requires at least 20 GiB free disk reserve

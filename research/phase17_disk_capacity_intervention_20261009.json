@@ -1,0 +1,9 @@
+{
+  "utc": "2026-10-09T12:52:41.276513+00:00",
+  "status": "DECLARED_BEFORE_COMPRESSION_OR_NEW_SHADOW_METRICS",
+  "intervention": "Reversible LZX compression of generated feature/auxiliary/SSL caches only; prove exact before/after logical SHA for each file; no deletion or source/checkpoint/data/prediction modification",
+  "original_guards_unchanged": true,
+  "B2_remains_closed": true,
+  "next_step": "Only if enough verified capacity restored, one new-tag matched B0 shadow retry; no repeated full FIT in unchanged state",
+  "heavy_budget_hours": 28
+}
