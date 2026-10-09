@@ -1,0 +1,14 @@
+{
+  "utc": "2026-10-09T12:13:35.929896+00:00",
+  "origin": "phase17_B2",
+  "tag": "phase17_B2_resume1_v3",
+  "maximum_additional_recovery_attempts": 1,
+  "maximum_new_member_seconds": 2700,
+  "reuse_completed_members": 3,
+  "guard_changes": false,
+  "diagnostics": "Each guard entry and exception records exact absolute path, disk and RAM bytes; original immutable guard runs directly; no retry of refused preflight.",
+  "if_repeat": "Close four-estimator branch as invalid resource-blocked, no performance verdict. Continue qualified B1 independent/test/private work.",
+  "old_resume_source_git": "95f6cb9afa56b0a4479c9bba4c05f4c225c04dd1",
+  "old_resume_source_sha256": "37c8f14cb7ccea1a4299c82039dabad066c0b55c2abfd5e1ba20d89f20bb9a23",
+  "heavy_budget_total_hours": 28
+}

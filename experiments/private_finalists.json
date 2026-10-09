@@ -219,7 +219,7 @@
     "extension_declared": true,
     "revised_heavy_budget_hours": 28,
     "extension_contract": "research\\phase17_compute_extension_20261009.json",
-    "four_estimator_replication": "RESOURCE_PREFLIGHT_STOP_BEFORE_MEMBER4; verified3-member prefix awaiting new-tag resume",
-    "resume_tag": "phase17_B2_resume1_v2"
+    "four_estimator_replication": "Second recovery disk preflight failure after FIT; final bounded diagnostic recovery pending; no AUC",
+    "resume_tag": "phase17_B2_resume1_v3"
   }
 }

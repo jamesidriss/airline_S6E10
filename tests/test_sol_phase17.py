@@ -235,3 +235,25 @@ def test_completed_fold_staging_rejects_failed_or_mismatched_report():
             try:complete_record(run,ev,p,1)
             except AssertionError:pass
             else:raise AssertionError('Incomplete or mismatched fold accepted for continuation')
+
+
+def test_resource_diagnostics_preserve_original_disk_preflight():
+    import json
+    from pathlib import Path
+    from tempfile import TemporaryDirectory
+    from types import SimpleNamespace
+    from scripts.phase17_resource_diagnostics import diagnosed_guard
+    from src.models.resource_guard import ResourcePreflightError
+    with TemporaryDirectory() as directory:
+        root=Path(directory);entered=False
+        with patch('shutil.disk_usage',return_value=SimpleNamespace(free=19*1024**3,total=100*1024**3)):
+            try:
+                with diagnosed_guard(root,{},max_seconds=2700,min_available_gib=2):
+                    entered=True
+            except ResourcePreflightError:pass
+            else:raise AssertionError('Original 20 GiB disk threshold was weakened')
+        assert not entered
+        evidence=json.loads((root/'guard_exception.json').read_text())
+        assert evidence['entry']['disk_free_bytes']==19*1024**3
+        assert evidence['after_exception']['absolute_guard_path']==str(root.resolve())
+        assert evidence['limits']=={'max_seconds':2700,'min_available_gib':2}

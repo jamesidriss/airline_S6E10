@@ -10,7 +10,7 @@ import torch
 from sklearn.metrics import roc_auc_score
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.common import ARTIFACTS, arr_sha256, file_sha256, git_commit, save_json
-from src.models.resource_guard import inference_guard
+from scripts.phase17_resource_diagnostics import diagnosed_guard as inference_guard
 from src.validation.folds import get_scheme
 from scripts.phase16_common import bank
 from scripts.phase16_tabpfn import prepare, release, library_sources
@@ -89,7 +89,7 @@ def main():
     ref = json.loads(Path('reports/sol_tabpfn35_route/route_f0.json').read_text())
     c = {**old, 'git': git_commit(), 'resume_origin_tag': args.origin, 'resume_configuration_sha256': file_sha256(config_path),
          'reused_members': len(prefix), 'own_probe_report_sha256': file_sha256(probe_path), 'backend_reference_gaps': gaps,
-         'source_sha256': {**old['source_sha256'], **{s: file_sha256(s) for s in ('scripts/resume_phase17_context.py', 'scripts/phase17_resume.py')}}}
+         'source_sha256': {**old['source_sha256'], **{s: file_sha256(s) for s in ('scripts/resume_phase17_context.py', 'scripts/phase17_resume.py', 'scripts/phase17_resource_diagnostics.py')}}}
     start = time.monotonic(); result = {'contract': c}; clf = None
     try:
         with inference_guard(root, c, max_seconds=max(300, (count-len(prefix))*2700), min_available_gib=4):

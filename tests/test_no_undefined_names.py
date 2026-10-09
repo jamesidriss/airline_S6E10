@@ -32,6 +32,7 @@ CRITICAL_SCRIPTS = [
     "scripts/phase17_primary_io.py",
     "scripts/phase17_resume.py",
     "scripts/resume_phase17_context.py",
+    "scripts/phase17_resource_diagnostics.py",
     "scripts/audit_phase17_integrity.py",
     "scripts/simulate_phase17_private.py",
     "scripts/assemble_phase17_test.py",
