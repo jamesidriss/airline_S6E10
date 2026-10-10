@@ -1,5 +1,8 @@
 # SOL campaign — audit and continuation
 
+Phase17 rescue 2026-10-10T23:05:54.442287+00:00: current full HOST suite142PASS/0FAIL; failed sandbox permission runs preserved. Cfree44.059284GiB/RAM13.164688GiB at preflight, GPU1837/16303MiB, no Python worker. Frozen B0 matched shadow2 starts after bank/integrity checks; qualification remains pending;0uploads.
+
+
 Phase17 rescue 2026-10-10T23:01:42.030769+00:00: exact2375 shared pip cache files explicitly approved and removed; measured physical Cfree gain8.012329GiB, after44.622986GiB. Frozen primary B1 unchanged; actual host full tests pending after sandbox temporary-file permission failures. No model job or upload yet; matched shadow2/3 then gated test0..4; count4 and Phase18 closed. V6 remains certified A.
 
 

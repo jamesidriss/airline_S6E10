@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-10T23:05:54.442287+00:00",
+  "status": "CURRENT_FULL_HOST_TEST_SUITE_PASS",
+  "passed": 142,
+  "failed": 0,
+  "stochastic_protocol_internal_assertions": 69,
+  "log": "reports\\phase17_rescue_host_full_tests_20261011.log",
+  "log_sha256": "422c4e526ebdcd29cfa90639658cc5c865281d131547db16572800fe511ec0f5",
+  "execution_environment": "Actual host with sandbox escalation; disposable test files support atomic replacement",
+  "production_ML_sources_changed": false,
+  "prior_failed_sandbox_runs_preserved": "reports/phase17_rescue_preflight_test_environment_20261011.json",
+  "source_commit": "b90efadc76b2a53c7503891d645c4b62cea54ce8"
+}
