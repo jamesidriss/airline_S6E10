@@ -1,0 +1,141 @@
+{
+  "utc": "2026-10-10T23:44:46.503376+00:00",
+  "status": "COMPLETE_HASH_VERIFIED_MATCHED_B0_CONTROL_FOLD",
+  "fold": 3,
+  "bank": {
+    "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+    "test_certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+    "data_sha256": {
+      "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+      "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+    },
+    "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+    "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+    "oof_sha256": {
+      "candidate": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+      "aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+      "route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510"
+    },
+    "test_sha256": {
+      "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+      "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+      "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+    },
+    "v6_csv_sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d"
+  },
+  "control_proof": {
+    "tag": "phase17_shadow_B0_capacity",
+    "report_sha256": "9d6570da4eecb19b3c865d9570d8aee8418838fa9a9f13d06f266ceaa5fe8813",
+    "prediction_sha256": "88bd7e30b34702fcfae37ed1c310eb788ea8fa863f3103422493d61d1979aaa5"
+  },
+  "auxiliary_proofs": [
+    {
+      "member": "xt_xt_d127_ss06",
+      "report_sha256": "70c414f5c186d3b4cdc0baea7a987d7f14a5dc137355145e0336c9af3cbcbde9",
+      "prediction_sha256": "9cd949e90250cbf2dbfa7143e68e5bab0b1b188105c9315aabd16521bff4acef",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d127_s1",
+      "report_sha256": "c58cdcdbaadaaf3d22e9c4ce14766ff4ae7e74e0d96a2c358950cc70d43813e6",
+      "prediction_sha256": "642f8c1087dd8407b295a457cd7637d61ead66175eb719049e8861fa1741b630",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d255",
+      "report_sha256": "5b3bb4d6739cc8e96b9bbf0b66fdcb7af4a6c1c6db55d1d7be8493152017d58b",
+      "prediction_sha256": "59e118d4dc7cec1256b165005d3519f7f95407ac239d31f7a5fe4e3f6823bf2a",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d127_bin63",
+      "report_sha256": "f8225ffd3062b8ad88417d56858d03320583564a3fc0f77603c2cd81b56348ec",
+      "prediction_sha256": "ad80d29d738f98bd62fdefe546d1e42366b61449294749e3bf6b8df82df35ed0",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d127_cs05",
+      "report_sha256": "2656c7d09535922988b129e20f31ad489b90c27a14731e88a2eec1c867fae53f",
+      "prediction_sha256": "9a581598352879332127c6afcc4b8c819e41726280911201bd1674efa0d46173",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xt_d63",
+      "report_sha256": "ebd154b87fb6f77c80392400c60e7154b37f8ac7ec7ff5e5ed3bd80eb5ec5c83",
+      "prediction_sha256": "fbae9d7dd18ab19c6cd56de509e187ed2c33e93a01f37115ad1b42c9fc20d046",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "z3_cat_d8_s2",
+      "report_sha256": "d03c7f28ffa6f02a9abb9ba53e44ca15f30217c64d26226ef8f2536a7d22a553",
+      "prediction_sha256": "9aab3730b857fa1ffe188e1d6a7d0a24edef845ff89fe0933516e53534adf569",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "prod5_xgb_full_primary",
+      "report_sha256": "92adadbc3f9452ef7cbb8f949494f6b27125e46e24d52f097aa3756de50fd221",
+      "prediction_sha256": "8e24d3f2d06de0ed5763d1755c09b50805b5a08e4ac82fafdb6af3251c7ed561",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "xt_xgb_lossguide",
+      "report_sha256": "902887fa23f8d53989c6b49b8b6ffc6dd419510a4419bf9027d25d0470421293",
+      "prediction_sha256": "5548da515f97b20c0b871f7551e16db7ab3e2779865f96d70d782ed7cc891519",
+      "fold0_control_max_gap": null
+    },
+    {
+      "member": "zoo_xgb_d6",
+      "report_sha256": "f622137346303408518549dd6a7e9e335ac7e1c9931177da9227e593c63fbec5",
+      "prediction_sha256": "093217a23456b03bb475e3f40ceefbf539a378d792f6a382a9c8f12bedc74e5c",
+      "fold0_control_max_gap": null
+    }
+  ],
+  "route_auc": 0.9618408140712369,
+  "portfolio_auc": 0.9622432018436221,
+  "prediction_sha256": "88bd7e30b34702fcfae37ed1c310eb788ea8fa863f3103422493d61d1979aaa5",
+  "portfolio_sha256": "d6af0bfcecfee441a927c6db903b19cf0fc37625b0cccea56fbe23d94f1b52a7",
+  "apply_rows": 139927,
+  "fit_rows": 559708,
+  "driver_seconds": 1048.8589999999967,
+  "fit_seconds": 804.75,
+  "actual_wrapper_worker_seconds": 1055.811999999998,
+  "resources": {
+    "sample_interval_seconds": 15,
+    "samples": 69,
+    "sampled_disk_min_gib": 48.50439453125,
+    "sampled_ram_min_gib": 5.1822967529296875,
+    "sampled_process_commit_max_gib": 18.9161376953125,
+    "sampled_gpu_allocated_max_gib": 12.731980800628662,
+    "sampled_gpu_reserved_max_gib": 13.376953125,
+    "driver_gpu_allocation_peak_gib": 12.735887050628662,
+    "initial_pagefiles": [
+      {
+        "name": "C:\\pagefile.sys",
+        "allocated_bytes": 29472325632,
+        "used_bytes": 98566144,
+        "peak_used_bytes": 114294784
+      }
+    ],
+    "last_pagefiles": [
+      {
+        "name": "C:\\pagefile.sys",
+        "allocated_bytes": 29472325632,
+        "used_bytes": 99614720,
+        "peak_used_bytes": 114294784
+      }
+    ],
+    "pagefile_allocated_unique_gib": [
+      27.4482421875
+    ],
+    "disk_start_gib": 49.867027282714844,
+    "disk_last_sample_gib": 48.50439453125,
+    "telemetry_final_disk_gib": 48.5025749206543,
+    "temp_metadata_scope": "Immediate files only; recursive changes outside this scope are not measured",
+    "transient_growth_conclusion": "Prior15GiB collapse was not reproduced by this single-estimator control. No Windows storage or virtual-memory setting was changed.",
+    "observations_sha256": "6a77cfcab5b8905facfac75996fc36b920e953c55c8c1c2ded412dfc2c0fb63b",
+    "summary_sha256": "c88d5900500d2f6b0ca1aff50785105359d86703937597ab359bf653c2d01f2f"
+  },
+  "new_candidate_confirmation": false,
+  "new_submissions": 0
+}

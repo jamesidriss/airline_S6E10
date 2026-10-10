@@ -1,0 +1,23 @@
+{
+  "utc": "2026-10-10T23:45:25.197083+00:00",
+  "prior_model_hours": 6.544027500000019,
+  "total_ceiling_hours": 28,
+  "unique_completed_model_workers": [
+    {
+      "tag": "phase17_rescue_telemetry_B0_shadow2_20261011",
+      "seconds": 1093.765999999996,
+      "status": "FROZEN_DRIVER_COMPLETE",
+      "sha256": "70d2f6d8aa87a9a601de6afe0252ee91a4c5a81a413f3d289352b23128b46e64"
+    },
+    {
+      "tag": "phase17_rescue_telemetry_B0_shadow3_20261011",
+      "seconds": 1055.811999999998,
+      "status": "FROZEN_DRIVER_COMPLETE",
+      "sha256": "c88d5900500d2f6b0ca1aff50785105359d86703937597ab359bf653c2d01f2f"
+    }
+  ],
+  "cumulative_model_hours": 7.141132500000017,
+  "remaining_model_hours": 20.85886749999998,
+  "next": "B1 shadow2, then3; existing20auxiliary fits reused",
+  "new_submissions": 0
+}

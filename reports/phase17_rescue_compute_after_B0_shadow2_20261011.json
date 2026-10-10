@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-10T23:26:59.485918+00:00",
+  "prior_verified_phase17_model_probe_hours": 6.544027500000019,
+  "total_ceiling_hours": 28,
+  "completed_rescue_workers": [
+    {
+      "tag": "phase17_rescue_telemetry_B0_shadow2_20261011",
+      "status": "FROZEN_DRIVER_COMPLETE",
+      "actual_worker_seconds": 1093.765999999996,
+      "summary_sha256": "70d2f6d8aa87a9a601de6afe0252ee91a4c5a81a413f3d289352b23128b46e64"
+    }
+  ],
+  "cumulative_completed_model_hours": 6.847851388888907,
+  "remaining_hours_excluding_active_worker": 21.152148611111095,
+  "currently_active": "B0 shadow3",
+  "accounting": "Unique wrapper wall time per completed model worker; original6.5440275h retained; no double counting driver seconds, reused20aux fits, evaluations or tests",
+  "new_submissions": 0
+}
