@@ -1,0 +1,25 @@
+{
+  "utc": "2026-10-10T23:01:42.030769+00:00",
+  "status": "TWO_SANDBOX_TEST_RUNS_FAILED_HOST_RUN_PENDING",
+  "runs": {
+    "reports\\phase17_rescue_preflight_full_tests_20261011.log": {
+      "sha256": "163bdf04b93d0c160534cd31fb7ccd1f62acaedaa4575b5aa41b297d139bb060",
+      "actual_summary": "135 passed, 7 failed"
+    },
+    "reports\\phase17_rescue_registered_full_tests_20261011.log": {
+      "sha256": "f1aaf80e67f720f3276f8552090a75588065cfbeff4d78c8bdf79c6bfbd067b3",
+      "actual_summary": "136 passed, 6 failed"
+    }
+  },
+  "first_failure_causes": [
+    "New observational sources not yet registered in Git",
+    "Six disposable-temp atomic replacement operations denied by Windows sandbox"
+  ],
+  "second_failure_causes": [
+    "Six disposable-temp atomic replacement operations denied by Windows sandbox; source registration passed"
+  ],
+  "duplicate_worker_resolution": "First worker naturally exited before strict identity-based stop attempt; no process was killed; all sandbox test workers exited before host test start",
+  "ML_workers_started": 0,
+  "host_tests_log": "reports/phase17_rescue_host_full_tests_20261011.log",
+  "production_sources_changed": false
+}

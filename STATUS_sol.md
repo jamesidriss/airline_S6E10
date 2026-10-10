@@ -1,5 +1,8 @@
 # SOL campaign — audit and continuation
 
+Phase17 rescue 2026-10-10T23:01:42.030769+00:00: exact2375 shared pip cache files explicitly approved and removed; measured physical Cfree gain8.012329GiB, after44.622986GiB. Frozen primary B1 unchanged; actual host full tests pending after sandbox temporary-file permission failures. No model job or upload yet; matched shadow2/3 then gated test0..4; count4 and Phase18 closed. V6 remains certified A.
+
+
 Phase17 checkpoint 2026-10-09T14:31:38.999961+00:00: official2 fullprimary OOF0.9618529228157235, delta v6+87.308991micro,5/5positive; fixedOOF820 allprivate drawspositive, p05+55.869511/median+86.067471micro. Fresh matched shadow auxiliary20fits verified; actual B0/B1 shadow predictions and certified test remain RESOURCE_BLOCKED by18.495136GiB<20GiB guard. Cfree32.031040GiB; additional8GiBrequested. Official4 bounded resource branch closed without model rejection. V6 remains certifiedA; B unresolved;0new uploads;142testsPASS0FAIL;6.5440275model/probe hours. No automaticPhase18. See reports/phase17_checkpoint_report_20261009.md.
 
 

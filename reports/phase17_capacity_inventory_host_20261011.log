@@ -1,0 +1,9 @@
+{"path": "C:\\Users\\James\\airline_S6E10\\artifacts", "allocated_gib": 8.549712200649083, "logical_gib": 12.605230311863124, "files": 1803, "truncated": false}
+{"path": "C:\\Users\\James\\airline_S6E10\\data\\cache", "allocated_gib": 0.014349675737321377, "logical_gib": 0.014349675737321377, "files": 6, "truncated": false}
+{"path": "C:\\Users\\James\\airline_S6E10\\checkpoints", "allocated_gib": 0.0070048738270998, "logical_gib": 0.0070048738270998, "files": 2, "truncated": false}
+{"path": "C:\\Users\\James\\AppData\\Local\\Temp", "allocated_gib": 86.85481757577509, "logical_gib": 86.84860665723681, "files": 51278, "truncated": false}
+{"path": "C:\\Users\\James\\AppData\\Local\\Temp", "allocated_gib": 86.85516293160617, "logical_gib": 86.85481757577509, "files": 51278, "truncated": false}
+{"path": "C:\\Users\\James\\AppData\\Local\\pip\\Cache", "allocated_gib": 8.008238271810114, "logical_gib": 8.008238271810114, "files": 2375, "truncated": false}
+{"path": "C:\\Users\\James\\.cache\\huggingface", "allocated_gib": 0.16447510104626417, "logical_gib": 0.16447510104626417, "files": 14, "truncated": false}
+{"path": "C:\\Users\\James\\.cache\\torch", "allocated_gib": 0.0, "logical_gib": 0.0, "files": 0, "truncated": false}
+{"path": "C:\\Users\\James\\AppData\\Local\\torch_extensions", "allocated_gib": 0.0, "logical_gib": 0.0, "files": 0, "truncated": false}

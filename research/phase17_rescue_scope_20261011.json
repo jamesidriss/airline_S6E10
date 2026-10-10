@@ -1,0 +1,57 @@
+{
+  "declared_utc": "2026-10-10T22:54:28.585269+00:00",
+  "client_date": "2026-10-11 Europe/Paris",
+  "status": "FROZEN_PHASE17_QUALIFICATION_RESCUE_NO_NEW_RESEARCH",
+  "previous_verified_HEAD": "57327ec96d297974aa0472050e8ac90300652778",
+  "previous_compute_model_and_probe_hours": 6.544027500000019,
+  "compute_total_ceiling_hours": 28,
+  "remaining_model_budget_hours": 21.45597249999998,
+  "accounting": "Cumulative prior unique model/probe wall time plus new actual worker times; no reset or double count; cleanup/tests/telemetry audits separately reported",
+  "approved_recovery": "Only exact2375file manifest; explicit human approval in this chat",
+  "capacity_recovery_report_sha256": "d791d84133d01bcaded6d097bf390d9ec53e3971e5901a3232c8f3f052637001",
+  "rest_disk_min_gib": 40,
+  "preferred_rest_disk_gib": [
+    45,
+    50
+  ],
+  "original_disk_guard_gib": 20,
+  "telemetry_interval_seconds": 15,
+  "telemetry_supplement": "Observe process private/committed/RAM/disk/pagefile and worker CUDA allocated/reserved; only our worker stops if original20GiB reserve breached",
+  "fixed_primary_candidate": "phase17_B1",
+  "internal_estimators": 2,
+  "seed": 1201,
+  "weights": "50/50 unchanged route/auxiliary mean logits",
+  "queue": [
+    "B0 shadow2",
+    "B0 shadow3 only after2success",
+    "B1 shadow2",
+    "B1 shadow3",
+    "protected matched shadow evaluator",
+    "if shadow passes: exact test contexts0,1,2,3,4",
+    "full certificate, protected820simulation and admission decision",
+    "if all gates pass: automatic single v7 upload after pre-result commit/push",
+    "exact-ref receipt and report"
+  ],
+  "shadow_gate": "Both paired deltas>=0 and their mean>0, unchanged",
+  "test_context_rows": 559708,
+  "test_rows": 299844,
+  "auxiliary_shadow_retrained": false,
+  "certified_v6_immutable": true,
+  "four_estimator_retries_allowed": false,
+  "new_seeds_features_weights_or_Phase18_allowed": false,
+  "protected_source_sha256": {
+    "scripts/run_sol_tabpfn_confirm.py": "496ccea68ba55aff3ad4a854683804836c13e618b71df7c6e039d0979d556564",
+    "scripts/run_phase17_confirmation.py": "aee31719de875e96c66741960e620b02702e888017f4a8dbb1638a5c7041d1be",
+    "scripts/phase16_tabpfn.py": "548f9de2cd4eeb3661829f2696e7f2a2cd32a1ad2277ad828eb8fcc5371749ab",
+    "src/models/resource_guard.py": "b91280215a10f688690603b17289e9b80d865488127744826ef0e449721a2049",
+    "scripts/evaluate_phase17_shadow.py": "8028c8ccd7cb6243abeb73a2e85e68dc7ca7747c109d0265efdeff0fb1fa03e2",
+    "scripts/assemble_phase17_test.py": "67877bd3244ccb9d9840f1d35f567fc226f638751d1a94dbc24b3c0070248c2a",
+    "scripts/simulate_phase17_private.py": "ade00ebfad6153502e95b95c41321a928ac11d02a0a4abd7911e231c0130ec76",
+    "scripts/decide_phase17_submission.py": "6a0cfc4a12cc5e832d0d3b76c3ca165ba25d4d08c1e026cb15dd5fe3c791a5bf"
+  },
+  "new_observational_sources_sha256": {
+    "scripts/run_phase17_monitored.py": "33e7323584e5873a97fbee552bff7f82193c0d2bb3ab62cf01452319543cedef",
+    "scripts/inventory_phase17_capacity.py": "433516c3f5e5bb4fe9a52ef733555da76a460b7f52d406090fa09d1cff787f10",
+    "scripts/recover_phase17_approved_pip_cache.ps1": "871689864396b54f1df255f870199dfa91331b51f698056e4b18a21149b6b6f1"
+  }
+}

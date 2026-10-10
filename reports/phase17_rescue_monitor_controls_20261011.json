@@ -1,0 +1,44 @@
+{
+  "utc": "2026-10-10T22:54:28.585269+00:00",
+  "status": "MONITOR_PREFLIGHT_MEMORY_AND_PAGEFILE_CONTROLS_PASS",
+  "resources": {
+    "utc": "2026-10-10T22:54:28.624270+00:00",
+    "pid": 7880,
+    "c_free_bytes": 47679156224,
+    "host_available_bytes": 8740208640,
+    "process_memory_native_fields_bytes": {
+      "rss": 34443264,
+      "vms": 18968576,
+      "num_page_faults": 9960,
+      "peak_wset": 34443264,
+      "wset": 34443264,
+      "peak_paged_pool": 244488,
+      "paged_pool": 244448,
+      "peak_nonpaged_pool": 20256,
+      "nonpaged_pool": 20256,
+      "pagefile": 18968576,
+      "peak_pagefile": 20754432,
+      "private": 18968576
+    },
+    "process_private_bytes": 18968576,
+    "process_commit_charge_bytes": 18968576,
+    "process_rss_bytes": 34443264,
+    "process_virtual_bytes": 18968576,
+    "pagefiles": [
+      {
+        "name": "C:\\pagefile.sys",
+        "allocated_bytes": 29472325632,
+        "used_bytes": 103809024,
+        "peak_used_bytes": 114294784
+      }
+    ],
+    "gpu_allocated_bytes": null,
+    "gpu_reserved_bytes": null
+  },
+  "original_source_SHA_preserved": true,
+  "original_guards_modified": false,
+  "ML_recipe_modified": false,
+  "sampling_seconds": 15,
+  "source_sha256": "33e7323584e5873a97fbee552bff7f82193c0d2bb3ab62cf01452319543cedef",
+  "model_run_performed": false
+}

@@ -1,0 +1,1333 @@
+{
+  "utc": "2026-10-10T22:44:00.372766+00:00",
+  "status": "READ_ONLY_TARGETED_INVENTORY_COMPLETE",
+  "initial_c_free_bytes": 39264141312,
+  "final_c_free_bytes": 39264202752,
+  "volumes": [
+    {
+      "mountpoint": "C:\\",
+      "filesystem": "NTFS",
+      "total_bytes": 999029731328,
+      "free_bytes": 39264202752
+    }
+  ],
+  "python_workers_excluding_self_and_ancestors": [],
+  "host_available_bytes": 14751879168,
+  "scans": [
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts",
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "protected": false,
+      "exists": true,
+      "logical_bytes": 13534762987,
+      "allocated_bytes": 9180183573,
+      "files": 1803,
+      "errors": [],
+      "top_files": [
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35\\tabpfn-v3.5-20260909.safetensors",
+          "logical_bytes": 876027932,
+          "allocated_bytes": 876027932,
+          "modified_utc": "2026-10-07T18:55:06.311751+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_ogm.npz",
+          "logical_bytes": 1891014762,
+          "allocated_bytes": 845418496,
+          "modified_utc": "2026-10-03T13:03:13.825271+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_ogsurf.npz",
+          "logical_bytes": 1619156474,
+          "allocated_bytes": 594468864,
+          "modified_utc": "2026-10-03T03:55:00.045007+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\7ad17c480b722e7625c3596c8618a46feca1e834cb557015dc1405c6f36be04d\\fit.npy",
+          "logical_bytes": 436572368,
+          "allocated_bytes": 417980416,
+          "modified_utc": "2026-10-08T11:11:44.567124+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\c7942955a42920c36a2fc0ba518744494b96f2c2a02cd20e005bb6785208d8cd\\fit.npy",
+          "logical_bytes": 349257920,
+          "allocated_bytes": 349257920,
+          "modified_utc": "2026-10-09T13:13:13.016207+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\28880ad73ed6b7f8d71af6ace9ec0238ad017741a4948b4ff1768e986f7af20d\\fit.npy",
+          "logical_bytes": 349257920,
+          "allocated_bytes": 349257920,
+          "modified_utc": "2026-10-09T13:05:47.200956+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\135c7530d7ddd06550eee3f49253efb812d40ff8a6959e683e46891d067fb678\\fit.npy",
+          "logical_bytes": 349257920,
+          "allocated_bytes": 334483456,
+          "modified_utc": "2026-10-08T08:07:51.813591+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\5454f223e84bed6bd45b58a614f3824d478172cf67a34b44b8b239dd5b323603\\fit.npy",
+          "logical_bytes": 349257920,
+          "allocated_bytes": 334479360,
+          "modified_utc": "2026-10-07T18:48:53.519240+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\b6962eddf3a5a51743939604bc91d7e3f176999683f5044d337a02cd7b942860\\fit.npy",
+          "logical_bytes": 349257920,
+          "allocated_bytes": 334471168,
+          "modified_utc": "2026-10-07T19:44:23.541104+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\42a61b7165c82daaf3804254c7d369d2f2a0f9f4f2e018fff59e07e9b895afab\\fit.npy",
+          "logical_bytes": 349257920,
+          "allocated_bytes": 334467072,
+          "modified_utc": "2026-10-07T21:02:07.270974+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\6a639c65b2275d1e69477ac3e8e64a566a6f0a092eb742c95b0ad5af7a154506\\fit.npy",
+          "logical_bytes": 349257920,
+          "allocated_bytes": 334462976,
+          "modified_utc": "2026-10-08T08:19:01.640635+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\dfd6a84b6372aaed10ad50fb402dfe4014ea3e2048ae35d5ad533b32c3785ee9\\fit.npy",
+          "logical_bytes": 349257920,
+          "allocated_bytes": 334458880,
+          "modified_utc": "2026-10-08T06:19:05.722640+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\23b2d6be24dde20ac0051fb2040bf2e5871a332fb03f12d91f40dda34c327c29\\fit.npy",
+          "logical_bytes": 349257920,
+          "allocated_bytes": 334446592,
+          "modified_utc": "2026-10-08T06:34:02.970604+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35_fast\\tabpfn-v3.5-fast-20260909.safetensors",
+          "logical_bytes": 334181708,
+          "allocated_bytes": 334181708,
+          "modified_utc": "2026-10-08T22:39:00.070299+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full.npz",
+          "logical_bytes": 947506586,
+          "allocated_bytes": 254869504,
+          "modified_utc": "2026-10-03T03:54:17.240216+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3.npz",
+          "logical_bytes": 899531594,
+          "allocated_bytes": 240029696,
+          "modified_utc": "2026-10-03T03:52:57.094777+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\7ad17c480b722e7625c3596c8618a46feca1e834cb557015dc1405c6f36be04d\\apply.npy",
+          "logical_bytes": 187102784,
+          "allocated_bytes": 179064832,
+          "modified_utc": "2026-10-08T11:11:44.678138+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_raw_trans.npz",
+          "logical_bytes": 591692062,
+          "allocated_bytes": 153243648,
+          "modified_utc": "2026-10-03T03:55:51.271803+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\sol_ssl12\\embedding.npy",
+          "logical_bytes": 127933440,
+          "allocated_bytes": 119107584,
+          "modified_utc": "2026-10-07T18:45:23.880877+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\c7942955a42920c36a2fc0ba518744494b96f2c2a02cd20e005bb6785208d8cd\\apply.npy",
+          "logical_bytes": 87314576,
+          "allocated_bytes": 87314576,
+          "modified_utc": "2026-10-09T13:13:13.064909+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\28880ad73ed6b7f8d71af6ace9ec0238ad017741a4948b4ff1768e986f7af20d\\apply.npy",
+          "logical_bytes": 87314576,
+          "allocated_bytes": 87314576,
+          "modified_utc": "2026-10-09T13:05:47.248419+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\b6962eddf3a5a51743939604bc91d7e3f176999683f5044d337a02cd7b942860\\apply.npy",
+          "logical_bytes": 87314576,
+          "allocated_bytes": 83582976,
+          "modified_utc": "2026-10-07T19:44:23.582104+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\5454f223e84bed6bd45b58a614f3824d478172cf67a34b44b8b239dd5b323603\\apply.npy",
+          "logical_bytes": 87314576,
+          "allocated_bytes": 83582976,
+          "modified_utc": "2026-10-07T18:48:53.568240+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\135c7530d7ddd06550eee3f49253efb812d40ff8a6959e683e46891d067fb678\\apply.npy",
+          "logical_bytes": 87314576,
+          "allocated_bytes": 83582976,
+          "modified_utc": "2026-10-08T08:07:51.859592+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\dfd6a84b6372aaed10ad50fb402dfe4014ea3e2048ae35d5ad533b32c3785ee9\\apply.npy",
+          "logical_bytes": 87314576,
+          "allocated_bytes": 83578880,
+          "modified_utc": "2026-10-08T06:19:05.776162+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\6a639c65b2275d1e69477ac3e8e64a566a6f0a092eb742c95b0ad5af7a154506\\apply.npy",
+          "logical_bytes": 87314576,
+          "allocated_bytes": 83578880,
+          "modified_utc": "2026-10-08T08:19:01.688636+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\42a61b7165c82daaf3804254c7d369d2f2a0f9f4f2e018fff59e07e9b895afab\\apply.npy",
+          "logical_bytes": 87314576,
+          "allocated_bytes": 83578880,
+          "modified_utc": "2026-10-07T21:02:07.317484+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\23b2d6be24dde20ac0051fb2040bf2e5871a332fb03f12d91f40dda34c327c29\\apply.npy",
+          "logical_bytes": 87314576,
+          "allocated_bytes": 83578880,
+          "modified_utc": "2026-10-08T06:34:03.017621+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\sol_ssl12\\summary.npy",
+          "logical_bytes": 75960532,
+          "allocated_bytes": 67817472,
+          "modified_utc": "2026-10-07T18:45:23.914900+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_raw_ext.npz",
+          "logical_bytes": 299844194,
+          "allocated_bytes": 51474432,
+          "modified_utc": "2026-10-03T03:55:47.403000+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_raw.npz",
+          "logical_bytes": 83956730,
+          "allocated_bytes": 11890688,
+          "modified_utc": "2026-10-03T18:29:42.550202+00:00",
+          "ntfs_compressed_flag": false
+        }
+      ],
+      "groups": {
+        "tabpfn35_fast": {
+          "logical_bytes": 334182031,
+          "allocated_bytes": 334182031,
+          "files": 4
+        },
+        "tabpfn35": {
+          "logical_bytes": 876045263,
+          "allocated_bytes": 876045263,
+          "files": 6
+        },
+        "sol_tabpfn35_verified": {
+          "logical_bytes": 3834,
+          "allocated_bytes": 3834,
+          "files": 1
+        },
+        "sol_tabpfn35_solo": {
+          "logical_bytes": 8581,
+          "allocated_bytes": 8581,
+          "files": 3
+        },
+        "sol_tabpfn35_shadow_recovery": {
+          "logical_bytes": 3363630,
+          "allocated_bytes": 3363630,
+          "files": 6
+        },
+        "sol_tabpfn35_seed1202_recovery": {
+          "logical_bytes": 1684358,
+          "allocated_bytes": 1684358,
+          "files": 4
+        },
+        "sol_tabpfn35_route_reserve": {
+          "logical_bytes": 3363343,
+          "allocated_bytes": 3363343,
+          "files": 6
+        },
+        "sol_tabpfn35_route_recovery": {
+          "logical_bytes": 3363448,
+          "allocated_bytes": 3363448,
+          "files": 6
+        },
+        "sol_tabpfn35_route": {
+          "logical_bytes": 1683963,
+          "allocated_bytes": 1683963,
+          "files": 4
+        },
+        "sol_tabpfn35_reuse_full": {
+          "logical_bytes": 4321,
+          "allocated_bytes": 4321,
+          "files": 2
+        },
+        "sol_tabpfn35_reuse_control": {
+          "logical_bytes": 8489,
+          "allocated_bytes": 8489,
+          "files": 2
+        },
+        "sol_tabpfn35_reuse": {
+          "logical_bytes": 8488,
+          "allocated_bytes": 8488,
+          "files": 2
+        },
+        "sol_tabpfn35_query_serial": {
+          "logical_bytes": 4291,
+          "allocated_bytes": 4291,
+          "files": 2
+        },
+        "sol_tabpfn35_query_full": {
+          "logical_bytes": 4137,
+          "allocated_bytes": 4137,
+          "files": 1
+        },
+        "sol_tabpfn35_query": {
+          "logical_bytes": 4137,
+          "allocated_bytes": 4137,
+          "files": 1
+        },
+        "sol_tabpfn35_predict_guard": {
+          "logical_bytes": 1683964,
+          "allocated_bytes": 1683964,
+          "files": 4
+        },
+        "sol_tabpfn35_memory": {
+          "logical_bytes": 3832,
+          "allocated_bytes": 3832,
+          "files": 1
+        },
+        "sol_tabpfn35_iclbf16": {
+          "logical_bytes": 4009,
+          "allocated_bytes": 4009,
+          "files": 1
+        },
+        "sol_tabpfn35_gelu_full": {
+          "logical_bytes": 4488,
+          "allocated_bytes": 4488,
+          "files": 2
+        },
+        "sol_tabpfn35_gelu": {
+          "logical_bytes": 8654,
+          "allocated_bytes": 8654,
+          "files": 2
+        },
+        "sol_tabpfn35_full_context_scaling": {
+          "logical_bytes": 3780,
+          "allocated_bytes": 3780,
+          "files": 2
+        },
+        "sol_tabpfn35_full_context_query_activation": {
+          "logical_bytes": 4427,
+          "allocated_bytes": 4427,
+          "files": 2
+        },
+        "sol_tabpfn35_full_context_probe": {
+          "logical_bytes": 3491,
+          "allocated_bytes": 3491,
+          "files": 2
+        },
+        "sol_tabpfn35_full_context_head_views": {
+          "logical_bytes": 4116,
+          "allocated_bytes": 4116,
+          "files": 2
+        },
+        "sol_tabpfn35_full_context_expandable": {
+          "logical_bytes": 4643,
+          "allocated_bytes": 4643,
+          "files": 2
+        },
+        "sol_tabpfn35_efficient": {
+          "logical_bytes": 3978,
+          "allocated_bytes": 3978,
+          "files": 1
+        },
+        "sol_tabpfn35_decoder": {
+          "logical_bytes": 8624,
+          "allocated_bytes": 8624,
+          "files": 2
+        },
+        "sol_tabpfn35_cv_test_recovery": {
+          "logical_bytes": 17996535,
+          "allocated_bytes": 17996535,
+          "files": 12
+        },
+        "sol_tabpfn35_compact": {
+          "logical_bytes": 4214,
+          "allocated_bytes": 4214,
+          "files": 1
+        },
+        "sol_tabpfn35_bounded": {
+          "logical_bytes": 4070,
+          "allocated_bytes": 4070,
+          "files": 1
+        },
+        "sol_tabpfn35_b64": {
+          "logical_bytes": 3712,
+          "allocated_bytes": 3712,
+          "files": 1
+        },
+        "sol_tabpfn35": {
+          "logical_bytes": 3625,
+          "allocated_bytes": 3625,
+          "files": 1
+        },
+        "sol_ssl12": {
+          "logical_bytes": 214711484,
+          "allocated_bytes": 197742568,
+          "files": 6
+        },
+        "sol_scaling_reuse": {
+          "logical_bytes": 12684,
+          "allocated_bytes": 12684,
+          "files": 3
+        },
+        "sol_scaling_control": {
+          "logical_bytes": 12684,
+          "allocated_bytes": 12684,
+          "files": 3
+        },
+        "sol_s0": {
+          "logical_bytes": 11194416,
+          "allocated_bytes": 11194416,
+          "files": 2
+        },
+        "sol_route_aux10_twofold": {
+          "logical_bytes": 4478432,
+          "allocated_bytes": 4478432,
+          "files": 6
+        },
+        "sol_route_aux10_threefold": {
+          "logical_bytes": 6717648,
+          "allocated_bytes": 6717648,
+          "files": 9
+        },
+        "sol_route_aux10_shadow_recovery": {
+          "logical_bytes": 4478432,
+          "allocated_bytes": 4478432,
+          "files": 6
+        },
+        "sol_route_aux10_primary_final_test": {
+          "logical_bytes": 5997392,
+          "allocated_bytes": 5997392,
+          "files": 4
+        },
+        "sol_route_aux10_primary_final": {
+          "logical_bytes": 25189292,
+          "allocated_bytes": 25189292,
+          "files": 19
+        },
+        "sol_repair": {
+          "logical_bytes": 5598475,
+          "allocated_bytes": 5598475,
+          "files": 11
+        },
+        "sol_query_activation_reuse": {
+          "logical_bytes": 12684,
+          "allocated_bytes": 12684,
+          "files": 3
+        },
+        "sol_public": {
+          "logical_bytes": 136817,
+          "allocated_bytes": 136817,
+          "files": 6
+        },
+        "sol_policy_pseudotest": {
+          "logical_bytes": 1525231,
+          "allocated_bytes": 1525231,
+          "files": 15
+        },
+        "sol_phase15_zero_training_20261008": {
+          "logical_bytes": 21269928,
+          "allocated_bytes": 21269928,
+          "files": 8
+        },
+        "sol_phase15_raw_twofold": {
+          "logical_bytes": 7836808,
+          "allocated_bytes": 7836808,
+          "files": 7
+        },
+        "sol_phase15_raw_threefold": {
+          "logical_bytes": 11755020,
+          "allocated_bytes": 11755020,
+          "files": 9
+        },
+        "sol_phase15_raw_primary": {
+          "logical_bytes": 30785988,
+          "allocated_bytes": 30785988,
+          "files": 16
+        },
+        "sol_phase15_raw": {
+          "logical_bytes": 6722140,
+          "allocated_bytes": 6722140,
+          "files": 10
+        },
+        "sol_phase15_native39_twofold": {
+          "logical_bytes": 7836808,
+          "allocated_bytes": 7836808,
+          "files": 7
+        },
+        "sol_phase15_native39_discovery": {
+          "logical_bytes": 3918596,
+          "allocated_bytes": 3918596,
+          "files": 5
+        },
+        "sol_phase15_native39": {
+          "logical_bytes": 4478818,
+          "allocated_bytes": 4478818,
+          "files": 9
+        },
+        "sol_phase15_checkout_probe_v7": {
+          "logical_bytes": 948784,
+          "allocated_bytes": 948784,
+          "files": 125
+        },
+        "sol_phase15_checkout_probe_v6": {
+          "logical_bytes": 905495,
+          "allocated_bytes": 905495,
+          "files": 122
+        },
+        "sol_phase15_checkout_probe_v5": {
+          "logical_bytes": 905383,
+          "allocated_bytes": 905383,
+          "files": 122
+        },
+        "sol_phase15_checkout_probe_v4": {
+          "logical_bytes": 831622,
+          "allocated_bytes": 831622,
+          "files": 115
+        },
+        "sol_phase15_checkout_probe_v3": {
+          "logical_bytes": 566087,
+          "allocated_bytes": 566087,
+          "files": 62
+        },
+        "sol_phase15_checkout_probe_v2": {
+          "logical_bytes": 393907,
+          "allocated_bytes": 393907,
+          "files": 39
+        },
+        "sol_phase15_checkout_probe": {
+          "logical_bytes": 89654,
+          "allocated_bytes": 89654,
+          "files": 10
+        },
+        "sol_phase15_auxpfn_twofold": {
+          "logical_bytes": 6717264,
+          "allocated_bytes": 6717264,
+          "files": 6
+        },
+        "sol_phase15_auxpfn_threefold": {
+          "logical_bytes": 10075768,
+          "allocated_bytes": 10075768,
+          "files": 8
+        },
+        "sol_phase15_auxpfn_probe": {
+          "logical_bytes": 20352,
+          "allocated_bytes": 20352,
+          "files": 4
+        },
+        "sol_phase15_auxpfn_discovery": {
+          "logical_bytes": 3358760,
+          "allocated_bytes": 3358760,
+          "files": 4
+        },
+        "sol_phase15_auxpfn": {
+          "logical_bytes": 6725475,
+          "allocated_bytes": 6725475,
+          "files": 11
+        },
+        "sol_neural_clean_compact": {
+          "logical_bytes": 5277918,
+          "allocated_bytes": 5277918,
+          "files": 5
+        },
+        "sol_head_views_reuse": {
+          "logical_bytes": 12684,
+          "allocated_bytes": 12684,
+          "files": 3
+        },
+        "sol_clean_classical": {
+          "logical_bytes": 1679534,
+          "allocated_bytes": 1679534,
+          "files": 3
+        },
+        "sol_clean_aux10_threefold": {
+          "logical_bytes": 50381540,
+          "allocated_bytes": 50381540,
+          "files": 61
+        },
+        "sol_clean_aux10_shadow_recovery": {
+          "logical_bytes": 33587740,
+          "allocated_bytes": 33587740,
+          "files": 41
+        },
+        "sol_clean_aux10_primary": {
+          "logical_bytes": 98363060,
+          "allocated_bytes": 98363060,
+          "files": 112
+        },
+        "sol_clean_aux10_isolated": {
+          "logical_bytes": 33587740,
+          "allocated_bytes": 33587740,
+          "files": 41
+        },
+        "sol_clean_aux10": {
+          "logical_bytes": 1679534,
+          "allocated_bytes": 1679534,
+          "files": 3
+        },
+        "sol_b_xt": {
+          "logical_bytes": 1119672,
+          "allocated_bytes": 1119672,
+          "files": 2
+        },
+        "sol_b": {
+          "logical_bytes": 4478688,
+          "allocated_bytes": 4478688,
+          "files": 8
+        },
+        "sol_a_ladder": {
+          "logical_bytes": 9516828,
+          "allocated_bytes": 9516828,
+          "files": 14
+        },
+        "sol_allocator_expandable": {
+          "logical_bytes": 12684,
+          "allocated_bytes": 12684,
+          "files": 3
+        },
+        "private_sim": {
+          "logical_bytes": 2276460,
+          "allocated_bytes": 2276460,
+          "files": 2
+        },
+        "predictions": {
+          "logical_bytes": 468280296,
+          "allocated_bytes": 468280296,
+          "files": 214
+        },
+        "phase17_shadow_B0": {
+          "logical_bytes": 4790,
+          "allocated_bytes": 4790,
+          "files": 2
+        },
+        "phase17_shadow_aux10": {
+          "logical_bytes": 35826828,
+          "allocated_bytes": 35826828,
+          "files": 43
+        },
+        "phase17_internal4_equivalence_20261009": {
+          "logical_bytes": 892479,
+          "allocated_bytes": 892479,
+          "files": 14
+        },
+        "phase17_internal2_serial_equivalence_20261009": {
+          "logical_bytes": 858899,
+          "allocated_bytes": 858899,
+          "files": 10
+        },
+        "phase17_internal2_equivalence_20261009": {
+          "logical_bytes": 858925,
+          "allocated_bytes": 858925,
+          "files": 10
+        },
+        "phase17_B2_resume1_v3": {
+          "logical_bytes": 8995034,
+          "allocated_bytes": 8995034,
+          "files": 16
+        },
+        "phase17_B2_resume1_v2": {
+          "logical_bytes": 8991495,
+          "allocated_bytes": 8991495,
+          "files": 11
+        },
+        "phase17_B2": {
+          "logical_bytes": 20223740,
+          "allocated_bytes": 20223740,
+          "files": 40
+        },
+        "phase17_B1_oof_private_20261009": {
+          "logical_bytes": 1058990,
+          "allocated_bytes": 1058990,
+          "files": 1
+        },
+        "phase17_B1": {
+          "logical_bytes": 56087317,
+          "allocated_bytes": 56087317,
+          "files": 78
+        },
+        "phase17_B0": {
+          "logical_bytes": 6157752,
+          "allocated_bytes": 6157752,
+          "files": 7
+        },
+        "phase17_attention_diagnosis_20261009": {
+          "logical_bytes": 816922,
+          "allocated_bytes": 816922,
+          "files": 4
+        },
+        "phase16_tabpfn_probe_v2": {
+          "logical_bytes": 24987,
+          "allocated_bytes": 24987,
+          "files": 3
+        },
+        "phase16_tabpfn_probe": {
+          "logical_bytes": 24987,
+          "allocated_bytes": 24987,
+          "files": 3
+        },
+        "phase16_geometry": {
+          "logical_bytes": 19990604,
+          "allocated_bytes": 19990604,
+          "files": 8
+        },
+        "phase16_fast_probe": {
+          "logical_bytes": 12952,
+          "allocated_bytes": 12952,
+          "files": 5
+        },
+        "phase16_fast": {
+          "logical_bytes": 2239655,
+          "allocated_bytes": 2239655,
+          "files": 6
+        },
+        "phase16_B0": {
+          "logical_bytes": 1679972,
+          "allocated_bytes": 1679972,
+          "files": 6
+        },
+        "fulldata": {
+          "logical_bytes": 39608712,
+          "allocated_bytes": 39608712,
+          "files": 34
+        },
+        "fold_diag": {
+          "logical_bytes": 12876228,
+          "allocated_bytes": 12876228,
+          "files": 23
+        },
+        "features": {
+          "logical_bytes": 6346323343,
+          "allocated_bytes": 2165016269,
+          "files": 26
+        },
+        "aux_distribution": {
+          "logical_bytes": 4611263194,
+          "allocated_bytes": 4454959770,
+          "files": 60
+        }
+      },
+      "truncated": false,
+      "seconds": 0.5470000000022992
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\data\\cache",
+      "owner_purpose": "Registered folds protected; generated input parquet caches",
+      "protected": true,
+      "exists": true,
+      "logical_bytes": 15407847,
+      "allocated_bytes": 15407847,
+      "files": 6,
+      "errors": [],
+      "top_files": [],
+      "groups": {
+        "<root files>": {
+          "logical_bytes": 13307228,
+          "allocated_bytes": 13307228,
+          "files": 2
+        },
+        "folds": {
+          "logical_bytes": 2100619,
+          "allocated_bytes": 2100619,
+          "files": 4
+        }
+      },
+      "truncated": false,
+      "seconds": 0.0
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\checkpoints",
+      "owner_purpose": "Saved model weights; absolute protection",
+      "protected": true,
+      "exists": true,
+      "logical_bytes": 7521426,
+      "allocated_bytes": 7521426,
+      "files": 2,
+      "errors": [],
+      "top_files": [],
+      "groups": {
+        "<root files>": {
+          "logical_bytes": 7521426,
+          "allocated_bytes": 7521426,
+          "files": 2
+        }
+      },
+      "truncated": false,
+      "seconds": 0.0
+    },
+    {
+      "path": "C:\\Users\\James\\AppData\\Local\\Packages\\sandbox.{5934048c-f737-4068-a2db-4109631a9e5c}\\AC\\Temp",
+      "owner_purpose": "Shared Windows/Python temporary files; owner unproven, no deletion authorized",
+      "protected": false,
+      "exists": true,
+      "logical_bytes": 0,
+      "allocated_bytes": 0,
+      "files": 0,
+      "errors": [],
+      "top_files": [],
+      "groups": {},
+      "truncated": false,
+      "seconds": 0.0
+    },
+    {
+      "path": "C:\\Users\\James\\AppData\\Local\\Packages\\sandbox.{5934048c-f737-4068-a2db-4109631a9e5c}\\AC\\pip\\Cache",
+      "owner_purpose": "Shared pip download/wheel cache; regenerable, owner not campaign-specific",
+      "protected": false,
+      "exists": false,
+      "logical_bytes": 0,
+      "allocated_bytes": 0,
+      "files": 0,
+      "errors": [],
+      "top_files": [],
+      "groups": {},
+      "truncated": false
+    },
+    {
+      "path": "C:\\Users\\James\\.cache\\huggingface",
+      "owner_purpose": "Shared pretrained-model downloads; checkpoint protection",
+      "protected": true,
+      "exists": true,
+      "logical_bytes": 176603795,
+      "allocated_bytes": 176603795,
+      "files": 14,
+      "errors": [],
+      "top_files": [
+        {
+          "path": "C:\\Users\\James\\.cache\\huggingface\\hub\\models--facebook--dinov2-small\\blobs\\ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1",
+          "logical_bytes": 88249960,
+          "allocated_bytes": 88249960,
+          "modified_utc": "2026-10-04T15:26:34.603519+00:00",
+          "ntfs_compressed_flag": false
+        },
+        {
+          "path": "C:\\Users\\James\\.cache\\huggingface\\hub\\blobs\\a3\\a3d2fa9edec8699c53cdb2b8da4859a1fc3b0e7197b7ee0a5067edebf74b56f4",
+          "logical_bytes": 88240510,
+          "allocated_bytes": 88240510,
+          "modified_utc": "2026-10-01T20:22:42.043574+00:00",
+          "ntfs_compressed_flag": false
+        }
+      ],
+      "groups": {
+        "<root files>": {
+          "logical_bytes": 5778,
+          "allocated_bytes": 5778,
+          "files": 1
+        },
+        "xet": {
+          "logical_bytes": 106602,
+          "allocated_bytes": 106602,
+          "files": 4
+        },
+        "hub": {
+          "logical_bytes": 176491415,
+          "allocated_bytes": 176491415,
+          "files": 9
+        }
+      },
+      "truncated": false,
+      "seconds": 0.0
+    },
+    {
+      "path": "C:\\Users\\James\\.cache\\torch",
+      "owner_purpose": "Shared torch downloads/build caches; checkpoint protection",
+      "protected": true,
+      "exists": false,
+      "logical_bytes": 0,
+      "allocated_bytes": 0,
+      "files": 0,
+      "errors": [],
+      "top_files": [],
+      "groups": {},
+      "truncated": false
+    },
+    {
+      "path": "C:\\Users\\James\\AppData\\Local\\Packages\\sandbox.{5934048c-f737-4068-a2db-4109631a9e5c}\\AC\\torch_extensions",
+      "owner_purpose": "Shared torch compiled extensions; no deletion selected",
+      "protected": false,
+      "exists": false,
+      "logical_bytes": 0,
+      "allocated_bytes": 0,
+      "files": 0,
+      "errors": [],
+      "top_files": [],
+      "groups": {},
+      "truncated": false
+    }
+  ],
+  "recovery_candidates": [
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35\\tabpfn-v3.5-20260909.safetensors",
+      "logical_bytes": 876027932,
+      "allocated_bytes": 876027932,
+      "modified_utc": "2026-10-07T18:55:06.311751+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Not established or protected model/prediction payload",
+      "proposed_operation": "No operation selected",
+      "risk": "Protected or uncertain ownership; do not delete/modify",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_ogm.npz",
+      "logical_bytes": 1891014762,
+      "allocated_bytes": 845418496,
+      "modified_utc": "2026-10-03T13:03:13.825271+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full_ogsurf.npz",
+      "logical_bytes": 1619156474,
+      "allocated_bytes": 594468864,
+      "modified_utc": "2026-10-03T03:55:00.045007+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\7ad17c480b722e7625c3596c8618a46feca1e834cb557015dc1405c6f36be04d\\fit.npy",
+      "logical_bytes": 436572368,
+      "allocated_bytes": 417980416,
+      "modified_utc": "2026-10-08T11:11:44.567124+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\c7942955a42920c36a2fc0ba518744494b96f2c2a02cd20e005bb6785208d8cd\\fit.npy",
+      "logical_bytes": 349257920,
+      "allocated_bytes": 349257920,
+      "modified_utc": "2026-10-09T13:13:13.016207+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\28880ad73ed6b7f8d71af6ace9ec0238ad017741a4948b4ff1768e986f7af20d\\fit.npy",
+      "logical_bytes": 349257920,
+      "allocated_bytes": 349257920,
+      "modified_utc": "2026-10-09T13:05:47.200956+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\135c7530d7ddd06550eee3f49253efb812d40ff8a6959e683e46891d067fb678\\fit.npy",
+      "logical_bytes": 349257920,
+      "allocated_bytes": 334483456,
+      "modified_utc": "2026-10-08T08:07:51.813591+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\5454f223e84bed6bd45b58a614f3824d478172cf67a34b44b8b239dd5b323603\\fit.npy",
+      "logical_bytes": 349257920,
+      "allocated_bytes": 334479360,
+      "modified_utc": "2026-10-07T18:48:53.519240+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\b6962eddf3a5a51743939604bc91d7e3f176999683f5044d337a02cd7b942860\\fit.npy",
+      "logical_bytes": 349257920,
+      "allocated_bytes": 334471168,
+      "modified_utc": "2026-10-07T19:44:23.541104+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\42a61b7165c82daaf3804254c7d369d2f2a0f9f4f2e018fff59e07e9b895afab\\fit.npy",
+      "logical_bytes": 349257920,
+      "allocated_bytes": 334467072,
+      "modified_utc": "2026-10-07T21:02:07.270974+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\6a639c65b2275d1e69477ac3e8e64a566a6f0a092eb742c95b0ad5af7a154506\\fit.npy",
+      "logical_bytes": 349257920,
+      "allocated_bytes": 334462976,
+      "modified_utc": "2026-10-08T08:19:01.640635+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\dfd6a84b6372aaed10ad50fb402dfe4014ea3e2048ae35d5ad533b32c3785ee9\\fit.npy",
+      "logical_bytes": 349257920,
+      "allocated_bytes": 334458880,
+      "modified_utc": "2026-10-08T06:19:05.722640+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\23b2d6be24dde20ac0051fb2040bf2e5871a332fb03f12d91f40dda34c327c29\\fit.npy",
+      "logical_bytes": 349257920,
+      "allocated_bytes": 334446592,
+      "modified_utc": "2026-10-08T06:34:02.970604+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35_fast\\tabpfn-v3.5-fast-20260909.safetensors",
+      "logical_bytes": 334181708,
+      "allocated_bytes": 334181708,
+      "modified_utc": "2026-10-08T22:39:00.070299+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Not established or protected model/prediction payload",
+      "proposed_operation": "No operation selected",
+      "risk": "Protected or uncertain ownership; do not delete/modify",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_full.npz",
+      "logical_bytes": 947506586,
+      "allocated_bytes": 254869504,
+      "modified_utc": "2026-10-03T03:54:17.240216+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_core3.npz",
+      "logical_bytes": 899531594,
+      "allocated_bytes": 240029696,
+      "modified_utc": "2026-10-03T03:52:57.094777+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\7ad17c480b722e7625c3596c8618a46feca1e834cb557015dc1405c6f36be04d\\apply.npy",
+      "logical_bytes": 187102784,
+      "allocated_bytes": 179064832,
+      "modified_utc": "2026-10-08T11:11:44.678138+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_raw_trans.npz",
+      "logical_bytes": 591692062,
+      "allocated_bytes": 153243648,
+      "modified_utc": "2026-10-03T03:55:51.271803+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\sol_ssl12\\embedding.npy",
+      "logical_bytes": 127933440,
+      "allocated_bytes": 119107584,
+      "modified_utc": "2026-10-07T18:45:23.880877+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\c7942955a42920c36a2fc0ba518744494b96f2c2a02cd20e005bb6785208d8cd\\apply.npy",
+      "logical_bytes": 87314576,
+      "allocated_bytes": 87314576,
+      "modified_utc": "2026-10-09T13:13:13.064909+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\28880ad73ed6b7f8d71af6ace9ec0238ad017741a4948b4ff1768e986f7af20d\\apply.npy",
+      "logical_bytes": 87314576,
+      "allocated_bytes": 87314576,
+      "modified_utc": "2026-10-09T13:05:47.248419+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\b6962eddf3a5a51743939604bc91d7e3f176999683f5044d337a02cd7b942860\\apply.npy",
+      "logical_bytes": 87314576,
+      "allocated_bytes": 83582976,
+      "modified_utc": "2026-10-07T19:44:23.582104+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\5454f223e84bed6bd45b58a614f3824d478172cf67a34b44b8b239dd5b323603\\apply.npy",
+      "logical_bytes": 87314576,
+      "allocated_bytes": 83582976,
+      "modified_utc": "2026-10-07T18:48:53.568240+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\135c7530d7ddd06550eee3f49253efb812d40ff8a6959e683e46891d067fb678\\apply.npy",
+      "logical_bytes": 87314576,
+      "allocated_bytes": 83582976,
+      "modified_utc": "2026-10-08T08:07:51.859592+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\dfd6a84b6372aaed10ad50fb402dfe4014ea3e2048ae35d5ad533b32c3785ee9\\apply.npy",
+      "logical_bytes": 87314576,
+      "allocated_bytes": 83578880,
+      "modified_utc": "2026-10-08T06:19:05.776162+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\6a639c65b2275d1e69477ac3e8e64a566a6f0a092eb742c95b0ad5af7a154506\\apply.npy",
+      "logical_bytes": 87314576,
+      "allocated_bytes": 83578880,
+      "modified_utc": "2026-10-08T08:19:01.688636+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\42a61b7165c82daaf3804254c7d369d2f2a0f9f4f2e018fff59e07e9b895afab\\apply.npy",
+      "logical_bytes": 87314576,
+      "allocated_bytes": 83578880,
+      "modified_utc": "2026-10-07T21:02:07.317484+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\aux_distribution\\23b2d6be24dde20ac0051fb2040bf2e5871a332fb03f12d91f40dda34c327c29\\apply.npy",
+      "logical_bytes": 87314576,
+      "allocated_bytes": 83578880,
+      "modified_utc": "2026-10-08T06:34:03.017621+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\sol_ssl12\\summary.npy",
+      "logical_bytes": 75960532,
+      "allocated_bytes": 67817472,
+      "modified_utc": "2026-10-07T18:45:23.914900+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_raw_ext.npz",
+      "logical_bytes": 299844194,
+      "allocated_bytes": 51474432,
+      "modified_utc": "2026-10-03T03:55:47.403000+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\airline_S6E10\\artifacts\\features\\static_raw.npz",
+      "logical_bytes": 83956730,
+      "allocated_bytes": 11890688,
+      "modified_utc": "2026-10-03T18:29:42.550202+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Campaign artifacts: predictions/checkpoints protected; generated feature caches distinguishable",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Generated cache; source/manifests must be verified before operation",
+      "proposed_operation": "Consider reversible compression only",
+      "risk": "Require logical SHA equality, narrow scope and no active model use",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\.cache\\huggingface\\hub\\models--facebook--dinov2-small\\blobs\\ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1",
+      "logical_bytes": 88249960,
+      "allocated_bytes": 88249960,
+      "modified_utc": "2026-10-04T15:26:34.603519+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Shared pretrained-model downloads; checkpoint protection",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Not established or protected model/prediction payload",
+      "proposed_operation": "No operation selected",
+      "risk": "Protected or uncertain ownership; do not delete/modify",
+      "expected_recoverable_bytes": null
+    },
+    {
+      "path": "C:\\Users\\James\\.cache\\huggingface\\hub\\blobs\\a3\\a3d2fa9edec8699c53cdb2b8da4859a1fc3b0e7197b7ee0a5067edebf74b56f4",
+      "logical_bytes": 88240510,
+      "allocated_bytes": 88240510,
+      "modified_utc": "2026-10-01T20:22:42.043574+00:00",
+      "ntfs_compressed_flag": false,
+      "owner_purpose": "Shared pretrained-model downloads; checkpoint protection",
+      "actively_in_use": "not established per file; no campaign model worker",
+      "reproducibility": "Not established or protected model/prediction payload",
+      "proposed_operation": "No operation selected",
+      "risk": "Protected or uncertain ownership; do not delete/modify",
+      "expected_recoverable_bytes": null
+    }
+  ],
+  "operations_performed": [],
+  "scope": "Targeted project/cache/temp metadata only; no personal-file trees, checkpoint contents, secret stores, OS-managed file operations or whole-disk recursion",
+  "limitations": "Allocated-size sum may double-count hard links. Metadata inventory alone does not establish ownership, open handles or recoverable free space. Shared temp and system storage cleanup remain unselected."
+}
