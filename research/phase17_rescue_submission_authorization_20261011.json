@@ -1,0 +1,20 @@
+{
+  "declared_utc": "2026-10-10T23:09:55.417923+00:00",
+  "status": "USER_AUTHORIZED_CONDITIONAL_SINGLE_B1_SUBMISSION_BEFORE_NEW_SHADOW_METRICS",
+  "source": "Latest user attachment section10; exact request preserved by attachment",
+  "source_attachment_sha256": "fc60e1f749f931e7dcd0e7ec9f82774ed04cd215b2bef57daad3520ec2b754b2",
+  "explicit_instruction": "If B1 passes frozen shadow validation, full test certificate, private-first decision gate and data/ID/source/secret audits, submit v7 automatically; no separate confirmation",
+  "existing_repository_default_oof_gain_submission_floor": 0.0003,
+  "application": "Latest specific user rescue explicitly authorizes this existing87.308991micro candidate after the frozen Phase17 gates. This authorization overrides the general300micro submission heuristic for this single candidate; it does not change any frozen admission threshold or use the public score to select weights/seeds.",
+  "candidate": "phase17_B1 official2; checkpoint/seed1201/schema/precision/official internal probability averaging/outer five-context probability averaging/final50-50 auxiliary logit blend unchanged",
+  "primary_evidence_only_existing": {
+    "pooled_delta_vs_v6": 8.730899114406387e-05,
+    "complete_folds": 5,
+    "positive_folds": 5
+  },
+  "new_shadow_observed_before_declaration": false,
+  "new_submissions_so_far": 0,
+  "promotion_requires_existing_protected_evaluator": true,
+  "near_clone_v6_not_automatic_B": true,
+  "public_score_is_diagnostic_only": true
+}

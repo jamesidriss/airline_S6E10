@@ -1,0 +1,51 @@
+{
+  "utc": "2026-10-10T23:06:49.511615+00:00",
+  "worker_pid": 30040,
+  "wrapper_sha256": "33e7323584e5873a97fbee552bff7f82193c0d2bb3ab62cf01452319543cedef",
+  "driver_path": "C:\\Users\\James\\airline_S6E10\\scripts\\run_sol_tabpfn_confirm.py",
+  "driver_sha256": "496ccea68ba55aff3ad4a854683804836c13e618b71df7c6e039d0979d556564",
+  "driver_args": [
+    "--reference",
+    "reports/sol_tabpfn35_route/route_f0.json",
+    "--scheme",
+    "shadow",
+    "--fold",
+    "2",
+    "--tag",
+    "phase17_shadow_B0_capacity"
+  ],
+  "interval_seconds": 15,
+  "resource_guards_modified": false,
+  "ML_recipe_modified": false,
+  "source": "Frozen driver executed with runpy; only read-only resource samples added",
+  "inflight_extra_disk_stop_bytes": 21474836480,
+  "status": "FROZEN_DRIVER_COMPLETE",
+  "exit_code": 0,
+  "seconds": 1093.765999999996,
+  "final_resources": {
+    "utc": "2026-10-10T23:25:03.268053+00:00",
+    "pid": 30040,
+    "c_free_bytes": 54119481344,
+    "host_available_bytes": 6081388544,
+    "process_memory_native_fields_bytes": {
+      "rss": 4939616256,
+      "vms": 7706681344,
+      "num_page_faults": 2688415,
+      "peak_wset": 6528311296,
+      "wset": 4939616256,
+      "peak_paged_pool": 13239312,
+      "paged_pool": 11524264,
+      "peak_nonpaged_pool": 179600,
+      "nonpaged_pool": 144784,
+      "pagefile": 7706681344,
+      "peak_pagefile": 23683244032,
+      "private": 7706681344
+    },
+    "process_private_bytes": 7706681344,
+    "process_commit_charge_bytes": 7706681344,
+    "process_rss_bytes": 4939616256,
+    "process_virtual_bytes": 7706681344,
+    "gpu_allocated_bytes": 9568256,
+    "gpu_reserved_bytes": 23068672
+  }
+}
