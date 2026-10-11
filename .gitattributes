@@ -42,3 +42,8 @@ src/models/resource_guard.py -text
 # Preserve byte-hashed Phase17 evidence on Windows and clean checkouts.
 **/*phase17* -text
 **/*phase17*/** -text
+# Keep the new certificate, upload evidence and metadata byte hashes stable.
+**/*v7_sol_tabpfn_internal2_aux10* -text
+submissions/manifest.csv -text
+submissions/kaggle_submissions.csv -text
+.gitignore -text
