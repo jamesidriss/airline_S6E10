@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-11T20:26:38.8218545Z",
+  "status": "STOPPED_OWN_PARTIAL_WORKER_TELEMETRY_STARTUP_RACE_NO_MODEL_VERDICT",
+  "verified_worker_pid": 42144,
+  "verified_parent_pid": 20452,
+  "started_utc": "2026-10-11T20:23:36.6849030Z",
+  "elapsed_worker_seconds": 182.1434313,
+  "reason": "Observer thread accessed torch.cuda before module initialization; original ML recipe unchanged",
+  "completed_raw_estimators": 0,
+  "completed_context_predictions": 0,
+  "automatic_approval_retry_resolved": true
+}

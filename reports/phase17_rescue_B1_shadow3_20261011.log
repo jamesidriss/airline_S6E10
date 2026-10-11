@@ -1,0 +1,14 @@
+Exception in thread Thread-1 (monitor):
+Traceback (most recent call last):
+  File "C:\Users\James\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "C:\Users\James\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\James\airline_S6E10\scripts\run_phase17_monitored.py", line 134, in monitor
+    row = observation(process, pagefiles)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\James\airline_S6E10\scripts\run_phase17_monitored.py", line 82, in observation
+    if torch is not None and torch.cuda.is_initialized():
+                             ^^^^^^^^^^
+AttributeError: partially initialized module 'torch' has no attribute 'cuda' (most likely due to a circular import)
+Win32 exception occurred releasing IUnknown at 0x00000123CF22CC20

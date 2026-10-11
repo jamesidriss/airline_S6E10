@@ -1,0 +1,216 @@
+{
+  "utc": "2026-10-11T20:31:19.607163+00:00",
+  "status": "PASS",
+  "controls": [
+    "absent_torch_not_imported",
+    "partial_torch_module_no_cuda",
+    "uninitialized_cuda_not_initialized",
+    "ready_cuda_read_only_values",
+    "transient_gpu_query_retains_host_observation",
+    "actual_host_two_native_samples_15_seconds_apart"
+  ],
+  "wrapper_sha256": "345f91bc65a921bd6269868266e3f498c6cd9efdab9b6bfb6602926c08d8bb95",
+  "native_observations": [
+    {
+      "utc": "2026-10-11T20:31:04.597213+00:00",
+      "pid": 34384,
+      "c_free_bytes": 174555144192,
+      "host_available_bytes": 13288054784,
+      "process_memory_native_fields_bytes": {
+        "rss": 32382976,
+        "vms": 16723968,
+        "num_page_faults": 8452,
+        "peak_wset": 32382976,
+        "wset": 32382976,
+        "peak_paged_pool": 244128,
+        "paged_pool": 244088,
+        "peak_nonpaged_pool": 19712,
+        "nonpaged_pool": 19712,
+        "pagefile": 16723968,
+        "peak_pagefile": 16723968,
+        "private": 16723968
+      },
+      "process_private_bytes": 16723968,
+      "process_commit_charge_bytes": 16723968,
+      "process_rss_bytes": 32382976,
+      "process_virtual_bytes": 16723968,
+      "pagefiles": [
+        {
+          "name": "C:\\pagefile.sys",
+          "allocated_bytes": 33285996544,
+          "used_bytes": 125829120,
+          "peak_used_bytes": 143654912
+        }
+      ],
+      "gpu_allocated_bytes": null,
+      "gpu_reserved_bytes": null
+    },
+    {
+      "utc": "2026-10-11T20:31:19.601657+00:00",
+      "pid": 34384,
+      "c_free_bytes": 174554750976,
+      "host_available_bytes": 13262028800,
+      "process_memory_native_fields_bytes": {
+        "rss": 32780288,
+        "vms": 16728064,
+        "num_page_faults": 8549,
+        "peak_wset": 32780288,
+        "wset": 32780288,
+        "peak_paged_pool": 244504,
+        "paged_pool": 244456,
+        "peak_nonpaged_pool": 19848,
+        "nonpaged_pool": 19848,
+        "pagefile": 16728064,
+        "peak_pagefile": 16728064,
+        "private": 16728064
+      },
+      "process_private_bytes": 16728064,
+      "process_commit_charge_bytes": 16728064,
+      "process_rss_bytes": 32780288,
+      "process_virtual_bytes": 16728064,
+      "pagefiles": [
+        {
+          "name": "C:\\pagefile.sys",
+          "allocated_bytes": 33285996544,
+          "used_bytes": 125829120,
+          "peak_used_bytes": 143654912
+        }
+      ],
+      "gpu_allocated_bytes": null,
+      "gpu_reserved_bytes": null
+    }
+  ],
+  "simulated_observations": [
+    {
+      "utc": "2026-10-11T20:31:04.547095+00:00",
+      "pid": 34384,
+      "c_free_bytes": 174555144192,
+      "host_available_bytes": 13293563904,
+      "process_memory_native_fields_bytes": {
+        "rss": 21749760,
+        "vms": 12705792,
+        "num_page_faults": 5432,
+        "peak_wset": 21749760,
+        "wset": 21749760,
+        "peak_paged_pool": 186080,
+        "paged_pool": 186080,
+        "peak_nonpaged_pool": 14064,
+        "nonpaged_pool": 13456,
+        "pagefile": 12705792,
+        "peak_pagefile": 12705792,
+        "private": 12705792
+      },
+      "process_private_bytes": 12705792,
+      "process_commit_charge_bytes": 12705792,
+      "process_rss_bytes": 21749760,
+      "process_virtual_bytes": 12705792,
+      "gpu_allocated_bytes": null,
+      "gpu_reserved_bytes": null
+    },
+    {
+      "utc": "2026-10-11T20:31:04.547095+00:00",
+      "pid": 34384,
+      "c_free_bytes": 174555144192,
+      "host_available_bytes": 13293563904,
+      "process_memory_native_fields_bytes": {
+        "rss": 21774336,
+        "vms": 12705792,
+        "num_page_faults": 5438,
+        "peak_wset": 21774336,
+        "wset": 21774336,
+        "peak_paged_pool": 186080,
+        "paged_pool": 186080,
+        "peak_nonpaged_pool": 14064,
+        "nonpaged_pool": 13456,
+        "pagefile": 12705792,
+        "peak_pagefile": 12705792,
+        "private": 12705792
+      },
+      "process_private_bytes": 12705792,
+      "process_commit_charge_bytes": 12705792,
+      "process_rss_bytes": 21774336,
+      "process_virtual_bytes": 12705792,
+      "gpu_allocated_bytes": null,
+      "gpu_reserved_bytes": null
+    },
+    {
+      "utc": "2026-10-11T20:31:04.547095+00:00",
+      "pid": 34384,
+      "c_free_bytes": 174555144192,
+      "host_available_bytes": 13293563904,
+      "process_memory_native_fields_bytes": {
+        "rss": 21774336,
+        "vms": 12705792,
+        "num_page_faults": 5438,
+        "peak_wset": 21774336,
+        "wset": 21774336,
+        "peak_paged_pool": 186080,
+        "paged_pool": 186080,
+        "peak_nonpaged_pool": 14064,
+        "nonpaged_pool": 13456,
+        "pagefile": 12705792,
+        "peak_pagefile": 12705792,
+        "private": 12705792
+      },
+      "process_private_bytes": 12705792,
+      "process_commit_charge_bytes": 12705792,
+      "process_rss_bytes": 21774336,
+      "process_virtual_bytes": 12705792,
+      "gpu_allocated_bytes": null,
+      "gpu_reserved_bytes": null
+    },
+    {
+      "utc": "2026-10-11T20:31:04.547595+00:00",
+      "pid": 34384,
+      "c_free_bytes": 174555144192,
+      "host_available_bytes": 13293563904,
+      "process_memory_native_fields_bytes": {
+        "rss": 21774336,
+        "vms": 12705792,
+        "num_page_faults": 5438,
+        "peak_wset": 21774336,
+        "wset": 21774336,
+        "peak_paged_pool": 186080,
+        "paged_pool": 186080,
+        "peak_nonpaged_pool": 14064,
+        "nonpaged_pool": 13456,
+        "pagefile": 12705792,
+        "peak_pagefile": 12705792,
+        "private": 12705792
+      },
+      "process_private_bytes": 12705792,
+      "process_commit_charge_bytes": 12705792,
+      "process_rss_bytes": 21774336,
+      "process_virtual_bytes": 12705792,
+      "gpu_allocated_bytes": 123,
+      "gpu_reserved_bytes": 456
+    },
+    {
+      "utc": "2026-10-11T20:31:04.547595+00:00",
+      "pid": 34384,
+      "c_free_bytes": 174555144192,
+      "host_available_bytes": 13293563904,
+      "process_memory_native_fields_bytes": {
+        "rss": 21774336,
+        "vms": 12705792,
+        "num_page_faults": 5438,
+        "peak_wset": 21774336,
+        "wset": 21774336,
+        "peak_paged_pool": 186080,
+        "paged_pool": 186080,
+        "peak_nonpaged_pool": 14064,
+        "nonpaged_pool": 13456,
+        "pagefile": 12705792,
+        "peak_pagefile": 12705792,
+        "private": 12705792
+      },
+      "process_private_bytes": 12705792,
+      "process_commit_charge_bytes": 12705792,
+      "process_rss_bytes": 21774336,
+      "process_virtual_bytes": 12705792,
+      "gpu_allocated_bytes": null,
+      "gpu_reserved_bytes": null,
+      "gpu_query_unavailable": "RuntimeError"
+    }
+  ]
+}

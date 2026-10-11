@@ -1,0 +1,57 @@
+{
+  "utc": "2026-10-11T20:31:42.717362+00:00",
+  "status": "OBSERVER_REPAIR_CONTROLS_PASS_FROZEN_RECIPE_UNCHANGED",
+  "old_wrapper_sha256": "33e7323584e5873a97fbee552bff7f82193c0d2bb3ab62cf01452319543cedef",
+  "new_wrapper_sha256": "345f91bc65a921bd6269868266e3f498c6cd9efdab9b6bfb6602926c08d8bb95",
+  "original_rescue_scope_sha256": "e7f2a26d880e322edcda9e6d85d8bad1ff7ce327fd30db58343b1b65bd27d13b",
+  "protected_source_sha256": {
+    "scripts/run_sol_tabpfn_confirm.py": "496ccea68ba55aff3ad4a854683804836c13e618b71df7c6e039d0979d556564",
+    "scripts/run_phase17_confirmation.py": "aee31719de875e96c66741960e620b02702e888017f4a8dbb1638a5c7041d1be",
+    "scripts/phase16_tabpfn.py": "548f9de2cd4eeb3661829f2696e7f2a2cd32a1ad2277ad828eb8fcc5371749ab",
+    "src/models/resource_guard.py": "b91280215a10f688690603b17289e9b80d865488127744826ef0e449721a2049",
+    "scripts/evaluate_phase17_shadow.py": "8028c8ccd7cb6243abeb73a2e85e68dc7ca7747c109d0265efdeff0fb1fa03e2",
+    "scripts/assemble_phase17_test.py": "67877bd3244ccb9d9840f1d35f567fc226f638751d1a94dbc24b3c0070248c2a",
+    "scripts/simulate_phase17_private.py": "ade00ebfad6153502e95b95c41321a928ac11d02a0a4abd7911e231c0130ec76",
+    "scripts/decide_phase17_submission.py": "6a0cfc4a12cc5e832d0d3b76c3ca165ba25d4d08c1e026cb15dd5fe3c791a5bf"
+  },
+  "controls_report": "reports/phase17_rescue_monitor_repair_controls_20261011.json",
+  "controls_report_sha256": "b19049d055b427fd4853dc5bd810305d6b19a393f2aeed345bcc0c7000aa3ab5",
+  "invalid_attempt_report": "reports/phase17_rescue_B1_shadow3_observer_failure_20261011.json",
+  "invalid_attempt_sha256": "bb9cba516606f5ce4688accd6e83af3f8973a8a31f2766de6793b9acdadfb82c",
+  "partial_attempt_preserved_manifest": [
+    {
+      "path": "artifacts\\phase17_shadow_B1\\f3_observer_invalid_20261011\\apply_ids.npy",
+      "bytes": 1119544,
+      "sha256": "5642f699f2d303dfd791209fe077c0391a4da106e4fc3c75f28da0d81e655450"
+    },
+    {
+      "path": "artifacts\\phase17_shadow_B1\\f3_observer_invalid_20261011\\configuration.json",
+      "bytes": 21712,
+      "sha256": "b039a18ef278fb77615bf891b972f0e716039fd4ce14604eeaadf616c7f5e1b3"
+    },
+    {
+      "path": "artifacts\\phase17_shadow_B1\\f3_observer_invalid_20261011\\fit_ids.npy",
+      "bytes": 4477792,
+      "sha256": "3f447c3504bd24b6bfb41127bce480be7c58470b1c2bdfbf516b60fd40fc0658"
+    },
+    {
+      "path": "artifacts\\phase17_shadow_B1\\f3_observer_invalid_20261011\\member_0_fit\\resources.json",
+      "bytes": 156,
+      "sha256": "a00f9c988731cd3f08f023524d8e8ff05d60dec1f759d33a77eb50b0837ecb43"
+    },
+    {
+      "path": "artifacts\\phase17_shadow_B1\\f3_observer_invalid_20261011\\progress.json",
+      "bytes": 64,
+      "sha256": "d1bf411c300712418075958723220fe70142a8183732da79196b69590b7fdffc"
+    },
+    {
+      "path": "artifacts\\phase17_shadow_B1\\f3_observer_invalid_20261011\\resources.json",
+      "bytes": 156,
+      "sha256": "79f923b17fd0fe1b8a448e851566b0b230e862aef86ced7e5f36b843f727290c"
+    }
+  ],
+  "model_verdict": null,
+  "changes": "Read already initialized CUDA only after module readiness; retain host observation on CUDA query error; fail only own worker on fatal observer error",
+  "completed_fold2_preserved": true,
+  "next_telemetry_tag": "phase17_rescue_telemetry_B1_shadow3_retry_20261011"
+}

@@ -79,11 +79,18 @@ def observation(process, pagefiles=None):
         except Exception as error:
             row['pagefile_query_unavailable'] = type(error).__name__
     torch = sys.modules.get('torch')
-    if torch is not None and torch.cuda.is_initialized():
-        row['gpu_allocated_bytes'] = int(torch.cuda.memory_allocated(0))
-        row['gpu_reserved_bytes'] = int(torch.cuda.memory_reserved(0))
-    else:
-        row['gpu_allocated_bytes'] = row['gpu_reserved_bytes'] = None
+    # Torch can be visible in sys.modules before its import has finished.
+    # Observe only an already initialized CUDA runtime; never initialize it here.
+    cuda = getattr(torch, 'cuda', None)
+    initialized = getattr(cuda, 'is_initialized', None)
+    row['gpu_allocated_bytes'] = row['gpu_reserved_bytes'] = None
+    if callable(initialized):
+        try:
+            if initialized():
+                row['gpu_allocated_bytes'] = int(cuda.memory_allocated(0))
+                row['gpu_reserved_bytes'] = int(cuda.memory_reserved(0))
+        except Exception as error:
+            row['gpu_query_unavailable'] = type(error).__name__
     return row
 
 
@@ -141,6 +148,13 @@ def main():
                         (folder/'resource_abort.json').write_text(json.dumps(abort, indent=2)+'\n', encoding='utf-8')
                         os._exit(86)
                     stop.wait(args.interval)
+        except Exception as error:
+            # Missing observations must not leave an apparently monitored job.
+            failure = {**contract, 'status': 'INVALID_OBSERVER_NO_MODEL_VERDICT',
+                       'utc': datetime.now(timezone.utc).isoformat(),
+                       'error_type': type(error).__name__, 'error': str(error)}
+            (folder/'observer_abort.json').write_text(json.dumps(failure, indent=2)+'\n', encoding='utf-8')
+            os._exit(86)
         finally:
             if com is not None:
                 pagefiles = None
