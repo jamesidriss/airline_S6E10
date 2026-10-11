@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-11T21:09:33.943056+00:00",
+  "updated_utc": "2026-10-11T22:00:14.586960+00:00",
   "BEST_A": {
     "name": "v6_sol_tabpfn_route_aux10",
     "ref": 56951906,
@@ -40,7 +40,7 @@
   },
   "candidate_in_confirmation": {
     "name": "phase17_B1",
-    "status": "FULL_PRIMARY_AND_MATCHED_SHADOW_PASS_AWAITS_CERTIFIED_TEST",
+    "status": "MATCHED_SHADOW_PASS_TEST_CONTEXT0_VERIFIED_TEST1_ACTIVE",
     "internal_estimators": 2,
     "complete_primary_folds": [
       0,
@@ -91,7 +91,9 @@
       7.413980634984885e-05
     ],
     "shadow_mean_delta": 8.751322571282083e-05,
-    "test_contexts_complete": []
+    "test_contexts_complete": [
+      0
+    ]
   },
   "verified_clean_BEST_B_HEDGE": null,
   "banked_legacy_previous_best_A": {
@@ -108,7 +110,7 @@
   },
   "final_selection_reassessed": true,
   "kaggle_final_selection_updated": false,
-  "continuation_status": "PHASE17_FROZEN_TEST_PENDING_AFTER_MATCHED_SHADOW_PASS_B2_CLOSED",
+  "continuation_status": "PHASE17_FROZEN_TEST_INFERENCE_ACTIVE_1_OF5_VERIFIED_B2_CLOSED",
   "rejected_hedge_candidates": {
     "clean_aux10": {
       "oof_loss_vs_A": 0.00034690428011585617,

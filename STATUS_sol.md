@@ -1,5 +1,8 @@
 # SOL campaign — audit and continuation
 
+Phase17 rescue 2026-10-11T22:00:14.586960+00:00: test context0 COMPLETE and both raw members replayed bitexact,299844 ordered test rows, vectorSHA4fa559bda40973dabf15ed09495064fc0231bc4abedbf904ec685c33e767a704. Test1 setup exactly matches its original primary FIT configurations and is active. Current full suite142PASS/0FAIL. Model budget9.069028h/28h. V6 immutable A; certificate/private decision/upload remain pending;0uploads.
+
+
 Phase17 rescue 2026-10-11T21:09:33.943056+00:00: BOTH matched B1 shadow folds PASS; portfolio deltas+100.886645/+74.139806micro, mean+87.513226micro; conditional bootstrap95%[48.200412,126.195119]micro. Eco Plus shadow2-105.210118/shadow3+175.563611micro; primary fold3-459.898148micro preserved. Saved raw members replayed bitexact; full tests then exact test0..4 remain gated; v6 immutable A;0uploads. Cumulative model time8.345287h/28h.
 
 
