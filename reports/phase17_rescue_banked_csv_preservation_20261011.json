@@ -1,0 +1,29 @@
+{
+  "utc": "2026-10-11T22:42:13.121653+00:00",
+  "status": "ALL_FOUR_BANKED_CSV_HASHES_UNCHANGED",
+  "historical_audit_sha256": "19e718fdbdf53f9112bb72fb0054d5619bca4444b6016104a9d69e3fe2b67072",
+  "verified": {
+    "v3_final": {
+      "path": "submissions\\v3_final.csv",
+      "sha256": "9602c2ad6628d55c802fbf8c3099e87b1f4a8257697bb255ff8b0e8b836c418a",
+      "bytes": 8286788
+    },
+    "v4_fulldata": {
+      "path": "submissions\\v4_fulldata.csv",
+      "sha256": "49aedb8ba57a914139ba98e13ab4f4284f29e029d41c6c0475276da0839a4670",
+      "bytes": 8184508
+    },
+    "v5_aux_cross": {
+      "path": "submissions\\v5_aux_cross.csv",
+      "sha256": "9f88dc476d28f3675014e1e876134da66d837fb57b722ecdc0b5e8f8d5858f61",
+      "bytes": 8286293
+    },
+    "v6_sol_tabpfn_route_aux10": {
+      "path": "submissions\\v6_sol_tabpfn_route_aux10.csv",
+      "sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d",
+      "bytes": 8285382
+    }
+  },
+  "scope": "Read-only actual CSV file bytes; no old submission modified",
+  "new_uploads": 0
+}
