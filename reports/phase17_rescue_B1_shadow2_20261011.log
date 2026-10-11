@@ -1,0 +1,11 @@
+shadow f2 member0: 1024/139927
+shadow f2 member0: 40960/139927
+shadow f2 member0: 81920/139927
+shadow f2 member0: 122880/139927
+shadow f2 member0: 139927/139927
+shadow f2 member1: 1024/139927
+shadow f2 member1: 40960/139927
+shadow f2 member1: 81920/139927
+shadow f2 member1: 122880/139927
+shadow f2 member1: 139927/139927
+{"status": "COMPLETE_FROZEN_SHADOW_FOLD", "seconds": 2048.3910000000033, "prediction_sha256": "dbd451a51bd1124ccd8102fe6bc8509b0ae99041eed5cc5b95f5412489a41614"}
