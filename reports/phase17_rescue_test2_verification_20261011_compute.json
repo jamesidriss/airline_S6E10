@@ -1,0 +1,62 @@
+{
+  "utc": "2026-10-11T23:21:20.199622+00:00",
+  "prior_model_hours": 6.544027500000019,
+  "total_ceiling_hours": 28,
+  "unique_completed_model_workers": [
+    {
+      "tag": "phase17_rescue_telemetry_B0_shadow2_20261011",
+      "seconds": 1093.765999999996,
+      "status": "FROZEN_DRIVER_COMPLETE",
+      "sha256": "70d2f6d8aa87a9a601de6afe0252ee91a4c5a81a413f3d289352b23128b46e64"
+    },
+    {
+      "tag": "phase17_rescue_telemetry_B0_shadow3_20261011",
+      "seconds": 1055.811999999998,
+      "status": "FROZEN_DRIVER_COMPLETE",
+      "sha256": "c88d5900500d2f6b0ca1aff50785105359d86703937597ab359bf653c2d01f2f"
+    },
+    {
+      "tag": "phase17_rescue_telemetry_B1_shadow2_20261011",
+      "seconds": 2057.6410000000033,
+      "status": "FROZEN_DRIVER_COMPLETE",
+      "sha256": "40de1a573e6cee6981e3490c75ccaad0368bb84c2df2621b4329071b085972a1"
+    },
+    {
+      "tag": "phase17_rescue_telemetry_B1_shadow3_retry_20261011",
+      "seconds": 2095.1709999999985,
+      "status": "FROZEN_DRIVER_COMPLETE",
+      "sha256": "d5b6a3b99a32074385a1f55064f7e2b75cddcbb88cea202142848fef45968a54"
+    },
+    {
+      "tag": "phase17_rescue_telemetry_test0_20261011",
+      "seconds": 2605.4680000000008,
+      "status": "FROZEN_DRIVER_COMPLETE",
+      "sha256": "71122d22b09f284ac3f51f3bb9cd54739c0d429313e34a552e9e9fd3936c1dd5"
+    },
+    {
+      "tag": "phase17_rescue_telemetry_test1_20261011",
+      "seconds": 2592.625,
+      "status": "FROZEN_DRIVER_COMPLETE",
+      "sha256": "e14c9b2ca65210d6f251b4d8905ee5d11a9d6870920adf49f946c55cd65d6117"
+    },
+    {
+      "tag": "phase17_rescue_telemetry_test2_20261011",
+      "seconds": 2567.0,
+      "status": "FROZEN_DRIVER_COMPLETE",
+      "sha256": "5bb9f005267848b97b81ad27f25d6880b2d94a6781b9f7358c41d9a0c4fb92fe"
+    }
+  ],
+  "cumulative_model_hours": 10.502257064250019,
+  "remaining_model_hours": 17.497742935749983,
+  "next": "Continue only the frozen gated rescue queue",
+  "new_submissions": 0,
+  "resource_note": "Latest actual Cfree162.797535GiB is a separate background/user/system increase; approved cache recovery remains measured8.012329GiB; no additional cleanup by this rescue",
+  "invalid_worker_attempts": [
+    {
+      "report": "reports/phase17_rescue_B1_shadow3_observer_failure_20261011.json",
+      "report_sha256": "bb9cba516606f5ce4688accd6e83af3f8973a8a31f2766de6793b9acdadfb82c",
+      "seconds": 182.1434313,
+      "verdict": "INVALID_OBSERVER_NO_MODEL_VERDICT"
+    }
+  ]
+}

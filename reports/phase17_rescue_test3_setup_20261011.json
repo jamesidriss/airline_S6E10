@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-11T23:21:34.943458+00:00",
+  "status": "EXACT_PRIMARY_FIT_CONFIGURATION_AND_ORDERED_TEST_IDS_PASS_BEFORE_PREDICTION",
+  "fold": 3,
+  "fit_rows": 559708,
+  "test_rows": 299844,
+  "internal_estimators": 2,
+  "configuration_sha256": "f4f82eda0ffa81651ec4658acc0f794570e09931e1aa111c50dc29f1093be87d",
+  "original_primary_fold_report_sha256": "a51495969d474ddd1e9e67d2db318ba77242ebbc45d64f4e3d29b5537a00a8dc",
+  "apply_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+  "no_test_labels": true
+}

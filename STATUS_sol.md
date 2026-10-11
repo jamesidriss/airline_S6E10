@@ -1,5 +1,8 @@
 # SOL campaign — audit and continuation
 
+Phase17 rescue 2026-10-11T23:21:33.774299+00:00: 3/5 frozen test contexts COMPLETE; test2 both raw members replayed bitexact,299844 ordered rows, vectorSHAde27a42adadaced4a6762d972a91ea115e0d8214d8c9d6d9d54c2e2ed187d8ce. Model budget10.502257h/28h. Current full suite142PASS/0FAIL; v6 protected; certification/private decision/single upload pending;0uploads.
+
+
 Phase17 rescue 2026-10-11T22:38:35.152801+00:00: 2/5 frozen test contexts COMPLETE; test1 both raw members replayed bitexact,299844 ordered rows, vectorSHA9a6d0f4e4be0ca89561367ebeebcb8e72382700e12bbaf21cda31ff70eb479b9. Model budget9.789202h/28h. Current full suite142PASS/0FAIL; v6 protected; certification/private decision/single upload pending;0uploads.
 
 
