@@ -1,0 +1,25 @@
+{
+  "utc": "2026-10-11T21:12:06.348591+00:00",
+  "status": "CURRENT_ACTUAL_HOST_FULL_SUITE_PASS",
+  "passed": 142,
+  "failed": 0,
+  "log": "reports\\phase17_rescue_current_full_tests_20261011.log",
+  "log_sha256": "bb179208f5d51cda6a1c70d5334c0ff9bb4f7e30cb763f013cbbbc2e32c65ece",
+  "git_at_result": "20c23655145a8df64dbbb77ee885cc2915f6652c",
+  "no_Python_source_change_since_controller_commit": true,
+  "source_sha256": {
+    "scripts/run_phase17_monitored.py": "345f91bc65a921bd6269868266e3f498c6cd9efdab9b6bfb6602926c08d8bb95",
+    "scripts/verify_phase17_rescue_context.py": "e8d13f02c50528fe47c14de130f9da449061eabdaec51f61ffa786bd3e751805",
+    "scripts/continue_phase17_rescue.ps1": "adb6fd0000773b0b3377b00f2b68abaeecc43d1e03c4c1ed9e0174cad68051cb",
+    "tests/run_tests.py": "94782e78ea4592452ca2241d05ac19403413244c53edeabed282452a53c40dcd"
+  },
+  "stochastic_summary": [
+    "PASS  tests.test_stochastic_protocol  (69/69 passed)"
+  ],
+  "leakage_checks": [
+    "PASS  tests.test_pipeline.test_crossfit_row_never_sees_own_label  (0.0s)",
+    "PASS  tests.test_pipeline.test_external_features_use_no_competition_label  (15.0s)",
+    "PASS  tests.test_pipeline.test_fold_safe_te_never_sees_apply_rows  (0.0s)",
+    "PASS  tests.test_pipeline.test_original_overlap_audit_is_small  (2.9s)"
+  ]
+}
