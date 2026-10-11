@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-11T21:34:51.812206+00:00",
+  "status": "PRE_UPLOAD_METADATA_BYTES_PRESERVED",
+  "files": [
+    {
+      "source": "submissions\\manifest.csv",
+      "preserved_path": "research\\phase17_rescue_upload_metadata_before_20261011\\manifest.csv",
+      "bytes": 5662,
+      "sha256": "d3a6858f6b837ac8113c2fff11cb7a1d9a1b0d0ce7e8d3f894343cb442920652"
+    },
+    {
+      "source": "submissions\\kaggle_submissions.csv",
+      "preserved_path": "research\\phase17_rescue_upload_metadata_before_20261011\\kaggle_submissions.csv",
+      "bytes": 3444,
+      "sha256": "ef28634b28a24c3449f146d6e28148ee31cf00cdeeab88931cbc1798f732f6a8"
+    }
+  ],
+  "v6_files_modified": false,
+  "new_uploads": 0
+}
