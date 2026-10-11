@@ -1,5 +1,8 @@
 # SOL campaign — audit and continuation
 
+Phase17 rescue 2026-10-11T21:09:33.943056+00:00: BOTH matched B1 shadow folds PASS; portfolio deltas+100.886645/+74.139806micro, mean+87.513226micro; conditional bootstrap95%[48.200412,126.195119]micro. Eco Plus shadow2-105.210118/shadow3+175.563611micro; primary fold3-459.898148micro preserved. Saved raw members replayed bitexact; full tests then exact test0..4 remain gated; v6 immutable A;0uploads. Cumulative model time8.345287h/28h.
+
+
 Phase17 rescue 2026-10-10T23:05:54.442287+00:00: current full HOST suite142PASS/0FAIL; failed sandbox permission runs preserved. Cfree44.059284GiB/RAM13.164688GiB at preflight, GPU1837/16303MiB, no Python worker. Frozen B0 matched shadow2 starts after bank/integrity checks; qualification remains pending;0uploads.
 
 

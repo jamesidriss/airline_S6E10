@@ -1,0 +1,378 @@
+{
+  "utc": "2026-10-11T21:09:33.943056+00:00",
+  "status": "BOTH_B1_SHADOW_FOLDS_COMPLETE_FROZEN_CONFIRMATION_PASS",
+  "primary_auc": 0.9618529228157235,
+  "folds": [
+    {
+      "fold": 2,
+      "route_auc": 0.9619719080451847,
+      "control_route_auc": 0.9616658523888969,
+      "portfolio_auc": 0.9622813155533759,
+      "control_portfolio_auc": 0.9621804289083001,
+      "portfolio_delta": 0.00010088664507579281,
+      "correlation": {
+        "logit": 0.9998220775919407,
+        "spearman": 0.9987467842624106,
+        "probability_residual": 0.9997218858664941
+      },
+      "pairs": {
+        "all_positive_negative_pairs": 4832552412,
+        "rescued_pair_credit": 6086198.5,
+        "damaged_pair_credit": 5598658.5,
+        "rescued_pair_fraction": 0.0012594169666710693,
+        "damaged_pair_fraction": 0.001158530321595196,
+        "net_auc_gain": 0.00010088664507587341,
+        "baseline_error_pair_credit": 182765059.5,
+        "candidate_error_pair_credit": 182277519.5,
+        "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 68455,
+          "delta": 0.00018696138513996097
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 65480,
+          "delta": 0.00029235502968882887
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 5992,
+          "delta": -0.00010521011821629234
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 99361,
+          "delta": 0.00012033584645643192
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 40566,
+          "delta": 0.00021781069748449955
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 115470,
+          "delta": 8.282000924775268e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 24457,
+          "delta": 0.00030895116508278253
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 69490,
+          "delta": 9.585067823825177e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 70437,
+          "delta": 0.00010769507830088454
+        }
+      ],
+      "candidate_report_sha256": "f18085445631b2207e46668d8c7954e77cd096c81bafeb6382b6ce6b1abf1be0",
+      "candidate_prediction_sha256": "dbd451a51bd1124ccd8102fe6bc8509b0ae99041eed5cc5b95f5412489a41614",
+      "portfolio_prediction_sha256": "c28a4c49a84c3489bc220ab331e9e750b9a9c17907bf17cfe9b42094c3f582e8",
+      "control_portfolio_prediction_sha256": "0c3fce67ff6d13ee45777b66b95b0cfeda91c52a43818ee4a2ad06300d50db2e",
+      "fit_ids_sha256": "4f0bca9847d223f7c16ea05777b377075761dfe3be4cf917193bdfdd9553bcb6",
+      "apply_ids_sha256": "3b80091b6981766b6490adceb9849fc780c0fc39038e2542226757ffa6910294",
+      "auxiliary_mean_logits_sha256": "5d2f41ebfc095342a0c81f36088098271f886d8b4013b6d5ac231751d9fcc87b",
+      "control_proof": {
+        "tag": "phase17_shadow_B0_capacity",
+        "report_sha256": "12567d1d93ea654c7fe19c62931001c9b71d61ffe8f3d784a5352c60fed6d572",
+        "prediction_sha256": "cdce1cd2e259564ba45a72cf93b2e08d3fe9d38f1507f0d2a4587ad20ff49f61"
+      },
+      "auxiliary_proofs": [
+        {
+          "member": "xt_xt_d127_ss06",
+          "report_sha256": "ce5d90baba7316eba10dc023ac7c4e3840c088b655c25dcc713b734d79c22f2b",
+          "prediction_sha256": "3a1a04168eca925be7f54a379616f7aa3faf3c45e59eb486b2ebccfb51ef7bb0",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "xt_xt_d127_s1",
+          "report_sha256": "ad2196a05e9078083ccfa6dece10d629d355926668d37c5badd62cb6375225d7",
+          "prediction_sha256": "d0ced7733e075ca58c01c5a6e868328541bca44850153acc659b00ff5cf6e7cb",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "xt_xt_d255",
+          "report_sha256": "c5a931d59664fc9dba8bc7b66c22fcb5a0da791f2ff3d9dd1773d99bb883e942",
+          "prediction_sha256": "bfca23bb445bfb2deb19cae127142779369e9d05847803aecfd3e24bd400ef3a",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "xt_xt_d127_bin63",
+          "report_sha256": "4ed42994709bd3c0d44bb8e12fbc7c58da65119ad5d2e64b2ee4dd3abc317aa1",
+          "prediction_sha256": "3cf3d59e0f90c862c2b01953d9a468b0b460def79897081f426b72f6f1b2a6e6",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "xt_xt_d127_cs05",
+          "report_sha256": "cd58a23dadedcdf78e1cc56551c930057c90ca7dcbf6dd4e1e5d40b6cb5a6e17",
+          "prediction_sha256": "a8180f2db6e132859b343e6a8dab94269e22b9e7c57c38b162889f8f91b185db",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "xt_xt_d63",
+          "report_sha256": "d5a62a60779ed3dfaad77d35f786b27ec576d4abe8ececb346a3cd9a19a0091f",
+          "prediction_sha256": "e585d5ecf2b93267e0d5ab96ed77d85b957ef06d779303e3210e1668767f60eb",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "z3_cat_d8_s2",
+          "report_sha256": "771c9e6e5818951b5f8a8bdc1b438ffb9936fb9a9617e576c354c62dad0bbb83",
+          "prediction_sha256": "4508aad352b634eabe4f4d6b487a2b5df6020c0814233a7858b146b054fae4d9",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "prod5_xgb_full_primary",
+          "report_sha256": "15c2feeb85e23ee06cbe9abc8e1b8c201361129dbfd12b8688875db4ec53516e",
+          "prediction_sha256": "8b9fca9f1b6099d212512bbfa65428ab15b3c10b743bff8e918697ff9671499b",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "xt_xgb_lossguide",
+          "report_sha256": "a6bb912cc0bf387b5b583c6a8c48ca2f00888495970cc1460ee8825460400aa2",
+          "prediction_sha256": "a8747c1adedbcf380f2eb9e08f87200ce74687984201d3ed7e45ab0dcf4890e8",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "zoo_xgb_d6",
+          "report_sha256": "2f95927c451917ba4c880fc94fd530b01f476d3637143b59f3fd7c4e679843c9",
+          "prediction_sha256": "f140e7651fd7a19f5579b56fd0876ee867af63ddc89dbd228e3562c75f272e7b",
+          "fold0_control_max_gap": null
+        }
+      ],
+      "candidate_seconds": 2048.3910000000033,
+      "control_seconds": 1088.4839999999967
+    },
+    {
+      "fold": 3,
+      "route_auc": 0.9621038356365788,
+      "control_route_auc": 0.9618408140712369,
+      "portfolio_auc": 0.962317341649972,
+      "control_portfolio_auc": 0.9622432018436221,
+      "portfolio_delta": 7.413980634984885e-05,
+      "correlation": {
+        "logit": 0.9998337549400078,
+        "spearman": 0.998860399666981,
+        "probability_residual": 0.9997238689880137
+      },
+      "pairs": {
+        "all_positive_negative_pairs": 4832552412,
+        "rescued_pair_credit": 5804415.5,
+        "damaged_pair_credit": 5446131.0,
+        "rescued_pair_fraction": 0.0012011076145985937,
+        "damaged_pair_fraction": 0.001126967808248988,
+        "net_auc_gain": 7.413980634960571e-05,
+        "baseline_error_pair_credit": 182461706.0,
+        "candidate_error_pair_credit": 182103421.5,
+        "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 68428,
+          "delta": 0.0001454906702086367
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 65460,
+          "delta": 7.776865876529815e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 6039,
+          "delta": 0.00017556361082715632
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 99485,
+          "delta": 0.00011013873890330927
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 40442,
+          "delta": 0.00022001698499996003
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 115514,
+          "delta": 6.792713440439968e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 24413,
+          "delta": 0.00026751991096141126
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 69292,
+          "delta": 7.812774545001844e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 70635,
+          "delta": 6.979193133693773e-05
+        }
+      ],
+      "candidate_report_sha256": "781acf925fba4144b06d6182ed9a10e2a61bc5b94073a02e32d6af37a837a5fc",
+      "candidate_prediction_sha256": "5d728023924738befd6ea858644fe6143c85f2a7551161384b25c68b80a02a05",
+      "portfolio_prediction_sha256": "1bd2b1d7d8b7de633f6b2677b4eab0eec89d071225965afd06d08d51ade87063",
+      "control_portfolio_prediction_sha256": "d6af0bfcecfee441a927c6db903b19cf0fc37625b0cccea56fbe23d94f1b52a7",
+      "fit_ids_sha256": "3803bd544c5696bbf34dd5d327cd4fca75c369a90c650fecb4b120af42f2a16c",
+      "apply_ids_sha256": "9e74640cb064ae875b8262307f3595fbf164cdafe842ace8caa34277062f33f7",
+      "auxiliary_mean_logits_sha256": "d9d5f6b094298b8ea62927a8e6e90048bed4dfebb85aad77ea91f13efa66bdcd",
+      "control_proof": {
+        "tag": "phase17_shadow_B0_capacity",
+        "report_sha256": "9d6570da4eecb19b3c865d9570d8aee8418838fa9a9f13d06f266ceaa5fe8813",
+        "prediction_sha256": "88bd7e30b34702fcfae37ed1c310eb788ea8fa863f3103422493d61d1979aaa5"
+      },
+      "auxiliary_proofs": [
+        {
+          "member": "xt_xt_d127_ss06",
+          "report_sha256": "70c414f5c186d3b4cdc0baea7a987d7f14a5dc137355145e0336c9af3cbcbde9",
+          "prediction_sha256": "9cd949e90250cbf2dbfa7143e68e5bab0b1b188105c9315aabd16521bff4acef",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "xt_xt_d127_s1",
+          "report_sha256": "c58cdcdbaadaaf3d22e9c4ce14766ff4ae7e74e0d96a2c358950cc70d43813e6",
+          "prediction_sha256": "642f8c1087dd8407b295a457cd7637d61ead66175eb719049e8861fa1741b630",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "xt_xt_d255",
+          "report_sha256": "5b3bb4d6739cc8e96b9bbf0b66fdcb7af4a6c1c6db55d1d7be8493152017d58b",
+          "prediction_sha256": "59e118d4dc7cec1256b165005d3519f7f95407ac239d31f7a5fe4e3f6823bf2a",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "xt_xt_d127_bin63",
+          "report_sha256": "f8225ffd3062b8ad88417d56858d03320583564a3fc0f77603c2cd81b56348ec",
+          "prediction_sha256": "ad80d29d738f98bd62fdefe546d1e42366b61449294749e3bf6b8df82df35ed0",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "xt_xt_d127_cs05",
+          "report_sha256": "2656c7d09535922988b129e20f31ad489b90c27a14731e88a2eec1c867fae53f",
+          "prediction_sha256": "9a581598352879332127c6afcc4b8c819e41726280911201bd1674efa0d46173",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "xt_xt_d63",
+          "report_sha256": "ebd154b87fb6f77c80392400c60e7154b37f8ac7ec7ff5e5ed3bd80eb5ec5c83",
+          "prediction_sha256": "fbae9d7dd18ab19c6cd56de509e187ed2c33e93a01f37115ad1b42c9fc20d046",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "z3_cat_d8_s2",
+          "report_sha256": "d03c7f28ffa6f02a9abb9ba53e44ca15f30217c64d26226ef8f2536a7d22a553",
+          "prediction_sha256": "9aab3730b857fa1ffe188e1d6a7d0a24edef845ff89fe0933516e53534adf569",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "prod5_xgb_full_primary",
+          "report_sha256": "92adadbc3f9452ef7cbb8f949494f6b27125e46e24d52f097aa3756de50fd221",
+          "prediction_sha256": "8e24d3f2d06de0ed5763d1755c09b50805b5a08e4ac82fafdb6af3251c7ed561",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "xt_xgb_lossguide",
+          "report_sha256": "902887fa23f8d53989c6b49b8b6ffc6dd419510a4419bf9027d25d0470421293",
+          "prediction_sha256": "5548da515f97b20c0b871f7551e16db7ab3e2779865f96d70d782ed7cc891519",
+          "fold0_control_max_gap": null
+        },
+        {
+          "member": "zoo_xgb_d6",
+          "report_sha256": "f622137346303408518549dd6a7e9e335ac7e1c9931177da9227e593c63fbec5",
+          "prediction_sha256": "093217a23456b03bb475e3f40ceefbf539a378d792f6a382a9c8f12bedc74e5c",
+          "fold0_control_max_gap": null
+        }
+      ],
+      "candidate_seconds": 2087.2029999999977,
+      "control_seconds": 1048.8589999999967
+    }
+  ],
+  "paired_fold_deltas": [
+    0.00010088664507579281,
+    7.413980634984885e-05
+  ],
+  "mean_paired_delta": 8.751322571282083e-05,
+  "bootstrap": {
+    "seed": 20261010,
+    "repeats": 200,
+    "unit": "paired rows resampled with replacement",
+    "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+    "reference": "control",
+    "comparisons": {
+      "candidate": {
+        "mean": 8.838100167502083e-05,
+        "percentile_95_interval": [
+          4.8200411803181466e-05,
+          0.00012619511879020384
+        ],
+        "positive_fraction": 1.0
+      }
+    }
+  },
+  "resource_reports": [
+    {
+      "sample_interval_seconds": 15,
+      "samples": 134,
+      "sampled_disk_min_gib": 47.99722671508789,
+      "sampled_ram_min_gib": 5.851524353027344,
+      "sampled_process_commit_max_gib": 20.661117553710938,
+      "sampled_gpu_allocated_max_gib": 12.731980800628662,
+      "sampled_gpu_reserved_max_gib": 13.384765625,
+      "driver_gpu_allocation_peak_gib": 12.735887050628662,
+      "pagefile_allocated_unique_gib": [
+        27.4482421875
+      ],
+      "observations_sha256": "72a7a48cf35b643123525f844749ab919b9a721f8e7dbcd253cfb1f7a77ce766",
+      "summary_sha256": "40de1a573e6cee6981e3490c75ccaad0368bb84c2df2621b4329071b085972a1"
+    },
+    {
+      "sample_interval_seconds": 15,
+      "samples": 137,
+      "sampled_disk_min_gib": 161.93781661987305,
+      "sampled_ram_min_gib": 4.528026580810547,
+      "sampled_process_commit_max_gib": 20.65740966796875,
+      "sampled_gpu_allocated_max_gib": 12.731980800628662,
+      "sampled_gpu_reserved_max_gib": 13.384765625,
+      "pagefile_allocated_unique_gib": [
+        31.0
+      ],
+      "observations_sha256": "bbfff4dc6cc99b8cebcef1c9883c54bc92f17e8e63989d4a8acd4e6ca2c8bb33",
+      "summary_sha256": "d5b6a3b99a32074385a1f55064f7e2b75cddcbb88cea202142848fef45968a54"
+    }
+  ],
+  "shadow_confirmation_sha256": "281aae9c80184dc6d7fb729461d1142ab840ff1cd7d80a6d321a6beb24bbd486",
+  "compute_report_sha256": "740d23bf0d9d231317e5aca35a64eea90b840db34fc70301067145364eac2c5e",
+  "primary_EcoPlus_fold3_loss_preserved": -0.00045989814828217845,
+  "v6_immutable": true,
+  "new_submissions": 0,
+  "next": "Current full suite then five gated exact test contexts; no new modeling choices"
+}

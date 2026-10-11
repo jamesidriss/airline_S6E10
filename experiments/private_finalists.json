@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-09T14:31:38.999961+00:00",
+  "updated_utc": "2026-10-11T21:09:33.943056+00:00",
   "BEST_A": {
     "name": "v6_sol_tabpfn_route_aux10",
     "ref": 56951906,
@@ -40,7 +40,7 @@
   },
   "candidate_in_confirmation": {
     "name": "phase17_B1",
-    "status": "FULL_PRIMARY_PASS_AWAITS_MATCHED_SHADOW_AND_CERTIFIED_TEST",
+    "status": "FULL_PRIMARY_AND_MATCHED_SHADOW_PASS_AWAITS_CERTIFIED_TEST",
     "internal_estimators": 2,
     "complete_primary_folds": [
       0,
@@ -81,10 +81,17 @@
     "paired_se": 9.368949671537106e-06,
     "primary_report": "reports/phase17_B1_primary.json",
     "primary_performance_admission": true,
-    "independent_confirmation_passed": false,
+    "independent_confirmation_passed": true,
     "test_predictions_complete": false,
     "oof_stress_report": "reports/phase17_B1_oof_private_20261009.json",
-    "matched_shadow_auxiliary_report": "reports/phase17_shadow_aux10_verification_20261009.json"
+    "matched_shadow_auxiliary_report": "reports/phase17_shadow_aux10_verification_20261009.json",
+    "shadow_report": "reports/phase17_B1_shadow_confirmation.json",
+    "shadow_paired_deltas": [
+      0.00010088664507579281,
+      7.413980634984885e-05
+    ],
+    "shadow_mean_delta": 8.751322571282083e-05,
+    "test_contexts_complete": []
   },
   "verified_clean_BEST_B_HEDGE": null,
   "banked_legacy_previous_best_A": {
@@ -101,7 +108,7 @@
   },
   "final_selection_reassessed": true,
   "kaggle_final_selection_updated": false,
-  "continuation_status": "PHASE17_B1_QUALIFICATION_RESOURCE_BLOCKED_B2_RESOURCE_BRANCH_CLOSED",
+  "continuation_status": "PHASE17_FROZEN_TEST_PENDING_AFTER_MATCHED_SHADOW_PASS_B2_CLOSED",
   "rejected_hedge_candidates": {
     "clean_aux10": {
       "oof_loss_vs_A": 0.00034690428011585617,
@@ -235,5 +242,6 @@
     "checkpoint_decision": "reports/phase17_checkpoint_decision_20261009.json",
     "full_tests_passed": 142,
     "full_tests_failed": 0
-  }
+  },
+  "rescue_previous_finalists_snapshot_sha256": "4ef5e9ac897ba8e3555bf021f24351dc8af7c6ff1ae1202e5122e552a3a564a7"
 }
