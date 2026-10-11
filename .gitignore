@@ -60,6 +60,8 @@ reports/**/*.npy
 !submissions/manifest.csv
 !submissions/kaggle_submissions.csv
 !submissions/*.csv
+# New frozen finalist vectors stay local; certificates record their exact hashes.
+/submissions/v7_sol_tabpfn_internal2_aux10.csv
 !STATUS.md
 !research/**
 
