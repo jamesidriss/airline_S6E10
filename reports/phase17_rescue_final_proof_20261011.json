@@ -1,0 +1,258 @@
+{
+  "utc": "2026-10-12T01:17:06.740201+00:00",
+  "status": "COMPLETE_CERTIFIED_AND_SUBMITTED_ALL_CLOSING_CHECKS_PASS",
+  "exact_stop_status": "COMPLETE \u2014 CERTIFIED AND SUBMITTED",
+  "evidence_commit_before_final_closing_metadata": "0c4b8423b368a8231ccc58582e457751144c4159",
+  "pre_result_commit": "60064495e44633ffb2da055a41b9c482ab23ee79",
+  "pre_result_sha256": "78e9086f847fbff543bf7ef098e536fd5934ca5b90450b88a8964acec3f81323",
+  "candidate": "v7_sol_tabpfn_internal2_aux10",
+  "new_uploads": 1,
+  "ref": "57090508",
+  "public_auc": 0.96146,
+  "public_delta_vs_v6": 2e-05,
+  "actual_private_score_known": false,
+  "public_rank_snapshot": {
+    "utc": "2026-10-12T01:01:01.084697+00:00",
+    "team_rank": 351,
+    "teams": 1554
+  },
+  "quota_remaining": 9,
+  "recommended_champion_A": "v7_sol_tabpfn_internal2_aux10",
+  "credible_champion_B": null,
+  "v6_preserved_as_clean_banked_fallback": {
+    "name": "v6_sol_tabpfn_route_aux10",
+    "ref": 56951906,
+    "oof": 0.9617656138245795,
+    "public": 0.96144,
+    "status": "CERTIFIED_RECOMMENDED_CHAMPION_A_EXPECTED_PRIVATE_PERFORMER",
+    "primary_report": "reports/sol_route_aux10_primary_final.json",
+    "test_certificate": "reports/sol_route_aux10_primary_final_test_certificate.json",
+    "scorecard": "reports/sol_route_aux10_recovery_scorecard.json",
+    "pre_result_manifest": "reports/v6_sol_tabpfn_route_aux10_pre_result.json",
+    "receipt": "reports/v6_sol_tabpfn_route_aux10_result.json",
+    "test_prediction_sha256": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+    "independent_scope": "Both predeclared shadow folds and fixed primary fold0 seed1202 diagnostic; full shadow and block10 not established",
+    "policy_limitation": "Small100k training pool/20k holdout policy audit has zero-crossing bootstrap interval; five-context fallback remains frozen; no deployment OOF score claimed"
+  },
+  "primary": {
+    "full_auc": 0.9618529228157235,
+    "pooled_delta": 8.730899114406387e-05,
+    "paired_fold_deltas": [
+      0.0001006337950936187,
+      5.353630502968887e-05,
+      0.00010374848677385806,
+      8.215554972856864e-05,
+      9.92298601477648e-05
+    ],
+    "mean_paired_gain": 8.786079935469981e-05,
+    "paired_se": 9.368949671537106e-06,
+    "positive_folds": 5,
+    "pair_rescue_damage": {
+      "all_positive_negative_pairs": 120813731344,
+      "rescued_pair_credit": 148033941.5,
+      "damaged_pair_credit": 137485816.5,
+      "rescued_pair_fraction": 0.0012253072548392228,
+      "damaged_pair_fraction": 0.0011379982636951142,
+      "net_auc_gain": 8.73089911441085e-05,
+      "baseline_error_pair_credit": 4619238859.5,
+      "candidate_error_pair_credit": 4608690734.5,
+      "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+    },
+    "correlation_vs_v6": {
+      "logit": 0.9998244792314533,
+      "spearman": 0.9988084279012514,
+      "probability_residual": 0.9997279027392092
+    },
+    "segments": [
+      {
+        "column": "Class",
+        "value": "Business",
+        "rows": 342212,
+        "delta": 0.00014853953292859323
+      },
+      {
+        "column": "Class",
+        "value": "Eco",
+        "rows": 327404,
+        "delta": 0.0002025420962225022
+      },
+      {
+        "column": "Class",
+        "value": "Eco Plus",
+        "rows": 30019,
+        "delta": 1.7752492166511757e-05
+      },
+      {
+        "column": "Type of Travel",
+        "value": "Business travel",
+        "rows": 497441,
+        "delta": 9.838851139643001e-05
+      },
+      {
+        "column": "Type of Travel",
+        "value": "Personal Travel",
+        "rows": 202194,
+        "delta": 0.00039151373519830113
+      },
+      {
+        "column": "Customer Type",
+        "value": "Loyal Customer",
+        "rows": 576990,
+        "delta": 8.452735000130662e-05
+      },
+      {
+        "column": "Customer Type",
+        "value": "disloyal Customer",
+        "rows": 122645,
+        "delta": 0.00017123314328759687
+      },
+      {
+        "column": "Gender",
+        "value": "Female",
+        "rows": 347952,
+        "delta": 8.83457037196278e-05
+      },
+      {
+        "column": "Gender",
+        "value": "Male",
+        "rows": 351683,
+        "delta": 8.629197962672919e-05
+      }
+    ],
+    "distance_to_stretch": 0.0002470771842764119
+  },
+  "shadow_paired_deltas": [
+    0.00010088664507579281,
+    7.413980634984885e-05
+  ],
+  "shadow_mean_delta": 8.751322571282083e-05,
+  "private_820": {
+    "simulations": 820,
+    "public_quantiles": [
+      2.3412805300709884e-05,
+      9.139586968948121e-05,
+      0.0001645381957157743
+    ],
+    "private_quantiles": [
+      5.586951140424401e-05,
+      8.606747059097808e-05,
+      0.0001184793102690207
+    ],
+    "private_p05": 5.586951140424401e-05,
+    "private_median": 8.606747059097808e-05,
+    "private_worst_5pct_mean": 4.822835249580601e-05,
+    "public_private_sign_disagreement_rate": 0.015853658536585366,
+    "private_reversal_vs_full_oof_rate": 0.0,
+    "public_reversal_vs_full_oof_rate": 0.015853658536585366
+  },
+  "certified_test_contexts": 5,
+  "internal_estimators_each": 2,
+  "fit_rows_each": 559708,
+  "test_rows": 299844,
+  "prediction_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
+  "csv_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+  "ordered_test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+  "test_correlation_vs_v6": {
+    "logit": 0.9998959438301246,
+    "spearman": 0.9992486121970208
+  },
+  "all_frozen_parameters_chosen_before_public_result": true,
+  "tests": {
+    "actual_passed": 142,
+    "actual_failed": 0,
+    "actual_run_report": "reports\\phase17_rescue_current_full_tests_20261011.json",
+    "source_hashes_still_identical": true,
+    "all_four_required_leakage_tests_passed": true
+  },
+  "closing_checks": {
+    "integrity_report": "reports\\phase17_rescue_post_result_integrity_20261011.json",
+    "integrity_report_sha256": "5ae82fc7b72a62424ae94d96220ce0f289fef20f097f8e61e7622bac43ab46ae",
+    "integrity_status": "PHASE17_INTEGRITY_PASS",
+    "historical_evidence_files": 75,
+    "checkpoint_inputs_reverified": 174,
+    "append_only_phase17_ledger_rows": 34,
+    "changed_git_blobs_scanned": 317,
+    "unicode_scan_report": "reports\\phase17_rescue_post_result_unicode_scan_20261011.json",
+    "unicode_scan_sha256": "5fae869793b9b739108a682a877f8fe793fc2e6dd8867cdaaa51d9e2bb8e3d94",
+    "unicode_scan_status": "FULL_TEXT_AND_UTF16_SECRET_SCAN_AND_COMMITTED_BYTES_PASS",
+    "working_text_files_scanned": 1427,
+    "utf16_working_logs_scanned": 65,
+    "secret_findings": 0,
+    "git_working_byte_mismatches": 0,
+    "all_four_bank_CSV_hashes_unchanged": true,
+    "old_submission_rows_unchanged": true,
+    "new_submission_rows": 1,
+    "frozen_pre_result_inputs_still_match": true,
+    "all_Python_and_PS_source_unchanged_since_actual_142_test_pass": true,
+    "v6_finalist_descriptor_preserved": true,
+    "no_model_worker_remaining_at_resource_snapshot": true
+  },
+  "banked_csv_hashes": {
+    "v3_final": {
+      "path": "submissions\\v3_final.csv",
+      "sha256": "9602c2ad6628d55c802fbf8c3099e87b1f4a8257697bb255ff8b0e8b836c418a",
+      "bytes": 8286788
+    },
+    "v4_fulldata": {
+      "path": "submissions\\v4_fulldata.csv",
+      "sha256": "49aedb8ba57a914139ba98e13ab4f4284f29e029d41c6c0475276da0839a4670",
+      "bytes": 8184508
+    },
+    "v5_aux_cross": {
+      "path": "submissions\\v5_aux_cross.csv",
+      "sha256": "9f88dc476d28f3675014e1e876134da66d837fb57b722ecdc0b5e8f8d5858f61",
+      "bytes": 8286293
+    },
+    "v6_sol_tabpfn_route_aux10": {
+      "path": "submissions\\v6_sol_tabpfn_route_aux10.csv",
+      "sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d",
+      "bytes": 8285382
+    }
+  },
+  "model_and_probe_hours": 11.92826817536113,
+  "budget_ceiling_hours": 28,
+  "budget_reset": false,
+  "resources": {
+    "source": "actual host native Windows counters",
+    "active_campaign_model_workers": [],
+    "no_windows_virtual_memory_change": true,
+    "unrelated_processes_terminated": false,
+    "ram_free_gib": 12.56551742553711,
+    "pagefiles": [
+      {
+        "peak_gib": 0.1337890625,
+        "name": "C:\\pagefile.sys",
+        "allocated_gib": 31,
+        "current_gib": 0.1103515625
+      }
+    ],
+    "utc": "2026-10-12T01:01:03.5135544Z",
+    "scope": "Read-only resource closure; only approved pip cache cleanup was performed",
+    "c_free_gib": 188.7790184020996
+  },
+  "scientific_limitations": "Conditional OOF resampling, not unknown private labels or refitting uncertainty; partial shadow scope, no block10/new B1 seed confirmation; frozen five-context fallback and small-policy-audit uncertainty; Eco Plus fold losses preserved.",
+  "phase18_or_n4_retry_started": false,
+  "Kaggle_final_selection_explicitly_changed": false,
+  "outstanding_required_model_submission_or_research_work": [],
+  "evidence_file_sha256": {
+    "reports\\phase17_rescue_completion_20261011.json": "d8b6613ff20901fd22f9bb8db056a3256dab1644ef549be73b881778cb70bb83",
+    "reports\\v7_sol_tabpfn_internal2_aux10_result.json": "fbf0ac489af54b7dc387a4ae0839461899e934f4bdf44d473bb1934e2fab3207",
+    "reports\\v7_sol_tabpfn_internal2_aux10_pre_result.json": "78e9086f847fbff543bf7ef098e536fd5934ca5b90450b88a8964acec3f81323",
+    "reports\\v7_sol_tabpfn_internal2_aux10_test_certificate.json": "e8bf46bed832ee430d3b109f407a8c9d4c07869995a4f60a184a6f1bbea35bc0",
+    "reports\\phase17_rescue_current_full_tests_20261011.json": "9fdb1b850e49336eb9e4889fdd64aef6b7bd320cf60a03ca967c23404c1da912",
+    "reports\\phase17_rescue_checkpoint_preservation_20261011.json": "bcc23ec14adfd1d5b2eb850841a8e90dace534a6568ebb952ba1b7eb1cefed0d",
+    "reports\\phase17_rescue_banked_csv_preservation_20261011.json": "5873863ca74ad5dd38a808efaa93c57dfc87f90559f85130ed99191d07502753",
+    "reports\\phase17_rescue_completion_resources_20261011.json": "8bc30aa54a85be77120f1a857e5feccebdf2f59349950ff99602ee89c8ff01fa",
+    "reports\\phase17_rescue_post_result_integrity_20261011.json": "5ae82fc7b72a62424ae94d96220ce0f289fef20f097f8e61e7622bac43ab46ae",
+    "reports\\phase17_rescue_post_result_unicode_scan_20261011.json": "5fae869793b9b739108a682a877f8fe793fc2e6dd8867cdaaa51d9e2bb8e3d94",
+    "reports\\phase17_rescue_post_result_integrity_20261011.log": "a0c95bf8abcff9453033fe1c1ac9062408cd49269ad11f110755732112569e6e",
+    "reports\\v7_sol_tabpfn_internal2_aux10_upload_receipt.json": "482fddd85a68447f010e1521ea83354bd91cdcf793af51c9ef22d654f309d400",
+    "reports\\phase17_rescue_kaggle_result_20261011.json": "046ef4c3c9ee6c6b098581fa24366538a0a7f32d061e88d3c7384f377f628756",
+    "experiments\\private_finalists.json": "f131945066ef03b112b413b2ccae2e73604cec21a54566ca940fc78a61682f57",
+    "STATUS_sol.md": "67e3a28f696e0aa05aced036e2d0f58292db60b03f5e54e72c0cd736f8b4bc2a",
+    "experiments\\ledger.jsonl": "3436f472f93b6cbeee7e3450811412ea322a2456c4ff9efbe1cf55d71b95a1fa",
+    "submissions\\manifest.csv": "42d24001e89ce7b837d1be060198a79615c625b0bacdb939e6e1b6a6cb8c1088",
+    "submissions\\kaggle_submissions.csv": "55454d088c44a960ee0bc240b45361f78b0aad377f05d7a83c622fd8e4c5b588"
+  },
+  "noncyclic_final_commit_policy": "All substantive frozen/result checks passed at the stated evidence commit. Closing metadata, these audit reports and the final proof are then committed, scanned in full and byte-compared to Git; final remote HEAD is checked after the last push. Self-hashing and cyclic final-commit fields are deliberately excluded."
+}

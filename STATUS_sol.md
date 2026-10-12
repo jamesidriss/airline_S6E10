@@ -1,5 +1,8 @@
 # SOL campaign — audit and continuation
 
+Phase17 rescue 2026-10-12T01:17:06.740201+00:00: COMPLETE — CERTIFIED AND SUBMITTED. One authorized upload, ref57090508, scored public0.96146 (+0.00002 versus preservedv6); private score unknown. Both matched B1 shadow folds passed; all5 test contexts/299844 rows certified; current142PASS/0FAIL. Post-result integrity PASS:75 historical evidence files,174 checkpoint inputs,34 append-only ledger rows,317 changed Git blobs; Unicode secret scan PASS,0findings. v7 recommendedA; no credibleB; v6 and all4 bankedCSV hashes unchanged. Cumulative11.928268h/28h; no model worker remains. Closing proof: reports/phase17_rescue_final_proof_20261011.json; final push is verified after committing these closing files. No additional submission/research authorized by this finite rescue.
+
+
 Phase17 rescue 2026-10-12T01:06:21.232145+00:00: v7 CERTIFIED and single upload SCORED COMPLETE,ref57090508,public0.96146,delta+20micro versusv6. A frozen before public; team public rank351/1554 at2026-10-12T01:01:01.084697+00:00; quota9. Full primary.9618529228157235(+87.308991micro),shadowmean+87.513226micro;5/5 exact test contexts; current142PASS/0FAIL. V6 hash unchanged; no credibleB; cumulative11.928268h/28h. Post-result closing audit/push pending; no further upload/research.
 
 

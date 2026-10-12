@@ -1,6 +1,6 @@
 {
   "utc": "2026-10-12T01:06:21.232145+00:00",
-  "status": "CERTIFIED_AND_SCORED_POST_RESULT_INTEGRITY_PUSH_PENDING",
+  "status": "COMPLETE \u2014 CERTIFIED AND SUBMITTED",
   "exact_stop_target": "COMPLETE \u2014 CERTIFIED AND SUBMITTED",
   "evidence_git_before_closure": "60064495e44633ffb2da055a41b9c482ab23ee79",
   "disk_recovery": {
@@ -757,9 +757,9 @@
     ],
     "cumulative_model_hours": 11.92826817536113,
     "remaining_model_hours": 16.07173182463887,
-    "next": "Continue only the frozen gated rescue queue",
-    "new_submissions": 0,
-    "resource_note": "Latest actual Cfree162.797535GiB is a separate background/user/system increase; approved cache recovery remains measured8.012329GiB; no additional cleanup by this rescue",
+    "next": "Finite authorized rescue complete; no further model or submission work",
+    "new_submissions": 1,
+    "resource_note": "Latest actual host closure is recorded separately; approved cache recovery remains8.012329GiB. Subsequent large free-space changes are not attributed to our cleanup.",
     "invalid_worker_attempts": [
       {
         "report": "reports/phase17_rescue_B1_shadow3_observer_failure_20261011.json",
@@ -795,11 +795,27 @@
     "phase16_bitexact": true
   },
   "post_result_checks": {
-    "old_submission_records_unchanged": true,
-    "all_four_banked_CSV_hashes_unchanged": true,
+    "integrity_report": "reports\\phase17_rescue_post_result_integrity_20261011.json",
+    "integrity_report_sha256": "5ae82fc7b72a62424ae94d96220ce0f289fef20f097f8e61e7622bac43ab46ae",
+    "integrity_status": "PHASE17_INTEGRITY_PASS",
+    "historical_evidence_files": 75,
+    "checkpoint_inputs_reverified": 174,
+    "append_only_phase17_ledger_rows": 34,
+    "changed_git_blobs_scanned": 317,
+    "unicode_scan_report": "reports\\phase17_rescue_post_result_unicode_scan_20261011.json",
+    "unicode_scan_sha256": "5fae869793b9b739108a682a877f8fe793fc2e6dd8867cdaaa51d9e2bb8e3d94",
+    "unicode_scan_status": "FULL_TEXT_AND_UTF16_SECRET_SCAN_AND_COMMITTED_BYTES_PASS",
+    "working_text_files_scanned": 1427,
+    "utf16_working_logs_scanned": 65,
+    "secret_findings": 0,
+    "git_working_byte_mismatches": 0,
+    "all_four_bank_CSV_hashes_unchanged": true,
+    "old_submission_rows_unchanged": true,
+    "new_submission_rows": 1,
     "frozen_pre_result_inputs_still_match": true,
-    "no_remaining_model_worker": true,
-    "full_post_result_integrity_and_secret_audit": "Pending closing execution and push"
+    "all_Python_and_PS_source_unchanged_since_actual_142_test_pass": true,
+    "v6_finalist_descriptor_preserved": true,
+    "no_model_worker_remaining_at_resource_snapshot": true
   },
   "scientific_limitations": "Conditional OOF resampling, not unknown private labels or refitting uncertainty; partial shadow scope, no block10/new B1 seed confirmation; frozen five-context fallback and small-policy-audit uncertainty; Eco Plus fold losses preserved.",
   "new_model_or_submission_work_after_this_finite_rescue": "None; no automatic Phase18 or n4 retry",
@@ -807,7 +823,209 @@
     "reports\\v7_sol_tabpfn_internal2_aux10_pre_result.json": "78e9086f847fbff543bf7ef098e536fd5934ca5b90450b88a8964acec3f81323",
     "reports\\v7_sol_tabpfn_internal2_aux10_result.json": "fbf0ac489af54b7dc387a4ae0839461899e934f4bdf44d473bb1934e2fab3207",
     "reports\\phase17_rescue_kaggle_result_20261011.json": "046ef4c3c9ee6c6b098581fa24366538a0a7f32d061e88d3c7384f377f628756",
-    "reports\\phase17_rescue_completion_resources_20261011.json": "8bc30aa54a85be77120f1a857e5feccebdf2f59349950ff99602ee89c8ff01fa"
+    "reports\\phase17_rescue_completion_resources_20261011.json": "8bc30aa54a85be77120f1a857e5feccebdf2f59349950ff99602ee89c8ff01fa",
+    "reports\\phase17_rescue_post_result_integrity_20261011.json": "5ae82fc7b72a62424ae94d96220ce0f289fef20f097f8e61e7622bac43ab46ae",
+    "reports\\phase17_rescue_post_result_unicode_scan_20261011.json": "5fae869793b9b739108a682a877f8fe793fc2e6dd8867cdaaa51d9e2bb8e3d94",
+    "reports\\phase17_rescue_checkpoint_preservation_20261011.json": "bcc23ec14adfd1d5b2eb850841a8e90dace534a6568ebb952ba1b7eb1cefed0d",
+    "reports\\phase17_rescue_current_full_tests_20261011.json": "9fdb1b850e49336eb9e4889fdd64aef6b7bd320cf60a03ca967c23404c1da912"
   },
-  "closing_policy": "Noncyclic closing audit, scan and final proof follow this report; final remote HEAD is verified and delivered after the last commit."
+  "closing_policy": "All substantive frozen/result checks passed at the stated evidence commit. Closing metadata, these audit reports and the final proof are then committed, scanned in full and byte-compared to Git; final remote HEAD is checked after the last push. Self-hashing and cyclic final-commit fields are deliberately excluded.",
+  "closing_utc": "2026-10-12T01:17:06.740201+00:00",
+  "exact_stop_status": "COMPLETE \u2014 CERTIFIED AND SUBMITTED",
+  "primary": {
+    "full_auc": 0.9618529228157235,
+    "pooled_delta": 8.730899114406387e-05,
+    "paired_fold_deltas": [
+      0.0001006337950936187,
+      5.353630502968887e-05,
+      0.00010374848677385806,
+      8.215554972856864e-05,
+      9.92298601477648e-05
+    ],
+    "mean_paired_gain": 8.786079935469981e-05,
+    "paired_se": 9.368949671537106e-06,
+    "positive_folds": 5,
+    "pair_rescue_damage": {
+      "all_positive_negative_pairs": 120813731344,
+      "rescued_pair_credit": 148033941.5,
+      "damaged_pair_credit": 137485816.5,
+      "rescued_pair_fraction": 0.0012253072548392228,
+      "damaged_pair_fraction": 0.0011379982636951142,
+      "net_auc_gain": 8.73089911441085e-05,
+      "baseline_error_pair_credit": 4619238859.5,
+      "candidate_error_pair_credit": 4608690734.5,
+      "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+    },
+    "correlation_vs_v6": {
+      "logit": 0.9998244792314533,
+      "spearman": 0.9988084279012514,
+      "probability_residual": 0.9997279027392092
+    },
+    "segments": [
+      {
+        "column": "Class",
+        "value": "Business",
+        "rows": 342212,
+        "delta": 0.00014853953292859323
+      },
+      {
+        "column": "Class",
+        "value": "Eco",
+        "rows": 327404,
+        "delta": 0.0002025420962225022
+      },
+      {
+        "column": "Class",
+        "value": "Eco Plus",
+        "rows": 30019,
+        "delta": 1.7752492166511757e-05
+      },
+      {
+        "column": "Type of Travel",
+        "value": "Business travel",
+        "rows": 497441,
+        "delta": 9.838851139643001e-05
+      },
+      {
+        "column": "Type of Travel",
+        "value": "Personal Travel",
+        "rows": 202194,
+        "delta": 0.00039151373519830113
+      },
+      {
+        "column": "Customer Type",
+        "value": "Loyal Customer",
+        "rows": 576990,
+        "delta": 8.452735000130662e-05
+      },
+      {
+        "column": "Customer Type",
+        "value": "disloyal Customer",
+        "rows": 122645,
+        "delta": 0.00017123314328759687
+      },
+      {
+        "column": "Gender",
+        "value": "Female",
+        "rows": 347952,
+        "delta": 8.83457037196278e-05
+      },
+      {
+        "column": "Gender",
+        "value": "Male",
+        "rows": 351683,
+        "delta": 8.629197962672919e-05
+      }
+    ],
+    "distance_to_stretch": 0.0002470771842764119
+  },
+  "private_820": {
+    "simulations": 820,
+    "public_quantiles": [
+      2.3412805300709884e-05,
+      9.139586968948121e-05,
+      0.0001645381957157743
+    ],
+    "private_quantiles": [
+      5.586951140424401e-05,
+      8.606747059097808e-05,
+      0.0001184793102690207
+    ],
+    "private_p05": 5.586951140424401e-05,
+    "private_median": 8.606747059097808e-05,
+    "private_worst_5pct_mean": 4.822835249580601e-05,
+    "public_private_sign_disagreement_rate": 0.015853658536585366,
+    "private_reversal_vs_full_oof_rate": 0.0,
+    "public_reversal_vs_full_oof_rate": 0.015853658536585366
+  },
+  "frozen_candidate_definition": {
+    "internal_estimators": 2,
+    "outer_contexts": 5,
+    "fit_rows_each": 559708,
+    "seed": 1201,
+    "frozen_params": {
+      "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35\\tabpfn-v3.5-20260909.safetensors",
+      "n_estimators": 2,
+      "auto_scale_n_estimators": false,
+      "random_state": 1201,
+      "device": "cuda",
+      "ignore_pretraining_limits": true,
+      "fit_mode": "fit_with_cache",
+      "kv_cache_precision": "int8",
+      "keep_cache_on_device": true,
+      "inference_precision": "autocast",
+      "categorical_features_indices": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        21
+      ],
+      "memory_saving_mode": true,
+      "n_preprocessing_jobs": 1,
+      "tuning_config": null
+    },
+    "feature_names": [
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Cleanliness",
+      "Gender",
+      "Customer Type",
+      "Type of Travel",
+      "Class",
+      "Age",
+      "Flight Distance",
+      "Departure Delay in Minutes",
+      "Arrival Delay in Minutes",
+      "Flight Distance coarse10"
+    ],
+    "checkpoint": {
+      "accessed_utc": "2026-10-07T18:55:06.560314+00:00",
+      "source": "https://huggingface.co/Prior-Labs/tabpfn_3_5",
+      "revision": "06bf2ba35c80a92a3b9abb436b99cf49e7a0365e",
+      "checkpoint_sha256": "ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3",
+      "license_sha256": "9570fdd687bb76ed45499412ad57d6ba949848e6d731f1242572bb57f2f73ae1",
+      "license": "TabPFN-3.5 Non-Commercial License v1.0; section 1.c includes data science competitions; no commercial deployment",
+      "usage": "own fold-safe full-context inference, no imported competition predictions",
+      "rule_section": "2.6 external public models"
+    },
+    "library_source_sha256": {
+      "classifier.py": "946f31f593d50fb1ab64fc948451bc2d5071c6d119ecb1c9ac419e633d7c3708",
+      "inference.py": "7b24edcee231de2d40c616415aa5b72ea19ec020b9b6889c6f1209b98f178444",
+      "base.py": "3537d7939bc6122c2339b464371d5f7428d4342cf6b9b58f3ccfa96022af3304",
+      "inference_config.py": "9861965d5082b55be5f1182563b7043a4c413783ce87db57a0925fc3ea05cf38",
+      "preprocessing/ensemble.py": "6c795ffa8715aa1a6692eaa99c745cc1209c8cf46564b9fc16b0cb427fa9ebff",
+      "preprocessing/datamodel.py": "bdbba1fb6881fe71826fb8ed9e97f367e471f599ce268088f0154202332acd06"
+    },
+    "geometry": "Official internal probability aggregation followed by equal probability average of five exact primary FIT contexts; unchanged auxiliary10 mean logits; fixed50/50 logit portfolio",
+    "weights": {
+      "route": 0.5,
+      "equal_logit_auxiliary10": 0.5
+    },
+    "all_raw_estimator_contributions_replay_bitexact": true,
+    "no_new_seed_weight_feature_calibration_or_architecture_choice": true
+  },
+  "frozen_policy_audit_limitation": {
+    "source": "reports/sol_policy_pseudotest_comparison.json",
+    "source_sha256": "82f37c69b4f8edc9452b4011a2c5d858f8080a22fbab448c5017663e51fe850a",
+    "fit_pool_rows": 100000,
+    "held_out_rows": 20000,
+    "delta_average_minus_single": 3.91749266208663e-05,
+    "bootstrap_95_interval": [
+      -0.00028568191066898063,
+      0.00027215107282064507
+    ],
+    "limitation": "Small historical frozen fallback audit, not B1 full-data deployment OOF or unknown private performance"
+  }
 }

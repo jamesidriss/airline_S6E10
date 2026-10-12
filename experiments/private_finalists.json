@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-12T01:06:21.232145+00:00",
+  "updated_utc": "2026-10-12T01:17:06.740201+00:00",
   "BEST_A": {
     "name": "v7_sol_tabpfn_internal2_aux10",
     "ref": 57090508,
@@ -376,8 +376,10 @@
     "report": "reports/phase17_rescue_completion_20261011.json",
     "receipt": "reports\\v7_sol_tabpfn_internal2_aux10_result.json",
     "private_leaderboard_unknown": true,
-    "outstanding_required_work": [
-      "Final post-result integrity/secret audit and evidence push"
-    ]
+    "outstanding_required_work": [],
+    "stop_status": "COMPLETE \u2014 CERTIFIED AND SUBMITTED",
+    "closing_proof": "reports\\phase17_rescue_final_proof_20261011.json",
+    "integrity_report": "reports\\phase17_rescue_post_result_integrity_20261011.json",
+    "unicode_scan_report": "reports\\phase17_rescue_post_result_unicode_scan_20261011.json"
   }
 }
