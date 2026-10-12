@@ -1,0 +1,813 @@
+{
+  "utc": "2026-10-12T01:06:21.232145+00:00",
+  "status": "CERTIFIED_AND_SCORED_POST_RESULT_INTEGRITY_PUSH_PENDING",
+  "exact_stop_target": "COMPLETE \u2014 CERTIFIED AND SUBMITTED",
+  "evidence_git_before_closure": "60064495e44633ffb2da055a41b9c482ab23ee79",
+  "disk_recovery": {
+    "initial_C_gib_before_approved_operation": 36.61065673828125,
+    "after_C_gib": 44.62298583984375,
+    "actual_reclaimed_gib": 8.0123291015625,
+    "exact_approved_pip_cache_files": 2375,
+    "successful_monitored_job_C_min_gib": 43.48635482788086,
+    "successful_monitored_job_RAM_min_gib": 4.3838653564453125,
+    "no_personal_or_banked_artifact_removed": true,
+    "original_15GiB_transient_spike": "Not reproduced during this successful frozen queue; original cause remains unproved",
+    "later_large_free_space_gains": "Unassigned background/user/system activity; not credited to the8.012329GiB approved cache cleanup. Pagefile allocation remained31GiB during shadow3 later26.35GiB free-space increase.",
+    "no_pagefile_virtual_memory_setting_change_or_reboot": true,
+    "latest_actual_host": {
+      "source": "actual host native Windows counters",
+      "active_campaign_model_workers": [],
+      "no_windows_virtual_memory_change": true,
+      "unrelated_processes_terminated": false,
+      "ram_free_gib": 12.56551742553711,
+      "pagefiles": [
+        {
+          "peak_gib": 0.1337890625,
+          "name": "C:\\pagefile.sys",
+          "allocated_gib": 31,
+          "current_gib": 0.1103515625
+        }
+      ],
+      "utc": "2026-10-12T01:01:03.5135544Z",
+      "scope": "Read-only resource closure; only approved pip cache cleanup was performed",
+      "c_free_gib": 188.7790184020996
+    }
+  },
+  "shadow_validation": {
+    "status": "MATCHED_SHADOW_CONFIRMATION_PASS",
+    "folds": [
+      {
+        "fold": 2,
+        "route_auc": 0.9619719080451847,
+        "control_route_auc": 0.9616658523888969,
+        "portfolio_auc": 0.9622813155533759,
+        "control_portfolio_auc": 0.9621804289083001,
+        "portfolio_delta": 0.00010088664507579281,
+        "candidate_seconds": 2048.3910000000033,
+        "control_seconds": 1088.4839999999967,
+        "segments": [
+          {
+            "column": "Class",
+            "value": "Business",
+            "rows": 68455,
+            "delta": 0.00018696138513996097
+          },
+          {
+            "column": "Class",
+            "value": "Eco",
+            "rows": 65480,
+            "delta": 0.00029235502968882887
+          },
+          {
+            "column": "Class",
+            "value": "Eco Plus",
+            "rows": 5992,
+            "delta": -0.00010521011821629234
+          },
+          {
+            "column": "Type of Travel",
+            "value": "Business travel",
+            "rows": 99361,
+            "delta": 0.00012033584645643192
+          },
+          {
+            "column": "Type of Travel",
+            "value": "Personal Travel",
+            "rows": 40566,
+            "delta": 0.00021781069748449955
+          },
+          {
+            "column": "Customer Type",
+            "value": "Loyal Customer",
+            "rows": 115470,
+            "delta": 8.282000924775268e-05
+          },
+          {
+            "column": "Customer Type",
+            "value": "disloyal Customer",
+            "rows": 24457,
+            "delta": 0.00030895116508278253
+          },
+          {
+            "column": "Gender",
+            "value": "Female",
+            "rows": 69490,
+            "delta": 9.585067823825177e-05
+          },
+          {
+            "column": "Gender",
+            "value": "Male",
+            "rows": 70437,
+            "delta": 0.00010769507830088454
+          }
+        ]
+      },
+      {
+        "fold": 3,
+        "route_auc": 0.9621038356365788,
+        "control_route_auc": 0.9618408140712369,
+        "portfolio_auc": 0.962317341649972,
+        "control_portfolio_auc": 0.9622432018436221,
+        "portfolio_delta": 7.413980634984885e-05,
+        "candidate_seconds": 2087.2029999999977,
+        "control_seconds": 1048.8589999999967,
+        "segments": [
+          {
+            "column": "Class",
+            "value": "Business",
+            "rows": 68428,
+            "delta": 0.0001454906702086367
+          },
+          {
+            "column": "Class",
+            "value": "Eco",
+            "rows": 65460,
+            "delta": 7.776865876529815e-05
+          },
+          {
+            "column": "Class",
+            "value": "Eco Plus",
+            "rows": 6039,
+            "delta": 0.00017556361082715632
+          },
+          {
+            "column": "Type of Travel",
+            "value": "Business travel",
+            "rows": 99485,
+            "delta": 0.00011013873890330927
+          },
+          {
+            "column": "Type of Travel",
+            "value": "Personal Travel",
+            "rows": 40442,
+            "delta": 0.00022001698499996003
+          },
+          {
+            "column": "Customer Type",
+            "value": "Loyal Customer",
+            "rows": 115514,
+            "delta": 6.792713440439968e-05
+          },
+          {
+            "column": "Customer Type",
+            "value": "disloyal Customer",
+            "rows": 24413,
+            "delta": 0.00026751991096141126
+          },
+          {
+            "column": "Gender",
+            "value": "Female",
+            "rows": 69292,
+            "delta": 7.812774545001844e-05
+          },
+          {
+            "column": "Gender",
+            "value": "Male",
+            "rows": 70635,
+            "delta": 6.979193133693773e-05
+          }
+        ]
+      }
+    ],
+    "paired_deltas": [
+      0.00010088664507579281,
+      7.413980634984885e-05
+    ],
+    "mean_paired_delta": 8.751322571282083e-05,
+    "bootstrap": {
+      "seed": 20261010,
+      "repeats": 200,
+      "unit": "paired rows resampled with replacement",
+      "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+      "reference": "control",
+      "comparisons": {
+        "candidate": {
+          "mean": 8.838100167502083e-05,
+          "percentile_95_interval": [
+            4.8200411803181466e-05,
+            0.00012619511879020384
+          ],
+          "positive_fraction": 1.0
+        }
+      }
+    },
+    "all_job_resources_and_runtimes": [
+      {
+        "path": "reports/phase17_rescue_B0_shadow2_verification_20261011.json",
+        "sha256": "d64d63e154d406238a0e3a9ad78f119ad532eea2912b872ba82a46beec19e5c6",
+        "status": "COMPLETE_HASH_VERIFIED_MATCHED_B0_CONTROL_FOLD",
+        "worker_seconds": 1093.765999999996,
+        "resources": {
+          "sample_interval_seconds": 15,
+          "samples": 71,
+          "sampled_disk_min_gib": 43.48635482788086,
+          "sampled_ram_min_gib": 4.3838653564453125,
+          "sampled_process_commit_max_gib": 18.932044982910156,
+          "sampled_gpu_allocated_max_gib": 12.731980800628662,
+          "sampled_gpu_reserved_max_gib": 13.376953125,
+          "driver_gpu_allocation_peak_gib": 12.735887050628662,
+          "initial_pagefiles": [
+            {
+              "name": "C:\\pagefile.sys",
+              "allocated_bytes": 29472325632,
+              "used_bytes": 85983232,
+              "peak_used_bytes": 114294784
+            }
+          ],
+          "last_pagefiles": [
+            {
+              "name": "C:\\pagefile.sys",
+              "allocated_bytes": 29472325632,
+              "used_bytes": 98566144,
+              "peak_used_bytes": 114294784
+            }
+          ],
+          "pagefile_allocated_unique_gib": [
+            27.4482421875
+          ],
+          "disk_start_gib": 44.05678939819336,
+          "disk_last_sample_gib": 50.428924560546875,
+          "telemetry_final_disk_gib": 50.40269470214844,
+          "temp_metadata_scope": "Immediate files only; recursive changes outside this scope are not measured",
+          "transient_growth_conclusion": "Prior15GiB collapse was not reproduced by this single-estimator control. Separate~7GiB free-space increase was observed without pagefile-allocation change and is not attributed to our cleanup.",
+          "observations_sha256": "48b78884c0bcd7499a027669dd1bd106fd32a6bfc90ab6b93b4ca70cc4017051",
+          "summary_sha256": "70d2f6d8aa87a9a601de6afe0252ee91a4c5a81a413f3d289352b23128b46e64"
+        }
+      },
+      {
+        "path": "reports/phase17_rescue_B0_shadow3_verification_20261011.json",
+        "sha256": "bf895c6182d0d13c2603a75cac56594c9a9c7ccaa0ede7a5ab1bcf929641ffc3",
+        "status": "COMPLETE_HASH_VERIFIED_MATCHED_B0_CONTROL_FOLD",
+        "worker_seconds": 1055.811999999998,
+        "resources": {
+          "sample_interval_seconds": 15,
+          "samples": 69,
+          "sampled_disk_min_gib": 48.50439453125,
+          "sampled_ram_min_gib": 5.1822967529296875,
+          "sampled_process_commit_max_gib": 18.9161376953125,
+          "sampled_gpu_allocated_max_gib": 12.731980800628662,
+          "sampled_gpu_reserved_max_gib": 13.376953125,
+          "driver_gpu_allocation_peak_gib": 12.735887050628662,
+          "initial_pagefiles": [
+            {
+              "name": "C:\\pagefile.sys",
+              "allocated_bytes": 29472325632,
+              "used_bytes": 98566144,
+              "peak_used_bytes": 114294784
+            }
+          ],
+          "last_pagefiles": [
+            {
+              "name": "C:\\pagefile.sys",
+              "allocated_bytes": 29472325632,
+              "used_bytes": 99614720,
+              "peak_used_bytes": 114294784
+            }
+          ],
+          "pagefile_allocated_unique_gib": [
+            27.4482421875
+          ],
+          "disk_start_gib": 49.867027282714844,
+          "disk_last_sample_gib": 48.50439453125,
+          "telemetry_final_disk_gib": 48.5025749206543,
+          "temp_metadata_scope": "Immediate files only; recursive changes outside this scope are not measured",
+          "transient_growth_conclusion": "Prior15GiB collapse was not reproduced by this single-estimator control. No Windows storage or virtual-memory setting was changed.",
+          "observations_sha256": "6a77cfcab5b8905facfac75996fc36b920e953c55c8c1c2ded412dfc2c0fb63b",
+          "summary_sha256": "c88d5900500d2f6b0ca1aff50785105359d86703937597ab359bf653c2d01f2f"
+        }
+      },
+      {
+        "path": "reports/phase17_rescue_B1_shadow2_verification_20261011.json",
+        "sha256": "5f0f399fac9d6a32f289b3d45c32916602031f04dbab9b7c4e0e9e1828fad728",
+        "status": "COMPLETE_REPLAY_VERIFIED_B1_SHADOW_FOLD_REQUIRES_OTHER_FOLD",
+        "worker_seconds": 2057.6410000000033,
+        "resources": {
+          "sample_interval_seconds": 15,
+          "samples": 134,
+          "sampled_disk_min_gib": 47.99722671508789,
+          "sampled_ram_min_gib": 5.851524353027344,
+          "sampled_process_commit_max_gib": 20.661117553710938,
+          "sampled_gpu_allocated_max_gib": 12.731980800628662,
+          "sampled_gpu_reserved_max_gib": 13.384765625,
+          "driver_gpu_allocation_peak_gib": 12.735887050628662,
+          "pagefile_allocated_unique_gib": [
+            27.4482421875
+          ],
+          "observations_sha256": "72a7a48cf35b643123525f844749ab919b9a721f8e7dbcd253cfb1f7a77ce766",
+          "summary_sha256": "40de1a573e6cee6981e3490c75ccaad0368bb84c2df2621b4329071b085972a1"
+        }
+      },
+      {
+        "path": "reports/phase17_rescue_B1_shadow3_verification_20261011.json",
+        "sha256": "467984f16cac8bc523388cf1dc108458667b6f80626a11a3d0067b300be646ec",
+        "status": "COMPLETE_FROZEN_CONTEXT_REPLAY_VERIFIED",
+        "worker_seconds": 2095.1709999999985,
+        "resources": {
+          "sample_interval_seconds": 15,
+          "samples": 137,
+          "sampled_disk_min_gib": 161.93781661987305,
+          "sampled_ram_min_gib": 4.528026580810547,
+          "sampled_process_commit_max_gib": 20.65740966796875,
+          "sampled_gpu_allocated_max_gib": 12.731980800628662,
+          "sampled_gpu_reserved_max_gib": 13.384765625,
+          "pagefile_allocated_unique_gib": [
+            31.0
+          ],
+          "observations_sha256": "bbfff4dc6cc99b8cebcef1c9883c54bc92f17e8e63989d4a8acd4e6ca2c8bb33",
+          "summary_sha256": "d5b6a3b99a32074385a1f55064f7e2b75cddcbb88cea202142848fef45968a54"
+        }
+      }
+    ],
+    "shared_auxiliary_fits_reused": 20
+  },
+  "test_certificate": {
+    "path": "reports/v7_sol_tabpfn_internal2_aux10_test_certificate.json",
+    "sha256": "e8bf46bed832ee430d3b109f407a8c9d4c07869995a4f60a184a6f1bbea35bc0",
+    "contexts_complete": 5,
+    "internal_estimators_each": 2,
+    "fit_rows_each": 559708,
+    "ordered_unique_test_rows": 299844,
+    "all_raw_replays_and_exact_original_primary_configuration_checks_passed": true,
+    "geometry": "Official internal probability aggregation followed by equal probability average of five exact primary FIT contexts; unchanged auxiliary10 mean logits; fixed50/50 logit portfolio",
+    "full_CSV_roundtrip_verified": true,
+    "prediction_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
+    "csv_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+    "test_correlation_vs_v6": {
+      "logit": 0.9998959438301246,
+      "spearman": 0.9992486121970208
+    },
+    "test_job_resources_and_runtimes": [
+      {
+        "path": "reports/phase17_rescue_test0_verification_20261011.json",
+        "sha256": "3fcf0f8d61632586412f579e77eeeb1dee37a6659642aa2f6db73f809a22750f",
+        "status": "COMPLETE_FROZEN_CONTEXT_REPLAY_VERIFIED",
+        "worker_seconds": 2605.4680000000008,
+        "resources": {
+          "sample_interval_seconds": 15,
+          "samples": 171,
+          "sampled_disk_min_gib": 189.0132942199707,
+          "sampled_ram_min_gib": 7.156360626220703,
+          "sampled_process_commit_max_gib": 20.644691467285156,
+          "sampled_gpu_allocated_max_gib": 12.731980800628662,
+          "sampled_gpu_reserved_max_gib": 13.384765625,
+          "pagefile_allocated_unique_gib": [
+            31.0
+          ],
+          "observations_sha256": "e2c2e9301ab0f76ea56bca3c6b6b476e30b08e679886cbcfae9287590be9370f",
+          "summary_sha256": "71122d22b09f284ac3f51f3bb9cd54739c0d429313e34a552e9e9fd3936c1dd5"
+        }
+      },
+      {
+        "path": "reports/phase17_rescue_test1_verification_20261011.json",
+        "sha256": "7ee52cceb10d805c3923bf80340be650b1f484368bb02fb0b051f3bcdebd3a7e",
+        "status": "COMPLETE_FROZEN_CONTEXT_REPLAY_VERIFIED",
+        "worker_seconds": 2592.625,
+        "resources": {
+          "sample_interval_seconds": 15,
+          "samples": 169,
+          "sampled_disk_min_gib": 189.04645538330078,
+          "sampled_ram_min_gib": 7.429725646972656,
+          "sampled_process_commit_max_gib": 20.64642333984375,
+          "sampled_gpu_allocated_max_gib": 12.731980800628662,
+          "sampled_gpu_reserved_max_gib": 13.384765625,
+          "pagefile_allocated_unique_gib": [
+            31.0
+          ],
+          "observations_sha256": "c6c8770156e5fb9f86c6d3e0603645121d1b37b0b11ed0e7fc1c3b5adfbeb2af",
+          "summary_sha256": "e14c9b2ca65210d6f251b4d8905ee5d11a9d6870920adf49f946c55cd65d6117"
+        }
+      },
+      {
+        "path": "reports/phase17_rescue_test2_verification_20261011.json",
+        "sha256": "0f8b476e53808fd635c9c9feffff14526fa732c773db5bc12f08f7275ae36b06",
+        "status": "COMPLETE_FROZEN_CONTEXT_REPLAY_VERIFIED",
+        "worker_seconds": 2567.0,
+        "resources": {
+          "sample_interval_seconds": 15,
+          "samples": 167,
+          "sampled_disk_min_gib": 189.0304183959961,
+          "sampled_ram_min_gib": 7.345569610595703,
+          "sampled_process_commit_max_gib": 20.63454818725586,
+          "sampled_gpu_allocated_max_gib": 12.731980800628662,
+          "sampled_gpu_reserved_max_gib": 13.384765625,
+          "pagefile_allocated_unique_gib": [
+            31.0
+          ],
+          "observations_sha256": "ae2e2bead623ecb163a030c17558533568707cc0da786cd59d4031baa83783a5",
+          "summary_sha256": "5bb9f005267848b97b81ad27f25d6880b2d94a6781b9f7358c41d9a0c4fb92fe"
+        }
+      },
+      {
+        "path": "reports/phase17_rescue_test3_verification_20261011.json",
+        "sha256": "23fc115df19ae0f8ac6d4ccebbb40da821ddee5e5bd7802c2e40d56885c0b5ac",
+        "status": "COMPLETE_FROZEN_CONTEXT_REPLAY_VERIFIED",
+        "worker_seconds": 2566.875,
+        "resources": {
+          "sample_interval_seconds": 15,
+          "samples": 167,
+          "sampled_disk_min_gib": 188.79397201538086,
+          "sampled_ram_min_gib": 7.609249114990234,
+          "sampled_process_commit_max_gib": 20.643573760986328,
+          "sampled_gpu_allocated_max_gib": 12.731980800628662,
+          "sampled_gpu_reserved_max_gib": 13.384765625,
+          "pagefile_allocated_unique_gib": [
+            31.0
+          ],
+          "observations_sha256": "d523bf0965b1c79ced3a1fec8171e515e370a689acaa33788f8f2b195c6c61ab",
+          "summary_sha256": "fd97d5c4f2aaebf6d3fd4a22c47da458caf35c819cdcceeb60f1bd32bfa1dfc7"
+        }
+      },
+      {
+        "path": "reports/phase17_rescue_test4_verification_20261011.json",
+        "sha256": "832e6b7b262accf6f5ada0e87e04963c03c9ee954805ac8c8b40e5ab2d5ea515",
+        "status": "COMPLETE_FROZEN_CONTEXT_REPLAY_VERIFIED",
+        "worker_seconds": 2566.7649999999994,
+        "resources": {
+          "sample_interval_seconds": 15,
+          "samples": 167,
+          "sampled_disk_min_gib": 188.78849029541016,
+          "sampled_ram_min_gib": 7.397556304931641,
+          "sampled_process_commit_max_gib": 20.64855194091797,
+          "sampled_gpu_allocated_max_gib": 12.731980800628662,
+          "sampled_gpu_reserved_max_gib": 13.384765625,
+          "pagefile_allocated_unique_gib": [
+            31.0
+          ],
+          "observations_sha256": "b4b08ab6997c6570a1011cd6e758b4d75cba07613791d07d8f2c32216a2a5bd6",
+          "summary_sha256": "a15d3ebc6fbf0e0f5b622a2f9df8505d721fec16dc27f36a5f7405fa6ac6cfe3"
+        }
+      }
+    ]
+  },
+  "submission": {
+    "utc": "2026-10-12T01:06:21.232145+00:00",
+    "status": "COMPLETE_SCORED_SINGLE_FROZEN_SUBMISSION",
+    "candidate": "v7_sol_tabpfn_internal2_aux10",
+    "ref": "57090508",
+    "file": "v7_sol_tabpfn_internal2_aux10.csv",
+    "upload_attempts": 1,
+    "kaggle_status": "COMPLETE",
+    "public_auc": 0.96146,
+    "public_delta_vs_v6": 2e-05,
+    "team_public_rank_at_snapshot": 351,
+    "team_count_at_snapshot": 1554,
+    "rank_snapshot_utc": "2026-10-12T01:01:01.084697+00:00",
+    "rank_scope": "Authenticated competition-list team user_rank; not a reconstructed submission-specific rank",
+    "remote_remaining": 9,
+    "local_used_utc_day": 1,
+    "local_remaining": 9,
+    "pre_result_sha256": "78e9086f847fbff543bf7ef098e536fd5934ca5b90450b88a8964acec3f81323",
+    "pre_result_commit": "60064495e44633ffb2da055a41b9c482ab23ee79",
+    "csv_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+    "prediction_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
+    "test_correlation_vs_v6": {
+      "logit": 0.9998959438301246,
+      "spearman": 0.9992486121970208
+    },
+    "chosen_A_before_public_score": true,
+    "public_noise_floor_approx": 0.0002,
+    "interpretation": "Public gain20micro is a measurement within the measured paired noise floor; it does not establish actual private improvement. Frozen private-first A choice, seeds, weights and configurations are unchanged.",
+    "actual_private_score_known": false,
+    "source_snapshot": "reports\\phase17_rescue_kaggle_result_20261011.json",
+    "source_snapshot_sha256": "046ef4c3c9ee6c6b098581fa24366538a0a7f32d061e88d3c7384f377f628756",
+    "old_submission_records_unchanged": true,
+    "all_four_bank_csv_hashes_unchanged": true
+  },
+  "finalist_decision": {
+    "A": "v7_sol_tabpfn_internal2_aux10",
+    "B": null,
+    "v6_preserved": {
+      "name": "v6_sol_tabpfn_route_aux10",
+      "ref": 56951906,
+      "oof": 0.9617656138245795,
+      "public": 0.96144,
+      "status": "CERTIFIED_RECOMMENDED_CHAMPION_A_EXPECTED_PRIVATE_PERFORMER",
+      "primary_report": "reports/sol_route_aux10_primary_final.json",
+      "test_certificate": "reports/sol_route_aux10_primary_final_test_certificate.json",
+      "scorecard": "reports/sol_route_aux10_recovery_scorecard.json",
+      "pre_result_manifest": "reports/v6_sol_tabpfn_route_aux10_pre_result.json",
+      "receipt": "reports/v6_sol_tabpfn_route_aux10_result.json",
+      "test_prediction_sha256": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+      "independent_scope": "Both predeclared shadow folds and fixed primary fold0 seed1202 diagnostic; full shadow and block10 not established",
+      "policy_limitation": "Small100k training pool/20k holdout policy audit has zero-crossing bootstrap interval; five-context fallback remains frozen; no deployment OOF score claimed"
+    },
+    "primary": {
+      "full_auc": 0.9618529228157235,
+      "pooled_delta": 8.730899114406387e-05,
+      "paired_fold_deltas": [
+        0.0001006337950936187,
+        5.353630502968887e-05,
+        0.00010374848677385806,
+        8.215554972856864e-05,
+        9.92298601477648e-05
+      ],
+      "mean_paired_gain": 8.786079935469981e-05,
+      "paired_se": 9.368949671537106e-06,
+      "positive_folds": 5,
+      "pair_rescue_damage": {
+        "all_positive_negative_pairs": 120813731344,
+        "rescued_pair_credit": 148033941.5,
+        "damaged_pair_credit": 137485816.5,
+        "rescued_pair_fraction": 0.0012253072548392228,
+        "damaged_pair_fraction": 0.0011379982636951142,
+        "net_auc_gain": 8.73089911441085e-05,
+        "baseline_error_pair_credit": 4619238859.5,
+        "candidate_error_pair_credit": 4608690734.5,
+        "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+      },
+      "correlation_vs_v6": {
+        "logit": 0.9998244792314533,
+        "spearman": 0.9988084279012514,
+        "probability_residual": 0.9997279027392092
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": 0.00014853953292859323
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": 0.0002025420962225022
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": 1.7752492166511757e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": 9.838851139643001e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": 0.00039151373519830113
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": 8.452735000130662e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": 0.00017123314328759687
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": 8.83457037196278e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": 8.629197962672919e-05
+        }
+      ],
+      "distance_to_stretch": 0.0002470771842764119
+    },
+    "primary_bootstrap": {
+      "seed": 20261010,
+      "repeats": 200,
+      "unit": "paired rows resampled with replacement",
+      "limitation": "Conditional on saved validation predictions; does not simulate refitting or unknown distribution shift",
+      "reference": "v6",
+      "comparisons": {
+        "candidate": {
+          "mean": 8.647908725301079e-05,
+          "percentile_95_interval": [
+            5.9349370008857094e-05,
+            0.00011372372512356565
+          ],
+          "positive_fraction": 1.0
+        }
+      }
+    },
+    "shadow_mean_delta": 8.751322571282083e-05,
+    "private820": {
+      "simulations": 820,
+      "public_quantiles": [
+        2.3412805300709884e-05,
+        9.139586968948121e-05,
+        0.0001645381957157743
+      ],
+      "private_quantiles": [
+        5.586951140424401e-05,
+        8.606747059097808e-05,
+        0.0001184793102690207
+      ],
+      "private_p05": 5.586951140424401e-05,
+      "private_median": 8.606747059097808e-05,
+      "private_worst_5pct_mean": 4.822835249580601e-05,
+      "public_private_sign_disagreement_rate": 0.015853658536585366,
+      "private_reversal_vs_full_oof_rate": 0.0,
+      "public_reversal_vs_full_oof_rate": 0.015853658536585366
+    },
+    "EcoPlus_risks": {
+      "primary_fold3_EcoPlus": {
+        "fold": 3,
+        "segment": "Class/Eco Plus",
+        "rows": 6058,
+        "delta": -0.00045989814828217845,
+        "pooled_segment_delta": 1.7752492166511757e-05,
+        "policy": "Primary fold3 loss and shadow2 Eco Plus loss preserved; both frozen matched shadow confirmation gates passed."
+      },
+      "shadow_EcoPlus": [
+        {
+          "fold": 2,
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 5992,
+          "delta": -0.00010521011821629234
+        },
+        {
+          "fold": 3,
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 6039,
+          "delta": 0.00017556361082715632
+        }
+      ]
+    },
+    "v6_complementarity": {
+      "utc": "2026-10-12T00:50:14.061537+00:00",
+      "status": "V6_PRESERVED_AS_BANKED_FALLBACK_NO_CREDIBLE_CHAMPION_B",
+      "chosen_A": "v7_sol_tabpfn_internal2_aux10",
+      "comparison_candidate": "v6_sol_tabpfn_route_aux10",
+      "method": "Analytical reversal of exact primary pair credits and the same frozen private draw deltas; actual certified test correlations",
+      "contract_sha256": "35309829038353de953d07a26f8d59718f5929f5757494172c015a1559a6e58a",
+      "primary_report_sha256": "c63f5a172c7bdbaa160ce7aa022a1214daf03d5e0daac0540f7b9f2aa116f449",
+      "test_certificate_sha256": "e8bf46bed832ee430d3b109f407a8c9d4c07869995a4f60a184a6f1bbea35bc0",
+      "simulation_sha256": "cf5adb08b5c068a21816ca0cd90ad49e39c62161786bf9e7adff450e76d8feb5",
+      "pooled_delta_vs_A": -8.730899114406387e-05,
+      "mean_paired_delta_vs_A": -8.786079935469981e-05,
+      "paired_fold_deltas": [
+        -0.0001006337950936187,
+        -5.353630502968887e-05,
+        -0.00010374848677385806,
+        -8.215554972856864e-05,
+        -9.92298601477648e-05
+      ],
+      "oof_correlation": {
+        "logit": 0.9998244792314533,
+        "spearman": 0.9988084279012514,
+        "probability_residual": 0.9997279027392092
+      },
+      "test_correlation": {
+        "logit": 0.9998959438301246,
+        "spearman": 0.9992486121970208
+      },
+      "rescued_pair_credit": 137485816.5,
+      "damaged_pair_credit": 148033941.5,
+      "rescued_pair_fraction": 0.0011379982636951142,
+      "damaged_pair_fraction": 0.0012253072548392228,
+      "rescue_damage_ratio": 0.9287452263101432,
+      "minimum_ratio": 0.95,
+      "private820_p05_delta_vs_A": -0.0001184793102690207,
+      "worst_pooled_segment_delta_vs_A": -0.00039151373519830113,
+      "comparison_thresholds": {
+        "pooled_loss": true,
+        "mean_paired_loss": true,
+        "oof_spearman": true,
+        "test_spearman": false,
+        "rescued_pair_fraction": true,
+        "rescue_damage_ratio": false,
+        "worst_segment_delta": false,
+        "private820_p05": true
+      },
+      "all_comparison_thresholds_pass": false,
+      "qualification_scope": "Comparison thresholds cannot manufacture a new Phase17 certificate for v6; structural dependence and failed rescue ratio preclude an independent B claim",
+      "v6_prediction_and_csv_unchanged": true
+    },
+    "stretch_0_9621_reached": false,
+    "remaining_gap_to_stretch": 0.0002470771842764119,
+    "Kaggle_final_selection_explicitly_changed": false
+  },
+  "budget": {
+    "utc": "2026-10-12T00:47:10.750151+00:00",
+    "prior_model_hours": 6.544027500000019,
+    "total_ceiling_hours": 28,
+    "unique_completed_model_workers": [
+      {
+        "tag": "phase17_rescue_telemetry_B0_shadow2_20261011",
+        "seconds": 1093.765999999996,
+        "status": "FROZEN_DRIVER_COMPLETE",
+        "sha256": "70d2f6d8aa87a9a601de6afe0252ee91a4c5a81a413f3d289352b23128b46e64"
+      },
+      {
+        "tag": "phase17_rescue_telemetry_B0_shadow3_20261011",
+        "seconds": 1055.811999999998,
+        "status": "FROZEN_DRIVER_COMPLETE",
+        "sha256": "c88d5900500d2f6b0ca1aff50785105359d86703937597ab359bf653c2d01f2f"
+      },
+      {
+        "tag": "phase17_rescue_telemetry_B1_shadow2_20261011",
+        "seconds": 2057.6410000000033,
+        "status": "FROZEN_DRIVER_COMPLETE",
+        "sha256": "40de1a573e6cee6981e3490c75ccaad0368bb84c2df2621b4329071b085972a1"
+      },
+      {
+        "tag": "phase17_rescue_telemetry_B1_shadow3_retry_20261011",
+        "seconds": 2095.1709999999985,
+        "status": "FROZEN_DRIVER_COMPLETE",
+        "sha256": "d5b6a3b99a32074385a1f55064f7e2b75cddcbb88cea202142848fef45968a54"
+      },
+      {
+        "tag": "phase17_rescue_telemetry_test0_20261011",
+        "seconds": 2605.4680000000008,
+        "status": "FROZEN_DRIVER_COMPLETE",
+        "sha256": "71122d22b09f284ac3f51f3bb9cd54739c0d429313e34a552e9e9fd3936c1dd5"
+      },
+      {
+        "tag": "phase17_rescue_telemetry_test1_20261011",
+        "seconds": 2592.625,
+        "status": "FROZEN_DRIVER_COMPLETE",
+        "sha256": "e14c9b2ca65210d6f251b4d8905ee5d11a9d6870920adf49f946c55cd65d6117"
+      },
+      {
+        "tag": "phase17_rescue_telemetry_test2_20261011",
+        "seconds": 2567.0,
+        "status": "FROZEN_DRIVER_COMPLETE",
+        "sha256": "5bb9f005267848b97b81ad27f25d6880b2d94a6781b9f7358c41d9a0c4fb92fe"
+      },
+      {
+        "tag": "phase17_rescue_telemetry_test3_20261011",
+        "seconds": 2566.875,
+        "status": "FROZEN_DRIVER_COMPLETE",
+        "sha256": "fd97d5c4f2aaebf6d3fd4a22c47da458caf35c819cdcceeb60f1bd32bfa1dfc7"
+      },
+      {
+        "tag": "phase17_rescue_telemetry_test4_20261011",
+        "seconds": 2566.7649999999994,
+        "status": "FROZEN_DRIVER_COMPLETE",
+        "sha256": "a15d3ebc6fbf0e0f5b622a2f9df8505d721fec16dc27f36a5f7405fa6ac6cfe3"
+      }
+    ],
+    "cumulative_model_hours": 11.92826817536113,
+    "remaining_model_hours": 16.07173182463887,
+    "next": "Continue only the frozen gated rescue queue",
+    "new_submissions": 0,
+    "resource_note": "Latest actual Cfree162.797535GiB is a separate background/user/system increase; approved cache recovery remains measured8.012329GiB; no additional cleanup by this rescue",
+    "invalid_worker_attempts": [
+      {
+        "report": "reports/phase17_rescue_B1_shadow3_observer_failure_20261011.json",
+        "report_sha256": "bb9cba516606f5ce4688accd6e83af3f8973a8a31f2766de6793b9acdadfb82c",
+        "seconds": 182.1434313,
+        "verdict": "INVALID_OBSERVER_NO_MODEL_VERDICT"
+      }
+    ]
+  },
+  "tests": {
+    "actual_passed": 142,
+    "actual_failed": 0,
+    "actual_run_report": "reports\\phase17_rescue_current_full_tests_20261011.json",
+    "source_hashes_still_identical": true,
+    "all_four_required_leakage_tests_passed": true
+  },
+  "preupload_audits": {
+    "data_ID_model_bank_append_only_ledger_source_bytes": "PHASE17_INTEGRITY_PASS",
+    "historical_evidence_files": 75,
+    "checkpoint_inputs_resolve": 174,
+    "changed_git_blobs_scanned": 304,
+    "secret_scan_and_UTF16": "FULL_TEXT_AND_UTF16_SECRET_SCAN_AND_COMMITTED_BYTES_PASS",
+    "working_text_files_scanned": 1415,
+    "utf16_logs_scanned": 65,
+    "banked_v3_v4_v5_v6_csv_hashes_unchanged": true
+  },
+  "numerical_equivalence_recheck": {
+    "path": "reports\\phase17_internal2_serial_equivalence_20261009.json",
+    "sha256": "36ff05a4e2bc870abc701de9deba89276af5b1b189cbdda73f02a8e634833808",
+    "passes": true,
+    "maximum_probability_gap": 1.1920928955078125e-07,
+    "tolerance": 2e-06,
+    "phase16_bitexact": true
+  },
+  "post_result_checks": {
+    "old_submission_records_unchanged": true,
+    "all_four_banked_CSV_hashes_unchanged": true,
+    "frozen_pre_result_inputs_still_match": true,
+    "no_remaining_model_worker": true,
+    "full_post_result_integrity_and_secret_audit": "Pending closing execution and push"
+  },
+  "scientific_limitations": "Conditional OOF resampling, not unknown private labels or refitting uncertainty; partial shadow scope, no block10/new B1 seed confirmation; frozen five-context fallback and small-policy-audit uncertainty; Eco Plus fold losses preserved.",
+  "new_model_or_submission_work_after_this_finite_rescue": "None; no automatic Phase18 or n4 retry",
+  "evidence_sha256": {
+    "reports\\v7_sol_tabpfn_internal2_aux10_pre_result.json": "78e9086f847fbff543bf7ef098e536fd5934ca5b90450b88a8964acec3f81323",
+    "reports\\v7_sol_tabpfn_internal2_aux10_result.json": "fbf0ac489af54b7dc387a4ae0839461899e934f4bdf44d473bb1934e2fab3207",
+    "reports\\phase17_rescue_kaggle_result_20261011.json": "046ef4c3c9ee6c6b098581fa24366538a0a7f32d061e88d3c7384f377f628756",
+    "reports\\phase17_rescue_completion_resources_20261011.json": "8bc30aa54a85be77120f1a857e5feccebdf2f59349950ff99602ee89c8ff01fa"
+  },
+  "closing_policy": "Noncyclic closing audit, scan and final proof follow this report; final remote HEAD is verified and delivered after the last commit."
+}

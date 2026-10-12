@@ -1,5 +1,8 @@
 # SOL campaign — audit and continuation
 
+Phase17 rescue 2026-10-12T01:06:21.232145+00:00: v7 CERTIFIED and single upload SCORED COMPLETE,ref57090508,public0.96146,delta+20micro versusv6. A frozen before public; team public rank351/1554 at2026-10-12T01:01:01.084697+00:00; quota9. Full primary.9618529228157235(+87.308991micro),shadowmean+87.513226micro;5/5 exact test contexts; current142PASS/0FAIL. V6 hash unchanged; no credibleB; cumulative11.928268h/28h. Post-result closing audit/push pending; no further upload/research.
+
+
 Phase17 rescue 2026-10-12T00:53:23.382171+00:00: v7 internal2 CERTIFIED and frozen private decision PASS;820/820 positive private resampling deltas,P05+55.869511micro/median+86.067471micro. Chosen A before public result; testSpearman.999248612/logitPearson.999895944 versusv6; v6 preserved fallback, no credibleB. Actual142PASS/0FAIL; final integrity/pre-result push/single upload pending;0uploads.
 
 

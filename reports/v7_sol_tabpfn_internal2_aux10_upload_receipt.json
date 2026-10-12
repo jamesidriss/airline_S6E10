@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-12T00:59:32.575459+00:00",
+  "git_before_upload": "60064495e44633ffb2da055a41b9c482ab23ee79",
+  "status": "SINGLE_UPLOAD_CONFIRMED_EXACT_REFERENCE_PENDING_SCORE",
+  "candidate": "v7_sol_tabpfn_internal2_aux10",
+  "ref": "57090508",
+  "file": "v7_sol_tabpfn_internal2_aux10.csv",
+  "description": "Frozen v7 internal2 + unchanged auxiliary10; primary +87.309micro, matched shadow +87.513micro; pre-result 78e9086f847f; private-first, no public tuning",
+  "upload_attempts": 1,
+  "pre_result_path": "reports\\v7_sol_tabpfn_internal2_aux10_pre_result.json",
+  "pre_result_sha256": "78e9086f847fbff543bf7ef098e536fd5934ca5b90450b88a8964acec3f81323",
+  "csv_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+  "prediction_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
+  "uploaded": true,
+  "no_public_based_parameter_change": true
+}

@@ -1,23 +1,23 @@
 {
-  "updated_utc": "2026-10-12T00:53:23.382171+00:00",
+  "updated_utc": "2026-10-12T01:06:21.232145+00:00",
   "BEST_A": {
     "name": "v7_sol_tabpfn_internal2_aux10",
-    "ref": null,
+    "ref": 57090508,
     "oof": 0.9618529228157235,
-    "public": null,
-    "status": "FROZEN_CERTIFIED_CHAMPION_A_CHOICE_FINAL_INTEGRITY_AND_SINGLE_UPLOAD_PENDING",
+    "public": 0.96146,
+    "status": "CERTIFIED_RECOMMENDED_CHAMPION_A_SCORED_PRIVATE_FIRST",
     "primary_report": "reports/phase17_B1_primary.json",
     "shadow_report": "reports/phase17_B1_shadow_confirmation.json",
     "test_certificate": "reports\\v7_sol_tabpfn_internal2_aux10_test_certificate.json",
     "decision": "reports\\v7_sol_tabpfn_internal2_aux10_decision.json",
     "private_simulation": "reports\\phase17_rescue_v7_private820_20261011.json",
-    "pre_result_manifest": "reports/v7_sol_tabpfn_internal2_aux10_pre_result.json",
+    "pre_result_manifest": "reports\\v7_sol_tabpfn_internal2_aux10_pre_result.json",
     "test_prediction_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
     "csv_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
     "independent_scope": "Two predeclared matched alternative shadow folds, not unseen labels or full shadow/block10",
     "policy_limitation": "Five exact original primary FIT contexts averaged in probability space; small100k/20k policy audit has zero-crossing interval; no full-data TabPFN deployment OOF, new B1 seed confirmation or unknown private labels claimed",
     "chosen_before_public_score": true,
-    "uploaded": false,
+    "uploaded": true,
     "risk": {
       "primary_fold3_EcoPlus": {
         "fold": 3,
@@ -43,7 +43,8 @@
           "delta": 0.00017556361082715632
         }
       ]
-    }
+    },
+    "receipt": "reports\\v7_sol_tabpfn_internal2_aux10_result.json"
   },
   "BEST_B_HEDGE": null,
   "fallback_B": {
@@ -55,22 +56,22 @@
   "final_selection_locked": false,
   "verified_clean_BEST_A": {
     "name": "v7_sol_tabpfn_internal2_aux10",
-    "ref": null,
+    "ref": 57090508,
     "oof": 0.9618529228157235,
-    "public": null,
-    "status": "FROZEN_CERTIFIED_CHAMPION_A_CHOICE_FINAL_INTEGRITY_AND_SINGLE_UPLOAD_PENDING",
+    "public": 0.96146,
+    "status": "CERTIFIED_RECOMMENDED_CHAMPION_A_SCORED_PRIVATE_FIRST",
     "primary_report": "reports/phase17_B1_primary.json",
     "shadow_report": "reports/phase17_B1_shadow_confirmation.json",
     "test_certificate": "reports\\v7_sol_tabpfn_internal2_aux10_test_certificate.json",
     "decision": "reports\\v7_sol_tabpfn_internal2_aux10_decision.json",
     "private_simulation": "reports\\phase17_rescue_v7_private820_20261011.json",
-    "pre_result_manifest": "reports/v7_sol_tabpfn_internal2_aux10_pre_result.json",
+    "pre_result_manifest": "reports\\v7_sol_tabpfn_internal2_aux10_pre_result.json",
     "test_prediction_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
     "csv_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
     "independent_scope": "Two predeclared matched alternative shadow folds, not unseen labels or full shadow/block10",
     "policy_limitation": "Five exact original primary FIT contexts averaged in probability space; small100k/20k policy audit has zero-crossing interval; no full-data TabPFN deployment OOF, new B1 seed confirmation or unknown private labels claimed",
     "chosen_before_public_score": true,
-    "uploaded": false,
+    "uploaded": true,
     "risk": {
       "primary_fold3_EcoPlus": {
         "fold": 3,
@@ -96,11 +97,12 @@
           "delta": 0.00017556361082715632
         }
       ]
-    }
+    },
+    "receipt": "reports\\v7_sol_tabpfn_internal2_aux10_result.json"
   },
   "candidate_in_confirmation": {
     "name": "phase17_B1",
-    "status": "PHASE17_FROZEN_CERTIFIED_A_CHOICE_FINAL_INTEGRITY_PENDING",
+    "status": "COMPLETE_QUALIFIED_CERTIFIED_AND_SUBMITTED",
     "internal_estimators": 2,
     "complete_primary_folds": [
       0,
@@ -119,7 +121,7 @@
     "mean_paired_delta": 8.786079935469981e-05,
     "full_oof_auc": 0.9618529228157235,
     "test_certificate": "reports\\v7_sol_tabpfn_internal2_aux10_test_certificate.json",
-    "uploaded": false,
+    "uploaded": true,
     "complete_folds": [
       0,
       1,
@@ -182,7 +184,11 @@
       "public_private_sign_disagreement_rate": 0.015853658536585366,
       "private_reversal_vs_full_oof_rate": 0.0,
       "public_reversal_vs_full_oof_rate": 0.015853658536585366
-    }
+    },
+    "promoted_as": "v7_sol_tabpfn_internal2_aux10",
+    "ref": 57090508,
+    "public": 0.96146,
+    "receipt": "reports\\v7_sol_tabpfn_internal2_aux10_result.json"
   },
   "verified_clean_BEST_B_HEDGE": null,
   "banked_legacy_previous_best_A": {
@@ -199,7 +205,7 @@
   },
   "final_selection_reassessed": true,
   "kaggle_final_selection_updated": false,
-  "continuation_status": "PHASE17_FROZEN_CERTIFIED_A_CHOICE_FINAL_INTEGRITY_PENDING",
+  "continuation_status": "COMPLETE_CERTIFIED_AND_SUBMITTED_PHASE17_RESCUE",
   "rejected_hedge_candidates": {
     "clean_aux10": {
       "oof_loss_vs_A": 0.00034690428011585617,
@@ -327,8 +333,8 @@
     "four_estimator_discovery": "DISCOVERY_PASS_REQUIRES_FROZEN_REPLICATION",
     "champion_A": "v7_sol_tabpfn_internal2_aux10",
     "champion_B": null,
-    "new_submissions": 0,
-    "next_gate": "Final actual data/ID/source/secret audits, pre-result manifest commit/push and single authorized upload",
+    "new_submissions": 1,
+    "next_gate": "Finite rescue complete; no automatic Phase18 or n4 retry",
     "initial_heavy_budget_hours": 8,
     "extension_used": false,
     "B2_fold0_portfolio_delta": 0.00010445218312693516,
@@ -338,14 +344,15 @@
     "extension_contract": "research\\phase17_compute_extension_20261009.json",
     "four_estimator_replication": "RESOURCE_BRANCH_CLOSED_NO_MODEL_REJECTION",
     "resume_tag": "phase17_B2_resume1_v3",
-    "resource_status": "Current completed test3 telemetry minimum Cfree188.793972GiB; no guard breach",
-    "status": "PHASE17_FROZEN_CERTIFIED_A_CHOICE_FINAL_INTEGRITY_PENDING",
+    "resource_status": "All monitored jobs stayed above unchanged guards; closure has no remaining model worker",
+    "status": "COMPLETE_CERTIFIED_AND_SUBMITTED_PHASE17_RESCUE",
     "completed_model_and_probe_hours": 11.92826817536113,
     "checkpoint_report": "reports/phase17_checkpoint_report_20261009.md",
     "checkpoint_decision": "reports/phase17_checkpoint_decision_20261009.json",
     "full_tests_passed": 142,
     "full_tests_failed": 0,
-    "rescue_budget_report": "reports/phase17_rescue_test4_verification_20261011_compute.json"
+    "rescue_budget_report": "reports/phase17_rescue_test4_verification_20261011_compute.json",
+    "rescue_completion_report": "reports/phase17_rescue_completion_20261011.json"
   },
   "rescue_previous_finalists_snapshot_sha256": "4ef5e9ac897ba8e3555bf021f24351dc8af7c6ff1ae1202e5122e552a3a564a7",
   "banked_previous_clean_A": {
@@ -362,5 +369,15 @@
     "test_prediction_sha256": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
     "independent_scope": "Both predeclared shadow folds and fixed primary fold0 seed1202 diagnostic; full shadow and block10 not established",
     "policy_limitation": "Small100k training pool/20k holdout policy audit has zero-crossing bootstrap interval; five-context fallback remains frozen; no deployment OOF score claimed"
+  },
+  "banked_previous_clean_A_role": "IMMUTABLE_VALIDATED_V6_FALLBACK_STRUCTURALLY_RELATED_NOT_CHAMPION_B",
+  "phase17_rescue_completion": {
+    "new_submissions": 1,
+    "report": "reports/phase17_rescue_completion_20261011.json",
+    "receipt": "reports\\v7_sol_tabpfn_internal2_aux10_result.json",
+    "private_leaderboard_unknown": true,
+    "outstanding_required_work": [
+      "Final post-result integrity/secret audit and evidence push"
+    ]
   }
 }

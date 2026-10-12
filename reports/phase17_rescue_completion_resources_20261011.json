@@ -1,0 +1,18 @@
+{
+  "source": "actual host native Windows counters",
+  "active_campaign_model_workers": [],
+  "no_windows_virtual_memory_change": true,
+  "unrelated_processes_terminated": false,
+  "ram_free_gib": 12.56551742553711,
+  "pagefiles": [
+    {
+      "peak_gib": 0.1337890625,
+      "name": "C:\\pagefile.sys",
+      "allocated_gib": 31,
+      "current_gib": 0.1103515625
+    }
+  ],
+  "utc": "2026-10-12T01:01:03.5135544Z",
+  "scope": "Read-only resource closure; only approved pip cache cleanup was performed",
+  "c_free_gib": 188.7790184020996
+}
