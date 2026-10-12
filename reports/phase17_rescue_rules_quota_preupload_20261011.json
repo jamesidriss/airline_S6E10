@@ -1,0 +1,32 @@
+{
+  "utc": "2026-10-12T00:07:36.931157+00:00",
+  "status": "CURRENT_OFFICIAL_RULES_AND_AVAILABLE_QUOTA_VERIFIED",
+  "source": "Authenticated current official Kaggle competition pages and submission limits; web viewer fallback",
+  "rules_body_unchanged_from_rescue_start": true,
+  "daily_limit": 10,
+  "final_selection_limit": 2,
+  "deadline_utc": "2026-10-31T23:59:00Z",
+  "remote_remaining": 10,
+  "local_used_utc_day": 0,
+  "local_remaining": 10,
+  "account_existing_v6_ref_verified": "56951906",
+  "sources": {
+    "research\\raw\\phase17_rescue_rules_preupload_20261011.json": "df614e98e2599d664bb30b1be235edc25c926494a66325b3e72f6b979bb526ba",
+    "research\\raw\\phase17_rescue_timeline_preupload_20261011.json": "542cb0ff536d42486d12ec2d1cd26dcc8eb10d41c725d14cc3a476745221743e",
+    "research\\raw\\phase17_rescue_evaluation_preupload_20261011.json": "fd9f1a79b82a841fd5397880112144e079efb3fe9ba9c02607cefc694b6c7dc0",
+    "reports\\phase17_rescue_kaggle_preupload_20261011.json": "3f068fe207500a48ae41045785f610a5e34cf83818e00735861457d4688be8c9"
+  },
+  "no_public_based_parameter_choice": true,
+  "upload_not_started": true,
+  "downloaded_source_pages_local_only": true,
+  "source_body_sha256": {
+    "research/raw/phase17_rescue_rules_preupload_20261011.json": "4f02b59b3d17b6eee4638756d06dce704883809fd0e38d214e07d8ab74f85b5d",
+    "research/raw/phase17_rescue_timeline_preupload_20261011.json": "33e84979637a6d899c9d006d7b21d745b6da0309883f98badf4ecbe7ed911261",
+    "research/raw/phase17_rescue_evaluation_preupload_20261011.json": "d04d1dc3043c2d60ae1ce0c111d7dd7549a414ad53932378948e7b243041d398"
+  },
+  "rules_prior_source": {
+    "path": "research/raw/phase17_rescue_rules_current_20261011.json",
+    "sha256": "efcab927964720ad8ee8cabde9a8e0110eb407fde05b6a3c83744a54e5d12e06"
+  },
+  "source_retrieval": "KaggleApi.competition_list_pages(playground-series-s6e10): exact Rules, Timeline and Evaluation content"
+}
