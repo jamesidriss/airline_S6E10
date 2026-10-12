@@ -1,0 +1,331 @@
+{
+  "utc": "2026-10-12T00:57:45.269318+00:00",
+  "git_evidence_commit": "82b15f16fcf4773ff4f35b70ef36bde9fc2f166a",
+  "status": "ALL_FROZEN_GATES_PASS_READY_FOR_EXACTLY_ONE_AUTHORIZED_UPLOAD",
+  "candidate": "v7_sol_tabpfn_internal2_aux10",
+  "intended_role": "A",
+  "public_score_observed_for_candidate": false,
+  "uploaded": false,
+  "maximum_upload_attempts": 1,
+  "competition": "playground-series-s6e10",
+  "submission_path": "C:\\Users\\James\\airline_S6E10\\submissions\\v7_sol_tabpfn_internal2_aux10.csv",
+  "submission_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+  "test_prediction_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
+  "test_rows": 299844,
+  "ordered_test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+  "candidate_definition": {
+    "internal_estimators": 2,
+    "outer_contexts": 5,
+    "fit_rows_each": 559708,
+    "seed": 1201,
+    "frozen_params": {
+      "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35\\tabpfn-v3.5-20260909.safetensors",
+      "n_estimators": 2,
+      "auto_scale_n_estimators": false,
+      "random_state": 1201,
+      "device": "cuda",
+      "ignore_pretraining_limits": true,
+      "fit_mode": "fit_with_cache",
+      "kv_cache_precision": "int8",
+      "keep_cache_on_device": true,
+      "inference_precision": "autocast",
+      "categorical_features_indices": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        21
+      ],
+      "memory_saving_mode": true,
+      "n_preprocessing_jobs": 1,
+      "tuning_config": null
+    },
+    "feature_names": [
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Cleanliness",
+      "Gender",
+      "Customer Type",
+      "Type of Travel",
+      "Class",
+      "Age",
+      "Flight Distance",
+      "Departure Delay in Minutes",
+      "Arrival Delay in Minutes",
+      "Flight Distance coarse10"
+    ],
+    "checkpoint": {
+      "accessed_utc": "2026-10-07T18:55:06.560314+00:00",
+      "source": "https://huggingface.co/Prior-Labs/tabpfn_3_5",
+      "revision": "06bf2ba35c80a92a3b9abb436b99cf49e7a0365e",
+      "checkpoint_sha256": "ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3",
+      "license_sha256": "9570fdd687bb76ed45499412ad57d6ba949848e6d731f1242572bb57f2f73ae1",
+      "license": "TabPFN-3.5 Non-Commercial License v1.0; section 1.c includes data science competitions; no commercial deployment",
+      "usage": "own fold-safe full-context inference, no imported competition predictions",
+      "rule_section": "2.6 external public models"
+    },
+    "library_source_sha256": {
+      "classifier.py": "946f31f593d50fb1ab64fc948451bc2d5071c6d119ecb1c9ac419e633d7c3708",
+      "inference.py": "7b24edcee231de2d40c616415aa5b72ea19ec020b9b6889c6f1209b98f178444",
+      "base.py": "3537d7939bc6122c2339b464371d5f7428d4342cf6b9b58f3ccfa96022af3304",
+      "inference_config.py": "9861965d5082b55be5f1182563b7043a4c413783ce87db57a0925fc3ea05cf38",
+      "preprocessing/ensemble.py": "6c795ffa8715aa1a6692eaa99c745cc1209c8cf46564b9fc16b0cb427fa9ebff",
+      "preprocessing/datamodel.py": "bdbba1fb6881fe71826fb8ed9e97f367e471f599ce268088f0154202332acd06"
+    },
+    "geometry": "Official internal probability aggregation followed by equal probability average of five exact primary FIT contexts; unchanged auxiliary10 mean logits; fixed50/50 logit portfolio",
+    "weights": {
+      "route": 0.5,
+      "equal_logit_auxiliary10": 0.5
+    },
+    "all_raw_estimator_contributions_replay_bitexact": true,
+    "no_new_seed_weight_feature_calibration_or_architecture_choice": true
+  },
+  "primary": {
+    "full_auc": 0.9618529228157235,
+    "pooled_delta": 8.730899114406387e-05,
+    "paired_fold_deltas": [
+      0.0001006337950936187,
+      5.353630502968887e-05,
+      0.00010374848677385806,
+      8.215554972856864e-05,
+      9.92298601477648e-05
+    ],
+    "mean_paired_gain": 8.786079935469981e-05,
+    "paired_se": 9.368949671537106e-06,
+    "positive_folds": 5,
+    "pair_rescue_damage": {
+      "all_positive_negative_pairs": 120813731344,
+      "rescued_pair_credit": 148033941.5,
+      "damaged_pair_credit": 137485816.5,
+      "rescued_pair_fraction": 0.0012253072548392228,
+      "damaged_pair_fraction": 0.0011379982636951142,
+      "net_auc_gain": 8.73089911441085e-05,
+      "baseline_error_pair_credit": 4619238859.5,
+      "candidate_error_pair_credit": 4608690734.5,
+      "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+    },
+    "correlation_vs_v6": {
+      "logit": 0.9998244792314533,
+      "spearman": 0.9988084279012514,
+      "probability_residual": 0.9997279027392092
+    },
+    "segments": [
+      {
+        "column": "Class",
+        "value": "Business",
+        "rows": 342212,
+        "delta": 0.00014853953292859323
+      },
+      {
+        "column": "Class",
+        "value": "Eco",
+        "rows": 327404,
+        "delta": 0.0002025420962225022
+      },
+      {
+        "column": "Class",
+        "value": "Eco Plus",
+        "rows": 30019,
+        "delta": 1.7752492166511757e-05
+      },
+      {
+        "column": "Type of Travel",
+        "value": "Business travel",
+        "rows": 497441,
+        "delta": 9.838851139643001e-05
+      },
+      {
+        "column": "Type of Travel",
+        "value": "Personal Travel",
+        "rows": 202194,
+        "delta": 0.00039151373519830113
+      },
+      {
+        "column": "Customer Type",
+        "value": "Loyal Customer",
+        "rows": 576990,
+        "delta": 8.452735000130662e-05
+      },
+      {
+        "column": "Customer Type",
+        "value": "disloyal Customer",
+        "rows": 122645,
+        "delta": 0.00017123314328759687
+      },
+      {
+        "column": "Gender",
+        "value": "Female",
+        "rows": 347952,
+        "delta": 8.83457037196278e-05
+      },
+      {
+        "column": "Gender",
+        "value": "Male",
+        "rows": 351683,
+        "delta": 8.629197962672919e-05
+      }
+    ],
+    "distance_to_stretch": 0.0002470771842764119
+  },
+  "shadow_paired_deltas": [
+    0.00010088664507579281,
+    7.413980634984885e-05
+  ],
+  "shadow_mean_delta": 8.751322571282083e-05,
+  "private_820": {
+    "simulations": 820,
+    "public_quantiles": [
+      2.3412805300709884e-05,
+      9.139586968948121e-05,
+      0.0001645381957157743
+    ],
+    "private_quantiles": [
+      5.586951140424401e-05,
+      8.606747059097808e-05,
+      0.0001184793102690207
+    ],
+    "private_p05": 5.586951140424401e-05,
+    "private_median": 8.606747059097808e-05,
+    "private_worst_5pct_mean": 4.822835249580601e-05,
+    "public_private_sign_disagreement_rate": 0.015853658536585366,
+    "private_reversal_vs_full_oof_rate": 0.0,
+    "public_reversal_vs_full_oof_rate": 0.015853658536585366
+  },
+  "fixed_private_partition_definitions_sha256": "7003ac1c9a0594d3e28f152cc9b556704ef9f1dc1545a1486dd76b164ed64472",
+  "all_820_original_mask_hashes_match": true,
+  "test_correlation_vs_v6": {
+    "logit": 0.9998959438301246,
+    "spearman": 0.9992486121970208
+  },
+  "risks": {
+    "primary_fold3_EcoPlus": {
+      "fold": 3,
+      "segment": "Class/Eco Plus",
+      "rows": 6058,
+      "delta": -0.00045989814828217845,
+      "pooled_segment_delta": 1.7752492166511757e-05,
+      "policy": "Primary fold3 loss and shadow2 Eco Plus loss preserved; both frozen matched shadow confirmation gates passed."
+    },
+    "shadow_EcoPlus": [
+      {
+        "fold": 2,
+        "column": "Class",
+        "value": "Eco Plus",
+        "rows": 5992,
+        "delta": -0.00010521011821629234
+      },
+      {
+        "fold": 3,
+        "column": "Class",
+        "value": "Eco Plus",
+        "rows": 6039,
+        "delta": 0.00017556361082715632
+      }
+    ]
+  },
+  "B": null,
+  "v6_preserved_as_banked_clean_fallback": {
+    "name": "v6_sol_tabpfn_route_aux10",
+    "ref": 56951906,
+    "oof": 0.9617656138245795,
+    "public": 0.96144,
+    "status": "CERTIFIED_RECOMMENDED_CHAMPION_A_EXPECTED_PRIVATE_PERFORMER",
+    "primary_report": "reports/sol_route_aux10_primary_final.json",
+    "test_certificate": "reports/sol_route_aux10_primary_final_test_certificate.json",
+    "scorecard": "reports/sol_route_aux10_recovery_scorecard.json",
+    "pre_result_manifest": "reports/v6_sol_tabpfn_route_aux10_pre_result.json",
+    "receipt": "reports/v6_sol_tabpfn_route_aux10_result.json",
+    "test_prediction_sha256": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+    "independent_scope": "Both predeclared shadow folds and fixed primary fold0 seed1202 diagnostic; full shadow and block10 not established",
+    "policy_limitation": "Small100k training pool/20k holdout policy audit has zero-crossing bootstrap interval; five-context fallback remains frozen; no deployment OOF score claimed"
+  },
+  "tests": {
+    "actual_passed": 142,
+    "actual_failed": 0,
+    "actual_run_report": "reports\\phase17_rescue_current_full_tests_20261011.json",
+    "source_hashes_still_identical": true,
+    "all_four_required_leakage_tests_passed": true
+  },
+  "audits": {
+    "data_ID_model_bank_append_only_ledger_source_bytes": "PHASE17_INTEGRITY_PASS",
+    "historical_evidence_files": 75,
+    "checkpoint_inputs_resolve": 174,
+    "changed_git_blobs_scanned": 304,
+    "secret_scan_and_UTF16": "FULL_TEXT_AND_UTF16_SECRET_SCAN_AND_COMMITTED_BYTES_PASS",
+    "working_text_files_scanned": 1415,
+    "utf16_logs_scanned": 65,
+    "banked_v3_v4_v5_v6_csv_hashes_unchanged": true
+  },
+  "quota_preupload": {
+    "utc": "2026-10-12T00:51:41.581349+00:00",
+    "status": "CURRENT_RULES_QUOTA_AND_NO_DUPLICATE_UPLOAD_PASS",
+    "official_current_page_body_sha256": {
+      "rules": "4f02b59b3d17b6eee4638756d06dce704883809fd0e38d214e07d8ab74f85b5d",
+      "Timeline": "33e84979637a6d899c9d006d7b21d745b6da0309883f98badf4ecbe7ed911261",
+      "Evaluation": "d04d1dc3043c2d60ae1ce0c111d7dd7549a414ad53932378948e7b243041d398"
+    },
+    "reference_rules_verification_sha256": "4e64981ad7b68067aa2daecb40c10a468d2db7ef3174cc5c9fb2c6c81bbffbb9",
+    "remote_remaining": 10,
+    "local_used_utc_day": 0,
+    "local_remaining": 10,
+    "filename": "v7_sol_tabpfn_internal2_aux10.csv",
+    "existing_remote_filename_matches": 0,
+    "existing_local_filename_matches": 0,
+    "deadline_not_passed": true,
+    "submission_source_sha256": "07dd8644a2d2d632640f514c71df28304dca5eaf7d5af057de81001091bd3d90",
+    "decision_sha256": "e2f3d79a392e9d6932e8d1ed309e27dd8b59a1d0e0df5ed0b52ddfaabf819fdc",
+    "uploaded": false
+  },
+  "total_model_and_probe_wall_hours": 11.92826817536113,
+  "total_model_budget_ceiling_hours": 28,
+  "remaining_model_hours": 16.07173182463887,
+  "disk_recovery_measured_gib": 8.0123291015625,
+  "metadata_snapshots_before_upload": {
+    "submissions\\manifest.csv": {
+      "snapshot": "research\\phase17_rescue_pre_result_metadata_20261011\\manifest.csv",
+      "sha256": "42d24001e89ce7b837d1be060198a79615c625b0bacdb939e6e1b6a6cb8c1088"
+    },
+    "submissions\\kaggle_submissions.csv": {
+      "snapshot": "research\\phase17_rescue_pre_result_metadata_20261011\\kaggle_submissions.csv",
+      "sha256": "ef28634b28a24c3449f146d6e28148ee31cf00cdeeab88931cbc1798f732f6a8"
+    }
+  },
+  "evidence_sha256": {
+    "reports\\v7_sol_tabpfn_internal2_aux10_test_certificate.json": "e8bf46bed832ee430d3b109f407a8c9d4c07869995a4f60a184a6f1bbea35bc0",
+    "reports\\v7_sol_tabpfn_internal2_aux10_decision.json": "e2f3d79a392e9d6932e8d1ed309e27dd8b59a1d0e0df5ed0b52ddfaabf819fdc",
+    "reports\\phase17_rescue_v7_private820_20261011.json": "cf5adb08b5c068a21816ca0cd90ad49e39c62161786bf9e7adff450e76d8feb5",
+    "reports\\phase17_rescue_preupload_integrity_20261011.json": "99b18bce5663b92e86294f79f7a4ce82f1876ae74a7b9afff3f02652722310ef",
+    "reports\\phase17_rescue_preupload_unicode_scan_20261011.json": "e4f174d3e66d738dc99913e341aaa84b69a6188e7ca4895d8f47dc60afe59163",
+    "reports\\phase17_rescue_upload_live_rules_guard_20261011.json": "fc6dfc1f28b32b7f657c0b7fc02ba89bdaff7df6da1d0b66e6203497d0f5f712",
+    "reports\\phase17_rescue_current_full_tests_20261011.json": "9fdb1b850e49336eb9e4889fdd64aef6b7bd320cf60a03ca967c23404c1da912",
+    "research\\phase17_rescue_submission_authorization_20261011.json": "ad0847a795c1f344de1b693f2e43f27fe5dc5d221325d4d0c66e4362258020b6",
+    "reports\\phase17_rescue_qualified_choice_20261011.json": "e4551cf3e042d6d0d7872f26ce9dd315c21829d1c5ffda9b3e5f02a081d43da3",
+    "reports\\phase17_B1_primary.json": "c63f5a172c7bdbaa160ce7aa022a1214daf03d5e0daac0540f7b9f2aa116f449",
+    "reports\\phase17_B1_shadow_confirmation.json": "281aae9c80184dc6d7fb729461d1142ab840ff1cd7d80a6d321a6beb24bbd486",
+    "reports\\phase17_rescue_v6_complementarity_20261011.json": "97a9aa96f24ab34800fc940115d51a4a70d22f14d3fefb34862ec1e71d50274c",
+    "reports\\phase17_rescue_checkpoint_preservation_20261011.json": "bcc23ec14adfd1d5b2eb850841a8e90dace534a6568ebb952ba1b7eb1cefed0d",
+    "reports\\phase17_rescue_banked_csv_preservation_20261011.json": "5873863ca74ad5dd38a808efaa93c57dfc87f90559f85130ed99191d07502753",
+    "reports\\phase17_rescue_test4_verification_20261011_compute.json": "3225665a9f69727727ac521c2f01c130e50f7740f25d2c827af007048b593515"
+  },
+  "primary_source_sha256": {
+    "scripts/assemble_phase17_test.py": "67877bd3244ccb9d9840f1d35f567fc226f638751d1a94dbc24b3c0070248c2a",
+    "scripts/phase17_certification.py": "5867e1f854220377b9fffbdbbbac52abbdbfc9b349f811eee15975d7815f8cee",
+    "scripts/phase17_primary_io.py": "3df7f007daf5cf14135c4606b78791c9db75dec8c00a525a4d086959bfe3aa3e",
+    "scripts/assemble_sol_clean.py": "33a1c0625487abdfde116a458a8244e4fc61228869deba1459e4d2bb42f95d73",
+    "src/submission/make.py": "bd94334be7c2905d86d3a27bd73a0243909cbccb64c8b28eb4164c01dbc6fc2d",
+    "scripts/phase16_tabpfn.py": "548f9de2cd4eeb3661829f2696e7f2a2cd32a1ad2277ad828eb8fcc5371749ab"
+  },
+  "selection_policy": "A chosen from complete frozen primary, matched shadow, test certification and private robustness before public measurement; no public-based change",
+  "limitations": "Conditional OOF resampling, not unknown private labels or refitting uncertainty; partial shadow scope, no block10/new B1 seed confirmation; frozen five-context fallback and small-policy-audit uncertainty; Eco Plus fold losses preserved."
+}

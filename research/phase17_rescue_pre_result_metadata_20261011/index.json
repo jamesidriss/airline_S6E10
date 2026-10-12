@@ -1,0 +1,14 @@
+{
+  "utc": "2026-10-12T00:57:45.264914+00:00",
+  "snapshot_before_single_upload": true,
+  "files": {
+    "submissions\\manifest.csv": {
+      "snapshot": "research\\phase17_rescue_pre_result_metadata_20261011\\manifest.csv",
+      "sha256": "42d24001e89ce7b837d1be060198a79615c625b0bacdb939e6e1b6a6cb8c1088"
+    },
+    "submissions\\kaggle_submissions.csv": {
+      "snapshot": "research\\phase17_rescue_pre_result_metadata_20261011\\kaggle_submissions.csv",
+      "sha256": "ef28634b28a24c3449f146d6e28148ee31cf00cdeeab88931cbc1798f732f6a8"
+    }
+  }
+}
