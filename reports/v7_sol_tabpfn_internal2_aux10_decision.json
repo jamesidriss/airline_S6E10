@@ -1,0 +1,48 @@
+{
+  "utc": "2026-10-12T00:50:03.130252+00:00",
+  "git": "03df1944d6351926ff91ab5eeee9c6baf4bd9b25",
+  "candidate": "v7_sol_tabpfn_internal2_aux10",
+  "intended_role": "A",
+  "verdict": "SUBMIT_FROZEN_CERTIFIED_PHASE17_CANDIDATE",
+  "reason": "Complete fixed primary admission, matched independent confirmation, exact test certification and frozen private robustness; no public-based choice",
+  "primary_auc": 0.9618529228157235,
+  "pooled_delta_vs_v6": 8.730899114406387e-05,
+  "certificate_sha256": "e8bf46bed832ee430d3b109f407a8c9d4c07869995a4f60a184a6f1bbea35bc0",
+  "simulation_sha256": "cf5adb08b5c068a21816ca0cd90ad49e39c62161786bf9e7adff450e76d8feb5",
+  "robustness_contract_sha256": "cd4f2dd7bf353c6f0d38fa20281b043262ba2ef745665740662186e3eb985ede",
+  "joint_contract_sha256": "35309829038353de953d07a26f8d59718f5929f5757494172c015a1559a6e58a",
+  "test_correlation_vs_v6": {
+    "logit": 0.9998959438301246,
+    "spearman": 0.9992486121970208
+  },
+  "private_820": {
+    "simulations": 820,
+    "public_quantiles": [
+      2.3412805300709884e-05,
+      9.139586968948121e-05,
+      0.0001645381957157743
+    ],
+    "private_quantiles": [
+      5.586951140424401e-05,
+      8.606747059097808e-05,
+      0.0001184793102690207
+    ],
+    "private_p05": 5.586951140424401e-05,
+    "private_median": 8.606747059097808e-05,
+    "private_worst_5pct_mean": 4.822835249580601e-05,
+    "public_private_sign_disagreement_rate": 0.015853658536585366,
+    "private_reversal_vs_full_oof_rate": 0.0,
+    "public_reversal_vs_full_oof_rate": 0.015853658536585366
+  },
+  "worst_primary_segment_delta": 1.7752492166511757e-05,
+  "joint_B": null,
+  "submission_path": "C:\\Users\\James\\airline_S6E10\\submissions\\v7_sol_tabpfn_internal2_aux10.csv",
+  "submission_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+  "test_prediction_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
+  "uploaded": false,
+  "source_sha256": {
+    "scripts/decide_phase17_submission.py": "6a0cfc4a12cc5e832d0d3b76c3ca165ba25d4d08c1e026cb15dd5fe3c791a5bf",
+    "scripts/phase17_primary_io.py": "3df7f007daf5cf14135c4606b78791c9db75dec8c00a525a4d086959bfe3aa3e",
+    "scripts/phase16_pair_metrics.py": "f8e998569676f8b8b574637c92335ae6a7445b647e17bfee377a5dfd7216b9ea"
+  }
+}

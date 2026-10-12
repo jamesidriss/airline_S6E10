@@ -1,5 +1,8 @@
 # SOL campaign — audit and continuation
 
+Phase17 rescue 2026-10-12T00:53:23.382171+00:00: v7 internal2 CERTIFIED and frozen private decision PASS;820/820 positive private resampling deltas,P05+55.869511micro/median+86.067471micro. Chosen A before public result; testSpearman.999248612/logitPearson.999895944 versusv6; v6 preserved fallback, no credibleB. Actual142PASS/0FAIL; final integrity/pre-result push/single upload pending;0uploads.
+
+
 Phase17 rescue 2026-10-12T00:48:38.897195+00:00: ALL5 test contexts and299844 ordered rows CERTIFIED; exact official internal2 and frozen50/50 geometry; current142PASS/0FAIL. Cumulative model budget11.928268h/28h. Certificate-dependent private820/decision pending; v6 bank preserved;0uploads.
 
 

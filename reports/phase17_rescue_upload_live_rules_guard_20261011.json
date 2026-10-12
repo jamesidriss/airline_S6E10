@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-12T00:51:41.581349+00:00",
+  "status": "CURRENT_RULES_QUOTA_AND_NO_DUPLICATE_UPLOAD_PASS",
+  "official_current_page_body_sha256": {
+    "rules": "4f02b59b3d17b6eee4638756d06dce704883809fd0e38d214e07d8ab74f85b5d",
+    "Timeline": "33e84979637a6d899c9d006d7b21d745b6da0309883f98badf4ecbe7ed911261",
+    "Evaluation": "d04d1dc3043c2d60ae1ce0c111d7dd7549a414ad53932378948e7b243041d398"
+  },
+  "reference_rules_verification_sha256": "4e64981ad7b68067aa2daecb40c10a468d2db7ef3174cc5c9fb2c6c81bbffbb9",
+  "remote_remaining": 10,
+  "local_used_utc_day": 0,
+  "local_remaining": 10,
+  "filename": "v7_sol_tabpfn_internal2_aux10.csv",
+  "existing_remote_filename_matches": 0,
+  "existing_local_filename_matches": 0,
+  "deadline_not_passed": true,
+  "submission_source_sha256": "07dd8644a2d2d632640f514c71df28304dca5eaf7d5af057de81001091bd3d90",
+  "decision_sha256": "e2f3d79a392e9d6932e8d1ed309e27dd8b59a1d0e0df5ed0b52ddfaabf819fdc",
+  "uploaded": false
+}

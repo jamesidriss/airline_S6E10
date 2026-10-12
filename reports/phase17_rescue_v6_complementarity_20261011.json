@@ -1,0 +1,50 @@
+{
+  "utc": "2026-10-12T00:50:14.061537+00:00",
+  "status": "V6_PRESERVED_AS_BANKED_FALLBACK_NO_CREDIBLE_CHAMPION_B",
+  "chosen_A": "v7_sol_tabpfn_internal2_aux10",
+  "comparison_candidate": "v6_sol_tabpfn_route_aux10",
+  "method": "Analytical reversal of exact primary pair credits and the same frozen private draw deltas; actual certified test correlations",
+  "contract_sha256": "35309829038353de953d07a26f8d59718f5929f5757494172c015a1559a6e58a",
+  "primary_report_sha256": "c63f5a172c7bdbaa160ce7aa022a1214daf03d5e0daac0540f7b9f2aa116f449",
+  "test_certificate_sha256": "e8bf46bed832ee430d3b109f407a8c9d4c07869995a4f60a184a6f1bbea35bc0",
+  "simulation_sha256": "cf5adb08b5c068a21816ca0cd90ad49e39c62161786bf9e7adff450e76d8feb5",
+  "pooled_delta_vs_A": -8.730899114406387e-05,
+  "mean_paired_delta_vs_A": -8.786079935469981e-05,
+  "paired_fold_deltas": [
+    -0.0001006337950936187,
+    -5.353630502968887e-05,
+    -0.00010374848677385806,
+    -8.215554972856864e-05,
+    -9.92298601477648e-05
+  ],
+  "oof_correlation": {
+    "logit": 0.9998244792314533,
+    "spearman": 0.9988084279012514,
+    "probability_residual": 0.9997279027392092
+  },
+  "test_correlation": {
+    "logit": 0.9998959438301246,
+    "spearman": 0.9992486121970208
+  },
+  "rescued_pair_credit": 137485816.5,
+  "damaged_pair_credit": 148033941.5,
+  "rescued_pair_fraction": 0.0011379982636951142,
+  "damaged_pair_fraction": 0.0012253072548392228,
+  "rescue_damage_ratio": 0.9287452263101432,
+  "minimum_ratio": 0.95,
+  "private820_p05_delta_vs_A": -0.0001184793102690207,
+  "worst_pooled_segment_delta_vs_A": -0.00039151373519830113,
+  "comparison_thresholds": {
+    "pooled_loss": true,
+    "mean_paired_loss": true,
+    "oof_spearman": true,
+    "test_spearman": false,
+    "rescued_pair_fraction": true,
+    "rescue_damage_ratio": false,
+    "worst_segment_delta": false,
+    "private820_p05": true
+  },
+  "all_comparison_thresholds_pass": false,
+  "qualification_scope": "Comparison thresholds cannot manufacture a new Phase17 certificate for v6; structural dependence and failed rescue ratio preclude an independent B claim",
+  "v6_prediction_and_csv_unchanged": true
+}

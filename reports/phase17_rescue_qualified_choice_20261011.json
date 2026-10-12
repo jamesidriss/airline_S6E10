@@ -1,0 +1,224 @@
+{
+  "utc": "2026-10-12T00:53:23.382171+00:00",
+  "git_evidence": "03df1944d6351926ff91ab5eeee9c6baf4bd9b25",
+  "status": "PRE_PUBLIC_CERTIFIED_A_CHOICE_FINAL_INTEGRITY_PENDING",
+  "A": {
+    "name": "v7_sol_tabpfn_internal2_aux10",
+    "ref": null,
+    "oof": 0.9618529228157235,
+    "public": null,
+    "status": "FROZEN_CERTIFIED_CHAMPION_A_CHOICE_FINAL_INTEGRITY_AND_SINGLE_UPLOAD_PENDING",
+    "primary_report": "reports/phase17_B1_primary.json",
+    "shadow_report": "reports/phase17_B1_shadow_confirmation.json",
+    "test_certificate": "reports\\v7_sol_tabpfn_internal2_aux10_test_certificate.json",
+    "decision": "reports\\v7_sol_tabpfn_internal2_aux10_decision.json",
+    "private_simulation": "reports\\phase17_rescue_v7_private820_20261011.json",
+    "pre_result_manifest": "reports/v7_sol_tabpfn_internal2_aux10_pre_result.json",
+    "test_prediction_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
+    "csv_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+    "independent_scope": "Two predeclared matched alternative shadow folds, not unseen labels or full shadow/block10",
+    "policy_limitation": "Five exact original primary FIT contexts averaged in probability space; small100k/20k policy audit has zero-crossing interval; no full-data TabPFN deployment OOF, new B1 seed confirmation or unknown private labels claimed",
+    "chosen_before_public_score": true,
+    "uploaded": false,
+    "risk": {
+      "primary_fold3_EcoPlus": {
+        "fold": 3,
+        "segment": "Class/Eco Plus",
+        "rows": 6058,
+        "delta": -0.00045989814828217845,
+        "pooled_segment_delta": 1.7752492166511757e-05,
+        "policy": "Primary fold3 loss and shadow2 Eco Plus loss preserved; both frozen matched shadow confirmation gates passed."
+      },
+      "shadow_EcoPlus": [
+        {
+          "fold": 2,
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 5992,
+          "delta": -0.00010521011821629234
+        },
+        {
+          "fold": 3,
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 6039,
+          "delta": 0.00017556361082715632
+        }
+      ]
+    }
+  },
+  "B": null,
+  "preserved_v6": {
+    "name": "v6_sol_tabpfn_route_aux10",
+    "ref": 56951906,
+    "oof": 0.9617656138245795,
+    "public": 0.96144,
+    "status": "CERTIFIED_RECOMMENDED_CHAMPION_A_EXPECTED_PRIVATE_PERFORMER",
+    "primary_report": "reports/sol_route_aux10_primary_final.json",
+    "test_certificate": "reports/sol_route_aux10_primary_final_test_certificate.json",
+    "scorecard": "reports/sol_route_aux10_recovery_scorecard.json",
+    "pre_result_manifest": "reports/v6_sol_tabpfn_route_aux10_pre_result.json",
+    "receipt": "reports/v6_sol_tabpfn_route_aux10_result.json",
+    "test_prediction_sha256": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+    "independent_scope": "Both predeclared shadow folds and fixed primary fold0 seed1202 diagnostic; full shadow and block10 not established",
+    "policy_limitation": "Small100k training pool/20k holdout policy audit has zero-crossing bootstrap interval; five-context fallback remains frozen; no deployment OOF score claimed"
+  },
+  "primary": {
+    "full_auc": 0.9618529228157235,
+    "pooled_delta": 8.730899114406387e-05,
+    "paired_fold_deltas": [
+      0.0001006337950936187,
+      5.353630502968887e-05,
+      0.00010374848677385806,
+      8.215554972856864e-05,
+      9.92298601477648e-05
+    ],
+    "mean_paired_gain": 8.786079935469981e-05,
+    "paired_se": 9.368949671537106e-06,
+    "positive_folds": 5,
+    "pair_rescue_damage": {
+      "all_positive_negative_pairs": 120813731344,
+      "rescued_pair_credit": 148033941.5,
+      "damaged_pair_credit": 137485816.5,
+      "rescued_pair_fraction": 0.0012253072548392228,
+      "damaged_pair_fraction": 0.0011379982636951142,
+      "net_auc_gain": 8.73089911441085e-05,
+      "baseline_error_pair_credit": 4619238859.5,
+      "candidate_error_pair_credit": 4608690734.5,
+      "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+    },
+    "correlation_vs_v6": {
+      "logit": 0.9998244792314533,
+      "spearman": 0.9988084279012514,
+      "probability_residual": 0.9997279027392092
+    },
+    "segments": [
+      {
+        "column": "Class",
+        "value": "Business",
+        "rows": 342212,
+        "delta": 0.00014853953292859323
+      },
+      {
+        "column": "Class",
+        "value": "Eco",
+        "rows": 327404,
+        "delta": 0.0002025420962225022
+      },
+      {
+        "column": "Class",
+        "value": "Eco Plus",
+        "rows": 30019,
+        "delta": 1.7752492166511757e-05
+      },
+      {
+        "column": "Type of Travel",
+        "value": "Business travel",
+        "rows": 497441,
+        "delta": 9.838851139643001e-05
+      },
+      {
+        "column": "Type of Travel",
+        "value": "Personal Travel",
+        "rows": 202194,
+        "delta": 0.00039151373519830113
+      },
+      {
+        "column": "Customer Type",
+        "value": "Loyal Customer",
+        "rows": 576990,
+        "delta": 8.452735000130662e-05
+      },
+      {
+        "column": "Customer Type",
+        "value": "disloyal Customer",
+        "rows": 122645,
+        "delta": 0.00017123314328759687
+      },
+      {
+        "column": "Gender",
+        "value": "Female",
+        "rows": 347952,
+        "delta": 8.83457037196278e-05
+      },
+      {
+        "column": "Gender",
+        "value": "Male",
+        "rows": 351683,
+        "delta": 8.629197962672919e-05
+      }
+    ],
+    "distance_to_stretch": 0.0002470771842764119
+  },
+  "shadow_paired_deltas": [
+    0.00010088664507579281,
+    7.413980634984885e-05
+  ],
+  "shadow_mean_delta": 8.751322571282083e-05,
+  "private820": {
+    "simulations": 820,
+    "public_quantiles": [
+      2.3412805300709884e-05,
+      9.139586968948121e-05,
+      0.0001645381957157743
+    ],
+    "private_quantiles": [
+      5.586951140424401e-05,
+      8.606747059097808e-05,
+      0.0001184793102690207
+    ],
+    "private_p05": 5.586951140424401e-05,
+    "private_median": 8.606747059097808e-05,
+    "private_worst_5pct_mean": 4.822835249580601e-05,
+    "public_private_sign_disagreement_rate": 0.015853658536585366,
+    "private_reversal_vs_full_oof_rate": 0.0,
+    "public_reversal_vs_full_oof_rate": 0.015853658536585366
+  },
+  "test_correlation_vs_v6": {
+    "logit": 0.9998959438301246,
+    "spearman": 0.9992486121970208
+  },
+  "risks": {
+    "primary_fold3_EcoPlus": {
+      "fold": 3,
+      "segment": "Class/Eco Plus",
+      "rows": 6058,
+      "delta": -0.00045989814828217845,
+      "pooled_segment_delta": 1.7752492166511757e-05,
+      "policy": "Primary fold3 loss and shadow2 Eco Plus loss preserved; both frozen matched shadow confirmation gates passed."
+    },
+    "shadow_EcoPlus": [
+      {
+        "fold": 2,
+        "column": "Class",
+        "value": "Eco Plus",
+        "rows": 5992,
+        "delta": -0.00010521011821629234
+      },
+      {
+        "fold": 3,
+        "column": "Class",
+        "value": "Eco Plus",
+        "rows": 6039,
+        "delta": 0.00017556361082715632
+      }
+    ]
+  },
+  "budget_hours": 11.92826817536113,
+  "tests_actual": {
+    "passed": 142,
+    "failed": 0,
+    "source_unchanged_since_actual_suite": true
+  },
+  "uploaded": false,
+  "prediction_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
+  "csv_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+  "evidence_sha256": {
+    "reports\\v7_sol_tabpfn_internal2_aux10_test_certificate.json": "e8bf46bed832ee430d3b109f407a8c9d4c07869995a4f60a184a6f1bbea35bc0",
+    "reports\\v7_sol_tabpfn_internal2_aux10_decision.json": "e2f3d79a392e9d6932e8d1ed309e27dd8b59a1d0e0df5ed0b52ddfaabf819fdc",
+    "reports\\phase17_rescue_v7_private820_20261011.json": "cf5adb08b5c068a21816ca0cd90ad49e39c62161786bf9e7adff450e76d8feb5",
+    "reports\\phase17_rescue_v6_complementarity_20261011.json": "97a9aa96f24ab34800fc940115d51a4a70d22f14d3fefb34862ec1e71d50274c",
+    "reports\\phase17_rescue_upload_live_rules_guard_20261011.json": "fc6dfc1f28b32b7f657c0b7fc02ba89bdaff7df6da1d0b66e6203497d0f5f712",
+    "reports\\phase17_rescue_current_full_tests_20261011.json": "9fdb1b850e49336eb9e4889fdd64aef6b7bd320cf60a03ca967c23404c1da912"
+  }
+}

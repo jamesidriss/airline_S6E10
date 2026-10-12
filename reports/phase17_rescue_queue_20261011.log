@@ -1,0 +1,11 @@
+Waiting for the existing frozen B1 shadow3 worker; no model is launched concurrently.
+MILESTONE: B1 shadow3 saved contributions replayed exactly; protected matched evaluation starts.
+MILESTONE: matched shadow PASS; frozen deltas 0,000100886645075793, 7,41398063498488E-05.
+MILESTONE: current full tests passed; five exact test contexts run sequentially.
+MILESTONE: test context 0 complete; all299844 ordered rows and both saved members verified.
+MILESTONE: test context 1 complete; all299844 ordered rows and both saved members verified.
+MILESTONE: test context 2 complete; all299844 ordered rows and both saved members verified.
+MILESTONE: test context 3 complete; all299844 ordered rows and both saved members verified.
+MILESTONE: test context 4 complete; all299844 ordered rows and both saved members verified.
+MILESTONE: all five contexts certified and unique v7 CSV built; no upload yet.
+MILESTONE: protected final decision SUBMIT_FROZEN_CERTIFIED_PHASE17_CANDIDATE; root must audit, freeze and push pre-result evidence before the single authorized upload.
