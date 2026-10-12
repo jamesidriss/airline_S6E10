@@ -1,0 +1,50 @@
+{
+  "utc": "2026-10-11T23:21:20.708945+00:00",
+  "worker_pid": 30188,
+  "wrapper_sha256": "345f91bc65a921bd6269868266e3f498c6cd9efdab9b6bfb6602926c08d8bb95",
+  "driver_path": "C:\\Users\\James\\airline_S6E10\\scripts\\run_phase17_confirmation.py",
+  "driver_sha256": "aee31719de875e96c66741960e620b02702e888017f4a8dbb1638a5c7041d1be",
+  "driver_args": [
+    "--mode",
+    "test",
+    "--primary-tag",
+    "phase17_B1",
+    "--fold",
+    "3",
+    "--tag",
+    "phase17_B1_test"
+  ],
+  "interval_seconds": 15,
+  "resource_guards_modified": false,
+  "ML_recipe_modified": false,
+  "source": "Frozen driver executed with runpy; only read-only resource samples added",
+  "inflight_extra_disk_stop_bytes": 21474836480,
+  "status": "FROZEN_DRIVER_COMPLETE",
+  "seconds": 2566.875,
+  "final_resources": {
+    "utc": "2026-10-12T00:04:07.653110+00:00",
+    "pid": 30188,
+    "c_free_bytes": 202729598976,
+    "host_available_bytes": 8818102272,
+    "process_memory_native_fields_bytes": {
+      "rss": 4881756160,
+      "vms": 8018333696,
+      "num_page_faults": 4602797,
+      "peak_wset": 6519119872,
+      "wset": 4881756160,
+      "peak_paged_pool": 13239312,
+      "paged_pool": 11531176,
+      "peak_nonpaged_pool": 181776,
+      "nonpaged_pool": 147912,
+      "pagefile": 8018333696,
+      "peak_pagefile": 23738769408,
+      "private": 8018333696
+    },
+    "process_private_bytes": 8018333696,
+    "process_commit_charge_bytes": 8018333696,
+    "process_rss_bytes": 4881756160,
+    "process_virtual_bytes": 8018333696,
+    "gpu_allocated_bytes": 9568256,
+    "gpu_reserved_bytes": 494927872
+  }
+}
