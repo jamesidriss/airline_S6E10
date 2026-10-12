@@ -1,0 +1,2 @@
+[submission] wrote C:\Users\James\airline_S6E10\submissions\v7_sol_tabpfn_internal2_aux10.csv  rows=299844  sha16=ba35e80556f44585
+{"status": "CERTIFIED_PHASE17_TEST_REQUIRES_ROBUSTNESS_DECISION", "name": "v7_sol_tabpfn_internal2_aux10", "test_rows": 299844, "submission_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd", "test_correlation_vs_v6": {"logit": 0.9998959438301246, "spearman": 0.9992486121970208}}

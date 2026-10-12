@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-12T00:04:59.613198+00:00",
+  "updated_utc": "2026-10-12T00:48:38.897195+00:00",
   "BEST_A": {
     "name": "v6_sol_tabpfn_route_aux10",
     "ref": 56951906,
@@ -40,7 +40,7 @@
   },
   "candidate_in_confirmation": {
     "name": "phase17_B1",
-    "status": "MATCHED_SHADOW_PASS_TEST_CONTEXTS_0_TO_3_VERIFIED",
+    "status": "PHASE17_ALL5_TEST_CONTEXTS_CERTIFIED_PRIVATE_DECISION_PENDING",
     "internal_estimators": 2,
     "complete_primary_folds": [
       0,
@@ -58,7 +58,7 @@
     ],
     "mean_paired_delta": 8.786079935469981e-05,
     "full_oof_auc": 0.9618529228157235,
-    "test_certificate": null,
+    "test_certificate": "reports\\v7_sol_tabpfn_internal2_aux10_test_certificate.json",
     "uploaded": false,
     "complete_folds": [
       0,
@@ -68,7 +68,7 @@
       4
     ],
     "full_pooled_oof_auc": 0.9618529228157235,
-    "verdict": "PRIMARY_AND_MATCHED_SHADOW_PASS_REQUIRES_COMPLETE_TEST_CERTIFICATION",
+    "verdict": "PRIMARY_AND_SHADOW_PASS_CERTIFIED_TEST_REQUIRES_PRIVATE_DECISION",
     "observed_risk": {
       "fold": 3,
       "segment": "Class/Eco Plus",
@@ -82,7 +82,7 @@
     "primary_report": "reports/phase17_B1_primary.json",
     "primary_performance_admission": true,
     "independent_confirmation_passed": true,
-    "test_predictions_complete": false,
+    "test_predictions_complete": true,
     "oof_stress_report": "reports/phase17_B1_oof_private_20261009.json",
     "matched_shadow_auxiliary_report": "reports/phase17_shadow_aux10_verification_20261009.json",
     "shadow_report": "reports/phase17_B1_shadow_confirmation.json",
@@ -95,8 +95,14 @@
       0,
       1,
       2,
-      3
-    ]
+      3,
+      4
+    ],
+    "test_certificate_sha256": "e8bf46bed832ee430d3b109f407a8c9d4c07869995a4f60a184a6f1bbea35bc0",
+    "test_correlation_vs_v6": {
+      "logit": 0.9998959438301246,
+      "spearman": 0.9992486121970208
+    }
   },
   "verified_clean_BEST_B_HEDGE": null,
   "banked_legacy_previous_best_A": {
@@ -113,7 +119,7 @@
   },
   "final_selection_reassessed": true,
   "kaggle_final_selection_updated": false,
-  "continuation_status": "PHASE17_FROZEN_TEST_INFERENCE_4_OF5_VERIFIED_B2_CLOSED",
+  "continuation_status": "PHASE17_ALL5_TEST_CONTEXTS_CERTIFIED_PRIVATE_DECISION_PENDING",
   "rejected_hedge_candidates": {
     "clean_aux10": {
       "oof_loss_vs_A": 0.00034690428011585617,
@@ -241,13 +247,13 @@
     "four_estimator_replication": "RESOURCE_BRANCH_CLOSED_NO_MODEL_REJECTION",
     "resume_tag": "phase17_B2_resume1_v3",
     "resource_status": "Current completed test3 telemetry minimum Cfree188.793972GiB; no guard breach",
-    "status": "PHASE17_FROZEN_TEST_INFERENCE_4_OF5_VERIFIED_B2_CLOSED",
-    "completed_model_and_probe_hours": 11.215277897583352,
+    "status": "PHASE17_ALL5_TEST_CONTEXTS_CERTIFIED_PRIVATE_DECISION_PENDING",
+    "completed_model_and_probe_hours": 11.92826817536113,
     "checkpoint_report": "reports/phase17_checkpoint_report_20261009.md",
     "checkpoint_decision": "reports/phase17_checkpoint_decision_20261009.json",
     "full_tests_passed": 142,
     "full_tests_failed": 0,
-    "rescue_budget_report": "reports\\phase17_rescue_test3_verification_20261011_compute.json"
+    "rescue_budget_report": "reports/phase17_rescue_test4_verification_20261011_compute.json"
   },
   "rescue_previous_finalists_snapshot_sha256": "4ef5e9ac897ba8e3555bf021f24351dc8af7c6ff1ae1202e5122e552a3a564a7"
 }
