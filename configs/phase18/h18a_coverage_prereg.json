@@ -9,7 +9,8 @@
     "S6E10 resource record: peak GPU 13.675 GB at 559,708-row contexts (artifacts/phase17_B1/f0/member_0_stats.json); VRAM total 17.09 GB decimal; linear KV-cache projection at 629,671 rows = 15.39 GB."
   ],
   "matched_design": {
-    "correction_note": "2026-10-14: transcription fix BEFORE any GPU run — frozen random_state is 1201 (as certified in reports/v7_sol_tabpfn_internal2_aux10_pre_result.json), not 1801 as an earlier draft of this file stated. No experiment has been executed under the erroneous value.",
+    "correction_note": "2026-10-14: transcription fix BEFORE any GPU run - frozen random_state is 1201 (as certified in reports/v7_sol_tabpfn_internal2_aux10_pre_result.json), not 1801 as an earlier draft of this file stated. No experiment has been executed under the erroneous value.",
+    "conversion_amendment_20261014": "Pre-S1 amendment (S1 not yet started; S0 probe in flight). H18-E fold-0 measured a 7.1% conversion of route-level AUC gain into portfolio-level gain (v7's own internal2 change converted at ~27%); both are blends of the SAME route with the same aux10, so route-only gains are heavily diluted at the portfolio level. PREDECLARED S3-LAUNCH RULE (cost control, does not alter the S1/S2 advance rules or the S3 admission gate): S3 launches ONLY IF the S1+S2 mean matched route delta is >= 5.6e-5, which is the smallest mean route delta that could clear the 1.5e-5 portfolio admission gate even at the OPTIMISTIC 27% conversion; otherwise H18-A closes at wave 2 as INSUFFICIENT_EXPECTED_PORTFOLIO_CONVERSION after ~2h GPU.",
     "eval_rows": "block10 fold 0 apply_ids (69,964 rows, immutable registry data/cache/folds/block10_10f_seed20261010.npy)",
     "control_arm": {
       "context": "fixed-seed (seed=1801) random subsample of 559,708 rows from the 629,671 non-eval rows",
