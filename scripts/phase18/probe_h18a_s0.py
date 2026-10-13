@@ -96,6 +96,7 @@ def main() -> None:
 
     work = ARTIFACTS / "phase18" / "h18a_s0_probe"
     work.mkdir(parents=True, exist_ok=True)
+    (work / "predict").mkdir(exist_ok=True)  # inference_guard stats this dir on entry
     save_json(contract, work / "contract.json")
 
     from src.models.windows_attention import register  # noqa: E402
@@ -112,6 +113,9 @@ def main() -> None:
             clf.fit(x[ctx], y[ctx])
             fit_seconds = time.monotonic() - start
             peak_fit = int(torch.cuda.max_memory_allocated())
+            # persist fit evidence immediately so a later crash cannot lose it
+            result.update(fit_seconds=fit_seconds, peak_gpu_bytes_fit=peak_fit)
+            save_json(result, out_path)
             gc.collect(); torch.cuda.empty_cache()
             # bounded timing-only prediction on PRED_TIMING_ROWS unlabeled test rows
             pred_start = time.monotonic()
@@ -139,6 +143,11 @@ def main() -> None:
         result.update(status="RESOURCE_BOUND_H18A_CLOSED", error=repr(error),
                       status_note="OOM or guard refusal at 90% coverage; "
                                   "coverage axis closed per prereg stop condition; no param shrink")
+        save_json(result, out_path)
+        raise
+    except Exception as error:
+        result.update(status="PROBE_INCOMPLETE_TECHNICAL", error=repr(error),
+                      status_note="technical failure, NOT a modelling or feasibility verdict")
         save_json(result, out_path)
         raise
     finally:

@@ -28,21 +28,25 @@ to 0.962100 is 247e-5 OOF; no single axis below is claimed to close it.
 - **Risk.** 1.7 GB projected VRAM margin (probe decides); protocol mismatch is
   controlled by the matched design; aux10 half of the portfolio is untouched.
 
-## Rank 2 — H18-E: official TabPFN internal estimators 2 -> 4 (Axis E)
+## Rank 2 — H18-E: official TabPFN internal estimators 2 -> 4 (Axis E) — **CLOSED at wave 1 (2026-10-14)**
 
-- **Mechanism.** Estimator averaging is a proven, consistent gain: the 2-member
-  mean beats either single member on all 5 primary folds (m0: -23.7..-33.0e-5,
-  m1: -11.2..-20.2e-5 vs route; `reports/phase18/tabpfn_internal_audit.json`).
-- **Wave-1 evidence.** Fold 0 (B2, certified artifacts):
-  route4 - route2 = **+5.34e-5**; portfolio4 fold0 +104.5e-5 vs v6 vs portfolio2
-  +100.6e-5 (`reports/phase18/tabpfn_internal4_fold0_audit.json`). Member
-  diversity grows slightly with index (m0-m3 Spearman 0.9793 < m0-m1 0.9825).
-  All 4 single members lose to the 4-member mean.
-- **Caveat.** One fold only; B2 folds 1-4 were RESOURCE_BLOCKED (disk guard),
-  not model-rejected. Disk now 188 GB free — blocker gone. Peak VRAM unchanged
-  (13.68 GB, members sequential). Cost ~8 h GPU for the remaining 5-fold + test.
-- **Expected gain if it replicates.** ~+2.5e-5 portfolio (route is 50% of v7;
-  route delta halves). Above the 1.5e-5 admission gate only if consistent.
+- **Verdict: NEGATIVE at the admission level.** Fold-0 route4 − route2 = +5.34e-5
+  (standalone, real), but portfolio4 − v7 = **+3.82e-6** — a 7.1% conversion of
+  route gain into portfolio gain. The 0.5 route + 0.5 aux10 logit blend dilutes
+  route-only improvements almost entirely (route and aux10 share 0.9977
+  correlation; the portfolio ranking is dominated by their shared component).
+  Expected mean portfolio gain under perfect replication ≈ 0.4e-5, an order of
+  magnitude below the 1.5e-5 admission gate. Folds 1-4 never run
+  (~4.4h GPU saved); evidence: `reports/phase18_h18e_f0_evaluation.json`,
+  closure record `phase18_h18e_close` in the ledger.
+- **Methodological lesson (now a standing rule):** re-measure any route-level
+  gain at the PORTFOLIO level on fold 0 BEFORE granting GPU replication
+  budget. Conversion is change-dependent (~7% here, ~27% for v7's internal2
+  change over v6).
+- (Historical wave-1 evidence: route4 − route2 = +5.34e-5 on fold 0; member
+  AUCs [0.96113, 0.96130, 0.96102, 0.96112], all below route4 0.961511;
+  m0-m3 Spearman 0.9793; B2 folds 1-4 were RESOURCE_BLOCKED by disk, not
+  model-rejected.)
 
 ## Rank 3 — H18-C: ratings-tuple-key exact-value TE (Axis C) — WEAKENED
 

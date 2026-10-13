@@ -31,7 +31,10 @@ Last updated: 2026-10-14 (session 2). Update at every milestone.
 | 6 | TabPFN internal audit: `tabpfn_internal_audit.json` (2-estimator), `tabpfn_internal4_fold0_audit.json` (4-estimator fold 0) | DONE |
 | 7 | `reports/phase18/hypothesis_ranking.md` | DONE |
 | 8 | H18-A pre-registration `configs/phase18/h18a_coverage_prereg.json` — frozen before any fold-0 GPU | DONE |
-| 9+ | H18-A S0 memory probe, then staged execution | NEXT |
+| 9 | S0 memory probe `scripts/phase18/probe_h18a_s0.py` — launched in background, awaiting result | RUNNING |
+| 9 prep | S1 matched-arm runner + paired comparison written and syntax/reindex-checked (`scripts/phase18/run_h18a_s1_arm.py`, `compare_h18a_s1.py`); both refuse to run unless S0 status is PASS_FEASIBLE; arms assert member config hashes equal the frozen phase17 probe metadata | READY |
+| — | Phase18 tests `tests/phase18/test_phase18.py` (5 tests) wired into `tests/run_tests.py`; a failing test caught and fixed the prereg random_state typo (1801→1201) before any GPU run | DONE |
+| — | Audit records appended to `experiments/ledger.jsonl` + `experiments/phase18_registry.jsonl` via `scripts/phase18/record_audits.py` (idempotent) | DONE |
 
 ## 3. Key findings this session (numbers)
 
@@ -56,7 +59,13 @@ Last updated: 2026-10-14 (session 2). Update at every milestone.
   m0-m3 Spearman 0.9793 (slightly more diverse than m0-m1 0.9825). Peak VRAM
   13.68 GB per member (sequential — estimator count does not raise peak).
   B2 folds 1-4 were RESOURCE_BLOCKED (disk guard), not model-rejected; disk is
-  now 188 GB free.
+  now 188 GB free. **UPDATE 2026-10-14: the fold-0 PORTFOLIO-level delta vs
+  champion v7 is only +3.82e-6 (7.1% conversion of the route gain) — H18-E
+  CLOSED at wave 1; folds 1-4 never run. Two-path verification: direct
+  recomposition and difference of certified phase17 vs-v6 evaluations
+  (B2 +104.45e-6 − B1 +100.63e-6) agree to the last digit. (Note: an earlier
+  session summary mis-scaled these as +104.5e-5/+100.6e-5; the true values are
+  ~1.0e-4.)**
 - **Coverage feasibility arithmetic:** peak 13.675 GB at 559,708-row context;
   linear KV projection at 629,671 rows (90% coverage) = 15.39 GB vs 17.09 GB
   total → ~1.7 GB margin. Probe required before committing (H18-A S0).
@@ -64,11 +73,18 @@ Last updated: 2026-10-14 (session 2). Update at every milestone.
 ## 4. Ranked queue (summary — see reports/phase18/hypothesis_ranking.md)
 
 1. **H18-A** coverage 80%→90% (preregistered, staged, up to 16 h GPU)
-2. **H18-E** estimators 2→4 (fold-0 discovery done: +5.34e-5 route; replication
-   pending, ~8 h GPU)
+2. ~~**H18-E** estimators 2→4~~ **CLOSED at wave 1** — fold0 route gain +5.34e-5
+   converts to only +3.82e-6 portfolio (7.1% conversion; aux10 blend dilution);
+   folds 1-4 never run. Standing rule added: portfolio-level fold-0 check
+   precedes any GPU replication grant.
 3. H18-C ratings-tuple-key TE (weakened; CPU-only)
 4. H18-B EBM/GAM (cheap CPU probe then likely close)
 5. H18-F/G/D — no wave-1 planned
+
+**Conversion-ratio lesson (2026-10-14, from H18-E):** route-level gains are NOT
+portfolio gains. Measured fold-0 conversions: 7.1% (4-estimator change),
+~27% (v7 internal2 change vs v6). Any route-improving hypothesis must be
+re-measured at portfolio level on fold 0 before replication GPU is granted.
 
 Champion B: still UNRESOLVED. Do not invent a hedge.
 
