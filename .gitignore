@@ -74,3 +74,6 @@ Thumbs.db
 /research/raw/phase17_rescue_rules_preupload_20261011.json
 /research/raw/phase17_rescue_timeline_preupload_20261011.json
 /research/raw/phase17_rescue_evaluation_preupload_20261011.json
+
+# transient session logs
+logs_*.txt
