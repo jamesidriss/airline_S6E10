@@ -1,0 +1,131 @@
+{
+  "tag": "p18_error_atlas",
+  "inputs": {
+    "v7_portfolio_sha256": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+    "v7_route_sha256": "bcb2811329d3686882450e93435647f8f7ab65abfc48c1a1b51db1e9d1ef95e0",
+    "v6_sha256": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+    "aux10_sha256": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+    "teacher_sha256": "9cc4caa9aca039f773ece4e303ba0e9e4680072b0e7890a9abbe29876e97e752"
+  },
+  "auc": {
+    "v7": 0.9618529228157235,
+    "v6": 0.9617656138245795,
+    "delta": 8.730899114406387e-05,
+    "route": 0.9615159787196581,
+    "aux10": 0.9614187095444636,
+    "teacher": 0.9590638413532816
+  },
+  "pairwise": {
+    "all_positive_negative_pairs": 120813731344,
+    "rescued_pair_credit": 148033941.5,
+    "damaged_pair_credit": 137485816.5,
+    "rescued_pair_fraction": 0.0012253072548392228,
+    "damaged_pair_fraction": 0.0011379982636951142,
+    "net_auc_gain": 8.73089911441085e-05,
+    "baseline_error_pair_credit": 4619238859.5,
+    "candidate_error_pair_credit": 4608690734.5,
+    "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling",
+    "per_row_identity_max_abs_err": 0.0,
+    "net_equals_auc_delta": true,
+    "rows_corrected": 374387,
+    "rows_damaged": 322805,
+    "rows_unchanged": 2443,
+    "top_corrected_rows_credit": 13407128.0,
+    "top_damaged_rows_credit": -11072106.5
+  },
+  "margins_v7": {
+    "near_tie_pairs": 2475041528,
+    "near_tie_fraction": 0.02048642567749745,
+    "confident_wrong_pairs": 12022117279,
+    "confident_wrong_fraction": 0.09950952714777696,
+    "confident_right_pairs": 108791614065,
+    "confident_right_fraction": 0.9004904728522231,
+    "total_pairs": 120813731344
+  },
+  "margins_v6": {
+    "near_tie_pairs": 2495998307,
+    "near_tie_fraction": 0.020659889229751528,
+    "confident_wrong_pairs": 12056245956,
+    "confident_wrong_fraction": 0.0997920171977103,
+    "confident_right_pairs": 108757485388,
+    "confident_right_fraction": 0.9002079828022898,
+    "total_pairs": 120813731344
+  },
+  "folds": [
+    {
+      "fold": 0,
+      "rows": 139927,
+      "auc_v7": 0.9618278142504795,
+      "auc_v6": 0.9617271804553859,
+      "rescued": 5889235.5,
+      "damaged": 5402919.0,
+      "net": 0.0001006337950937245
+    },
+    {
+      "fold": 1,
+      "rows": 139927,
+      "auc_v7": 0.9619889611452807,
+      "auc_v6": 0.961935424840251,
+      "rescued": 5646898.0,
+      "damaged": 5388181.0,
+      "net": 5.3536305029525256e-05
+    },
+    {
+      "fold": 2,
+      "rows": 139927,
+      "auc_v7": 0.9618912986763071,
+      "auc_v6": 0.9617875501895332,
+      "rescued": 6115427.5,
+      "damaged": 5614057.5,
+      "net": 0.00010374848677378401
+    },
+    {
+      "fold": 3,
+      "rows": 139927,
+      "auc_v7": 0.9610994818114763,
+      "auc_v6": 0.9610173262617477,
+      "rescued": 6060935.5,
+      "damaged": 5663914.5,
+      "net": 8.215554972857271e-05
+    },
+    {
+      "fold": 4,
+      "rows": 139927,
+      "auc_v7": 0.9624956398713964,
+      "auc_v6": 0.9623964100112486,
+      "rescued": 5869057.0,
+      "damaged": 5389523.5,
+      "net": 9.922986014786755e-05
+    }
+  ],
+  "disagreement": {
+    "route_aux10_pearson": 0.9976934009716536,
+    "route_aux10_spearman": 0.9723171771812291,
+    "v7_v6_pearson": 0.9999144659407133,
+    "v7_v6_spearman": 0.9988084279012514
+  },
+  "duplicate_keys": {
+    "rows_in_dup_groups": 342513,
+    "auc_v7_dup_only": 0.9635017421300744,
+    "auc_v7_unique_only": 0.9503875099582622,
+    "credit_change_dup_mean": 13.946925372175654,
+    "credit_change_unique_mean": 16.1600846489435
+  },
+  "confidence": {
+    "auc_v7_bottom_confidence_quintile": 0.8617085461349413,
+    "mean_credit_change_low_conf": 13.471976459153701,
+    "mean_credit_change_high_conf": 7.220209253462545
+  },
+  "teacher_disagreement": {
+    "teacher_v7_pearson": 0.9973348796803384,
+    "teacher_v7_spearman": 0.95244158173994,
+    "mean_credit_change_top_teacher_gap": 15.226119690981726,
+    "mean_credit_change_bottom_teacher_gap": 15.986769887155445
+  },
+  "notes": [
+    "All pair credits exact; no sampling. Net credit / total pairs reproduces the AUC delta exactly.",
+    "credit_change>0 means row's misordered-pair count decreased under v7 (a corrected row).",
+    "Segment x fold cells: 9+ segments x 5 folds => treat isolated negative cells as multiple-comparison candidates, not effects.",
+    "teacher vector is the original-domain LightGBM view model (OOF), used only for disagreement diagnostics."
+  ]
+}

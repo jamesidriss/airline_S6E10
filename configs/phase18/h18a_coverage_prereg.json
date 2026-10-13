@@ -1,0 +1,45 @@
+{
+  "utc": "2026-10-14T00:00:00Z",
+  "hypothesis_id": "H18-A",
+  "axis": "A/H — training-coverage / deployment policy",
+  "status": "PREREGISTERED_BEFORE_FOLD0",
+  "hypothesis": "Raising the TabPFN route context from 80% coverage (559,708 rows) to 90% coverage (629,671 rows) improves ranking accuracy, because more labeled rows per final model is a model-family-general mechanism (S6E9: +2.57e-5 and +2.79e-5, 5/5 folds, CIs excluding zero, no other change).",
+  "mechanism_evidence": [
+    "S6E9 deployment-policy audit: 2 half-data bags -> 5 bags on 80% rows improved both frozen finalists under a matched preregistered comparison (reports/deployment_policy_audit_results.json in the S6E9 clone).",
+    "S6E10 resource record: peak GPU 13.675 GB at 559,708-row contexts (artifacts/phase17_B1/f0/member_0_stats.json); VRAM total 17.09 GB decimal; linear KV-cache projection at 629,671 rows = 15.39 GB."
+  ],
+  "matched_design": {
+    "eval_rows": "block10 fold 0 apply_ids (69,964 rows, immutable registry data/cache/folds/block10_10f_seed20261010.npy)",
+    "control_arm": {
+      "context": "fixed-seed (seed=1801) random subsample of 559,708 rows from the 629,671 non-eval rows",
+      "n_estimators": 2,
+      "expected_context_rows": 559708
+    },
+    "treatment_arm": {
+      "context": "all 629,671 non-eval rows (90% coverage of the full train)",
+      "n_estimators": 2,
+      "expected_context_rows": 629671
+    },
+    "frozen_params": "identical to v7 certified config: model tabpfn-v3.5-20260909.safetensors, auto_scale_n_estimators=false, random_state=1801, device=cuda, ignore_pretraining_limits=true, fit_mode=fit_with_cache, kv_cache_precision=int8, keep_cache_on_device=true, inference_precision=autocast, categorical_features_indices=[13,14,15,16,18,21], memory_saving_mode=true, n_preprocessing_jobs=1, tuning_config=null",
+    "paired_metric": "AUC on the identical eval rows, treatment minus control; exact pair-credit decomposition as secondary",
+    "only_variable": "context size (559,708 -> 629,671). Seeds, estimator count, params, eval rows identical."
+  },
+  "stages": [
+    {"stage": "S0_probe", "what": "memory/timing probe: one fit at 629,671 rows, n_estimators=1, measure peak VRAM; abort if peak > 16.6 GB or OOM", "gpu_minutes": 20, "claim": "none (timing/memory only)"},
+    {"stage": "S1_discovery", "what": "matched arms on block10 fold 0", "gpu_minutes": 60, "advance_rule": "treatment - control > 0 on fold 0 AND no OOM"},
+    {"stage": "S2_replication", "what": "matched arms on block10 fold 1 (fresh eval rows, same seeds)", "gpu_minutes": 60, "advance_rule": "treatment wins on fold 1 as well (2/2 positive)"},
+    {"stage": "S3_full_oof", "what": "build the 90%-coverage route OOF: 10 contexts (block10 complements), 2 estimators each; blend 50/50 with the UNCHANGED aux10; compare portfolio vs champion v7 on primary folds with the frozen admission gate", "gpu_minutes": 265, "advance_rule": "admission gate: mean paired portfolio gain >= 1.5e-5, >= 2.5x paired SE, positive >= 4/5 primary folds"},
+    {"stage": "S4_test", "what": "certify test contexts (10 contexts x 2 estimators on 299,844 test rows) only after S3 passes", "gpu_minutes": 265, "advance_rule": "exact hash certification + pre-flight gate"}
+  ],
+  "success_rule_primary": "S3 admission gate on the 50/50 aux10 portfolio vs champion v7 (OOF 0.9618529228157235), NOT the route-only delta.",
+  "stop_conditions": [
+    "OOM or peak VRAM > 16.6 GB at S0: H18-A closes as RESOURCE_BOUND; do not shrink params to fit (that would be a different hypothesis).",
+    "S1 or S2 non-positive: H18-A closes as NEGATIVE at wave 2; no further coverage GPU.",
+    "S3 fails gate: record negative; no test contexts.",
+    "Cumulative H18-A GPU > 16 h: stop and re-rank."
+  ],
+  "budget": {"gpu_hours_max": 16, "cpu_hours_max": 2},
+  "no_tuning_clause": "No seed, smoothing, estimator-count or param change between stages. One predeclared comparison per stage. No public-LB consultation at any point.",
+  "champion_invariance": "Champion A test geometry is NOT modified by this experiment. H18-A, if it wins, becomes a NEW candidate requiring full certification; v7 artifacts stay byte-identical.",
+  "related_hypothesis_id": "H18-E (estimator count 2->4, fold-0 discovery already complete, replication pending)"
+}

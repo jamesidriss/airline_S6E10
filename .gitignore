@@ -65,6 +65,9 @@ reports/**/*.npy
 !STATUS.md
 !research/**
 
+# ---- cross-competition historical clones (read-only external repos, own .git) ----
+/research/cross_competition/raw/
+
 # ---- misc ----
 Thumbs.db
 .DS_Store

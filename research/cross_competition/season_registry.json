@@ -1,0 +1,101 @@
+{
+  "generated_utc": "2026-10-13T21:29:21.463364+00:00",
+  "schema_note": "Metrics differ across seasons (balanced accuracy vs ROC-AUC); never pool raw scores. Compare rank changes and paired within-season deltas.",
+  "seasons": [
+    {
+      "season": "S6E7",
+      "task": "Predicting Student Health Risk",
+      "metric": "balanced_accuracy",
+      "train_rows": 295753,
+      "test_rows": null,
+      "repo": "jamesidriss/Kaggle_S6E7_predicting_student_health_risk",
+      "repo_commit": "b2874abd2ba4d160a034e50ba2960e1a618399a1",
+      "best_verified_local_cv": 0.9506354114847112,
+      "best_verified_local_cv_source": "final_candidate_leaderboard.txt (realmlp_seed2718_recall_diverse)",
+      "public_best": 0.95053,
+      "public_best_source": "competition/snapshots/kaggle_submissions_live.csv (submission_v5_04_geo_3407_31415_2718)",
+      "public_to_oof_pearson": 0.8938,
+      "public_to_oof_spearman": 0.4127,
+      "pseudo_leaderboard_winner_recurrence_rate": 0.186,
+      "pseudo_leaderboard_spearman": 0.862,
+      "private_score": null,
+      "private_rank": null,
+      "private_status": "UNKNOWN (privateScore column empty for all 13 submissions; no standings artifact)",
+      "kaggle_submission_refs": null,
+      "submissions_count": 13
+    },
+    {
+      "season": "S6E8",
+      "task": "Predicting Smartphone Addiction",
+      "metric": "roc_auc",
+      "train_rows": null,
+      "test_rows": null,
+      "repo": "jamesidriss/Kaggle_S6E8_predicting_smartphone_addiction",
+      "repo_commit": "8f5e1975511792cf1b2bf5595015e8a16b3de53a",
+      "best_verified_local_cv": 0.9697335714296428,
+      "best_verified_local_cv_source": "artifacts/metrics/E004_final.json (D_MIX pooled, community-derived stack)",
+      "best_self_built_local_cv": 0.9680964615121493,
+      "best_self_built_local_cv_source": "reports/E003_BLEND_DECISION.md (E003_C2_XGB_IMP MS3)",
+      "public_best": 0.96846,
+      "public_best_source": "SUBMISSION_LEDGER.csv (E002-MS5-B, ref 55282653)",
+      "private_score": null,
+      "private_rank": null,
+      "private_status": "UNKNOWN (no private score/rank anywhere in repo)",
+      "kaggle_submission_refs": [
+        "55268730",
+        "55268731",
+        "55282653"
+      ],
+      "submissions_count": 3
+    },
+    {
+      "season": "S6E9",
+      "task": "Predicting Electric Vehicle Purchases",
+      "metric": "roc_auc",
+      "train_rows": 668665,
+      "test_rows": 286571,
+      "repo": "jamesidriss/Kaggle_S6E9_predicting_electric_vehicle_purchases",
+      "repo_commit": "e8afd9283e265520fec79b2de5fce8fc858dd9ae",
+      "best_verified_local_cv": 0.9461004903190622,
+      "best_verified_local_cv_source": "reports/deployment_policy_audit_results.json (P5 matched nested, CatBoost+TabM)",
+      "public_best": 0.94627,
+      "public_best_source": "registry/deployment_policy_audit.json (ref 56718142)",
+      "private_score": null,
+      "private_rank": null,
+      "private_status": "UNKNOWN (no standings artifact; final-selection swap to P5 pair unconfirmed)",
+      "kaggle_submission_refs": [
+        "56503879",
+        "56503880",
+        "56718142",
+        "56715949"
+      ],
+      "submissions_count": 4
+    },
+    {
+      "season": "S6E10",
+      "task": "Predicting Airline Satisfaction",
+      "metric": "roc_auc",
+      "train_rows": 699635,
+      "test_rows": 299844,
+      "repo": "jamesidriss/airline_S6E10",
+      "repo_commit": "0edbe66bce8c1d470fda5b953bef88078d779f47",
+      "best_verified_local_cv": 0.9618529228157235,
+      "best_verified_local_cv_source": "reports/phase17_B1_primary.json (v7_sol_tabpfn_internal2_aux10 full primary OOF)",
+      "public_best": 0.96146,
+      "public_best_source": "reports/v7_sol_tabpfn_internal2_aux10_result.json (ref 57090508)",
+      "private_score": null,
+      "private_rank": null,
+      "private_status": "COMPETITION LIVE (deadline 2026-10-31); private unavailable",
+      "kaggle_submission_refs": [
+        "56788249",
+        "56793823",
+        "56805526",
+        "56845975",
+        "56918343",
+        "56951906",
+        "57090508"
+      ],
+      "submissions_count": 7
+    }
+  ]
+}

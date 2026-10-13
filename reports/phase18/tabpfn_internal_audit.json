@@ -1,0 +1,80 @@
+{
+  "auc": {
+    "route_internal2": 0.9615159787196581,
+    "member0_only": 0.9612196009478463,
+    "member1_only": 0.9613596598659161,
+    "member_mean": 0.9615159770021382,
+    "m0_minus_route": -0.0002963777718117955,
+    "m1_minus_route": -0.00015631885374201016,
+    "member_mean_minus_route": -1.7175199040764255e-09
+  },
+  "pair_rescue_m1_vs_m0": {
+    "all_positive_negative_pairs": 120813731344,
+    "rescued_pair_credit": 576409203.0,
+    "damaged_pair_credit": 559488162.5,
+    "rescued_pair_fraction": 0.004771057036213511,
+    "damaged_pair_fraction": 0.004630998118143844,
+    "net_auc_gain": 0.00014005891806966655,
+    "baseline_error_pair_credit": 4685204712.5,
+    "candidate_error_pair_credit": 4668283672.0,
+    "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+  },
+  "error_pairs": {
+    "m0": 4685204712.5,
+    "m1": 4668283672.0,
+    "total": 120813731344
+  },
+  "members": {
+    "pearson": 0.9986414487939548,
+    "spearman": 0.9825212529533854,
+    "mean_abs_gap": 0.01052318318414681,
+    "p99_abs_gap": 0.09872860491275794
+  },
+  "fold_aucs": [
+    {
+      "fold": 0,
+      "route": 0.9614576551310231,
+      "m0": 0.9611324459037415,
+      "m1": 0.9613307504537855,
+      "m0_minus_route": -0.00032520922728163093,
+      "m1_minus_route": -0.0001269046772376381
+    },
+    {
+      "fold": 1,
+      "route": 0.9616162935885816,
+      "m0": 0.9613791650688465,
+      "m1": 0.9614318436490866,
+      "m0_minus_route": -0.00023712851973511917,
+      "m1_minus_route": -0.00018444993949495725
+    },
+    {
+      "fold": 2,
+      "route": 0.9615299662268825,
+      "m0": 0.9611995670167187,
+      "m1": 0.9614181433320789,
+      "m0_minus_route": -0.0003303992101637565,
+      "m1_minus_route": -0.00011182289480360375
+    },
+    {
+      "fold": 3,
+      "route": 0.9608864257673363,
+      "m0": 0.9606084955173375,
+      "m1": 0.9606849170371708,
+      "m0_minus_route": -0.00027793024999878124,
+      "m1_minus_route": -0.00020150873016544502
+    },
+    {
+      "fold": 4,
+      "route": 0.9621354781283643,
+      "m0": 0.9618192017862381,
+      "m1": 0.9619878494139341,
+      "m0_minus_route": -0.00031627634212616496,
+      "m1_minus_route": -0.00014762871443019243
+    }
+  ],
+  "interpretation_limits": [
+    "This is a diagnostic on the frozen config; no member was selected using these numbers.",
+    "A single-member route would be a deployment-policy change requiring its own matched experiment.",
+    "Internal-member AUCs here are OOF via the certified five FIT contexts, same geometry as route."
+  ]
+}
