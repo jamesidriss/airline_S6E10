@@ -1,0 +1,529 @@
+{
+  "hypothesis_id": "H18-A",
+  "stage": "S1_matched_discovery_arm",
+  "arm": "treatment",
+  "eval_fold_block10": 0,
+  "git": "cb6a341ee8afd034fd2bf48bf26e33ce68ccc18a",
+  "prereg_sha256": "248fab01b62d572aa0ce1b27dba1ee2e2ed24e9d10d210964acef09d36900f77",
+  "s0_probe_sha256": "c58e15ddb144871005b66e8d8a352291ea4a92a3ad1d33dad4b18664839c99c3",
+  "context_rows": 629671,
+  "eval_rows": 69964,
+  "context_ids_sha256": "fd81e49418e068b5ece179a37643c0df5ce4fc10dbc48d3ff55cffe4dce0e8ce",
+  "eval_ids_sha256": "f76703ea68eec4c049c65347d0fe2f05fdca9246659765576955b7f09234dacd",
+  "feature_context_sha256": "7a2400758a2618205ae1de732c2f7eb4287eaa9f0691ff7466aa08b8c588d03c",
+  "feature_eval_sha256": "bcbf565c17b660380b2d5ee9066510de47e644b1c94c31e7a2b6c446c7c88b50",
+  "control_subsample_seed": 1801,
+  "model_seed": 1201,
+  "params": {
+    "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn35\\tabpfn-v3.5-20260909.safetensors",
+    "n_estimators": 2,
+    "auto_scale_n_estimators": false,
+    "random_state": 1201,
+    "device": "cuda",
+    "ignore_pretraining_limits": true,
+    "fit_mode": "fit_with_cache",
+    "kv_cache_precision": "int8",
+    "keep_cache_on_device": true,
+    "inference_precision": "autocast",
+    "categorical_features_indices": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      21
+    ],
+    "memory_saving_mode": true,
+    "n_preprocessing_jobs": 1,
+    "tuning_config": null
+  },
+  "allocator_ceiling_fraction": 0.95,
+  "bank": {
+    "primary_report_sha256": "e327ac39714512081a8bce53794cbd59810babbac42f714059bca2c2c13f9dff",
+    "test_certificate_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+    "data_sha256": {
+      "train": "2313b65c74e6994f01c2628aae82d2f97aa6f74a81950172ff83864837c98b36",
+      "test": "ff7932747f27c5274de904194ac38b4d088ea4f9bb005ae74f0d619fb893a9b6"
+    },
+    "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+    "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+    "test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+    "oof_sha256": {
+      "candidate": "09042fda45f93c1817999553e827e154128ae399445e0209e599d517032977a8",
+      "aux10": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+      "route": "41f9a9c48dbeaf8c3a2a5248bac64a843e787c972672da820d56a1446f5c9510"
+    },
+    "test_sha256": {
+      "candidate": "b9ccd997acca2e5c05946e7581ec8d81ea21ab198eadfd99e535f86f651b7c7f",
+      "aux10": "c05e915fe541ecef4d1ceca94f493315c53b049ef01926fd3ea210e47fed2bd2",
+      "route": "7ac0576f609ab758e3cecea04b1da76bcdb7317598cdd6d74a61a85b52651e1b"
+    },
+    "v6_csv_sha256": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d"
+  },
+  "library_source_sha256": {
+    "classifier.py": "946f31f593d50fb1ab64fc948451bc2d5071c6d119ecb1c9ac419e633d7c3708",
+    "inference.py": "7b24edcee231de2d40c616415aa5b72ea19ec020b9b6889c6f1209b98f178444",
+    "base.py": "3537d7939bc6122c2339b464371d5f7428d4342cf6b9b58f3ccfa96022af3304",
+    "inference_config.py": "9861965d5082b55be5f1182563b7043a4c413783ce87db57a0925fc3ea05cf38",
+    "preprocessing/ensemble.py": "6c795ffa8715aa1a6692eaa99c745cc1209c8cf46564b9fc16b0cb427fa9ebff",
+    "preprocessing/datamodel.py": "bdbba1fb6881fe71826fb8ed9e97f367e471f599ce268088f0154202332acd06"
+  },
+  "only_variable": "context size; both arms share eval rows, params, seeds, estimator count",
+  "status": "COMPLETE",
+  "fit_seconds": 0.9850000000005821,
+  "peak_gpu_bytes": 15316503552,
+  "prediction_sha256": "3797770fb0ee75f9f02ddd3c6fe6c7d900a3c150f19d93f23216133541f4ff9e",
+  "auc": 0.9609691431458857,
+  "estimator_metadata": {
+    "members": [
+      {
+        "index": 0,
+        "config": {
+          "preprocess_config": {
+            "name": "none",
+            "categorical_name": "ordinal_shuffled",
+            "append_original": false,
+            "max_features_per_estimator": 768,
+            "global_transformer_name": null,
+            "max_onehot_cardinality": null,
+            "differentiable": false
+          },
+          "add_fingerprint_feature": true,
+          "polynomial_features": "no",
+          "feature_shift_count": 908,
+          "feature_shift_decoder": "shuffle",
+          "outlier_removal_std": 12.0,
+          "_model_index": 0,
+          "passthrough_inf": false,
+          "class_permutation": [
+            0,
+            1
+          ]
+        },
+        "config_sha256": "de5090d76d9f4b3fb04e72fdb6eef98f41ae1dc508b9642da948987615d99c01",
+        "pipeline_seed": 826233175,
+        "prepared_x_sha256": "2638095000f9f4c4c51fc28109f6b6ecfa35ac3222268cb661548636ae80d692",
+        "prepared_y_sha256": "7855767b81681a75aeb604a8cc4d3473a6118e83dafeb3b4e1692922ce3df722",
+        "prepared_shape": [
+          629671,
+          22
+        ],
+        "feature_schema": {
+          "features": [
+            {
+              "name": "f13",
+              "modality": "categorical",
+              "scheduled_gpu_transform": null,
+              "ancestor": null,
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "f14",
+              "modality": "categorical",
+              "scheduled_gpu_transform": null,
+              "ancestor": null,
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "f15",
+              "modality": "categorical",
+              "scheduled_gpu_transform": null,
+              "ancestor": null,
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "f16",
+              "modality": "categorical",
+              "scheduled_gpu_transform": null,
+              "ancestor": null,
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "f18",
+              "modality": "categorical",
+              "scheduled_gpu_transform": null,
+              "ancestor": null,
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "f21",
+              "modality": "categorical",
+              "scheduled_gpu_transform": null,
+              "ancestor": null,
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_0",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f0",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_1",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f1",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_2",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f2",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_3",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f3",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_4",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f4",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_5",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f5",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_6",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f6",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_7",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f7",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_8",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f8",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_9",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f9",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_10",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f10",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_11",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f11",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_12",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f12",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_13",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f17",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_14",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f19",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_15",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f20",
+              "non_constant_with_inf": false
+            }
+          ]
+        },
+        "feature_indices": null,
+        "gpu_preprocessor_type": "TorchPreprocessingPipeline",
+        "fit_seconds": 985.1409999999996,
+        "total_seconds": 1117.1409999999996,
+        "peak_gpu_bytes": 15315115008,
+        "raw_logits_sha256": "e66b18de0425cbc809adbc86be598401ff30b894cbd6d312113a27c6c48119fe",
+        "gpu_allocated_after_release": 480378880
+      },
+      {
+        "index": 1,
+        "config": {
+          "preprocess_config": {
+            "name": "none",
+            "categorical_name": "ordinal_shuffled",
+            "append_original": false,
+            "max_features_per_estimator": 768,
+            "global_transformer_name": null,
+            "max_onehot_cardinality": null,
+            "differentiable": false
+          },
+          "add_fingerprint_feature": true,
+          "polynomial_features": "no",
+          "feature_shift_count": 907,
+          "feature_shift_decoder": "shuffle",
+          "outlier_removal_std": 12.0,
+          "_model_index": 0,
+          "passthrough_inf": false,
+          "class_permutation": [
+            1,
+            0
+          ]
+        },
+        "config_sha256": "6781d617213a0411bf6ad94f64d095fbf9a490d54db61050c7451f56f3e22827",
+        "pipeline_seed": 674312838,
+        "prepared_x_sha256": "36898768cf11e1adb27419a91d4d4f7fac8304ebf5cae2c1ed80c44b0791a653",
+        "prepared_y_sha256": "d6c6bbd697fd35a4bcc62afaf9262638ee5c3f3fa374e04183562176d7125658",
+        "prepared_shape": [
+          629671,
+          22
+        ],
+        "feature_schema": {
+          "features": [
+            {
+              "name": "f13",
+              "modality": "categorical",
+              "scheduled_gpu_transform": null,
+              "ancestor": null,
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "f14",
+              "modality": "categorical",
+              "scheduled_gpu_transform": null,
+              "ancestor": null,
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "f15",
+              "modality": "categorical",
+              "scheduled_gpu_transform": null,
+              "ancestor": null,
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "f16",
+              "modality": "categorical",
+              "scheduled_gpu_transform": null,
+              "ancestor": null,
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "f18",
+              "modality": "categorical",
+              "scheduled_gpu_transform": null,
+              "ancestor": null,
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "f21",
+              "modality": "categorical",
+              "scheduled_gpu_transform": null,
+              "ancestor": null,
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_0",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f0",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_1",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f1",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_2",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f2",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_3",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f3",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_4",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f4",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_5",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f5",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_6",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f6",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_7",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f7",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_8",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f8",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_9",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f9",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_10",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f10",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_11",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f11",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_12",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f12",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_13",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f17",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_14",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f19",
+              "non_constant_with_inf": false
+            },
+            {
+              "name": "reshape_15",
+              "modality": "numerical",
+              "scheduled_gpu_transform": null,
+              "ancestor": "f20",
+              "non_constant_with_inf": false
+            }
+          ]
+        },
+        "feature_indices": null,
+        "gpu_preprocessor_type": "TorchPreprocessingPipeline",
+        "fit_seconds": 981.2350000000006,
+        "total_seconds": 1118.313000000002,
+        "peak_gpu_bytes": 15316503552,
+        "raw_logits_sha256": "c847bf519f4aea368260880436445574abd638c03960186c75327128f863d35f",
+        "gpu_allocated_after_release": 480378880
+      }
+    ],
+    "softmax_temperature": 1.0,
+    "average_before_softmax": false,
+    "balance_probabilities": false,
+    "row_subsampling": null,
+    "n_estimators_resolved": 2,
+    "checkpoint_n_estimators": 8,
+    "official_inference_config": {
+      "PREPROCESS_TRANSFORMS": [
+        {
+          "name": "none",
+          "categorical_name": "ordinal_shuffled",
+          "append_original": false,
+          "max_features_per_estimator": 768,
+          "global_transformer_name": null,
+          "max_onehot_cardinality": null,
+          "differentiable": false
+        }
+      ],
+      "MAX_UNIQUE_FOR_CATEGORICAL_FEATURES": 1000000,
+      "MIN_UNIQUE_FOR_NUMERICAL_FEATURES": 4,
+      "MIN_NUMBER_SAMPLES_FOR_CATEGORICAL_INFERENCE": 100,
+      "MIN_CARDINALITY_FOR_TEXT": 30,
+      "SOFTMAX_TEMPERATURE": 1.0,
+      "N_ESTIMATORS": 8,
+      "TRANSFORM_DATES": true,
+      "TRANSFORM_TEXT": true,
+      "TEXT_N_COMPONENTS": 30,
+      "OUTLIER_REMOVAL_STD": 12.0,
+      "FEATURE_SHIFT_METHOD": "shuffle",
+      "CLASS_SHIFT_METHOD": "shuffle",
+      "FINGERPRINT_FEATURE": true,
+      "POLYNOMIAL_FEATURES": "no",
+      "SUBSAMPLE_SAMPLES": null,
+      "SAMPLE_SUBSAMPLING_METHOD": "auto",
+      "ENABLE_GPU_PREPROCESSING": true,
+      "FEATURE_SUBSAMPLING_METHOD": "balanced",
+      "FEATURE_SUBSAMPLING_CONSTANT_FEATURE_COUNT": 50,
+      "FEATURE_SUBSAMPLING_IMPORTANCE_TOP_K_COUNT": 150,
+      "REGRESSION_Y_PREPROCESS_TRANSFORMS": [
+        null,
+        "safepower"
+      ],
+      "USE_SKLEARN_16_DECIMAL_PRECISION": false,
+      "MAX_NUMBER_OF_CLASSES": 160,
+      "MAX_NUMBER_OF_FEATURES": 20000,
+      "MAX_NUMBER_OF_SAMPLES": 1000000,
+      "MAX_CPU_SAMPLES": 5000,
+      "FIX_NAN_BORDERS_AFTER_TARGET_TRANSFORM": true,
+      "PASSTHROUGH_INF": false,
+      "_REGRESSION_DEFAULT_OUTLIER_REMOVAL_STD": null,
+      "_CLASSIFICATION_DEFAULT_OUTLIER_REMOVAL_STD": 12.0
+    }
+  }
+}

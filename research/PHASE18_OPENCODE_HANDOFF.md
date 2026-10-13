@@ -31,8 +31,10 @@ Last updated: 2026-10-14 (session 2). Update at every milestone.
 | 6 | TabPFN internal audit: `tabpfn_internal_audit.json` (2-estimator), `tabpfn_internal4_fold0_audit.json` (4-estimator fold 0) | DONE |
 | 7 | `reports/phase18/hypothesis_ranking.md` | DONE |
 | 8 | H18-A pre-registration `configs/phase18/h18a_coverage_prereg.json` — frozen before any fold-0 GPU | DONE |
-| 9 | S0 memory probe `scripts/phase18/probe_h18a_s0.py` — launched in background, awaiting result | RUNNING |
-| 9 prep | S1 matched-arm runner + paired comparison written and syntax/reindex-checked (`scripts/phase18/run_h18a_s1_arm.py`, `compare_h18a_s1.py`); both refuse to run unless S0 status is PASS_FEASIBLE; arms assert member config hashes equal the frozen phase17 probe metadata | READY |
+| 9 | S0 memory probe `scripts/phase18/probe_h18a_s0.py` — **PASS: peak 15.32 GB < 16.6 GB abort at 629,671 rows; fit 990s; full-test predict projects ~8 min/member** (`reports/phase18/h18a_s0_probe.json`, ledger `p18_h18a_s0_probe`) | DONE |
+| 10 | S1 fold-0 matched arms on block10 fold 0: control (559,708 ctx) COMPLETE, AUC 0.9609162, peak 13.67 GB (= phase17 at this context size); treatment (629,671 ctx) RUNNING | RUNNING |
+| 9 prep | S1 matched-arm runner + paired comparison written and syntax/reindex-checked (`scripts/phase18/run_h18a_s1_arm.py`, `compare_h18a_s1.py`); both refuse to run unless S0 status is PASS_FEASIBLE; arms assert member config hashes equal the frozen phase17 probe metadata | DONE |
+| 9 prep | S3 context runner + 10-context aggregate admission gate written (`scripts/phase18/run_h18a_s3_context.py`, `assemble_h18a_s3.py`); S3 hard-fails unless preregistered launch rule (S1+S2 mean route delta ≥ 5.6e-5) fires; block10-fold-0 S3 context reuses S1 treatment with hash re-verification | READY |
 | — | Phase18 tests `tests/phase18/test_phase18.py` (5 tests) wired into `tests/run_tests.py`; a failing test caught and fixed the prereg random_state typo (1801→1201) before any GPU run | DONE |
 | — | Audit records appended to `experiments/ledger.jsonl` + `experiments/phase18_registry.jsonl` via `scripts/phase18/record_audits.py` (idempotent) | DONE |
 
