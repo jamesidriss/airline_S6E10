@@ -9,6 +9,7 @@
     "S6E10 resource record: peak GPU 13.675 GB at 559,708-row contexts (artifacts/phase17_B1/f0/member_0_stats.json); VRAM total 17.09 GB decimal; linear KV-cache projection at 629,671 rows = 15.39 GB."
   ],
   "matched_design": {
+    "correction_note": "2026-10-14: transcription fix BEFORE any GPU run — frozen random_state is 1201 (as certified in reports/v7_sol_tabpfn_internal2_aux10_pre_result.json), not 1801 as an earlier draft of this file stated. No experiment has been executed under the erroneous value.",
     "eval_rows": "block10 fold 0 apply_ids (69,964 rows, immutable registry data/cache/folds/block10_10f_seed20261010.npy)",
     "control_arm": {
       "context": "fixed-seed (seed=1801) random subsample of 559,708 rows from the 629,671 non-eval rows",
@@ -20,7 +21,7 @@
       "n_estimators": 2,
       "expected_context_rows": 629671
     },
-    "frozen_params": "identical to v7 certified config: model tabpfn-v3.5-20260909.safetensors, auto_scale_n_estimators=false, random_state=1801, device=cuda, ignore_pretraining_limits=true, fit_mode=fit_with_cache, kv_cache_precision=int8, keep_cache_on_device=true, inference_precision=autocast, categorical_features_indices=[13,14,15,16,18,21], memory_saving_mode=true, n_preprocessing_jobs=1, tuning_config=null",
+    "frozen_params": "identical to v7 certified config: model tabpfn-v3.5-20260909.safetensors, auto_scale_n_estimators=false, random_state=1201, device=cuda, ignore_pretraining_limits=true, fit_mode=fit_with_cache, kv_cache_precision=int8, keep_cache_on_device=true, inference_precision=autocast, categorical_features_indices=[13,14,15,16,18,21], memory_saving_mode=true, n_preprocessing_jobs=1, tuning_config=null",
     "paired_metric": "AUC on the identical eval rows, treatment minus control; exact pair-credit decomposition as secondary",
     "only_variable": "context size (559,708 -> 629,671). Seeds, estimator count, params, eval rows identical."
   },
