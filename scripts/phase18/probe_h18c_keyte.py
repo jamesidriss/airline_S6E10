@@ -38,7 +38,8 @@ from src.validation.compare import logit  # noqa: E402
 from src.validation.folds import get_scheme  # noqa: E402
 from src.models.resource_guard import inference_guard, ResourcePreflightError  # noqa: E402
 from scripts.run_views import _inner_es_split, _fit_cat_es  # noqa: E402
-from scripts.run_phase13 import RATINGS, fit_slot  # noqa: E402
+from scripts.run_phase13 import RATINGS  # noqa: E402
+from scripts.run_phase13b import fit_slot  # noqa: E402
 from scripts.run_phase14 import fit_xgb, fit_cat  # noqa: E402
 from scripts.native_cat import attach, cat_frame, default_cat_cols  # noqa: E402
 from scripts.replay_sol_classical import frozen_roles, resolved_params  # noqa: E402
