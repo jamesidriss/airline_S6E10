@@ -1,0 +1,28 @@
+{
+  "hypothesis_id": "H18-A",
+  "stage": "S1_matched_discovery",
+  "eval_fold_block10": 1,
+  "eval_rows": 69964,
+  "auc_control": 0.9619180543447778,
+  "auc_treatment": 0.9619402630271472,
+  "delta": 2.220868236935125e-05,
+  "pair_rescue_damage": {
+    "all_positive_negative_pairs": 1208153620,
+    "rescued_pair_credit": 2977168.5,
+    "damaged_pair_credit": 2950337.0,
+    "rescued_pair_fraction": 0.0024642300868990487,
+    "damaged_pair_fraction": 0.002442021404529666,
+    "net_auc_gain": 2.2208682369382795e-05,
+    "baseline_error_pair_credit": 46008840.5,
+    "candidate_error_pair_credit": 45982009.0,
+    "policy": "Exact pair credits; correct1/tied1/2/wrong0; no sampling"
+  },
+  "discovery_pass": true,
+  "control_context_rows": 559708,
+  "treatment_context_rows": 629671,
+  "only_variable_verified": true,
+  "report_sha256": {
+    "control": "36114d3c1f56c5d72f510c8b78a07d82000ca953bc3b1c303e1ba616607d1e21",
+    "treatment": "d97555a66b702181640a54275635d87d2061b4611857dd5eac5514ed3306bea8"
+  }
+}

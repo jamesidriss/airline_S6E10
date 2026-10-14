@@ -5,28 +5,26 @@ Phase 17 certification chain. Ranking criterion: expected operational v7 portfol
 gain × probability of surviving the admission gate, per GPU-hour. The stretch gap
 to 0.962100 is 247e-5 OOF; no single axis below is claimed to close it.
 
-## Rank 1 — H18-A: TabPFN context coverage 80% -> 90% (Axis A/H)
+## Rank 1 — H18-A: TabPFN context coverage 80% -> 90% (Axis A/H) — **CLOSED at wave 2 (2026-10-14)**
 
-- **Mechanism.** Each v7 route context trains on 80% of rows (559,708). S6E9
-  measured that raising per-model training coverage (2 half-data bags -> 5 bags
-  on 80%) gained +2.57e-5 (CatBoost+TabM) and +2.79e-5 (CatBoost), 5/5 folds,
-  CIs excluding zero — with no feature/seed/hyperparameter change. The mechanism
-  (more labels per final model) is model-family general.
-- **Evidence for feasibility.** Peak GPU at 559,708 rows = 13.675 GB
-  (`artifacts/phase17_B1/f0/member_0_stats.json`); total VRAM 16303 MiB = 17.09 GB
-  decimal. Linear KV-cache projection at 629,671 rows = 15.39 GB (margin 1.7 GB).
-  Members run sequentially, so estimator count does not raise peak.
-- **Matched design.** Both arms evaluated on identical block10 fold-0 rows
-  (69,964): control context = fixed-seed 559,708-row subsample of the other 9
-  folds; treatment context = all 629,671. Same frozen params, n_estimators=2,
-  same seeds. Only context size differs. Causality is established here; the
-  promotion test (10-context route OOF vs champion on primary folds) follows only
-  if discovery + replication pass.
-- **Cost.** Memory probe ~15 min; matched discovery ~55 min; replication ~55 min;
-  full 10-context OOF ~4.4 h; test contexts ~4.4 h. Worst case ~14 h of the 24 h
-  GPU budget, gated at every stage.
-- **Risk.** 1.7 GB projected VRAM margin (probe decides); protocol mismatch is
-  controlled by the matched design; aux10 half of the portfolio is untouched.
+- **Verdict: mechanism REAL, operationally insufficient.** Matched design (both
+  arms on identical block10 eval rows, only context size differs): route delta
+  **+5.2976e-5** (block10 f0) and **+2.2209e-5** (block10 f1), 2/2 positive —
+  the S6E9 deployment-coverage lesson transfers directionally to TabPFN.
+  But mean +3.759e-5 failed the preregistered S3-launch rule (≥5.6e-5) by 1.5×,
+  and the expected portfolio conversion (2.7e-6 – 1.0e-5 using the measured
+  7.1–27% band) cannot reach the 1.5e-5 admission gate even optimistically.
+  S3 (10 contexts, ~5.5h) and S4 test (~8h) never ran. GPU burned 2.6h, saved
+  ~13.5h. Evidence: `reports/phase18/h18a_s1_f{0,1}_comparison.json`, closure
+  record `phase18_h18a_close`.
+- **S0 feasibility (kept for the record):** 90% context fits — peak 15.32 GB
+  (< 16.6 GB abort, 17.09 GB hardware), fit 990s, full-test predict projects
+  ~8 min/member.
+- **Fold heterogeneity lesson:** f0 delta was 2.4× f1 — single-fold route
+  deltas must not drive GPU commitments; the two-fold rule caught it.
+- (Design history: control = fixed-seed 559,708-row subsample of the other 9
+  folds; treatment = all 629,671; frozen v7 params, n_estimators=2, seed 1201;
+  exact pair-credit identity verified in both comparisons.)
 
 ## Rank 2 — H18-E: official TabPFN internal estimators 2 -> 4 (Axis E) — **CLOSED at wave 1 (2026-10-14)**
 
