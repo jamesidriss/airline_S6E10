@@ -1,0 +1,131 @@
+{
+  "hypothesis_id": "H19-B",
+  "title": "Frozen auxiliary10 deployment-policy experiment: single full-FIT vs bag-of-five inference (private-first pseudo-test)",
+  "frozen_utc": "2026-10-14",
+  "git_at_freeze": "f0b20385a465198cdf154efc2cc308ba7053e16f",
+  "champion_at_freeze": {
+    "name": "v7_sol_tabpfn_internal2_aux10",
+    "oof_auc": 0.9618529228157235,
+    "geometry_immutable": true,
+    "composition": "sigmoid((logit(route) + classical_aux10_logits) / 2).astype(float32)"
+  },
+  "scientific_question": "Does replacing the certified aux10 deployment policy (one full-FIT refit per role, 100% of FIT) with a bag-of-five inner-fold members per role (each ~80% of FIT, equal mean-logit) improve the complete v7 ranking on a frozen pseudo-test (primary fold 4)?",
+  "standard": {
+    "type": "PSEUDO_TEST",
+    "note": "This changes test-time inference only; OOF is unchanged. It CANNOT pass the OOF admission gate and is NOT a private-performance proof. It is matched diagnostic evidence for finalist selection under a frozen protocol.",
+    "s6e9_caveat": "S6E9's deployment bagging precedent moved finalists +2.6e-4 private, but pseudo-test deltas do not transfer cleanly to private. Measured fold-4 evidence is conditional on this split."
+  },
+  "frozen_pseudotest": {
+    "pseudotest": "primary fold 4",
+    "fit": "primary folds 0,1,2,3",
+    "fit_size": 559708,
+    "pseudotest_size": 139927,
+    "labels_use": "pseudotest labels used ONLY for final AUC/pair/segment evaluation; never in feature fitting, ES, tree-count, bagging, weight selection, or model selection",
+    "honesty": "Fold 4 has been used in earlier campaign research (it is part of the primary OOF). This is NOT a genuinely new hidden holdout; it provides matched diagnostic evidence only."
+  },
+  "control": {
+    "policy": "single full-FIT refit per role (certified aux10 deployment policy)",
+    "source": "certified primary fold-4 aux10 member predictions under tag sol_clean_aux10_primary",
+    "retrain": false,
+    "verification": [
+      "classical(4, 'sol_clean_aux10_primary') contract verification (role config, params, fold membership, tree counts, row-ID order, feature hashes, source hashes, finite [0,1] probabilities)",
+      "control portfolio sigmoid((logit(route4)+aux10_control_logits)/2).astype(float32) reproduces artifacts/phase17_B1/f4/portfolio.npy bit-exact (max abs diff == 0.0)"
+    ],
+    "fit_population": "each role r trains on np.flatnonzero(scheme_folds != 4); for primary-scheme roles this is folds 0-3 (= FIT, 559708 rows). Non-primary roles use their certified immutable scheme and train population (recorded, not modified)."
+  },
+  "treatment": {
+    "policy": "bag-of-five inner-fold members per role, equal mean-logit",
+    "inner_partitions": {
+      "n": 5,
+      "algorithm": "StratifiedKFold(5, shuffle=True, random_state=20261022) restricted to the FIT index set (primary folds 0-3), stratified on y",
+      "deterministic": true,
+      "hash_verified": true,
+      "excludes_pseudotest": "no fold-4 row ever appears in any bag member's training set"
+    },
+    "per_role_per_member": {
+      "training_set": "FIT minus inner partition i (i=0..4); ~80% of FIT",
+      "inner_es": "_inner_es_split(bag_fit, y, seed=1) — 10% carved from bag_fit, never pseudotest",
+      "features": "reproduce the role's certified feature-generation protocol on the bag subset: ViewBuilder(role.view).assemble(bag_fit, y, fold4_idx, inner_seed=inner) then add_expected_values (aux EV probability_cache, seed=1, rounds=250, inner_folds=3) rebuilt strictly inside bag_fit",
+      "params": "role's certified hyperparameters and categorical-encoding semantics, unchanged",
+      "dispatch": "same model-specific fit functions as the certified fold (fit_slot for lgbm-aux, fit_xgb for xgb-aux, native CatBoost attach for cat-aux C1), preserving each model's tree-count/ES semantics",
+      "prediction": "probability on pseudotest rows; save exact row IDs and hashes"
+    },
+    "aggregation": {
+      "family_level": "equal mean over the 5 bag members' logits per role (logit(p) with clip to [1e-7,1-1e-7])",
+      "role_level": "equal mean-logit over the 10 roles, matching the certified aux10 mean-logit method",
+      "forbidden": "no averaging of incompatible probability and logit vectors; no best-bag selection by pseudotest AUC"
+    }
+  },
+  "evaluation": {
+    "composition_control": "sigmoid((logit(route4) + aux10_control_logits) / 2).astype(float32)",
+    "composition_treatment": "sigmoid((logit(route4) + aux10_bag5_logits) / 2).astype(float32)",
+    "route": "unchanged certified TabPFN route prediction on primary fold 4 (artifacts/phase17_B1/f4/prediction.npy)",
+    "metrics": [
+      "aux standalone AUC (control vs treatment)",
+      "full portfolio AUC (control vs treatment)",
+      "exact paired AUC delta (treatment - control) on identical fold-4 rows",
+      "pair rescue/damage with credit correct=1, tie=0.5, wrong=0; net pair credit must reproduce the exact AUC delta",
+      "Spearman rank correlation (control vs treatment portfolio)",
+      "logit Pearson correlation (control vs treatment portfolio)",
+      "segment effects (predeclared: Gender, Customer Type, Type of Travel, Class, Age quartiles, Flight Distance quartiles, Departure Delay in Minutes>0, Arrival Delay in Minutes>0, unique-rating-key vs not)",
+      "prediction-scale changes (mean/quantiles of |treatment - control| probability, sign flips)",
+      "differences from the certified fold-4 baseline (control must be bit-exact)"
+    ],
+    "recompute_from_vectors": "every metric recomputed from actual prediction vectors; portfolio gain never inferred from auxiliary standalone gain"
+  },
+  "decision_policy": {
+    "frozen_thresholds": {
+      "meaningful_aux_delta": 3e-5,
+      "meaningful_portfolio_delta": 3e-5,
+      "min_significant_se_multiple": 3.0,
+      "portfolio_regression_not_significant": -3e-5
+    },
+    "classification": {
+      "NEGATIVE": "bag5 portfolio AUC delta < -3e-5, OR bag5 is significantly worse (delta <= -3e-5 AND |delta| >= 3x paired SE)",
+      "PROMISING_DIAGNOSTIC": "bag5 portfolio AUC delta >= +3e-5 AND delta >= 3x paired SE AND aux standalone delta > 0",
+      "NEUTRAL": "everything between NEGATIVE and PROMISING (|delta| < +3e-5, or delta >= +3e-5 but < 3x SE, or aux standalone non-positive)",
+      "INVALID": "any protocol/numerical defect (non-disjointness, pseudotest leakage, TE/aux nesting error, wrong config/counts/fold/rows/trees/IDs/aggregation, non-finite output, control non-identity, v7 mutation)",
+      "RESOURCE_BLOCKED": "the complete predefined comparison cannot finish within the authorized CPU budget"
+    },
+    "even_if_promising": [
+      "do not promote",
+      "do not alter v7",
+      "do not submit to Kaggle",
+      "do not claim full OOF increased",
+      "do not use public score to choose the policy",
+      "a promising result requires a separately preregistered replication on another matched pseudo-test split (identical model params/weights) before any deployment change is considered"
+    ]
+  },
+  "compute": {
+    "cpu_hours_estimate": 8,
+    "cpu_hours_ceiling_phase19_total": 30,
+    "gpu": "H19-B is CPU-classical; no new heavy GPU training. XGB aux roles carry device='cuda' in their certified config (light hist method, ~11-30s/fit) and are preserved unchanged to honor 'identical config'; these count as light GPU use, not heavy GPU.",
+    "max_concurrent_gpu_jobs": 1,
+    "pilot": "a single-role pilot may measure resource/numerical fidelity only; its AUC MUST NOT choose which roles enter the full candidate set",
+    "budget_rule": "before all 50 fits: measure one member cost, estimate remaining runtime, inspect feature-cache reuse, verify CPU budget, RAM, disk; if the complete comparison cannot finish, stop with a resource report rather than silently reducing the family set"
+  },
+  "anti_leakage": {
+    "forbidden_training_inputs": [
+      "per_row_burden.parquet",
+      "pred_a / stored Atlas predictions",
+      "external/stored Atlas predictions for folds 1-4",
+      "any pseudotest (fold-4) label in feature fitting, ES, tree-count, bagging, weight selection, model selection"
+    ],
+    "te_nesting": "TE and aux-EV rebuilt strictly inside each bag member's training set (mirroring the certified outer-fold policy at bag scale)",
+    "expected_rating_crossfit": "aux EV probability_cache cross-fits inside bag_fit; apply rows are fold 4 (disjoint from bag_fit)",
+    "preregistered_scope_resolution": "The phase19 registry entry (committed earlier) described a generic 5-fold-carve experiment. The mission specifies the concrete instantiation (aux10 roles on primary fold 4). This prereg binds that exact instantiation; the generic registry text is a scope sketch, not a different experiment. No fold-0-fitted role is reused for folds 1-4 (that would leak); each role uses its certified native scheme with fold 4 held out."
+  },
+  "v7_protection": {
+    "no_mutation": "all artifacts/phase17_B1/*, artifacts/sol_clean_aux10_primary/*, experiments/private_finalists.json, submissions/* are read-only for this experiment",
+    "hashes_verified_at_start": [
+      "v7_sol_tabpfn_internal2_aux10.csv sha256 fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+      "test_prediction sha256 2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
+      "portfolio fold k hashes (CHAMPION_PORTFOLIO_SHA256) and route fold k hashes (CHAMPION_ROUTE_SHA256) over full OOF arrays"
+    ]
+  },
+  "budget_and_submissions": {
+    "submissions_used": 0,
+    "submissions_authorized_by_this_experiment": 0,
+    "note": "H19-B cannot satisfy the OOF-gain submission rule; it is finalist-selection evidence only."
+  }
+}
