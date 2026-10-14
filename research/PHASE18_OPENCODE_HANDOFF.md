@@ -105,6 +105,15 @@ even with less-correlated errors (H18-B); (4) feature gains that are unstable
 across member families cancel in the mean-logit (H18-C). Budget banked: ~19h
 GPU, ample CPU. Any future axis must clear the same preregistered gates.
 
+**Cycle close-out (2026-10-14):** full test suite **147/147 pass**; all work
+pushed (`0edbe66..9020765`, 12 commits, secret scan clean). Submissions this
+cycle: **0** (no OOF gain met the ≳+3e-5 bar — nothing was submitted, correctly).
+Champion A `v7_sol_tabpfn_internal2_aux10` remains the certified submission
+(public 0.96146). Next session starts from: ranked queue exhausted → a NEW
+hypothesis ranking (with this cycle's four standing lessons as priors) is the
+entry point; champion B search remains the only unresolved finalist direction
+and must not be improvised.
+
 **Conversion-ratio lesson (2026-10-14, from H18-E):** route-level gains are NOT
 portfolio gains. Measured fold-0 conversions: 7.1% (4-estimator change),
 ~27% (v7 internal2 change vs v6). Any route-improving hypothesis must be
