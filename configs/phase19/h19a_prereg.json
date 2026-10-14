@@ -1,0 +1,163 @@
+{
+  "schema": "phase19_prereg_extension_v1",
+  "hypothesis_id": "H19-A",
+  "title": "Difficulty-targeted reweighted LightGBM member -- fold-0 falsifier",
+  "parent_registry": "research/phase19_hypothesis_registry.jsonl",
+  "parent_registry_commit": "b5b83a4a05338228c86c021071a84e08fab5d7dc",
+  "start_sha": "b5b83a4a05338228c86c021071a84e08fab5d7dc",
+  "frozen_before_any_result": true,
+  "scope": {
+    "outer_eval_fold": 0,
+    "fit_folds": [1, 2, 3, 4],
+    "scheme": "primary",
+    "scheme_seed": 20261010,
+    "fold_registry": "src/validation/folds.py::get_scheme (immutable; hash-checked)",
+    "only_fold0": true,
+    "no_folds_1_4": "folds 1-4 are the FIT partition only; they are NOT evaluated as outer folds here",
+    "no_h19b_h19c": true,
+    "no_submission": true,
+    "submission_budget_note": "0 of 2 final submissions used; none authorized by this prereg"
+  },
+
+  "anti_leakage_audit": {
+    "primary_non_negotiable": "Never leak. No fold-0 label information in any supervised fit (features, weights, targets, early-stopping).",
+    "forbidden_training_inputs": [
+      "reports/phase19/per_row_burden.parquet",
+      "Atlas pred_a / pred_b (difficulty predictions for folds 1-4)",
+      "Atlas stored route / aux vectors for folds 1-4",
+      "any diagnostic whose producing model trained on fold-0 labels"
+    ],
+    "contamination_proof": {
+      "route": "champion route for fold k = TabPFN trained on folds != k; for k in 1..4 this set contains fold 0 -> route[fold k] is a function of fold-0 labels",
+      "aux": "classical(k,...) trains each aux member on fi = flatnonzero(folds != k); for k in 1..4 fi contains fold 0 -> aux[fold k] is a function of fold-0 labels",
+      "atlas_target": "Atlas per-row shared burden for fold-k rows is computed from route[fold k] and aux[fold k]; therefore the burden/flag for folds 1-4 carries fold-0 label information transitively",
+      "atlas_difficulty_model": "Atlas pred_a for fold k is trained on folds != k (contains fold 0 for k>=1) with the contaminated flag as target; doubly contaminated",
+      "conclusion": "NONE of per_row_burden.parquet, pred_a, pred_b, stored route/aux for folds 1-4 may be used as training weights for a fold-0 evaluation."
+    },
+    "primary_constraint": "difficulty weights for FIT rows (folds 1-4) must be built from predictions that NEVER saw fold 0",
+    "reconstruction_rule": "inner cross-fit strictly within FIT (folds 1-4); each FIT row judged/predicted by a model trained only on folds subseteq {1,2,3,4}"
+  },
+
+  "documented_deviations": [
+    {
+      "id": "DEV-1",
+      "faithful_target": "champion SHARED difficulty = misranked pairs where BOTH champion route (TabPFN) AND champion aux (LGBM ens) fail, for FIT rows",
+      "why_blocked": "the faithful target requires FOLD-0-SAFE champion route predictions for folds 1-4; the champion route is TabPFN (GPU). Rebuilding it fold-0-safely means 4 TabPFN trainings inside FIT, which is heavy GPU and explicitly out of scope for H19-A (CPU-only, no heavy GPU).",
+      "blocking_status": "BLOCKED on budget for the faithful target; a blocking diagnostic is recorded in the run output and report.",
+      "substitute": "fold-0-safe CPU PROXY shared difficulty = misranked pairs where TWO fold-0-safe CPU LightGBM judges (inner-cross-fitted within FIT) BOTH fail",
+      "is_silent": false,
+      "justification": "both judges are trained only on folds subseteq {1,2,3,4}; the proxy keeps the 'shared (two independent models both fail)' definition while staying CPU-only and fold-0-safe. The judges are CPU LGBM stand-ins, NOT the TabPFN route -- this substitution is explicit, budget-driven, and reported as a limitation.",
+      "scope_of_validity": "a positive result is evidence about the upweight-HARD-ROWS MECHANISM under a fold-0-safe proxy difficulty; it does NOT by itself validate the exact champion-shared-difficulty target (that needs the GPU route reconstruction)."
+    }
+  ],
+
+  "difficulty_reconstruction": {
+    "fit_only": true,
+    "never_sees_fold0": true,
+    "inner_crossfit": "for inner fold j in {1,2,3,4}: train on FIT\\{j}, predict fold j (out-of-sample for fold j, fold-0-safe for all)",
+    "judges": {
+      "count": 2,
+      "purpose": "two fold-0-safe satisfaction models whose BOTH-fail pairs define the fold-0-safe shared difficulty",
+      "features": "rich view 'full' assembled with fi=FIT\\{j}, val=fold_j, inner_seed=j (fold-safe TE; never fold 0)",
+      "early_stop": "inner 10% carved from FIT\\{j} only (patience 300); never fold 0",
+      "judge_A": {"objective": "binary", "metric": "auc", "n_estimators": 3000, "learning_rate": 0.05, "num_leaves": 127, "min_child_samples": 40, "colsample_bytree": 0.8, "subsample": 0.8, "subsample_freq": 1, "reg_lambda": 1.0, "max_bin": 255, "extra_trees": true, "verbose": -1, "n_jobs": 8, "seed": 11},
+      "judge_B": {"objective": "binary", "metric": "auc", "n_estimators": 3000, "learning_rate": 0.05, "num_leaves": 63, "min_child_samples": 60, "colsample_bytree": 0.6, "subsample": 0.8, "subsample_freq": 1, "reg_lambda": 1.0, "max_bin": 255, "extra_trees": false, "verbose": -1, "n_jobs": 8, "seed": 22}
+    },
+    "target": {
+      "definition": "within each inner fold j: shared-misranking burden = two_class_counts(y_fold_j, rank(judgeA), rank(judgeB))['burden_neg'] + ['burden_pos']; rate = burden / (n_pos_j + n_neg_j); flag = 1[rate >= per-fold 0.8 quantile]",
+      "convention": "fold-wise top-quintile, matching the Atlas quintile convention",
+      "fold0_safe": "every judge prediction comes from a model trained only on folds subseteq {1,2,3,4}"
+    },
+    "difficulty_model": {
+      "target": "the fold-0-safe flag above",
+      "features": "rich view 'full' covariates ONLY (no labels, no model scores in features)",
+      "inner_crossfit": "for inner fold j: train on FIT\\{j} (features, flag), predict fold j -> score d_i (out-of-sample for fold j's flag)",
+      "params": {"objective": "binary", "metric": "auc", "n_estimators": 3000, "learning_rate": 0.05, "num_leaves": 96, "min_child_samples": 40, "colsample_bytree": 0.8, "subsample": 0.8, "subsample_freq": 1, "reg_lambda": 1.0, "max_bin": 255, "verbose": -1, "n_jobs": 8, "seed": 1201},
+      "early_stop": "inner 10% carved from FIT\\{j} only (flag target); never fold 0"
+    },
+    "known_second_order_coupling": "flag[FIT\\{j}] is produced by judges that saw fold j (not fold 0). This is a weak second-order FIT-label coupling in the difficulty layer. It is fold-0-SAFE (no fold 0 anywhere) and FIT labels influencing FIT weights is allowed; documented, not a fold-0 leak."
+  },
+
+  "weight_function": {
+    "input": "difficulty score d_i for FIT rows (fold-0-safe, inner-cross-fitted)",
+    "rank": "r_i = midrank(d_i) within FIT scaled to [0,1]",
+    "raw": "w_raw_i = 1 + lambda * (2*r_i - 1)",
+    "lambda": 0.5,
+    "normalize": "w_i = w_raw_i / mean(w_raw over FIT); then clip to [0.25, 2.0]",
+    "target_mean": 1.0,
+    "applied_to": "the LightGBM TRAINING rows only (trn split of the inner ES); the ES rows are unweighted (AUC early-stop is rank-based)",
+    "control_weight": "all-ones (uniform), same code path as treatment (lgb weight=ones == weight=None exactly)",
+    "bounds": [0.25, 2.0],
+    "no_post_hoc_search": "lambda and bounds are FROZEN here; no weight sweep after seeing fold 0"
+  },
+
+  "members": {
+    "control": "LightGBM, rich view 'full', UNIFORM weights",
+    "treatment": "identical LightGBM, rich view 'full', difficulty weights w on training rows",
+    "identical_between": ["features", "params", "seed", "inner_es_split", "early_stopping", "auc metric"],
+    "only_difference": "sample_weight (uniform vs difficulty)",
+    "params": {"objective": "binary", "metric": "auc", "n_estimators": 6000, "learning_rate": 0.02, "num_leaves": 127, "min_child_samples": 40, "colsample_bytree": 0.8, "subsample": 0.8, "subsample_freq": 1, "reg_lambda": 1.0, "max_bin": 255, "extra_trees": true, "verbose": -1, "n_jobs": 8},
+    "member_seed": 20261010,
+    "inner_es_seed": 1,
+    "early_stopping": "inner 10% split carved from FIT (folds 1-4) ONLY, patience 300; never the eval fold (fold 0)",
+    "features": "ViewBuilder(tr, te, 'full').assemble(fi=FIT, y, val=fold0, inner_seed=member_seed) -- fold-safe TE, fold-0 val TE built from FIT labels only"
+  },
+
+  "metrics": {
+    "primary": "fold-0 AUC (exact, sklearn roc_auc_score): control, treatment, delta = treat - ctrl",
+    "mechanism_exact": "fold-0 shared-fail pair TOTAL via two_class_counts(y_fold0, rank(route0), rank(aux0)) -- exact integer",
+    "mechanism_sampled": {
+      "what": "per-pair treatment/control correctness ON shared-fail pairs and ON non-shared (elsewhere) pairs",
+      "method": "uniform random cross-class pairs within fold 0 (sample pos index and neg index independently, uniform)",
+      "n_pairs": 50000000,
+      "seed": 20261019,
+      "with_replacement": true,
+      "per_pair": ["shared = (route_p<=route_n) & (aux_p<=aux_n)", "treat_right = rank_treat_p > rank_treat_n (ties=0.5)", "ctrl_right = rank_ctrl_p > rank_ctrl_n (ties=0.5)"],
+      "reported": ["shared rate + binomial SE", "treat_right | shared + SE", "ctrl_right | shared + SE", "corrected (ctrl wrong, treat right)", "degraded (ctrl right, treat wrong)", "net = corrected - degraded", "same stats on non-shared pairs (new errors elsewhere)"],
+      "counts_estimated": "sample rate * exact shared-fail total (and * exact non-shared total)",
+      "uncertainty": "binomial (or multinomial) SE reported for every rate; sampling seed + strategy frozen HERE before results"
+    },
+    "correlations": "Pearson + Spearman of treatment and control predictions vs champion route0 and aux0 halves",
+    "portfolio": {
+      "composition": "equal-weight 11th aux member: aux11 = (10*aux10_logits + member_logits)/11; port = sigmoid((logit(route0) + aux11)/2)",
+      "variants": ["base (aux10 only, stored champion)", "+control (11th = control)", "+treatment (11th = treatment)"],
+      "rule": "equal weight, no tuning on fold 0; key delta = AUC(+treatment) - AUC(+control)",
+      "exact": "composition verified bit-exact against stored champion portfolio for the base variant"
+    }
+  },
+
+  "decision_rules": {
+    "d": "delta_AUC = AUC_treatment - AUC_control on fold 0 (exact)",
+    "s_rate": "P(treatment right | shared-fail) - P(control right | shared-fail) from frozen sampling; positive = treatment corrects shared-fail pairs better than control",
+    "s_sig": "s_rate >= 2 * SE(s_rate)",
+    "convincing_single_fold_gain": 0.00003,
+    "DEAD": "d < +3e-5 AND s_rate <= 0  (no indicative-level standalone improvement AND no shared-fail edge over control); OR d <= 0 AND s_rate <= 0 regardless",
+    "PATH_TO_REPLICATION": "d >= +3e-5 AND s_sig (s_rate > 0 at >=2 SE) AND portfolio delta (AUC(+treat)-AUC(+ctrl)) >= 0",
+    "INCONCLUSIVE": "everything else (mixed or sub-threshold signals)",
+    "gates_not_validatable_by_fold0": "the full promotion gates (>=1.5e-5 mean paired, >=2.5x paired SE, positive in >=4/5 folds, prefer pooled >=3e-5) CANNOT be validated by fold 0 alone; a PATH verdict only recommends folds 1-4 for FUTURE consideration and does NOT launch them",
+    "verdict_vocabulary": ["DEAD", "INCONCLUSIVE", "PATH_TO_REPLICATION"]
+  },
+
+  "tests_planned": [
+    "immutable fold registry unchanged (hash)",
+    "no fold-0 index in any supervised fit (judges, difficulty model, members)",
+    "no fold-0 label in features/weights/targets/early-stopping",
+    "difficulty provenance: judges/difficulty inner-cross-fitted within FIT only",
+    "id alignment: control/treatment predictions aligned to fold-0 ids, no reorder",
+    "weight validity: finite, positive, within bounds, reproducible, mean ~1",
+    "reproducibility: same seed -> same weights and predictions",
+    "champion identity: stored champion portfolio/route hashes + composition bit-exact",
+    "tie-aware AUC identity exact",
+    "arithmetic consistency: stretch target 0.962100000 - 0.9618529228157235 == 0.0002470771842765 (2.47e-4), docs corrected",
+    "feature non-regression vs certified rich view"
+  ],
+
+  "budget": {
+    "gpu_jobs_new": 0,
+    "gpu_note": "H19-A is CPU-only; the faithful TabPFN route reconstruction is BLOCKED (heavy GPU)",
+    "cpu_estimate_hours": 4,
+    "cpu_phase_budget_hours": 30,
+    "heavy_gpu_phase_budget_hours": 12,
+    "submissions_used": 0
+  }
+}
