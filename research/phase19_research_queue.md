@@ -6,7 +6,7 @@ Generated 2026-10-14, after the shared-error Atlas (H19-ATLAS) and the two audit
 
 Champion A unchanged: `v7_sol_tabpfn_internal2_aux10` = 0.961852923 OOF (hash-verified
 byte-exact this session). Champion B remains **UNRESOLVED**. Stretch target
-0.962100000 requires **+2.47e-5** over champion A.
+0.962100000 requires **+2.47e-4** over champion A (exact: 0.962100000 − 0.9618529228157235 = 0.0002470771842765).
 
 ## Atlas headline numbers (all asserted exact; `reports/phase19/shared_error_atlas.json`)
 

@@ -1,7 +1,7 @@
 # Phase 19 — experiment scoreboard
 
 Live. Updated as each hypothesis resolves. Champion A: `v7_sol_tabpfn_internal2_aux10`
-= 0.961852923 OOF (hash-verified). Stretch target 0.962100000 (+2.47e-5). Submissions
+= 0.961852923 OOF (hash-verified). Stretch target 0.962100000 (+2.47e-4; exact 0.0002470771842765). Submissions
 0 of 2 used. GPU 0 of 12h new spent.
 
 | id | hypothesis | experiment | result | verdict |

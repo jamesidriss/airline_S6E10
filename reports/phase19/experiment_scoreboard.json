@@ -4,7 +4,7 @@
   "champion_a": {"name": "v7_sol_tabpfn_internal2_aux10", "oof_auc": 0.9618529228157235, "public_lb": 0.96146, "kaggle_ref": 57090508, "geometry_immutable": true},
   "champion_b": "UNRESOLVED",
   "stretch_target_oof": 0.962100000,
-  "stretch_gain_required": 2.47e-05,
+  "stretch_gain_required": 2.470771842765e-04,
   "submissions_used_of_2": 0,
   "gpu_hours_spent_of_12": 0,
   "experiments": [
