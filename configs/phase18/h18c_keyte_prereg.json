@@ -1,0 +1,38 @@
+{
+  "utc": "2026-10-14T12:00:00Z",
+  "hypothesis_id": "H18-C",
+  "axis": "C — generator structure: ratings-tuple-key exact-value TE",
+  "status": "PREREGISTERED_BEFORE_ANY_FIT",
+  "hypothesis": "A fold-safe exact-value target encoding of the 17-column rating-tuple key (13 survey ratings + Gender + Customer Type + Type of Travel + Class) adds marginal signal to the aux10 GBDT members, because tree models cannot memorize 13-dim exact tuples with continuous splits and the key agreement rate is high (49% of train rows share their key; test coverage 38-54%). S6E8's exact-value TE was that season's largest lever (+0.0032 there).",
+  "prior_evidence_against": [
+    "Single-column exact-value TE on all 21 raw columns (te_all21) was -13.3e-5 on the full view (STATUS.md L894) — same data, same view, same family.",
+    "Key-based (S13+M4) TE standalone AUC only 0.818-0.868 (reports/duplicate_key_signal.json).",
+    "Error atlas: unique-key rows (51% of train, where key TE returns only the prior) carry the harder residual (AUC 0.9504 vs 0.9635 on dup rows).",
+    "aux10 members already see all 13 ratings + 4 meta + 13 aux_ev_* expected-value features that already encode rating-tuple implications."
+  ],
+  "feature_spec": {
+    "key": "string-join of 13 RATINGS columns + Gender + Customer Type + Type of Travel + Class (exact duplicate_key_signal.json S13+M4 definition)",
+    "te": "src/features/s6e10.py FoldSafeTE, smooths (10.0, 20.0, 100.0), inner_folds=5, inner_seed=0 -> 4 features per key (s10, s20, s100, log1p-count)",
+    "fit_rows": "inner 5-fold crossfit within outer FIT (each fit row encoded from a table that excluded its inner fold)",
+    "apply_rows": "encoded from the full outer-FIT table only",
+    "append": "4 columns hstacked onto the certified full-view + aux_ev features; certified columns untouched"
+  },
+  "wave1_scope": {
+    "fold": "primary fold 0 only",
+    "members": "all 10 aux roles (xt_xt_d127_ss06, xt_xt_d127_s1, xt_xt_d255, xt_xt_d127_bin63, xt_xt_d127_cs05, xt_xt_d63, z3_cat_d8_s2, prod5_xgb_full_primary, xt_xgb_lossguide, zoo_xgb_d6) — deploying on one member would understate the treatment (each member is 1/10 of the aux component)",
+    "control": "certified predictions reports/sol_clean_aux10_primary/*_f0.json (hash-verified via the classical() chain); rebuilt features must hash-equal the certified feature_fit_sha256; one member (xt_xt_d127_ss06) additionally re-fit without TE and asserted bit-identical to its certified prediction",
+    "treatment": "identical pipeline + 4 appended TE columns; same params, seeds, inner ES split (seed=1), inner TE seed (0), library versions asserted equal to the certified contracts",
+    "primary_metric": "portfolio fold-0 delta: compose(route2_fold0, aux_logits_treatment) vs certified champion fold-0 portfolio, exact pair-credit identity asserted",
+    "secondary": "per-member AUC deltas, aux10 fold-0 AUC delta"
+  },
+  "advance_bar_predeclared": "Extend to primary folds 1-4 (all 10 members each) ONLY IF the fold-0 PORTFOLIO delta >= +3.0e-5 (3x the 1.5e-5 admission gate, allowing fold heterogeneity). Below that, close H18-C at wave 1.",
+  "stop_conditions": [
+    "Any fidelity assertion fails (feature hash, control replay, library versions, EV gap > 1e-10): status INVALID, no modelling verdict, stop.",
+    "Fold-0 portfolio delta < +3.0e-5: close as NEGATIVE/INSUFFICIENT at wave 1.",
+    "Cumulative CPU wall > 3h for H18-C: stop and record partial state.",
+    "No public-LB consultation at any point."
+  ],
+  "budget": {"gpu_hours_max": 0, "cpu_hours_max": 3},
+  "champion_invariance": "Wave 1 touches no champion artifact; any promotion requires full 5-fold evidence, shadow confirmation, and complete certification (v7 stays byte-identical).",
+  "conversion_context": "Measured route-side conversion band 7.1-27% (H18-E, v7 internal2). H18-C changes the AUX side, whose portfolio conversion is symmetric; the advance bar is already at portfolio level, so no conversion extrapolation is applied."
+}
