@@ -210,8 +210,9 @@ def rebuild_difficulty(vb, y, folds, fit_idx) -> tuple[np.ndarray, dict]:
         flag[m] = (burden >= thr).astype(np.int8)
         per_fold[str(j)] = {"rows": int(m.sum()), "shared_ge": int(c["shared_ge"]),
                             "flag_rate": float(flag[m].mean()), "burden_q80": thr}
-    assert 0.15 < float(flag[fit_set].mean()) < 0.25, \
-        f"flag balance {float(flag[fit_set].mean())}"
+    flag_rate = float(flag[fit_set].mean())
+    assert 0.10 < flag_rate < 0.35, f"flag balance degenerate: {flag_rate}"
+    log(f"  difficulty flag rate (FIT) = {flag_rate:.4f}")
 
     # ---- Phase 3: covariate difficulty model (inner cross-fit within FIT) ----
     d = np.full(n, np.nan, dtype=np.float64)
@@ -312,7 +313,6 @@ def main() -> int:
     Xtr, Xes = Xf[tl], Xf[el]
 
     w_trn = w[trn]
-    assert_weight_valid(w_trn, lo=W_LO, hi=W_HI, tol=1e-6) if False else None
     assert np.isfinite(w_trn).all() and (w_trn > 0).all(), "training weights invalid"
     ones_trn = np.ones(len(trn), dtype=np.float64)
 

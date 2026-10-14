@@ -25,7 +25,32 @@
       "verdict": "COMPLETE",
       "note": "diagnostic; ledger p19_shared_error_atlas"
     },
-    {"id": "H19-A", "rank": 1, "hypothesis": "difficulty-targeted reweighted member is right on shared-fail pairs", "experiment": "fold 0: inner-cross-fit difficulty weights -> reweighted LGBM vs baseline; count specialist-correct on shared-fail pairs", "result": null, "verdict": "PREREGISTERED"},
+    {
+      "id": "H19-A",
+      "rank": 1,
+      "hypothesis": "difficulty-targeted reweighted member is right on shared-fail pairs",
+      "experiment": "fold 0: inner-cross-fit fold-0-safe difficulty weights -> reweighted LGBM vs uniform LGBM on certified 'full' view (identical params/seed/inner-ES); 50M-pair frozen sampling counts corrected/degraded on champion shared-fail pairs vs elsewhere",
+      "result": {
+        "control_auc_f0": 0.9611731952069511,
+        "treatment_auc_f0": 0.9611618969997583,
+        "standalone_delta_f0": -1.1298207192811383e-05,
+        "shared_pairs_exact_f0": 156922098,
+        "shared_corrected": 40742,
+        "shared_degraded": 34344,
+        "shared_net_rate": 0.00394370329642558,
+        "shared_net_se": 0.00016887549457931687,
+        "nonshared_corrected": 103134,
+        "nonshared_degraded": 109691,
+        "nonshared_net_rate": -0.00013553774720058328,
+        "nonshared_net_se": 9.535983653936435e-06,
+        "portfolio_delta_treat_vs_ctrl": 8.67246402691535e-07,
+        "portfolio_base_auc_f0": 0.9618278142504795,
+        "best_iteration": [750, 596],
+        "cpu_seconds": 297.56797671318054
+      },
+      "verdict": "INCONCLUSIVE (mechanism real: shared-fail net +0.00394 ~23 SE; standalone -1.13e-5; losses elsewhere outweigh shared gains; no folds 1-4 launch)",
+      "note": "ledger p19_h19a_fold0_falsifier; prereg ffcb28b committed before results; report reports/phase19/h19a_fold0_falsifier.json"
+    },
     {"id": "H19-B", "rank": 2, "hypothesis": "aux10 bag-of-fold deployment beats full-fit on a pseudo-test", "experiment": "carve fold 4 holdout; 5 fold-fit vs 1 full-fit on folds 0-3; predict holdout", "result": null, "verdict": "PREREGISTERED", "standard": "pseudo-test (cannot pass OOF gate; finalist-selection evidence)"},
     {"id": "H19-C", "rank": 3, "hypothesis": "smoothed nearest-key helps unique-key rows", "experiment": "fold 0: +nearest-key TE feature; AUC overall + unique-key subset", "result": null, "verdict": "PREREGISTERED", "standard": "fold-0 screen"},
     {"id": "H19-D", "rank": 4, "hypothesis": "aggregation-loss tiebreaker / champion B", "experiment": null, "result": null, "verdict": "RESERVE_NO_CANDIDATE"},

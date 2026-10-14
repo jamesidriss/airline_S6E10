@@ -1,0 +1,286 @@
+{
+  "utc": "2026-10-14T17:43:07.638302+00:00",
+  "hypothesis_id": "H19-A",
+  "title": "difficulty-targeted reweighted LGBM member -- fold-0 falsifier",
+  "git": "1eef4a0e381b0f73201154159e19a97484c29902",
+  "start_sha": "b5b83a4a05338228c86c021071a84e08fab5d7dc",
+  "prereg": "configs/phase19/h19a_prereg.json",
+  "prereg_sha256": "d02a8b74be49423ad40c3167d54a983eb8f87d783d1bba919a0e656ccfab5b09",
+  "prereg_committed_before_results": true,
+  "budget": {
+    "gpu_jobs_new": 0,
+    "cpu_seconds": 297.56797671318054,
+    "submissions_used": 0,
+    "no_folds_1_4": true
+  },
+  "scope": {
+    "eval_fold": 0,
+    "fit_folds": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "scheme": "primary"
+  },
+  "anti_leakage_audit": {
+    "set_proof": {
+      "1": {
+        "fit_folds": [
+          0,
+          2,
+          3,
+          4
+        ],
+        "contains_fold0": true,
+        "n_fold0_rows_in_training": 139927
+      },
+      "2": {
+        "fit_folds": [
+          0,
+          1,
+          3,
+          4
+        ],
+        "contains_fold0": true,
+        "n_fold0_rows_in_training": 139927
+      },
+      "3": {
+        "fit_folds": [
+          0,
+          1,
+          2,
+          4
+        ],
+        "contains_fold0": true,
+        "n_fold0_rows_in_training": 139927
+      },
+      "4": {
+        "fit_folds": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "contains_fold0": true,
+        "n_fold0_rows_in_training": 139927
+      }
+    },
+    "numeric_demo": {
+      "fold": 1,
+      "model_with_fold0_trained_on_folds": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "model_without_fold0_trained_on_folds": [
+        2,
+        3,
+        4
+      ],
+      "pearson_of_fold1_predictions": 0.9988040316559738,
+      "mean_abs_diff_fold1_predictions": 0.0111587106371529,
+      "max_abs_diff_fold1_predictions": 0.3844895742555587,
+      "interpretation": "predictions differ => fold-0 labels changed fold-1-row predictions => any fold-k (k>=1) diagnostic derived from them carries fold-0 label information"
+    },
+    "blocking_diagnostic": "FAITHFUL TARGET BLOCKED: the preregistered difficulty target is the champion SHARED difficulty (route=TabPFN AND aux both fail). The champion route is TabPFN (GPU). Rebuilding it fold-0-safely for folds 1-4 requires 4 TabPFN trainings inside FIT = heavy GPU, explicitly out of scope for H19-A (CPU-only, no heavy GPU). The champion aux for folds 1-4 is itself fold-0-contaminated (trains on folds != k). Therefore the faithful shared difficulty CANNOT be recalculated strictly safely within the H19-A budget. This falsifier proceeds with an explicitly documented fold-0-safe CPU PROXY shared difficulty (two inner-cross-fitted LightGBM judges) -- see prereg documented_deviations DEV-1.",
+    "forbidden_as_training_weights": [
+      "reports/phase19/per_row_burden.parquet",
+      "atlas pred_a",
+      "atlas pred_b",
+      "atlas stored route (folds 1-4)",
+      "atlas stored aux (folds 1-4)"
+    ],
+    "conclusion": "Atlas diagnostics for folds 1-4 are fold-0-contaminated and were NOT used as training weights anywhere in this run."
+  },
+  "difficulty_reconstruction": {
+    "judge_pearson": 0.9986052483574328,
+    "judge_B": "inner-cross-fit within FIT, never fold 0",
+    "target": "fold-wise top-quintile shared-misranking burden (two judges)",
+    "flag_rate_fit": 0.2001025534743116,
+    "per_fold_target": {
+      "1": {
+        "rows": 139927,
+        "shared_ge": 169015492,
+        "flag_rate": 0.20017580595596277,
+        "burden_q80": 2253.0
+      },
+      "2": {
+        "rows": 139927,
+        "shared_ge": 163783737,
+        "flag_rate": 0.20001858111729687,
+        "burden_q80": 2241.0
+      },
+      "3": {
+        "rows": 139927,
+        "shared_ge": 170733765,
+        "flag_rate": 0.20018295253953847,
+        "burden_q80": 2289.0
+      },
+      "4": {
+        "rows": 139927,
+        "shared_ge": 160884523,
+        "flag_rate": 0.20003287428444833,
+        "burden_q80": 2201.0
+      }
+    },
+    "difficulty_score_mean": 0.19984367454176638,
+    "difficulty_score_std": 0.3281725569092753,
+    "fold0_seen_by_any_supervised_fit": false
+  },
+  "weights": {
+    "lambda": 0.5,
+    "clip_before_norm": [
+      0.25,
+      2.0
+    ],
+    "raw_min": 0.5,
+    "raw_max": 1.5,
+    "mean_before_norm": 1.0,
+    "min": 0.5,
+    "max": 1.5,
+    "mean": 1.0,
+    "std": 0.28867565035551734,
+    "n": 559708,
+    "applied_to": "member training rows only",
+    "control_weight": "all-ones (uniform)"
+  },
+  "members": {
+    "control": {
+      "best_iteration": 750,
+      "auc": 0.9611731952069511
+    },
+    "treatment": {
+      "best_iteration": 596,
+      "auc": 0.9611618969997583
+    },
+    "identical_except": "sample_weight (uniform vs difficulty)",
+    "params": {
+      "n_estimators": 6000,
+      "learning_rate": 0.02,
+      "num_leaves": 127,
+      "min_child_samples": 40,
+      "colsample_bytree": 0.8,
+      "subsample": 0.8,
+      "subsample_freq": 1,
+      "reg_lambda": 1.0,
+      "max_bin": 255,
+      "extra_trees": true,
+      "verbose": -1,
+      "n_jobs": 8
+    },
+    "seed": 20261010,
+    "inner_es_seed": 1
+  },
+  "standalone": {
+    "control_auc": 0.9611731952069511,
+    "treatment_auc": 0.9611618969997583,
+    "delta": -1.1298207192811383e-05,
+    "route_auc": 0.9614576551310231,
+    "champion_portfolio_auc": 0.9618278142504795
+  },
+  "shared_fail_exact": {
+    "shared_ge": 156922098,
+    "shared_strict": 156921389,
+    "route_strict": 186256511,
+    "aux_strict": 186467272,
+    "route_only": 29335122,
+    "aux_only": 29545883,
+    "pairs": 4832536620
+  },
+  "pair_sampling": {
+    "n_pairs": 50000000,
+    "seed": 20261019,
+    "with_replacement": true,
+    "sampled_shared_rate": 0.03244666,
+    "sampled_shared_se": 2.5057483865193603e-05,
+    "shared": {
+      "n": 1622333,
+      "acc_treat": 0.04458825654165945,
+      "acc_treat_se": 0.00016204501146189283,
+      "acc_ctrl": 0.04064455324523387,
+      "acc_ctrl_se": 0.00015503190466114659,
+      "net_rate": 0.00394370329642558,
+      "net_rate_se": 0.00016887549457931687,
+      "corrected": 40742,
+      "degraded": 34344,
+      "count_net": 6398,
+      "ties_treat": 0,
+      "ties_ctrl": 0
+    },
+    "non_shared": {
+      "n": 48377667,
+      "acc_treat": 0.9919550481837002,
+      "acc_treat_se": 1.284355541060368e-05,
+      "acc_ctrl": 0.9920905859309007,
+      "acc_ctrl_se": 1.2735774605136268e-05,
+      "net_rate": -0.00013553774720058328,
+      "net_rate_se": 9.535983653936435e-06,
+      "corrected": 103134,
+      "degraded": 109691,
+      "count_net": -6557,
+      "ties_treat": 0,
+      "ties_ctrl": 0
+    },
+    "all": {
+      "n": 50000000,
+      "acc_treat": 0.96121616,
+      "acc_treat_se": 2.730555053480793e-05,
+      "acc_ctrl": 0.96121934,
+      "acc_ctrl_se": 2.7304476246761745e-05,
+      "net_rate": -3.18e-06,
+      "net_rate_se": 1.073146784466319e-05,
+      "corrected": 143876,
+      "degraded": 144035,
+      "count_net": -159,
+      "ties_treat": 0,
+      "ties_ctrl": 0
+    }
+  },
+  "correlations": {
+    "control": {
+      "pearson_route": 0.997410889502216,
+      "spearman_route": 0.967914539123275,
+      "pearson_aux": 0.9996242078354579,
+      "spearman_aux": 0.9941068963040821
+    },
+    "treatment": {
+      "pearson_route": 0.9974650473540401,
+      "spearman_route": 0.9676240085682982,
+      "pearson_aux": 0.9996179037180315,
+      "spearman_aux": 0.9922518858482275
+    }
+  },
+  "portfolio": {
+    "composition": "equal-weight 11th aux member: aux11=(10*aux10+member_logit)/11",
+    "base_auc": 0.9618278142504795,
+    "plus_control_auc": 0.9618269891144664,
+    "plus_treatment_auc": 0.9618278563608691,
+    "delta_treat_vs_ctrl": 8.67246402691535e-07
+  },
+  "decision": {
+    "d_delta": -1.1298207192811383e-05,
+    "convincing_single_fold_gain": 3e-05,
+    "s_rate": 0.00394370329642558,
+    "s_se": 0.00016887549457931687,
+    "s_sig": true,
+    "portfolio_delta": 8.67246402691535e-07,
+    "verdict": "INCONCLUSIVE",
+    "rule": "DEAD: d<3e-5 AND s_rate<=0 | PATH: d>=3e-5 AND s>=2SE AND port>=0 | else INCONCLUSIVE"
+  },
+  "verdict": "INCONCLUSIVE",
+  "verdict_vocabulary": [
+    "DEAD",
+    "INCONCLUSIVE",
+    "PATH_TO_REPLICATION"
+  ],
+  "folds_1_4_recommendation": "no folds 1-4 replication recommended",
+  "artifacts": {
+    "control_pred": "feca11c895808d7d4e21ba1462f8774312fd0bb6e5809a8a76fada8c7049a6ff",
+    "treatment_pred": "f20fd898f95f6bd11a471d9419b739d099f524fea8833a6df31b5e3561cf6b6a",
+    "fold0_ids": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+    "fit_weights": "e79011a83dc4dea77611410837c9c54a30392f05e919f599b12def6dd991b8c6"
+  },
+  "elapsed_seconds": 297.56797671318054
+}

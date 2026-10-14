@@ -2,7 +2,7 @@
   "phase": 19,
   "declared_utc": "2026-10-14",
   "git_at_declaration": "8a38acf9b5d1ad88363196545034837b61e59f6b",
-  "status": "PLANNED",
+  "status": "IN_PROGRESS",
   "ceilings": {
     "new_heavy_gpu_hours_ceiling": 12,
     "gpu_ceiling_provenance": "Phase 19 master prompt: <=12h new heavy GPU, hard ceiling ~19h banked (verify compute ledger). Phase 18 burned 2.6h of its 24h (research/PHASE18_OPENCODE_HANDOFF.md).",
@@ -22,6 +22,21 @@
     "atlas_and_audits": {"gpu_hours": 0, "cpu_hours_estimate": 6, "unit": "completed: build_shared_error_atlas.py full 5-fold Fenwick dominance + difficulty predictor + zero-rating probe + neural audit", "heavy_gpu": false, "status": "DONE"}
   },
   "phase19_total_planned": {"gpu_hours": 0, "cpu_hours_estimate": 20},
+  "spent": {
+    "H19-A": {
+      "status": "DONE",
+      "gpu_hours": 0,
+      "cpu_hours": 0.08265776974968878,
+      "cpu_seconds": 297.56797671318054,
+      "verdict": "INCONCLUSIVE",
+      "detail": "fold-0 falsifier (audit + 8 inner judge fits + 4 difficulty fits + control/treatment members + 50M-pair sampling); run at git 1eef4a0e381b0f73201154159e19a97484c29902; report reports/phase19/h19a_fold0_falsifier.json; no folds 1-4 launched"
+    },
+    "H19-B": {"status": "NOT_STARTED", "gpu_hours": 0, "cpu_hours": 0},
+    "H19-C": {"status": "NOT_STARTED", "gpu_hours": 0, "cpu_hours": 0},
+    "H19-D": {"status": "RESERVE", "gpu_hours": 0, "cpu_hours": 0},
+    "H19-E": {"status": "RESERVE", "gpu_hours": 0, "cpu_hours": 0}
+  },
+  "phase19_total_spent": {"gpu_hours": 0, "cpu_hours": 0.08265776974968878},
   "rationale_gpu_zero": "The top-3 ranked hypotheses (H19-A reweighted member, H19-B deployment pseudo-test, H19-C smoothed key) are all CPU LightGBM experiments. H19-E (neural) is a reserve with a strong negative prior (~1e-3 below champion) and is not worth GPU spend. The 12h GPU ceiling is held in reserve should a concrete neural or TabPFN-side hypothesis emerge that plausibly closes a 1e-3 gap; none currently does.",
   "submission_budget": {
     "new_submissions_allowed_phase19": 2,
