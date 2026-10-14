@@ -3,3 +3,4 @@
 {"exp_id": "p18_internal4_fold0_audit", "fingerprint": "p18_internal4_fold0_audit", "git": "c686203313d67c6a4f01bd56e287e957910867ac", "script_sha256": "ba882d899b5b58dcad62af2db914e677da236d317f23df5d5680de1d91c406ee", "status": "COMPLETE", "utc": "2026-10-13T22:19:43Z"}
 {"evidence": "reports/phase18_h18e_f0_evaluation.json", "exp_id": "phase18_h18e_close", "fingerprint": "H18-E", "git": "a16d021ed8e1b3533d0f17fa8a4f8134a9b4760a", "status": "NEGATIVE", "utc": "2026-10-13T22:37:05Z"}
 {"evidence": "reports/phase18/h18a_s1_f0_comparison.json; reports/phase18/h18a_s1_f1_comparison.json", "exp_id": "phase18_h18a_close", "fingerprint": "H18-A", "git": "6e2eaae502f61a2a8de31900db90ca3dc22c3f5f", "status": "NEGATIVE", "utc": "2026-10-14T01:08:42Z"}
+{"evidence": "reports/phase18/h18c_f0.json", "exp_id": "phase18_h18c_close", "fingerprint": "H18-C", "git": "7ed65c819c590ee942a1b3943b4ba63a5dad70e5", "status": "NEGATIVE", "utc": "2026-10-14T01:42:08Z"}

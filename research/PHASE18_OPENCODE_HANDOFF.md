@@ -82,8 +82,12 @@ Last updated: 2026-10-14 (session 2). Update at every milestone.
    converts to only +3.82e-6 portfolio (7.1% conversion; aux10 blend dilution);
    folds 1-4 never run. Standing rule added: portfolio-level fold-0 check
    precedes any GPU replication grant.
-3. H18-C ratings-tuple-key TE (weakened; CPU-only) — **NEXT**
-4. H18-B EBM/GAM (cheap CPU probe then likely close)
+3. ~~**H18-C** ratings-tuple-key TE~~ **CLOSED at wave 1** — portfolio fold-0
+   delta +6.80e-6 vs the predeclared +3.0e-5 bar (4.4× short); member deltas
+   unstable across families (LGBM sometimes +16e-5, XGB 0/3 positive up to
+   −21e-5), mean-logit aggregation cancels the scatter. All fidelity gates
+   passed. Evidence `reports/phase18/h18c_f0.json`, ledger `phase18_h18c_close`.
+4. H18-B EBM/GAM (cheap CPU probe then likely close) — **NEXT**
 5. H18-F/G/D — no wave-1 planned
 
 **Conversion-ratio lesson (2026-10-14, from H18-E):** route-level gains are NOT

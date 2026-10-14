@@ -46,17 +46,21 @@ to 0.962100 is 247e-5 OOF; no single axis below is claimed to close it.
   m0-m3 Spearman 0.9793; B2 folds 1-4 were RESOURCE_BLOCKED by disk, not
   model-rejected.)
 
-## Rank 3 — H18-C: ratings-tuple-key exact-value TE (Axis C) — WEAKENED
+## Rank 3 — H18-C: ratings-tuple-key exact-value TE (Axis C) — **CLOSED at wave 1 (2026-10-14)**
 
-- S6E8's exact-value TE was its largest transferable lever (+0.0032 there), and
-  the FoldSafeTE machinery already exists (`src/features/s6e10.py`).
-- **But the S6E10 evidence chain is negative:** single-column exact-value TE on
-  all 21 raw columns was -13.3e-5 on the full view (`STATUS.md` L894); key-based
-  (S13+M4) TE standalone AUC only 0.818-0.868 (`reports/duplicate_key_signal.json`);
-  the error atlas shows unique-key rows (51% of train, where the key TE returns
-  only the prior) carry the harder residual (AUC 0.9504 vs 0.9635 on dup rows).
-- Kept alive only because a 17-column *combination* key differs from
-  single-column TE; cheap CPU fold-0 test if higher ranks stall.
+- **Verdict: NEGATIVE / INSUFFICIENT at the admission level.** Wave 1 (all 10
+  aux members, primary fold 0, prereg `configs/phase18/h18c_keyte_prereg.json`):
+  portfolio fold-0 delta **+6.80e-6**, 4.4× below the predeclared +3.0e-5
+  advance bar; aux10 +8.6e-6. All fidelity gates passed (certified feature
+  hashes, library versions, EV gap ≤1e-10, bit-identical control replay).
+- **Member deltas are unstable across families:** LGBM +16.5e-5 / +10.9e-5 /
+  +8.6e-5 / −1.65e-5 / −0.3e-5 / −12.2e-5 (3 of 6 positive), XGB −5.3e-5 /
+  −6.5e-5 / −21.1e-5 (0 of 3), Cat +1.5e-5. The mean-logit aggregation
+  cancels the scatter — the feature helps some members and sabotages others.
+- Consistent with the pre-existing negative evidence chain: all21 single-column
+  TE −13.3e-5; key-TE standalone 0.818–0.868; unique-key rows (51%, prior-only
+  fallback) carry the residual error. Evidence: `reports/phase18/h18c_f0.json`,
+  closure record `phase18_h18c_close`.
 
 ## Rank 4 — H18-B: EBM/GAM hierarchical additive members (Axis B)
 
