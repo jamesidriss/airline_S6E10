@@ -1,5 +1,11 @@
 # Phase 18 — ranked research hypotheses
 
+> **CAMPAIGN STATUS 2026-10-14: all ranked hypotheses are RESOLVED.** H18-A closed
+> wave 2, H18-E wave 1, H18-C wave 1, H18-B wave 1; H18-F/G/D have no wave-1
+> candidate. Champion A (`v7_sol_tabpfn_internal2_aux10`) unchanged; champion B
+> remains UNRESOLVED. GPU burned this cycle: 2.6h of 24h. Every closure is a
+> ledger record with a frozen-rule justification; see each rank below.
+
 Generated 2026-10-14. Evidence citations refer to `reports/phase18/*.json` and the
 Phase 17 certification chain. Ranking criterion: expected operational v7 portfolio
 gain × probability of surviving the admission gate, per GPU-hour. The stretch gap
@@ -62,11 +68,19 @@ to 0.962100 is 247e-5 OOF; no single axis below is claimed to close it.
   fallback) carry the residual error. Evidence: `reports/phase18/h18c_f0.json`,
   closure record `phase18_h18c_close`.
 
-## Rank 4 — H18-B: EBM/GAM hierarchical additive members (Axis B)
+## Rank 4 — H18-B: EBM/GAM hierarchical additive members (Axis B) — **CLOSED at wave 1 (2026-10-14)**
 
-- Expected: weak and redundant vs the existing GBDT/TabPFN portfolio; S6E7
-  showed additive structures add nothing once interactions are modeled. Plan:
-  one cheap CPU fold-0 standalone + marginal test, then close unless surprising.
+- **Verdict: NEGATIVE — appending hurts.** The additive member (LightGBM
+  boosted stumps `num_leaves=2/max_depth=1` = Friedman additive gradient
+  boosting, trained on certified machinery with the inner-ES protocol;
+  prereg `configs/phase18/h18b_stump_prereg.json`) is weaker standalone
+  (AUC 0.95982 vs aux members ~0.9612) and dragging it into the mean-logit
+  aux arm lowers it: aux10 **−4.26e-5**, **portfolio −1.88e-5** on fold 0.
+  Quantitative confirmation of the S6E7 cross-season lesson: the mean-logit
+  aggregate cannot absorb a weaker member even with somewhat less-correlated
+  errors (logit corr 0.9952 with champion, Spearman 0.9682).
+- Diversity clause: 0.9952 > 0.99 ⇒ no champion-B evidence claimed. No folds
+  1–4. Evidence: `reports/phase18/h18b_f0.json`, closure `phase18_h18b_close`.
 
 ## Rank 5 — H18-F (advanced ranking) / H18-G (latent factors) / H18-D (original-only)
 

@@ -87,8 +87,23 @@ Last updated: 2026-10-14 (session 2). Update at every milestone.
    unstable across families (LGBM sometimes +16e-5, XGB 0/3 positive up to
    −21e-5), mean-logit aggregation cancels the scatter. All fidelity gates
    passed. Evidence `reports/phase18/h18c_f0.json`, ledger `phase18_h18c_close`.
-4. H18-B EBM/GAM (cheap CPU probe then likely close) — **NEXT**
-5. H18-F/G/D — no wave-1 planned
+4. ~~**H18-B** EBM/GAM additive member~~ **CLOSED at wave 1** — boosted-stump
+   member weaker standalone (0.95982) and APPENDING it to the mean-logit aux
+   arm hurts: aux10 −4.26e-5, portfolio −1.88e-5 (vs the +3.0e-5 bar). Confirms
+   the S6E7 additive-structures lesson quantitatively. Logit corr 0.9952 > 0.99
+   ⇒ no champion-B evidence claimed. Evidence `reports/phase18/h18b_f0.json`,
+   ledger `phase18_h18b_close`.
+5. H18-F/G/D — no wave-1 planned (no mechanism identified)
+
+**QUEUE EXHAUSTED (2026-10-14).** All live Phase 18 hypotheses are closed with
+frozen-rule verdicts. Champion A unchanged, champion B unresolved, stretch gap
+0.000247077 unclosed. Standing lessons from this cycle: (1) route-level gains
+must be re-measured at portfolio level before GPU replication (7–27% conversion
+band); (2) single-fold route deltas must not drive GPU commitments (2.4×
+heterogeneity observed); (3) mean-logit aggregates cannot absorb weaker members
+even with less-correlated errors (H18-B); (4) feature gains that are unstable
+across member families cancel in the mean-logit (H18-C). Budget banked: ~19h
+GPU, ample CPU. Any future axis must clear the same preregistered gates.
 
 **Conversion-ratio lesson (2026-10-14, from H18-E):** route-level gains are NOT
 portfolio gains. Measured fold-0 conversions: 7.1% (4-estimator change),
