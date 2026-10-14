@@ -1,0 +1,48 @@
+{
+  "phase": 19,
+  "declared_utc": "2026-10-14",
+  "git_at_declaration": "8a38acf9b5d1ad88363196545034837b61e59f6b",
+  "status": "PLANNED",
+  "ceilings": {
+    "new_heavy_gpu_hours_ceiling": 12,
+    "gpu_ceiling_provenance": "Phase 19 master prompt: <=12h new heavy GPU, hard ceiling ~19h banked (verify compute ledger). Phase 18 burned 2.6h of its 24h (research/PHASE18_OPENCODE_HANDOFF.md).",
+    "cpu_hours_ceiling": 30,
+    "concurrent_heavy_gpu_jobs_max": 1
+  },
+  "gpu_state_at_declaration": {
+    "device": "NVIDIA GeForce RTX 5070 Ti 16GB",
+    "memory_used_mib": 1006,
+    "utilization_pct": 2,
+    "note": "idle; no Phase 19 GPU work started"
+  },
+  "planned": {
+    "H19-A": {"gpu_hours": 0, "cpu_hours_estimate": 4, "unit": "fold 0: inner-cross-fit difficulty LGBM (~0.5h) + baseline and reweighted LGBM members (~1h each) + shared-fail pair scoring; folds 1-4 replication only if fold-0 shows a path", "heavy_gpu": false},
+    "H19-B": {"gpu_hours": 0, "cpu_hours_estimate": 8, "unit": "pseudo-test: carve fold 4 holdout; train 5 fold-fit members on folds 0-3 inner split + 1 full-fit member on folds 0-3; predict holdout; LGBM members ~15min each", "heavy_gpu": false},
+    "H19-C": {"gpu_hours": 0, "cpu_hours_estimate": 2, "unit": "fold 0 nearest-key smoothed TE feature + baseline vs +feature LGBM + unique-key subset AUC", "heavy_gpu": false},
+    "atlas_and_audits": {"gpu_hours": 0, "cpu_hours_estimate": 6, "unit": "completed: build_shared_error_atlas.py full 5-fold Fenwick dominance + difficulty predictor + zero-rating probe + neural audit", "heavy_gpu": false, "status": "DONE"}
+  },
+  "phase19_total_planned": {"gpu_hours": 0, "cpu_hours_estimate": 20},
+  "rationale_gpu_zero": "The top-3 ranked hypotheses (H19-A reweighted member, H19-B deployment pseudo-test, H19-C smoothed key) are all CPU LightGBM experiments. H19-E (neural) is a reserve with a strong negative prior (~1e-3 below champion) and is not worth GPU spend. The 12h GPU ceiling is held in reserve should a concrete neural or TabPFN-side hypothesis emerge that plausibly closes a 1e-3 gap; none currently does.",
+  "submission_budget": {
+    "new_submissions_allowed_phase19": 2,
+    "new_submissions_used": 0,
+    "cap_hard_refusal": "src/submission/kaggle_io.py hard-refuses past the cap",
+    "note": "H19-B is pseudo-test standard and cannot satisfy the OOF-gain submission rule; it is finalist-selection evidence only."
+  },
+  "validation_contract": {
+    "primary_folds": "StratifiedKFold(5, shuffle, seed=20261010), immutable, hash-checked in data/cache/folds/, never regenerate",
+    "shadow_folds": "StratifiedKFold(5, seed=777001), confirmation only, never tune",
+    "block10_folds": "10 folds, seed 20261010, finalists",
+    "early_stopping": "inner 10% split carved from FIT rows, never the eval fold"
+  },
+  "champion_a": {
+    "name": "v7_sol_tabpfn_internal2_aux10",
+    "oof_auc": 0.9618529228157235,
+    "public_lb": 0.96146,
+    "kaggle_ref": 57090508,
+    "geometry_immutable": true,
+    "champion_b": "UNRESOLVED"
+  },
+  "stretch_target_oof": 0.962100000,
+  "stretch_gain_required": 2.47e-05
+}
