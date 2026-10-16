@@ -1,0 +1,63 @@
+{
+  "hypothesis_id": "H19-FM-SCREEN",
+  "title": "Foundation-model fold-0 screen: can any installable tabular FLM become an 11th ensemble member?",
+  "frozen_before_results": true,
+  "status": "PREREGISTERED",
+  "motivation": "The champion route arm is TabPFN-v3.5 full-context on the raw-21 view. Five other installable tabular foundation models (TabICL-v2, TabDPT, Causilo, TabFM, xRFM) are untested on S6E10. A model can add ensemble value if it is strong AND decorrelated. This screen measures both on fold 0 before committing to a full 5-fold OOF.",
+  "scope": {
+    "standard": "FOLD-0 DISCOVERY SCREEN",
+    "cannot": "pass the OOF admission gate; justify a submission; or establish private performance",
+    "purpose": "decide whether a candidate merits a full 5-fold OOF + admission-gate run",
+    "submission": 0
+  },
+  "protocol": {
+    "eval_fold": 0,
+    "fit_folds": [1, 2, 3, 4],
+    "fold_scheme": "primary (StratifiedKFold 5, shuffle, seed 20261010), immutable",
+    "feature_representation": "raw21 + 'Flight Distance coarse10', meta columns label-encoded to codes, fillna(-1) -- built by the champion's own frames() builder (scripts/run_sol_tabpfn.py, route=True)",
+    "target_encoding": "NONE (raw view only; label-free)",
+    "context": {
+      "kind": "stratified subsample of FIT (folds 1-4) for in-context learning",
+      "size_default": 20000,
+      "seed": 20261023,
+      "fold_safe": "context is a subset of FIT; never contains a fold-0 row"
+    },
+    "eval_rows": "full fold-0 (~139927) unless --eval-rows caps it (label-agnostic head)"
+  },
+  "candidates": ["tabicl", "tabdpt", "causilo", "xrfm", "tabfm"],
+  "candidate_notes": {
+    "tabicl": "TabICLClassifier, default checkpoint tabicl-classifier-v2-20260212.ckpt (TabICLv2), auto-download",
+    "tabdpt": "TabDPTClassifier, context_reduction=subsample, compile=False",
+    "causilo": "CausiloClassifier (causal discovery + TabPFN), n_estimators=8",
+    "xrfm": "xRFM recursive feature machine (torch kernel machine; inner 15% val split carved from context)",
+    "tabfm": "TabFMClassifier (google/tabfm-1.0.0-jax); requires a jax backend -- run separately once jax is installed"
+  },
+  "metrics": {
+    "standalone_auc": "exact AUC on fold 0",
+    "equal_logit_blend_auc": "AUC of sigmoid((logit(champion_portfolio)+logit(candidate))/2)",
+    "portfolio_delta": "equal_logit_blend_auc - champion_portfolio_auc (fold 0)",
+    "logit_pearson_vs_portfolio": "decorrelation vs champion portfolio",
+    "logit_pearson_vs_route": "decorrelation vs champion route arm"
+  },
+  "decision_rule": {
+    "PROMISING": "portfolio_delta >= +5e-5 AND logit_pearson_vs_portfolio < 0.995",
+    "NOT_PROMISING": "otherwise",
+    "note": "PROMISING only means 'run full 5-fold OOF + admission gate'; it is NOT admission. The admission gate (mean paired fold gain >= 1.5e-5, >= 2.5x paired SE, positive in >= 4 of 5 folds) still applies and can only be evaluated on full OOF."
+  },
+  "anti_leakage": [
+    "No target encoding is used (raw view only).",
+    "Context rows are a subset of FIT (folds 1-4); no fold-0 row is ever in context.",
+    "The champion reference (route/portfolio) is loaded from hash-asserted phase17_B1 artifacts (portfolio sha 1981745c..., route sha bcb28113...).",
+    "No Atlas diagnostics, no per_row_burden, no stored folds 1-4 predictions are used."
+  ],
+  "budget": {
+    "gpu": "inference-only on the RTX 5070 Ti (light); <=1 GPU job at a time",
+    "cpu": "negligible",
+    "submissions": 0
+  },
+  "predeclared_followups": [
+    "Any PROMISING candidate gets a full 5-fold OOF with inner cross-fitting and the admission gate.",
+    "TabFM runs separately once a jax backend is installed (not installed at prereg time to protect the certified torch stack).",
+    "TabPFN-3 vs TabPFN-2.6 checkpoint comparison (item 13) requires downloading additional checkpoints; not part of this screen."
+  ]
+}
