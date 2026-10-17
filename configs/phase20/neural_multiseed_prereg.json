@@ -1,0 +1,16 @@
+{
+ "phase": 20,
+ "experiment": "P20-NEURAL-MULTISEED",
+ "family": "OBJ",
+ "item": 42,
+ "preregistered_utc": "2026-10-17",
+ "hypothesis": "Seed-averaging the best full-view neural arch (PLR-MLP, fold-0 standalone 0.960197) reduces idiosyncratic variance and lifts standalone AUC toward the champion (~0.9619) without changing the inductive bias, potentially flipping port_delta toward positive.",
+ "why_this_arch": "PLR-MLP full-view is the best standalone of the neural block (0.960197) and the cheapest (~18s/run). Periodic numerical embeddings are the most distinct bias vs the boosted-tree aux10.",
+ "protocol": "identical to neural fold-0 screen (train on FIT, inner 10% ES fold-safe, predict fold-0, champion hash-asserted); only the torch/numpy/python seed varies (seeds 1..4; seed-1 already exists as plrmlp_full_fold0). Equal-logit average of the 4 saved fold-0 predictions = the multi-seed member.",
+ "screen_metrics_bar": "promising if ensemble portfolio_delta >= +5e-5 AND logit_pearson_vs_portfolio < 0.995",
+ "seeds": [1, 2, 3, 4],
+ "view": "full (285-feature certified rich view, fold-safe TE)",
+ "negative_rule": "if 4-seed averaging does not lift standalone past ~0.961 or port_delta stays negative, close the multi-seed lever for this arch: seed variance is not the binding constraint (correlation with the champion is).",
+ "anti_leakage": "each seed trained on FIT only, inner ES fold-safe, EVAL labels never read; ensemble averages only saved fold-0 predictions.",
+ "budget": {"gpu_hours_est": 0.02, "cpu_hours_est": 0, "note": "3 extra seeds ~18s each + trivial ensemble"}
+}
