@@ -1,0 +1,27 @@
+{
+  "prereg_id": "P20-FINALIST-READINESS",
+  "date": "2026-10-18",
+  "scope": "F1 audits on SAVED OOF/test prediction arrays only. No new model training, no new Kaggle submission, no public-LB consultation. Needed before finalist lock (deadline 2026-10-31).",
+  "hypotheses": {
+    "H91_SEED_VS_SUBSET": {
+      "item": 91,
+      "question": "For the certified pipeline, how much of the fold-0 AUC variance is seed variance vs FIT-subset variance?",
+      "method": "Variance decomposition on existing multi-seed OOF arrays from src/submission/store.py. Use z4_xt_f10_s1/s2/s3/s4 (identical LGBM recipe, seeds 1/2/3/4) and prod5_realmlp_full_primary_s1/s7/s123/s2024 (identical RealMLP recipe, 4 seeds). Seed variance = variance of per-fold AUC across seeds within a fold index; subset variance = variance across fold indices (each fold = one FIT subset) pooled over seeds. Report both components and their ratio.",
+      "decision_rule": "Descriptive; no go/no-go. If seed variance dominates subset variance, finalist robustness is mainly a seed-stability question; if subset variance dominates, it is a data-composition question.",
+      "leakage": "None: uses only already-computed OOF predictions; no refit, no labels beyond those already encoded in the stored arrays."
+    },
+    "H94_STABILITY_AUDIT": {
+      "item": 94,
+      "question": "Are the champion OOF predictions stable across preprocessing / feature-selection / inference variants of the same rows?",
+      "method": "Load the champion OOF (sol_route_aux10_primary_final, AUC 0.961766) and compare against preprocessing-variant members: view_lgbm_raw_primary (21 feat), view_lgbm_raw_ext_primary (75), view_lgbm_core3_primary (225), view_lgbm_full_primary (285), and the blend members. Compute (a) rank correlation (Spearman) of each variant's OOF logits vs champion per fold; (b) per-fold AUC of each variant; (c) the equal-logit blend AUC of champion+variant vs champion alone per fold. Stability = blend does not degrade champion by more than 5e-5 on any fold AND Spearman > 0.98 on every fold.",
+      "decision_rule": "Audit gate for finalist lock: champion is STABLE if every preprocessing variant satisfies the stability rule. If a variant degrades the blend, that variant is flagged as a finalist-risk and must be disclosed before lock.",
+      "leakage": "None: arrays already computed; blend evaluated on the same OOF rows the champion was scored on (in-sample blend stability diagnostic, explicitly NOT an admission measurement)."
+    }
+  },
+  "non_goals": [
+    "No new fold scheme registration (item 96 deferred to a separate prereg).",
+    "No public-LB numbers consulted or recorded.",
+    "No ensemble weight search (H94 uses frozen equal-logit only)."
+  ],
+  "git_before": "e5bd4cc05b539a76b465ffc6b6f5f2560720798e"
+}
