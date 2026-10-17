@@ -1,0 +1,21 @@
+{
+  "prereg_id": "P20-FEAT51-RESIDUAL-RATINGS",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. New feature block: 13 cross-fit service-rating residuals. Question: does the 'inconsistency' of a passenger's rating pattern (residual of each rating predicted from the OTHER 20 covariates) carry satisfaction signal beyond the absolute ratings?",
+  "hypotheses": {
+    "H51_RESIDUAL_SIGNAL": {
+      "item": 51,
+      "question": "Do cross-fit residual service-rating features (observed rating minus teacher prediction from other covariates) improve fold-0 OOF AUC of the rich-view LGBM?",
+      "method": "For each of the 13 service-rating columns, train a teacher (HistGB, lr=0.05, 200 iters) to predict that rating from the OTHER 20 covariates, using an inner 10% split carved from FIT only (folds 1-4). Predict the held-out rating on ALL rows (cross-fit: fold-0 rows predicted by a teacher trained on folds 1-4; fold-k rows predicted by a teacher trained on the other folds). residual_j = observed_j - teacher_pred_j. Add the 13 residuals to the 285-feature rich view. Run LGBM (xt_xt_f10 recipe, seed 1) on fold-0: FIT = folds 1-4 (with inner 10% ES from FIT), eval = fold-0. Measure port_delta vs the champion reference and standalone AUC.",
+      "leakage": "Teachers are cross-fit (never see the row they predict). The residual uses the observed rating (a covariate available at prediction time) minus the out-of-sample teacher prediction. No satisfaction label enters the residual. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995 (the screen bar). Otherwise NEGATIVE.",
+      "note": "Distinct from the closed 'residual-group-bias' attempt (which used group means). This is a per-row cross-fit residual, not a group bias."
+    }
+  },
+  "non_goals": [
+    "No new architecture training (teachers are small HistGB).",
+    "No public-LB consultation.",
+    "Only the 13 service ratings are residualized (not Age/Delay, which are continuous and not 'ratings')."
+  ],
+  "git_before": "b9b7f7d"
+}
