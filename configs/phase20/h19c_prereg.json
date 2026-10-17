@@ -1,0 +1,81 @@
+{
+ "schema": "phase20_prereg_v1",
+ "hypothesis_id": "H19-C",
+ "title": "Smoothed nearest-key target features on unique-rating-key rows -- fold-0 screen",
+ "experiment_number": 45,
+ "family": "FEAT",
+ "start_sha": "18530b5",
+ "frozen_before_any_result": true,
+ "frozen_utc": "2026-10-17",
+ "mechanism_distinct_from_closed": {
+  "closed_H18C": "exact 13-rating-key target encoding (+6.8e-6, insufficient -> closed)",
+  "why_different": "Nearest-key smoothing transports label signal to rows whose exact key is rare/unseen by aggregating the smoothed target means of FIT keys at Hamming distance exactly 1 (65 candidate keys/row under base-6 arithmetic over the 13 integer ratings). Exact-key TE contributes only where a key repeats; nearest-key reaches the 36%-of-rows unique-rating-key weak region (atlas segment AUC 0.95032, largest contiguous residual).",
+  "prior": "LOW (queue rank 3): members already see all 13 ratings and generalize across similar keys via splits -- this tests whether an explicit Hamming-neighbor target estimate adds anything beyond what tree splits extract."
+ },
+ "scope": {
+  "outer_eval_fold": 0,
+  "fit_folds": [1, 2, 3, 4],
+  "scheme": "primary",
+  "scheme_seed": 20261010,
+  "fold_registry": "src/validation/folds.py::get_scheme (immutable; hash-checked)",
+  "only_fold0": true,
+  "no_folds_1_4_as_outer": true,
+  "no_submission": true,
+  "submission_budget_note": "0 of 2 final submissions used; none authorized by this prereg"
+ },
+ "anti_leakage": {
+  "primary": "No fold-0 label in any supervised fit (features, targets, early-stopping).",
+  "feature_provenance": "te_* family: the nearest-key table is target-dependent and MUST be recomputed per fold with inner cross-fitting. NearestKeyTE.crossfit(fit_key, y_fit, fit_R) encodes FIT rows with an inner 5-fold cross-fit (no row sees its own label); NearestKeyTE.apply(fit_key_FIT, y_FIT, apply_key_EVAL, apply_R_EVAL) encodes EVAL rows from the FIT table only (EVAL labels never read).",
+  "segment_flags": "unique/dup rating-key flags are transductive and LABEL-FREE (value_counts over combined tr+te ratings, identical to the phase-19 atlas is_dup definition). Permitted under the provenance table (cnt_* transductive class).",
+  "module": "src/phase20/h19c_nearest_key.py (7 fold-safety + arithmetic tests green)",
+  "reconstruction_rule": "nk features for FIT rows come only from crossfit (inner folds within FIT); nk features for EVAL rows come only from the FIT table; no EVAL label anywhere."
+ },
+ "features": {
+  "block_name": "nk",
+  "columns": ["nk1", "nk1_logc", "nk1_nk"],
+  "definition": "nk1 = (sum_k cnt_k*mean_k + lam*prior)/(sum_k cnt_k + lam) over Hamming-d-1 neighbor keys, gated to prior if aggregate count < min_count; nk1_logc = log1p(total neighbor count); nk1_nk = log1p(number of distinct neighbor keys found)",
+  "params": {"lam": 30.0, "min_count": 2, "inner_folds": 5, "inner_seed": 0},
+  "params_frozen": "lam/min_count/inner_folds/inner_seed FROZEN here; no smoothing sweep after results",
+  "encoding": "base-6 over the 13 integer ratings (positions 0..12), rating order = src/phase20/h19c_nearest_key.RATING_COLS (atlas order)"
+ },
+ "members": {
+  "control": "LightGBM, rich view 'full', WITHOUT the nk feature block",
+  "treatment": "identical LightGBM, rich view 'full', WITH the nk feature block appended",
+  "identical_between": ["base features (rich view 'full')", "params", "seed", "inner_es_split", "early_stopping", "auc metric"],
+  "only_difference": "presence of the 3 nk columns (crossfit for FIT rows, apply for EVAL rows)",
+  "params": {"objective": "binary", "metric": "auc", "n_estimators": 6000, "learning_rate": 0.02, "num_leaves": 127, "min_child_samples": 40, "colsample_bytree": 0.8, "subsample": 0.8, "subsample_freq": 1, "reg_lambda": 1.0, "max_bin": 255, "extra_trees": true, "verbose": -1, "n_jobs": 8},
+  "params_note": "same MEMBER_PARAMS as H19-A (rich view + extra_trees verified +2.75e-4 on full view); consistent across control/treatment so the ONLY delta is the nk block",
+  "member_seed": 20261010,
+  "inner_es_seed": 1,
+  "early_stopping": "inner 10% split carved from FIT (folds 1-4) ONLY, patience 300; never the eval fold (fold 0)",
+  "features": "ViewBuilder(tr, te, 'full').assemble(fi=FIT, y, val=EVAL, inner_seed=member_seed) -- fold-safe TE identical to H19-A; nk block appended after assembly"
+ },
+ "metrics": {
+  "primary": "fold-0 AUC (exact, sklearn roc_auc_score): control, treatment, delta = treat - ctrl",
+  "segments": {
+   "definition": "unique_rating_key = NOT is_dup (atlas transductive label-free flag); dup_rating_key = is_dup",
+   "reported": ["AUC control/treatment/delta on unique subset", "AUC control/treatment/delta on dup subset", "subset sizes"],
+   "rationale": "the mechanism targets the unique-key weak region; a gain concentrated there with no dup regression is the expected signature"
+  },
+  "correlations": "Pearson of control/treatment vs champion route0 and aux0 halves (diversity signal)",
+  "portfolio": {
+   "composition": "equal-weight 11th aux member: aux11 = (10*aux0_logits + member_logits)/11; port = sigmoid((logit(route0) + aux11)/2)",
+   "variants": ["base (stored champion)", "+control", "+treatment"],
+   "rule": "equal weight, no tuning on fold 0; key delta = AUC(+treatment) - AUC(+control)"
+  },
+  "champion_reference": "phase17_B1 per-fold route/portfolio npy, hash-asserted (CHAMPION_PORTFOLIO_SHA256 / CHAMPION_ROUTE_SHA256); fold-0 aux0_logits from classical(0, ...) (fold-0-safe: trains on folds 1-4); composition bit-exact vs stored portfolio"
+ },
+ "decision_rules": {
+  "d": "delta_AUC = AUC_treatment - AUC_control on fold 0 (exact)",
+  "seg_u": "delta on unique-key subset (treatment - control)",
+  "convincing_single_fold_gain": 0.00003,
+  "DEAD": "d <= 0 (no standalone improvement), OR d < +3e-5 AND seg_u <= 0 (no indicative standalone gain and no unique-region edge)",
+  "PATH_TO_REPLICATION": "d >= +3e-5 AND seg_u > 0 AND portfolio delta (AUC(+treat)-AUC(+ctrl)) >= 0",
+  "INCONCLUSIVE": "everything else (mixed or sub-threshold)",
+  "gates_not_validatable_by_fold0": "the full promotion gate (>=1.5e-5 mean paired, >=2.5x paired SE, positive in >=4/5 folds) CANNOT be validated by fold 0 alone; a PATH verdict only recommends folds 1-4 for FUTURE consideration and does NOT launch them",
+  "verdict_vocabulary": ["DEAD", "INCONCLUSIVE", "PATH_TO_REPLICATION"],
+  "negative_rule": "if DEAD, record NEGATIVE for this exact mechanism (lam/min_count/encoding) and do not rerun identically; any future retry must change a predeclared mechanism (different neighborhood radius, different key definition, or a different estimator), not retune lam/min_count post hoc."
+ },
+ "forbidden": ["public-leaderboard-based selection", "eval-fold labels in features/targets/early-stopping", "changing decision rules after results", "rerunning the identical recipe after a DEAD verdict", "smoothing-parameter sweeps on fold 0"],
+ "budget": {"gpu_jobs_new": 0, "cpu_estimate_hours": 3, "cpu_phase_budget_hours": 30, "submissions_used": 0}
+}
