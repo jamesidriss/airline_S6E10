@@ -33,9 +33,9 @@
   {
    "rank": 5,
    "item": "H19-C smoothed nearest-key (preregistered, cheap CPU)",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_DEAD",
    "gpu": "no",
-   "note": "open ranked hypothesis"
+   "note": "fold-0 PATH did not replicate (full-5 mean -2.25e-6, 2/5); mechanism closed; no pipeline surgery"
   },
   {
    "rank": 6,

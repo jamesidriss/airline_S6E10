@@ -48,7 +48,7 @@ Generated 2026-10-17 · 96 experiments · champion v7 0.961852923 · target 0.96
 | 42 | Multi-seed ensemble | OBJ | none | NOT_STARTED | P3 | F2 | OK | - | only after one new architecture shows competit |
 | 43 | Nested distillation of v7 | OBJ | generic distillation closed | HISTORICAL_EQUIVALENT | P4 | F0 | OK | closed | do not reopen generic distillation; nested-onl |
 | 44 | Cross-family co-regularization | OBJ | none | NOT_STARTED | P4 | F1 | OK | - | needs 2 strong base candidates first |
-| 45 | H19-C nearest-key smoothing | FEAT | preregistered, open rank3 | NOT_STARTED | P3 | F2 | OK | - | execute existing prereg; strict fold-safety; n |
+| 45 | H19-C nearest-key smoothing | FEAT | DEAD (this session) | COMPLETE_NEGATIVE | P3 | F5 | OK | done | CLOSED: fold-0 PATH was a fluke (full-5 mean -2.25e-6, 2/5 folds, OOF unique-key negative); base-6/Hamming-1/lam30/mc2 nearest-key smoothing closed; do not rerun identically |
 | 46 | Learned similarity metric | FEAT | none | NOT_STARTED | P3 | F1 | OK | - | FIT-only learned metric; member-family compat  |
 | 47 | xRFM rich view | FEAT | distinct from item 6 | NOT_STARTED | P3 | F2 | OK | - | rich-view xRFM (distinct mechanism from raw-vi |
 | 48 | Hierarchical 13-rating | FEAT | none | NOT_STARTED | P3 | F1 | OK | - | hierarchical rating model; fold-0 |
