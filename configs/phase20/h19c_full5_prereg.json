@@ -1,0 +1,73 @@
+{
+  "schema": "phase20_prereg_v2",
+  "hypothesis_id": "H19-C",
+  "title": "Smoothed nearest-key target features -- full 5-fold promotion gate (completion of the fold-0 PATH)",
+  "experiment_number": 45,
+  "family": "FEAT",
+  "supersedes_fold0_prereg": "configs/phase20/h19c_prereg.json (sha256 493065a2..., committed 6e186d6, fold-0 screen ONLY)",
+  "parent_result": "reports/phase20/h19c_fold0_screen.json (verdict PATH_TO_REPLICATION, member delta +6.711e-5, unique-key +1.205e-4)",
+  "why_new_prereg": "The fold-0 prereg explicitly scoped itself to fold 0 ('a PATH verdict only recommends folds 1-4 for FUTURE consideration and does NOT launch them'). This prereg freezes the folds 1-4 completion BEFORE any folds 1-4 treatment evaluation. Historical preregs are never edited; this is a separate frozen contract for the promotion gate.",
+  "start_sha": "6e186d6",
+  "frozen_before_any_result": true,
+  "frozen_utc": "2026-10-17",
+  "multi_fidelity_rationale": {
+    "fold0_screen": "DONE -- PATH_TO_REPLICATION (cheap single-fold screen; mechanism confirmed by unique-key concentration)",
+    "this_step": "5-fold promotion gate on the SAME control/treatment member -- the completion the fold-0 prereg anticipated. Cheap (~15 min CPU) and de-risks the expensive portfolio deployment (which requires surgery on the certified aux trainer).",
+    "next_step_if_pass": "portfolio-level deployment: add the nk block to ALL 10 aux members, rebuild OOF, measure the v7 portfolio delta vs the current champion -- a separate, heavier, separately-preregistered experiment. NOT launched by this prereg."
+  },
+  "scope": {
+    "outer_eval": "OOF over all 5 primary folds (k=0..4); for each k, fit on folds!=k, eval on fold k",
+    "scheme": "primary",
+    "scheme_seed": 20261010,
+    "fold_registry": "src/validation/folds.py::get_scheme (immutable; hash-checked) -- NEVER regenerate",
+    "all_5_folds": true,
+    "no_submission": true,
+    "submission_budget_note": "0 of 2 final submissions used; none authorized by this prereg"
+  },
+  "anti_leakage": {
+    "primary": "No eval-fold label in any supervised fit (features, targets, early-stopping).",
+    "rich_view_te": "ViewBuilder.assemble(fi=folds!=k, y, val=fold k, inner_seed=MEMBER_SEED) rebuilds the fold-safe TE per fold using ONLY the fit rows' labels (the certified fold-safe assembly used by run_views).",
+    "nk_block": "NearestKeyTE.crossfit(fit_key_folds!=k, y[folds!=k], fit_R) encodes FIT rows with an inner 5-fold cross-fit (no row sees its own label); NearestKeyTE.apply(fit_key_folds!=k, y[folds!=k], apply_key_foldk, apply_R_foldk) encodes fold-k rows from the FIT table ONLY (fold-k labels never read).",
+    "early_stopping": "_inner_es_split(fit, y, seed=1) carves the inner ES split from the FIT rows (folds!=k) ONLY, never the eval fold -- identical for control and treatment so the ONLY difference is the nk block.",
+    "segment_flags": "unique/dup rating-key flags are transductive + LABEL-free (value_counts over combined tr+te ratings, atlas is_dup definition). Permitted (cnt_* transductive class).",
+    "forbidden": "Atlas difficulty diagnostics, any fold-k label in features/targets/ES, public-leaderboard-based selection, changing decision rules after results, retuning nk smoothing params (lam/min_count) after results."
+  },
+  "members": {
+    "control": "LightGBM, rich view 'full', WITHOUT the nk feature block",
+    "treatment": "identical LightGBM, rich view 'full', WITH the nk feature block appended",
+    "identical_between": ["rich view 'full' base features (fold-safe per fold)", "MEMBER_PARAMS", "MEMBER_SEED (constant across folds, matching run_views)", "inner ES split (same trn/es for control+treatment)", "early-stopping (patience 300 on ES AUC)", "auc metric"],
+    "only_difference": "presence of the 3 nk columns (crossfit for FIT rows, apply for eval-fold rows)",
+    "params": {"objective": "binary", "metric": "auc", "n_estimators": 6000, "learning_rate": 0.02, "num_leaves": 127, "min_child_samples": 40, "colsample_bytree": 0.8, "subsample": 0.8, "subsample_freq": 1, "reg_lambda": 1.0, "max_bin": 255, "extra_trees": true, "verbose": -1, "n_jobs": 8},
+    "params_note": "same MEMBER_PARAMS as the fold-0 screen and H19-A (rich view + extra_trees verified +2.75e-4 on the full view). extra_trees=True is valid ONLY on a rich view -- it is on one here.",
+    "member_seed": 20261010,
+    "inner_es_seed": 1,
+    "early_stopping": "inner 10% split carved from FIT rows ONLY, patience 300; never the eval fold (keeps OOF comparable with itself)"
+  },
+  "features": {
+    "base": "ViewBuilder(tr, te, 'full') -- rich view, 285 features (raw21 + coarse10 + fold-safe transductive/external/te blocks)",
+    "nk_block": {"columns": ["nk1", "nk1_logc", "nk1_nk"], "params": {"lam": 30.0, "min_count": 2, "inner_folds": 5, "inner_seed": 0}, "params_frozen": "identical to the fold-0 screen; NO smoothing sweep after results", "encoding": "base-6 over the 13 integer ratings; Hamming-distance-1 neighbor keys via src/phase20/h19c_nearest_key.py"}
+  },
+  "metrics": {
+    "primary": "per-fold member AUC (control, treatment), paired delta_k = treat_k - ctrl_k for k=0..4",
+    "promotion_statistics": {"mean_paired_delta": "mean of delta_k", "paired_se": "sample std of delta_k / sqrt(5)", "positive_fold_count": "count of delta_k > 0"},
+    "segments": "per-fold AUC control/treatment/delta on unique_rating_key and dup_rating_key subsets (mechanism confirmation: gain should concentrate on unique keys)",
+    "correlations": "per-fold Pearson of treatment vs champion route and aux halves (diversity signal)",
+    "portfolio_proxy_informational": {"composition": "aux11=(10*aux0_k + member_logit)/11; port=sigmoid((logit(route_k)+aux11)/2), per fold k", "variants": ["base (stored champion)", "+control", "+treatment"], "status": "INFORMATIONAL ONLY -- the 11th-member proxy UNDERWEIGHTS a feature block (enters at weight 1/11); it is NOT the gate quantity. Reported to show direction, not used for the decision.", "not_the_gate": true},
+    "champion_reference": "phase17_B1 per-fold route/portfolio npy, hash-asserted (CHAMPION_PORTFOLIO_SHA256 / CHAMPION_ROUTE_SHA256); aux0_k logits from classical(k, ...) (fold-k-safe: trains/loads only folds!=k members); composition bit-exact vs stored portfolio"
+  },
+  "decision_rules": {
+    "gate_type": "MEMBER-LEVEL promotion gate (a necessary condition for the feature; the portfolio deployment is the further, separately-preregistered step)",
+    "promote_all_three_required": [
+      "mean_paired_delta >= 0.000015 (1.5e-5)",
+      "mean_paired_delta >= 2.5 * paired_se",
+      "positive_fold_count >= 4 (of 5)"
+    ],
+    "PROMOTE": "all three gate conditions met -> nk is a validated member-level improvement; RECOMMEND the portfolio-level deployment test (nk added to all 10 aux members) as the next separately-preregistered experiment. Does NOT auto-launch it.",
+    "DEAD": "mean_paired_delta <= 0, OR positive_fold_count <= 2 (mechanism does not replicate beyond fold 0) -> record NEGATIVE for this exact mechanism (lam/min_count/base-6/Hamming-1); do not rerun identically; any future retry must change a predeclared mechanism (different radius, key definition, or estimator), not retune lam/min_count.",
+    "INCONCLUSIVE": "everything else (some gate conditions met, mixed folds, or sub-threshold mean) -> no promotion, mechanism not falsified; may be revisited only with a genuinely new angle, not a retune.",
+    "verdict_vocabulary": ["PROMOTE", "DEAD", "INCONCLUSIVE"],
+    "no_lmbd_sweep": "lam=30.0 and min_count=2 are frozen; a post-hoc smoothing sweep on these folds is forbidden."
+  },
+  "forbidden": ["public-leaderboard-based selection", "eval-fold labels in features/targets/early-stopping", "changing decision rules after results", "rerunning the identical recipe after a DEAD verdict", "smoothing-parameter sweeps after results", "editing the fold-0 prereg or its result"],
+  "budget": {"gpu_jobs_new": 0, "cpu_estimate_hours": 0.5, "cpu_phase_budget_hours": 30, "submissions_used": 0, "runs_parallel_to": "Mitra GPU probe (sh_147a4ade5001vmEQjJlg5ZACo4)"}
+}
