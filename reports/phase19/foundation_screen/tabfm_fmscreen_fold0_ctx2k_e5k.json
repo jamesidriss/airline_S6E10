@@ -1,0 +1,85 @@
+{
+  "model": "tabfm",
+  "status": "DONE",
+  "error": null,
+  "utc": "2026-10-17T00:01:36.025474+00:00",
+  "git": "c467f9a856bf24f4fec194fa7fd6314d216fba63",
+  "context_rows": 2000,
+  "context_seed": 20261023,
+  "eval_rows": 5000,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "device": "cpu",
+  "features": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "categorical_indices": [
+    13,
+    14,
+    15,
+    16,
+    18,
+    21
+  ],
+  "label_free_category_maps": {
+    "Gender": [
+      "Female",
+      "Male"
+    ],
+    "Customer Type": [
+      "Loyal Customer",
+      "disloyal Customer"
+    ],
+    "Type of Travel": [
+      "Business travel",
+      "Personal Travel"
+    ],
+    "Class": [
+      "Business",
+      "Eco",
+      "Eco Plus"
+    ]
+  },
+  "prediction_sha256": "5b05fbaa553ac555fc31e1390e850a50a28a1477ab32863f45fd911471cfd686",
+  "metrics": {
+    "standalone_auc": 0.9574324670576704,
+    "champion_portfolio_auc": 0.9640671847850092,
+    "champion_route_auc": 0.9636499362871286,
+    "equal_logit_blend_auc": 0.9624771053612624,
+    "portfolio_delta": -0.001590079423746782,
+    "logit_pearson_vs_portfolio": 0.9777998944842834,
+    "logit_pearson_vs_route": 0.9762706523918672,
+    "pred_std": 0.43829878912838266,
+    "pred_mean": 0.42429481858424845
+  },
+  "seed": 1201,
+  "tag": "fmscreen_fold0_ctx2k_e5k",
+  "prereg": "configs/phase19/foundation_screen_prereg.json",
+  "fit_predict_seconds": 1082.2696740627289
+}

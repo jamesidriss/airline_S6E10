@@ -1,0 +1,43 @@
+{
+  "inner_partitions_seed": 20261022,
+  "es_seed": 1,
+  "fit_size": 559708,
+  "bags": [
+    {
+      "bag": 0,
+      "bag_fit_size": 447766,
+      "bag_fit_ids_sha256": "a0c468e28a64277c9d451c7552ed6a6ffc10e8cf223330cf42fc5929392e2ff4",
+      "held_out_size": 111942,
+      "held_out_ids_sha256": "93b12f175498c644b5a608587a63f1d45874bc27d9027511f015a5eb6d60fb1c"
+    },
+    {
+      "bag": 1,
+      "bag_fit_size": 447766,
+      "bag_fit_ids_sha256": "1c2b2aa9acf064f9f22c6bda9f82346ddde574524f95890aacd809dceb931340",
+      "held_out_size": 111942,
+      "held_out_ids_sha256": "b074a77c5907d1aef559aa7492a6a14ad86ead1d2ea500490e0df16aecdf009e"
+    },
+    {
+      "bag": 2,
+      "bag_fit_size": 447766,
+      "bag_fit_ids_sha256": "0f7a4211422fcd33ce12adf3ade8b597a8c0bb687ea2211b1cbcaabd4a660883",
+      "held_out_size": 111942,
+      "held_out_ids_sha256": "dd7a9691bf1d31f0127ec416cc2bd8293ff0fc988a399004906409028769d0f1"
+    },
+    {
+      "bag": 3,
+      "bag_fit_size": 447767,
+      "bag_fit_ids_sha256": "b797d75e4a7bdd972099b075d2ee97ba008096922b3f789e4a91c7dcdec9085d",
+      "held_out_size": 111941,
+      "held_out_ids_sha256": "a2218e1ed639cb2312025e493e37d6c8eb1c40bb0020af089fcc56f23506bf97"
+    },
+    {
+      "bag": 4,
+      "bag_fit_size": 447767,
+      "bag_fit_ids_sha256": "4b22c8e612724307ef1c6507ba60641843121e8b780bf1c5ff174eac08a1f48f",
+      "held_out_size": 111941,
+      "held_out_ids_sha256": "91723af5a8663f930de1f469422ee3405a71c9c70e458a4ae2832f4ae3e74de8"
+    }
+  ],
+  "pseudotest_excluded": true
+}

@@ -31,12 +31,26 @@
       "verdict": "INCONCLUSIVE",
       "detail": "fold-0 falsifier (audit + 8 inner judge fits + 4 difficulty fits + control/treatment members + 50M-pair sampling); run at git 1eef4a0e381b0f73201154159e19a97484c29902; report reports/phase19/h19a_fold0_falsifier.json; no folds 1-4 launched"
     },
-    "H19-B": {"status": "NOT_STARTED", "gpu_hours": 0, "cpu_hours": 0},
+    "H19-B": {
+      "status": "DONE",
+      "gpu_hours": 0,
+      "cpu_hours": 2.5,
+      "verdict": "NEGATIVE",
+      "detail": "bag-of-five deployment pseudo-test on fold 4: 10 roles x 5 bags = 50 member fits on 4/5-FIT subsets + 10 aux-EV cache builds + exact pair eval; certified full-FIT control reproduced bit-exact (identity gap 0.0); portfolio delta -2.783e-4 (paired SE 1.747e-4), aux delta -3.96e-5, all 22 segments negative; light cuda XGB aux preserved (counted light, not heavy). Report reports/phase19/h19b_bag5_f4.json",
+      "sub_eval_identity_fix": "eval assertion relaxed from abs<1e-9 to relative<1e-9 (float64 rank-sum vs exact-credit paths differ ~3e-13 relative at 4.83e9 pairs); an internal sanity check, not a decision threshold"
+    },
+    "H19-FM-SCREEN": {
+      "status": "DONE",
+      "gpu_hours": 0.05,
+      "cpu_hours": 0.01,
+      "verdict": "NEGATIVE (none promising)",
+      "detail": "fold-0 discovery screen of installable tabular foundation models on the champion raw-21+coarse10 view, 20k stratified fold-0-safe context, 50k fold-0 eval rows: Causilo port_delta -1.01e-3 (AUC 0.9567, corr 0.986), TabICL-v2 -1.40e-3 (AUC 0.9563, corr 0.984), xRFM -9.29e-3 (AUC 0.9306, corr 0.824); TabDPT FAILED (cuda kernel unavailable), TabFM deferred (needs jax backend). All ran models are far below the +5e-5 promising bar. Inference-only (light GPU) + HF checkpoint downloads (~GB). Report reports/phase19/foundation_screen/summary_fmscreen_fold0_ctx20k_e50k.json"
+    },
     "H19-C": {"status": "NOT_STARTED", "gpu_hours": 0, "cpu_hours": 0},
     "H19-D": {"status": "RESERVE", "gpu_hours": 0, "cpu_hours": 0},
     "H19-E": {"status": "RESERVE", "gpu_hours": 0, "cpu_hours": 0}
   },
-  "phase19_total_spent": {"gpu_hours": 0, "cpu_hours": 0.08265776974968878},
+  "phase19_total_spent": {"gpu_hours": 0.05, "heavy_gpu_hours": 0, "cpu_hours": 2.592657769749689},
   "rationale_gpu_zero": "The top-3 ranked hypotheses (H19-A reweighted member, H19-B deployment pseudo-test, H19-C smoothed key) are all CPU LightGBM experiments. H19-E (neural) is a reserve with a strong negative prior (~1e-3 below champion) and is not worth GPU spend. The 12h GPU ceiling is held in reserve should a concrete neural or TabPFN-side hypothesis emerge that plausibly closes a 1e-3 gap; none currently does.",
   "submission_budget": {
     "new_submissions_allowed_phase19": 2,

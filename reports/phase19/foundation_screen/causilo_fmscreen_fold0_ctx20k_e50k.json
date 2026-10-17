@@ -1,0 +1,85 @@
+{
+  "model": "causilo",
+  "status": "DONE",
+  "error": null,
+  "utc": "2026-10-16T23:36:35.525146+00:00",
+  "git": "c467f9a856bf24f4fec194fa7fd6314d216fba63",
+  "context_rows": 20000,
+  "context_seed": 20261023,
+  "eval_rows": 50000,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "device": "cuda",
+  "features": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "categorical_indices": [
+    13,
+    14,
+    15,
+    16,
+    18,
+    21
+  ],
+  "label_free_category_maps": {
+    "Gender": [
+      "Female",
+      "Male"
+    ],
+    "Customer Type": [
+      "Loyal Customer",
+      "disloyal Customer"
+    ],
+    "Type of Travel": [
+      "Business travel",
+      "Personal Travel"
+    ],
+    "Class": [
+      "Business",
+      "Eco",
+      "Eco Plus"
+    ]
+  },
+  "prediction_sha256": "ef625d853b39b0ca1372b86c6f1e5f4cfca303d24caba9e32fb55eabf068320e",
+  "metrics": {
+    "standalone_auc": 0.9566838919690978,
+    "champion_portfolio_auc": 0.962329546661162,
+    "champion_route_auc": 0.9618671480859018,
+    "equal_logit_blend_auc": 0.9613189777491431,
+    "portfolio_delta": -0.0010105689120188943,
+    "logit_pearson_vs_portfolio": 0.9862634610510155,
+    "logit_pearson_vs_route": 0.9847328928281583,
+    "pred_std": 0.42618544567171235,
+    "pred_mean": 0.44377953200876713
+  },
+  "seed": 1201,
+  "tag": "fmscreen_fold0_ctx20k_e50k",
+  "prereg": "configs/phase19/foundation_screen_prereg.json",
+  "fit_predict_seconds": 36.44211721420288
+}

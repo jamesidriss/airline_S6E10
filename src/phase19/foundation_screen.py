@@ -87,9 +87,11 @@ def build_model(name: str, device: str, seed: int = 1201):
     if name == "tabdpt":
         from tabdpt import TabDPTClassifier
         # compile=False avoids a long recompile per call; context_reduction handles
-        # large context by subsampling inside the model.
+        # large context by subsampling inside the model. use_flash=False because the
+        # flash-attention kernel is unavailable on the RTX 5070 Ti (sm_120) -- verified
+        # to otherwise raise "No available kernel".
         return TabDPTClassifier(device=device, context_reduction="subsample", compile=False,
-                                verbose=False)
+                                use_flash=False, verbose=False)
     if name == "causilo":
         from causilo import CausiloClassifier
         return CausiloClassifier(device=device, n_estimators=8, random_state=seed)

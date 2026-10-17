@@ -1,0 +1,85 @@
+{
+  "model": "tabicl",
+  "status": "DONE",
+  "error": null,
+  "utc": "2026-10-16T23:35:55.718417+00:00",
+  "git": "c467f9a856bf24f4fec194fa7fd6314d216fba63",
+  "context_rows": 20000,
+  "context_seed": 20261023,
+  "eval_rows": 50000,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "device": "cuda",
+  "features": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "categorical_indices": [
+    13,
+    14,
+    15,
+    16,
+    18,
+    21
+  ],
+  "label_free_category_maps": {
+    "Gender": [
+      "Female",
+      "Male"
+    ],
+    "Customer Type": [
+      "Loyal Customer",
+      "disloyal Customer"
+    ],
+    "Type of Travel": [
+      "Business travel",
+      "Personal Travel"
+    ],
+    "Class": [
+      "Business",
+      "Eco",
+      "Eco Plus"
+    ]
+  },
+  "prediction_sha256": "76441c01682c5beecc1df96581d6f3fddd3e5f6719a069c001d4d8b8cffc91b6",
+  "metrics": {
+    "standalone_auc": 0.9563425053941899,
+    "champion_portfolio_auc": 0.962329546661162,
+    "champion_route_auc": 0.9618671480859018,
+    "equal_logit_blend_auc": 0.9609350324317327,
+    "portfolio_delta": -0.0013945142294292667,
+    "logit_pearson_vs_portfolio": 0.9842534934129415,
+    "logit_pearson_vs_route": 0.9828487826690312,
+    "pred_std": 0.43987642707341157,
+    "pred_mean": 0.4432213235394843
+  },
+  "seed": 1201,
+  "tag": "fmscreen_fold0_ctx20k_e50k",
+  "prereg": "configs/phase19/foundation_screen_prereg.json",
+  "fit_predict_seconds": 34.353904008865356
+}

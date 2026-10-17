@@ -1,0 +1,25 @@
+{
+  "utc": "2026-10-17T00:01:36.086147+00:00",
+  "git": "c467f9a856bf24f4fec194fa7fd6314d216fba63",
+  "context": 2000,
+  "context_seed": 20261023,
+  "eval_fold": 0,
+  "eval_rows": 5000,
+  "tag": "fmscreen_fold0_ctx2k_e5k",
+  "device": "cpu",
+  "elapsed_seconds": 1084.310387134552,
+  "results": [
+    {
+      "model": "tabfm",
+      "standalone_auc": 0.9574324670576704,
+      "champion_portfolio_auc": 0.9640671847850092,
+      "champion_route_auc": 0.9636499362871286,
+      "equal_logit_blend_auc": 0.9624771053612624,
+      "portfolio_delta": -0.001590079423746782,
+      "logit_pearson_vs_portfolio": 0.9777998944842834,
+      "logit_pearson_vs_route": 0.9762706523918672,
+      "pred_std": 0.43829878912838266,
+      "pred_mean": 0.42429481858424845
+    }
+  ]
+}

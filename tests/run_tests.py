@@ -30,12 +30,13 @@ def main() -> int:
     import tests.test_sol_phase17 as T17
     import tests.phase18.test_phase18 as T18
     import tests.phase19.test_h19a as T19
+    import tests.phase19.test_h19b as T19B
 
     # NOTE: test_stochastic_protocol.py has its own __main__ runner with per-assertion reporting, so
     # it is invoked as a subprocess rather than imported here -- importing it would only pick up its
     # module-level helpers. It is registered explicitly so the aggregate count stays honest; a test
     # file that silently stops being run is worse than no test file.
-    mods = (T, TR, TW, TN, TI, TE, TV, TS, TP, TM, TQ, TC, TK, T15, T16, T17, T18, T19)
+    mods = (T, TR, TW, TN, TI, TE, TV, TS, TP, TM, TQ, TC, TK, T15, T16, T17, T18, T19, T19B)
     fns = [(mod.__name__, getattr(mod, n)) for mod in mods
            for n in sorted(dir(mod)) if n.startswith("test_")]
     ok = fail = 0

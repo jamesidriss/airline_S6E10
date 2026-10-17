@@ -1,0 +1,25 @@
+{
+  "utc": "2026-10-16T23:41:10.843652+00:00",
+  "git": "c467f9a856bf24f4fec194fa7fd6314d216fba63",
+  "context": 20000,
+  "context_seed": 20261023,
+  "eval_fold": 0,
+  "eval_rows": 50000,
+  "tag": "fmscreen_fold0_ctx20k_e50k",
+  "device": "cuda",
+  "elapsed_seconds": 24.202531337738037,
+  "results": [
+    {
+      "model": "tabdpt",
+      "standalone_auc": 0.9562378721693728,
+      "champion_portfolio_auc": 0.962329546661162,
+      "champion_route_auc": 0.9618671480859018,
+      "equal_logit_blend_auc": 0.9609193476103493,
+      "portfolio_delta": -0.0014101990508127438,
+      "logit_pearson_vs_portfolio": 0.9846585639652486,
+      "logit_pearson_vs_route": 0.9832352853527243,
+      "pred_std": 0.42931095278654857,
+      "pred_mean": 0.4439859887494147
+    }
+  ]
+}

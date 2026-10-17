@@ -134,3 +134,49 @@ evidence only).
 
 See `reports/phase19/experiment_scoreboard.md`. Atlas complete; H19-A/B/C preregistered
 and pending fold-0 execution.
+
+## 8. Session update — H19-B closed (NEGATIVE) + foundation-model screen (all NEGATIVE)
+
+**H19-B deployment policy — verdict `NEGATIVE` (frozen rules).** Question: does replacing
+the certified aux10 inference policy (one full-FIT refit per role) with a **bag-of-five
+inner-fold members** (equal mean-logit) improve the complete v7 ranking on pseudo-test
+fold 4? Answer: **no — it uniformly hurts.** 10 roles × 5 bags = 50 member fits on 4/5-FIT
+subsets; the certified full-FIT control reproduced **bit-exact** (identity gap 0.0).
+
+- aux: control 0.9620929850 → bag5 0.9620533686 (**Δ −3.96e-5**)
+- portfolio: control 0.9624956399 → bag5 0.9622173311 (**Δ −2.783e-4**, paired SE 1.747e-4,
+  −1.59σ); **all 22 predeclared segments negative** (worst Personal Travel −1.13e-3);
+  logit Pearson 0.999, mean |Δprob| 0.104.
+- **Mechanism:** each bag member trains on only ~80 % of FIT (~447k rows), so averaging five
+  under-trained members loses to one model fit on all 559k rows. **The certified
+  one-full-FIT-refit-per-role policy is confirmed correct; no change to v7.** No promotion,
+  no submission (pseudo-test standard cannot pass the OOF gate). Ledger
+  `p19_h19b_bag5_deployment`; report `reports/phase19/h19b_bag5_f4.json`.
+- **Eval-note:** the exact-pair identity assertion was relaxed from absolute `<1e-9` to
+  relative `<1e-9`; at 4.83e9 pairs the `roc_auc` rank-sum and exact-credit paths differ by
+  ~3e-13 relative (abs ~4.5e-7) — an internal sanity check, not a decision threshold.
+
+**Foundation-model screen (fold 0, `H19-FM-SCREEN`, prereg `c467f9a`).** Installable
+tabular foundation models given a shot as an 11th member on the champion raw-21+coarse10
+view, 20k stratified fold-0-safe context, 50k fold-0 eval rows, equal-logit blend vs the
+champion portfolio. Promising bar = portfolio Δ ≥ +5e-5 AND logit-corr < 0.995.
+
+| model | AUC | port Δ | corr vs port | note |
+|---|---|---|---|---|
+| Causilo | 0.956684 | −1.01e-3 | 0.986 | causal-discovery + TabPFN |
+| TabICL-v2 | 0.956343 | −1.40e-3 | 0.984 | `tabicl-classifier-v2` ckpt |
+| xRFM | 0.930634 | −9.29e-3 | 0.824 | decorrelated but far too weak |
+| TabDPT | (rerun `use_flash=False`) | — | — | flash-attn kernel unavailable on 5070 Ti |
+| TabFM | (deferred→run) | — | — | needs jax backend (installed jax CPU-only) |
+
+**Conclusion:** all tested models sit ~1e-3 to 9e-3 **below** the champion when blended —
+none is promising. The champion route is TabPFN-v3.5 **full-context** (559k rows); these
+candidates were given only 20k context, so this is a screen, not a full-context head-to-head
+— but the gap is large and consistent with the strong prior that the champion's full-context
+TabPFN + aux10 portfolio is already near the achievable ceiling. **Champion A unchanged;
+Champion B still UNRESOLVED; 0 submissions.**
+
+**Environment (reversible):** installed `tabicl`, `tabdpt`, `causilo`, `tabfm`, `omegaconf`,
+`absl-py`, `jaxtyping<0.3`, `typeguard<3`, `jax 0.7` (CPU-only) via `--no-deps` /
+version-pinned installs. Certified stack verified unchanged (numpy 2.4.6, torch 2.11+cu128,
+sklearn 1.9.1, scipy 1.17.1, lightgbm 4.7.0). Heavy-GPU use still 0 h.

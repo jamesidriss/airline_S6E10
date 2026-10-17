@@ -1,0 +1,251 @@
+{
+  "hypothesis_id": "H19-B",
+  "verdict": "NEGATIVE",
+  "prereg_sha256": "37f4d7cd3ad142b20cb3a211df1d6a115287e11b1e9627e4e8f473aa4d82ec9a",
+  "git": "11e5db33b5af22bab60dcc0f0281bb440bb5cb81",
+  "pseudotest": "primary fold 4",
+  "rows": {
+    "fit": 559708,
+    "pseudotest": 139927
+  },
+  "control": {
+    "policy": "single full-FIT refit",
+    "tag": "sol_clean_aux10_primary",
+    "bit_exact_vs_phase17": true,
+    "identity_gap": 0.0
+  },
+  "treatment": {
+    "policy": "bag-of-five inner-fold mean-logit",
+    "roles": 10,
+    "bags": 5,
+    "tag": "phase19_h19b_bag5"
+  },
+  "aux": {
+    "ctrl_auc": 0.9620929849523999,
+    "bag5_auc": 0.9620533686205575,
+    "delta": -3.961633184246249e-05
+  },
+  "portfolio": {
+    "ctrl_auc": 0.9624956398713964,
+    "bag5_auc": 0.9622173311464541,
+    "delta": -0.00027830872494227776,
+    "paired_se": 0.0001747370906388662
+  },
+  "decision": {
+    "port_delta": -0.00027830872494227776,
+    "port_se": 0.0001747370906388662,
+    "sig_multiple": -1.5927283894034026,
+    "aux_delta": -3.961633184246249e-05,
+    "classification": "NEGATIVE"
+  },
+  "pairs": {
+    "pairs": 4832552412,
+    "ctrl_right": 4651310560,
+    "ctrl_tie": 132,
+    "ctrl_wrong": 181241720,
+    "treat_right": 4649965620,
+    "treat_tie": 129,
+    "treat_wrong": 182586663,
+    "ctrl_credit": 4651310626.0,
+    "treat_credit": 4649965684.5,
+    "net_credit": -1344941.5,
+    "rescue_credit": 0.0,
+    "damage_credit": -1344941.5,
+    "identity_abs_error": 4.4889748096466064e-07,
+    "auc_ctrl": 0.9624956398713964,
+    "auc_treat": 0.9622173311464541,
+    "identity_rel_error": 3.3376729096742173e-13
+  },
+  "correlations": {
+    "spearman": 0.9928217589938656,
+    "logit_pearson": 0.9989902499261731
+  },
+  "prediction_scale": {
+    "mean_abs": 0.10424677433092801,
+    "median_abs": 0.11272194981575012,
+    "p95_abs": 0.15852822214364998,
+    "max_abs": 0.29881271719932556,
+    "p99_abs": 0.17937326043844215,
+    "sign_flip_frac": 0.011870475319273622
+  },
+  "segments": [
+    {
+      "segment": "Type of Travel=Personal Travel",
+      "rows": 40420,
+      "pos_rate": 0.09606630380999505,
+      "port_ctrl_auc": 0.8352610832953046,
+      "port_bag5_auc": 0.8341309083730849,
+      "delta": -0.0011301749222196733
+    },
+    {
+      "segment": "FlightDistance_q4",
+      "rows": 34979,
+      "pos_rate": 0.7417879299007977,
+      "port_ctrl_auc": 0.9466654607096984,
+      "port_bag5_auc": 0.9457945662246776,
+      "delta": -0.0008708944850207567
+    },
+    {
+      "segment": "Class=Business",
+      "rows": 68374,
+      "pos_rate": 0.7274841313949747,
+      "port_ctrl_auc": 0.9433153586919263,
+      "port_bag5_auc": 0.9425771317352724,
+      "delta": -0.0007382269566539312
+    },
+    {
+      "segment": "Customer Type=disloyal Customer",
+      "rows": 24583,
+      "pos_rate": 0.19936541512427286,
+      "port_ctrl_auc": 0.9254148614469762,
+      "port_bag5_auc": 0.9248412698034226,
+      "delta": -0.0005735916435535282
+    },
+    {
+      "segment": "Class=Eco",
+      "rows": 65614,
+      "pos_rate": 0.16592495504008292,
+      "port_ctrl_auc": 0.9072068089958227,
+      "port_bag5_auc": 0.9067308348699274,
+      "delta": -0.0004759741258952843
+    },
+    {
+      "segment": "DepartureDelay>0",
+      "rows": 12901,
+      "pos_rate": 0.4064026044492675,
+      "port_ctrl_auc": 0.9636851299002209,
+      "port_bag5_auc": 0.9632330104530177,
+      "delta": -0.0004521194472032475
+    },
+    {
+      "segment": "Age_q3",
+      "rows": 33962,
+      "pos_rate": 0.6069724986749897,
+      "port_ctrl_auc": 0.9581233019248827,
+      "port_bag5_auc": 0.9577162341759758,
+      "delta": -0.00040706774890686415
+    },
+    {
+      "segment": "FlightDistance_q3",
+      "rows": 34741,
+      "pos_rate": 0.4346737284476555,
+      "port_ctrl_auc": 0.961555875098168,
+      "port_bag5_auc": 0.9611802373859867,
+      "delta": -0.00037563771218129816
+    },
+    {
+      "segment": "Gender=Female",
+      "rows": 69565,
+      "pos_rate": 0.43760511751599224,
+      "port_ctrl_auc": 0.9626465128535748,
+      "port_bag5_auc": 0.9622991609432444,
+      "delta": -0.0003473519103304179
+    },
+    {
+      "segment": "Type of Travel=Business travel",
+      "rows": 99507,
+      "pos_rate": 0.584732732370587,
+      "port_ctrl_auc": 0.959620561537682,
+      "port_bag5_auc": 0.9592735639241318,
+      "delta": -0.0003469976135502817
+    },
+    {
+      "segment": "Age_q2",
+      "rows": 38379,
+      "pos_rate": 0.40668073686130435,
+      "port_ctrl_auc": 0.9603260946390196,
+      "port_bag5_auc": 0.9600102831163605,
+      "delta": -0.00031581152265913737
+    },
+    {
+      "segment": "Age_q1",
+      "rows": 35219,
+      "pos_rate": 0.2607967290383032,
+      "port_ctrl_auc": 0.9453712554358693,
+      "port_bag5_auc": 0.9450758229188922,
+      "delta": -0.00029543251697705664
+    },
+    {
+      "segment": "Customer Type=Loyal Customer",
+      "rows": 115344,
+      "pos_rate": 0.4956217922041892,
+      "port_ctrl_auc": 0.9631057744605132,
+      "port_bag5_auc": 0.962823064823395,
+      "delta": -0.00028270963711818364
+    },
+    {
+      "segment": "DepartureDelay==0",
+      "rows": 127026,
+      "pos_rate": 0.4473493615480295,
+      "port_ctrl_auc": 0.9623517520456768,
+      "port_bag5_auc": 0.9620783649749156,
+      "delta": -0.0002733870707611885
+    },
+    {
+      "segment": "ArrivalDelay==0",
+      "rows": 127983,
+      "pos_rate": 0.45209910691263683,
+      "port_ctrl_auc": 0.9619446707669809,
+      "port_bag5_auc": 0.9617006426169958,
+      "delta": -0.00024402814998503164
+    },
+    {
+      "segment": "ArrivalDelay>0",
+      "rows": 11886,
+      "pos_rate": 0.3525996971226653,
+      "port_ctrl_auc": 0.9656509687130859,
+      "port_bag5_auc": 0.9654174939987896,
+      "delta": -0.00023347471429624456
+    },
+    {
+      "segment": "Gender=Male",
+      "rows": 70362,
+      "pos_rate": 0.4494755691992837,
+      "port_ctrl_auc": 0.9623288915729593,
+      "port_bag5_auc": 0.9621148636997416,
+      "delta": -0.00021402787321767036
+    },
+    {
+      "segment": "Age_q4",
+      "rows": 32367,
+      "pos_rate": 0.5147526801989681,
+      "port_ctrl_auc": 0.9638251856006693,
+      "port_bag5_auc": 0.9636296645201657,
+      "delta": -0.00019552108050358008
+    },
+    {
+      "segment": "FlightDistance_q1",
+      "rows": 35396,
+      "pos_rate": 0.3080291558368177,
+      "port_ctrl_auc": 0.9492049043513769,
+      "port_bag5_auc": 0.9491290975217529,
+      "delta": -7.580682962404772e-05
+    },
+    {
+      "segment": "FlightDistance_q2",
+      "rows": 34811,
+      "pos_rate": 0.29062652609807244,
+      "port_ctrl_auc": 0.9471014973197809,
+      "port_bag5_auc": 0.9470338631115487,
+      "delta": -6.763420823219235e-05
+    },
+    {
+      "segment": "Class=Eco Plus",
+      "rows": 5939,
+      "pos_rate": 0.24246506145815794,
+      "port_ctrl_auc": 0.9358798868884444,
+      "port_bag5_auc": 0.9358567335951199,
+      "delta": -2.31532933244738e-05
+    }
+  ],
+  "limitations": [
+    "Pseudo-test standard: OOF is unchanged; this cannot pass the admission gate.",
+    "Fold 4 is part of the primary OOF and was used in earlier research; not a hidden holdout.",
+    "A pseudo-test gain is not proof of private performance; S6E9 shows policy deltas do not transfer cleanly."
+  ],
+  "budget": {
+    "cpu_hours_estimate": 8,
+    "gpu": "CPU-classical (light cuda XGB preserved)"
+  },
+  "submissions_used": 0
+}

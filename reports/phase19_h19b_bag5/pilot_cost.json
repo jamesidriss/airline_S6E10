@@ -1,0 +1,9 @@
+{
+  "status": "PILOT_COMPLETE_COST_ONLY",
+  "role": "xt_xt_d127_ss06",
+  "elapsed_seconds": 38.828999999997905,
+  "n_trees": 548,
+  "fit_rows": 447766,
+  "git": "7f2a4277e70708cdad4e24c0366b7b79631c102c",
+  "note": "single-member cost probe; AUC must not select roles"
+}

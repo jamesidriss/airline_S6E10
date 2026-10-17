@@ -1,10 +1,16 @@
 {
   "phase": 19,
-  "updated_utc": "2026-10-14",
-  "champion_a": {"name": "v7_sol_tabpfn_internal2_aux10", "oof_auc": 0.9618529228157235, "public_lb": 0.96146, "kaggle_ref": 57090508, "geometry_immutable": true},
+  "updated_utc": "2026-10-17",
+  "champion_a": {
+    "name": "v7_sol_tabpfn_internal2_aux10",
+    "oof_auc": 0.9618529228157235,
+    "public_lb": 0.96146,
+    "kaggle_ref": 57090508,
+    "geometry_immutable": true
+  },
   "champion_b": "UNRESOLVED",
-  "stretch_target_oof": 0.962100000,
-  "stretch_gain_required": 2.470771842765e-04,
+  "stretch_target_oof": 0.9621,
+  "stretch_gain_required": 0.0002470771842765,
   "submissions_used_of_2": 0,
   "gpu_hours_spent_of_12": 0,
   "experiments": [
@@ -17,7 +23,13 @@
         "shared_share_of_portfolio_fail": 0.8531696457537087,
         "aggregation_loss_auc_mass": 0.005600447723774414,
         "difficulty_auc_set_A": 0.9317774609941913,
-        "difficulty_auc_per_fold": [0.9321242813004272, 0.931938099416519, 0.9317985709255093, 0.931048426739648, 0.932317036755255],
+        "difficulty_auc_per_fold": [
+          0.9321242813004272,
+          0.931938099416519,
+          0.9317985709255093,
+          0.931048426739648,
+          0.932317036755255
+        ],
         "difficulty_auc_se": 0.00021750499557242667,
         "satisfaction_context_auc": 0.5341561038931105,
         "teacher_enrichment_top_burden": 5.001344949310757
@@ -45,22 +57,94 @@
         "nonshared_net_se": 9.535983653936435e-06,
         "portfolio_delta_treat_vs_ctrl": 8.67246402691535e-07,
         "portfolio_base_auc_f0": 0.9618278142504795,
-        "best_iteration": [750, 596],
+        "best_iteration": [
+          750,
+          596
+        ],
         "cpu_seconds": 297.56797671318054
       },
       "verdict": "INCONCLUSIVE (mechanism real: shared-fail net +0.00394 ~23 SE; standalone -1.13e-5; losses elsewhere outweigh shared gains; no folds 1-4 launch)",
       "note": "ledger p19_h19a_fold0_falsifier; prereg ffcb28b committed before results; report reports/phase19/h19a_fold0_falsifier.json"
     },
-    {"id": "H19-B", "rank": 2, "hypothesis": "aux10 bag-of-fold deployment beats full-fit on a pseudo-test", "experiment": "carve fold 4 holdout; 5 fold-fit vs 1 full-fit on folds 0-3; predict holdout", "result": null, "verdict": "PREREGISTERED", "standard": "pseudo-test (cannot pass OOF gate; finalist-selection evidence)"},
-    {"id": "H19-C", "rank": 3, "hypothesis": "smoothed nearest-key helps unique-key rows", "experiment": "fold 0: +nearest-key TE feature; AUC overall + unique-key subset", "result": null, "verdict": "PREREGISTERED", "standard": "fold-0 screen"},
-    {"id": "H19-D", "rank": 4, "hypothesis": "aggregation-loss tiebreaker / champion B", "experiment": null, "result": null, "verdict": "RESERVE_NO_CANDIDATE"},
-    {"id": "H19-E", "rank": 5, "hypothesis": "neural reserve", "experiment": null, "result": {"realmlp_full_view": [0.960789, 0.960881], "tabm": 0.960693, "corrected_realmlp_f0": 0.960758, "gap_to_champion": -0.00104}, "verdict": "RESERVE_NEGATIVE_PRIOR"}
+    {
+      "id": "H19-B",
+      "rank": 2,
+      "hypothesis": "aux10 bag-of-fold deployment beats full-fit on a pseudo-test",
+      "experiment": "fold-4 pseudo-test: certified single full-FIT aux10 vs bag-of-five inner-fold mean-logit (10 roles x 5 members); control bit-exact vs phase17_B1/f4; exact pair flips; frozen decision policy",
+      "result": {
+        "aux_ctrl_auc_f4": 0.9620929849523999,
+        "aux_bag5_auc_f4": 0.9620533686205575,
+        "aux_delta": -3.961633184246249e-05,
+        "port_ctrl_auc_f4": 0.9624956398713964,
+        "port_bag5_auc_f4": 0.9622173311464541,
+        "port_delta": -0.00027830872494227776,
+        "port_paired_se": 0.0001747370906388662,
+        "delta_over_se": -1.5927283894034026,
+        "pair_net_credit": -1344941.5,
+        "pair_identity_err": 4.4889748096466064e-07,
+        "spearman": 0.9928217589938656,
+        "logit_pearson": 0.9989902499261731,
+        "mean_abs_dp": 0.10424677433092801
+      },
+      "verdict": "NEGATIVE (port \u0394 -2.783e-04, -1.6\u00d7SE; pseudo-test standard, cannot pass OOF gate)",
+      "standard": "pseudo-test (cannot pass OOF gate; finalist-selection evidence)",
+      "note": "ledger p19_h19b_bag5_deployment; prereg 7f2a427 before results; report reports/phase19/h19b_bag5_f4.json"
+    },
+    {
+      "id": "H19-C",
+      "rank": 3,
+      "hypothesis": "smoothed nearest-key helps unique-key rows",
+      "experiment": "fold 0: +nearest-key TE feature; AUC overall + unique-key subset",
+      "result": null,
+      "verdict": "PREREGISTERED",
+      "standard": "fold-0 screen"
+    },
+    {
+      "id": "H19-D",
+      "rank": 4,
+      "hypothesis": "aggregation-loss tiebreaker / champion B",
+      "experiment": null,
+      "result": null,
+      "verdict": "RESERVE_NO_CANDIDATE"
+    },
+    {
+      "id": "H19-E",
+      "rank": 5,
+      "hypothesis": "neural reserve",
+      "experiment": null,
+      "result": {
+        "realmlp_full_view": [
+          0.960789,
+          0.960881
+        ],
+        "tabm": 0.960693,
+        "corrected_realmlp_f0": 0.960758,
+        "gap_to_champion": -0.00104
+      },
+      "verdict": "RESERVE_NEGATIVE_PRIOR"
+    }
   ],
   "closed_this_cycle": [
-    {"branch": "zero-rating / not-offered features", "evidence": "already in src/features/s6e10.py (na_*, rate_*, zero x segment)", "verdict": "ABSORBED_NOT_NEW"},
-    {"branch": "conditional-density / generative ratio", "evidence": "Phase 7 p7_class_conditional_generative: standalone 0.931, all blend weights negative, logit-corr 0.87", "verdict": "CLOSED"},
-    {"branch": "residual group-bias offsets", "evidence": "Phase 10: +2.00e-5 did not transfer to v3", "verdict": "CLOSED"},
-    {"branch": "neural rich-view gap", "evidence": "audit: historical + corrected neural already on full view, all ~1e-3 below champion", "verdict": "DISPROVEN"}
+    {
+      "branch": "zero-rating / not-offered features",
+      "evidence": "already in src/features/s6e10.py (na_*, rate_*, zero x segment)",
+      "verdict": "ABSORBED_NOT_NEW"
+    },
+    {
+      "branch": "conditional-density / generative ratio",
+      "evidence": "Phase 7 p7_class_conditional_generative: standalone 0.931, all blend weights negative, logit-corr 0.87",
+      "verdict": "CLOSED"
+    },
+    {
+      "branch": "residual group-bias offsets",
+      "evidence": "Phase 10: +2.00e-5 did not transfer to v3",
+      "verdict": "CLOSED"
+    },
+    {
+      "branch": "neural rich-view gap",
+      "evidence": "audit: historical + corrected neural already on full view, all ~1e-3 below champion",
+      "verdict": "DISPROVEN"
+    }
   ],
   "gates": {
     "admission_mean_paired_min": 1.5e-05,
