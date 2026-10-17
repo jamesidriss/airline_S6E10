@@ -55,7 +55,7 @@ def inner_es_split(fit_idx, y, frac=0.1, seed=SEED):
     return train, val
 
 
-def build_model(name: str):
+def build_model(name: str, n_features: int):
     """Return a fitted-ready estimator with .fit(X,y)/.predict_proba(X)."""
     if name == "extratrees":
         from sklearn.ensemble import ExtraTreesClassifier
@@ -75,7 +75,7 @@ def build_model(name: str):
         from sklearn.ensemble import ExtraTreesClassifier
         from sklearn.random_projection import GaussianRandomProjection
         # fixed n_components: eps-based auto target can exceed n_features on wide views.
-        n_comp = min(64, X_DIM)
+        n_comp = min(64, n_features)
         proj = GaussianRandomProjection(n_components=n_comp, random_state=SEED)
 
         class _Oblique:
@@ -163,7 +163,7 @@ def main() -> int:
     pred_path = ART / f"{args.model}_{args.view}_fold0.npy"
     meta_path = OUT / f"{args.model}_{args.view}_fold0.json"
 
-    model = build_model(args.model)
+    model = build_model(args.model, n_feat)
     t1 = time.time()
     try:
         model.fit(X_fit[fit_train], y_fit[fit_train])
