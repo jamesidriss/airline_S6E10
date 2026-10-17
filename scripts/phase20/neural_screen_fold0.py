@@ -196,7 +196,7 @@ def main() -> int:
                     help="override prereg path (S7 repair prereg uses the 'repairs' schema)")
     args = ap.parse_args()
 
-    prereg_path = Path(args.prereg) if args.prereg else PREREG
+    prereg_path = Path(args.prereg).resolve() if args.prereg else PREREG
     prereg = json.loads(prereg_path.read_text(encoding="utf-8"))
     if "architectures" in prereg:
         cfg = prereg["architectures"][args.model].copy()

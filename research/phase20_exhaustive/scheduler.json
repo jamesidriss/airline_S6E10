@@ -1,0 +1,2912 @@
+{
+ "schema": "p20-scheduler-v1",
+ "created_utc": "2026-10-17T22:15:00.183179+00:00",
+ "updated_utc": "2026-10-17T22:40:57.112350+00:00",
+ "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
+ "gpu_lock": null,
+ "jobs": {
+  "J001": {
+   "id": "J001",
+   "exp_row": 1,
+   "family": "FLM",
+   "title": "Mitra-v2",
+   "priority": "P1",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J002": {
+   "id": "J002",
+   "exp_row": 2,
+   "family": "FLM",
+   "title": "TabICLv2",
+   "priority": "P1",
+   "state": "DONE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "PARTIAL_VALID",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "PARTIAL_VALID"
+    }
+   ]
+  },
+  "J003": {
+   "id": "J003",
+   "exp_row": 3,
+   "family": "FLM",
+   "title": "EXAONE Tabular",
+   "priority": "P2",
+   "state": "LICENSE_BLOCKED",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "LICENSE_BLOCKED",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "LICENSE_BLOCKED"
+    }
+   ]
+  },
+  "J004": {
+   "id": "J004",
+   "exp_row": 4,
+   "family": "FLM",
+   "title": "Kumo Tabular",
+   "priority": "P1",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J005": {
+   "id": "J005",
+   "exp_row": 5,
+   "family": "FLM",
+   "title": "TabDPT v1.3/Turbo",
+   "priority": "P2",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J006": {
+   "id": "J006",
+   "exp_row": 6,
+   "family": "FLM",
+   "title": "xRFM raw",
+   "priority": "P3",
+   "state": "DONE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "PARTIAL_VALID",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "PARTIAL_VALID"
+    }
+   ]
+  },
+  "J007": {
+   "id": "J007",
+   "exp_row": 7,
+   "family": "FLM",
+   "title": "LimiX-2",
+   "priority": "P1",
+   "state": "LICENSE_BLOCKED",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "LICENSE_BLOCKED",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "LICENSE_BLOCKED"
+    }
+   ]
+  },
+  "J008": {
+   "id": "J008",
+   "exp_row": 8,
+   "family": "FLM",
+   "title": "LimiX-2M & 16M",
+   "priority": "P1",
+   "state": "LICENSE_BLOCKED",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "LICENSE_BLOCKED",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "LICENSE_BLOCKED"
+    }
+   ]
+  },
+  "J009": {
+   "id": "J009",
+   "exp_row": 9,
+   "family": "FLM",
+   "title": "Xiaomi-TabLDM",
+   "priority": "P1",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J010": {
+   "id": "J010",
+   "exp_row": 10,
+   "family": "FLM",
+   "title": "Causilo",
+   "priority": "P3",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J011": {
+   "id": "J011",
+   "exp_row": 11,
+   "family": "FLM",
+   "title": "TabFM",
+   "priority": "P2",
+   "state": "DONE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "PARTIAL_VALID",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "PARTIAL_VALID"
+    }
+   ]
+  },
+  "J012": {
+   "id": "J012",
+   "exp_row": 12,
+   "family": "FLM",
+   "title": "RealTabPFN-2.5",
+   "priority": "P2",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J013": {
+   "id": "J013",
+   "exp_row": 13,
+   "family": "FLM",
+   "title": "TabPFN-3 vs 2.6",
+   "priority": "P1",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J014": {
+   "id": "J014",
+   "exp_row": 14,
+   "family": "FLM",
+   "title": "EXAONE/TabICL adaptation",
+   "priority": "P2",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J015": {
+   "id": "J015",
+   "exp_row": 15,
+   "family": "NN",
+   "title": "FT-Transformer",
+   "priority": "P2",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "FTTransformer full F2: 0.958639, portfolio -6.167e-4; inference chunk repair",
+   "kind": "gpu",
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "C:\\Users\\James\\airline_S6E10\\scripts\\phase20\\neural_screen_fold0.py",
+    "--model",
+    "fttransformer",
+    "--view",
+    "full",
+    "--batch-size",
+    "512",
+    "--infer-chunk",
+    "2048",
+    "--tag",
+    "fttransformer_full_bounded_fold0"
+   ],
+   "prereg": {
+    "path": "configs/phase20/s7_fidelity_repair_prereg.json",
+    "sha256": "c10cf3fec2efa1e35eb561009afcf72f717dbc0274490df46fb049145e79e5ed"
+   },
+   "fingerprint": "c8e06bb188717ea8",
+   "depends_on": [],
+   "attempts": 0,
+   "expect": {
+    "report": "reports/phase20/neural_screen/fttransformer_full_bounded_fold0.json",
+    "prediction": "artifacts/phase20/neural_screen/fttransformer_full_bounded_fold0.npy",
+    "eval_rows": 139927
+   },
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/fttransformer_full_bounded_fold0.json"
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    },
+    {
+     "ts": "2026-10-17T22:21:05.963599+00:00",
+     "event": "set-cmd",
+     "cmd": [
+      "--kind",
+      "gpu",
+      "--",
+      "C:\\Users\\James\\airline_S6E10\\scripts\\phase20\\neural_screen_fold0.py",
+      "--model",
+      "fttransformer",
+      "--view",
+      "full",
+      "--batch-size",
+      "512",
+      "--infer-chunk",
+      "2048",
+      "--tag",
+      "fttransformer_full_bounded_fold0"
+     ]
+    },
+    {
+     "ts": "2026-10-17T22:21:06.478306+00:00",
+     "event": "prereg",
+     "sha256": "642eca691abe5125f603d15e0cac938aa438e200b37851d2c49c375fdb9aadac"
+    },
+    {
+     "ts": "2026-10-17T22:21:06.992947+00:00",
+     "event": "block",
+     "from": "CLOSED_NEGATIVE",
+     "to": "CLOSED_NEGATIVE",
+     "why": "DONE -- rich view measured 0.958639/-6.167e-4 (corr 0.9921); both views negative (bounded-inference resource repair per S7; prereg P20-S7-FIDELITY-REPAIR governs)"
+    },
+    {
+     "ts": "2026-10-17T22:40:57.076718+00:00",
+     "event": "s7-verified-provenance-repair",
+     "source_script": "scripts/phase20/neural_screen_fold0.py",
+     "source_sha256": "4bb57fd50d81a14a2eab706e9d5f2ba5f72d6738891db29463d3560cbda78efe",
+     "governing_s7_prereg_sha256": "c10cf3fec2efa1e35eb561009afcf72f717dbc0274490df46fb049145e79e5ed",
+     "runner_recipe_prereg": {
+      "path": "configs/phase20/neural_screen_prereg.json"
+     },
+     "report": "reports/phase20/neural_screen/fttransformer_full_bounded_fold0.json",
+     "prediction": "artifacts/phase20/neural_screen/fttransformer_full_bounded_fold0.npy",
+     "fingerprint": "c8e06bb188717ea8",
+     "verification": "manifest verified",
+     "note": "FTTransformer full F2: 0.958639, portfolio -6.167e-4; inference chunk repair"
+    }
+   ]
+  },
+  "J016": {
+   "id": "J016",
+   "exp_row": 16,
+   "family": "NN",
+   "title": "SAINT",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J017": {
+   "id": "J017",
+   "exp_row": 17,
+   "family": "NN",
+   "title": "DCNv2",
+   "priority": "P2",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "Canonical full-matrix DCNv2 F2: 0.959041, portfolio -9.779e-4; route measured separately",
+   "kind": "gpu",
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "C:\\Users\\James\\airline_S6E10\\scripts\\phase20\\neural_screen_fold0.py",
+    "--model",
+    "dcnv2full",
+    "--view",
+    "full",
+    "--prereg",
+    "configs/phase20/s7_fidelity_repair_prereg.json",
+    "--tag",
+    "dcnv2full_full_fold0"
+   ],
+   "prereg": {
+    "path": "configs/phase20/s7_fidelity_repair_prereg.json",
+    "sha256": "c10cf3fec2efa1e35eb561009afcf72f717dbc0274490df46fb049145e79e5ed"
+   },
+   "fingerprint": "f8e7d0b9fde1be6d",
+   "depends_on": [],
+   "attempts": 0,
+   "expect": {
+    "report": "reports/phase20/neural_screen/dcnv2full_full_fold0.json",
+    "prediction": "artifacts/phase20/neural_screen/dcnv2full_full_fold0.npy",
+    "eval_rows": 139927
+   },
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/dcnv2full_full_fold0.json"
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    },
+    {
+     "ts": "2026-10-17T22:21:09.019260+00:00",
+     "event": "set-cmd",
+     "cmd": [
+      "--kind",
+      "gpu",
+      "--",
+      "C:\\Users\\James\\airline_S6E10\\scripts\\phase20\\neural_screen_fold0.py",
+      "--model",
+      "dcnv2full",
+      "--view",
+      "route",
+      "--prereg",
+      "configs/phase20/s7_fidelity_repair_prereg.json"
+     ]
+    },
+    {
+     "ts": "2026-10-17T22:21:09.531444+00:00",
+     "event": "prereg",
+     "sha256": "c10cf3fec2efa1e35eb561009afcf72f717dbc0274490df46fb049145e79e5ed"
+    },
+    {
+     "ts": "2026-10-17T22:21:10.041443+00:00",
+     "event": "block",
+     "from": "CLOSED_NEGATIVE",
+     "to": "CLOSED_NEGATIVE",
+     "why": "DONE + full view too -- canonical full-W DCNv2 route 0.957458/-9.818e-4, full 0.959041/-9.779e-4; canonical confirmed negative (was scalar-cross proxy)"
+    },
+    {
+     "ts": "2026-10-17T22:40:57.092853+00:00",
+     "event": "s7-verified-provenance-repair",
+     "source_script": "scripts/phase20/neural_screen_fold0.py",
+     "source_sha256": "4bb57fd50d81a14a2eab706e9d5f2ba5f72d6738891db29463d3560cbda78efe",
+     "governing_s7_prereg_sha256": "c10cf3fec2efa1e35eb561009afcf72f717dbc0274490df46fb049145e79e5ed",
+     "runner_recipe_prereg": {
+      "path": "configs/phase20/s7_fidelity_repair_prereg.json"
+     },
+     "report": "reports/phase20/neural_screen/dcnv2full_full_fold0.json",
+     "prediction": "artifacts/phase20/neural_screen/dcnv2full_full_fold0.npy",
+     "fingerprint": "f8e7d0b9fde1be6d",
+     "verification": "manifest verified",
+     "note": "Canonical full-matrix DCNv2 F2: 0.959041, portfolio -9.779e-4; route measured separately"
+    }
+   ]
+  },
+  "J018": {
+   "id": "J018",
+   "exp_row": 18,
+   "family": "NN",
+   "title": "AutoInt",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J019": {
+   "id": "J019",
+   "exp_row": 19,
+   "family": "NN",
+   "title": "DeepFM & xDeepFM",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J020": {
+   "id": "J020",
+   "exp_row": 20,
+   "family": "NN",
+   "title": "NODE",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183179+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J021": {
+   "id": "J021",
+   "exp_row": 21,
+   "family": "NN",
+   "title": "GRANDE",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J022": {
+   "id": "J022",
+   "exp_row": 22,
+   "family": "NN",
+   "title": "TabNet",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J023": {
+   "id": "J023",
+   "exp_row": 23,
+   "family": "NN",
+   "title": "ExcelFormer",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J024": {
+   "id": "J024",
+   "exp_row": 24,
+   "family": "NN",
+   "title": "AMFormer",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J025": {
+   "id": "J025",
+   "exp_row": 25,
+   "family": "NN",
+   "title": "T2G-Former",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J026": {
+   "id": "J026",
+   "exp_row": 26,
+   "family": "NN",
+   "title": "Trompt",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J027": {
+   "id": "J027",
+   "exp_row": 27,
+   "family": "NN",
+   "title": "Periodic/PLR MLP",
+   "priority": "P2",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J028": {
+   "id": "J028",
+   "exp_row": 28,
+   "family": "NN",
+   "title": "Tabular ResNet",
+   "priority": "P2",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J029": {
+   "id": "J029",
+   "exp_row": 29,
+   "family": "NN",
+   "title": "Supervised MoE",
+   "priority": "P2",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J030": {
+   "id": "J030",
+   "exp_row": 30,
+   "family": "NN",
+   "title": "Service-interaction net",
+   "priority": "P2",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "InteractionNet full F2: 0.958710, portfolio -9.388e-4; inference chunk repair",
+   "kind": "gpu",
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "C:\\Users\\James\\airline_S6E10\\scripts\\phase20\\neural_screen_fold0.py",
+    "--model",
+    "interactionnet",
+    "--view",
+    "full",
+    "--infer-chunk",
+    "4096",
+    "--tag",
+    "interactionnet_full_bounded_fold0"
+   ],
+   "prereg": {
+    "path": "configs/phase20/s7_fidelity_repair_prereg.json",
+    "sha256": "c10cf3fec2efa1e35eb561009afcf72f717dbc0274490df46fb049145e79e5ed"
+   },
+   "fingerprint": "c92f9431c4bbdb70",
+   "depends_on": [],
+   "attempts": 0,
+   "expect": {
+    "report": "reports/phase20/neural_screen/interactionnet_full_bounded_fold0.json",
+    "prediction": "artifacts/phase20/neural_screen/interactionnet_full_bounded_fold0.npy",
+    "eval_rows": 139927
+   },
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/interactionnet_full_bounded_fold0.json"
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    },
+    {
+     "ts": "2026-10-17T22:21:07.503794+00:00",
+     "event": "set-cmd",
+     "cmd": [
+      "--kind",
+      "gpu",
+      "--",
+      "C:\\Users\\James\\airline_S6E10\\scripts\\phase20\\neural_screen_fold0.py",
+      "--model",
+      "interactionnet",
+      "--view",
+      "full",
+      "--infer-chunk",
+      "4096",
+      "--tag",
+      "interactionnet_full_bounded_fold0"
+     ]
+    },
+    {
+     "ts": "2026-10-17T22:21:08.001287+00:00",
+     "event": "prereg",
+     "sha256": "642eca691abe5125f603d15e0cac938aa438e200b37851d2c49c375fdb9aadac"
+    },
+    {
+     "ts": "2026-10-17T22:21:08.516882+00:00",
+     "event": "block",
+     "from": "CLOSED_NEGATIVE",
+     "to": "CLOSED_NEGATIVE",
+     "why": "DONE -- rich view measured 0.958710/-9.388e-4 (corr 0.9838); both views negative (bounded-inference resource repair per S7)"
+    },
+    {
+     "ts": "2026-10-17T22:40:57.085107+00:00",
+     "event": "s7-verified-provenance-repair",
+     "source_script": "scripts/phase20/neural_screen_fold0.py",
+     "source_sha256": "4bb57fd50d81a14a2eab706e9d5f2ba5f72d6738891db29463d3560cbda78efe",
+     "governing_s7_prereg_sha256": "c10cf3fec2efa1e35eb561009afcf72f717dbc0274490df46fb049145e79e5ed",
+     "runner_recipe_prereg": {
+      "path": "configs/phase20/neural_screen_prereg.json"
+     },
+     "report": "reports/phase20/neural_screen/interactionnet_full_bounded_fold0.json",
+     "prediction": "artifacts/phase20/neural_screen/interactionnet_full_bounded_fold0.npy",
+     "fingerprint": "c92f9431c4bbdb70",
+     "verification": "manifest verified",
+     "note": "InteractionNet full F2: 0.958710, portfolio -9.388e-4; inference chunk repair"
+    }
+   ]
+  },
+  "J031": {
+   "id": "J031",
+   "exp_row": 31,
+   "family": "OBJ",
+   "title": "Fine-tune TabICLv2",
+   "priority": "P2",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J032": {
+   "id": "J032",
+   "exp_row": 32,
+   "family": "OBJ",
+   "title": "Fine-tune Mitra-v2",
+   "priority": "P1",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J033": {
+   "id": "J033",
+   "exp_row": 33,
+   "family": "OBJ",
+   "title": "LoRA/adapters",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J034": {
+   "id": "J034",
+   "exp_row": 34,
+   "family": "OBJ",
+   "title": "Fine-tune TabPFN 3.5",
+   "priority": "P2",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J035": {
+   "id": "J035",
+   "exp_row": 35,
+   "family": "OBJ",
+   "title": "Multi-task",
+   "priority": "P2",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J036": {
+   "id": "J036",
+   "exp_row": 36,
+   "family": "OBJ",
+   "title": "Ordinal aux loss",
+   "priority": "P3",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J037": {
+   "id": "J037",
+   "exp_row": 37,
+   "family": "OBJ",
+   "title": "Supervised contrastive",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J038": {
+   "id": "J038",
+   "exp_row": 38,
+   "family": "OBJ",
+   "title": "Diff AUC surrogate",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J039": {
+   "id": "J039",
+   "exp_row": 39,
+   "family": "OBJ",
+   "title": "Hard-pair mining",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J040": {
+   "id": "J040",
+   "exp_row": 40,
+   "family": "OBJ",
+   "title": "Noise-robust loss",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J041": {
+   "id": "J041",
+   "exp_row": 41,
+   "family": "OBJ",
+   "title": "EMA / SWA",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J042": {
+   "id": "J042",
+   "exp_row": 42,
+   "family": "OBJ",
+   "title": "Multi-seed ensemble",
+   "priority": "P3",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J043": {
+   "id": "J043",
+   "exp_row": 43,
+   "family": "OBJ",
+   "title": "Nested distillation of v7",
+   "priority": "P4",
+   "state": "DONE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "HISTORICAL_EQUIVALENT",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "HISTORICAL_EQUIVALENT"
+    }
+   ]
+  },
+  "J044": {
+   "id": "J044",
+   "exp_row": 44,
+   "family": "OBJ",
+   "title": "Cross-family co-regularization",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J045": {
+   "id": "J045",
+   "exp_row": 45,
+   "family": "FEAT",
+   "title": "H19-C nearest-key smoothing",
+   "priority": "P3",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J046": {
+   "id": "J046",
+   "exp_row": 46,
+   "family": "FEAT",
+   "title": "Learned similarity metric",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J047": {
+   "id": "J047",
+   "exp_row": 47,
+   "family": "FEAT",
+   "title": "xRFM rich view",
+   "priority": "P3",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J048": {
+   "id": "J048",
+   "exp_row": 48,
+   "family": "FEAT",
+   "title": "Hierarchical 13-rating",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J049": {
+   "id": "J049",
+   "exp_row": 49,
+   "family": "FEAT",
+   "title": "Conditional ordinal embed",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J050": {
+   "id": "J050",
+   "exp_row": 50,
+   "family": "FEAT",
+   "title": "Learned interactions",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J051": {
+   "id": "J051",
+   "exp_row": 51,
+   "family": "FEAT",
+   "title": "Observed-minus-predicted ratings",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J052": {
+   "id": "J052",
+   "exp_row": 52,
+   "family": "FEAT",
+   "title": "Supervised rating factorization",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J053": {
+   "id": "J053",
+   "exp_row": 53,
+   "family": "FEAT",
+   "title": "Conditional clustering",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J054": {
+   "id": "J054",
+   "exp_row": 54,
+   "family": "FEAT",
+   "title": "Smoothed categorical model",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J055": {
+   "id": "J055",
+   "exp_row": 55,
+   "family": "FEAT",
+   "title": "LGBM leaf embeddings",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J056": {
+   "id": "J056",
+   "exp_row": 56,
+   "family": "FEAT",
+   "title": "Local continuous transforms",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J057": {
+   "id": "J057",
+   "exp_row": 57,
+   "family": "FEAT",
+   "title": "Low-rank rating interactions",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J058": {
+   "id": "J058",
+   "exp_row": 58,
+   "family": "FEAT",
+   "title": "Rare-combination regularizer",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J059": {
+   "id": "J059",
+   "exp_row": 59,
+   "family": "CLASS",
+   "title": "Native sklearn ExtraTrees",
+   "priority": "P3",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J060": {
+   "id": "J060",
+   "exp_row": 60,
+   "family": "CLASS",
+   "title": "Rotation/oblique forest",
+   "priority": "P4",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J061": {
+   "id": "J061",
+   "exp_row": 61,
+   "family": "CLASS",
+   "title": "Genuine EBM",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J062": {
+   "id": "J062",
+   "exp_row": 62,
+   "family": "CLASS",
+   "title": "GAM splines+interactions",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J063": {
+   "id": "J063",
+   "exp_row": 63,
+   "family": "CLASS",
+   "title": "Kernel Ridge",
+   "priority": "P4",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    }
+   ]
+  },
+  "J064": {
+   "id": "J064",
+   "exp_row": 64,
+   "family": "CLASS",
+   "title": "Approx RBF SVM",
+   "priority": "P4",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "RFF SVM F2: 0.929997, portfolio -2.175e-3",
+   "kind": "cpu",
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "C:\\Users\\James\\airline_S6E10\\scripts\\phase20\\classical_screen_fold0.py",
+    "--model",
+    "rffsvm",
+    "--view",
+    "full",
+    "--tag",
+    "rffsvm_full_fold0"
+   ],
+   "prereg": {
+    "path": "configs/phase20/s7_fidelity_repair_prereg.json",
+    "sha256": "c10cf3fec2efa1e35eb561009afcf72f717dbc0274490df46fb049145e79e5ed"
+   },
+   "fingerprint": "0f1fd61431b83ce5",
+   "depends_on": [],
+   "attempts": 0,
+   "expect": {
+    "report": "reports/phase20/classical_screen/rffsvm_full_fold0.json",
+    "prediction": "artifacts/phase20/classical_screen/rffsvm_full_fold0.npy",
+    "eval_rows": 139927
+   },
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/classical_screen/rffsvm_full_fold0.json"
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    },
+    {
+     "ts": "2026-10-17T22:21:12.078543+00:00",
+     "event": "set-cmd",
+     "cmd": [
+      "--kind",
+      "cpu",
+      "--",
+      "C:\\Users\\James\\airline_S6E10\\scripts\\phase20\\classical_screen_fold0.py",
+      "--model",
+      "rffsvm",
+      "--view",
+      "full"
+     ]
+    },
+    {
+     "ts": "2026-10-17T22:21:12.597868+00:00",
+     "event": "prereg",
+     "sha256": "c10cf3fec2efa1e35eb561009afcf72f717dbc0274490df46fb049145e79e5ed"
+    },
+    {
+     "ts": "2026-10-17T22:21:13.109723+00:00",
+     "event": "block",
+     "from": "CLOSED_NEGATIVE",
+     "to": "CLOSED_NEGATIVE",
+     "why": "DONE -- RFF approx RBF SVM 0.929997/-2.175e-3 (corr 0.8671); negative by direct measurement (row had been closed without ever being run)"
+    },
+    {
+     "ts": "2026-10-17T22:40:57.112350+00:00",
+     "event": "s7-verified-provenance-repair",
+     "source_script": "scripts/phase20/classical_screen_fold0.py",
+     "source_sha256": "7cdb002837665d914646ebce04ba10c6bd48713517a6276bc64a0a2ec376f33d",
+     "governing_s7_prereg_sha256": "c10cf3fec2efa1e35eb561009afcf72f717dbc0274490df46fb049145e79e5ed",
+     "runner_recipe_prereg": null,
+     "report": "reports/phase20/classical_screen/rffsvm_full_fold0.json",
+     "prediction": "artifacts/phase20/classical_screen/rffsvm_full_fold0.npy",
+     "fingerprint": "0f1fd61431b83ce5",
+     "verification": "manifest verified",
+     "note": "RFF SVM F2: 0.929997, portfolio -2.175e-3"
+    }
+   ]
+  },
+  "J065": {
+   "id": "J065",
+   "exp_row": 65,
+   "family": "CLASS",
+   "title": "Factorized logistic interactions",
+   "priority": "P4",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "Rank-16 factorized logistic F2: 0.959788, portfolio -6.815e-4",
+   "kind": "gpu",
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "C:\\Users\\James\\airline_S6E10\\scripts\\phase20\\neural_screen_fold0.py",
+    "--model",
+    "factlog",
+    "--view",
+    "full",
+    "--prereg",
+    "configs/phase20/s7_fidelity_repair_prereg.json",
+    "--tag",
+    "factlog_full_fold0",
+    "--infer-chunk",
+    "32768"
+   ],
+   "prereg": {
+    "path": "configs/phase20/s7_fidelity_repair_prereg.json",
+    "sha256": "c10cf3fec2efa1e35eb561009afcf72f717dbc0274490df46fb049145e79e5ed"
+   },
+   "fingerprint": "7a3d193fe44e65d1",
+   "depends_on": [],
+   "attempts": 0,
+   "expect": {
+    "report": "reports/phase20/neural_screen/factlog_full_fold0.json",
+    "prediction": "artifacts/phase20/neural_screen/factlog_full_fold0.npy",
+    "eval_rows": 139927
+   },
+   "result": {
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/factlog_full_fold0.json"
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_NEGATIVE"
+    },
+    {
+     "ts": "2026-10-17T22:21:10.555383+00:00",
+     "event": "set-cmd",
+     "cmd": [
+      "--kind",
+      "gpu",
+      "--",
+      "C:\\Users\\James\\airline_S6E10\\scripts\\phase20\\neural_screen_fold0.py",
+      "--model",
+      "factlog",
+      "--view",
+      "full",
+      "--prereg",
+      "configs/phase20/s7_fidelity_repair_prereg.json",
+      "--infer-chunk",
+      "32768"
+     ]
+    },
+    {
+     "ts": "2026-10-17T22:21:11.065242+00:00",
+     "event": "prereg",
+     "sha256": "c10cf3fec2efa1e35eb561009afcf72f717dbc0274490df46fb049145e79e5ed"
+    },
+    {
+     "ts": "2026-10-17T22:21:11.578310+00:00",
+     "event": "block",
+     "from": "CLOSED_NEGATIVE",
+     "to": "CLOSED_NEGATIVE",
+     "why": "DONE -- FactLog rank-16 bilinear logistic 0.959788/-6.815e-4 (corr 0.9868); negative by direct measurement (prior auto-close by additive logreg corrected)"
+    },
+    {
+     "ts": "2026-10-17T22:40:57.100351+00:00",
+     "event": "s7-verified-provenance-repair",
+     "source_script": "scripts/phase20/neural_screen_fold0.py",
+     "source_sha256": "4bb57fd50d81a14a2eab706e9d5f2ba5f72d6738891db29463d3560cbda78efe",
+     "governing_s7_prereg_sha256": "c10cf3fec2efa1e35eb561009afcf72f717dbc0274490df46fb049145e79e5ed",
+     "runner_recipe_prereg": {
+      "path": "configs/phase20/s7_fidelity_repair_prereg.json"
+     },
+     "report": "reports/phase20/neural_screen/factlog_full_fold0.json",
+     "prediction": "artifacts/phase20/neural_screen/factlog_full_fold0.npy",
+     "fingerprint": "7a3d193fe44e65d1",
+     "verification": "manifest verified",
+     "note": "Rank-16 factorized logistic F2: 0.959788, portfolio -6.815e-4"
+    }
+   ]
+  },
+  "J066": {
+   "id": "J066",
+   "exp_row": 66,
+   "family": "CLASS",
+   "title": "Hierarchical kernels",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J067": {
+   "id": "J067",
+   "exp_row": 67,
+   "family": "CLASS",
+   "title": "Local density classifier",
+   "priority": "P5",
+   "state": "DONE",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "HISTORICAL_EQUIVALENT",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "HISTORICAL_EQUIVALENT"
+    }
+   ]
+  },
+  "J068": {
+   "id": "J068",
+   "exp_row": 68,
+   "family": "CLASS",
+   "title": "Supervised mixed-factor",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J069": {
+   "id": "J069",
+   "exp_row": 69,
+   "family": "CLASS",
+   "title": "Conditional rule ensembles",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J070": {
+   "id": "J070",
+   "exp_row": 70,
+   "family": "ENS",
+   "title": "Nested v7+FLM stack",
+   "priority": "P4",
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "blocked-on-base",
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "NOT_STARTED",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J071": {
+   "id": "J071",
+   "exp_row": 71,
+   "family": "ENS",
+   "title": "Cross-family MoE",
+   "priority": "P4",
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "blocked-on-base",
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "NOT_STARTED",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J072": {
+   "id": "J072",
+   "exp_row": 72,
+   "family": "ENS",
+   "title": "Covariate-only gating",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J073": {
+   "id": "J073",
+   "exp_row": 73,
+   "family": "ENS",
+   "title": "Shared-error specialist",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J074": {
+   "id": "J074",
+   "exp_row": 74,
+   "family": "ENS",
+   "title": "Near-tie specialist",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J075": {
+   "id": "J075",
+   "exp_row": 75,
+   "family": "ENS",
+   "title": "Hard-pair specialist",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J076": {
+   "id": "J076",
+   "exp_row": 76,
+   "family": "ENS",
+   "title": "Feature-subspace ensemble",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J077": {
+   "id": "J077",
+   "exp_row": 77,
+   "family": "ENS",
+   "title": "Champion B utility selection",
+   "priority": "P4",
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "no-candidate",
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "NOT_STARTED",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J078": {
+   "id": "J078",
+   "exp_row": 78,
+   "family": "ENS",
+   "title": "Cross-fold robust ensemble",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J079": {
+   "id": "J079",
+   "exp_row": 79,
+   "family": "ENS",
+   "title": "Fixed vs nested blending",
+   "priority": "P5",
+   "state": "PENDING",
+   "state_note": "low-value",
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J080": {
+   "id": "J080",
+   "exp_row": 80,
+   "family": "GEN",
+   "title": "AUC ceiling estimate",
+   "priority": "P5",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J081": {
+   "id": "J081",
+   "exp_row": 81,
+   "family": "GEN",
+   "title": "Generator conditional model",
+   "priority": "P5",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J082": {
+   "id": "J082",
+   "exp_row": 82,
+   "family": "GEN",
+   "title": "Random vs feature noise",
+   "priority": "P5",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J083": {
+   "id": "J083",
+   "exp_row": 83,
+   "family": "GEN",
+   "title": "Feature-dependent transition",
+   "priority": "P5",
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "blocked-identifiability",
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "NOT_STARTED",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J084": {
+   "id": "J084",
+   "exp_row": 84,
+   "family": "GEN",
+   "title": "Original conditional transfer",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J085": {
+   "id": "J085",
+   "exp_row": 85,
+   "family": "GEN",
+   "title": "Source-trained specialists",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J086": {
+   "id": "J086",
+   "exp_row": 86,
+   "family": "GEN",
+   "title": "Joint probabilistic model",
+   "priority": "P5",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J087": {
+   "id": "J087",
+   "exp_row": 87,
+   "family": "GEN",
+   "title": "Causal mechanism",
+   "priority": "P5",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J088": {
+   "id": "J088",
+   "exp_row": 88,
+   "family": "DEP",
+   "title": "H19-B full-fit vs bag5",
+   "priority": "P0",
+   "state": "PROMOTED",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "COMPLETE_CERTIFIED",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "COMPLETE_CERTIFIED"
+    }
+   ]
+  },
+  "J089": {
+   "id": "J089",
+   "exp_row": 89,
+   "family": "DEP",
+   "title": "H19-B replication",
+   "priority": "P5",
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "not-warranted",
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "NOT_STARTED",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J090": {
+   "id": "J090",
+   "exp_row": 90,
+   "family": "DEP",
+   "title": "FIT size / bag count",
+   "priority": "P5",
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "blocked-on-arch",
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "NOT_STARTED",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J091": {
+   "id": "J091",
+   "exp_row": 91,
+   "family": "DEP",
+   "title": "Seed vs subset variance",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J092": {
+   "id": "J092",
+   "exp_row": 92,
+   "family": "DEP",
+   "title": "Independent FLM bagging",
+   "priority": "P5",
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "blocked-on-acc",
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "NOT_STARTED",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J093": {
+   "id": "J093",
+   "exp_row": 93,
+   "family": "DEP",
+   "title": "Matched-coverage policies",
+   "priority": "P5",
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "not-warranted",
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "NOT_STARTED",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J094": {
+   "id": "J094",
+   "exp_row": 94,
+   "family": "DEP",
+   "title": "OOF/test stability audit",
+   "priority": "P4",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J095": {
+   "id": "J095",
+   "exp_row": 95,
+   "family": "DEP",
+   "title": "New nested Champion B",
+   "priority": "P3",
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "no-strong-candidate",
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": "NOT_STARTED",
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  },
+  "J096": {
+   "id": "J096",
+   "exp_row": 96,
+   "family": "DEP",
+   "title": "Independent finalist validation",
+   "priority": "P3",
+   "state": "PENDING",
+   "state_note": null,
+   "kind": "unknown",
+   "cmd": null,
+   "prereg": null,
+   "fingerprint": null,
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": null
+   },
+   "history": [
+    {
+     "ts": "2026-10-17T22:15:00.183680+00:00",
+     "event": "init",
+     "from": "NOT_STARTED"
+    }
+   ]
+  }
+ }
+}

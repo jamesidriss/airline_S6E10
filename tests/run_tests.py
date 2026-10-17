@@ -33,6 +33,7 @@ def main() -> int:
     import tests.phase19.test_h19b as T19B
     import tests.phase20.test_h19c as T20C
     import tests.phase20.test_runner_exit_codes as T20X
+    import tests.phase20.test_scheduler_contracts as T20S
     import tests.test_native_block as NB
     import tests.test_native_cat as NC
     import tests.test_phase11r_protocol as P11R
@@ -45,7 +46,7 @@ def main() -> int:
     # module-level helpers. It is registered explicitly so the aggregate count stays honest; a test
     # file that silently stops being run is worse than no test file.
     mods = (T, TR, TW, TN, TI, TE, TV, TS, TP, TM, TQ, TC, TK, T15, T16, T17, T18, T19, T19B,
-            T20C, T20X, NB, NC, P11R, P12, P13, RN)
+            T20C, T20X, T20S, NB, NC, P11R, P12, P13, RN)
     fns = [(mod.__name__, getattr(mod, n)) for mod in mods
            for n in sorted(dir(mod)) if n.startswith("test_")]
     ok = fail = 0

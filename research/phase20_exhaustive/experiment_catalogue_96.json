@@ -226,11 +226,11 @@
    "historical_equivalent": "-",
    "status": "COMPLETE_NEGATIVE",
    "priority": "P2",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "canonical recipe; smoke; fold-0 OOF vs v7 delta",
-   "phase20_finding": "fold-0 screen both views: route (22-feat) plateau ~0.957; full (285-feat) lifts ~+2.3e-3 to ~0.960 but port_delta < +5e-5 (corr ~0.993); multiseed ensemble 0.960679/port_delta -3.15e-4 (corr 0.9956). Correlation with champion is binding."
+   "phase20_finding": "S7 repair (item 15): route view measured F2 (AUC 0.957656 / port_delta -7.473e-4 / corr 0.9897). Rich view originally FAILED with CUDA OOM -- stage-determined by allocation forensics to INNER-VALIDATION PREDICTION (11.45 GiB allocation == 55971x286x192x4 = 11.4496 GiB; eval chunk would need 14.37 GiB) -> RESOURCE limit, not architectural. Bounded re-run (batch 512, infer chunk 2048, preregistered fallback rung) MEASURED the rich view: AUC 0.958639 / port_delta -6.167e-4 / corr 0.9921 -- far below +5e-5. Both views negative under the protocol; prior FAILED JSON preserved as history."
   },
   {
    "experiment_number": 16,
@@ -451,11 +451,11 @@
    "historical_equivalent": "-",
    "status": "COMPLETE_NEGATIVE",
    "priority": "P2",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "domain-motivated cross-rating interactions; smoke; fold-0",
-   "phase20_finding": "fold-0 screen both views: route (22-feat) plateau ~0.957; full (285-feat) lifts ~+2.3e-3 to ~0.960 but port_delta < +5e-5 (corr ~0.993); multiseed ensemble 0.960679/port_delta -3.15e-4 (corr 0.9956). Correlation with champion is binding."
+   "phase20_finding": "S7 repair (item 30): route view measured F2 (AUC 0.956084 / port_delta -1.5505e-3 / corr 0.9789). Rich view originally FAILED with CUDA OOM -- stage-determined by allocation forensics to INNER-VALIDATION PREDICTION (8.44 GiB allocation ~ 55971x40330x4 = 8.409 GiB; eval chunk would need 10.6 GiB; training pairs only 0.66 GiB) -> RESOURCE limit, not architectural. Bounded re-run (infer chunk 4096) MEASURED the rich view: AUC 0.958710 / port_delta -9.388e-4 / corr 0.9838 -- far below +5e-5. Both views negative; prior FAILED JSON preserved as history."
   },
   {
    "experiment_number": 31,
