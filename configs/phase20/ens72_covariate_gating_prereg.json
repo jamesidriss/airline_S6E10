@@ -1,0 +1,20 @@
+{
+  "prereg_id": "P20-ENS72-COVARIATE-GATING",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen on SAVED OOF arrays (no new member training). A cross-fit covariate gate learns when to trust the route reference vs the rich blend, using ONLY the 21 raw covariates (label-free features) and the FIT-fold labels (cross-fitting). Question: can a real (non-cheating) blender capture part of the +3.14e-3 oracle headroom (GEN 80)?",
+  "hypotheses": {
+    "H72_GATE_BEATS_EQUAL": {
+      "item": 72,
+      "question": "Does a cross-fit covariate gate (route-vs-rich weights from covariates) beat the frozen equal-logit blend on fold-0 OOF?",
+      "method": "Candidates: route = sol_route_aux10_primary_final (OOF 0.961766), rich = blend_v3_final (OOF 0.961509). Gate target: per-row binary 'route is correct' (route on correct side of 0.5). Gate features: 21 raw covariates standardized on FIT-train only. Model: L2 logistic regression (C=1.0). Cross-fitting: for fold-0 eval, train the gate on folds 1-4 OOF rows (their member predictions + covariates + labels), apply to fold-0 rows. Blend: w = P(route correct | covariates); final = w*route + (1-w)*rich. Measure fold-0 AUC of: route alone, equal blend, gated blend.",
+      "decision_rule": "Gate is PROMISING if fold-0 AUC(gated) >= AUC(route) + 1e-4. NEGATIVE if gated < equal blend. The gate must generalize from covariates, not labels -- if it cannot beat the equal blend, covariate gating is closed and the +3.14e-3 oracle headroom is not capturable this way.",
+      "leakage": "Gate trained on folds 1-4 labels only, applied to fold-0 rows never seen by the gate. Member OOF predictions are already cross-fit. No fold-0 label touches the gate. Fold-safe by construction."
+    }
+  },
+  "non_goals": [
+    "No new member training (members are saved OOF arrays).",
+    "No public-LB consultation.",
+    "No weight search on the eval fold (the gate is the only learned object, and it is cross-fit)."
+  ],
+  "git_before": "d9ad430"
+}
