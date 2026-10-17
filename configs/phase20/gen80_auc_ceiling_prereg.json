@@ -1,0 +1,26 @@
+{
+  "prereg_id": "P20-GEN80-AUC-CEILING",
+  "date": "2026-10-18",
+  "scope": "F1 sensitivity analysis on SAVED OOF arrays. No training, no submission, no public-LB consultation. Question: is the stretch target OOF 0.96274 (gap +8.87e-4) achievable by blending the existing certified candidates?",
+  "hypotheses": {
+    "H80_ORACLE_BLEND": {
+      "item": 80,
+      "question": "What is the AUC ceiling of blending the best route-based reference (sol_route_aux10, OOF 0.961766) with the best rich-view blend (blend_v3_final, 59 members, OOF 0.961509)?",
+      "method": "Oracle (cheating) upper bound: for each row, if EITHER model's prediction is on the correct side of 0.5, count the row as correct. The oracle AUC = fraction of rows where at least one model is correct, mapped through the score distribution. This upper-blends ANY blender (logit, rank, covariate-gated) over these two candidates. Also compute: (a) the 'both wrong' rate = 1 - oracle; (b) the AUC of the equal-logit blend (measured, 0.9615-ish); (c) the headroom = oracle - champion.",
+      "decision_rule": "If oracle - champion >= +8.87e-4 (the stretch gap), the stretch is THEORETICALLY reachable by a better blender over these two candidates. If oracle - champion < +8.87e-4, NO blend of these two reaches the stretch -> closing the gap requires a genuinely new signal (FEAT block), not a better blend.",
+      "leakage": "The oracle uses labels to compute the upper bound -- it is an analysis ceiling, NOT a deployable model. No model is trained on it."
+    },
+    "H80_HARD_ROWS": {
+      "item": 80,
+      "question": "Where do the champion's errors concentrate, and how much AUC is recoverable from the hardest rows?",
+      "method": "Rank rows by |champion_logit| confidence. Compute AUC on the easiest 50%, 80%, 90% of rows. The AUC on the hardest 10% bounds the recoverable gain: if the hardest 10% has AUC 0.85, perfecting them gains at most 0.10 * 0.10 = +0.01 AUC. Report the AUC-by-decile table.",
+      "decision_rule": "Descriptive. If the hardest decile has AUC < 0.70, there is meaningful headroom from hard-row modeling; if > 0.90, the errors are near-irreducible."
+    }
+  },
+  "non_goals": [
+    "No new model training.",
+    "No public-LB numbers.",
+    "The oracle is an analysis ceiling only -- never a submission candidate."
+  ],
+  "git_before": "97fcd55"
+}
