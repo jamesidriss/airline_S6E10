@@ -1,0 +1,291 @@
+{
+  "experiment": "P20-H19C-FULL5",
+  "hypothesis_id": "H19-C",
+  "experiment_number": 45,
+  "status": "COMPLETE",
+  "verdict": "DEAD",
+  "error": null,
+  "utc": "2026-10-17T02:52:57.199962+00:00",
+  "git": "b4231622ce2b606e6ab8e6d82f4fd5ebdcfdd659",
+  "prereg": "configs\\phase20\\h19c_full5_prereg.json",
+  "prereg_sha256": "475e90defa2f8c71a7be0ea993b9b85db83e3f5ff476868eb20840e633dae361",
+  "parent_fold0": "reports/phase20/h19c_fold0_screen.json (PATH_TO_REPLICATION)",
+  "scope": {
+    "scheme": "primary",
+    "folds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "n_train": 699635,
+    "n_test": 299844
+  },
+  "features": {
+    "block": "nk",
+    "params": {
+      "lam": 30.0,
+      "min_count": 2,
+      "inner_folds": 5,
+      "inner_seed": 0
+    },
+    "base_view": "full (rich, fold-safe TE)",
+    "only_difference_vs_control": "presence of nk block"
+  },
+  "members": {
+    "params": {
+      "objective": "binary",
+      "metric": "auc",
+      "n_estimators": 6000,
+      "learning_rate": 0.02,
+      "num_leaves": 127,
+      "min_child_samples": 40,
+      "colsample_bytree": 0.8,
+      "subsample": 0.8,
+      "subsample_freq": 1,
+      "reg_lambda": 1.0,
+      "max_bin": 255,
+      "extra_trees": true,
+      "verbose": -1,
+      "n_jobs": 8
+    },
+    "member_seed": 20261010,
+    "inner_es_seed": 1,
+    "per_fold_best_iter": [
+      {
+        "fold": 0,
+        "ctrl": 750,
+        "treat": 987
+      },
+      {
+        "fold": 1,
+        "ctrl": 679,
+        "treat": 587
+      },
+      {
+        "fold": 2,
+        "ctrl": 780,
+        "treat": 887
+      },
+      {
+        "fold": 3,
+        "ctrl": 871,
+        "treat": 918
+      },
+      {
+        "fold": 4,
+        "ctrl": 1187,
+        "treat": 1489
+      }
+    ]
+  },
+  "per_fold": [
+    {
+      "fold": 0,
+      "ctrl_auc": 0.9611731952069511,
+      "treat_auc": 0.9612403071660531,
+      "delta": 6.71119591020286e-05,
+      "unique": {
+        "n": 45842,
+        "ctrl": 0.9471166230852204,
+        "treat": 0.9472370808097239,
+        "delta": 0.00012045772450353098
+      },
+      "dup": {
+        "n": 94085,
+        "ctrl": 0.9636798551026549,
+        "treat": 0.9637411554118482,
+        "delta": 6.130030919337948e-05
+      },
+      "portfolio_proxy": {
+        "base_auc": 0.9618278142504795,
+        "ctrl_auc": 0.9618269891144664,
+        "treat_auc": 0.9618332907739041,
+        "delta": 6.301659437712992e-06
+      },
+      "corr_treat_route": 0.9973630075346657,
+      "corr_treat_aux": 0.9995330644188326,
+      "ctrl_best_iter": 750,
+      "treat_best_iter": 987
+    },
+    {
+      "fold": 1,
+      "ctrl_auc": 0.9613695556541851,
+      "treat_auc": 0.9613290029641587,
+      "delta": -4.05526900264519e-05,
+      "unique": {
+        "n": 46201,
+        "ctrl": 0.9493284365492516,
+        "treat": 0.9490507488435189,
+        "delta": -0.00027768770573266544
+      },
+      "dup": {
+        "n": 93726,
+        "ctrl": 0.9632301287872205,
+        "treat": 0.9632567360678587,
+        "delta": 2.6607280638191178e-05
+      },
+      "portfolio_proxy": {
+        "base_auc": 0.9619889611452807,
+        "ctrl_auc": 0.9619903944458245,
+        "treat_auc": 0.9619889562824261,
+        "delta": -1.438163398370662e-06
+      },
+      "corr_treat_route": 0.9974519579530272,
+      "corr_treat_aux": 0.9995037527638332,
+      "ctrl_best_iter": 679,
+      "treat_best_iter": 587
+    },
+    {
+      "fold": 2,
+      "ctrl_auc": 0.9610213825033214,
+      "treat_auc": 0.9611169609804119,
+      "delta": 9.557847709051881e-05,
+      "unique": {
+        "n": 45953,
+        "ctrl": 0.9492796358096993,
+        "treat": 0.9492321130363326,
+        "delta": -4.7522773366726057e-05
+      },
+      "dup": {
+        "n": 93974,
+        "ctrl": 0.9627301765246289,
+        "treat": 0.9629254052041858,
+        "delta": 0.00019522867955690248
+      },
+      "portfolio_proxy": {
+        "base_auc": 0.9618912986763071,
+        "ctrl_auc": 0.961880480687066,
+        "treat_auc": 0.9618886438680595,
+        "delta": 8.163180993503438e-06
+      },
+      "corr_treat_route": 0.9974057809335188,
+      "corr_treat_aux": 0.9995541692164079,
+      "ctrl_best_iter": 780,
+      "treat_best_iter": 887
+    },
+    {
+      "fold": 3,
+      "ctrl_auc": 0.9604892233499899,
+      "treat_auc": 0.9604223195748341,
+      "delta": -6.690377515572443e-05,
+      "unique": {
+        "n": 45920,
+        "ctrl": 0.9457795593390846,
+        "treat": 0.9457709577865754,
+        "delta": -8.601552509257537e-06
+      },
+      "dup": {
+        "n": 94007,
+        "ctrl": 0.963341358939449,
+        "treat": 0.9632104879507143,
+        "delta": -0.00013087098873476588
+      },
+      "portfolio_proxy": {
+        "base_auc": 0.9610994818114763,
+        "ctrl_auc": 0.9611076710656479,
+        "treat_auc": 0.9611037178752072,
+        "delta": -3.953190440664223e-06
+      },
+      "corr_treat_route": 0.9973875436568509,
+      "corr_treat_aux": 0.9995411133270283,
+      "ctrl_best_iter": 871,
+      "treat_best_iter": 918
+    },
+    {
+      "fold": 4,
+      "ctrl_auc": 0.9617250096365846,
+      "treat_auc": 0.9616585302748291,
+      "delta": -6.64793617555226e-05,
+      "unique": {
+        "n": 45919,
+        "ctrl": 0.9473644028961828,
+        "treat": 0.9473609090192997,
+        "delta": -3.4938768831427325e-06
+      },
+      "dup": {
+        "n": 94008,
+        "ctrl": 0.9645497868039103,
+        "treat": 0.9644289997392952,
+        "delta": -0.00012078706461515765
+      },
+      "portfolio_proxy": {
+        "base_auc": 0.9624956398713964,
+        "ctrl_auc": 0.9624925988283312,
+        "treat_auc": 0.9624947651783483,
+        "delta": 2.166350017152041e-06
+      },
+      "corr_treat_route": 0.9969931495358486,
+      "corr_treat_aux": 0.9993610239821438,
+      "ctrl_best_iter": 1187,
+      "treat_best_iter": 1489
+    }
+  ],
+  "promotion": {
+    "paired_fold_deltas": [
+      6.71119591020286e-05,
+      -4.05526900264519e-05,
+      9.557847709051881e-05,
+      -6.690377515572443e-05,
+      -6.64793617555226e-05
+    ],
+    "mean_paired_delta": -2.2490781490303035e-06,
+    "paired_se": 3.4752057430275855e-05,
+    "positive_fold_count": 2,
+    "gate": {
+      "mean_threshold": 1.5e-05,
+      "se_multiple": 2.5,
+      "min_positive_folds": 4
+    }
+  },
+  "oof_standalone": {
+    "ctrl_auc": 0.9611412724466512,
+    "treat_auc": 0.9611374786229283,
+    "delta": -3.7938237228418714e-06,
+    "unique": {
+      "ctrl": 0.9477432574825814,
+      "treat": 0.9476943161936263
+    },
+    "dup": {
+      "ctrl": 0.9634944151175119,
+      "treat": 0.9635001628191169
+    }
+  },
+  "portfolio_proxy_informational": {
+    "note": "11th-member equal-weight proxy; UNDERWEIGHTS a feature block; NOT the gate quantity",
+    "ctrl_auc": 0.9618517242888808,
+    "treat_auc": 0.9618541098041429,
+    "delta": 2.3855152621043985e-06
+  },
+  "decision": {
+    "mean_paired_delta": -2.2490781490303035e-06,
+    "paired_se": 3.4752057430275855e-05,
+    "positive_fold_count": 2,
+    "gates": {
+      "mean_ge_1p5e-5": false,
+      "mean_ge_2p5_se": false,
+      "positive_ge_4of5": false
+    },
+    "thresholds": {
+      "mean": 1.5e-05,
+      "se_multiple": 2.5,
+      "min_positive_folds": 4
+    },
+    "verdict": "DEAD",
+    "note": "member-level promotion gate; PROMOTE recommends the portfolio-level deployment test (nk added to all 10 aux members) as a SEPARATE, heavier, separately-preregistered experiment -- it does NOT auto-launch it."
+  },
+  "champion_hashes": {
+    "portfolio": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+    "route": "bcb2811329d3686882450e93435647f8f7ab65abfc48c1a1b51db1e9d1ef95e0",
+    "composition_bit_exact_per_fold": true
+  },
+  "budget": {
+    "gpu_jobs": 0,
+    "submission": 0
+  },
+  "oof_hashes": {
+    "ctrl": "3b7334d96a8bcb793533730004542afbfa652ec97dccd54d6baab61362f2a3d1",
+    "treat": "e2b134feef10d5ca73a27e82b08d25a7454f61df3826f6de29a11d17c2ba0123"
+  }
+}
