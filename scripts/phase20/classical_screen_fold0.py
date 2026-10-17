@@ -166,10 +166,18 @@ def main() -> int:
     model = build_model(args.model, n_feat)
     t1 = time.time()
     try:
-        model.fit(X_fit[fit_train], y_fit[fit_train])
-        proba = model.predict_proba(X_eval)
-        pred = proba[:, 1] if proba.ndim == 2 else proba
-        pred = np.asarray(pred, dtype=np.float64)
+        if args.model == "kernelridge":
+            # KernelRidge is a REGRESSOR (no predict_proba). Fit on the 0/1 target and
+            # use the (clipped) regression output as the score; AUC is valid on a monotone
+            # score, and the screen blend uses the clipped value as a pseudo-probability.
+            model.fit(X_fit[fit_train], y_fit[fit_train].astype(np.float64))
+            raw = np.asarray(model.predict(X_eval), dtype=np.float64)
+            pred = np.clip(raw, 1e-7, 1.0 - 1e-7)
+        else:
+            model.fit(X_fit[fit_train], y_fit[fit_train])
+            proba = model.predict_proba(X_eval)
+            pred = proba[:, 1] if proba.ndim == 2 else proba
+            pred = np.asarray(pred, dtype=np.float64)
         np.save(pred_path, pred.astype("float32"))
         m = screen_metrics(y_eval, pred, port0, route0)
         status, err = "DONE", None
