@@ -1,0 +1,206 @@
+{
+ "updated_utc": "2026-10-17",
+ "principle": "Historical evidence is mapped, never discarded. Items with prior valid evidence keep their negatives; the registry's historical_evidence_paths point here.",
+ "ledger": "experiments/ledger.jsonl (append-only, 90+ entries)",
+ "evidence": {
+  "champion_v7": {
+   "name": "v7_sol_tabpfn_internal2_aux10",
+   "oof": 0.9618529228157235,
+   "public": 0.96146,
+   "kaggle_ref": 57090508,
+   "composition": "TabPFN-v3.5 (2 internal estimators, 5 outer-FIT contexts for test) 50% logit + aux10 (6 LGBM extraTrees, 3 XGB, 1 CatBoost on fold-safe cross-fitted rating features) 50% logit",
+   "test_prediction_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
+   "submission_csv_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+   "verified_this_session": "CSV hash OK (2026-10-17); immutable"
+  },
+  "champion_v6_fallback": {
+   "name": "v6_sol_tabpfn_route_aux10",
+   "oof": 0.9617656138245795,
+   "public": 0.96144,
+   "kaggle_ref": 56951906,
+   "note": "certified fallback, NOT independent of v7"
+  },
+  "closed_branches": {
+   "sources": [
+    "AGENTS.md danger zone",
+    "research/current_meta.md",
+    "reports/phase18/*",
+    "reports/phase19/*",
+    "experiments/ledger.jsonl"
+   ],
+   "items": [
+    {
+     "mechanism": "DART",
+     "verdict": "NEGATIVE"
+    },
+    {
+     "mechanism": "LightGBM RF",
+     "verdict": "NEGATIVE"
+    },
+    {
+     "mechanism": "CatBoost Ordered",
+     "verdict": "NEGATIVE"
+    },
+    {
+     "mechanism": "Generic target encoding",
+     "verdict": "NEGATIVE (leak-safe TE did not pay; te_cond crosses exist as engineered interactions only)"
+    },
+    {
+     "mechanism": "Exact-key TE",
+     "verdict": "NEGATIVE"
+    },
+    {
+     "mechanism": "H18-C tuple-key TE",
+     "verdict": "NEGATIVE"
+    },
+    {
+     "mechanism": "TabR variants",
+     "verdict": "NEGATIVE"
+    },
+    {
+     "mechanism": "Direct original-data appending",
+     "verdict": "NEGATIVE"
+    },
+    {
+     "mechanism": "Generic pseudo-labeling",
+     "verdict": "NEGATIVE"
+    },
+    {
+     "mechanism": "SSL32 (generic self-supervised)",
+     "verdict": "NEGATIVE"
+    },
+    {
+     "mechanism": "TabPFN Fast mode",
+     "verdict": "NEGATIVE (accuracy loss)"
+    },
+    {
+     "mechanism": "4-estimator TabPFN route expansion",
+     "verdict": "NEUTRAL on portfolio (route +slight, portfolio ~flat)"
+    },
+    {
+     "mechanism": "90%-context TabPFN route",
+     "verdict": "directionally positive, operationally insufficient"
+    },
+    {
+     "mechanism": "H18-B additive boosted stump",
+     "verdict": "NEGATIVE"
+    },
+    {
+     "mechanism": "H19-A fixed difficulty reweighting",
+     "verdict": "INCONCLUSIVE (mechanism real on shared-fail pairs +3.94e-3, standalone -1.13e-5, portfolio +8.7e-7); reports/phase19/h19a_fold0_falsifier.json"
+    },
+    {
+     "mechanism": "H19-B bag-of-five deployment",
+     "verdict": "NEGATIVE (aux -3.96e-5, portfolio -2.783e-4, all 22 segments negative); reports/phase19/h19b_bag5_f4.json"
+    },
+    {
+     "mechanism": "extra_trees on MINIMAL views",
+     "verdict": "NEGATIVE (-5.6e-3 raw view); only on rich views (+2.75e-4)"
+    },
+    {
+     "mechanism": "Adding weaker decorrelated member",
+     "verdict": "NEGATIVE on portfolio repeatedly"
+    },
+    {
+     "mechanism": "Residual group-bias correction",
+     "verdict": "closed (absorbed into aux feature blocks)"
+    },
+    {
+     "mechanism": "Conditional-density categorical",
+     "verdict": "closed"
+    },
+    {
+     "mechanism": "Direct survey-row lookup",
+     "verdict": "closed (unreliable)"
+    },
+    {
+     "mechanism": "Multi-task conditional rating prediction (earlier form)",
+     "verdict": "closed; item 35 must differ (shared-representation MTL with FIT-only selection)"
+    }
+   ]
+  },
+  "foundation_screen_phase19": {
+   "protocol": "fold 0, EVAL[:50000], champion raw21+coarse10 view, stratified 20k FIT context (seed 20261023); equal-logit blend vs hash-asserted champion portfolio",
+   "prereg": "configs/phase19/foundation_screen_prereg.json",
+   "results": [
+    {
+     "model": "causilo",
+     "auc": 0.956684,
+     "portfolio_delta": -0.00101,
+     "logit_corr": 0.986
+    },
+    {
+     "model": "tabicl-v2",
+     "auc": 0.956343,
+     "portfolio_delta": -0.0014,
+     "logit_corr": 0.984
+    },
+    {
+     "model": "tabdpt",
+     "auc": 0.956238,
+     "portfolio_delta": -0.00141,
+     "logit_corr": 0.985
+    },
+    {
+     "model": "tabfm",
+     "auc": 0.957432,
+     "portfolio_delta": -0.00159,
+     "logit_corr": 0.978,
+     "note": "2k context / 5k eval (CPU scale) -- NOT directly comparable to the 20k/50k rows above"
+    },
+    {
+     "model": "xrfm",
+     "auc": 0.930634,
+     "portfolio_delta": -0.00929,
+     "logit_corr": 0.824,
+     "note": "decorrelated but far too weak on raw view"
+    }
+   ],
+   "artifacts": [
+    "reports/phase19/foundation_screen/",
+    "artifacts/phase19/foundation_screen/"
+   ],
+   "verdict": "all NEGATIVE for the exact tested protocols; preserved. Larger-context retries require a predeclared plausible-scaling argument."
+  },
+  "neural_negative_evidence": {
+   "scope": "RealMLP and TabM evaluated on the rich 285-col view in earlier phases; both ~1e-3+ below v7 at the portfolio level",
+   "registry_impact": "NEGATIVE for those exact recipes; NOT architecture-wide. Items 15-30 test genuinely distinct architectures (FT-Transformer, DCNv2, SAINT, ...) with canonical recipes.",
+   "paths": [
+    "experiments/ledger.jsonl (phase 11-14 entries)",
+    "research/current_meta.md"
+   ]
+  },
+  "atlas": {
+   "finding": "~85% of v7's residual error mass is SHARED between its two halves (tabpfn route + aux10)",
+   "implication": "a member that fixes only one half's errors adds little; levers are (a) a new inductive bias right where BOTH fail, or (b) a strong AND decorrelated member (Champion B)",
+   "paths": [
+    "reports/phase18/error_atlas.md",
+    "reports/phase19/shared_error_atlas.json"
+   ]
+  },
+  "original_data_evidence": {
+   "positive": "original-dataset-derived conditional statistics (ogte_/ogs_ blocks, teach_knn) help",
+   "negative": "directly appending original survey rows hurt; exact row lookup unreliable",
+   "paths": [
+    "src/features/s6e10.py",
+    "experiments/ledger.jsonl"
+   ]
+  },
+  "submission_history": {
+   "submissions": [
+    "v1..v7 (7 total)"
+   ],
+   "latest": {
+    "name": "v7_sol_tabpfn_internal2_aux10",
+    "ref": 57090508,
+    "public": 0.96146
+   },
+   "budget": {
+    "phase19_new_allowed": 2,
+    "used": 0,
+    "cap": "src/submission/kaggle_io.py hard-refuses"
+   },
+   "noise_floor": "paired public-LB noise ~+/-2e-4; only submit on OOF gain >= 3e-5 with certification (AGENTS.md stricter 3e-4 rule governs submission decisions until documented revision)"
+  }
+ }
+}

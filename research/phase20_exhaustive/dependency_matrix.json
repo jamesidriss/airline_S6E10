@@ -1,0 +1,41 @@
+{
+ "updated_utc": "2026-10-17",
+ "certified_env": {
+  "path": ".venv",
+  "python": "3.11.9",
+  "numpy": "2.4.6",
+  "torch": "2.11.0+cu128",
+  "sklearn": "1.9.1",
+  "scipy": "1.17.1",
+  "lightgbm": "4.7.0",
+  "installed_phase19": [
+   "tabicl",
+   "tabdpt",
+   "causilo",
+   "tabfm",
+   "xrfm",
+   "omegaconf",
+   "absl-py",
+   "jaxtyping<0.3",
+   "typeguard<3",
+   "jax (cpu)"
+  ],
+  "policy": "IMMUTABLE for the certified v7 stack; no in-place upgrades for new candidates"
+ },
+ "isolated_envs": {
+  ".venv_ag": {
+   "purpose": "AutoGluon 1.6.3 + mitra-finetune 0.3.0 + structured-data-models 0.2.1 (Kumo)",
+   "python": "3.11.9",
+   "torch": "2.9.0+cu129 (CUDA RTX 5070 Ti verified)",
+   "note": "created 2026-10-17; certified .venv verified unchanged after install",
+   "compat_risk": "torch 2.9 vs certified 2.11 is intentional isolation, not drift"
+  }
+ },
+ "new_candidate_needs": {
+  "mitra-v2": ".venv_ag (autogluon[mitra] + mitra-finetune)",
+  "kumo-tabular": ".venv_ag (structured-data-models 0.2.1)",
+  "xiaomi-tabldm": "torch>=2.2 + einops + huggingface-hub; planned for .venv_ag (license: weights ambiguous NC-vs-Apache; see model_availability file)",
+  "neural architectures 15-30": "certified .venv suffices (torch 2.11); implement in src/phase20 with canonical recipes",
+  "classical 59-69": "certified .venv (sklearn 1.9.1)"
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "updated_utc": "2026-10-17",
+ "phase19_authorized": {
+  "heavy_gpu_hours": 12,
+  "cpu_hours": 30,
+  "spent_at_phase20_start": {
+   "gpu_heavy_h": 0.0,
+   "gpu_h": 0.05,
+   "cpu_h": 2.59
+  }
+ },
+ "phase20_position": {
+  "question": "the 96-item program exceeds the phase-19 residual ceiling",
+  "policy": "continue high-value feasible work inside the residual; any extension needs explicit user approval (hard-cap rule)",
+  "spent_this_session": {
+   "gpu_heavy_h": 0.0,
+   "notable": "isolated .venv_ag setup (disk ~6GB), HF downloads (~0.6GB), mitra probe running"
+  },
+  "disk_free_gb_now": 136.3
+ },
+ "submission_budget": {
+  "new_allowed": 0,
+  "used": 0,
+  "gate": "OOF-validated gain + certification + explicit user approval each time"
+ },
+ "daily_kaggle_cap": "src/submission/kaggle_io.py hard-refusal intact"
+}

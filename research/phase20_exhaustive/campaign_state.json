@@ -1,0 +1,45 @@
+{
+ "updated_utc": "2026-10-17",
+ "head_at_start": "5d7beb6e9c25af8d01a3edb4cd97dccef610ab45",
+ "champion_a": {
+  "name": "v7_sol_tabpfn_internal2_aux10",
+  "oof": 0.9618529228157235,
+  "public": 0.96146,
+  "ref": 57090508,
+  "immutable": true
+ },
+ "champion_b": "UNRESOLVED (v6 fallback certified)",
+ "stretch_target": {
+  "oof": 0.96274,
+  "gap": 0.0008870771842765,
+  "supersedes": 0.9621,
+  "status": "aspirational; never promised"
+ },
+ "tests": {
+  "baseline": 166,
+  "expected_after_phase20": "166 + new (fold-isolation, adapter contracts, pair arithmetic)"
+ },
+ "registry": {
+  "total": 96,
+  "families": {
+   "FLM": 14,
+   "NN": 16,
+   "OBJ": 14,
+   "FEAT": 14,
+   "CLASS": 11,
+   "ENS": 10,
+   "GEN": 8,
+   "DEP": 9
+  }
+ },
+ "sessions_progress": {
+  "AUDITED": "96/96 catalogued with historical evidence mapping",
+  "IMPLEMENTED": "mitra screen runner + Kumo env; neural/classical pending",
+  "SMOKE_TESTED": "mitra F1 pass; Kumo import pass (F1 smoke pending)",
+  "FOLD_TESTED": "0 new this session (mitra F2 probe running)",
+  "FULL_OOF": 0,
+  "CERTIFIED": 0,
+  "SUBMITTED": 0,
+  "FINALIST_SELECTED": 0
+ }
+}

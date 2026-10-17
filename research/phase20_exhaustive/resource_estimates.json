@@ -1,0 +1,24 @@
+{
+ "updated_utc": "2026-10-17",
+ "hardware": {
+  "cpu": "Ryzen 7 9800X3D",
+  "ram_gb": 32,
+  "gpu": "RTX 5070 Ti 16GB (sm_120)",
+  "os": "Windows 11",
+  "disk_free_gb_at_start": 136.3
+ },
+ "measured": {
+  "mitra_smoke_synthetic": {
+   "fit_2bag_3krows_s": 39,
+   "predict_rows_per_s": 4,
+   "note": "predict rate dominated by missing flash-attn (stock kernel); 50k eval x 8 bag children is the cost driver for F2"
+  },
+  "mitra_probe_armA_2keval": "see reports/phase20/mitra_screen/ (running)"
+ },
+ "guards": {
+  "heavy_gpu_jobs_max": 1,
+  "current": "mitra arm-A probe only",
+  "ag_mem_check": "AutoGluon static ICL memory estimate (rows^2 formula) DISABLED for Mitra runs -- it misestimates capped-support FT at >17GiB; guard documented in runner + metadata",
+  "pagefile": "unchanged (31GB swap, 29GB free at audit)"
+ }
+}

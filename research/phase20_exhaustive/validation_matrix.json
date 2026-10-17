@@ -1,0 +1,32 @@
+{
+ "updated_utc": "2026-10-17",
+ "schemes": {
+  "primary": {
+   "type": "StratifiedKFold(5, shuffle=True, random_state=20261010)",
+   "status": "immutable, hash-registered in data/cache/folds/",
+   "use": "discovery CV; admission gate"
+  },
+  "shadow": {
+   "type": "StratifiedKFold(5, seed=777001)",
+   "status": "registered",
+   "use": "confirmation only, never tuning; NOTE: heavily consulted in phase 17-19 -- NOT a fresh holdout"
+  },
+  "block10": {
+   "type": "10 folds seed 20261010",
+   "status": "registered",
+   "use": "finalist robustness"
+  },
+  "blocked_id_scheme": {
+   "use": "generator-batch-aware split test for any id-derived feature"
+  },
+  "pseudo_priv": {
+   "type": "820 fixed pseudo-public/private partitions",
+   "use": "private robustness diagnostics (P05/median/P95, ordering disagreement)"
+  }
+ },
+ "selection_history_manifest": {
+  "shadow_consultations": "phase 17-19 finalists (recorded in ledger); any NEW scheme used for selection becomes selection-contaminated after first use -- log every consultation here",
+  "log": []
+ },
+ "folds_196_or_178": "not applicable"
+}

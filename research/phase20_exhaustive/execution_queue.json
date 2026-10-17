@@ -1,0 +1,79 @@
+{
+ "updated_utc": "2026-10-17",
+ "ranking_rule": "expected operational private benefit / (GPU-h + wall-days-to-deadline risk); deadline 2026-10-31T23:59Z",
+ "queue": [
+  {
+   "rank": 1,
+   "item": "P20-MITRA-SCREEN (F2 arms A/B)",
+   "status": "RUNNING",
+   "gpu": "yes",
+   "eta": "~1-3h/arm pending probe"
+  },
+  {
+   "rank": 2,
+   "item": "KUMO F1 smoke + F2 fold-0 screen (small->large)",
+   "status": "PREPARED",
+   "gpu": "yes",
+   "note": "eligible, API verified, deps installed"
+  },
+  {
+   "rank": 3,
+   "item": "Xiaomi-TabLDM F1 smoke (clf_default.ckpt 535MiB)",
+   "status": "PREPARED",
+   "gpu": "yes",
+   "note": "license: weights NC-vs-Apache contradiction; research-only screen OK, submission needs user license review"
+  },
+  {
+   "rank": 4,
+   "item": "EXAONE Tabular audit + inference-only research",
+   "status": "NOT_STARTED",
+   "gpu": "maybe",
+   "note": "weights non-commercial; no submission use"
+  },
+  {
+   "rank": 5,
+   "item": "H19-C smoothed nearest-key (preregistered, cheap CPU)",
+   "status": "NOT_STARTED",
+   "gpu": "no",
+   "note": "open ranked hypothesis"
+  },
+  {
+   "rank": 6,
+   "item": "Neural P2 block: FT-Transformer / DCNv2 / service-interaction-net / MoE / PLR",
+   "status": "NOT_STARTED",
+   "gpu": "yes",
+   "note": "canonical recipes, fold-0 OOF vs v7 delta each"
+  },
+  {
+   "rank": 7,
+   "item": "Context-scaling ladder for any PROMISING FLM (2k..100k predeclared)",
+   "status": "CONDITIONAL",
+   "gpu": "yes",
+   "rule": "only if fold-0 trajectory positive"
+  },
+  {
+   "rank": 8,
+   "item": "Native ExtraTrees rich-view + EBM interactions (P3 cheap classical)",
+   "status": "NOT_STARTED",
+   "gpu": "no"
+  },
+  {
+   "rank": 9,
+   "item": "Champion B search (needs a strong distinct base)",
+   "status": "CONDITIONAL",
+   "rule": "only after a candidate passes the admission gate"
+  },
+  {
+   "rank": 10,
+   "item": "Generator/noise P5 items",
+   "status": "DEFERRED",
+   "rule": "after actionable predictive queue is exhausted or deadline-safe"
+  }
+ ],
+ "not_executable_now": {
+  "limix_2_2m_16m": "LICENSE_BLOCKED (non-commercial / authorization required)",
+  "tabpfn_2.5_2.6_realtabpfn": "UNVERIFIED existence (0 HF hits; GitHub discovery owed)",
+  "item_43_distillation": "historically equivalent closed mechanism",
+  "items_89_93": "frozen-rule conditional; H19-B negative makes them not-warranted"
+ }
+}

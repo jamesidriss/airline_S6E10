@@ -27,10 +27,10 @@
    "historical_equivalent": "-",
    "status": "NOT_STARTED",
    "priority": "P1",
-   "fidelity_reached": "F0",
+   "fidelity_reached": "F1",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "install isolated autogluon[mitra]; fold-0 screen + context ladder"
+   "next_action": "F2 fold-0 screen (arms A/B) running in .venv_ag"
   },
   {
    "experiment_number": 2,
@@ -70,9 +70,9 @@
    "status": "NOT_STARTED",
    "priority": "P1",
    "fidelity_reached": "F0",
-   "competition_eligibility": "CUSTOM",
+   "competition_eligibility": "OK (OpenMDW-1.1 verified ELIGIBLE: outputs unrestricted)",
    "blocking_reason": "-",
-   "next_action": "audit OpenMDW-1.1 vs prize rules; download small first; fold-0 screen"
+   "next_action": "audit inference API (.pt checkpoints); F1 smoke of small classifier; fold-0 screen"
   },
   {
    "experiment_number": 5,
@@ -109,11 +109,11 @@
    "requested_method": "Stable.ai LimiX-2 ckpt",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "LICENSE_BLOCKED",
    "priority": "P1",
    "fidelity_reached": "F0",
-   "competition_eligibility": "CUSTOM",
-   "blocking_reason": "-",
+   "competition_eligibility": "NC (stableai-limix-non-commercial-license-v1.0)",
+   "blocking_reason": "non-commercial license; prize-competition use not established",
    "next_action": "verify custom license vs prize; estimate VRAM; bounded pilot if permitted"
   },
   {
@@ -123,11 +123,11 @@
    "requested_method": "LimiX-2M / LimiX-16M ckpts (track separately)",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "LICENSE_BLOCKED",
    "priority": "P1",
    "fidelity_reached": "F0",
-   "competition_eligibility": "CUSTOM",
-   "blocking_reason": "-",
+   "competition_eligibility": "NC (limix-2m/16m-license-v1.0: academic research ok, commercial upon authorization)",
+   "blocking_reason": "commercial use requires StableAI authorization; ask user before any authorized use",
    "next_action": "verify licenses; inspect size/arch; feasibility + bounded pilot each"
   },
   {
@@ -140,7 +140,7 @@
    "status": "NOT_STARTED",
    "priority": "P1",
    "fidelity_reached": "F0",
-   "competition_eligibility": "OK",
+   "competition_eligibility": "OK (GitHub project Apache-2.0; verify checkpoint terms)",
    "blocking_reason": "-",
    "next_action": "verify checkpoint terms; inspect context-memory; chunk/cached pilot"
   },

@@ -1,0 +1,31 @@
+{
+ "updated_utc": "2026-10-17",
+ "champion_routes": {
+  "tabpfn_v35": {
+   "fit": "5 outer-FIT full contexts (~559k rows)",
+   "infer": "5 contexts averaged; 2 internal estimators",
+   "features": "raw21 + coarse10",
+   "role": "50% of v7"
+  },
+  "aux10": {
+   "members": "6 LGBM extraTrees + 3 XGB + 1 CatBoost",
+   "features": "285-col rich view, fold-safe cross-fitted aux ratings",
+   "deployment": "ONE full-FIT refit per role (certified; H19-B proved bag-of-five degrades)",
+   "role": "50% of v7"
+  }
+ },
+ "new_candidates_planned": {
+  "mitra-v2": {
+   "recipe": "frozen mitra-finetune (50-step FT, 8-fold bag, support 16384, eval_metric=roc_auc)",
+   "status": "F2 fold-0 in progress"
+  },
+  "kumo-tabular": {
+   "recipe": "in-context, num_estimators=8, float16 autocast, context ladder 20k->50k->full-FIT-subset",
+   "status": "F1 next"
+  },
+  "neural_15_30": {
+   "recipe_policy": "one canonical recipe per architecture, comparable resource budget, FIT-only ES, no grid",
+   "status": "queued P2"
+  }
+ }
+}
