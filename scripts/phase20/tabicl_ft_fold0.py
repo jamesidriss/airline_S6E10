@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -26,6 +27,14 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 import sys
+
+# Fallback prereg (H20-TABICL-FT-FALLBACK): the first full-dose attempt was
+# hard-killed at the end-of-epoch validation after per-batch time degraded 3x
+# (allocator fragmentation; no prediction or result file was ever produced).
+# expandable_segments makes the caching allocator serve blocks from a growing
+# segment instead of hunting fragmented ones. This affects only HOW memory is
+# allocated, never any computed value, and MUST be set before torch imports.
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
 sys.path.insert(0, str(ROOT))
 
@@ -47,12 +56,16 @@ def log(msg: str) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--device", default="cuda")
-    ap.add_argument("--tag", default="tabicl_ft_route_fold0")
+    ap.add_argument("--tag", default="tabicl_ft_route_fold0_fb100k")
     ap.add_argument("--seed", type=int, default=1)
+    ap.add_argument("--arm", choices=["full", "fb100k"], default="fb100k",
+                    help="full = frozen 503k-row recipe (RESOURCE_BLOCKED at 16GB/2h budget); "
+                         "fb100k = preregistered fallback: 100k stratified subsample of FIT-train")
     args = ap.parse_args()
 
     prereg = json.loads(PREREG.read_text(encoding="utf-8"))
     frozen = prereg["protocol"]["model"]["frozen_args"]
+    assert args.arm == "full" or args.tag.endswith("_fb100k"), "fallback arm tag must carry _fb100k"
 
     t0 = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
@@ -93,6 +106,23 @@ def main() -> int:
     # inner 10% stratified of FIT as the fine-tuner's validation (fold-safe)
     fit_pos = np.arange(len(FIT))
     train_pos, val_pos = inner_es_split(fit_pos, y[FIT], frac=0.1, seed=20261010)
+    n_train_full = int(len(train_pos))
+    if args.arm == "fb100k":
+        # H20-TABICL-FT-FALLBACK: stratified 100k subsample of FIT-train
+        # (per-class without-replacement, proportional counts, rng 20261011).
+        # The inner validation split stays the FULL 55971 rows so the
+        # early-stopping metric and its 0.9586 baseline remain comparable.
+        rng = np.random.default_rng(20261011)
+        ytr_full = y[FIT][train_pos]
+        keep_parts = []
+        for cls in np.unique(ytr_full):
+            cls_idx = np.flatnonzero(ytr_full == cls)
+            n_cls = int(round(100000 * len(cls_idx) / n_train_full))
+            keep_parts.append(rng.choice(cls_idx, size=min(n_cls, len(cls_idx)), replace=False))
+        keep = np.sort(np.concatenate(keep_parts))
+        train_pos = train_pos[keep]
+        log(f"fallback arm: FIT-train subsampled {n_train_full} -> {len(train_pos)} rows "
+            f"(stratified, rng 20261011)")
     Xtr = Xall[FIT][train_pos].astype(np.float32)
     ytr = y[FIT][train_pos].astype(np.int64)
     Xva = Xall[FIT][val_pos].astype(np.float32)
@@ -120,12 +150,15 @@ def main() -> int:
         n_estimators_finetune=int(frozen["n_estimators_finetune"]),
         n_estimators_inference=int(frozen["n_estimators_inference"]),
         max_data_size=int(frozen["max_data_size"]),
+        save_interval=0,  # robustness: keep ONLY best.ckpt on disk (pure I/O;
+                          # does not alter training) so a hard kill preserves
+                          # the best-epoch weights for recovery.
         device=frozen["device"], verbose=True, random_state=1201)
 
     log("fine-tuning on FIT-train with FIT-val early stopping...")
     t1 = time.time()
     try:
-        clf.fit(Xtr, ytr, X_val=Xva, y_val=yva)
+        clf.fit(Xtr, ytr, X_val=Xva, y_val=yva, output_dir=ART / "ckpt")
         ft_secs = time.time() - t1
         log(f"fine-tune done in {ft_secs:.1f}s; predicting {len(EVAL)} fold-0 rows")
         chunks = []
@@ -150,6 +183,9 @@ def main() -> int:
 
     meta = {
         "model": "tabicl_finetuned", "status": status, "error": err,
+        "arm": args.arm, "allocator_conf": os.environ.get("PYTORCH_CUDA_ALLOC_CONF"),
+        "fallback_prereg": "configs/phase20/tabicl_ft_fallback_prereg.json" if args.arm != "full" else None,
+        "train_rows_full_dose": n_train_full,
         "frozen_args": frozen, "train_rows": int(len(train_pos)),
         "val_rows": int(len(val_pos)), "inner_split_seed": 20261010,
         "utc": datetime.now(timezone.utc).isoformat(), "git": git_commit(),

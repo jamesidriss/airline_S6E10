@@ -1,0 +1,24 @@
+{
+  "hypothesis_id": "H20-TABICL-FT-FALLBACK",
+  "title": "Resource fallback for the H20-TABICL-FT fold-0 screen (allocator fix + reduced fine-tune row budget)",
+  "frozen_before_results": true,
+  "status": "PREREGISTERED",
+  "decided_at_utc": "2026-10-17T16:40:00Z",
+  "decided_before_any_result_for": ["tabicl-ft-route-fold0"],
+  "motivation": "The first invocation of H20-TABICL-FT died WITHOUT producing any prediction or result file: epoch 1 of 10 completed its 51 meta-batches (per-batch time degraded 19s -> 63s, the allocator-fragmentation signature) and the process was then hard-killed at the end-of-epoch validation (no Python exception reached the runner's try/except, no FAILED JSON, no Windows application/OOM event, 19GB RAM free). Separately, the observed wall-clock (45min for ONE epoch) puts the full frozen recipe at ~7.5 GPU-h for this single fold-0 screen and ~37h for the prospective 5-fold follow-up, far beyond this prereg's own <=2 GPU-h budget and the campaign ceiling. A resource failure is NOT a measurement: the fine-tuning mechanism has still never been observed. These two changes are pure resource adaptations chosen before ANY fine-tuned prediction existed.",
+  "changes": {
+    "allocator": "PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True set before torch import (verified functional on the certified torch 2.11.0+cu128). This changes only how the CUDA caching allocator serves blocks; it cannot alter any computed value or prediction.",
+    "train_rows": "The fine-tune training set X_train is a stratified 100000-row subsample of FIT-train (per-class without-replacement draw, np.random.default_rng(20261011); proportional class counts). The inner validation split stays the FULL 55971-row stratified 10% of FIT from the original prereg, so the early-stopping metric and its 0.9586 pretrained baseline remain directly comparable. The eval fold (139927 rows) is untouched.",
+    "rationale_rows": "Training meta-batches are 10k-row chunks: 100k rows => 10 chunks/epoch => ~42min of training for all 10 epochs plus validations, inside the <=2 GPU-h budget. It also shrinks the end-of-epoch validation fit (100k-row context) and the final inference estimator (100k-row context at 8 estimators) to ~1/5 of what the full recipe intended, removing the memory-pressure point the first attempt died on."
+  },
+  "unchanged": [
+    "all other frozen_args of H20-TABICL-FT: epochs=10, learning_rate=1e-5, weight_decay=0.01, n_estimators_finetune=2, n_estimators_inference=8, max_data_size=10000, device=cuda",
+    "route view (22 features, label-free), eval fold 0, FIT-only training/validation, inner-split seed 20261010, classifier random_state 1201",
+    "the transformers LR-scheduler shim disclosure of the original prereg",
+    "champion hash-asserted references and all screen metrics"
+  ],
+  "decision_rule": "identical to H20-TABICL-FT (PROMISING = portfolio_delta >= +5e-5 AND corr_vs_portfolio < 0.995; DECORRELATION_COLLAPSE = standalone improves but corr_vs_route >= 0.99; NEGATIVE = standalone fails to improve < +2e-3 over the 0.956343 zero-shot).",
+  "deviation_note": "This is a REDUCED-DOSE arm (100k of 503k fine-tune rows). A NEGATIVE verdict closes reduced-dose supervised fine-tuning of TabICL at this data size; full-dose (503k rows, ~7.5 GPU-h/screen) remains unmeasured and resource-blocked under the current compute ceiling. A PROMISING verdict would still owe the full-dose arm, under a user-approved extended compute plan, before any OOF admission claim.",
+  "anti_leakage": "unchanged from H20-TABICL-FT: subsample of FIT only, eval fold never seen, label-free view, no public-LB feedback.",
+  "budget": {"gpu": "<= 2 GPU-h", "submissions": 0}
+}

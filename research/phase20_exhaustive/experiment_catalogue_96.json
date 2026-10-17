@@ -464,12 +464,12 @@
    "requested_method": "supervised fine-tune of TabICL, FIT-only ES",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "IN_PROGRESS",
    "priority": "P2",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "-",
-   "next_action": "official FT procedure; FIT-only selection"
+   "blocking_reason": "full-dose (503k rows, 10 epochs) hard-killed at end-of-epoch validation after 3x allocator slowdown; ~7.5 GPU-h/screen exceeds the <=2h prereg budget. Fallback arm (100k stratified subsample + expandable_segments allocator) preregistered before any result; running.",
+   "next_action": "read reports/phase20/tabicl_ft/tabicl_ft_route_fold0_fb100k.json; apply parent decision rule; PROMISING would still owe the full-dose arm under an extended compute plan"
   },
   {
    "experiment_number": 32,
@@ -1391,5 +1391,5 @@
    "next_action": "note reused shadow is not fresh; new scheme if used for selection"
   }
  ],
- "updated": "2026-10-17T11:59:58.817984+00:00"
+ "updated": "2026-10-17T16:50:00Z"
 }
