@@ -1,0 +1,45 @@
+{
+ "experiment": "P20-MITRA-SCREEN",
+ "phase": 20,
+ "frozen_utc": "2026-10-17",
+ "hypothesis": "Mitra-v2 (Apache-2.0, 75.7M 2D-transformer FLM, synthetic-prior pretraining; tech report claims surpassing TabPFN-3 on TabArena/TALENT) can add incremental value as an 11th member of the v7 portfolio on S6E10's synthetic generator data.",
+ "why_distinct_from_prior_negatives": "The five-model phase-19 screen (TabICL-v2, TabDPT, Causilo, TabFM, xRFM: all portfolio-delta-negative at 20k/2k context) never included Mitra. Its released checkpoint became verifiable this session (autogluon/mitra-classifier-2, revision-pinned, weights sha256 5ffab0e2cf52f61c5b7c7eb1e8542996736d1023a0212190cc09abc2119a1e09, Apache-2.0, ungated).",
+ "model": {
+  "name": "mitra-v2",
+  "checkpoint": "artifacts/phase20/mitra-classifier-2/model.safetensors",
+  "weights_sha256": "5ffab0e2cf52f61c5b7c7eb1e8542996736d1023a0212190cc09abc2119a1e09",
+  "hf_revision": "pinned via manifest artifacts/phase20/mitra-classifier-2_manifest.json",
+  "license": "apache-2.0",
+  "competition_eligibility": "permissive; no known restriction on model weights under S6E10 rules (re-verify against current Rules page before any submission)",
+  "runtime": "mitra-finetune 0.3.0 (Apache-2.0, local snapshot artifacts/phase20/mitra-finetune-src, pyproject sha at install) via autogluon.tabular 1.6.3, isolated venv .venv_ag, torch 2.9.0+cu129 CUDA RTX 5070 Ti"
+ },
+ "protocol": {
+  "fidelity": "F2 (scientific pilot, fold 0 only; cannot pass the admission gate)",
+  "representation": "champion raw21+coarse10 view via scripts.run_sol_tabpfn.frames(route=True) identical to the phase-19 screen and the champion route arm",
+  "fit_population": "folds 1-4 (primary scheme seed 20261010) = FIT only",
+  "eval_population": "fold 0, EVAL[:50000] -- IDENTICAL eval rows to the phase-19 screen tag fmscreen_fold0_ctx20k_e50k, making AUCs directly comparable to that table",
+  "champion_reference": "hash-asserted phase17_B1 portfolio/route fold-0 slices (same asserts as phase-19 script)",
+  "prereg_decision_source": "configs/phase19/foundation_screen_prereg.json thresholds (kept identical so the screen table stays one protocol)"
+ },
+ "arms": [
+  {
+   "id": "armA_ctx20k",
+   "question": "same-context comparison (A)",
+   "fit_rows": "stratified 20,000-row context drawn from FIT with CONTEXT_SEED=20261023 (identical context to the phase-19 screens)",
+   "mitra_policy": "mitra-finetune frozen recipe: num_bag_folds=8, 50-step fine-tune, lr/warmup/wd defaults, support cap 16384 (binary classification), class-balanced predict support, no env-var protocol overrides (MITRA_FT_BUDGET_S unset)",
+   "note": "Mitra's native binary support cap (16,384) is smaller than the 20k context; the cap is disclosed in metadata and actual support rows are recorded. Arm A therefore measures 'Mitra with the same allowed FIT information budget as the phase-19 screens', subject to its own cap."
+  },
+  {
+   "id": "armB_bestpolicy",
+   "question": "best-supported-policy comparison (B)",
+   "fit_rows": "full FIT (folds 1-4)",
+   "mitra_policy": "same frozen recipe; support cap still 16384 at fine-tune/predict (native limit), but the bag children's held-out folds and heldout-in-support rule can draw on the full FIT distribution",
+   "note": "this is Mitra's legitimate best operating point under its own documented defaults; it does NOT claim full-context equivalence to the champion's 559k-row TabPFN contexts."
+  }
+ ],
+ "metrics": ["standalone fold-0 AUC on the matched 50k eval rows", "equal-logit blend delta vs champion portfolio (port_delta)", "logit-Pearson vs portfolio and vs route", "exact same screen_metrics() implementation as phase 19"],
+ "promising_bar": "PROMISING iff portfolio_delta >= +5e-5 AND logit_pearson_vs_portfolio < 0.995 in either arm; only then a full 5-fold OOF + admission gate (mean paired >= 1.5e-5, >= 2.5x paired SE, >= 4/5 folds) is justified.",
+ "negative_rule": "if both arms have portfolio_delta < +5e-5 (or negative), record NEGATIVE for the exact frozen recipe + protocol and do not rerun identically; any future retry must change a predeclared mechanism (fine-tuning steps, support policy, or a distinct representation), not re-fit the same recipe.",
+ "forbidden": ["public-leaderboard-based selection", "eval-fold labels in context/support/early-stopping", "changing the promising bar after results", "rerunning the identical recipe after a negative"],
+ "submission_impact": "none by itself (fold-0 screen cannot satisfy the OOF-gain submission rule)"
+}

@@ -1,0 +1,30 @@
+{
+ "total": 96,
+ "by_status": {
+  "NOT_STARTED": 87,
+  "PARTIAL_VALID": 5,
+  "LICENSE_BLOCKED": 1,
+  "HISTORICAL_EQUIVALENT": 2,
+  "COMPLETE_CERTIFIED": 1
+ },
+ "by_family": {
+  "FLM": 14,
+  "NN": 16,
+  "OBJ": 14,
+  "FEAT": 14,
+  "CLASS": 11,
+  "ENS": 10,
+  "GEN": 8,
+  "DEP": 9
+ },
+ "by_priority": {
+  "P1": 8,
+  "P2": 14,
+  "P3": 31,
+  "P4": 30,
+  "P5": 12,
+  "P0": 1
+ },
+ "executed_prior": 8,
+ "not_started": 87
+}

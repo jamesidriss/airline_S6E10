@@ -1,0 +1,97 @@
+experiment_number,canonical_name,research_family,requested_method,historical_status,historical_equivalent,status,priority,fidelity_reached,competition_eligibility,blocking_reason,next_action
+1,Mitra-v2,FLM,"AutoGluon Mitra-v2 75.7M 2D-transformer FLM, synthetic-prior pretrain",none,-,NOT_STARTED,P1,F0,OK,-,install isolated autogluon[mitra]; fold-0 screen + context ladder
+2,TabICLv2,FLM,TabICL v2 in-context classifier (tabicl-classifier-v2 ckpt),20k-fold0 screen -1.40e-3 vs v7 blend,-,PARTIAL_VALID,P1,F2,OK,-,preserve 20k neg; probe native context; one bounded larger-context retest only if trajectory plausible
+3,EXAONE Tabular,FLM,LG AI EXAONE Tabular official inference+weights,none,-,LICENSE_BLOCKED,P2,F0,NC,weights non-commercial; competition use not established,verify intended-use; do NOT submit with NC weights; inference-only research ok if licensed
+4,Kumo Tabular,FLM,NVIDIA Kumo-Tabular small/medium/large classifiers,none,-,NOT_STARTED,P1,F0,CUSTOM,-,audit OpenMDW-1.1 vs prize rules; download small first; fold-0 screen
+5,TabDPT v1.3/Turbo,FLM,"TabDPT classifier, context_reduction subsample",20k-fold0 screen -1.41e-3,-,PARTIAL_VALID,P2,F2,OK,-,preserve 20k neg; only distinct larger-context/arch policy if justified
+6,xRFM raw,FLM,xRFM recursive feature machine on raw21 view,"raw-view 0.9306, -9.3e-3",item 47,PARTIAL_VALID,P3,F2,OK,-,preserve raw neg; rich-view variant is item 47
+7,LimiX-2,FLM,Stable.ai LimiX-2 ckpt,none,-,NOT_STARTED,P1,F0,CUSTOM,-,verify custom license vs prize; estimate VRAM; bounded pilot if permitted
+8,LimiX-2M & 16M,FLM,LimiX-2M / LimiX-16M ckpts (track separately),none,-,NOT_STARTED,P1,F0,CUSTOM,-,verify licenses; inspect size/arch; feasibility + bounded pilot each
+9,Xiaomi-TabLDM,FLM,Xiaomi TabLDM released checkpoints (Apache-2.0 project),none,-,NOT_STARTED,P1,F0,OK,-,verify checkpoint terms; inspect context-memory; chunk/cached pilot
+10,Causilo,FLM,Causilo causal-discovery + TabPFN classifier,20k-fold0 screen -1.01e-3,-,PARTIAL_VALID,P3,F2,OK,-,preserve neg; only clearly different mechanism
+11,TabFM,FLM,Google TabFM (JAX) FLM,2k-CPU-fold0 -1.59e-3,-,PARTIAL_VALID,P2,F2,NC,non-commercial weights,preserve 2k neg; audit native context limit; GPU-jax retest only if justified
+12,RealTabPFN-2.5,FLM,RealTabPFN / TabPFN-2.5 (exact project TBD),none,-,NOT_STARTED,P2,F0,OK,-,locate official repo+ckpt+license; feasibility then controlled comparison
+13,TabPFN-3 vs 2.6,FLM,Compare TabPFN-3 vs TabPFN-2.6 checkpoints (matched protocol),none,-,NOT_STARTED,P1,F0,OK,-,verify exact checkpoints exist; pin revisions; matched inference vs our v3.5
+14,EXAONE/TabICL adaptation,FLM,Official documented fine-tune/adaptation of EXAONE or TabICL,none,-,NOT_STARTED,P2,F0,NC/OK,-,audit official adaptation; FIT-only model selection; separate from invented loops
+15,FT-Transformer,NN,Feature-tokenizer + column-attention transformer,none (RealMLP/TabM ~1e-3 below),-,NOT_STARTED,P2,F1,OK,-,canonical recipe; smoke; fold-0 OOF vs v7 delta
+16,SAINT,NN,row+column attention,none,-,NOT_STARTED,P3,F1,OK,-,canonical recipe; smoke; fold-0
+17,DCNv2,NN,"deep & cross network, low-rank crosses",none,-,NOT_STARTED,P2,F1,OK,-,explicit-cross inductive bias (distinct from RealMLP); smoke; fold-0
+18,AutoInt,NN,attention-based high-order interactions,none,-,NOT_STARTED,P3,F1,OK,-,smoke; fold-0
+19,DeepFM & xDeepFM,NN,FM interactions + deep / compressed DCM,none,-,NOT_STARTED,P3,F1,OK,-,smoke; fold-0
+20,NODE,NN,differentiable oblivious trees,none,-,NOT_STARTED,P3,F1,OK,-,smoke; fold-0
+21,GRANDE,NN,gradient-based differentiable tree ensembles,none,-,NOT_STARTED,P3,F1,OK,-,smoke; fold-0
+22,TabNet,NN,sequential attentive feature selection,none,-,NOT_STARTED,P4,F1,OK,-,low prior (weak historically); smoke only if time
+23,ExcelFormer,NN,tabular-specialized attention,none,-,NOT_STARTED,P3,F1,OK,-,smoke; fold-0
+24,AMFormer,NN,additive+multiplicative interactions,none,-,NOT_STARTED,P3,F1,OK,-,smoke; fold-0
+25,T2G-Former,NN,graph-inspired feature relations,none,-,NOT_STARTED,P3,F1,OK,-,smoke; fold-0
+26,Trompt,NN,learned prompting for column importance,none,-,NOT_STARTED,P3,F1,OK,-,smoke; fold-0
+27,Periodic/PLR MLP,NN,periodic numerical embeddings,none,-,NOT_STARTED,P2,F1,OK,-,PLR numeric embeddings; compare numeric-encode vs cat-embed continuous
+28,Tabular ResNet,NN,ordinal service-rating embeddings + residual net,none,-,NOT_STARTED,P2,F1,OK,-,smoke; fold-0
+29,Supervised MoE,NN,multi-expert + learned gating (FIT-only),none,-,NOT_STARTED,P2,F1,OK,-,gating uses FIT labels only; smoke; fold-0
+30,Service-interaction net,NN,explicit 13-rating + context interaction net,none,-,NOT_STARTED,P2,F1,OK,-,domain-motivated cross-rating interactions; smoke; fold-0
+31,Fine-tune TabICLv2,OBJ,"supervised fine-tune of TabICL, FIT-only ES",none,-,NOT_STARTED,P2,F0,OK,-,official FT procedure; FIT-only selection
+32,Fine-tune Mitra-v2,OBJ,AutoGluon/Mitra official fine-tune routine,none,-,NOT_STARTED,P1,F0,OK,-,50-step FT w/ 8-fold bag (needs CUDA); do after Mitra-v2 inference screen
+33,LoRA/adapters,OBJ,parameter-efficient adaptation where supported,none,-,NOT_STARTED,P3,F0,OK,-,audit which FLMs support adapters; bounded test
+34,Fine-tune TabPFN 3.5,OBJ,fine-tune our v3.5 ckpt,none,-,NOT_STARTED,P2,F0,OK,-,verify license+16GB VRAM sufficiency for FT
+35,Multi-task,OBJ,predict satisfaction + 13 ratings shared rep,prior conditional multi-task,-,NOT_STARTED,P2,F1,OK,-,audit prior conditional multi-task; true shared-rep MTL; FIT-only
+36,Ordinal aux loss,OBJ,ordinal (not generic) loss on rating levels,none,-,NOT_STARTED,P3,F1,OK,-,ordinal aux objective; smoke; fold-0
+37,Supervised contrastive,OBJ,FIT-only contrastive passenger reps,generic SSL32 closed,-,NOT_STARTED,P3,F1,OK,-,distinct supervised-contrastive (not generic SSL32); FIT-only
+38,Diff AUC surrogate,OBJ,ranking-oriented differentiable AUC loss,none,-,NOT_STARTED,P3,F1,OK,-,AUC surrogate vs standard BCE; fold-0
+39,Hard-pair mining,OBJ,FIT-only hard pos-neg pair mining,H19-A fixed reweight NEGATIVE/INC,-,NOT_STARTED,P3,F1,OK,-,distinct mining (not fixed reweight); never outer-eval labels
+40,Noise-robust loss,OBJ,losses robust to label noise,none,-,NOT_STARTED,P4,F1,OK,-,compare noise-robust losses; fold-0
+41,EMA / SWA,OBJ,weight/checkpoint averaging,none,-,NOT_STARTED,P3,F1,OK,-,EMA/SWA on a neural candidate to cut seed variance
+42,Multi-seed ensemble,OBJ,seed diversity + member utility,none,-,NOT_STARTED,P3,F2,OK,-,only after one new architecture shows competitiveness
+43,Nested distillation of v7,OBJ,fully nested distill of v7 (no outer-label contam),generic distillation closed,-,HISTORICAL_EQUIVALENT,P4,F0,OK,closed,do not reopen generic distillation; nested-only variant needs infeasible base rebuild
+44,Cross-family co-regularization,OBJ,joint training of truly distinct reps,none,-,NOT_STARTED,P4,F1,OK,-,needs 2 strong base candidates first
+45,H19-C nearest-key smoothing,FEAT,smoothed nearest-key TE on unique-key rows,"preregistered, open rank3",-,NOT_STARTED,P3,F2,OK,-,execute existing prereg; strict fold-safety; no exact-key TE
+46,Learned similarity metric,FEAT,supervised passenger similarity,none,-,NOT_STARTED,P3,F1,OK,-,FIT-only learned metric; member-family compat test
+47,xRFM rich view,FEAT,xRFM on 285-col rich view,distinct from item 6,item 6,NOT_STARTED,P3,F2,OK,-,rich-view xRFM (distinct mechanism from raw-view item 6)
+48,Hierarchical 13-rating,FEAT,conditional shared structure across ratings,none,-,NOT_STARTED,P3,F1,OK,-,hierarchical rating model; fold-0
+49,Conditional ordinal embed,FEAT,context-conditioned rating embeddings,none,-,NOT_STARTED,P4,F1,OK,-,smoke; fold-0
+50,Learned interactions,FEAT,learned (not enumerated) feature interactions,te_cond crosses exist,-,NOT_STARTED,P3,F1,OK,-,learned interaction rep vs manual crosses
+51,Observed-minus-predicted ratings,FEAT,residual service-rating info,residual-group-bias closed,-,NOT_STARTED,P3,F1,OK,-,distinct residual-feature (not group-bias); fold-0
+52,Supervised rating factorization,FEAT,latent rating dims for satisfaction ranking,none,-,NOT_STARTED,P3,F1,OK,-,supervised factorization; fold-0
+53,Conditional clustering,FEAT,label-free passenger clusters + context models,none,-,NOT_STARTED,P4,F1,OK,-,clusters fit without eval labels
+54,Smoothed categorical model,FEAT,generalize rare categorical configs,conditional-density closed,-,NOT_STARTED,P4,F1,OK,-,distinct smoothing (not conditional-density)
+55,LGBM leaf embeddings,FEAT,tree leaf assignments as new rep,none,-,NOT_STARTED,P3,F2,OK,-,leaf-embedding rep into a second family
+56,Local continuous transforms,FEAT,context-sensitive numeric transforms,generic local transforms partly absorbed,-,NOT_STARTED,P4,F1,OK,-,distinct local transform; redundancy vs existing blocks
+57,Low-rank rating interactions,FEAT,low-rank interaction matrices among ratings,none,-,NOT_STARTED,P3,F1,OK,-,low-rank cross-rating; fold-0
+58,Rare-combination regularizer,FEAT,regularize sparse passenger contexts,none,-,NOT_STARTED,P4,F1,OK,-,fold-0
+59,Native sklearn ExtraTrees,CLASS,sklearn ExtraTrees (vs LGBM extra_trees),LGBM extra_trees rich-view +2.3e-4,-,NOT_STARTED,P3,F2,OK,-,distinct from LGBM flag; rich view only (raw view degrades)
+60,Rotation/oblique forest,CLASS,rotated or oblique tree boundaries,none,-,NOT_STARTED,P4,F1,OK,-,fold-0
+61,Genuine EBM,CLASS,interpret EBM with real interactions,H18-B boosted-stump NEGATIVE,-,NOT_STARTED,P3,F2,OK,-,real EBM distinct from failed stump; fold-0
+62,GAM splines+interactions,CLASS,"GAM, FIT-only interaction selection",none,-,NOT_STARTED,P4,F1,OK,-,fold-0
+63,Kernel Ridge,CLASS,approximate scalable kernels,none,-,NOT_STARTED,P4,F1,OK,-,Nyström/RFF approx; no dense 700k^2 kernel
+64,Approx RBF SVM,CLASS,Nyström / random-Fourier SVM,none,-,NOT_STARTED,P4,F1,OK,-,RFF approx; fold-0
+65,Factorized logistic interactions,CLASS,low-rank interaction regression,none,-,NOT_STARTED,P4,F1,OK,-,fold-0
+66,Hierarchical kernels,CLASS,context-conditioned kernels,none,-,NOT_STARTED,P4,F0,OK,-,resource-limited likely
+67,Local density classifier,CLASS,local-density classification,prior density failures,-,HISTORICAL_EQUIVALENT,P5,F0,OK,weak prior,audit prior; only distinct mechanism
+68,Supervised mixed-factor,CLASS,interacting numeric/categorical factors,none,-,NOT_STARTED,P4,F1,OK,-,fold-0
+69,Conditional rule ensembles,CLASS,sparse conditional rules,none,-,NOT_STARTED,P4,F1,OK,-,fold-0
+70,Nested v7+FLM stack,ENS,fully nested stack with OOS base features,none,-,NOT_STARTED,P4,F0,OK,blocked-on-base,needs a strong FLM base first
+71,Cross-family MoE,ENS,learned routing over independent families,none,-,NOT_STARTED,P4,F0,OK,blocked-on-base,needs 2+ strong families
+72,Covariate-only gating,ENS,feature-conditioned ensemble weights (no eval labels),none,-,NOT_STARTED,P4,F1,OK,-,gate uses covariates only
+73,Shared-error specialist,ENS,target errors shared by TabPFN+aux10,85% residual is shared,-,NOT_STARTED,P4,F0,OK,hard,needs a model right WHERE both halves fail (H19-A proxy inconclusive)
+74,Near-tie specialist,ENS,target small-margin pairs,none,-,NOT_STARTED,P4,F1,OK,-,FIT-only margins
+75,Hard-pair specialist,ENS,"improve hard pairs, protect easy","H19-A INC (mech real, net ~0)",H19-A,NOT_STARTED,P4,F1,OK,-,distinct from H19-A fixed reweight; must not degrade easy pairs
+76,Feature-subspace ensemble,ENS,members on distinct feature subsets,none,-,NOT_STARTED,P4,F2,OK,-,fold-0
+77,Champion B utility selection,ENS,2-slot selection under OOF resampling,Champion B UNRESOLVED,-,NOT_STARTED,P4,F2,OK,no-candidate,optimize only with a real B candidate
+78,Cross-fold robust ensemble,ENS,stable gains across partitions,none,-,NOT_STARTED,P4,F2,OK,-,fold-0 + shadow
+79,Fixed vs nested blending,ENS,advantage of learned combination,fixed blend certified,-,NOT_STARTED,P5,F0,OK,low-value,do not do large in-sample weight search
+80,AUC ceiling estimate,GEN,achievable-AUC ceiling w/ assumptions,prior ~3.8%-noise discussion,-,NOT_STARTED,P5,F1,OK,-,distinguish theory vs measurement; sensitivity analysis
+81,Generator conditional model,GEN,conditional satisfaction structure,none,-,NOT_STARTED,P5,F0,OK,-,conceptual; must yield actionable signal
+82,Random vs feature noise,GEN,decompose noise mechanisms,none,-,NOT_STARTED,P5,F0,OK,-,identifiability assumptions
+83,Feature-dependent transition,GEN,label-transition model,none,-,NOT_STARTED,P5,F0,OK,blocked-identifiability,only under defensible identifiability
+84,Original conditional transfer,GEN,conditional transfer from original survey,original conditional stats useful; direct append harmful,-,NOT_STARTED,P4,F2,OK,-,audit prior; conditional (not append) transfer
+85,Source-trained specialists,GEN,source-domain context specialists,ogte_/ogs_ features exist,-,NOT_STARTED,P4,F2,OK,-,original-label features already used; incremental test
+86,Joint probabilistic model,GEN,joint ratings+satisfaction,none,-,NOT_STARTED,P5,F0,OK,-,conceptual
+87,Causal mechanism,GEN,causal hypothesis (not conclusion),none,-,NOT_STARTED,P5,F0,OK,-,treat as hypothesis; observational limits
+88,H19-B full-fit vs bag5,DEP,aux10 deployment policy pseudo-test,NEGATIVE (this session),-,COMPLETE_CERTIFIED,P0,F5,OK,done,do not repeat; certified full-FIT confirmed
+89,H19-B replication,DEP,independent pseudo-test replication,conditional,item 88,NOT_STARTED,P5,F0,OK,not-warranted,frozen rule: only if first policy test positive; it was NEGATIVE
+90,FIT size / bag count,DEP,vary FIT size + bag count,none,item 88,NOT_STARTED,P5,F0,OK,blocked-on-arch,only after a competitive new architecture
+91,Seed vs subset variance,DEP,decompose seed vs subset variance,none,-,NOT_STARTED,P4,F1,OK,-,measure separately
+92,Independent FLM bagging,DEP,bag 2 new FLMs,none,-,NOT_STARTED,P5,F0,OK,blocked-on-acc,only if both FLMs accurate+eligible
+93,Matched-coverage policies,DEP,isolate bagging at fixed train size,H19-B NEGATIVE,item 88,NOT_STARTED,P5,F0,OK,not-warranted,H19-B already showed bagging hurts at matched roles
+94,OOF/test stability audit,DEP,preprocessing/selection/inference diffs,none,-,NOT_STARTED,P4,F1,OK,-,audit before finalist lock
+95,New nested Champion B,DEP,2nd finalist w/ real justification,Champion B UNRESOLVED,-,NOT_STARTED,P3,F0,OK,no-strong-candidate,construct after a strong distinct base exists
+96,Independent finalist validation,DEP,validate both finalists on fresh schemes,shadow reused,-,NOT_STARTED,P3,F0,OK,-,note reused shadow is not fresh; new scheme if used for selection
