@@ -176,6 +176,10 @@ def main() -> int:
     prereg = json.loads(PREREG.read_text(encoding="utf-8"))
     cfg = prereg["architectures"][args.model].copy()
     recipe = cfg.pop("recipe", "")
+    # Split the frozen config into architecture kwargs (-> build) and training kwargs (-> loop).
+    TRAIN_KEYS = {"lr", "weight_decay", "batch_size", "max_epochs", "es_patience"}
+    arch_cfg = {k: v for k, v in cfg.items() if k not in TRAIN_KEYS}
+    train_cfg = {k: v for k, v in cfg.items() if k in TRAIN_KEYS}
     tag = args.tag or f"{args.model}_fold0"
 
     t0 = time.time()
@@ -230,13 +234,13 @@ def main() -> int:
             log(f"AUC={m['standalone_auc']:.6f} port_delta={m['portfolio_delta']:+.3e}")
             return 0
 
-    model = neural_arch.build(args.model, Xtr_all.shape[1], **cfg)
+    model = neural_arch.build(args.model, Xtr_all.shape[1], **arch_cfg)
     n_params = sum(p.numel() for p in model.parameters())
     log(f"training {args.model} ({n_params:,} params) on {len(train_idx)} -> predict {len(eval_idx)}")
     t1 = time.time()
     try:
         logits, best_val = train_and_predict(model, Xtr_s, ytr, Xval_s, yval, Xeval_s,
-                                             cfg, args.device, args.seed)
+                                             train_cfg, args.device, args.seed)
         pred = 1.0 / (1.0 + np.exp(-logits.astype(np.float64)))
         np.save(pred_path, pred.astype("float32"))
         m = screen_metrics(y_eval, pred, port0, route0)
@@ -252,7 +256,7 @@ def main() -> int:
 
     meta = {
         "model": args.model, "arch_module": ARCH_MODULE, "status": status, "error": err,
-        "recipe": recipe, "cfg": cfg,
+        "recipe": recipe, "arch_cfg": arch_cfg, "train_cfg": train_cfg,
         "utc": datetime.now(timezone.utc).isoformat(), "git": git_commit(),
         "eval_rows": int(len(eval_idx)), "eval_fold": 0, "fit_folds": [1, 2, 3, 4],
         "train_rows": int(len(train_idx)), "val_rows": int(len(val_idx)),
