@@ -1,0 +1,22 @@
+{
+ "phase": 20,
+ "experiment": "P20-CLASSICAL-SCREEN",
+ "family": "CLASS",
+ "preregistered_utc": "2026-10-17",
+ "hypothesis": "The champion aux10 are boosted trees (lgbm/xgb/cat). Genuinely distinct classical inductive biases -- bagged/random forest (ExtraTrees, RandomForest), oblique/rotated splits, additive logistic, and RBF kernel -- may decorrelate from the boosted-tree portfolio while staying competitive. Fold-0 discovery screen decides whether any merits full 5-fold OOF.",
+ "why_distinct": "Bagged forests randomize split CANDIDATES + thresholds (vs boosting's sequential focus); oblique forest splits on projections (vs axis-aligned); kernel ridge is a nonparametric smoother. These differ from both the boosted-tree aux10 and the neural/FLM blocks already tested.",
+ "view": "full (certified rich 285-feature view via ViewBuilder.assemble; fold-safe TE fit on FIT, EVAL labels never read). route (22-feat) offered as an apples-to-apples secondary.",
+ "protocol": "train on FIT (folds 1-4), inner 10% ES split fold-safe from FIT, predict fold-0; scaler (where used) fit on FIT-train only; champion hash-asserted via load_champion_fold0.",
+ "screen_metrics_bar": "promising if portfolio_delta >= +5e-5 AND logit_pearson_vs_portfolio < 0.995 (fold-0 discovery proxy; cannot pass admission gate)",
+ "models": {
+  "extratrees": {"recipe": "sklearn ExtraTreesClassifier (fully-randomized bagged trees)", "n_estimators": 400, "min_samples_leaf": 2, "max_features": "sqrt", "random_state": 1},
+  "randomforest": {"recipe": "sklearn RandomForestClassifier (bagged trees)", "n_estimators": 400, "min_samples_leaf": 2, "max_features": "sqrt", "random_state": 1},
+  "histgb": {"recipe": "sklearn HistGradientBoostingClassifier (histogram GBDT)", "max_iter": 400, "learning_rate": 0.06, "max_leaf_nodes": 63, "random_state": 1},
+  "oblique": {"recipe": "Gaussian random projection -> ExtraTrees (cheap oblique/rotated-split proxy)", "projection": "GaussianRandomProjection eps=0.2", "base": "ExtraTrees 400/leaf2/sqrt", "random_state": 1},
+  "logreg": {"recipe": "sklearn LogisticRegression (additive linear)", "max_iter": 2000, "C": 1.0, "random_state": 1},
+  "kernelridge": {"recipe": "RBF KernelRidge on StandardScaler, FIT subsampled to 40k (O(n^2))", "alpha": 1.0, "gamma": 0.001, "kernel_rows": 40000, "random_state": 1}
+ },
+ "negative_rule": "record NEGATIVE for the exact frozen recipe + protocol; do not rerun identically. If all classical candidates sit at port_delta < +5e-5 with corr ~0.99 (redundant with the boosted-tree aux10), close the classical-member path: bagged/oblique/kernel biases do not decorrelate enough to add an 11th member.",
+ "anti_leakage": "view assembled fold-safe (TE fit on FIT only, EVAL labels never read); model fit on FIT only; inner ES split fold-safe; no target encoding beyond the certified fold-safe TE blocks; champion loaded from hash-asserted phase17 artifacts.",
+ "budget": {"gpu_hours_est": 0, "cpu_hours_est": 2, "note": "all CPU; runs parallel to GPU jobs"}
+}
