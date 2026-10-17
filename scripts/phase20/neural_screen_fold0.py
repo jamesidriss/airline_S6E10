@@ -175,6 +175,9 @@ def main() -> int:
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--tag", default="")
     ap.add_argument("--seed", type=int, default=1)
+    ap.add_argument("--batch-size", type=int, default=0,
+                    help="override the frozen batch_size (attention archs need a smaller "
+                         "batch on the 285-token rich view to fit 16 GB VRAM)")
     args = ap.parse_args()
 
     prereg = json.loads(PREREG.read_text(encoding="utf-8"))
@@ -184,6 +187,8 @@ def main() -> int:
     TRAIN_KEYS = {"lr", "weight_decay", "batch_size", "max_epochs", "es_patience"}
     arch_cfg = {k: v for k, v in cfg.items() if k not in TRAIN_KEYS}
     train_cfg = {k: v for k, v in cfg.items() if k in TRAIN_KEYS}
+    if args.batch_size:
+        train_cfg["batch_size"] = int(args.batch_size)
     tag = args.tag or f"{args.model}_{args.view}_fold0"
 
     t0 = time.time()
