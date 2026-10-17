@@ -101,7 +101,10 @@ def scan_tree() -> list[Finding]:
     for p in sorted(ROOT.rglob("*")):
         if not p.is_file():
             continue
-        if any(part in SKIP_DIRS for part in p.parts):
+        # Skip virtualenvs generically (".venv", ".venv_ag", any isolated env we create for
+        # foundation models): they hold third-party package test fixtures (botocore, pycryptodome,
+        # cryptography self-tests) that are secret-shaped by design, never our credentials.
+        if any(part in SKIP_DIRS or part.startswith(".venv") for part in p.parts):
             continue
         rel = p.relative_to(ROOT).as_posix()
         if rel in SELF_EXEMPT:

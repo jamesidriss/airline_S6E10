@@ -17,6 +17,11 @@ data/*.zip
 # ---- python env ----
 .venv/
 venv/
+# Isolated envs for foundation models (prompt: never upgrade the certified stack in place) and
+# AutoGluon's default model-output dir. Anchored at the repository root so they can never shadow
+# a same-named directory at any depth (the regression guard is tests/test_pipeline.py).
+/.venv_ag/
+/AutogluonModels/
 __pycache__/
 *.py[cod]
 *.egg-info/
