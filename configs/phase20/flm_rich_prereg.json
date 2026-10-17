@@ -1,0 +1,66 @@
+{
+  "hypothesis_id": "H20-FM-RICH",
+  "title": "Do tabular foundation models lift on the certified 285-feature rich view (the feature-deficit hypothesis for the FLM family)?",
+  "frozen_before_results": true,
+  "status": "PREREGISTERED",
+  "motivation": "All seven FLM screens were NEGATIVE on the champion's raw-22 route view (plateau ~0.956-0.957, port_delta ~-1e-3). Phase 20 then CONFIRMED the feature-deficit hypothesis for the neural family: the same architectures gained ~+2.3e-3 standalone AUC on the certified 285-feature rich view (e.g. DCNv2 0.957580 -> 0.959898; PLR-MLP 0.957 -> 0.960197). FLMs are the most decorrelated family measured against the champion (logit-Pearson ~0.984-0.986 on the route view) but too weak; if the same ~+2.3e-3 feature lift applies while decorrelation survives, an FLM could cross BOTH screening conditions (standalone near champion AND corr < 0.995) that no family has achieved so far. This is a MECHANISM CHANGE (feature view), not a rerun of the closed route-view recipes: each candidate sees exactly one new factor versus its frozen phase-19 screen result, giving a paired route-vs-rich comparison per model.",
+  "scope": {
+    "standard": "FOLD-0 DISCOVERY SCREEN",
+    "cannot": "pass the OOF admission gate; justify a submission; or establish private performance",
+    "purpose": "decide whether any FLM merits a full 5-fold OOF + admission-gate run on the rich view",
+    "submission": 0
+  },
+  "protocol": {
+    "eval_fold": 0,
+    "fit_folds": [1, 2, 3, 4],
+    "fold_scheme": "primary (StratifiedKFold 5, shuffle, seed 20261010), immutable",
+    "feature_representation": "the certified rich view 'full' (237 static transductive/external features + 48 fold-safe target encodings = 285) built by src/features/view.py ViewBuilder.assemble -- the exact view behind the champion's aux10 boosted-tree arms",
+    "target_encoding": "fold-safe TE only: FIT rows inner-cross-fit (own label excluded), EVAL rows encoded by a FIT-fitted table; EVAL labels never read",
+    "context": {
+      "kind": "stratified subsample of FIT (folds 1-4) for in-context learning",
+      "size_default": 20000,
+      "seed": 20261023,
+      "fold_safe": "context is a subset of FIT; never contains a fold-0 row",
+      "note": "context stays 20k (identical to the phase-19 route-view screens) so the ONLY changed factor vs the frozen route results is the feature view"
+    },
+    "eval_rows": "full fold-0 (139927 rows; lower-noise than the 50k subscreens used for the route-view reference numbers)",
+    "harness": "scripts/phase19/foundation_screen_fold0.py --view full (gained the --view flag for this screen)"
+  },
+  "candidates": ["tabicl", "causilo", "tabdpt", "xrfm"],
+  "candidate_notes": {
+    "tabicl": "TabICL-v2, route-view reference AUC 0.956343 / port_delta -1.394e-3 / corr 0.9843",
+    "causilo": "Causilo (causal discovery + TabPFN), route-view reference AUC 0.956684 / port_delta -1.011e-3 / corr 0.9863 (best FLM on route)",
+    "tabdpt": "TabDPT, context_reduction=subsample, compile=False, use_flash=False (sm_120), route-view reference AUC 0.956238 / port_delta -1.410e-3 / corr 0.9847",
+    "xrfm": "xRFM recursive feature machine, route-view reference AUC ~0.9306 / port_delta -9.3e-3 (weakest; kept as the strongest possible feature-lift test since it is maximally feature-starved)",
+    "excluded": "tabfm (jax backend; negative at 2k context, low expected lift); mitra/kumo (resource-closed at feasible scale); LimiX/EXAONE (license-blocked)"
+  },
+  "metrics": {
+    "standalone_auc": "exact AUC on full fold-0",
+    "equal_logit_blend_auc": "AUC of sigmoid((logit(champion_portfolio)+logit(candidate))/2)",
+    "portfolio_delta": "equal_logit_blend_auc - champion_portfolio_auc (fold 0)",
+    "logit_pearson_vs_portfolio": "decorrelation vs champion portfolio",
+    "logit_pearson_vs_route": "decorrelation vs champion route arm",
+    "paired_reference": "each model's own frozen phase-19 route-view screen result (same protocol, same context, same champion hashes; eval subset differs: 50k then, 139927 now -- port_delta sign/magnitude comparisons are treated as indicative, not exact)"
+  },
+  "decision_rule": {
+    "PROMISING": "portfolio_delta >= +5e-5 AND logit_pearson_vs_portfolio < 0.995",
+    "CLOSE_FLMS_RICH": "if every candidate has portfolio_delta < +5e-5, the FLM x rich-view direction is closed: either the feature lift does not transfer to in-context learners, or decorrelation collapses onto the redundancy frontier (corr >= 0.995), or both. No further FLM view/context variants without a new mechanism.",
+    "note": "PROMISING only means 'run full 5-fold OOF + admission gate'. The admission gate (mean paired fold gain >= 1.5e-5, >= 2.5x paired SE, positive in >= 4 of 5 folds) still applies and can only be evaluated on full OOF."
+  },
+  "anti_leakage": [
+    "TE features are fold-safe: FIT rows inner-cross-fit excluding own label, EVAL rows encoded by a FIT-fitted table; EVAL labels never read (tests/test_pipeline.py guards).",
+    "Context rows are a subset of FIT (folds 1-4); no fold-0 row is ever in context.",
+    "The champion reference (route/portfolio) is loaded from hash-asserted phase17_B1 artifacts (portfolio sha 1981745c..., route sha bcb28113...).",
+    "Context rows' TE features may encode labels of OTHER FIT rows (transductive within the training fold) exactly as in the neural full-view screen and the champion's own aux arms; this is fold-safe with respect to the applied fold-0 rows."
+  ],
+  "budget": {
+    "gpu": "inference-only, RTX 5070 Ti 16 GB, <=1 GPU job at a time; estimates <= 1.5 GPU-h total including the richer per-row token cost",
+    "cpu": "view assembly ~minutes",
+    "submissions": 0
+  },
+  "predeclared_followups": [
+    "Any PROMISING candidate gets a full 5-fold OOF with inner cross-fitting and the admission gate.",
+    "A negative closes FLM x rich-view; reopening requires a genuinely different mechanism (e.g. supervised fine-tuning, item 31/35), not another view/context tweak.",
+    "Context-scaling ladder (queue rank 7) remains CONDITIONAL and only on a positive fold-0 trajectory."
+  ]
+}

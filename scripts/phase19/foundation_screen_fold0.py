@@ -91,6 +91,10 @@ def main() -> int:
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--tag", default="fmscreen_fold0_ctx20k")
     ap.add_argument("--seed", type=int, default=1201)
+    ap.add_argument("--view", default="route", choices=["route", "full"],
+                    help="route = phase-19 raw22 view (frames); full = the certified 285-feature "
+                         "rich view (ViewBuilder.assemble, fold-safe TE) that lifted neural "
+                         "standalone AUC by ~+2.3e-3 in phase 20")
     args = ap.parse_args()
 
     t0 = time.time()
@@ -104,20 +108,35 @@ def main() -> int:
     ids = tr["id"].to_numpy()
     folds = get_scheme("primary", y, ids).folds
 
-    # champion raw representation: raw21 + Flight Distance coarse10, meta as codes
-    Xtr, _Xte, names, cats, maps = frames(tr, te, route=True)
-    assert Xtr.shape[0] == len(y), "feature/row misalignment"
-
     FIT = np.flatnonzero(folds != 0)
     EVAL = np.flatnonzero(folds == 0)
     assert not np.intersect1d(FIT, EVAL).size
+
+    # champion raw representation: raw21 + Flight Distance coarse10, meta as codes
+    if args.view == "route":
+        Xtr, _Xte, names, cats, maps = frames(tr, te, route=True)
+        assert Xtr.shape[0] == len(y), "feature/row misalignment"
+    else:
+        # certified 285-feature rich view. Fold-safe: TE for FIT rows is an inner
+        # cross-fit excluding each row's own label; EVAL rows are encoded by a table
+        # fitted on FIT only; EVAL labels are never read.
+        from src.features.view import ViewBuilder
+        vb = ViewBuilder(tr, te, "full")
+        vb.build_static()
+        X_fit, Xa, names = vb.assemble(FIT, y, EVAL, None, inner_seed=args.seed)
+        X_eval = Xa["val"]
+        assert X_fit.shape[0] == len(FIT) and X_eval.shape[0] == len(EVAL)
+        Xtr = np.empty((len(y), X_fit.shape[1]), dtype="float32")
+        Xtr[FIT] = X_fit
+        Xtr[EVAL] = X_eval
+        cats, maps = [], {}
 
     route_all, port_all = load_champion_fold0(folds)
     eval_idx = EVAL if (not args.eval_rows or args.eval_rows >= len(EVAL)) else EVAL[:args.eval_rows]
     route0, port0 = route_all[eval_idx], port_all[eval_idx]
     y_eval = y[eval_idx]
 
-    log(f"rows={len(y)} FIT={len(FIT)} EVAL={len(eval_idx)} context={args.context} "
+    log(f"rows={len(y)} view={args.view} FIT={len(FIT)} EVAL={len(eval_idx)} context={args.context} "
         f"features={Xtr.shape[1]} device={args.device}")
 
     ctx = stratified_context(FIT, y, args.context, seed=CONTEXT_SEED)
@@ -152,6 +171,7 @@ def main() -> int:
             "utc": datetime.now(timezone.utc).isoformat(), "git": git_commit(),
             "context_rows": int(len(ctx)), "context_seed": CONTEXT_SEED,
             "eval_rows": int(len(eval_idx)), "eval_fold": 0, "fit_folds": [1, 2, 3, 4],
+            "view": args.view,
             "device": args.device, "features": list(names), "categorical_indices": list(cats),
             "label_free_category_maps": maps,
             "prediction_sha256": arr_sha256(np.load(pred_path)) if pred is not None else None,
