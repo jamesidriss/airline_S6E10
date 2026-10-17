@@ -1,0 +1,36 @@
+{
+  "model": "rffsvm",
+  "family": "classical",
+  "status": "DONE",
+  "error": null,
+  "view": "full",
+  "seed": 1,
+  "fit_rows": 503737,
+  "train_rows": 503737,
+  "val_rows": 55971,
+  "eval_rows": 139927,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "n_features": 285,
+  "utc": "2026-10-17T20:22:27.569846+00:00",
+  "git": "e9ffc826cb825e12b924e80d73399972063e9513",
+  "protocol": "view assembled fold-safe (TE on FIT only); model fit on FIT-train; inner 10% ES split fold-safe; champion hash-asserted; SCREEN only",
+  "prediction_sha256": "768b2e11b974225b9958dc637da87322e51a20e872045383a08e3a4ae34286c8",
+  "metrics": {
+    "standalone_auc": 0.9299972137614138,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.9596528822579309,
+    "portfolio_delta": -0.00217493199254859,
+    "logit_pearson_vs_portfolio": 0.8670905540864676,
+    "logit_pearson_vs_route": 0.8648764865630467,
+    "pred_std": 0.19009145575210665,
+    "pred_mean": 0.46729865766868733
+  },
+  "fit_predict_seconds": 17.51819086074829
+}
