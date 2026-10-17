@@ -206,7 +206,10 @@ def main() -> int:
             f"corr_route={m['logit_pearson_vs_route']:.4f} ({secs:.1f}s)")
     else:
         log(f"FAILED: {err}")
-    return 0
+    # Robustness (mandate S8): a FAILED run must NOT report success to the
+    # calling scheduler. DONE is only true with a verified manifest + finite
+    # metrics on disk.
+    return 0 if (status == "DONE" and m is not None) else 1
 
 
 if __name__ == "__main__":

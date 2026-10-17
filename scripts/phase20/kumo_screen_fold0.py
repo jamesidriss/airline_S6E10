@@ -192,7 +192,7 @@ def main() -> int:
             f"corr_port={m['logit_pearson_vs_portfolio']:.4f} ({secs:.1f}s)")
     else:
         log(f"FAILED: {err}")
-    return 0
+    return 0 if (status == "DONE" and m is not None) else 1
 
 
 if __name__ == "__main__":
