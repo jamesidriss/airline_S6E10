@@ -167,6 +167,9 @@ def main() -> int:
     ap.add_argument("--model", default="fttransformer",
                     choices=["fttransformer", "dcnv2", "plrmlp", "tabresnet", "moe",
                              "interactionnet"])
+    ap.add_argument("--view", default="route", choices=["route", "full"],
+                    help="route = 22-feature champion TabPFN view (frames); "
+                         "full = 285-feature certified rich view (ViewBuilder.assemble, fold-safe TE)")
     ap.add_argument("--eval-rows", type=int, default=0,  # 0 = all fold-0 rows
                     help="0 uses every fold-0 row (139927); >0 subsamples first N")
     ap.add_argument("--device", default="cuda")
@@ -181,7 +184,7 @@ def main() -> int:
     TRAIN_KEYS = {"lr", "weight_decay", "batch_size", "max_epochs", "es_patience"}
     arch_cfg = {k: v for k, v in cfg.items() if k not in TRAIN_KEYS}
     train_cfg = {k: v for k, v in cfg.items() if k in TRAIN_KEYS}
-    tag = args.tag or f"{args.model}_fold0"
+    tag = args.tag or f"{args.model}_{args.view}_fold0"
 
     t0 = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
@@ -190,7 +193,6 @@ def main() -> int:
     import torch
 
     from src.phase20 import neural_arch
-    from scripts.run_sol_tabpfn import frames
 
     set_seed(args.seed)
 
@@ -199,28 +201,49 @@ def main() -> int:
     ids = tr["id"].to_numpy()
     folds = get_scheme("primary", y, ids).folds
 
-    Xtr_all, _Xte, names, cats, maps = frames(tr, te, route=True)
-    assert Xtr_all.shape[0] == len(y), "feature/row misalignment"
-
     FIT = np.flatnonzero(folds != 0)
     EVAL = np.flatnonzero(folds == 0)
     assert not np.intersect1d(FIT, EVAL).size
 
     route_all, port_all = load_champion_fold0(folds)
-    eval_idx = EVAL if (not args.eval_rows or args.eval_rows >= len(EVAL)) else EVAL[:args.eval_rows]
-    route0, port0 = route_all[eval_idx], port_all[eval_idx]
-    y_eval = y[eval_idx]
 
-    train_idx, val_idx = inner_es_split(FIT, y, frac=0.1, seed=args.seed)
-    mu, sd = _fit_scaler(Xtr_all[train_idx])
-    Xtr_s = (Xtr_all[train_idx] - mu) / sd
-    Xval_s = (Xtr_all[val_idx] - mu) / sd
-    Xeval_s = (Xtr_all[eval_idx] - mu) / sd
-    ytr = y[train_idx].astype(np.float64)
-    yval = y[val_idx].astype(np.float64)
+    # --- features for the chosen view, FIT-positioned + EVAL-positioned ---
+    if args.view == "route":
+        from scripts.run_sol_tabpfn import frames
+        Xall, _Xte, names, cats, maps = frames(tr, te, route=True)
+        assert Xall.shape[0] == len(y), "feature/row misalignment"
+        X_fit = Xall[FIT]            # (len(FIT), n_feat)
+        X_eval_all = Xall[EVAL]      # (len(EVAL), n_feat)
+    else:  # full certified rich view (fold-safe TE fit on FIT, applied to EVAL)
+        from src.features.view import ViewBuilder
+        vb = ViewBuilder(tr, te, "full")
+        vb.build_static()
+        X_fit, Xa, names = vb.assemble(FIT, y, EVAL, None, inner_seed=args.seed)
+        X_eval_all = Xa["val"]       # (len(EVAL), n_feat); EVAL labels never read by TE
+        cats = []
+    n_feat = X_fit.shape[1]
+    assert X_fit.shape[0] == len(FIT) and X_eval_all.shape[0] == len(EVAL)
 
-    log(f"rows={len(y)} FIT={len(FIT)} train={len(train_idx)} val={len(val_idx)} "
-        f"EVAL={len(eval_idx)} features={Xtr_all.shape[1]} model={args.model} "
+    # eval subsample = first N of EVAL (same rows across views)
+    eval_n = len(EVAL) if (not args.eval_rows or args.eval_rows >= len(EVAL)) else args.eval_rows
+    eval_global = EVAL[:eval_n]           # global rows (champion reference)
+    route0, port0 = route_all[eval_global], port_all[eval_global]
+    y_eval = y[eval_global]
+    X_eval = X_eval_all[:eval_n]
+
+    # inner 10% ES split among FIT POSITIONS (never the eval fold)
+    fit_pos = np.arange(len(FIT))
+    train_pos, val_pos = inner_es_split(fit_pos, y[FIT], frac=0.1, seed=args.seed)
+    y_fit = y[FIT].astype(np.float64)
+    mu, sd = _fit_scaler(X_fit[train_pos])
+    Xtr_s = (X_fit[train_pos] - mu) / sd
+    Xval_s = (X_fit[val_pos] - mu) / sd
+    Xeval_s = (X_eval - mu) / sd
+    ytr = y_fit[train_pos]
+    yval = y_fit[val_pos]
+
+    log(f"rows={len(y)} view={args.view} FIT={len(FIT)} train={len(train_pos)} "
+        f"val={len(val_pos)} EVAL={eval_n} features={n_feat} model={args.model} "
         f"device={args.device} cfg={cfg}")
 
     pred_path = ART / f"{tag}.npy"
@@ -229,15 +252,15 @@ def main() -> int:
         saved = np.load(pred_path)
         meta = json.loads(meta_path.read_text(encoding="utf-8"))
         if meta.get("status") == "DONE" and arr_sha256(saved) == meta.get("prediction_sha256") \
-                and meta.get("eval_rows") == int(len(eval_idx)):
+                and meta.get("eval_rows") == int(eval_n):
             log("verified prediction exists; reusing")
             m = meta["metrics"]
             log(f"AUC={m['standalone_auc']:.6f} port_delta={m['portfolio_delta']:+.3e}")
             return 0
 
-    model = neural_arch.build(args.model, Xtr_all.shape[1], **arch_cfg)
+    model = neural_arch.build(args.model, n_feat, **arch_cfg)
     n_params = sum(p.numel() for p in model.parameters())
-    log(f"training {args.model} ({n_params:,} params) on {len(train_idx)} -> predict {len(eval_idx)}")
+    log(f"training {args.model} ({n_params:,} params) on {len(train_pos)} -> predict {eval_n}")
     t1 = time.time()
     try:
         logits, best_val = train_and_predict(model, Xtr_s, ytr, Xval_s, yval, Xeval_s,
@@ -259,8 +282,9 @@ def main() -> int:
         "model": args.model, "arch_module": ARCH_MODULE, "status": status, "error": err,
         "recipe": recipe, "arch_cfg": arch_cfg, "train_cfg": train_cfg,
         "utc": datetime.now(timezone.utc).isoformat(), "git": git_commit(),
-        "eval_rows": int(len(eval_idx)), "eval_fold": 0, "fit_folds": [1, 2, 3, 4],
-        "train_rows": int(len(train_idx)), "val_rows": int(len(val_idx)),
+        "eval_rows": int(eval_n), "eval_fold": 0, "fit_folds": [1, 2, 3, 4],
+        "view": args.view,
+        "train_rows": int(len(train_pos)), "val_rows": int(len(val_pos)),
         "inner_es_seed": args.seed, "scaler": "zero-mean/unit-var fit on FIT-train only",
         "device": args.device, "seed": args.seed, "tag": tag, "n_params": int(n_params),
         "best_inner_val_auc": None if best_val is None else float(best_val),
