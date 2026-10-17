@@ -1165,7 +1165,8 @@
    "fidelity_reached": "F1",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "distinguish theory vs measurement; sensitivity analysis"
+   "next_action": "distinguish theory vs measurement; sensitivity analysis",
+   "phase20_finding": "AUC ceiling analysis (prereg P20-GEN80-AUC-CEILING): oracle (label-cheating) blend of route reference (0.961766) + 59-member rich blend (0.961509) = 0.964906, headroom +3.14e-3 >> stretch gap +0.97e-4 -> stretch THEORETICALLY reachable by a better blender. Real blenders (equal/softmax/family-balanced) all <= champion -> constraint is blender generalization, not headroom. Hardest decile AUC 0.557 (errors concentrate on few rows). Next lever: covariate-gated blender (ENS 72), fold-safe, could generalize."
   },
   {
    "experiment_number": 81,

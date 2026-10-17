@@ -1,0 +1,57 @@
+{
+ "prereg": "configs/phase20/gen80_auc_ceiling_prereg.json",
+ "prereg_sha256": "82af441ed577d5cdf2dade569516568de529108a29be6c63b16e688ac39fcc24",
+ "h80_oracle": {
+  "route_reference": {
+   "id": "sol_route_aux10_primary_final",
+   "oof_auc": 0.961766
+  },
+  "rich_blend": {
+   "id": "blend_v3_final",
+   "oof_auc": 0.961509,
+   "n_members": 59
+  },
+  "equal_logit_blend_auc": 0.961756,
+  "oracle_ceiling": 0.964906,
+  "headroom_oracle_minus_route": 0.00314,
+  "stretch_target": 0.96274,
+  "stretch_gap_vs_champion": 0.000974,
+  "stretch_reachable_by_blend": true,
+  "interpretation": "Oracle ceiling 0.964906 vs champion 0.961766: headroom +0.003140. Stretch gap +0.000974. Stretch THEORETICALLY reachable by a better blender over these two."
+ },
+ "h80_hard_rows": {
+  "confidence": "route reference logit",
+  "auc_by_decile": [
+   {
+    "top_frac": 0.5,
+    "n_rows": 349817,
+    "auc": 0.871049
+   },
+   {
+    "top_frac": 0.8,
+    "n_rows": 559708,
+    "auc": 0.954331
+   },
+   {
+    "top_frac": 0.9,
+    "n_rows": 629671,
+    "auc": 0.9583
+   },
+   {
+    "top_frac": 0.95,
+    "n_rows": 664653,
+    "auc": 0.959955
+   },
+   {
+    "top_frac": 1.0,
+    "n_rows": 699635,
+    "auc": 0.961766
+   },
+   {
+    "top_frac": "hardest_10pct",
+    "n_rows": 69964,
+    "auc": 0.557065
+   }
+  ]
+ }
+}
