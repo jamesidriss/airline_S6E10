@@ -1,0 +1,30 @@
+{
+  "hypothesis_id": "H20-TABICL-FT-RECOVERY",
+  "title": "Recovery of the H20-TABICL-FT fb100k arm after GPU driver crash: evaluate the saved best.ckpt (epoch-8 prefix of the frozen trajectory)",
+  "frozen_before_results": true,
+  "status": "PREREGISTERED",
+  "decided_at_utc": "2026-10-17T19:40:00Z",
+  "decided_before_any_fold0_prediction_for": ["tabicl-ft-fb100k"],
+  "established_cause": {
+    "evidence": "Windows device logs: nvlddmkm Event ID 153 (NVIDIA driver error) at 2026-10-17T15:07:04 (kills the full-dose attempt) and at 2026-10-17T17:07:32 (kills the fb100k attempt, whose console log ends 17:07:10); LiveKernelEvent 141/144/19e at 14:42:45 during the full-dose run. No Windows application fault, no system OOM event, 19GB RAM free at inspection.",
+    "conclusion": "The NVIDIA driver crashed/reset under sustained TabICL fine-tune load and terminated the process at OS level. This CORRECTS the earlier ledger hypothesis of allocator fragmentation: that hypothesis is not established and is withdrawn; the driver crash is the evidenced cause. Unknown remains WHY the driver crashed (hardware/driver instability under this load); no further root cause is claimed.",
+    "correction_policy": "Recorded as a new append-only ledger correction; the original entry is not edited."
+  },
+  "recovered_state": {
+    "checkpoint": "artifacts/phase20/tabicl_ft/ckpt/best.ckpt (331004321 bytes, mtime 2026-10-17T17:06:03)",
+    "verified": "epoch=8 curr_step=8 best_metric=0.9579433793073343; optimizer_state and scheduler_state present; 391 tensors / 27552258 params; finite-weight spot check passed",
+    "val_trajectory": "0.9578, 0.9578, 0.9578, 0.9579, 0.9579, 0.9579, 0.9579, 0.95794 (baseline pretrained val 0.9578)",
+    "training_progress": "8 of 10 planned epochs completed; process killed by driver crash at the start of epoch 9; no fold-0 prediction, no result JSON exists",
+    "best_vs_baseline": "epoch-8 best (0.957943) is +1.4e-4 above the pretrained baseline (0.9578), i.e. the library's safety-net guarantee holds for the saved state"
+  },
+  "action": {
+    "what": "Build the final inference estimator from best.ckpt (the library's documented TabICLClassifier(model_path=...) reload path, identical weights to the fine-tuner's own step-13 final-estimator construction), fit it on the SAME 100000-row fine-tune training set with n_estimators_inference=8, predict the full fold-0 (139927 rows) in 8192-row chunks, compute the frozen screen metrics, apply the frozen decision rule.",
+    "why_not_full_rerun": "A from-scratch rerun needs ~1.5h of sustained GPU load; the driver crashed twice within 3h of such load today (two nvlddmkm 153 events). A third sustained run has high crash probability, would burn ~1.5 GPU-h of the remaining ~5h, and would produce the same prefix trajectory that is already saved.",
+    "why_not_two_more_epochs": "Continuing via model_path with epochs=2 would re-warm the LR to 1e-5 while the frozen schedule intended ~1e-6 for epochs 9-10: that injects FOREIGN optimization steps into the frozen trajectory (a warm-restart burst at 10x the intended LR), a strictly larger deviation than evaluating the saved prefix. The saved epoch-8 state is a literal prefix of the frozen run, selected by the library's own best-metric rule.",
+    "deviation_disclosure": "DEVIATION: training completed 8 of 10 epochs (GPU driver crash, evidenced above). The evaluated weights are the frozen trajectory's own best-metric checkpoint -- no foreign weight update occurred. The val trajectory (+1.4e-4 total, plateaued across the last 5 epochs, early-stopping patience 8 never exhausted) bounds the counterfactual value of the 2 missing epochs as small. If this arm were PROMISING, the completed 10-epoch arm on a stable run would still be owed before any OOF admission, exactly as the full-dose arm would."
+  },
+  "decision_rule": "identical to H20-TABICL-FT and its fallback: PROMISING = portfolio_delta >= +5e-5 AND corr_vs_portfolio < 0.995 -> full 5-fold OOF owed; DECORRELATION_COLLAPSE = standalone improves but corr_vs_route >= 0.99; NEGATIVE = standalone < +2e-3 over zero-shot 0.956343. Applied to the fold-0 metrics of the recovered arm.",
+  "resource_adaptation_if_oom": "If the 8-estimator x 100k-context inference OOMs at 16GB, set inner batch_size 8 -> 4 (splits estimator members into 2 forward batches: identical math, pure batching) before any weaker alternative. Declare in the result JSON if used.",
+  "anti_leakage": "unchanged: all training/validation rows subsets of FIT, eval fold never seen by training or selection, label-free route view, hash-asserted champion reference, no public-LB feedback.",
+  "budget": {"gpu": "<= 0.5 GPU-h for recovery inference", "submissions": 0}
+}

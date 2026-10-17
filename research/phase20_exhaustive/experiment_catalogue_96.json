@@ -464,12 +464,13 @@
    "requested_method": "supervised fine-tune of TabICL, FIT-only ES",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "IN_PROGRESS",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P2",
-   "fidelity_reached": "F0",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
-   "blocking_reason": "full-dose (503k rows, 10 epochs) hard-killed at end-of-epoch validation after 3x allocator slowdown; ~7.5 GPU-h/screen exceeds the <=2h prereg budget. Fallback arm (100k stratified subsample + expandable_segments allocator) preregistered before any result; running.",
-   "next_action": "read reports/phase20/tabicl_ft/tabicl_ft_route_fold0_fb100k.json; apply parent decision rule; PROMISING would still owe the full-dose arm under an extended compute plan"
+   "blocking_reason": null,
+   "next_action": "closed: reduced-dose FT NEGATIVE (standalone 0.957404 < 0.958343 bar; port_delta -8.17e-4; fine-tune gained +1.06e-3 strength but DECORRELATION COLLAPSED corr_route 0.9843->0.9881). Full-dose arm remains RESOURCE_BLOCKED (GPU driver crash under sustained load + ~7.5 GPU-h/screen); reopening needs a driver-stable full-10-epoch run under an extended compute plan, not a new recipe",
+   "finding": "H20-TABICL-FT (items 31+13) NEGATIVE. Fine-tuned TabICL-v2 on route view: standalone fold-0 0.957404 (+1.061e-3 vs zero-shot 0.956343) but port_delta -8.169e-4 (champion 0.961828 fold-0 portfolio) and corr_vs_route 0.9881 vs zero-shot 0.9843 -- fine-tuning moved the model TOWARD the champion while staying weaker: both strength AND decorrelation fail. Confirms the structural frontier independently for the in-context family. Both fine-tune processes were killed by GPU driver crashes (nvlddmkm 153), NOT allocator fragmentation; recovered via epoch-8 best checkpoint (preregistered recovery, no foreign weight update). Reduced-dose arm closed."
   },
   {
    "experiment_number": 32,
@@ -923,14 +924,14 @@
    "fidelity_reached": "F1",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "Nyström/RFF approx; no dense 700k^2 kernel",
+   "next_action": "Nystr\u00f6m/RFF approx; no dense 700k^2 kernel",
    "phase20_finding": "fold-0 rich-view screen: classical biases either decorrelate (corr ~0.984) but are too weak (~0.958) or are strong (~0.960) but redundant with the boosted-tree aux10 (corr ~0.997); port_delta < +5e-5"
   },
   {
    "experiment_number": 64,
    "canonical_name": "Approx RBF SVM",
    "research_family": "CLASS",
-   "requested_method": "Nyström / random-Fourier SVM",
+   "requested_method": "Nystr\u00f6m / random-Fourier SVM",
    "historical_status": "none",
    "historical_equivalent": "-",
    "status": "COMPLETE_NEGATIVE",

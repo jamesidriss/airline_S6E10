@@ -49,5 +49,17 @@
   "FLM_RICH_BLOCK": "CLOSED: feature lift transfers to in-context learners (tabdpt +1.4e-3, causilo +9.9e-4 standalone vs route; port_delta ~halved) but corr rises to ~0.989-0.990; both plateau at port_delta ~-7.9e-4 (~16x the bar). xrfm rich-view DEGENERATE (AUC 0.589). tabicl RESOURCE_BLOCKED on rich view at 16GB (3 resource failures; mechanism never measured -- NOT negative). FLM x rich-view closed; reopening needs supervised fine-tuning (items 31/34).",
   "MTL_BLOCK": "CLOSED (items 35+36): masked-rating CORAL aux head on PLR trunk -- both arms slightly worse than plain PLR (0.959963/-5.009e-4, 0.959813/-5.576e-4 vs 0.960197/-4.191e-4); corr unchanged ~0.993. Rating-coupling aux neither lifts nor decorrelates; distinct from (and now also negative alongside) the closed SSL32 pretraining branch.",
   "TABICL_FT_BLOCK": "FULL-DOSE RESOURCE_BLOCKED: hard kill at end-of-epoch validation after 3x in-epoch allocator slowdown (19->63 s/it); no result file ever produced; 45min/epoch => ~7.5 GPU-h/screen, beyond the prereg <=2h budget. Fallback (100k stratified FIT-train subsample + expandable_segments allocator, sha256 29db36cf) preregistered BEFORE any fine-tuned prediction; fold-0 arm RUNNING. Row 31 still OPEN; NEGATIVE on the fallback closes only reduced-dose FT."
- }
+ },
+ "gpu_hours_used": 5.8,
+ "tabicl_ft": {
+  "status": "CLOSED_NEGATIVE",
+  "result": "reports/phase20/tabicl_ft/tabicl_ft_route_fold0_fb100k.json",
+  "standalone": 0.957404,
+  "port_delta": -0.0008169,
+  "corr_route": 0.9881,
+  "cause_correction": "GPU driver crash (nvlddmkm 153); allocator-fragmentation hypothesis withdrawn",
+  "full_dose": "RESOURCE_BLOCKED (driver instability + ~7.5 GPU-h/screen)",
+  "recovery_prereg_sha256": "a9383ab92ae9997b7b6b33520bd46daf670fb921eb50b12dbe95e02c30a4c393"
+ },
+ "test_suite": "run_tests.py registers phase20 + 6 previously-unregistered legacy modules (223 tests)"
 }

@@ -1,0 +1,111 @@
+{
+  "model": "tabicl_finetuned_recovered",
+  "status": "DONE",
+  "error": null,
+  "arm": "fb100k",
+  "recovered": true,
+  "recovery_prereg": {
+    "path": "configs/phase20/tabicl_ft_recovery_prereg.json",
+    "sha256": "a9383ab92ae9997b7b6b33520bd46daf670fb921eb50b12dbe95e02c30a4c393"
+  },
+  "recovery_cause": "GPU driver crash (nvlddmkm Event 153 at 2026-10-17T15:07:04 and T17:07:32; LiveKernelEvent 141/144/19e at 14:42:45) terminated the fine-tune process at OS level at the start of epoch 9/10; earlier allocator-fragmentation hypothesis WITHDRAWN (not established)",
+  "checkpoint": {
+    "path": "artifacts/phase20/tabicl_ft/ckpt/best.ckpt",
+    "sha256": "6843b104ba55a7e7ceb809963863a0e14ef996fc7cde9ea115ab4c4dad21042d",
+    "epoch": 8,
+    "best_metric": 0.9579433793073343,
+    "pretrained_baseline_val": 0.9578,
+    "val_trajectory": [
+      0.9578,
+      0.9578,
+      0.9578,
+      0.9579,
+      0.9579,
+      0.9579,
+      0.9579,
+      0.9579433793073343
+    ]
+  },
+  "deviation": "training completed 8 of 10 epochs (GPU driver crash); evaluated weights are the frozen trajectory's own best-metric checkpoint -- no foreign weight update occurred; PROMISING verdict still owes the completed 10-epoch arm before any OOF admission",
+  "resource_adaptation": null,
+  "train_rows_full_dose": 503737,
+  "train_rows": 100000,
+  "inner_split_seed": 20261010,
+  "subsample_seed": 20261011,
+  "allocator_conf": "expandable_segments:True",
+  "frozen_args_source": "configs/phase20/tabicl_ft_prereg.json",
+  "utc": "2026-10-17T18:27:52.559301+00:00",
+  "git": "32bd00151127dcbdfa773d3f42c499698074013a",
+  "eval_rows": 139927,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "view": "route (champion raw22, label-free)",
+  "device": "cuda",
+  "tag": "tabicl_ft_route_fold0_fb100k",
+  "features": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "categorical_indices": [
+    13,
+    14,
+    15,
+    16,
+    18,
+    21
+  ],
+  "protocol": "reload epoch-8 fine-tuned checkpoint via TabICLClassifier(model_path=...), fit final estimator on the same 100k fine-tune train rows, predict fold-0; champion hash-asserted",
+  "prediction_sha256": "f3c97c47627903d2cf4ac6fe8dc2e05120cb9ce0e7339278e5acea75ff4bd25c",
+  "metrics": {
+    "standalone_auc": 0.9574036616405402,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.9610109046623221,
+    "portfolio_delta": -0.0008169095881573885,
+    "logit_pearson_vs_portfolio": 0.9891915192686362,
+    "logit_pearson_vs_route": 0.9881262506833997,
+    "pred_std": 0.44521712876307173,
+    "pred_mean": 0.4413065860234884,
+    "delta_vs_zeroshot": 0.0010606616405401947
+  },
+  "decision": {
+    "verdict": "NEGATIVE",
+    "reason": "standalone 0.957404 < zero-shot 0.956343 + 2e-3; fine-tuning added no material strength (applies to the reduced-dose arm)",
+    "rules": {
+      "promising": "port_delta >= +5e-5 AND corr_vs_portfolio < 0.995",
+      "negative": "standalone < 0.958343 (zero-shot + 2e-3) or no admissible portfolio value",
+      "decorrelation_collapse": "standalone improves but corr_vs_route >= 0.99"
+    }
+  },
+  "fit_seconds": 1.9992382526397705,
+  "predict_seconds": 1090.8832697868347,
+  "total_seconds": 1095.9834005832672,
+  "prereg": {
+    "path": "configs/phase20/tabicl_ft_prereg.json"
+  }
+}
