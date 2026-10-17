@@ -1,0 +1,15 @@
+{
+  "hypothesis_id": "H20-FM-RICH-FALLBACK2",
+  "title": "TabICL rich-view: context-reduction fallback after the disk-offload attempt failed at the OS level",
+  "frozen_before_results": true,
+  "status": "PREREGISTERED",
+  "context": "The H20-FM-RICH-FALLBACK disk_offload_dir attempt for tabicl was hard-killed: the library preallocated ~125 GB of sparse mmap files and exhausted the C: drive (3.3 GB free at kill time; recovered to 128.9 GB after cleanup). NO tabicl rich-view prediction was ever produced -- its mechanism is still unmeasured. Disk offload is abandoned as an approach.",
+  "fallback": {
+    "change": "tabicl with context 20000 -> 8192 (stratified, same CONTEXT_SEED=20261023); no offload; all other args identical to the frozen H20-FM-RICH recipe",
+    "rationale": "the CUDA OOM was context-attention memory at 20k x 285 features; Causilo fit at the identical 8k context, so 8k is a demonstrated-feasible footprint on this GPU",
+    "deviation_note": "a context change affects information, not labels; if this arm were PROMISING the 20k arm would still be owed before any full OOF (same rule as the causilo 8k arm)"
+  },
+  "decision_rule": "identical to H20-FM-RICH: PROMISING = portfolio_delta >= +5e-5 AND corr < 0.995; with tabdpt (-7.857e-4), causilo@8k (-7.894e-4) and xrfm (degenerate) already recorded, a negative here CLOSES the FLM x rich-view direction.",
+  "anti_leakage": "unchanged (fold-safe TE, context subset of FIT, hash-asserted champion reference).",
+  "budget": {"gpu": "<= 0.5 GPU-h", "submissions": 0}
+}
