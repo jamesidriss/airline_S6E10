@@ -41,9 +41,9 @@
   {
    "rank": 6,
    "item": "Neural P2 block: FT-Transformer / DCNv2 / service-interaction-net / MoE / PLR",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "gpu": "yes",
-   "note": "canonical recipes, fold-0 OOF vs v7 delta each"
+   "note": "6 archs x 2 views + 4-seed ensemble; route plateau ~0.957, full-view best plrmlp 0.960197 / multiseed 0.960679 port_delta -3.15e-4 (corr 0.9956). all negative; correlation with champion is binding"
   },
   {
    "rank": 7,
@@ -55,8 +55,9 @@
   {
    "rank": 8,
    "item": "Native ExtraTrees rich-view + EBM interactions (P3 cheap classical)",
-   "status": "NOT_STARTED",
-   "gpu": "no"
+   "status": "COMPLETE_NEGATIVE",
+   "gpu": "no",
+   "note": "classical rich-view screen: best histgb port_delta -4.336e-04 (corr 0.9965); redundant or too weak; EBM (interpretml) still not installed -> deferred"
   },
   {
    "rank": 9,

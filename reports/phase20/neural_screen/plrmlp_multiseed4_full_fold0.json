@@ -1,0 +1,31 @@
+{
+  "kind": "plrmlp_multiseed_equal_logit",
+  "seeds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "n_members": 4,
+  "mean_pairwise_member_logit_corr": 0.9906,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "utc": "2026-10-17T07:20:20.035406+00:00",
+  "protocol": "equal-logit avg of 4 PLR-MLP full-view fold-0 preds (seeds 1-4, each FIT-trained, inner-10% ES, champion hash-asserted); SCREEN only",
+  "metrics": {
+    "standalone_auc": 0.9606792274033507,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.9615125683206929,
+    "portfolio_delta": -0.0003152459297866006,
+    "logit_pearson_vs_portfolio": 0.9955905718532687,
+    "logit_pearson_vs_route": 0.9925422555913483,
+    "pred_std": 0.43633844904381813,
+    "pred_mean": 0.4489605544234048
+  }
+}

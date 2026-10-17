@@ -1,0 +1,36 @@
+{
+  "model": "oblique",
+  "family": "classical",
+  "status": "DONE",
+  "error": null,
+  "view": "full",
+  "seed": 1,
+  "fit_rows": 503737,
+  "train_rows": 503737,
+  "val_rows": 55971,
+  "eval_rows": 139927,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "n_features": 285,
+  "utc": "2026-10-17T07:24:35.763763+00:00",
+  "git": "195f641e93350408adc6291f56d8ac330b734e2c",
+  "protocol": "view assembled fold-safe (TE on FIT only); model fit on FIT-train; inner 10% ES split fold-safe; champion hash-asserted; SCREEN only",
+  "prediction_sha256": "265322daef9b36b4b497b02f4752a705a362564c927c0bdff53858b2c63ce704",
+  "metrics": {
+    "standalone_auc": 0.9476907696976749,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.9566236042304425,
+    "portfolio_delta": -0.0052042100200370145,
+    "logit_pearson_vs_portfolio": 0.8901432869858281,
+    "logit_pearson_vs_route": 0.8881730535337508,
+    "pred_std": 0.40985535720280414,
+    "pred_mean": 0.4430423446047251
+  },
+  "fit_predict_seconds": 41.185357332229614
+}

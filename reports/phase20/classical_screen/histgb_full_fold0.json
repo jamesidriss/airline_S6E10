@@ -1,0 +1,36 @@
+{
+  "model": "histgb",
+  "family": "classical",
+  "status": "DONE",
+  "error": null,
+  "view": "full",
+  "seed": 1,
+  "fit_rows": 503737,
+  "train_rows": 503737,
+  "val_rows": 55971,
+  "eval_rows": 139927,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "n_features": 285,
+  "utc": "2026-10-17T07:12:00.739411+00:00",
+  "git": "f5f36a57c07a15aa9831e303d32f550f82eccff9",
+  "protocol": "view assembled fold-safe (TE on FIT only); model fit on FIT-train; inner 10% ES split fold-safe; champion hash-asserted; SCREEN only",
+  "prediction_sha256": "f1204b5ad9396ecb5c66c8b959c1338cce20ed350db8f737a755609c2d0dff2f",
+  "metrics": {
+    "standalone_auc": 0.960322637451633,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.9613942521970997,
+    "portfolio_delta": -0.0004335620533797435,
+    "logit_pearson_vs_portfolio": 0.9964854851319443,
+    "logit_pearson_vs_route": 0.9932135630612614,
+    "pred_std": 0.4316224033375499,
+    "pred_mean": 0.4428658865148883
+  },
+  "fit_predict_seconds": 23.758657693862915
+}

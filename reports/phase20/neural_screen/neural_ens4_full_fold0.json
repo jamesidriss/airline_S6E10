@@ -1,0 +1,34 @@
+{
+  "kind": "neural_equal_logit_ensemble",
+  "view": "full",
+  "members": [
+    "dcnv2",
+    "tabresnet",
+    "plrmlp",
+    "moe"
+  ],
+  "n_members": 4,
+  "mean_pairwise_member_logit_corr": 0.9895,
+  "eval_rows": 139927,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "utc": "2026-10-17T06:54:05.543815+00:00",
+  "protocol": "equal-logit average of saved fold-0 member preds (each FIT-trained, inner-10% ES, champion hash-asserted); SCREEN only",
+  "metrics": {
+    "standalone_auc": 0.9582131370377489,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.9611292002997796,
+    "portfolio_delta": -0.0006986139506999223,
+    "logit_pearson_vs_portfolio": 0.989053919789616,
+    "logit_pearson_vs_route": 0.987715427743941,
+    "pred_std": 0.42978632522678617,
+    "pred_mean": 0.4447315334030603
+  },
+  "seconds": 0.21753263473510742
+}

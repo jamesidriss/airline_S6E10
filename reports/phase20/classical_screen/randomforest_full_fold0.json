@@ -1,0 +1,36 @@
+{
+  "model": "randomforest",
+  "family": "classical",
+  "status": "DONE",
+  "error": null,
+  "view": "full",
+  "seed": 1,
+  "fit_rows": 503737,
+  "train_rows": 503737,
+  "val_rows": 55971,
+  "eval_rows": 139927,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "n_features": 285,
+  "utc": "2026-10-17T07:14:22.841287+00:00",
+  "git": "7ba82564fc7739e3332b28e185e4bf70b8a29b11",
+  "protocol": "view assembled fold-safe (TE on FIT only); model fit on FIT-train; inner 10% ES split fold-safe; champion hash-asserted; SCREEN only",
+  "prediction_sha256": "8d82f6556e78354b1829f31d9464ef22fcef8bd903cca6e770461f716fad672c",
+  "metrics": {
+    "standalone_auc": 0.9581091626575196,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.9604616781983123,
+    "portfolio_delta": -0.0013661360521671773,
+    "logit_pearson_vs_portfolio": 0.9844522834724209,
+    "logit_pearson_vs_route": 0.9821079094561619,
+    "pred_std": 0.41118527877547184,
+    "pred_mean": 0.44540255450203486
+  },
+  "fit_predict_seconds": 130.43780374526978
+}

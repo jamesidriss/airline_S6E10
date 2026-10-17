@@ -1,0 +1,87 @@
+{
+  "model": "moe",
+  "arch_module": "src/phase20/neural_arch.py",
+  "status": "DONE",
+  "error": null,
+  "recipe": "canonical supervised Mixture-of-Experts: softmax gate over E expert MLPs, output = gated weighted sum of expert logits",
+  "arch_cfg": {
+    "d_hidden": 128,
+    "n_experts": 4,
+    "dropout": 0.1
+  },
+  "train_cfg": {
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "batch_size": 4096,
+    "max_epochs": 100,
+    "es_patience": 15
+  },
+  "utc": "2026-10-17T06:26:11.354806+00:00",
+  "git": "5d3b5f3d3f262d76c2fc8d44980a4c4625f4a79c",
+  "eval_rows": 139927,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "train_rows": 503737,
+  "val_rows": 55971,
+  "inner_es_seed": 1,
+  "scaler": "zero-mean/unit-var fit on FIT-train only",
+  "device": "cuda",
+  "seed": 1,
+  "tag": "moe_fold0",
+  "n_params": 15752,
+  "best_inner_val_auc": 0.955982836367659,
+  "features": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "categorical_indices": [
+    13,
+    14,
+    15,
+    16,
+    18,
+    21
+  ],
+  "protocol": "train on FIT, inner 10% ES from FIT only, predict fold-0; champion hash-asserted",
+  "prediction_sha256": "5604472511a8a3525f7ba6c6a89b280a78aeaf259b1d0a971eb7b4bb4dea040a",
+  "metrics": {
+    "standalone_auc": 0.9568889504866288,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.9607320991185784,
+    "portfolio_delta": -0.0010957151319010983,
+    "logit_pearson_vs_portfolio": 0.9838679621836088,
+    "logit_pearson_vs_route": 0.9825866347247484,
+    "pred_std": 0.4298228817092561,
+    "pred_mean": 0.44425186535409894
+  },
+  "fit_predict_seconds": 13.577635526657104,
+  "prereg": {
+    "path": "configs/phase20/neural_screen_prereg.json"
+  }
+}

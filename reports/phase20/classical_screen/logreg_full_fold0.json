@@ -1,0 +1,36 @@
+{
+  "model": "logreg",
+  "family": "classical",
+  "status": "DONE",
+  "error": null,
+  "view": "full",
+  "seed": 1,
+  "fit_rows": 503737,
+  "train_rows": 503737,
+  "val_rows": 55971,
+  "eval_rows": 139927,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "n_features": 285,
+  "utc": "2026-10-17T07:15:02.109944+00:00",
+  "git": "7ba82564fc7739e3332b28e185e4bf70b8a29b11",
+  "protocol": "view assembled fold-safe (TE on FIT only); model fit on FIT-train; inner 10% ES split fold-safe; champion hash-asserted; SCREEN only",
+  "prediction_sha256": "e826e3ffa2261246c5e2ecfd8a9e77d1133f720d930a00294ae74e83bc496d0e",
+  "metrics": {
+    "standalone_auc": 0.9258194223471812,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.9545089009589336,
+    "portfolio_delta": -0.007318913291545881,
+    "logit_pearson_vs_portfolio": 0.8500020361064845,
+    "logit_pearson_vs_route": 0.8476307955303046,
+    "pred_std": 0.37762189417903136,
+    "pred_mean": 0.44378400152614317
+  },
+  "fit_predict_seconds": 18.318406581878662
+}

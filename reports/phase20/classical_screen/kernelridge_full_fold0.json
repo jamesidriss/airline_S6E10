@@ -1,0 +1,36 @@
+{
+  "model": "kernelridge",
+  "family": "classical",
+  "status": "DONE",
+  "error": null,
+  "view": "full",
+  "seed": 1,
+  "fit_rows": 8000,
+  "train_rows": 503737,
+  "val_rows": 55971,
+  "eval_rows": 139927,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "n_features": 285,
+  "utc": "2026-10-17T07:26:56.190525+00:00",
+  "git": "f5f2c3b4b0a3d2eb53c64677cc52b03d7aa8648b",
+  "protocol": "view assembled fold-safe (TE on FIT only); model fit on FIT-train; inner 10% ES split fold-safe; champion hash-asserted; SCREEN only",
+  "prediction_sha256": "b48778ee48d7ebe6d33635f3c42ae3ed9582374cfae92b231fab17845ff88ace",
+  "metrics": {
+    "standalone_auc": 0.9554844433853455,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.958855162591608,
+    "portfolio_delta": -0.0029726516588715057,
+    "logit_pearson_vs_portfolio": 0.7633079615842023,
+    "logit_pearson_vs_route": 0.7595141578451489,
+    "pred_std": 0.4094701214554556,
+    "pred_mean": 0.4377167882177522
+  },
+  "fit_predict_seconds": 11.164871215820312
+}
