@@ -74,7 +74,9 @@ def build_model(name: str):
         # Givens rotations baked into ExtraTrees on projected features)
         from sklearn.ensemble import ExtraTreesClassifier
         from sklearn.random_projection import GaussianRandomProjection
-        proj = GaussianRandomProjection(n_components="auto", eps=0.2, random_state=SEED)
+        # fixed n_components: eps-based auto target can exceed n_features on wide views.
+        n_comp = min(64, X_DIM)
+        proj = GaussianRandomProjection(n_components=n_comp, random_state=SEED)
 
         class _Oblique:
             def __init__(self):
