@@ -95,6 +95,33 @@ def build_model(name: str, n_features: int):
     if name == "logreg":
         from sklearn.linear_model import LogisticRegression
         return LogisticRegression(max_iter=2000, C=1.0, random_state=SEED)
+    if name == "rffsvm":
+        # S7 repair (item 64): approximate RBF SVM via random Fourier features ->
+        # linear SVM. StandardScaler is fit INSIDE fit() on the passed rows only
+        # (fold-safe). predict_proba returns sigmoid(decision_function): monotone
+        # in the score (valid for AUC) and a valid pseudo-probability for the blend.
+        from sklearn.kernel_approximation import RBFSampler
+        from sklearn.pipeline import make_pipeline
+        from sklearn.preprocessing import StandardScaler
+        from sklearn.svm import LinearSVC
+
+        class _RFFSVM:
+            def __init__(self):
+                self.p = make_pipeline(
+                    StandardScaler(),
+                    RBFSampler(n_components=512, gamma=0.01, random_state=SEED))
+                self.m = LinearSVC(C=1.0, random_state=SEED, max_iter=5000)
+
+            def fit(self, X, y):
+                self.p.fit(X)
+                self.m.fit(self.p.transform(X), y)
+                return self
+
+            def predict_proba(self, X):
+                raw = np.asarray(self.m.decision_function(self.p.transform(X)),
+                                 dtype=np.float64)
+                return 1.0 / (1.0 + np.exp(-np.clip(raw, -50.0, 50.0)))
+        return _RFFSVM()
     if name == "kernelridge":
         # subsample FIT to ~40k rows (kernel methods are O(n^2)); RBF kernel
         from sklearn.kernel_ridge import KernelRidge
@@ -108,7 +135,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True,
                     choices=["extratrees", "randomforest", "histgb", "oblique", "logreg",
-                             "kernelridge"])
+                             "kernelridge", "rffsvm"])
     ap.add_argument("--view", default="full", choices=["full", "route"])
     ap.add_argument("--eval-rows", type=int, default=0)
     ap.add_argument("--kernel-rows", type=int, default=40000,

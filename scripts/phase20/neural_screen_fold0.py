@@ -88,8 +88,15 @@ def _fit_scaler(Xtr: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     return mu, sd
 
 
-def train_and_predict(model, Xtr, ytr, Xval, yval, Xeval, cfg, device, seed):
-    """AdamW + warmup/cosine + inner-val early stopping. Returns eval logits."""
+def train_and_predict(model, Xtr, ytr, Xval, yval, Xeval, cfg, device, seed,
+                      infer_chunk: int = 65536):
+    """AdamW + warmup/cosine + inner-val early stopping. Returns eval logits.
+
+    infer_chunk: bounded inference minibatch for inner-val AND outer-eval
+    prediction (row-independent forward passes; numerics per row unchanged).
+    S7 repair: the rich-view OOMs were unchunked 55971-row inner-val forwards,
+    not architectural limits.
+    """
     import torch
     import torch.nn as nn
 
@@ -136,11 +143,15 @@ def train_and_predict(model, Xtr, ytr, Xval, yval, Xeval, cfg, device, seed):
                 loss = crit(logits, ytr_t[idx])
             loss.backward()
             opt.step()
-        # inner-val AUC (never the eval fold)
+        # inner-val AUC (never the eval fold), bounded minibatches
         model.eval()
         with torch.no_grad():
-            with torch.amp.autocast(dev.type, dtype=torch.bfloat16, enabled=(dev.type == "cuda")):
-                vlog = model(Xval_t).float().cpu().numpy()
+            vout = []
+            for s in range(0, Xval_t.shape[0], infer_chunk):
+                chunk = Xval_t[s:s + infer_chunk]
+                with torch.amp.autocast(dev.type, dtype=torch.bfloat16, enabled=(dev.type == "cuda")):
+                    vout.append(model(chunk).float().cpu().numpy())
+            vlog = np.concatenate(vout)
         v_auc = roc_auc_score(yval_np, vlog)
         if v_auc > best_val + 1e-6:
             best_val = v_auc
@@ -155,8 +166,8 @@ def train_and_predict(model, Xtr, ytr, Xval, yval, Xeval, cfg, device, seed):
     model.eval()
     with torch.no_grad():
         out = []
-        for s in range(0, Xeval_t.shape[0], 65536):
-            chunk = Xeval_t[s:s + 65536]
+        for s in range(0, Xeval_t.shape[0], infer_chunk):
+            chunk = Xeval_t[s:s + infer_chunk]
             with torch.amp.autocast(dev.type, dtype=torch.bfloat16, enabled=(dev.type == "cuda")):
                 out.append(model(chunk).float().cpu().numpy())
     return np.concatenate(out), best_val
@@ -165,8 +176,8 @@ def train_and_predict(model, Xtr, ytr, Xval, yval, Xeval, cfg, device, seed):
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="fttransformer",
-                    choices=["fttransformer", "dcnv2", "plrmlp", "tabresnet", "moe",
-                             "interactionnet"])
+                    choices=["fttransformer", "dcnv2", "dcnv2full", "factlog", "plrmlp",
+                             "tabresnet", "moe", "interactionnet"])
     ap.add_argument("--view", default="route", choices=["route", "full"],
                     help="route = 22-feature champion TabPFN view (frames); "
                          "full = 285-feature certified rich view (ViewBuilder.assemble, fold-safe TE)")
@@ -178,10 +189,21 @@ def main() -> int:
     ap.add_argument("--batch-size", type=int, default=0,
                     help="override the frozen batch_size (attention archs need a smaller "
                          "batch on the 285-token rich view to fit 16 GB VRAM)")
+    ap.add_argument("--infer-chunk", type=int, default=65536,
+                    help="bounded inference minibatch for inner-val AND outer-eval "
+                         "prediction (S7 repair: rich-view OOMs were unchunked forwards)")
+    ap.add_argument("--prereg", default="", 
+                    help="override prereg path (S7 repair prereg uses the 'repairs' schema)")
     args = ap.parse_args()
 
-    prereg = json.loads(PREREG.read_text(encoding="utf-8"))
-    cfg = prereg["architectures"][args.model].copy()
+    prereg_path = Path(args.prereg) if args.prereg else PREREG
+    prereg = json.loads(prereg_path.read_text(encoding="utf-8"))
+    if "architectures" in prereg:
+        cfg = prereg["architectures"][args.model].copy()
+    else:  # S7 repair prereg: {arch: {...}, train_kwargs: {...}}
+        rep = prereg["repairs"][args.model]
+        cfg = {**rep.get("arch", {}), **rep.get("train_kwargs", {})}
+        cfg.setdefault("recipe", rep.get("change", ""))
     recipe = cfg.pop("recipe", "")
     # Split the frozen config into architecture kwargs (-> build) and training kwargs (-> loop).
     TRAIN_KEYS = {"lr", "weight_decay", "batch_size", "max_epochs", "es_patience"}
@@ -269,7 +291,8 @@ def main() -> int:
     t1 = time.time()
     try:
         logits, best_val = train_and_predict(model, Xtr_s, ytr, Xval_s, yval, Xeval_s,
-                                             train_cfg, args.device, args.seed)
+                                             train_cfg, args.device, args.seed,
+                                             infer_chunk=args.infer_chunk)
         pred = 1.0 / (1.0 + np.exp(-logits.astype(np.float64)))
         np.save(pred_path, pred.astype("float32"))
         m = screen_metrics(y_eval, pred, port0, route0)
@@ -297,7 +320,8 @@ def main() -> int:
         "protocol": "train on FIT, inner 10% ES from FIT only, predict fold-0; champion hash-asserted",
         "prediction_sha256": arr_sha256(np.load(pred_path)) if pred is not None else None,
         "metrics": m, "fit_predict_seconds": secs,
-        "prereg": {"path": PREREG.relative_to(ROOT).as_posix()},
+        "infer_chunk": int(args.infer_chunk),
+        "prereg": {"path": prereg_path.relative_to(ROOT).as_posix()},
     }
     save_json(meta, meta_path)
     if m is not None:

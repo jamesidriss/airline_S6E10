@@ -86,6 +86,68 @@ class DCNv2(nn.Module):
         return self.out(torch.cat([xc, xd], dim=1)).squeeze(-1)
 
 
+class DCNv2Full(nn.Module):
+    """Canonical DCNv2 with a FULL cross matrix (S7 fidelity repair, item 17).
+
+    x_{l+1} = x_0 ⊙ (W_l x_l + b_l) + x_l  with  W_l ∈ R^{n_feat × n_feat}.
+    The earlier DCNv2 proxy used Linear(n_features, 1) — a rank-1 cross with the
+    output direction fixed to the all-ones vector (a SCALAR gate per layer). This
+    class is identical in every other respect (deep MLP branch, concat head, init)
+    so the ONLY delta is the cross matrix rank. n_feat ≤ 512 makes the dense W cheap.
+    """
+
+    def __init__(self, n_features: int, d_hidden: int = 256, n_layers: int = 3,
+                 dropout: float = 0.1):
+        super().__init__()
+        self.cross_w = nn.ModuleList(
+            [nn.Linear(n_features, n_features, bias=False) for _ in range(n_layers)])
+        self.cross_b = nn.ParameterList(
+            [nn.Parameter(torch.zeros(n_features)) for _ in range(n_layers)])
+        deep = []
+        d = n_features
+        for _ in range(n_layers):
+            deep += [nn.Linear(d, d_hidden), nn.BatchNorm1d(d_hidden), nn.ReLU(),
+                     nn.Dropout(dropout)]
+            d = d_hidden
+        self.deep = nn.Sequential(*deep)
+        self.out = nn.Linear(n_features + d_hidden, 1)
+        for w in self.cross_w:
+            nn.init.xavier_uniform_(w.weight, gain=0.5)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x0 = x
+        xc = x
+        for w, b in zip(self.cross_w, self.cross_b):
+            xl = w(xc) + b                                # (B, n_feat), full W
+            xc = x0 * xl + xc                             # residual cross
+        xd = self.deep(x)
+        return self.out(torch.cat([xc, xd], dim=1)).squeeze(-1)
+
+
+class FactLog(nn.Module):
+    """Factorized (bilinear) logistic: logit = w·x + Σ_{r=1..R} (u_r·x)(v_r·x).
+
+    S7 repair for item 65: the row had been closed by an ADDITIVE logistic
+    negative (a different model). Here the interaction term is a rank-R
+    factorization of the quadratic form — a genuine interaction model, trained
+    end-to-end with the same AdamW + inner-val ES loop as the other neural archs.
+    U/V init 0.5/sqrt(F) keeps the initial bilinear sum at ~unit std for
+    standardized inputs.
+    """
+
+    def __init__(self, n_features: int, rank: int = 16):
+        super().__init__()
+        self.w = nn.Linear(n_features, 1)
+        scale = 0.5 / n_features ** 0.5
+        self.U = nn.Parameter(scale * torch.randn(rank, n_features))
+        self.V = nn.Parameter(scale * torch.randn(rank, n_features))
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        xu = x @ self.U.T                                 # (B, R)
+        xv = x @ self.V.T                                 # (B, R)
+        return self.w(x).squeeze(-1) + (xu * xv).sum(-1)  # (B,)
+
+
 class PLRMLP(nn.Module):
     """Periodic (PLR) numerical embeddings + MLP (Gorishniy et al. 2024).
 
@@ -209,6 +271,10 @@ def build(name: str, n_features: int, **cfg) -> nn.Module:
         return FTTransformer(n_features, **cfg)
     if name in ("dcnv2", "dcn"):
         return DCNv2(n_features, **cfg)
+    if name in ("dcnv2full", "dcnfull", "dcnv2canonical"):
+        return DCNv2Full(n_features, **cfg)
+    if name in ("factlog", "factorizedlogistic", "bilinearlogistic"):
+        return FactLog(n_features, **cfg)
     if name in ("plrmlp", "plr"):
         return PLRMLP(n_features, **cfg)
     if name in ("tabresnet", "resnet"):
