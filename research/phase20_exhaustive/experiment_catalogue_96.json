@@ -1050,10 +1050,11 @@
    "historical_equivalent": "-",
    "status": "NOT_STARTED",
    "priority": "P4",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "gate uses covariates only"
+   "next_action": "CLOSED by direct fold-0 measurement",
+   "phase20_finding": "Covariate-gated blender (prereg P20-ENS72-COVARIATE-GATING): cross-fit L2 logistic gate on 21 raw covariates (ordinal-encoded, median-imputed), target = route-correct, trained folds 1-4, applied fold-0. Gated blend 0.961735 vs route 0.961727 (+7.99e-6) vs equal blend 0.961725 (+1.01e-5). NEGATIVE: far below the +1e-4 bar. Covariates cannot predict when route vs rich is correct -- errors concentrate on the same hard rows. Covariate gating closed; the +3.14e-3 oracle headroom (GEN 80) is not capturable this way."
   },
   {
    "experiment_number": 73,

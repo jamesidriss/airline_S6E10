@@ -1,0 +1,26 @@
+{
+ "prereg": "configs/phase20/ens72_covariate_gating_prereg.json",
+ "prereg_sha256": "ae9c07e5d05dad9ab2e5d7224e1e98b5db1edcab1a0063a70c2f3b19f06e58be",
+ "candidates": {
+  "route": "sol_route_aux10_primary_final",
+  "rich": "blend_v3_final"
+ },
+ "gate": {
+  "features": "21 raw covariates (StandardScaler on folds 1-4 only)",
+  "model": "LogisticRegression(C=1.0, L2)",
+  "target": "route_correct (route on correct side of 0.5)",
+  "cross_fit": "train folds 1-4, apply fold-0"
+ },
+ "fold0_results": {
+  "route_auc": 0.961727,
+  "rich_auc": 0.961501,
+  "equal_blend_auc": 0.961725,
+  "gated_blend_auc": 0.961735,
+  "gated_minus_route": 7.99e-06,
+  "gated_minus_equal": 1.005e-05,
+  "promising": false,
+  "decision_rule": "PROMISING if gated >= route + 1e-4; NEGATIVE if gated < equal"
+ },
+ "fold0_eval_rows": 139927,
+ "fold0_route_accuracy": 0.928034
+}
