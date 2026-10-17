@@ -1,0 +1,61 @@
+{
+  "hypothesis_id": "H20-TABICL-FT",
+  "title": "Supervised fine-tuning of TabICL-v2 on the champion route view: can the best-decorrelated candidate become strong enough? (catalogue items 31 + 13)",
+  "frozen_before_results": true,
+  "status": "PREREGISTERED",
+  "motivation": "TabICL's zero-shot route-view screen measured the BEST decorrelation of any strong-ish candidate (corr 0.9828 vs champion route arm, 0.9843 vs portfolio -- every other non-FLM candidate sits >= 0.989) but standalone lagged at 0.956343 (-5.5e-3 vs champion route). Both closure ledgers (FLM rich-view, neural) named supervised fine-tuning as the ONLY reopening mechanism. The installed tabicl package ships FinetunedTabICLClassifier (supervised meta-batch fine-tuning of the pretrained checkpoint). If fine-tuning lifts standalone toward ~0.960 while decorrelation survives (fine-tuning on FIT could also pull it UP toward the champion -- that trade is exactly what this measures), the combination of BOTH conditions is unprecedented in this campaign.",
+  "scope": {
+    "standard": "FOLD-0 DISCOVERY SCREEN",
+    "cannot": "pass the OOF admission gate; justify a submission; or establish private performance",
+    "purpose": "decide whether fine-tuned TabICL merits a full 5-fold OOF + admission-gate run",
+    "submission": 0
+  },
+  "protocol": {
+    "eval_fold": 0,
+    "fit_folds": [1, 2, 3, 4],
+    "fold_scheme": "primary (StratifiedKFold 5, shuffle, seed 20261010), immutable",
+    "view": "route (champion raw22 via frames(); the SAME representation the champion's own TabPFN arm uses). Rationale: (a) the 285-feature rich view OOM'd TabICL three times at 16GB (RESOURCE_BLOCKED, recorded); (b) the decorrelation that motivates this experiment was measured on the route view -- keeping the view isolates fine-tuning as the single changed factor vs the frozen zero-shot reference.",
+    "split": "inner 10% stratified of FIT as X_val/y_val (epoch selection + early stop; fold-safe -- never the eval fold). X_train = remaining 90% of FIT. Scaler: none (TabICL has internal preprocessing, identical to its zero-shot screen).",
+    "model": {
+      "class": "tabicl.FinetunedTabICLClassifier",
+      "frozen_args": {"epochs": 10, "learning_rate": 1e-5, "weight_decay": 0.01,
+                      "n_estimators_finetune": 2, "n_estimators_inference": 8,
+                      "max_data_size": 10000, "device": "cuda"},
+      "note": "10 epochs is deliberately conservative (default 30): the zero-shot checkpoint is already strong; the risk is over-fine-tuning INTO the champion's decision boundary (correlation rise), and 10 epochs bounds both compute and that drift. No epoch/arg sweep: one frozen recipe."
+    },
+    "reference": {
+      "zero_shot_route": {"auc": 0.956343, "port_delta": -1.394e-3, "corr": 0.9843,
+                          "source": "tabicl_fmscreen_fold0_ctx20k_e50k (phase-19, frozen)"},
+      "champion_route_auc_fold0_full": 0.961458,
+      "champion_portfolio_auc_fold0_full": 0.961828
+    }
+  },
+  "metrics": {
+    "standalone_auc": "exact AUC on full fold-0 (139927 rows)",
+    "portfolio_delta": "equal_logit_blend_auc - champion_portfolio_auc (fold 0)",
+    "logit_pearson_vs_portfolio": "decorrelation vs champion portfolio",
+    "logit_pearson_vs_route": "decorrelation vs champion route arm (the TabPFN member this replaces-or-joins)"
+  },
+  "decision_rule": {
+    "PROMISING": "portfolio_delta >= +5e-5 AND logit_pearson_vs_portfolio < 0.995",
+    "DECORRELATION_COLLAPSE": "if standalone improves but corr_vs_route >= 0.99, fine-tuning has simply distilled the champion's own inductive bias into TabICL: close the fine-tuning mechanism for this checkpoint",
+    "NEGATIVE": "standalone fails to improve materially (< +2e-3 over zero-shot): supervised fine-tuning of in-context learners closes for this data size",
+    "note": "PROMISING only means 'run full 5-fold OOF + admission gate'."
+  },
+  "anti_leakage": [
+    "X_train/X_val are both subsets of FIT; the eval fold is never used for training, epoch selection, or validation.",
+    "The route view is label-free (no TE).",
+    "The champion reference is loaded from hash-asserted phase17_B1 artifacts.",
+    "No public-LB feedback of any kind enters the recipe choice; the recipe is frozen here."
+  ],
+  "budget": {
+    "gpu": "<= 2 GPU-h (fine-tuning backprop over the pretrained checkpoint; bounded by 10 epochs / 10k chunks)",
+    "cpu": "negligible",
+    "submissions": 0
+  },
+  "predeclared_followups": [
+    "PROMISING -> full 5-fold OOF with the same frozen fine-tuning recipe per fold + admission gate.",
+    "DECORRELATION_COLLAPSE or NEGATIVE -> fine-tuning closes for TabICL; item 13 (TabPFN-3 vs 2.6 checkpoint swap) remains separate and is NOT authorized by this prereg.",
+    "A rich-view fine-tune remains blocked until the 16GB OOM constraint is solved (different GPU or a chunked-predict patch); it is NOT part of this experiment."
+  ]
+}
