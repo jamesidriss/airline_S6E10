@@ -7,7 +7,7 @@ Generated 2026-10-17 · 96 experiments · champion v7 0.961852923 · target 0.96
 | 1 | Mitra-v2 | FLM | NEGATIVE (this session) | COMPLETE_NEGATIVE | P1 | F2 | OK | done | CLOSED: prereg arms (20k/full) resource-infeasible on sm_120 (VRAM thrashing, no flash-attn); feasible-scale 2048ctx probe port_delta -1.63e-3 (bar +5e-5); FLM class 6/6 negative; do not rerun identical recipe |
 | 2 | TabICLv2 | FLM | 20k-fold0 screen -1.40e-3 vs v7 bl | PARTIAL_VALID | P1 | F2 | OK | - | preserve 20k neg; probe native context; one bo |
 | 3 | EXAONE Tabular | FLM | none | LICENSE_BLOCKED | P2 | F0 | NC | weights non-commercial; competition use not established | verify intended-use; do NOT submit with NC wei |
-| 4 | Kumo Tabular | FLM | none | NOT_STARTED | P1 | F0 | CUSTOM | - | audit OpenMDW-1.1 vs prize rules; download sma |
+| 4 | Kumo Tabular | FLM | NEGATIVE (this session) | COMPLETE_NEGATIVE | P1 | F2 | CUSTOM | done | CLOSED: fold-0 screen @4096ctx AUC 0.9576, port_delta -1.46e-3 (bar +5e-5); sits on the FLM plateau (7/7 negative); in-context predict is feasible (550 rows/s) but cannot lift past ~0.957; do not rerun identical recipe |
 | 5 | TabDPT v1.3/Turbo | FLM | 20k-fold0 screen -1.41e-3 | PARTIAL_VALID | P2 | F2 | OK | - | preserve 20k neg; only distinct larger-context |
 | 6 | xRFM raw | FLM | raw-view 0.9306, -9.3e-3 | PARTIAL_VALID | P3 | F2 | OK | - | preserve raw neg; rich-view variant is item 47 |
 | 7 | LimiX-2 | FLM | none | NOT_STARTED | P1 | F0 | CUSTOM | - | verify custom license vs prize; estimate VRAM; |

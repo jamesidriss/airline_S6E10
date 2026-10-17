@@ -13,9 +13,9 @@
   {
    "rank": 2,
    "item": "KUMO F1 smoke + F2 fold-0 screen (small->large)",
-   "status": "PREPARED",
+   "status": "COMPLETE_NEGATIVE",
    "gpu": "yes",
-   "note": "eligible, API verified, deps installed"
+   "note": "fold-0 @4096ctx port_delta -1.46e-3; FLM plateau (7/7 negative); in-context predict feasible but cannot lift past ~0.957"
   },
   {
    "rank": 3,

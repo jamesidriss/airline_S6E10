@@ -65,14 +65,14 @@
       "canonical_name": "Kumo Tabular",
       "research_family": "FLM",
       "requested_method": "NVIDIA Kumo-Tabular small/medium/large classifiers",
-      "historical_status": "none",
+      "historical_status": "NEGATIVE (this session)",
       "historical_equivalent": "-",
-      "status": "NOT_STARTED",
+      "status": "COMPLETE_NEGATIVE",
       "priority": "P1",
-      "fidelity_reached": "F0",
+      "fidelity_reached": "F2",
       "competition_eligibility": "OK (OpenMDW-1.1 verified ELIGIBLE: outputs unrestricted)",
-      "blocking_reason": "-",
-      "next_action": "audit inference API (.pt checkpoints); F1 smoke of small classifier; fold-0 screen"
+      "blocking_reason": "done",
+      "next_action": "CLOSED: fold-0 screen @4096ctx AUC 0.9576, port_delta -1.46e-3 (bar +5e-5); sits on the FLM plateau (7/7 negative); in-context predict is feasible (550 rows/s) but cannot lift past ~0.957; do not rerun identical recipe"
     },
     {
       "experiment_number": 5,
