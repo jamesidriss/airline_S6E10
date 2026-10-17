@@ -21,7 +21,8 @@
       "frozen_args": {"epochs": 10, "learning_rate": 1e-5, "weight_decay": 0.01,
                       "n_estimators_finetune": 2, "n_estimators_inference": 8,
                       "max_data_size": 10000, "device": "cuda"},
-      "note": "10 epochs is deliberately conservative (default 30): the zero-shot checkpoint is already strong; the risk is over-fine-tuning INTO the champion's decision boundary (correlation rise), and 10 epochs bounds both compute and that drift. No epoch/arg sweep: one frozen recipe."
+      "note": "10 epochs is deliberately conservative (default 30): the zero-shot checkpoint is already strong; the risk is over-fine-tuning INTO the champion's decision boundary (correlation rise), and 10 epochs bounds both compute and that drift. No epoch/arg sweep: one frozen recipe.",
+      "shim_disclosure": "tabicl._finetune imports 4 LR-scheduler functions from `transformers`, absent from the certified .venv. Installing it in place is forbidden (certified-stack policy); scripts/phase20/_shims/transformers.py reproduces the standard HuggingFace LambdaLR semantics (constant/linear/cosine/polynomial) and is prepended to sys.path for this run only. The fine-tuner's used scheduler (cosine_warmup) is thereby faithfully provided. Amended into this prereg BEFORE any fine-tuned prediction existed (first invocation died at ModuleNotFoundError)."
     },
     "reference": {
       "zero_shot_route": {"auc": 0.956343, "port_delta": -1.394e-3, "corr": 0.9843,

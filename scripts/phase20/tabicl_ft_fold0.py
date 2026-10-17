@@ -58,6 +58,18 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     ART.mkdir(parents=True, exist_ok=True)
 
+    # tabicl._finetune imports four LR-scheduler functions from `transformers`,
+    # which is absent from the certified .venv. Installing it in place would
+    # alter the certified stack (forbidden); the auditable shim provides the
+    # exact LambdaLR semantics the fine-tuner's cosine_warmup scheduler needs.
+    shim_dir = str(ROOT / "scripts" / "phase20" / "_shims")
+    if shim_dir not in sys.path:
+        sys.path.insert(0, shim_dir)
+    import transformers as _tf_shim
+    assert all(hasattr(_tf_shim, n) for n in (
+        "get_constant_schedule", "get_linear_schedule_with_warmup",
+        "get_cosine_schedule_with_warmup", "get_polynomial_decay_schedule_with_warmup"))
+
     from tabicl import FinetunedTabICLClassifier
 
     from scripts.run_sol_tabpfn import frames
