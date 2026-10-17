@@ -1,0 +1,129 @@
+{
+  "experiment": "P20-H19C",
+  "hypothesis_id": "H19-C",
+  "experiment_number": 45,
+  "status": "COMPLETE",
+  "verdict": "PATH_TO_REPLICATION",
+  "error": null,
+  "utc": "2026-10-17T02:22:54.969297+00:00",
+  "git": "6e186d65a6500da43f96d287215483e2a196db04",
+  "prereg": "configs\\phase20\\h19c_prereg.json",
+  "prereg_sha256": "493065a22e0d9486494e7285f359659008d3ca4410cf9ad565540cff57430990",
+  "scope": {
+    "fold": 0,
+    "fit_folds": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "scheme": "primary",
+    "n_fit": 559708,
+    "n_eval": 139927
+  },
+  "features": {
+    "block": "nk",
+    "cols": [
+      "nk1",
+      "nk1_logc",
+      "nk1_nk"
+    ],
+    "params": {
+      "lam": 30.0,
+      "min_count": 2,
+      "inner_folds": 5,
+      "inner_seed": 0
+    },
+    "fit_convention": "crossfit within FIT (no row own label); EVAL apply from FIT table only",
+    "base_view": "full (rich, fold-safe TE)"
+  },
+  "members": {
+    "params": {
+      "objective": "binary",
+      "metric": "auc",
+      "n_estimators": 6000,
+      "learning_rate": 0.02,
+      "num_leaves": 127,
+      "min_child_samples": 40,
+      "colsample_bytree": 0.8,
+      "subsample": 0.8,
+      "subsample_freq": 1,
+      "reg_lambda": 1.0,
+      "max_bin": 255,
+      "extra_trees": true,
+      "verbose": -1,
+      "n_jobs": 8
+    },
+    "member_seed": 20261010,
+    "inner_es_seed": 1,
+    "only_difference": "presence of nk block",
+    "ctrl_best_iter": 750,
+    "treat_best_iter": 987
+  },
+  "segments": {
+    "unique": {
+      "n": 45842,
+      "ctrl_auc": 0.9471166230852204,
+      "treat_auc": 0.9472370808097239,
+      "delta": 0.00012045772450353098
+    },
+    "dup": {
+      "n": 94085,
+      "ctrl_auc": 0.9636798551026549,
+      "treat_auc": 0.9637411554118482,
+      "delta": 6.130030919337948e-05
+    },
+    "definition": "transductive label-free atlas is_dup (key count>1 over tr+te)"
+  },
+  "standalone": {
+    "ctrl_auc": 0.9611731952069511,
+    "treat_auc": 0.9612403071660531,
+    "delta": 6.71119591020286e-05,
+    "route_auc": 0.9614576551310231,
+    "base_portfolio_auc": 0.9618278142504795
+  },
+  "correlations": {
+    "control": {
+      "pearson_route": 0.9974108895022147,
+      "pearson_aux": 0.9996242078354574
+    },
+    "treatment": {
+      "pearson_route": 0.9973630075346657,
+      "pearson_aux": 0.9995330644188326
+    }
+  },
+  "portfolio": {
+    "composition": "aux11=(10*aux0+member_logit)/11; port=sigmoid((logit(route)+aux11)/2)",
+    "base_auc": 0.9618278142504795,
+    "ctrl_auc": 0.9618269891144664,
+    "treat_auc": 0.9618332907739041,
+    "delta": 6.301659437712992e-06
+  },
+  "decision": {
+    "d": 6.71119591020286e-05,
+    "seg_u_delta": 0.00012045772450353098,
+    "port_delta": 6.301659437712992e-06,
+    "thresholds": {
+      "path_d": 3e-05,
+      "path_seg_u": 0.0,
+      "path_port": 0.0,
+      "dead_d": 0.0,
+      "dead_if_d_lt": 3e-05
+    },
+    "rule_applied": "PATH_TO_REPLICATION",
+    "note": "fold 0 cannot validate the full 5-fold promotion gate; PATH only recommends folds 1-4 for future consideration, does not launch them"
+  },
+  "champion_hashes": {
+    "portfolio": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+    "route": "bcb2811329d3686882450e93435647f8f7ab65abfc48c1a1b51db1e9d1ef95e0",
+    "composition_bit_exact": true
+  },
+  "budget": {
+    "gpu_jobs": 0,
+    "submission": 0
+  },
+  "prediction_hashes": {
+    "ctrl": "feca11c895808d7d4e21ba1462f8774312fd0bb6e5809a8a76fada8c7049a6ff",
+    "treat": "e62cc9e6dbc99e54f106effe83ca6e981f8ab86d03ed3c21b63b7fba3682c666"
+  }
+}
