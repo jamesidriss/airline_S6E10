@@ -165,7 +165,8 @@ def train_and_predict(model, Xtr, ytr, Xval, yval, Xeval, cfg, device, seed):
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="fttransformer",
-                    choices=["fttransformer", "dcnv2"])
+                    choices=["fttransformer", "dcnv2", "plrmlp", "tabresnet", "moe",
+                             "interactionnet"])
     ap.add_argument("--eval-rows", type=int, default=0,  # 0 = all fold-0 rows
                     help="0 uses every fold-0 row (139927); >0 subsamples first N")
     ap.add_argument("--device", default="cuda")

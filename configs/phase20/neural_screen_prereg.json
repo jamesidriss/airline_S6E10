@@ -1,45 +1,102 @@
 {
-  "experiment": "P20-NEURAL-SCREEN",
-  "phase": 20,
-  "frozen_utc": "2026-10-17",
-  "hypothesis": "A genuinely different neural inductive bias — FT-Transformer (attention over feature tokens) and DCNv2 (explicit feature crosses) — can add incremental value as an 11th member of the v7 portfolio, decorrelated from the tree-heavy champion and its existing RealMLP/TabM (feedforward) members.",
-  "why_distinct_from_prior_negatives": "The champion already contains RealMLP/TabM (feedforward MLPs) but no attention-over-features (FT-Transformer) or explicit-cross (DCNv2) network. The FLM class (7/7: TabICL/TabDPT/Causilo/TabFM/xRFM/Mitra/Kumo) is closed negative; neural P2 is the primary remaining untested inductive-bias class (queue rank 6).",
-  "env": "certified .venv (torch 2.11.0+cu128, CUDA); MY code — not a downloaded foundation model, so no .venv_ag isolation needed; numpy/torch stack not upgraded",
-  "protocol": {
-    "view": "champion raw21+coarse10 route representation via frames(tr,te,route=True) = 22 features",
-    "fold": "primary_5f_seed20261010; fold-0 discovery screen (F2; cannot pass admission gate)",
-    "train": "all FIT rows (folds 1-4 = 559708)",
-    "inner_es": "carve 10% of FIT (stratified, seed 1) as val for early-stopping checkpoint selection; NEVER the eval fold; scaler (standardize) fit on FIT-train only",
-    "predict": "fold-0 EVAL rows; screen_metrics vs hash-asserted champion portfolio/route",
-    "device": "cuda",
-    "standardize": "zero-mean unit-var scaler fit on FIT-train only (fold-safe)"
+ "experiment": "P20-NEURAL-SCREEN",
+ "phase": 20,
+ "frozen_utc": "2026-10-17",
+ "hypothesis": "A genuinely different neural inductive bias — FT-Transformer (attention over feature tokens) and DCNv2 (explicit feature crosses) — can add incremental value as an 11th member of the v7 portfolio, decorrelated from the tree-heavy champion and its existing RealMLP/TabM (feedforward) members.",
+ "why_distinct_from_prior_negatives": "The champion already contains RealMLP/TabM (feedforward MLPs) but no attention-over-features (FT-Transformer) or explicit-cross (DCNv2) network. The FLM class (7/7: TabICL/TabDPT/Causilo/TabFM/xRFM/Mitra/Kumo) is closed negative; neural P2 is the primary remaining untested inductive-bias class (queue rank 6).",
+ "env": "certified .venv (torch 2.11.0+cu128, CUDA); MY code — not a downloaded foundation model, so no .venv_ag isolation needed; numpy/torch stack not upgraded",
+ "protocol": {
+  "view": "champion raw21+coarse10 route representation via frames(tr,te,route=True) = 22 features",
+  "fold": "primary_5f_seed20261010; fold-0 discovery screen (F2; cannot pass admission gate)",
+  "train": "all FIT rows (folds 1-4 = 559708)",
+  "inner_es": "carve 10% of FIT (stratified, seed 1) as val for early-stopping checkpoint selection; NEVER the eval fold; scaler (standardize) fit on FIT-train only",
+  "predict": "fold-0 EVAL rows; screen_metrics vs hash-asserted champion portfolio/route",
+  "device": "cuda",
+  "standardize": "zero-mean unit-var scaler fit on FIT-train only (fold-safe)"
+ },
+ "architectures": {
+  "fttransformer": {
+   "recipe": "canonical FT-Transformer (Gorishniy et al. 2021): feature tokenizer t_j = x_j*w_j + b_j -> d_token; CLS token; Pre-LN transformer encoder; CLS -> MLP head",
+   "d_token": 192,
+   "n_layers": 3,
+   "n_heads": 8,
+   "dropout": 0.1,
+   "head_hidden": 192,
+   "lr": 0.001,
+   "weight_decay": 1e-05,
+   "batch_size": 4096,
+   "max_epochs": 100,
+   "es_patience": 15
   },
-  "architectures": {
-    "fttransformer": {
-      "recipe": "canonical FT-Transformer (Gorishniy et al. 2021): feature tokenizer t_j = x_j*w_j + b_j -> d_token; CLS token; Pre-LN transformer encoder; CLS -> MLP head",
-      "d_token": 192, "n_layers": 3, "n_heads": 8, "dropout": 0.1,
-      "head_hidden": 192, "lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096,
-      "max_epochs": 100, "es_patience": 15
-    },
-    "dcnv2": {
-      "recipe": "canonical DCNv2 (Wang et al. 2021): cross layers x_{l+1}=x_0*(W_l x_l + b_l)+x_l (explicit crosses) concatenated with deep MLP; joint output",
-      "d_hidden": 256, "n_layers": 3, "dropout": 0.1,
-      "lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096,
-      "max_epochs": 100, "es_patience": 15
-    }
+  "dcnv2": {
+   "recipe": "canonical DCNv2 (Wang et al. 2021): cross layers x_{l+1}=x_0*(W_l x_l + b_l)+x_l (explicit crosses) concatenated with deep MLP; joint output",
+   "d_hidden": 256,
+   "n_layers": 3,
+   "dropout": 0.1,
+   "lr": 0.001,
+   "weight_decay": 1e-05,
+   "batch_size": 4096,
+   "max_epochs": 100,
+   "es_patience": 15
   },
-  "optimization": "AdamW; BCEWithLogitsLoss; linear warmup 5%% then cosine decay; early-stop on inner-val AUC (patience es_patience); best-checkpoint predict",
-  "promising_bar": "PROMISING iff portfolio_delta >= +5e-5 AND logit_pearson_vs_portfolio < 0.995 for an architecture -> then promote that architecture to full 5-fold OOF + admission-gate run",
-  "negative_rule": "if every architecture has portfolio_delta < +5e-5 (or negative), record NEGATIVE for the exact frozen recipes + protocol and do not rerun identically; any future retry must change a predeclared mechanism (different architecture, representation, or training regime), not re-tune the same recipe",
-  "compute": {
-    "budget_gpu_hours": "within phase-20 remaining (~8h after Mitra/Kumo); FT-Transformer + DCNv2 fold-0 each ~15-30 min on GPU",
-    "one_gpu_job_at_a_time": true
+  "plrmlp": {
+   "recipe": "canonical PLR numerical embeddings + MLP (Gorishniy et al. 2024): per-feature learnable periodic cos/sin(2pi(w x + phi)) over frequencies, concat raw skip -> MLP",
+   "n_freq": 16,
+   "d_hidden": 256,
+   "n_layers": 2,
+   "dropout": 0.1,
+   "lr": 0.001,
+   "weight_decay": 1e-05,
+   "batch_size": 4096,
+   "max_epochs": 100,
+   "es_patience": 15
   },
-  "anti_leakage": [
-    "train on FIT only (folds 1-4); eval fold (fold 0) never seen in training",
-    "inner ES split carved from FIT only (never eval fold)",
-    "scaler fit on FIT-train only",
-    "no target encoding (route view is label-free)",
-    "champion reference hash-asserted from phase17 artifacts"
-  ]
+  "tabresnet": {
+   "recipe": "canonical Tabular ResNet: projection + pre-activation residual blocks (linear-BN-ReLU-residual) + head",
+   "d_hidden": 256,
+   "n_blocks": 4,
+   "dropout": 0.1,
+   "lr": 0.001,
+   "weight_decay": 1e-05,
+   "batch_size": 4096,
+   "max_epochs": 100,
+   "es_patience": 15
+  },
+  "moe": {
+   "recipe": "canonical supervised Mixture-of-Experts: softmax gate over E expert MLPs, output = gated weighted sum of expert logits",
+   "d_hidden": 128,
+   "n_experts": 4,
+   "dropout": 0.1,
+   "lr": 0.001,
+   "weight_decay": 1e-05,
+   "batch_size": 4096,
+   "max_epochs": 100,
+   "es_patience": 15
+  },
+  "interactionnet": {
+   "recipe": "explicit pairwise feature-interaction net (service-interaction style): append all upper-triangular products x_i*x_j to raw features -> MLP",
+   "d_hidden": 256,
+   "n_layers": 2,
+   "dropout": 0.1,
+   "lr": 0.001,
+   "weight_decay": 1e-05,
+   "batch_size": 4096,
+   "max_epochs": 100,
+   "es_patience": 15
+  }
+ },
+ "optimization": "AdamW; BCEWithLogitsLoss; linear warmup 5%% then cosine decay; early-stop on inner-val AUC (patience es_patience); best-checkpoint predict",
+ "promising_bar": "PROMISING iff portfolio_delta >= +5e-5 AND logit_pearson_vs_portfolio < 0.995 for an architecture -> then promote that architecture to full 5-fold OOF + admission-gate run",
+ "negative_rule": "if every architecture has portfolio_delta < +5e-5 (or negative), record NEGATIVE for the exact frozen recipes + protocol and do not rerun identically; any future retry must change a predeclared mechanism (different architecture, representation, or training regime), not re-tune the same recipe",
+ "compute": {
+  "budget_gpu_hours": "within phase-20 remaining (~8h after Mitra/Kumo); FT-Transformer + DCNv2 fold-0 each ~15-30 min on GPU",
+  "one_gpu_job_at_a_time": true
+ },
+ "anti_leakage": [
+  "train on FIT only (folds 1-4); eval fold (fold 0) never seen in training",
+  "inner ES split carved from FIT only (never eval fold)",
+  "scaler fit on FIT-train only",
+  "no target encoding (route view is label-free)",
+  "champion reference hash-asserted from phase17 artifacts"
+ ]
 }
