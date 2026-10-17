@@ -1,0 +1,21 @@
+{
+ "prereg": "configs/phase20/feat51_residual_ratings_prereg.json",
+ "prereg_sha256": "a1013332af66f003af42a8db7aea15a69cdd02c199ac05360121d45b9a266eb0",
+ "method": "cross-fit HistGB residual (13 service ratings, teacher from other 20 covariates, 5-fold)",
+ "fold0_results": {
+  "base_21raw_auc": 0.953423,
+  "augmented_21raw_13resid_auc": 0.957359,
+  "augmentation_delta": 0.00393649,
+  "resid_only_auc": 0.947307,
+  "champion_ref_proxy": "sol_route_aux10_primary_final (0.961766)",
+  "spearman_aug_vs_champion": 0.928778,
+  "equal_blend_auc": 0.960677,
+  "blend_delta_vs_aug": 0.00331745,
+  "champion_ref": 0.961853,
+  "port_delta_vs_champion": -0.00449373,
+  "promising": true,
+  "decision_rule": "PROMISING if augmentation_delta >= +5e-5"
+ },
+ "n_rating_cols": 13,
+ "n_teachers": 65
+}
