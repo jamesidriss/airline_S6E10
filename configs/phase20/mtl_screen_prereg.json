@@ -25,6 +25,9 @@
       {"p_mask": 0.5, "lam": 1.0, "seed": 1}
     ],
     "arch": "MultiTaskPLR: PLR periodic embedding -> 2-layer MLP trunk -> 128-d shared -> main head + CORAL aux head (13 ratings x 5 thresholds)",
+    "arch_kwargs": {"n_freq": 16, "d_trunk": 256, "trunk_layers": 2, "d_shared": 128, "dropout": 0.1},
+    "train_kwargs": {"lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15},
+    "amendment": "arch_kwargs/train_kwargs added after the runner hit KeyError on the prose-only spec; amended and re-hashed BEFORE any MTL prediction existed (both invocations failed at config load, zero GPU-seconds of training)",
     "reference": "plrmlp_full_fold0 (same trunk family, no MTL): AUC 0.9601974099474075, port_delta -4.191e-4, corr 0.9937"
   },
   "metrics": {

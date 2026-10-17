@@ -157,10 +157,18 @@ def main() -> int:
     args = ap.parse_args()
 
     prereg = json.loads(PREREG.read_text(encoding="utf-8"))
-    cfg = dict(prereg["train"])
+    # Frozen training config, identical to the accepted plrmlp_full_fold0 reference
+    # (arch family + optimizer schedule); only the MTL factors differ. Validated
+    # against the preregistered arms so no unregistered (p_mask, lam) can run.
+    cfg = dict(prereg["protocol"]["train_kwargs"])
     cfg["p_mask"] = args.p_mask
     cfg["lam"] = args.lam
-    arch_cfg = dict(prereg["arch"])
+    arch_cfg = dict(prereg["protocol"]["arch_kwargs"])
+    allowed = {(float(a["p_mask"]), float(a["lam"]), int(a["seed"]))
+               for a in prereg["protocol"]["arms"]}
+    if (float(args.p_mask), float(args.lam), int(args.seed)) not in allowed:
+        raise SystemExit(f"arm (p_mask={args.p_mask}, lam={args.lam}, seed={args.seed}) "
+                         f"is not in the preregistered arms {sorted(allowed)}")
     tag = args.tag or f"mtl_{args.view}_pm{args.p_mask:g}_lam{args.lam:g}_s{args.seed}"
 
     t0 = time.time()
