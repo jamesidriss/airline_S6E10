@@ -66,7 +66,8 @@ def load_champion_fold0(folds: np.ndarray):
 def run_model(name: str, args, Xtr: np.ndarray, y: np.ndarray, ctx: np.ndarray,
               eval_idx: np.ndarray, pred_path: Path) -> np.ndarray:
     """Fit a model on context rows, predict eval rows in batches, save + return."""
-    model = build_model(name, args.device, seed=args.seed)
+    model = build_model(name, args.device, seed=args.seed,
+                        disk_offload_dir=getattr(args, "tabicl_offload_dir", None))
     model.fit(Xtr[ctx], y[ctx])
     gc.collect()
     chunks = []
@@ -95,7 +96,12 @@ def main() -> int:
                     help="route = phase-19 raw22 view (frames); full = the certified 285-feature "
                          "rich view (ViewBuilder.assemble, fold-safe TE) that lifted neural "
                          "standalone AUC by ~+2.3e-3 in phase 20")
+    ap.add_argument("--tabicl-offload-dir", default="",
+                    help="H20-FM-RICH fallback: enable TabICL disk offload (CUDA OOM at 285 feat)")
     args = ap.parse_args()
+    if args.tabicl_offload_dir:
+        Path(args.tabicl_offload_dir).mkdir(parents=True, exist_ok=True)
+        args.tabicl_offload_dir = str(Path(args.tabicl_offload_dir).resolve())
 
     t0 = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
@@ -176,6 +182,7 @@ def main() -> int:
             "label_free_category_maps": maps,
             "prediction_sha256": arr_sha256(np.load(pred_path)) if pred is not None else None,
             "metrics": m, "seed": args.seed, "tag": args.tag,
+            "tabicl_offload_dir": args.tabicl_offload_dir or None,
             "prereg": "configs/phase19/foundation_screen_prereg.json",
             "fit_predict_seconds": time.time() - t1,
         }

@@ -1,0 +1,23 @@
+{
+  "hypothesis_id": "H20-FM-RICH-FALLBACK",
+  "title": "Resource fallbacks for the two OOM'd candidates of H20-FM-RICH (tabicl, causilo)",
+  "frozen_before_results": true,
+  "status": "PREREGISTERED",
+  "decided_at_utc": "2026-10-17T00:00:00Z",
+  "decided_before_any_result_for": ["tabicl-rich", "causilo-rich"],
+  "motivation": "In the H20-FM-RICH screen, tabicl and causilo FAILED with CUDA OOM (16 GB) at the frozen recipe (20k context, 285 features, full fold-0 eval). Their mechanism was never measured: a resource failure is NOT a negative. These fallbacks change ONLY the resource footprint, chosen now, before either model produces a single prediction on the rich view. No metric has been observed for either candidate on this view, so no metric-dependent choice is possible -- this is a pure resource adaptation.",
+  "fallbacks": {
+    "tabicl": {
+      "change": "pass disk_offload_dir=artifacts/phase19/foundation_screen/_tabicl_offload to TabICLClassifier (supported API per the OOM error message); all other args identical to the frozen recipe",
+      "rationale": "the OOM was in TabICL's internal output allocation (est. 15528 MB) with offloading disabled; disk offload is the library's own escape hatch and does not alter the model or its predictions"
+    },
+    "causilo": {
+      "change": "context reduced 20000 -> 8192 (stratified, same CONTEXT_SEED=20261023); all other args identical",
+      "rationale": "causilo's context attention memory is quadratic in context rows; 8192 is the largest power-of-two context that fits 16 GB at 285 features; a context-size change affects information, not labels -- no leakage risk",
+      "deviation_note": "this deviates from the frozen 20k context of H20-FM-RICH; any result is labeled as the 8k-context arm and, if it were ever PROMISING, the 20k arm would still be owed before a full OOF"
+    }
+  },
+  "decision_rule": "identical to H20-FM-RICH: PROMISING = portfolio_delta >= +5e-5 AND corr < 0.995; otherwise the FLM x rich-view direction closes together with the tabdpt result (-7.857e-4) and the xrfm degenerate run (AUC 0.589141, treated as a failed mechanism, not a measurement).",
+  "anti_leakage": "unchanged from H20-FM-RICH (fold-safe TE, context subset of FIT, hash-asserted champion reference).",
+  "budget": {"gpu": "<= 1 GPU-h", "submissions": 0}
+}

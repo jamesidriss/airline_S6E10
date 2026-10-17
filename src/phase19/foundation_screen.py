@@ -73,17 +73,22 @@ def screen_metrics(y_eval: np.ndarray, pred: np.ndarray, port0: np.ndarray, rout
 
 
 # ------------------------------------------------------------------ adapters
-def build_model(name: str, device: str, seed: int = 1201):
+def build_model(name: str, device: str, seed: int = 1201, disk_offload_dir: str | None = None):
     """Return a fitted-ready estimator with .fit(X,y) / .predict_proba(X).
 
     Each foundation model is an in-context learner (fit = ingest context rows,
     predict = forward pass). xRFM is the exception (a fitted kernel machine) and
     is wrapped to expose the same fit(X,y)/predict_proba signature by carving an
     inner validation split out of the context (fold-safe).
+
+    disk_offload_dir: optional H20-FM-RICH fallback for TabICL CUDA OOM at the
+    285-feature rich view (enables the library's own disk offload; predictions
+    are unchanged, only the memory footprint).
     """
     if name == "tabicl":
         from tabicl import TabICLClassifier
-        return TabICLClassifier(device=device, n_estimators=8, allow_auto_download=True)
+        kw = {"disk_offload_dir": disk_offload_dir} if disk_offload_dir else {}
+        return TabICLClassifier(device=device, n_estimators=8, allow_auto_download=True, **kw)
     if name == "tabdpt":
         from tabdpt import TabDPTClassifier
         # compile=False avoids a long recompile per call; context_reduction handles
