@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-17T11:26:00.346459+00:00",
+  "git": "1122161a8d5a4fb3a0e4951f1c6aeb32e88409d1",
+  "context": 8192,
+  "context_seed": 20261023,
+  "eval_fold": 0,
+  "eval_rows": 139927,
+  "tag": "fmscreen_rich_ctx8k",
+  "device": "cuda",
+  "elapsed_seconds": 12.989408254623413,
+  "results": []
+}

@@ -44,7 +44,8 @@
    "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "preserve 20k neg; probe native context; one bounded larger-context retest only if trajectory plausible"
+   "next_action": "preserve route-view neg (-1.394e-3); rich-view mechanism UNMEASURED -- 3 resource failures at 16GB (ctx20k OOM; disk_offload hard-killed the process after preallocating ~125GB and nearly filled C:; ctx8k still OOM: the internal prediction buffer is the binding constraint). RESOURCE_BLOCKED on rich view, NOT negative. Any future attempt needs a >16GB GPU or a chunked-predict patch; do not retry on this GPU.",
+   "phase20_finding": "fold-0 rich-view screen (H20-FM-RICH): feature lift transfers (+1.4e-3 tabdpt / +9.9e-4 causilo standalone vs route view, port_delta ~halved) but corr rises to ~0.989-0.990; both land at port_delta ~-7.9e-4, ~16x below the +5e-5 bar. FLM x rich-view closed."
   },
   {
    "experiment_number": 3,
@@ -81,12 +82,13 @@
    "requested_method": "TabDPT classifier, context_reduction subsample",
    "historical_status": "20k-fold0 screen -1.41e-3",
    "historical_equivalent": "-",
-   "status": "PARTIAL_VALID",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P2",
    "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "preserve 20k neg; only distinct larger-context/arch policy if justified"
+   "next_action": "CLOSED on both views (route -1.410e-3, rich -7.857e-4): fold-0 rich-view screen (H20-FM-RICH): feature lift transfers (+1.4e-3 tabdpt / +9.9e-4 causilo standalone vs route view, port_delta ~halved) but corr rises to ~0.989-0.990; both land at port_delta ~-7.9e-4, ~16x below the +5e-5 bar. FLM x rich-view closed.",
+   "phase20_finding": "fold-0 rich-view screen (H20-FM-RICH): feature lift transfers (+1.4e-3 tabdpt / +9.9e-4 causilo standalone vs route view, port_delta ~halved) but corr rises to ~0.989-0.990; both land at port_delta ~-7.9e-4, ~16x below the +5e-5 bar. FLM x rich-view closed."
   },
   {
    "experiment_number": 6,
@@ -151,12 +153,13 @@
    "requested_method": "Causilo causal-discovery + TabPFN classifier",
    "historical_status": "20k-fold0 screen -1.01e-3",
    "historical_equivalent": "-",
-   "status": "PARTIAL_VALID",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
    "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "preserve neg; only clearly different mechanism"
+   "next_action": "CLOSED on both views (route -1.011e-3, rich@8k -7.894e-4): fold-0 rich-view screen (H20-FM-RICH): feature lift transfers (+1.4e-3 tabdpt / +9.9e-4 causilo standalone vs route view, port_delta ~halved) but corr rises to ~0.989-0.990; both land at port_delta ~-7.9e-4, ~16x below the +5e-5 bar. FLM x rich-view closed.",
+   "phase20_finding": "fold-0 rich-view screen (H20-FM-RICH): feature lift transfers (+1.4e-3 tabdpt / +9.9e-4 causilo standalone vs route view, port_delta ~halved) but corr rises to ~0.989-0.990; both land at port_delta ~-7.9e-4, ~16x below the +5e-5 bar. FLM x rich-view closed."
   },
   {
    "experiment_number": 11,
@@ -517,12 +520,13 @@
    "requested_method": "predict satisfaction + 13 ratings shared rep",
    "historical_status": "prior conditional multi-task",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P2",
    "fidelity_reached": "F1",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "audit prior conditional multi-task; true shared-rep MTL; FIT-only"
+   "next_action": "CLOSED: fold-0 MTL screen (H20-MTL): masked-rating CORAL aux on PLR trunk -- both arms slightly worse than the plain-PLR reference (0.959963/-5.009e-4 and 0.959813/-5.576e-4 vs 0.960197/-4.191e-4), corr unchanged ~0.993. The coupling objective neither lifts nor decorrelates. Reopening needs a different auxiliary SIGNAL.",
+   "phase20_finding": "fold-0 MTL screen (H20-MTL): masked-rating CORAL aux on PLR trunk -- both arms slightly worse than the plain-PLR reference (0.959963/-5.009e-4 and 0.959813/-5.576e-4 vs 0.960197/-4.191e-4), corr unchanged ~0.993. The coupling objective neither lifts nor decorrelates."
   },
   {
    "experiment_number": 36,
@@ -531,12 +535,13 @@
    "requested_method": "ordinal (not generic) loss on rating levels",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
    "fidelity_reached": "F1",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "ordinal aux objective; smoke; fold-0"
+   "next_action": "CLOSED (fold-safe CORAL ordinal aux, measured with item 35): fold-0 MTL screen (H20-MTL): masked-rating CORAL aux on PLR trunk -- both arms slightly worse than the plain-PLR reference (0.959963/-5.009e-4 and 0.959813/-5.576e-4 vs 0.960197/-4.191e-4), corr unchanged ~0.993. The coupling objective neither lifts nor decorrelates.",
+   "phase20_finding": "fold-0 MTL screen (H20-MTL): masked-rating CORAL aux on PLR trunk -- both arms slightly worse than the plain-PLR reference (0.959963/-5.009e-4 and 0.959813/-5.576e-4 vs 0.960197/-4.191e-4), corr unchanged ~0.993. The coupling objective neither lifts nor decorrelates."
   },
   {
    "experiment_number": 37,
@@ -686,12 +691,13 @@
    "requested_method": "xRFM on 285-col rich view",
    "historical_status": "distinct from item 6",
    "historical_equivalent": "item 6",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
    "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "rich-view xRFM (distinct mechanism from raw-view item 6)"
+   "next_action": "CLOSED: xRFM on the 285-feature rich view is DEGENERATE (fold-0 AUC 0.589141, corr 0.1697) -- the recursive feature machine collapses at this dimensionality; a failed mechanism, not a usable measurement",
+   "phase20_finding": "xRFM rich-view fold-0: AUC 0.589141 (degenerate collapse at 285 features)."
   },
   {
    "experiment_number": 48,
@@ -1384,5 +1390,6 @@
    "blocking_reason": "-",
    "next_action": "note reused shadow is not fresh; new scheme if used for selection"
   }
- ]
+ ],
+ "updated": "2026-10-17T11:59:58.817984+00:00"
 }

@@ -1,0 +1,37 @@
+{
+  "utc": "2026-10-17T11:07:09.958528+00:00",
+  "git": "323526888267414600876568b46cbd4dbcfbe363",
+  "context": 20000,
+  "context_seed": 20261023,
+  "eval_fold": 0,
+  "eval_rows": 139927,
+  "tag": "fmscreen_rich_ctx20k",
+  "device": "cuda",
+  "elapsed_seconds": 81.70033240318298,
+  "results": [
+    {
+      "model": "tabdpt",
+      "standalone_auc": 0.9576319687568141,
+      "champion_portfolio_auc": 0.9618278142504795,
+      "champion_route_auc": 0.9614576551310231,
+      "equal_logit_blend_auc": 0.9610421431219283,
+      "portfolio_delta": -0.000785671128551213,
+      "logit_pearson_vs_portfolio": 0.9889850744089425,
+      "logit_pearson_vs_route": 0.9865853723432663,
+      "pred_std": 0.4284193108976589,
+      "pred_mean": 0.43958896435522465
+    },
+    {
+      "model": "xrfm",
+      "standalone_auc": 0.5891405853433553,
+      "champion_portfolio_auc": 0.9618278142504795,
+      "champion_route_auc": 0.9614576551310231,
+      "equal_logit_blend_auc": 0.7897846145033455,
+      "portfolio_delta": -0.172043199747134,
+      "logit_pearson_vs_portfolio": 0.1696716003548568,
+      "logit_pearson_vs_route": 0.169594645669575,
+      "pred_std": 0.4069048844000456,
+      "pred_mean": 0.4381554381764991
+    }
+  ]
+}
