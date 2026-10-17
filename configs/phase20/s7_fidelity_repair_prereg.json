@@ -1,0 +1,50 @@
+{
+ "phase": 20,
+ "experiment": "P20-S7-FIDELITY-REPAIR",
+ "family": "CLASS+NN",
+ "preregistered_utc": "2026-10-17",
+ "trigger": "Mandate S7: re-examine partial/failed classifications. Four defects found in live state: (a) FT-Transformer + InteractionNet rich-view attempts FAILED on CUDA OOM at INNER-VAL/EVAL inference (unchunked 55971-row val forward and 65536-row eval chunks on 285 tokens / 40330 pair-terms) -- a RESOURCE limit, not an architectural negative; (b) DCNv2 cross layer is SCALAR (Linear(n_features,1) -> rank-1 W = 1*w^T), NOT canonical DCNv2 (full W) or DCNv2-low-rank (u v^T) -- its negative cannot close canonical DCNv2; (c) item 64 Approx RBF SVM was closed by the classical-block addendum WITHOUT ever being run (only oblique + kernelridge results exist); (d) item 65 Factorized logistic interactions was closed by the additive-logreg negative -- a different model. (e) Items 35/36 (MTL) carry F1 but have full fold-0 numbers = F2; item 60/63 carry F1 but were measured = F2 with proxy labels.",
+ "resolution": "Run the four missing/incorrectly-classified measurements with declared resource adaptations; reclassify catalogue rows accordingly; no claim about canonical DCNv2 or RFF-SVM or factorized-logistic until measured.",
+ "view": "full (certified 285-feature rich view, fold-safe TE via ViewBuilder.assemble) for all repairs; route secondary only where stated.",
+ "fold": "primary_5f_seed20261010; fold-0 discovery screen (F2; cannot pass admission gate)",
+ "train": "all FIT rows (folds 1-4 = 559708); inner 10% ES split fold-safe (seed 1); scaler fit on FIT-train only",
+ "screen_bar": "promising if portfolio_delta >= +5e-5 AND logit_pearson_vs_portfolio < 0.995",
+ "repairs": {
+  "fttransformer_full_bounded": {
+   "item": 15,
+   "change": "RESOURCE ADAPTATION ONLY (math identical): train batch_size 4096 -> 1024 (attention memory scales with batch x tokens^2; 4096x8x286x286 bf16 x 3 layers cannot fit 16 GB), inner-val + eval inference chunked at 4096 rows (row-independent batching; numerics per row unchanged).",
+   "arch": "unchanged frozen FT-Transformer: d_token 192, n_layers 3, n_heads 8, dropout 0.1, head_hidden 192",
+   "train_kwargs": {"lr": 0.001, "weight_decay": 1e-05, "batch_size": 1024, "max_epochs": 100, "es_patience": 15},
+   "fallback_ladder": ["batch_size 512 if 1024 OOMs", "infer chunk 2048 if 4096 OOMs"],
+   "interpretation": "measures the SAME architecture on the rich view; prior rich-view FAILED status was resource-limited"
+  },
+  "interactionnet_full_bounded": {
+   "item": 30,
+   "change": "RESOURCE ADAPTATION ONLY: inner-val + eval inference chunked at 4096 rows (40330 pair-terms x 55971 val rows x fp32 was the 8.44 GiB allocation). train batch 4096 unchanged (4096x40330 bf16 = 660 MB, fits).",
+   "arch": "unchanged: upper-triangular pairwise products -> MLP d_hidden 256, n_layers 2, dropout 0.1",
+   "train_kwargs": {"lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15}
+  },
+  "dcnv2full": {
+   "item": 17,
+   "change": "NEW ARCHITECTURE: canonical DCNv2 cross layer x_{l+1} = x_0 ⊙ (W_l x_l + b_l) + x_l with FULL W_l in R^{n_feat x n_feat} (n_feat<=512 so dense is cheap), replacing the scalar-cross proxy (W = 1*w^T). Deep MLP branch + concat head unchanged from the proxy so the ONLY delta is the cross matrix rank.",
+   "arch": {"d_hidden": 256, "n_layers": 3, "dropout": 0.1},
+   "train_kwargs": {"lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15},
+   "views": ["route", "full"],
+   "interpretation": "if dcnv2full ALSO lands at port_delta < +5e-5, the cross-network family is closed for canonical W too; if it differs materially, the proxy measurement was the defect"
+  },
+  "factlog": {
+   "item": 65,
+   "change": "Factorized (bilinear) logistic: logit = w.x + sum_{r=1..16} (u_r.x)(v_r.x), rank-16 low-rank interaction logistic trained end-to-end (Adam, BCE, inner-val ES). This is the interaction model item 65 asked for; the additive logreg that closed it is a different hypothesis.",
+   "arch": {"rank": 16},
+   "train_kwargs": {"lr": 0.003, "weight_decay": 1e-04, "batch_size": 8192, "max_epochs": 60, "es_patience": 10}
+  },
+  "rffsvm": {
+   "item": 64,
+   "change": "Approximate RBF SVM via random Fourier features: RBFSampler(n_components=512, gamma=0.01, random_state=1) -> LinearSVC(C=1.0). score = decision_function (monotone-valid for AUC, same convention as the kernelridge precedent). StandardScaler fit on FIT-train only.",
+   "note": "gamma=0.01 fixed (median heuristic on 285 standardized features lands near 1/n_feat ~ 0.0035; 0.01 is the preregistered constant -- no tuning to any board)"
+  }
+ },
+ "negative_rule": "each repair records NEGATIVE for its exact frozen recipe if portfolio_delta < +5e-5 or corr >= 0.995; no rerun of an identical fingerprint; the four prior proxy/failed rows keep their ledger history (append-only) and get reclassified, never deleted",
+ "anti_leakage": "view fold-safe (TE fit on FIT, EVAL labels never read); all training data subsets of FIT; inner ES from FIT only; champion hash-asserted via load_champion_fold0; no public-LB contact",
+ "budget": {"gpu_hours_est": 1.0, "cpu_hours_est": 0.5, "one_gpu_job_at_a_time": true}
+}
