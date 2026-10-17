@@ -4,7 +4,7 @@ Generated 2026-10-17 · 96 experiments · champion v7 0.961852923 · target 0.96
 
 | # | Experiment | Family | Historical | Status | Pri | Fidelity | Eligibility | Blocking | Next action |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | Mitra-v2 | FLM | none | NOT_STARTED | P1 | F0 | OK | - | install isolated autogluon[mitra]; fold-0 scre |
+| 1 | Mitra-v2 | FLM | NEGATIVE (this session) | COMPLETE_NEGATIVE | P1 | F2 | OK | done | CLOSED: prereg arms (20k/full) resource-infeasible on sm_120 (VRAM thrashing, no flash-attn); feasible-scale 2048ctx probe port_delta -1.63e-3 (bar +5e-5); FLM class 6/6 negative; do not rerun identical recipe |
 | 2 | TabICLv2 | FLM | 20k-fold0 screen -1.40e-3 vs v7 bl | PARTIAL_VALID | P1 | F2 | OK | - | preserve 20k neg; probe native context; one bo |
 | 3 | EXAONE Tabular | FLM | none | LICENSE_BLOCKED | P2 | F0 | NC | weights non-commercial; competition use not established | verify intended-use; do NOT submit with NC wei |
 | 4 | Kumo Tabular | FLM | none | NOT_STARTED | P1 | F0 | CUSTOM | - | audit OpenMDW-1.1 vs prize rules; download sma |
@@ -35,7 +35,7 @@ Generated 2026-10-17 · 96 experiments · champion v7 0.961852923 · target 0.96
 | 29 | Supervised MoE | NN | none | NOT_STARTED | P2 | F1 | OK | - | gating uses FIT labels only; smoke; fold-0 |
 | 30 | Service-interaction net | NN | none | NOT_STARTED | P2 | F1 | OK | - | domain-motivated cross-rating interactions; sm |
 | 31 | Fine-tune TabICLv2 | OBJ | none | NOT_STARTED | P2 | F0 | OK | - | official FT procedure; FIT-only selection |
-| 32 | Fine-tune Mitra-v2 | OBJ | none | NOT_STARTED | P1 | F0 | OK | - | 50-step FT w/ 8-fold bag (needs CUDA); do afte |
+| 32 | Fine-tune Mitra-v2 | OBJ | NEGATIVE (this session) | COMPLETE_NEGATIVE | P1 | F1 | OK | done | CLOSED: the 50-step FT + 8-fold bag recipe was exercised by the row-1 screen (prereg mitra_screen_prereg) and is negative; do not rerun identical recipe |
 | 33 | LoRA/adapters | OBJ | none | NOT_STARTED | P3 | F0 | OK | - | audit which FLMs support adapters; bounded tes |
 | 34 | Fine-tune TabPFN 3.5 | OBJ | none | NOT_STARTED | P2 | F0 | OK | - | verify license+16GB VRAM sufficiency for FT |
 | 35 | Multi-task | OBJ | prior conditional multi-task | NOT_STARTED | P2 | F1 | OK | - | audit prior conditional multi-task; true share |

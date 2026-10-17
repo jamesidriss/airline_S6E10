@@ -5,9 +5,10 @@
   {
    "rank": 1,
    "item": "P20-MITRA-SCREEN (F2 arms A/B)",
-   "status": "RUNNING",
+   "status": "COMPLETE_NEGATIVE",
    "gpu": "yes",
-   "eta": "~1-3h/arm pending probe"
+   "eta": "~1-3h/arm pending probe",
+   "note": "prereg arms infeasible (VRAM thrashing @16-20k, no flash-attn sm_120); feasible 2048ctx probe port_delta -1.63e-3; FLM class 6/6 negative"
   },
   {
    "rank": 2,

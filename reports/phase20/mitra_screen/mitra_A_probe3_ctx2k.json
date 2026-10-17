@@ -1,0 +1,97 @@
+{
+  "model": "mitra-v2",
+  "arm": "A",
+  "status": "DONE",
+  "error": null,
+  "utc": "2026-10-17T03:26:28.836785+00:00",
+  "git": "84e655e3367811d00c16dad57dbb49d36722cce8",
+  "checkpoint": "C:\\Users\\James\\airline_S6E10\\artifacts\\phase20\\mitra-classifier-2",
+  "checkpoint_weights_sha256": "5ffab0e2cf52f61c5b7c7eb1e8542996736d1023a0212190cc09abc2119a1e09",
+  "runtime": "mitra-finetune 0.3.0 / autogluon 1.6.3 / torch 2.9.0+cu129 (isolated .venv_ag)",
+  "recipe": "frozen: 50-step FT, lr/warmup/wd defaults, eval_metric=roc_auc, num_bag_folds=8, time_limit=14400, no env protocol overrides",
+  "native_ft_support_cap": 16384,
+  "native_predict_support_cap": 16384,
+  "actual_fit_rows_passed": 2048,
+  "resource_guard_note": "AG static ICL memory estimate disabled (misestimates capped-support FT recipe)",
+  "context_rows_requested": 2048,
+  "context_seed": 20261023,
+  "eval_rows": 2000,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "eval_ids_sha256": "3a38f7188821919d7a96df2c5f47ded08830523c697443ed58c0a65dedae5812",
+  "arm_note": "stratified 20k FIT context (phase-19 matched information budget)",
+  "features": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "categorical_indices": [
+    13,
+    14,
+    15,
+    16,
+    18,
+    21
+  ],
+  "label_free_category_maps": {
+    "Gender": [
+      "Female",
+      "Male"
+    ],
+    "Customer Type": [
+      "Loyal Customer",
+      "disloyal Customer"
+    ],
+    "Type of Travel": [
+      "Business travel",
+      "Personal Travel"
+    ],
+    "Class": [
+      "Business",
+      "Eco",
+      "Eco Plus"
+    ]
+  },
+  "prediction_sha256": "7683112aa0122691d590f679cc301e378494b10e58e3314f4acb4a9452dbc9af",
+  "internal_oof_val_auc": 0.9538956835922404,
+  "metrics": {
+    "standalone_auc": 0.95050036232958,
+    "champion_portfolio_auc": 0.9594466833811839,
+    "champion_route_auc": 0.9593179005121675,
+    "equal_logit_blend_auc": 0.957815433706974,
+    "portfolio_delta": -0.0016312496742099114,
+    "logit_pearson_vs_portfolio": 0.974340885620143,
+    "logit_pearson_vs_route": 0.9725563283926396,
+    "pred_std": 0.42824534930870845,
+    "pred_mean": 0.4406214913288131
+  },
+  "tag": "probe3_ctx2k",
+  "prereg": "configs/phase20/mitra_screen_prereg.json",
+  "fit_seconds": 2.368377208709717,
+  "predict_seconds": 455.12027740478516,
+  "total_seconds": 457.6617875099182
+}

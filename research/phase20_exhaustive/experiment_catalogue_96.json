@@ -23,14 +23,14 @@
       "canonical_name": "Mitra-v2",
       "research_family": "FLM",
       "requested_method": "AutoGluon Mitra-v2 75.7M 2D-transformer FLM, synthetic-prior pretrain",
-      "historical_status": "none",
+      "historical_status": "NEGATIVE (this session)",
       "historical_equivalent": "-",
-      "status": "NOT_STARTED",
+      "status": "COMPLETE_NEGATIVE",
       "priority": "P1",
-      "fidelity_reached": "F1",
+      "fidelity_reached": "F2",
       "competition_eligibility": "OK",
-      "blocking_reason": "-",
-      "next_action": "F2 fold-0 screen (arms A/B) running in .venv_ag"
+      "blocking_reason": "done",
+      "next_action": "CLOSED: prereg arms (20k/full) resource-infeasible on sm_120 (VRAM thrashing, no flash-attn); feasible-scale 2048ctx probe port_delta -1.63e-3 (bar +5e-5); FLM class 6/6 negative; do not rerun identical recipe"
     },
     {
       "experiment_number": 2,
@@ -457,14 +457,14 @@
       "canonical_name": "Fine-tune Mitra-v2",
       "research_family": "OBJ",
       "requested_method": "AutoGluon/Mitra official fine-tune routine",
-      "historical_status": "none",
+      "historical_status": "NEGATIVE (this session)",
       "historical_equivalent": "-",
-      "status": "NOT_STARTED",
+      "status": "COMPLETE_NEGATIVE",
       "priority": "P1",
-      "fidelity_reached": "F0",
+      "fidelity_reached": "F1",
       "competition_eligibility": "OK",
-      "blocking_reason": "-",
-      "next_action": "50-step FT w/ 8-fold bag (needs CUDA); do after Mitra-v2 inference screen"
+      "blocking_reason": "done",
+      "next_action": "CLOSED: the 50-step FT + 8-fold bag recipe was exercised by the row-1 screen (prereg mitra_screen_prereg) and is negative; do not rerun identical recipe"
     },
     {
       "experiment_number": 33,
