@@ -1,0 +1,40 @@
+{
+ "experiment": "phase20_ens75_hard_pair_specialist",
+ "phase": "20",
+ "family": "ENS",
+ "experiment_number": 75,
+ "frozen_utc": "2026-10-18T00:00:00+00:00",
+ "hypothesis": "A stacking corrector that receives the champion portfolio's own cross-fitted logit as an input feature learns where the portfolio is wrong (hard pairs) while reproducing it on easy rows (protect-easy by construction, not by gating); its equal-logit blend with the portfolio reference beats the reference by >= +5e-5 AUC on fold-0 with Spearman < 0.995.",
+ "why_distinct_from_prior_negatives": "H19-A reweighted training by covariate-locatable difficulty (INC, net ~0). ENS74 reweighted training by portfolio margin |p-0.5| (NEGATIVE, blend below portfolio, but strongest standalone member of phase 20 at 0.961113). ENS75 uses NEITHER reweighting: uniform training weights, and the portfolio opinion enters as an input FEATURE (stacking/residual correction). Deployment is full-vector (no gating) so the candidate differs from the portfolio on every row and the corr limb remains mechanically passable. Row 75 next_action: 'distinct from H19-A fixed reweight; must not degrade easy pairs' -- easy pairs are protected by the model's ability to learn near-zero corrections when the portfolio is already right.",
+ "decision_rule": {
+  "frozen_rule": "PROMISING iff port_delta >= +5e-5 AND spearman_vs_portfolio < 0.995",
+  "port_delta": "AUC(equal-logit blend(candidate, PORTFOLIO_REF)) - AUC(PORTFOLIO_REF) on primary fold-0",
+  "portfolio_ref": "sol_route_aux10_primary_final (champion-v7 proxy)",
+  "descriptive_only": "standalone AUC, tie-subset AUCs, logit Pearson - never the decision rule"
+ },
+ "anti_leakage": [
+  "view assembled fold-safe (TE fit on FIT via ViewBuilder.assemble); model fit on FIT only",
+  "inner 10% ES split carved from FIT-train only, seed 1 (fold-0 labels read only at final metrics)",
+  "CAVEAT (recorded, same class as ENS74): the portfolio OOF logit for FIT rows was produced by models that trained INCLUDING fold 0 (standard OOF); the fold-0 logit column is fold-0-blind (trained on FIT only). Asymmetric second-order fold-0 influence on the FIT-side feature column. A POSITIVE result must be re-verified with FIT-internal inner cross-fitted portfolio logits (H19-A protocol) before any submission use.",
+  "fold-0 labels are read only at final metric computation"
+ ],
+ "protocol": {
+  "view": "full (285-feature certified rich view) + 1 stacking feature: logit(PORTFOLIO_REF OOF)",
+  "training": "LightGBM on ALL FIT rows, uniform sample_weight, portfolio logit appended as feature column",
+  "params": {
+   "objective": "binary", "metric": "auc", "learning_rate": 0.02,
+   "num_leaves": 127, "min_child_samples": 40, "colsample_bytree": 0.8,
+   "subsample": 0.8, "subsample_freq": 1, "reg_lambda": 1.0, "max_bin": 255,
+   "extra_trees": true, "n_estimators": 6000, "es_rounds": 300,
+   "seed": 1, "es_frac": 0.10
+  },
+  "candidate": "stacking-corrector predict_proba on all fold-0 rows (full vector, no gating)",
+  "descriptive": [
+   "standalone fold-0 AUC of the corrector",
+   "portfolio AUC on the bottom-30% portfolio-margin fold-0 subset vs corrector AUC on same subset",
+   "hard-pair readout: AUC of (corrector - portfolio logit) sign on the tie subset",
+   "Spearman candidate vs PORTFOLIO_REF, logit Pearson"
+  ]
+ },
+ "env": {"device": "cpu", "runner": "scripts/phase20/ens75_hard_pair_corrector.py"}
+}
