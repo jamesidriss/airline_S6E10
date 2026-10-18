@@ -737,12 +737,13 @@
    "requested_method": "context-conditioned rating embeddings",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P4",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "smoke; fold-0"
+   "next_action": "closed: port_delta -6.494e-04; strongest descriptive ",
+   "phase20_finding": "F2 fold-0: +4.94e-03 descriptive augmentation (0.953423 -> 0.958366), Spearman 0.9407, but port_delta -6.494e-04 fails the frozen rule; mechanism real (rating->satisfaction mapping depends on segment) yet candidate blends below portfolio. Future note: re-test block inside the FULL view under a new prereg; not a promotion."
   },
   {
    "experiment_number": 50,
@@ -1439,5 +1440,5 @@
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T15:01:35.770211+00:00"
+ "updated_utc": "2026-10-18T15:27:25.950899+00:00"
 }

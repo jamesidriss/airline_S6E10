@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T15:01:35.771711+00:00",
+ "updated_utc": "2026-10-18T15:27:25.952399+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -1610,24 +1610,32 @@
    "family": "FEAT",
    "title": "Conditional ordinal embed",
    "priority": "P4",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "largest descriptive augmentation of the phase (+4.94e-03 raw21) but port_delta -6.494e-04 fails frozen rule; candidate blends below portfolio",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/feat49_conditional_ordinal_embed_prereg.json",
+    "sha256": "d0f5450d3b8b9be0ea21ed81c64454446911ad9c75b92f0aa1449c56fa24ef4d"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/feat49_conditional_ordinal_embed/feat49_conditional_ordinal_embed.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T15:27:25.952399+00:00",
+     "event": "f2_screen_done",
+     "from": "PENDING"
     }
    ]
   },

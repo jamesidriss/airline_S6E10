@@ -1,0 +1,23 @@
+{
+ "status": "DONE",
+ "prereg": "configs/phase20/feat49_conditional_ordinal_embed_prereg.json",
+ "prereg_sha256": "d0f5450d3b8b9be0ea21ed81c64454446911ad9c75b92f0aa1449c56fa24ef4d",
+ "method": "adaptive-shrinkage target encoding (lam=40) of each of the 13 service ratings conditioned on the context cell (Customer Type x Type of Travel x Class); key = rating value x cell; strict outer-FIT-only EVAL stats + inner cross-fit within outer-FIT, ES labels excluded; added to 21raw (13 columns).",
+ "metrics": {
+  "control_fold0_auc": 0.953423,
+  "treatment_fold0_auc": 0.958366,
+  "augmentation_delta_descriptive_only": 0.00494301,
+  "portfolio_ref": "sol_route_aux10_primary_final",
+  "portfolio_fold0_auc": 0.961727,
+  "candidate_spearman_vs_portfolio": 0.940689,
+  "equal_logit_blend_fold0_auc": 0.961078,
+  "port_delta": -0.0006494,
+  "promising_frozen_rule": false,
+  "best_iter_control": 1283,
+  "best_iter_treatment": 836,
+  "eval_rows": 139927
+ },
+ "eval_rows": 139927,
+ "n_context_cells": 12,
+ "n_rating_columns": 13
+}
