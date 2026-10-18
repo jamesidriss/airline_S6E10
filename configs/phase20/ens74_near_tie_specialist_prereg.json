@@ -1,0 +1,40 @@
+{
+ "experiment": "phase20_ens74_near_tie_specialist",
+ "phase": "20",
+ "family": "ENS",
+ "experiment_number": 74,
+ "frozen_utc": "2026-10-18T00:00:00+00:00",
+ "hypothesis": "The champion portfolio's own cross-fitted uncertainty (small margin |p-0.5|) locates the FIT rows where an extra rich-view LGBM member carries incremental signal; upweighting those rows (3x) yields a specialist whose equal-logit blend with the portfolio reference beats the reference by >= +5e-5 AUC on fold-0 while decorrelating (Spearman < 0.995).",
+ "why_distinct": "Margins come from the portfolio's FIT-side OOF (route+aux10, never the eval fold's labels) and target UNCERTAINTY, not error-based difficulty (H19-A used difficulty weights and netted ~0) and not label-noise hard pairs (row 75). Row 74 next_action is exactly 'FIT-only margins'.",
+ "decision_rule": {
+  "frozen_rule": "PROMISING iff port_delta >= +5e-5 AND spearman_vs_portfolio < 0.995",
+  "port_delta": "AUC(equal-logit blend(candidate, PORTFOLIO_REF)) - AUC(PORTFOLIO_REF) on primary fold-0",
+  "portfolio_ref": "sol_route_aux10_primary_final (champion-v7 proxy)",
+  "descriptive_only": "standalone AUC, tie-subset AUCs, logit Pearson - never the decision rule"
+ },
+ "anti_leakage": [
+  "margins and the tie threshold are computed from PORTFOLIO_REF OOF only; threshold tau = 30% quantile of FIT-row margins; fold-0 rows are labeled near-tie by |port-0.5| <= tau using fold-0 PREDICTIONS (no labels)",
+  "view assembled fold-safe (TE fit on FIT via ViewBuilder.assemble)",
+  "inner 10% ES split carved from FIT-train only, seed 1 (ES labels never used for weighting)",
+  "fold-0 labels are read only at final metric computation"
+ ],
+ "protocol": {
+  "view": "full (285-feature certified rich view, fold-safe TE)",
+  "margin_source": "PORTFOLIO_REF OOF on FIT rows; tau = 30th percentile of |p-0.5| on FIT rows",
+  "training": "LightGBM on ALL FIT rows with sample_weight = 3.0 where margin <= tau else 1.0",
+  "params": {
+   "objective": "binary", "metric": "auc", "learning_rate": 0.02,
+   "num_leaves": 127, "min_child_samples": 40, "colsample_bytree": 0.8,
+   "subsample": 0.8, "subsample_freq": 1, "reg_lambda": 1.0, "max_bin": 255,
+   "extra_trees": true, "n_estimators": 6000, "es_rounds": 300,
+   "seed": 1, "tie_weight": 3.0, "es_frac": 0.10
+  },
+  "candidate": "specialist predict_proba on all fold-0 rows",
+  "descriptive": [
+   "standalone fold-0 AUC of specialist",
+   "portfolio AUC on near-tie fold-0 subset vs blend AUC on same subset",
+   "Spearman candidate vs PORTFOLIO_REF, logit Pearson"
+  ]
+ },
+ "env": {"device": "cpu", "runner": "scripts/phase20/ens74_near_tie_specialist.py"}
+}
