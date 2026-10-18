@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-DEP96-FINALIST-VALIDATION",
+  "date": "2026-10-18",
+  "scope": "F0 infrastructure + F1 validation. Create block10 (10-fold, seed 20261010) fold scheme per AGENTS.md. Validate champion A OOF on block10 as proof-of-concept. Prepare pipeline for finalist B when selected. No public-LB consultation.",
+  "hypotheses": {
+    "H96_BLOCK10_INFRASTRUCTURE": {
+      "item": 96,
+      "question": "Does the champion A OOF AUC replicate on the independent block10 (10-fold, seed 20261010) scheme? What is the OOF AUC and variance across 10 folds?",
+      "method": "Generate block10 folds (StratifiedKFold 10, seed 20261010) per AGENTS.md. Run champion LGBM (prod5_lgbm_full_primary recipe) 10-fold CV on the 285-feature rich view. Report per-fold AUC, mean, std, and correlation with primary 5-fold OOF. Also compute the equal-logit blend of block10 OOF with primary OOF to check consistency.",
+      "leakage": "Fold-safe: block10 folds are independent of primary folds. Training on 9/10 folds, eval on 1/10. No label leakage.",
+      "decision_rule": "Descriptive. If champion AUC on block10 is within 2e-4 of primary 5-fold, the champion is robust. Infrastructure ready for finalist B validation."
+    }
+  },
+  "non_goals": ["No public-LB consultation.", "No new model training beyond the validation LGBM."],
+  "git_before": "0e76c47"
+}
