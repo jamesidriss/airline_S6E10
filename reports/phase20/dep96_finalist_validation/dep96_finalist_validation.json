@@ -43,5 +43,6 @@
  "artifact": {
   "block10_folds": "data/cache/folds/block10_10f_seed20261010.npy",
   "oof_predictions": "reports/phase20/dep96_finalist_validation/block10_oof.npy"
- }
+ },
+ "correction_20261018": "CORRECTION 2026-10-18: This experiment validated a STANDALONE LGBM (prod5_lgbm_full_primary, xt_xt_f10 recipe) on block10 folds, NOT the v7 champion blend. The v7 champion (OOF 0.9618529228157235) is a 59-member blend including TabPFN, RealMLP, CatBoost, XGBoost, etc. This experiment validated a standalone classical model on block10 folds, NOT the v7 champion blend. The block10 infrastructure is ready; when finalist B is selected, the full v7 blend (or selected finalist blend) should be validated on block10 folds using the same per-fold assembly process."
 }

@@ -17,5 +17,6 @@
   "required_gain": 1.5e-05,
   "observed_gain": -0.00077429,
   "passes": false
- }
+ },
+ "correction_20261018": "CORRECTION 2026-10-18: The feature count '285 + 13' was incorrect. The static 'full' view has 237 features (not 285). The actual matrix was 237 static + 13 residuals = 250 features (matches n_features=250). The 285 figure included per-fold TE columns not present in the static view. The comparison to v7 champion (a 59-member blend) via a single LGBM AUC is not a valid portfolio delta measurement. A proper test requires paired control/treatment 5-fold CV with identical folds, feature views, and training policies. Re-measurement scheduled with paired control/treatment under identical 5-fold CV."
 }

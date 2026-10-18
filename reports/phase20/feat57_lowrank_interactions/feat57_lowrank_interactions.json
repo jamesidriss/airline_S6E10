@@ -15,5 +15,6 @@
   "promising": true,
   "decision_rule": "PROMISING if augmentation_delta >= +5e-5"
  },
- "rank": 8
+ "rank": 8,
+ "correction_20261018": "CORRECTION 2026-10-18: The measured mechanism is UNSUPERVISED SVD (PCA on ratings), which captures rating variance but NOT satisfaction-predictive interactions. The prereg requested a 'learned low-rank pairwise rating-interaction mechanism' (supervised, satisfaction-trained). The unsupervised SVD captures rating variance, not satisfaction-predictive interactions. The distinct missing mechanism is a SUPERVISED low-rank pairwise interaction model (e.g., factorized logistic on rating pairs with satisfaction supervision via cross-fitting). Re-measurement scheduled for the supervised mechanism."
 }

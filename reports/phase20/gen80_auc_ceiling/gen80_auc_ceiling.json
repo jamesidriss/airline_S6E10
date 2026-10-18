@@ -17,7 +17,8 @@
   "stretch_target": 0.96274,
   "stretch_gap_vs_champion": 0.000974,
   "stretch_reachable_by_blend": true,
-  "interpretation": "Oracle ceiling 0.964906 vs champion 0.961766: headroom +0.003140. Stretch gap +0.000974. Stretch THEORETICALLY reachable by a better blender over these two."
+  "interpretation": "Oracle ceiling 0.964906 vs champion 0.961766: headroom +0.003140. Stretch gap +0.000974. Stretch THEORETICALLY reachable by a better blender over these two.",
+  "correction_20261018": "CORRECTION 2026-10-18: The oracle ceiling (0.964906) is a LABEL-DEPENDENT pairwise upper bound (uses labels to cheat on every pos/neg pair). It is NOT evidence that an executable, label-free blender can achieve 0.962740. The oracle cheats by using ground-truth labels on every pair; a real blender must generalize from covariates only. The actual equal-logit blend (0.961756) underperforms the route reference alone (0.961766). Reference v7 champion OOF = 0.9618529228157235 (not route reference 0.961766). Stretch gap from champion is +8.87e-4. The oracle is a mathematical upper bound, NOT proof that stretch is achievable by any deployable blender."
  },
  "h80_hard_rows": {
   "confidence": "route reference logit",
