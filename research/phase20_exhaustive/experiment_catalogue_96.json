@@ -730,8 +730,8 @@
    "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "hierarchical rating model; fold-0",
-   "phase20_finding": "Multi-output HistGB hierarchical features (13 columns): augmentation delta +3.94e-4 (0.953423 → 0.953817). Hierarchical features alone weak (0.872). Decorrelated (Spearman 0.916). Blend with champion proxy +6.14e-3. PROMISING by +5e-5 bar but 10x weaker than FEAT 51 residuals (+3.94e-3). The multi-output shared-structure approach is dominated by the residual approach. PROMISING but not the primary lever."
+   "next_action": "rich-host F3 in flight; disposition after its feature gate + (if passed) stack admission",
+   "phase20_finding": "F3 COMPLETE on 21raw host (ledger p20_feat48_f3_21raw_host): fold-0 parity EXACT; feature gate PASS (mean +2.87e-4, SE 5.8e-5, t=4.92, 5/5 positive -- first rating-derived block to survive F3, unlike FEAT51 residuals t=1.54). Stack admission FAIL: equal-logit blend with champion v7 = -1.90e-3 (0/5, t=-32.6); weak-standalone member bleeds the stack (H94-consistent). Rich-host F3 (static-full 237 + 13hier, prereg fee4482d) in flight -- the block's last untested standard home."
   },
   {
    "experiment_number": 49,
@@ -1458,5 +1458,5 @@
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T18:49:03.374111+00:00"
+ "updated_utc": "2026-10-18T19:32:34.406856+00:00"
 }
