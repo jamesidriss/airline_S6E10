@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-CLASS68-MIXED-FACTOR",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. Supervised mixed-factor model: factorization machine style interactions with learned embeddings for categorical features, combined with linear terms.",
+  "hypotheses": {
+    "H68_MIXED_FACTOR": {
+      "item": 68,
+      "question": "Does a supervised mixed-factor model (FM-style embeddings for categoricals + linear terms) improve fold-0 OOF AUC on the rich view?",
+      "method": "Use sklearn's FactorizationMachineClassifier (or implement FM with embeddings for categorical features: Gender, Customer Type, Type of Travel, Class). Train on rich view folds 1-4, predict fold-0. Measure fold-0 port_delta vs champion proxy.",
+      "leakage": "Embeddings learned on FIT only (folds 1-4). Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995."
+    }
+  },
+  "non_goals": ["No public-LB consultation."],
+  "git_before": "4a75088"
+}
