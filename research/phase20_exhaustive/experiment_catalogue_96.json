@@ -765,12 +765,13 @@
    "requested_method": "latent rating dims for satisfaction ranking",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "supervised factorization; fold-0"
+   "next_action": "supervised factorization; fold-0",
+   "phase20_finding": "Supervised low-rank factorization (rank 8): augmentation delta -2.89e-3 (0.953423 \u2192 0.950533). NEGATIVE \u2014 the embeddings degrade LGBM performance. Decorrelated (Spearman 0.885) and blend with champion proxy +8.08e-3, but standalone degradation dominates. The supervised factorization objective does not extract LGBM-useful signal from the ratings. CLOSED."
   },
   {
    "experiment_number": 53,

@@ -1,0 +1,16 @@
+{
+ "prereg": "configs/phase20/feat52_rating_factorization_prereg.json",
+ "prereg_sha256": "c53890fd05de98a989d599d1a55463556d480cb145fb110dd18de75dd64b0acc",
+ "method": "Supervised low-rank factorization (rank 8) of 13 ratings, cross-fit 5-fold, PyTorch/AdamW",
+ "fold0_results": {
+  "base_21raw_auc": 0.953423,
+  "augmented_21raw_8emb_auc": 0.950533,
+  "augmentation_delta": -0.00288934,
+  "spearman_aug_vs_champion": 0.884804,
+  "equal_blend_auc": 0.958617,
+  "blend_delta_vs_aug": 0.00808362,
+  "champion_ref": 0.9618529228157235,
+  "port_delta_vs_champion": -0.01131948,
+  "promising": false
+ }
+}
