@@ -198,13 +198,13 @@
    "requested_method": "Compare TabPFN-3 vs TabPFN-2.6 checkpoints (matched protocol)",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "PARTIAL_VALID",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P1",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "verify exact checkpoints exist; pin revisions; matched inference vs our v3.5",
-   "phase20_finding": "Checkpoints verified (CPU): v2.6 = Prior-Labs/tabpfn_2_6 @ 24148873a9a5 (1 clf ckpt), v3 = Prior-Labs/tabpfn_3 @ 24a16a89d245 (4 clf ckpts); both ungated, license:other (same posture as champion's v3.5). Matched GPU inference deferred behind champion-OOF reproduction (v3.5 already newest and already champion; v2.6/v3 only possible as diversity members)."
+   "next_action": "closed: both checkpoint arms measured; neither can serve as a Champion-B member",
+   "phase20_finding": "BOTH arms executed at matched protocol with a frozen decision rule (ledgers p20_endgame_tabpfn26_screen, p20_endgame_tabpfn3_screen, + two interpretation controls). TabPFN-2.6 @100k context: standalone 0.956951, blend vs v7 -1.051e-3 (CI [-1.29e-3, -8.18e-4]). TabPFN-3 @100k: 0.956608, blend -7.97e-4 (CI [-9.6e-4, -6.3e-4]). Controls separate the confound: at the SAME 100k context the champion's v3.5 scores 0.959544 (context costs 1.91e-3) and v3 at FULL context (which FITS, 550 s, 8.22 GiB) scores 0.957746 -- 3.71e-3 below the champion member at identical context. Checkpoint quality dominates context size. CLOSED."
   },
   {
    "experiment_number": 14,
@@ -1464,5 +1464,5 @@
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T22:59:00.855270+00:00"
+ "updated_utc": "2026-10-18T23:54:04.428708+00:00"
 }

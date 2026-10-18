@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T23:34:22.132382+00:00",
+ "updated_utc": "2026-10-18T23:54:04.817553+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -351,8 +351,8 @@
    "family": "FLM",
    "title": "TabPFN-3 vs 2.6",
    "priority": "P1",
-   "state": "DONE",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "both checkpoint arms CLOSE on unconfounded matched-context evidence (v2.6 -1.05e-3, v3 full-context -6.24e-4 with CIs entirely below zero); checkpoint effect dominates context effect",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -361,7 +361,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": "PARTIAL_VALID",
+    "verdict": "COMPLETE_NEGATIVE",
     "report": "reports/phase20/flm13_checkpoint_verify/flm13_checkpoint_verify.json"
    },
    "history": [
@@ -376,6 +376,10 @@
      "from": "PENDING",
      "to": "DONE",
      "why": "verification portion complete; matched inference deferred with rationale (reserve preserved)"
+    },
+    {
+     "ts": "2026-10-18T23:54:04.428708+00:00",
+     "event": "state->CLOSED_NEGATIVE: row 13 closed with both arms + 2 controls"
     }
    ]
   },
