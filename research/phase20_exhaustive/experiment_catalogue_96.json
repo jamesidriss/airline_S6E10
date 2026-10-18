@@ -597,12 +597,13 @@
    "requested_method": "FIT-only hard pos-neg pair mining",
    "historical_status": "H19-A fixed reweight NEGATIVE/INC",
    "historical_equivalent": "-",
-   "status": "PREPARED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
-   "blocking_reason": "parity gate PASSED; arm=hard_mining deferred on budget",
-   "next_action": "ready: run arm=hard_mining on next GPU grant"
+   "blocking_reason": "-",
+   "next_action": "closed: objective variant negative on the frozen fold-0 screen",
+   "phase20_finding": "hard_mining: standalone 0.954052 (delta vs BCE control -3.60e-03); true v7 fold-0 0.961828 -> standalone delta -7.78e-03, equal-logit blend delta vs v7 -2.29e-04; frozen gate port_delta -2.19e-04 (need >= +5e-5), spearman vs route_ref 0.8908 (need < 0.995) -> FAIL. Weak-family ceiling stands: the objective cannot lift the fold-0 signal past the frozen screen; terminal."
   },
   {
    "experiment_number": 40,
@@ -1461,5 +1462,5 @@
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T22:44:25.799391+00:00"
+ "updated_utc": "2026-10-18T22:49:40.560036+00:00"
 }

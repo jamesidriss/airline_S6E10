@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T22:44:25.816396+00:00",
+ "updated_utc": "2026-10-18T22:49:40.576972+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -1503,8 +1503,8 @@
    "family": "OBJ",
    "title": "Hard-pair mining",
    "priority": "P3",
-   "state": "PENDING",
-   "state_note": "parity gate PASSED (ledger p20_obj37_41_parity_gate); arm=hard_mining deferred: ~42 min/arm x 5 exceeds remaining session GPU budget (~0.7h); runner+prereg committed pre-results (77b701a) - ready to run next grant",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "frozen gate FAIL: port_delta -2.19e-04 (need +5e-5); standalone 0.954052",
    "kind": "gpu",
    "cmd": [
     "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
@@ -1518,15 +1518,15 @@
    },
    "fingerprint": "a042c077eb6fb8fd",
    "depends_on": [],
-   "attempts": 0,
+   "attempts": 1,
    "expect": {
     "report": "reports/phase20/obj37_41_objectives/hard_mining_fold0.json",
     "prediction": "artifacts/phase20/obj37_41_objectives/hard_mining_fold0.npy",
     "eval_rows": 139927
    },
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/obj37_41_objectives/hard_mining_fold0.json"
    },
    "history": [
     {
@@ -1573,6 +1573,33 @@
       "eval_rows": 139927
      },
      "note": "re-registered via scheduler module (shell arg mangling repaired)"
+    },
+    {
+     "ts": "2026-10-18T22:44:29.224660+00:00",
+     "event": "run-start",
+     "pid": 15328,
+     "cmd": [
+      "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+      "scripts/phase20/obj37_41_objectives.py",
+      "--arm",
+      "hard_mining"
+     ],
+     "why": "OBJ39 hard_mining: prereg 94561fce; FIT-only hardness EMA + 50/50 hard/uniform sampling",
+     "fingerprint": "a042c077eb6fb8fd"
+    },
+    {
+     "ts": "2026-10-18T22:49:33.321997+00:00",
+     "event": "run-end",
+     "exit": 0,
+     "seconds": 304.1,
+     "state": "DONE"
+    },
+    {
+     "ts": "2026-10-18T22:49:40.576972+00:00",
+     "event": "block",
+     "from": "DONE",
+     "to": "CLOSED_NEGATIVE",
+     "why": "frozen gate FAIL: port_delta -2.19e-04 (need +5e-5); standalone 0.954052"
     }
    ]
   },
