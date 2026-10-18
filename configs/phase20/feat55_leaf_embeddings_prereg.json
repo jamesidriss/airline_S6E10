@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-FEAT55-LEAF-EMBEDDINGS",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. New feature block: LGBM leaf embeddings. Train the champion LGBM (xt_xt_f10 recipe) on the rich view, extract leaf indices for each tree as a new representation, feed into a second family (linear model or shallow neural net).",
+  "hypotheses": {
+    "H55_LEAF_EMBEDDINGS": {
+      "item": 55,
+      "question": "Do LGBM leaf embeddings (tree leaf assignments as dense features) provide a decorrelated representation that improves fold-0 OOF when fed into a second family model?",
+      "method": "Train LGBM (xt_xt_f10 recipe, seed 1) on folds 1-4 of the 285-feature rich view. Extract leaf indices for all trees (one-hot or integer indices) as a new feature matrix. Feed into a second family: (a) LogisticRegression on leaf indices, (b) shallow MLP (2 layers, 128 hidden). Cross-fit: train LGBM on folds 1-4, extract leaf indices for fold-0, train second family on folds 1-4, predict fold-0. Measure fold-0 port_delta vs champion.",
+      "leakage": "LGBM trained on FIT only (folds 1-4). Leaf indices extracted for fold-0 using the FIT-trained LGBM. Second family trained on FIT only. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995."
+    }
+  },
+  "non_goals": ["No public-LB consultation."],
+  "git_before": "fb13422"
+}
