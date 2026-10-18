@@ -1,0 +1,39 @@
+{
+ "prereg_id": "P20-ENDGAME-V7-REPRODUCTION",
+ "date": "2026-10-19",
+ "purpose": "Verify that the certified champion v7_sol_tabpfn_internal2_aux10 can still be rebuilt from committed source, current dependencies and immutable data -- the AGENTS.md finalist requirement 'reproduce each finalist from clean code before selecting'. The certified champion artifacts are immutable regardless of the outcome.",
+ "reproduction_command": ".venv/Scripts/python.exe scripts/run_phase17_tabpfn.py --estimators 2 --fold 0 --tag phase17_B1_replication_20261019",
+ "why_this_is_faithful": [
+  "the runner is the certified phase-17 pipeline that produced artifacts/phase17_B1/f{0..4} (source sha-pinned in the probe report)",
+  "library_sources() (tabpfn classifier/inference/base/inference_config/preprocessing) verified byte-identical to the phase-17 probe on 2026-10-18",
+  "scripts/phase16_tabpfn.py source sha verified identical to the phase-17 probe record",
+  "the immutable fold registry (data/cache/folds/primary_5f_seed20261010.npy) and the scope file are asserted by the runner itself",
+  "same hardware (RTX 5070 Ti 16GB), same seeds (pipeline seed 1201), same fit_with_cache inference policy"
+ ],
+ "comparison_targets": {
+  "source_fold": "artifacts/phase17_B1/f0 (certified; never overwritten)",
+  "report": "reports/phase17_B1_f0.json",
+  "route_prediction": {"path": "prediction.npy", "arr_sha256": "eda2772041b599872d9e23671e1706a817a27ef4ad04cb3ea4686f775d700a98", "auc": 0.9614576551310231},
+  "portfolio": {"path": "portfolio.npy", "arr_sha256": "7d025b33ed934c96053f7466a12b562523e186da75b0545f071f08a34c94b203"},
+  "member_0_raw_logits": {"arr_sha256": "455aaf4b15c2792798e7af8d10619d5f771ef3cba69e33a9506ae8186d210f07", "config_sha256": "de5090d76d9f4b3fb04e72fdb6eef98f41ae1dc508b9642da948987615d99c01"},
+  "member_1_raw_logits": {"arr_sha256": "d93428a576ce77faf63c8215a434ad0af6fc7fa3018b63556c875186a500d185", "config_sha256": "6781d617213a0411bf6ad94f64d095fbf9a490d54db61050c7451f56f3e22827"},
+  "apply_ids": {"arr_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4"},
+  "original_runtime_seconds": 2022.67
+ },
+ "acceptance_rule": {
+  "primary": "BITWISE: every listed arr_sha256 matches exactly (same library bytes, same data, deterministic seeds).",
+  "numerical_equivalence_fallback": "If and only if bitwise fails, the reproduction is accepted as NUMERICALLY_EQUIVALENT when max|delta| <= 1e-6 on the route probabilities AND Spearman(route_repro, route_certified) >= 0.9999 AND |AUC_repro - AUC_certified| <= 1e-6 AND the eval row set hash matches.",
+  "failure": "Anything outside the fallback band is REPRODUCTION_FAILED: recorded as a documented finding with exact differences; the certified champion stays immutable and finalist selection proceeds with the certified artifacts.",
+  "no_claims_rule": "Bitwise parity must never be claimed unless every hash matches; numerical equivalence must never be reported as bitwise."
+ },
+ "outputs": {
+  "artifacts": "artifacts/phase17_B1_replication_20261019/f0",
+  "report": "reports/phase17_B1_replication_20261019_f0.json",
+  "no_overwrite": "the certified artifacts/phase17_B1/** and reports/phase17_B1_f0.json are read-only for this experiment"
+ },
+ "license_eligibility": "TabPFN-3.5 Non-Commercial License v1.0, section 1.c explicitly includes data science competitions (recorded in every phase-16/17 contract, e.g. reports/phase17_B1_f0.json). Competition use is permitted; no commercial deployment is involved.",
+ "fold_safety": "fit_ids = folds != k; apply_ids = folds == k; asserted by the runner's contract; the immutable registry is never regenerated.",
+ "expected_cost_gpu_h": 0.57,
+ "budget_ref": "research/phase20_exhaustive/compute_budget_extension_22h.md (22h cap; this run charged against the balance)",
+ "git_before": "c3846ba"
+}
