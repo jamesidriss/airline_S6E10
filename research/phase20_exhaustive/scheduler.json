@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T13:43:44.642049+00:00",
+ "updated_utc": "2026-10-18T13:57:07.550144+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -2540,23 +2540,31 @@
    "family": "ENS",
    "title": "Hard-pair specialist",
    "priority": "P4",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "F2: corrector 0.961344, blend 0.961596, port_delta -1.312e-04; hard-pair subset worse than portfolio (0.900086 vs 0.901471)",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/ens75_hard_pair_corrector_prereg.json",
+    "sha256": "0f8d059df9977b7715d75dd2b2abb2e736eb7a5808149f8f05c11e6be8fc1e5d"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/ens75_hard_pair_corrector/ens75_hard_pair_corrector.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
+     "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T13:57:07.550144+00:00",
+     "event": "f2_screen_done",
      "from": "NOT_STARTED"
     }
    ]

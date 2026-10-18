@@ -1,0 +1,24 @@
+{
+ "status": "DONE",
+ "prereg": "configs/phase20/ens75_hard_pair_corrector_prereg.json",
+ "prereg_sha256": "0f8d059df9977b7715d75dd2b2abb2e736eb7a5808149f8f05c11e6be8fc1e5d",
+ "protocol": "stacking corrector: rich-view LGBM, uniform weights, portfolio OOF logit appended as input feature; inner 10% ES from FIT-train; candidate = corrector proba on all fold-0 rows (no gating).",
+ "metrics": {
+  "corrector_fold0_auc": 0.961344,
+  "portfolio_fold0_auc": 0.961727,
+  "equal_logit_blend_fold0_auc": 0.961596,
+  "port_delta": -0.00013124,
+  "candidate_spearman_vs_portfolio": 0.994326,
+  "candidate_logit_pearson_vs_portfolio": 0.99882,
+  "promising_frozen_rule": false,
+  "tau": 0.442901,
+  "tie_rows": 41647,
+  "tie_fraction": 0.2976,
+  "tie_subset_portfolio_auc": 0.901471,
+  "tie_subset_corrector_auc": 0.900086,
+  "best_iteration": 540,
+  "n_features": 286,
+  "eval_rows": 139927,
+  "fit_rows": 559708
+ }
+}

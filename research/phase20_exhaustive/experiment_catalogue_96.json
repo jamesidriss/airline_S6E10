@@ -1121,12 +1121,13 @@
    "requested_method": "improve hard pairs, protect easy",
    "historical_status": "H19-A INC (mech real, net ~0)",
    "historical_equivalent": "H19-A",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P4",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "distinct from H19-A fixed reweight; must not degrade easy pairs"
+   "next_action": "closed: stacking correction with portfolio logit as feature cannot beat the portfolio on its own hard pairs",
+   "phase20_finding": "F2 fold-0: corrector 0.961344, blend 0.961596, port_delta -1.312e-04, Spearman 0.994326. NEGATIVE; hard-pair subset corrector 0.900086 vs port 0.901471 (mechanism falsified). Third ENS mechanism converging on -1e-4..-3e-4: portfolio at local optimum for LGBM-family variants."
   },
   {
    "experiment_number": 76,
@@ -1435,5 +1436,5 @@
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T13:43:44.641052+00:00"
+ "updated_utc": "2026-10-18T13:57:07.544144+00:00"
 }
