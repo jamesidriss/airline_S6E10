@@ -1,0 +1,66 @@
+{
+ "experiment": "phase20_obj34_finetune_tabpfn35",
+ "phase": "20",
+ "family": "OBJ",
+ "experiment_number": 34,
+ "prereg_version": 2,
+ "amends": "configs/phase20/obj34_finetune_tabpfn35_prereg.json (sha256 00542b474d15c8dc146fab758be71cd852f1318a06cbb908ce5dd7952a3525ba, commit 77c6ad0)",
+ "amendment_reason": "Run v1 crashed BEFORE producing any predictive result (no fold-0 prediction, no metric). Traceback: FinetunedTabPFNClassifier._evaluate_model -> eval_classifier.predict_proba(X_val) -> TabPFNCUDAOutOfMemoryError: tried to allocate 1519.05 GiB. That allocation is exactly the full 50000 x 509708 x 16-head fp32 attention matrix: the library's inner-validation classifier inherits constructor defaults when the corresponding keys are absent from extra_classifier_kwargs, and the default inference_precision ('auto') resolved to fp32 math-backend SDPA, which materializes the matrix. v1 passed only model_path + categorical_features_indices, omitting the champion's inference_precision='autocast'. Fix = actually pass the champion fold-0 inference params the prereg already promised ('champion fold-0 route params verbatim'). NO decision-rule, seed, context, split, or epoch changes.",
+ "delta_from_v1": {
+  "extra_classifier_kwargs": "added inference_precision='autocast' (champion param; bf16 -> flash/mem-efficient SDPA, no materialization), kv_cache_precision='int8' (champion param; no cache is built in the FT estimator's batched mode nor the eval classifier's fit_preprocessors mode, so effect-free, kept for recipe fidelity), auto_scale_n_estimators=False (champion param; pins the frozen 2/2/2 estimator counts against size-based rescaling)",
+  "unchanged": "hypothesis, frozen rule (port_delta >= +5e-5 AND spearman < 0.995 vs route_ref), route view, FIT/EVAL split, seed 1201, epochs 30 + ES patience 8, validation_split_ratio 0.1 (FIT-internal), time_limit 2400s, ctx 50000, estimator counts 2/2/2, activation checkpointing, output_dir=None, checkpoint sha-assertion",
+  "library_constraint_note": "fit_mode is NOT passable through extra_classifier_kwargs (the FT module sets fit_mode='batched' for its own estimator and the inner-validation classifier defaults to 'fit_preprocessors'); the eval path therefore re-runs the forward without a KV cache, which under autocast stays within 16 GB (verified: the champion's own fold-0 predicts run the same architecture forward at the same 559k-token context under autocast)",
+  "evidence_class": "resource/placement repair only; no result existed to bias"
+ },
+ "hypothesis": "Weight-updating the champion's own TabPFN v3.5 checkpoint on FIT via the official Prior-Labs finetuning module (FinetunedTabPFNClassifier, full fine-tuning with inner validation early stopping) extracts task-specific signal that pure in-context learning misses: the fine-tuned model's equal-logit blend with route_ref beats route_ref by >= +5e-5 AUC with Spearman < 0.995 on primary fold-0.",
+ "why_distinct": "Every prior screen used v3.5 ZERO-SHOT (in-context learning only, no weight updates). This is the only official, documented weight-update path for the champion architecture (audit closed row 33: no LoRA/adapters exist anywhere; full FT is the only weight-update surface). The fine-tuned model starts from the champion checkpoint and adapts to FIT, so it is the single most-plausible remaining de-novo improvement axis: if ICL at 560k rows leaves signal on the table that gradient steps can capture, this finds it.",
+ "model_card": {
+  "module": "tabpfn.finetuning.FinetunedTabPFNClassifier (tabpfn 9.1.0, official Prior-Labs)",
+  "model_version": "ModelVersion.V3_5 (architecture config matched to the checkpoint)",
+  "checkpoint": "artifacts/tabpfn35/tabpfn-v3.5-20260909.safetensors",
+  "checkpoint_sha256": "ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3",
+  "checkpoint_bytes": 876027932,
+  "checkpoint_use": "READ-ONLY: model_path routed via extra_classifier_kwargs; output_dir left None so no intermediate checkpoints are written anywhere (champion artifacts untouched)",
+  "license": "license:other (Prior Labs terms; identical to champion v7 -- no new licensing exposure)"
+ },
+ "decision_rule": {
+  "frozen_rule": "PROMISING iff port_delta >= +5e-5 AND spearman_vs_route_ref < 0.995",
+  "port_delta": "AUC(equal-logit blend(finetuned, route_ref)) - AUC(route_ref) on primary fold-0 (all 139927 rows)",
+  "route_ref": "sol_route_aux10_primary_final (champion-v7 proxy, fold-0 AUC 0.961727)",
+  "also_reported": "standard screen_metrics table vs champion portfolio (fold-0 AUC 0.961828)",
+  "descriptive_only": ["standalone AUC", "logit Pearson vs portfolio/route", "epochs run / best epoch", "fine-tune wall time"]
+ },
+ "anti_leakage": [
+  "fit on FIT only (folds 1-4); fold-0 labels read only at final metric computation",
+  "route view is label-free (raw21 + coarse10, no target encoding)",
+  "the API's inner validation split (validation_split_ratio=0.1) is carved from FIT ONLY (library contract, same role as our inner-10% ES split); early stopping never sees fold-0",
+  "context subsample n_finetune_ctx_plus_query_samples=50000 drawn from FIT only",
+  "champion checkpoint sha256-asserted and used read-only; output_dir=None",
+  "champion fold-0 references hash-asserted via load_champion_fold0; route_ref from the OOF store"
+ ],
+ "protocol": {
+  "view": "route (22 features: raw21 + coarse10) via frames(tr, te, route=True)",
+  "fit_rows": "all primary FIT rows (folds 1-4, 559708); API subsamples 50000 for context+query",
+  "eval": "all primary fold-0 rows (139927)",
+  "estimator": {
+   "device": "cuda", "random_state": 1201, "model_version": "V3_5",
+   "time_limit_seconds": 2400,
+   "epochs": 30, "early_stopping": true, "early_stopping_patience": 8,
+   "validation_split_ratio": 0.1, "validation_frequency": 1, "min_delta": 0.0001,
+   "learning_rate": 1e-05, "weight_decay": 0.01, "grad_clip_value": 1.0,
+   "use_lr_scheduler": true,
+   "n_finetune_ctx_plus_query_samples": 50000,
+   "n_estimators_finetune": 2,
+   "n_estimators_validation": 2,
+   "n_estimators_final_inference": 2,
+   "use_activation_checkpointing": true,
+   "extra_classifier_kwargs": "model_path=<champion ckpt> (read-only), categorical_features_indices=cats, inference_precision='autocast', kv_cache_precision='int8', auto_scale_n_estimators=False"
+  },
+  "bound_note": "time_limit=2400s bounds the fine-tune loop; final inference n_estimators=2 (the champion route screen itself uses 1; 8 is the library default but is inference cost without decision value at screen fidelity)",
+  "run_order": "single arm"
+ },
+ "env": {
+  "gpu": "RTX 5070 Ti 16GB", "torch": "2.9.0+cu129",
+  "runner": "scripts/phase20/obj34_finetune_tabpfn35.py"
+ }
+}

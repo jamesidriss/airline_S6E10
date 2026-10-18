@@ -42,8 +42,11 @@ from scripts.phase19.foundation_screen_fold0 import load_champion_fold0  # noqa:
 
 OUT = REPORTS / "phase20" / "obj34_finetune_tabpfn35"
 ART = ARTIFACTS / "phase20" / "obj34_finetune_tabpfn35"
-PREREG = "configs/phase20/obj34_finetune_tabpfn35_prereg.json"
-PREREG_SHA = "00542b474d15c8dc146fab758be71cd852f1318a06cbb908ce5dd7952a3525ba"  # pinned before the first run (preregister-before-result)
+PREREG = "configs/phase20/obj34_finetune_tabpfn35_prereg_v2.json"
+# v2 = crash-amendment of the v1 prereg (00542b47..., commit 77c6ad0); run v1 died
+# before any predictive result (OOM in the library's inner-val eval, fp32 attention
+# materialization). See "amendment_reason"/"delta_from_v1" inside the prereg file.
+PREREG_SHA = "e4cd5276c95aae66c9ff1c0de9da6304e575da263e1e0c135cd1ed83c8c09f1a"  # pinned before the rerun (preregister-before-result)
 ROUTE_REF = "sol_route_aux10_primary_final"
 CKPT = ARTIFACTS / "tabpfn35" / "tabpfn-v3.5-20260909.safetensors"
 CKPT_SHA256 = "ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3"
@@ -122,7 +125,14 @@ def main() -> int:
     clf = FinetunedTabPFNClassifier(
         model_version=ModelVersion.V3_5,
         extra_classifier_kwargs={"model_path": str(CKPT.resolve()),
-                                 "categorical_features_indices": cats},
+                                 "categorical_features_indices": cats,
+                                 # champion fold-0 inference params (prereg v2):
+                                 # 'autocast' keeps the inner-val eval forward in
+                                 # bf16 (no fp32 attention materialization); the
+                                 # other two pin the frozen recipe.
+                                 "inference_precision": "autocast",
+                                 "kv_cache_precision": "int8",
+                                 "auto_scale_n_estimators": False},
         **FT_PARAMS,
     )
     t1 = time.time()
