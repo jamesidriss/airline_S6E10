@@ -1,0 +1,78 @@
+{
+ "experiment": "phase20_neural_screen_batch2",
+ "phase": "20",
+ "frozen_utc": "2026-10-18T00:00:00+00:00",
+ "hypothesis": "Ten catalogue neural architectures not yet screened (items 16 SAINT, 18 AutoInt, 19 DeepFM/xDeepFM, 20 NODE, 21 GRANDE, 22 TabNet, 23 ExcelFormer, 24 AMFormer, 25 T2G-Former, 26 Trompt) may carry inductive biases (row/column attention, factorized polynomial interactions, soft decision trees, sparsemax feature gating, semi-permeable/locality attention, prompt gating) whose fold-0 predictions decorrelate enough from the champion portfolio to pass the frozen admission rule.",
+ "why_distinct_from_prior_negatives": "None of these 11 architectures has ever been run on this dataset; the 8 previously-screened neural archs (fttransformer/dcnv2/dcnv2full/factlog/plrmlp/tabresnet/moe/interactionnet) are different code paths in src/phase20/neural_arch.py. The frozen rule is unchanged: PROMISING iff port_delta >= +5e-5 AND corr < 0.995 vs route reference (equal-logit blend with portfolio on fold-0).",
+ "decision_rule": {
+  "frozen_rule": "PROMISING iff port_delta >= +5e-5 AND spearman_corr_vs_route < 0.995",
+  "port_delta": "AUC(equal-logit blend(candidate, route_ref)) - AUC(route_ref) on primary fold-0",
+  "route_ref": "sol_route_aux10_primary_final (champion-v7 proxy; v7 OOF not archived)",
+  "descriptive_only": "standalone fold-0 AUC and logit Pearson are descriptive, never the decision rule"
+ },
+ "view": "route (22-feature champion TabPFN representation, standardized on FIT-train only)",
+ "fold": "primary fold-0 F2 screen (FIT = folds 1-4, inner 10% stratified ES split, seed 1)",
+ "env": {
+  "device": "cuda",
+  "torch": "2.11.0+cu128",
+  "runner": "scripts/phase20/neural_screen_fold0.py",
+  "arch_module": "src/phase20/neural_arch.py (batch-2 additions smoke-tested fwd+bwd before freeze)"
+ },
+ "architectures": {
+  "saint": {
+   "recipe": "SAINT (Gupta et al. 2020): interleaved column attention (per row over feature tokens) and row attention (per feature over in-batch rows, chunk-bounded at 1024) + FFN, mean-pool head",
+   "d_token": 64, "n_layers": 2, "n_heads": 4, "dropout": 0.1, "row_chunk": 1024,
+   "lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15
+  },
+  "autoint": {
+   "recipe": "AutoInt (Song et al. 2019): multi-head self-attention over feature tokens with residual linear layers, flatten head",
+   "d_token": 64, "n_layers": 3, "n_heads": 4, "dropout": 0.1,
+   "lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15
+  },
+  "deepfm": {
+   "recipe": "DeepFM (Guo et al. 2017): linear + 2nd-order FM on value-scaled feature embeddings (e_j = x_j*w_j) + deep MLP",
+   "d_emb": 16, "d_hidden": 128, "n_layers": 2, "dropout": 0.1,
+   "lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15
+  },
+  "xdeepfm": {
+   "recipe": "xDeepFM (Lian et al. 2018): CIN compressed-interaction network (2 layers of vector-wise field-pair outer products with linear compression) + deep MLP + linear",
+   "d_emb": 16, "cin_dims": [32, 32], "d_hidden": 128, "n_layers": 2, "dropout": 0.1,
+   "lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15
+  },
+  "node": {
+   "recipe": "NODE (Popovidchik et al. 2020): ensemble of differentiable soft oblivious trees (depth 6 x 8 trees) with path-probability gating, sigmoid leaves, linear skip",
+   "depth": 6, "n_trees": 8, "temperature": 1.0,
+   "lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15
+  },
+  "grande": {
+   "recipe": "GRANDE (Arik et al. 2024, distilled): K=8 random-subnetwork ensemble with fixed seeded feature masks (keep=0.5), learnable gates over subnetwork logits",
+   "n_subnets": 8, "d_hidden": 64, "mask_keep": 0.5, "seed": 1, "dropout": 0.1,
+   "lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15
+  },
+  "tabnet": {
+   "recipe": "TabNet (Arik & Pfister 2019, compact adaptation): 5 steps of sparsemax attentive masking over hidden units with direction-aware arrow and D-matrix prior (relaxation 1.5), step logits summed; masks gate the hidden state (hidden-space variant)",
+   "d_hidden": 64, "n_steps": 5, "dropout": 0.1, "relaxation": 1.5,
+   "lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15
+  },
+  "excelformer": {
+   "recipe": "ExcelFormer (Yan et al. 2024, distilled): semi-permeable attention - softmax weights gated by sigmoid(alpha * logits) membrane, renormalized, + FFN over feature tokens",
+   "d_token": 64, "n_layers": 3, "n_heads": 4, "dropout": 0.1,
+   "lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15
+  },
+  "amformer": {
+   "recipe": "AMFormer (Zhao et al. 2024, distilled): attention with multi-head locality - each head's keys/values restricted to its contiguous feature slice, all queries attend, per-head outputs concatenated + FFN",
+   "d_token": 64, "n_layers": 3, "n_heads": 4, "dropout": 0.1,
+   "lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15
+  },
+  "t2gformer": {
+   "recipe": "T2G-Former (Zhao et al. 2023, distilled): tokens-to-gates transformer - self-attention over feature tokens, per-expert attention pooling with learnable queries gates G=4 MLP experts on raw features, gated sum",
+   "d_token": 64, "n_layers": 2, "n_heads": 4, "n_experts": 4, "d_hidden": 64, "dropout": 0.1,
+   "lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15
+  },
+  "trompt": {
+   "recipe": "Trompt (Wu et al. 2023, distilled): P=6 parallel learnable prompts each content-attending over feature tokens with per-prompt MLP heads, averaged logit",
+   "d_token": 64, "n_prompts": 6, "dropout": 0.1,
+   "lr": 0.001, "weight_decay": 1e-05, "batch_size": 4096, "max_epochs": 100, "es_patience": 15
+  }
+ }
+}

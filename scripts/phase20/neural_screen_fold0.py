@@ -177,7 +177,9 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="fttransformer",
                     choices=["fttransformer", "dcnv2", "dcnv2full", "factlog", "plrmlp",
-                             "tabresnet", "moe", "interactionnet"])
+                             "tabresnet", "moe", "interactionnet",
+                             "saint", "autoint", "deepfm", "xdeepfm", "node", "grande",
+                             "tabnet", "excelformer", "amformer", "t2gformer", "trompt"])
     ap.add_argument("--view", default="route", choices=["route", "full"],
                     help="route = 22-feature champion TabPFN view (frames); "
                          "full = 285-feature certified rich view (ViewBuilder.assemble, fold-safe TE)")
