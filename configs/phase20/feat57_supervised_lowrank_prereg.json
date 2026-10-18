@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-FEAT57-SUPERVISED-LOWRANK",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. The missing mechanism from P20-FEAT57-LOWRANK-INTERACTIONS: a SUPERVISED low-rank pairwise interaction model trained with satisfaction labels. Factorized logistic on rating pairs (u_i * v_j) with cross-fitting.",
+  "hypotheses": {
+    "H57_SUPERVISED_LOWRANK": {
+      "item": 57,
+      "question": "Does a SUPERVISED low-rank factorization of the 13 rating pairs (trained with satisfaction labels via cross-fitting) improve fold-0 OOF AUC when added to 21raw?",
+      "method": "Factorized logistic on rating pairs: logit = w·x + Σ_{r=1..8} (u_r·x_ratings)(v_r·x_ratings). Cross-fit 5-fold: train factorization on folds 1-4 with satisfaction labels, predict 8-dim embeddings for fold-0. Add 8 embeddings to 21raw. LGBM fold-0.",
+      "leakage": "Factorization trained on FIT only (folds 1-4) with satisfaction labels. Predict fold-0 embeddings. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995."
+    }
+  },
+  "non_goals": ["No public-LB consultation."],
+  "git_before": "dace9da"
+}
