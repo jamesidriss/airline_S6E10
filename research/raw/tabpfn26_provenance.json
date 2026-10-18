@@ -1,0 +1,20 @@
+{
+ "model": "TabPFN-2.6 classifier checkpoint",
+ "repo": "Prior-Labs/tabpfn_2_6",
+ "revision_pinned": "24148873a9a5992b429833d07363690dcffd02a8",
+ "revision_short": "24148873a9a5",
+ "file": "tabpfn-v2.6-classifier-v2.6_default.ckpt",
+ "local_path": "artifacts/tabpfn26/tabpfn-v2.6-classifier-v2.6_default.ckpt",
+ "size_bytes": 43044699,
+ "sha256": "0578fa56f97e11024e31735aaec2c4e7332584b7730242fbaf6c0bbd0299206a",
+ "downloaded_utc": "2026-10-19T00:00:00+00:00",
+ "license": {
+  "name": "TABPFN-2.6 Non-Commercial License v1.0 (last revised March 24, 2026, Prior Labs GmbH)",
+  "license_file": "artifacts/tabpfn26/LICENSE",
+  "competition_eligibility": "ELIGIBLE",
+  "evidence_verbatim": "\"Non-Commercial Purpose\" means use for testing, evaluation, or research not tied to commercial gain, production deployment, or revenue generation. This includes internal benchmarking, academic research, and experimentation on private or public datasets as well as Data Science Competitions as defined below, provided the results are not used in commercial decision-making, client deliverables, or paid products/services.",
+  "same_posture_as_champion": "champion v3.5 uses the same non-commercial license structure with competitions included (recorded in reports/phase17_B1_f0.json)"
+ },
+ "purpose": "Champion-B search (catalogue row 13, matched-protocol checkpoint comparison). The ONLY difference from the champion route pipeline will be model_path; every other parameter is taken verbatim from scripts/run_sol_tabpfn.py (n_estimators=1, fit_with_cache, kv_cache_precision=int8, keep_cache_on_device=True, autocast bf16, random_state=1201, categorical_features_indices from the route view).",
+ "not_used_for": "anything else; the champion v7 is untouched and immutable"
+}

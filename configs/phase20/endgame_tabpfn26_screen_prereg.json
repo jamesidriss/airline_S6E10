@@ -1,0 +1,51 @@
+{
+ "prereg_id": "P20-ENDGAME-TABPFN26-SCREEN",
+ "date": "2026-10-19",
+ "purpose": "Champion-B search. Screen TabPFN-2.6 as a structurally distinct route member under the MATCHED champion-route protocol (only model_path differs) and decide by a frozen rule whether to promote it to a full 5-fold OOF run. This is catalogue row 13 continued (its GPU arm was deferred behind the champion reproduction).",
+ "checkpoint": {
+  "repo": "Prior-Labs/tabpfn_2_6",
+  "revision": "24148873a9a5992b429833d07363690dcffd02a8",
+  "file": "tabpfn-v2.6-classifier-v2.6_default.ckpt",
+  "sha256": "0578fa56f97e11024e31735aaec2c4e7332584b7730242fbaf6c0bbd0299206a",
+  "license": "TABPFN-2.6 Non-Commercial License v1.0; Data Science Competitions explicitly included (eligible); text at artifacts/tabpfn26/LICENSE, provenance at research/raw/tabpfn26_provenance.json"
+ },
+ "matched_protocol": {
+  "features": "champion route view, 22 columns, identical construction (scripts/phase16_tabpfn.prepare via run_phase17_tabpfn)",
+  "fit_rows": "folds != k (fold k=0 screen); immutable primary registry",
+  "params": "n_estimators=1, fit_mode=fit_with_cache, kv_cache_precision=int8, keep_cache_on_device=True, inference_precision=autocast(bf16), random_state=1201, ignore_pretraining_limits=True, categorical_features_indices from the route view -- taken verbatim from scripts/run_sol_tabpfn.py:112-115; ONLY model_path differs from the champion route",
+  "eval_rows": 139927 (primary fold 0)",
+  "no_gradient_fitting": "pretrained inference only; no early stopping; no outer labels in any fit or configuration"
+ },
+ "step_0_feasibility_probe": {
+  "when": "before the full screen, if the full-context fit has not been shown feasible for this checkpoint",
+  "what": "fit on a stratified 50k-row context and predict 4096 eval rows at batch 2048; record wall time, peak VRAM, and the per-batch rate",
+  "claim": "NONE -- resource engineering only; no scientific content; never reported as a model result"
+ },
+ "measured": {
+  "standalone_fold0_auc": "primary fold-0 AUC of the v2.6 member",
+  "blend_with_v7": "equal-logit blend of (v2.6 member, true v7 champion) on fold-0; port_delta_v7 = AUC(blend) - AUC(v7 fold-0 = 0.9618278142504795)",
+  "blend_with_route_ref": "frozen OBJ-style diagnostic: port_delta vs sol_route_aux10_primary_final fold-0 (0.9617271804553859)",
+  "correlations": "Spearman + logit Pearson vs v7 and vs route_ref",
+  "paired_bootstrap": "row bootstrap within fold-0, B=2000, seed 7, 95% CI of port_delta_v7 (the single-fold uncertainty that decides promotion)"
+ },
+ "frozen_decision_rule": {
+  "PROMOTE_to_5fold_OOF": "paired-bootstrap 95% CI lower bound of port_delta_v7 > 0 AND spearman(v2.6, v7) < 0.995 AND standalone >= 0.960457 (v6 route fold-0 0.961457 minus 1e-3; guards against a catastrophically weaker checkpoint)",
+  "CLOSE": "paired-bootstrap 95% CI upper bound of port_delta_v7 <= 0",
+  "AMBIGUOUS": "CI straddles 0 without satisfying PROMOTE -- recorded, NOT promoted (budget discipline); the frozen gate does not move",
+  "note": "one fold cannot certify +3e-4; it can only rule out or flag. Promotion buys the 5-fold OOF that decides PATH A/B."
+ },
+ "resource_guard_preregistered": {
+  "if_full_context_fit_or_predict_OOMs": "amend ONCE (recorded before the amended run) to context=stratified 100000 rows from FIT, predict batch=1024, everything else identical; the amendment must be committed before the rerun and the context bound is disclosed in every downstream claim",
+  "if_the_amendment_also_OOMs": "RESOURCE_BLOCKED with the measured evidence; no result, no promotion",
+  "chunk_invariance_note": "in fit_with_cache mode the KV cache is built from train rows only and eval rows are queries, so query-batch size does not change per-row predictions",
+  "no_disk_offload": "explicitly forbidden (hardware history: nvlddmkm Event 153 and a near-full C: drive)"
+ },
+ "cost_estimate_gpu_h": {"probe": 0.05, "screen": 0.6, "full_5fold_if_promoted": 2.8, "test_inference_if_promoted": 3.6},
+ "non_goals": [
+  "No weight search; equal-logit frozen.",
+  "No hyperparameter changes to help the checkpoint.",
+  "No public-LB consultation at any point.",
+  "The champion v7 is never modified; the candidate gets its own artifact paths and store id."
+ ],
+ "git_before": "a5bc688"
+}
