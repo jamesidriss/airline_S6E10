@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T22:59:00.872770+00:00",
+ "updated_utc": "2026-10-18T22:59:10.765988+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -3698,6 +3698,50 @@
      "from": "PENDING",
      "to": "CLOSED_NEGATIVE",
      "why": "catalogue status COMPLETE_NEGATIVE synced"
+    }
+   ]
+  },
+  "JREP01": {
+   "id": "JREP01",
+   "exp_row": 0,
+   "family": "DEP",
+   "title": "v7 clean-code fold-0 reproduction (prereg 0091f838)",
+   "priority": "P1",
+   "state": "PENDING",
+   "state_note": "AGENTS.md finalist requirement: reproduce each finalist from clean code",
+   "kind": "gpu",
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "scripts/run_phase17_tabpfn.py",
+    "--estimators",
+    "2",
+    "--fold",
+    "0",
+    "--tag",
+    "phase17_B1_replication_20261019"
+   ],
+   "prereg": {
+    "path": "configs/phase20/endgame_v7_reproduction_prereg.json",
+    "sha256": "0091f8381b126695b6c05323bafe060335d8436cd7824fd8981b18d3de901e8b"
+   },
+   "fingerprint": "48d71f1b5909171c",
+   "depends_on": [],
+   "attempts": 0,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": "reports/phase17_B1_replication_20261019_f0.json"
+   },
+   "history": [
+    {
+     "ts": "2026-10-18T22:59:10.765236+00:00",
+     "event": "init",
+     "from": "endgame-queue"
+    },
+    {
+     "ts": "2026-10-18T22:59:10.765988+00:00",
+     "event": "prereg",
+     "sha256": "0091f8381b126695b6c05323bafe060335d8436cd7824fd8981b18d3de901e8b"
     }
    ]
   }
