@@ -725,13 +725,14 @@
    "requested_method": "conditional shared structure across ratings",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "PROMISING",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
-   "fidelity_reached": "F2",
+   "fidelity_reached": "F3",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "rich-host F3 in flight; disposition after its feature gate + (if passed) stack admission",
-   "phase20_finding": "F3 COMPLETE on 21raw host (ledger p20_feat48_f3_21raw_host): fold-0 parity EXACT; feature gate PASS (mean +2.87e-4, SE 5.8e-5, t=4.92, 5/5 positive -- first rating-derived block to survive F3, unlike FEAT51 residuals t=1.54). Stack admission FAIL: equal-logit blend with champion v7 = -1.90e-3 (0/5, t=-32.6); weak-standalone member bleeds the stack (H94-consistent). Rich-host F3 (static-full 237 + 13hier, prereg fee4482d) in flight -- the block's last untested standard home."
+   "next_action": "closed: host-limited signal on both standard hosts; no ensemble contribution",
+   "phase20_finding": "Full F3 on BOTH hosts (ledgers p20_feat48_f3_21raw_host + p20_feat48_f3_rich_host; fold-0 parity exact both times). 21raw host: feature gate PASS (+2.87e-4 mean, t=4.92, 5/5 -- the strongest rating-derived augmentation measured) but stack admission FAIL (-1.90e-3, 0/5, weak member bleeds the champion). Rich host (static-full 237): feature gate FAIL (mean +4.7e-5, t=1.33, 4/5 -- signal subsumed by the rich view, same collapse as FEAT51 residuals t=1.54). The hierarchical rating structure is real but contributes nothing admissible: CLOSED.",
+   "status_correction_20261018": "F3 completed on both hosts (was PROMISING at F2-only); terminal COMPLETE_NEGATIVE"
   },
   {
    "experiment_number": 49,
@@ -1458,5 +1459,5 @@
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T19:32:34.406856+00:00"
+ "updated_utc": "2026-10-18T19:57:15.902329+00:00"
 }

@@ -1,0 +1,48 @@
+{
+ "prereg": "configs/phase20/feat48_rich_f3_prereg.json",
+ "prereg_sha256": "fee4482d5c570c3958448eaac149ae8e8cc82acb3a2088c91b2d341a23aa3747",
+ "status": "COMPLETE_F3_RICH",
+ "parity": {
+  "fold0_control": 0.9609533808354256,
+  "expected": 0.960953,
+  "tol": 5e-06,
+  "ok": true
+ },
+ "hier_artifact": {
+  "path": "artifacts/phase20/feat48_hierarchical_ratings/hier_crossfit_13.npy",
+  "arr_sha256": "bc824411fac3b4bdd18ef4ba95a4cdee2281a47428608c0b729e808984dcbd07"
+ },
+ "results": {
+  "control_oof_auc": 0.96100679,
+  "treatment_oof_auc": 0.96105639,
+  "per_fold_control": [
+   0.960953,
+   0.961137,
+   0.961011,
+   0.960359,
+   0.961614
+  ],
+  "per_fold_treatment": [
+   0.961122,
+   0.961216,
+   0.961037,
+   0.960319,
+   0.961619
+  ],
+  "paired_deltas_per_fold": [
+   0.00016826,
+   7.864e-05,
+   2.579e-05,
+   -4.054e-05,
+   4.9e-06
+  ],
+  "mean_paired_delta": 4.741e-05,
+  "se_paired_delta": 3.577e-05,
+  "t_stat": 1.3254,
+  "positive_folds": 4,
+  "admission_gate": {
+   "required_gain": 1.5e-05,
+   "passes": false
+  }
+ }
+}

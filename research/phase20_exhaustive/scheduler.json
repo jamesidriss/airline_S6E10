@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T19:32:34.406856+00:00",
+ "updated_utc": "2026-10-18T19:57:15.902329+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -1619,8 +1619,8 @@
    "family": "FEAT",
    "title": "Hierarchical 13-rating",
    "priority": "P3",
-   "state": "PENDING",
-   "state_note": "21raw F3 gate PASSED but stack admission failed (-1.90e-3); rich-host F3 running (prereg fee4482d)",
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "F3 both hosts: 21raw gate pass (+2.87e-4 t=4.92) but stack fail (-1.90e-3); rich host gate fail (t=1.33). Host-limited signal, terminal.",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1629,8 +1629,8 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE (host-limited)",
+    "report": "reports/phase20/feat48_hierarchical_ratings/feat48_rich_f3.json"
    },
    "history": [
     {
@@ -1641,6 +1641,10 @@
     {
      "ts": "2026-10-18T19:32:34.406856+00:00",
      "event": "F3 21raw: gate pass + stack fail; rich-host F3 launched"
+    },
+    {
+     "ts": "2026-10-18T19:57:15.902329+00:00",
+     "event": "state->CLOSED_NEGATIVE: rich-host F3 gate failed (t=1.33); both hosts measured (ledger p20_feat48_f3_rich_host)"
     }
    ]
   },

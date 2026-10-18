@@ -15,7 +15,7 @@ Generated 2026-10-17 · 96 experiments · champion v7 0.961852923 · target 0.96
 | 9 | Xiaomi-TabLDM | FLM | none | COMPLETE_NEGATIVE | P1 | F0 | OK | - | verify checkpoint terms; inspect context-memor |
 | 10 | Causilo | FLM | 20k-fold0 screen -1.01e-3 | COMPLETE_NEGATIVE | P3 | F2 | OK | - | preserve neg; only clearly different mechanism |
 | 11 | TabFM | FLM | 2k-CPU-fold0 -1.59e-3 | PARTIAL_VALID | P2 | F2 | NC | non-commercial weights | preserve 2k neg; audit native context limit; G |
-| 12 | RealTabPFN-2.5 | FLM | none | NOT_STARTED | P2 | F0 | OK | - | locate official repo+ckpt+license; feasibility |
+| 12 | RealTabPFN-2.5 | FLM | none | RESOURCE_BLOCKED | P2 | F0 | OK | - | locate official repo+ckpt+license; feasibility |
 | 13 | TabPFN-3 vs 2.6 | FLM | none | PARTIAL_VALID | P1 | F0 | OK | - | verify exact checkpoints exist; pin revisions; |
 | 14 | EXAONE/TabICL adaptation | FLM | none | COMPLETE_NEGATIVE | P2 | F0 | NC/OK | - | audit official adaptation; FIT-only model sele |
 | 15 | FT-Transformer | NN | none (RealMLP/TabM ~1e-3 below) | COMPLETE_NEGATIVE | P2 | F1 | OK | - | canonical recipe; smoke; fold-0 OOF vs v7 delt |
@@ -40,18 +40,18 @@ Generated 2026-10-17 · 96 experiments · champion v7 0.961852923 · target 0.96
 | 34 | Fine-tune TabPFN 3.5 | OBJ | none | RESOURCE_BLOCKED | P2 | F0 | OK | - | verify license+16GB VRAM sufficiency for FT |
 | 35 | Multi-task | OBJ | prior conditional multi-task | COMPLETE_NEGATIVE | P2 | F1 | OK | - | audit prior conditional multi-task; true share |
 | 36 | Ordinal aux loss | OBJ | none | COMPLETE_NEGATIVE | P3 | F1 | OK | - | ordinal aux objective; smoke; fold-0 |
-| 37 | Supervised contrastive | OBJ | generic SSL32 closed | NOT_STARTED | P3 | F1 | OK | - | distinct supervised-contrastive (not generic S |
-| 38 | Diff AUC surrogate | OBJ | none | NOT_STARTED | P3 | F1 | OK | - | AUC surrogate vs standard BCE; fold-0 |
-| 39 | Hard-pair mining | OBJ | H19-A fixed reweight NEGATIVE/INC | NOT_STARTED | P3 | F1 | OK | - | distinct mining (not fixed reweight); never ou |
-| 40 | Noise-robust loss | OBJ | none | NOT_STARTED | P4 | F1 | OK | - | compare noise-robust losses; fold-0 |
-| 41 | EMA / SWA | OBJ | none | NOT_STARTED | P3 | F1 | OK | - | EMA/SWA on a neural candidate to cut seed vari |
+| 37 | Supervised contrastive | OBJ | generic SSL32 closed | PREPARED | P3 | F1 | OK | - | distinct supervised-contrastive (not generic S |
+| 38 | Diff AUC surrogate | OBJ | none | PREPARED | P3 | F1 | OK | - | AUC surrogate vs standard BCE; fold-0 |
+| 39 | Hard-pair mining | OBJ | H19-A fixed reweight NEGATIVE/INC | PREPARED | P3 | F1 | OK | - | distinct mining (not fixed reweight); never ou |
+| 40 | Noise-robust loss | OBJ | none | PREPARED | P4 | F1 | OK | - | compare noise-robust losses; fold-0 |
+| 41 | EMA / SWA | OBJ | none | PREPARED | P3 | F1 | OK | - | EMA/SWA on a neural candidate to cut seed vari |
 | 42 | Multi-seed ensemble | OBJ | none | COMPLETE_NEGATIVE | P3 | F2 | OK | - | only after one new architecture shows competit |
 | 43 | Nested distillation of v7 | OBJ | generic distillation closed | HISTORICAL_EQUIVALENT | P4 | F0 | OK | closed | do not reopen generic distillation; nested-onl |
 | 44 | Cross-family co-regularization | OBJ | none | DEPENDENCY_CLOSED | P4 | F1 | OK | - | needs 2 strong base candidates first |
 | 45 | H19-C nearest-key smoothing | FEAT | DEAD (this session) | COMPLETE_NEGATIVE | P3 | F5 | OK | done | CLOSED: fold-0 PATH was a fluke (full-5 mean -2.25e-6, 2/5 folds, OOF unique-key negative); base-6/Hamming-1/lam30/mc2 nearest-key smoothing closed; do not rerun identically |
 | 46 | Learned similarity metric | FEAT | none | COMPLETE_NEGATIVE | P3 | F1 | OK | - | FIT-only learned metric; member-family compat  |
 | 47 | xRFM rich view | FEAT | distinct from item 6 | COMPLETE_NEGATIVE | P3 | F2 | OK | - | rich-view xRFM (distinct mechanism from raw-vi |
-| 48 | Hierarchical 13-rating | FEAT | none | PROMISING | P3 | F1 | OK | - | hierarchical rating model; fold-0 |
+| 48 | Hierarchical 13-rating | FEAT | none | COMPLETE_NEGATIVE | P3 | F1 | OK | - | hierarchical rating model; fold-0 |
 | 49 | Conditional ordinal embed | FEAT | none | COMPLETE_NEGATIVE | P4 | F1 | OK | - | smoke; fold-0 |
 | 50 | Learned interactions | FEAT | te_cond crosses exist | COMPLETE_NEGATIVE | P3 | F1 | OK | - | learned interaction rep vs manual crosses |
 | 51 | Observed-minus-predicted ratings | FEAT | residual-group-bias closed | COMPLETE_NEGATIVE | P3 | F1 | OK | - | distinct residual-feature (not group-bias); fo |
