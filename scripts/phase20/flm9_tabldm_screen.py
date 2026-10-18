@@ -131,7 +131,11 @@ def main() -> int:
 
     clf_kwargs = dict(categorical_indices=[int(c) for c in cats], **ESTIMATOR)
     if args.col_pinned_off:
-        clf_kwargs["inference_config"] = {"COL_CONFIG": {"max_pinned_memory_mb": 0.0}}
+        # use_async=False also required: the async D2H staging pool hardcodes
+        # pin_memory=True (PinnedBufferPool) and OOMs independently of the
+        # output-buffer cap. Sync copy writes identical values.
+        clf_kwargs["inference_config"] = {"COL_CONFIG": {"max_pinned_memory_mb": 0.0,
+                                                         "use_async": False}}
     clf = TabLDMClassifier(**clf_kwargs)
     t1 = time.time()
     clf.fit(X_fit, y_fit)  # ICL: no weight updates; preprocessing fitted on FIT context only
@@ -182,9 +186,11 @@ def main() -> int:
                   "device=cuda:0, random_state=1201" % CONTEXT_SEED,
         "col_pinned_off": bool(args.col_pinned_off),
         "resource_guard_note": ("COL output buffer routed to swappable CPU memory "
-                                "(max_pinned_memory_mb=0); memory placement only, "
-                                "numerics unchanged; disk offload never used"
-                                if args.col_pinned_off else "library defaults"),
+                                "(max_pinned_memory_mb=0) and async D2H staging pool "
+                                "disabled (use_async=False; the pool hardcodes pinned "
+                                "buffers and OOMs independently); transfer/memory "
+                                "placement only, numerics unchanged; disk offload never "
+                                "used" if args.col_pinned_off else "library defaults"),
         "context_rows": int(len(ctx)), "context_seed": CONTEXT_SEED,
         "context_sha256": arr_sha256(ctx.astype("int64")),
         "eval_fold": 0, "eval_rows": int(len(EVAL)), "fit_folds": [1, 2, 3, 4],
