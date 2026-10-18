@@ -258,8 +258,53 @@
    "promotion": "close: frozen gate failed (screen is terminal)"
   },
   "ema": {
-   "status": "PENDING",
-   "promotion": "not run"
+   "status": "DONE",
+   "git": "850ab88e0929b894a0987e89ffbe66b2ff83a727",
+   "prereg_sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2",
+   "standalone_auc_recomputed": 0.9582212838978962,
+   "standalone_auc_reported": 0.9582212838978962,
+   "auc_delta_recompute": 0.0,
+   "delta_vs_control": 0.0005649800952777229,
+   "delta_vs_v7_standalone": -0.0036065303525832926,
+   "blend_v7_auc": 0.961347047588436,
+   "blend_delta_vs_v7": -0.00048076666204344143,
+   "spearman_vs_v7": 0.9402414781470388,
+   "logit_pearson_vs_v7": 0.9903049257973446,
+   "spearman_vs_route_ref": 0.9397603771047538,
+   "frozen_gate": {
+    "port_delta": -0.0004338989364969237,
+    "spearman_vs_route_ref": 0.9397603771047538,
+    "promising": false,
+    "rule": "port_delta >= +5e-5 AND spearman_vs_route_ref < 0.995"
+   },
+   "control_parity_ok": null,
+   "eval_rows": 139927,
+   "fit_rows": 559708,
+   "train_rows": 503737,
+   "val_rows": 55971,
+   "features": 22,
+   "arch_cfg": {
+    "d_token": 192,
+    "n_layers": 3,
+    "n_heads": 8,
+    "dropout": 0.1,
+    "head_hidden": 192
+   },
+   "train_cfg": {
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "batch_size": 4096,
+    "max_epochs": 100,
+    "es_patience": 15
+   },
+   "arm_params": "weight EMA decay 0.999 (val eval + final prediction)",
+   "prediction_sha256": "c21384f02da7c9d3187d606d265a45e4736dc75d46e992e0b072dea22a4a1285",
+   "prediction_sha256_matches_report": true,
+   "total_seconds": 304.8935272693634,
+   "peak_vram_gb": 10.5,
+   "parity_vs_reference": null,
+   "champion_admission_justified": false,
+   "promotion": "close: frozen gate failed (screen is terminal)"
   }
  },
  "cross_arm_spearman": {
@@ -267,11 +312,16 @@
   "bce_control|auc_surrogate": 0.972702,
   "bce_control|hard_mining": 0.915574,
   "bce_control|gce": 0.919735,
+  "bce_control|ema": 0.977895,
   "supcon|auc_surrogate": 0.97396,
   "supcon|hard_mining": 0.927398,
   "supcon|gce": 0.908822,
+  "supcon|ema": 0.982663,
   "auc_surrogate|hard_mining": 0.912446,
   "auc_surrogate|gce": 0.923047,
-  "hard_mining|gce": 0.838535
+  "auc_surrogate|ema": 0.975717,
+  "hard_mining|gce": 0.838535,
+  "hard_mining|ema": 0.935549,
+  "gce|ema": 0.9043
  }
 }

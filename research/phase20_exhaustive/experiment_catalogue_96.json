@@ -627,12 +627,13 @@
    "requested_method": "weight/checkpoint averaging",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "PREPARED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
-   "blocking_reason": "parity gate PASSED; arm=ema deferred on budget",
-   "next_action": "ready: run arm=ema on next GPU grant"
+   "blocking_reason": "-",
+   "next_action": "closed: objective variant negative on the frozen fold-0 screen",
+   "phase20_finding": "ema: standalone 0.958221 (delta vs BCE control +5.65e-04); true v7 fold-0 0.961828 -> standalone delta -3.61e-03, equal-logit blend delta vs v7 -4.81e-04; frozen gate port_delta -4.34e-04 (need >= +5e-5), spearman vs route_ref 0.9398 (need < 0.995) -> FAIL. Weak-family ceiling stands: the objective cannot lift the fold-0 signal past the frozen screen; terminal."
   },
   {
    "experiment_number": 42,
@@ -1463,5 +1464,5 @@
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T22:53:38.801413+00:00"
+ "updated_utc": "2026-10-18T22:59:00.855270+00:00"
 }
