@@ -1,0 +1,38 @@
+{
+ "experiment": "phase20_feat49_conditional_ordinal_embed",
+ "phase": "20",
+ "family": "FEAT",
+ "experiment_number": 49,
+ "frozen_utc": "2026-10-18T00:00:00+00:00",
+ "hypothesis": "Each service/comfort rating's relation to satisfaction depends on WHO is flying (context): encoding every rating column conditioned on the traveler context cell (Customer Type x Type of Travel x Class) adds fold-0 signal beyond the 21 raw covariates that neither the raw ordinal values nor the context cell alone carry.",
+ "why_distinct": "FEAT58 encoded the demographic COMBO cell itself (one TE column for the 4-way key). FEAT49 instead encodes each RATING VALUE conditioned on context (13 separate columns: key = rating value x context cell), i.e. the interaction of service ratings with traveler segment -- a different feature hypothesis, not a rerun of 58. Distinct from all prior FEAT screens (learned similarity, factorization, leaf embeddings, local transforms, rare combos) which never conditioned a rating on a context cell.",
+ "method": {
+  "base": "21 raw covariates (raw21), identical to FEAT54/58 harness",
+  "context_cell": "Customer Type x Type of Travel x Class (<= 18 cells)",
+  "rating_columns": "the 13 service/comfort ratings (wifi, dep/arr convenience, booking, gate, food, boarding, seat, entertainment, onboard, legroom, baggage, checkin, cleanliness)",
+  "encoding": "adaptive (James-Stein) shrinkage target encoding, lam=40, one column per rating: key = (rating value, context cell)",
+  "added_columns": 13,
+  "strict_protocol": "identical to FEAT58: EVAL (fold-0) encodings from outer-FIT statistics only; FIT encodings inner-cross-fit within outer-FIT (own inner fold excluded); ES labels excluded from every encoding source. Fold-safe TE.",
+  "estimator": "LGBMClassifier identical hyperparameters control vs treatment (n_estimators=6000, ES 250, lr=0.02, leaves=127, extra_trees=True, min_child=40, colsample=0.8, subsample=0.8, reg_lambda=1.0, seed=1) -- NOTE extra_trees=True is licensed here only because FEAT screens run the SAME config for control and treatment (paired), not as an ensemble member claim",
+  "screen": "fold-0 control vs treatment; frozen rule vs portfolio ref"
+ },
+ "decision_rule": {
+  "frozen_rule": "PROMISING iff fold-0 port_delta >= +5e-5 AND candidate Spearman vs portfolio < 0.995",
+  "port_delta": "AUC(equal-logit blend(treatment, portfolio_ref)) - AUC(portfolio_ref) on primary fold-0 (all 139927 rows)",
+  "portfolio_ref": "sol_route_aux10_primary_final (fold-0 AUC 0.961727)",
+  "augmentation_delta": "treatment - control AUC is DESCRIPTIVE ONLY and cannot decide",
+  "screen_not_promotion": "passing means a full 5-fold OOF + admission gate is warranted; it does not enter the ensemble directly"
+ },
+ "anti_leakage": [
+  "EVAL (fold-0) encodings computed from outer-FIT (minus ES) statistics only",
+  "FIT encodings inner-cross-fit: row's own inner fold excluded from its encoding source",
+  "ES (inner 10% of FIT) labels excluded from all encoding sources",
+  "no label used at EVAL time; encoding lookup is pure statistics of FIT",
+  "frozen fold registry loaded from data/cache/folds/primary_5f_seed20261010.npy (immutable)",
+  "portfolio ref OOF loaded from the prediction store, hash-checked by store loader"
+ ],
+ "env": {
+  "runner": "scripts/phase20/feat49_conditional_ordinal_embed.py",
+  "compute": "CPU-only (~2-3 min, LGBM n_jobs=8)"
+ }
+}
