@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T22:33:58.908916+00:00",
+ "updated_utc": "2026-10-18T22:34:30.493478+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -1293,25 +1293,25 @@
    "priority": "P3",
    "state": "PENDING",
    "state_note": "parity gate PASSED (ledger p20_obj37_41_parity_gate); arm=supcon deferred: ~42 min/arm x 5 exceeds remaining session GPU budget (~0.7h); runner+prereg committed pre-results (77b701a) - ready to run next grant",
-   "kind": "unknown",
+   "kind": "gpu",
    "cmd": [
     "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
     "scripts/phase20/obj37_41_objectives.py",
     "--arm",
-    "supcon",
-    "--kind",
-    "gpu",
-    "--expect",
-    "{prediction:artifacts/phase20/obj37_41_objectives/supcon_fold0.npy,eval_rows:139927,report:reports/phase20/obj37_41_objectives/supcon_fold0.json}"
+    "supcon"
    ],
    "prereg": {
     "path": "configs/phase20/obj37_41_objectives_prereg.json",
     "sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2"
    },
-   "fingerprint": "6216f3e53358de35",
+   "fingerprint": "b637b31a18d677b2",
    "depends_on": [],
    "attempts": 0,
-   "expect": null,
+   "expect": {
+    "report": "reports/phase20/obj37_41_objectives/supcon_fold0.json",
+    "prediction": "artifacts/phase20/obj37_41_objectives/supcon_fold0.npy",
+    "eval_rows": 139927
+   },
    "result": {
     "verdict": null,
     "report": null
@@ -1344,6 +1344,23 @@
      "ts": "2026-10-18T22:33:55.288078+00:00",
      "event": "prereg",
      "sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2"
+    },
+    {
+     "ts": "2026-10-18T22:34:30.493478+00:00",
+     "event": "set-cmd",
+     "cmd": [
+      "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+      "scripts/phase20/obj37_41_objectives.py",
+      "--arm",
+      "supcon"
+     ],
+     "kind": "gpu",
+     "expect": {
+      "report": "reports/phase20/obj37_41_objectives/supcon_fold0.json",
+      "prediction": "artifacts/phase20/obj37_41_objectives/supcon_fold0.npy",
+      "eval_rows": 139927
+     },
+     "note": "re-registered via scheduler module (shell arg mangling repaired)"
     }
    ]
   },
@@ -1355,25 +1372,25 @@
    "priority": "P3",
    "state": "PENDING",
    "state_note": "parity gate PASSED (ledger p20_obj37_41_parity_gate); arm=auc_surrogate deferred: ~42 min/arm x 5 exceeds remaining session GPU budget (~0.7h); runner+prereg committed pre-results (77b701a) - ready to run next grant",
-   "kind": "unknown",
+   "kind": "gpu",
    "cmd": [
     "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
     "scripts/phase20/obj37_41_objectives.py",
     "--arm",
-    "auc_surrogate",
-    "--kind",
-    "gpu",
-    "--expect",
-    "{prediction:artifacts/phase20/obj37_41_objectives/auc_surrogate_fold0.npy,eval_rows:139927,report:reports/phase20/obj37_41_objectives/auc_surrogate_fold0.json}"
+    "auc_surrogate"
    ],
    "prereg": {
     "path": "configs/phase20/obj37_41_objectives_prereg.json",
     "sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2"
    },
-   "fingerprint": "c4ff5c007a4f1802",
+   "fingerprint": "cb052c3e39901164",
    "depends_on": [],
    "attempts": 0,
-   "expect": null,
+   "expect": {
+    "report": "reports/phase20/obj37_41_objectives/auc_surrogate_fold0.json",
+    "prediction": "artifacts/phase20/obj37_41_objectives/auc_surrogate_fold0.npy",
+    "eval_rows": 139927
+   },
    "result": {
     "verdict": null,
     "report": null
@@ -1406,6 +1423,23 @@
      "ts": "2026-10-18T22:33:56.197760+00:00",
      "event": "prereg",
      "sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2"
+    },
+    {
+     "ts": "2026-10-18T22:34:30.493478+00:00",
+     "event": "set-cmd",
+     "cmd": [
+      "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+      "scripts/phase20/obj37_41_objectives.py",
+      "--arm",
+      "auc_surrogate"
+     ],
+     "kind": "gpu",
+     "expect": {
+      "report": "reports/phase20/obj37_41_objectives/auc_surrogate_fold0.json",
+      "prediction": "artifacts/phase20/obj37_41_objectives/auc_surrogate_fold0.npy",
+      "eval_rows": 139927
+     },
+     "note": "re-registered via scheduler module (shell arg mangling repaired)"
     }
    ]
   },
@@ -1417,25 +1451,25 @@
    "priority": "P3",
    "state": "PENDING",
    "state_note": "parity gate PASSED (ledger p20_obj37_41_parity_gate); arm=hard_mining deferred: ~42 min/arm x 5 exceeds remaining session GPU budget (~0.7h); runner+prereg committed pre-results (77b701a) - ready to run next grant",
-   "kind": "unknown",
+   "kind": "gpu",
    "cmd": [
     "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
     "scripts/phase20/obj37_41_objectives.py",
     "--arm",
-    "hard_mining",
-    "--kind",
-    "gpu",
-    "--expect",
-    "{prediction:artifacts/phase20/obj37_41_objectives/hard_mining_fold0.npy,eval_rows:139927,report:reports/phase20/obj37_41_objectives/hard_mining_fold0.json}"
+    "hard_mining"
    ],
    "prereg": {
     "path": "configs/phase20/obj37_41_objectives_prereg.json",
     "sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2"
    },
-   "fingerprint": "267aee12ee31ef21",
+   "fingerprint": "a042c077eb6fb8fd",
    "depends_on": [],
    "attempts": 0,
-   "expect": null,
+   "expect": {
+    "report": "reports/phase20/obj37_41_objectives/hard_mining_fold0.json",
+    "prediction": "artifacts/phase20/obj37_41_objectives/hard_mining_fold0.npy",
+    "eval_rows": 139927
+   },
    "result": {
     "verdict": null,
     "report": null
@@ -1468,6 +1502,23 @@
      "ts": "2026-10-18T22:33:57.108341+00:00",
      "event": "prereg",
      "sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2"
+    },
+    {
+     "ts": "2026-10-18T22:34:30.493478+00:00",
+     "event": "set-cmd",
+     "cmd": [
+      "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+      "scripts/phase20/obj37_41_objectives.py",
+      "--arm",
+      "hard_mining"
+     ],
+     "kind": "gpu",
+     "expect": {
+      "report": "reports/phase20/obj37_41_objectives/hard_mining_fold0.json",
+      "prediction": "artifacts/phase20/obj37_41_objectives/hard_mining_fold0.npy",
+      "eval_rows": 139927
+     },
+     "note": "re-registered via scheduler module (shell arg mangling repaired)"
     }
    ]
   },
@@ -1479,25 +1530,25 @@
    "priority": "P4",
    "state": "PENDING",
    "state_note": "parity gate PASSED (ledger p20_obj37_41_parity_gate); arm=gce deferred: ~42 min/arm x 5 exceeds remaining session GPU budget (~0.7h); runner+prereg committed pre-results (77b701a) - ready to run next grant",
-   "kind": "unknown",
+   "kind": "gpu",
    "cmd": [
     "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
     "scripts/phase20/obj37_41_objectives.py",
     "--arm",
-    "gce",
-    "--kind",
-    "gpu",
-    "--expect",
-    "{prediction:artifacts/phase20/obj37_41_objectives/gce_fold0.npy,eval_rows:139927,report:reports/phase20/obj37_41_objectives/gce_fold0.json}"
+    "gce"
    ],
    "prereg": {
     "path": "configs/phase20/obj37_41_objectives_prereg.json",
     "sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2"
    },
-   "fingerprint": "ec091a06a2f85bab",
+   "fingerprint": "24905fbe71fae2c3",
    "depends_on": [],
    "attempts": 0,
-   "expect": null,
+   "expect": {
+    "report": "reports/phase20/obj37_41_objectives/gce_fold0.json",
+    "prediction": "artifacts/phase20/obj37_41_objectives/gce_fold0.npy",
+    "eval_rows": 139927
+   },
    "result": {
     "verdict": null,
     "report": null
@@ -1530,6 +1581,23 @@
      "ts": "2026-10-18T22:33:58.001413+00:00",
      "event": "prereg",
      "sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2"
+    },
+    {
+     "ts": "2026-10-18T22:34:30.493478+00:00",
+     "event": "set-cmd",
+     "cmd": [
+      "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+      "scripts/phase20/obj37_41_objectives.py",
+      "--arm",
+      "gce"
+     ],
+     "kind": "gpu",
+     "expect": {
+      "report": "reports/phase20/obj37_41_objectives/gce_fold0.json",
+      "prediction": "artifacts/phase20/obj37_41_objectives/gce_fold0.npy",
+      "eval_rows": 139927
+     },
+     "note": "re-registered via scheduler module (shell arg mangling repaired)"
     }
    ]
   },
@@ -1541,25 +1609,25 @@
    "priority": "P3",
    "state": "PENDING",
    "state_note": "parity gate PASSED (ledger p20_obj37_41_parity_gate); arm=ema deferred: ~42 min/arm x 5 exceeds remaining session GPU budget (~0.7h); runner+prereg committed pre-results (77b701a) - ready to run next grant",
-   "kind": "unknown",
+   "kind": "gpu",
    "cmd": [
     "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
     "scripts/phase20/obj37_41_objectives.py",
     "--arm",
-    "ema",
-    "--kind",
-    "gpu",
-    "--expect",
-    "{prediction:artifacts/phase20/obj37_41_objectives/ema_fold0.npy,eval_rows:139927,report:reports/phase20/obj37_41_objectives/ema_fold0.json}"
+    "ema"
    ],
    "prereg": {
     "path": "configs/phase20/obj37_41_objectives_prereg.json",
     "sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2"
    },
-   "fingerprint": "189edf43b288b8ff",
+   "fingerprint": "c2204a60b258756f",
    "depends_on": [],
    "attempts": 0,
-   "expect": null,
+   "expect": {
+    "report": "reports/phase20/obj37_41_objectives/ema_fold0.json",
+    "prediction": "artifacts/phase20/obj37_41_objectives/ema_fold0.npy",
+    "eval_rows": 139927
+   },
    "result": {
     "verdict": null,
     "report": null
@@ -1592,6 +1660,23 @@
      "ts": "2026-10-18T22:33:58.908916+00:00",
      "event": "prereg",
      "sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2"
+    },
+    {
+     "ts": "2026-10-18T22:34:30.493478+00:00",
+     "event": "set-cmd",
+     "cmd": [
+      "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+      "scripts/phase20/obj37_41_objectives.py",
+      "--arm",
+      "ema"
+     ],
+     "kind": "gpu",
+     "expect": {
+      "report": "reports/phase20/obj37_41_objectives/ema_fold0.json",
+      "prediction": "artifacts/phase20/obj37_41_objectives/ema_fold0.npy",
+      "eval_rows": 139927
+     },
+     "note": "re-registered via scheduler module (shell arg mangling repaired)"
     }
    ]
   },
