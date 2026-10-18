@@ -1,0 +1,132 @@
+{
+  "git": "13764a0d555702f1d05a121d5a6081378d41657a",
+  "tag": "tabpfn3_screen",
+  "fold": 0,
+  "mode": "screen",
+  "model_family": "TabPFN-3",
+  "prereg": "configs/phase20/endgame_tabpfn3_screen_prereg.json",
+  "prereg_sha256": "b7b1f3d855d48efc6401b816ae9028df7b0269c40802ad5fdcca859e1662fcb7",
+  "checkpoint_sha256": "d0d865d54dfbc524f5703104be90620182dca7e5fb2c16de72e9959ea18f3988",
+  "checkpoint_revision": "24a16a89d245",
+  "matched_source": "reports/sol_tabpfn35_route/route_f0.json (certified v3.5 route contract)",
+  "amendment_a1": "configs/phase20/endgame_tabpfn26_screen_amendment_a1.json (icl_bf16 switch unavailable on TabPFNV2p6)",
+  "params": {
+    "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn3\\tabpfn-v3-classifier-v3_default.ckpt",
+    "n_estimators": 1,
+    "auto_scale_n_estimators": false,
+    "random_state": 1201,
+    "device": "cuda",
+    "ignore_pretraining_limits": true,
+    "fit_mode": "fit_with_cache",
+    "kv_cache_precision": "int8",
+    "keep_cache_on_device": true,
+    "inference_precision": "autocast",
+    "categorical_features_indices": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      21
+    ],
+    "memory_saving_mode": true,
+    "n_preprocessing_jobs": 1,
+    "tuning_config": null
+  },
+  "seed": 1201,
+  "icl_bf16": true,
+  "chunk_cells": 262144,
+  "decoder_inplace_gelu": true,
+  "windows_mqa": true,
+  "reuse_query_output": true,
+  "batch": 1024,
+  "gpu_memory_fraction": 0.85,
+  "backend_gate": {
+    "fp16": 0.00048828125,
+    "bf16": 0.0078125
+  },
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "fit_ids_sha256": "4f6cafdf586649e3589d97fa657ce942699627c12053770d519e4d9d1004c338",
+  "apply_ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+  "feature_names": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "label_free_category_maps": {
+    "Gender": [
+      "Female",
+      "Male"
+    ],
+    "Customer Type": [
+      "Loyal Customer",
+      "disloyal Customer"
+    ],
+    "Type of Travel": [
+      "Business travel",
+      "Personal Travel"
+    ],
+    "Class": [
+      "Business",
+      "Eco",
+      "Eco Plus"
+    ]
+  },
+  "feature_fit_sha256": "157be074349b4d6c105a35200ed37da2ca3f14e601f9df30feba469fbc807dd0",
+  "feature_apply_sha256": "c39a7ee7e2065404bb6d4ab1cccc75a5659d5283103376d12b14d537dd097445",
+  "no_gradient_fitting": "pretrained inference only; no evaluation labels anywhere",
+  "utc": "2026-10-18T23:38:52.049727+00:00",
+  "fit_rows": 100000,
+  "apply_rows": 139927,
+  "context_bound": 100000,
+  "status": "SCREEN_COMPLETE",
+  "fit_seconds": 14.578000000008615,
+  "predict_seconds": 27.796999999991385,
+  "total_seconds": 42.375,
+  "peak_gpu_gib": 6.441975116729736,
+  "prediction_sha256": "a3b718beadd6c3718604b4f30e3a58d6a657b77620b2346b6adcffaa248a337d",
+  "metrics": {
+    "standalone_auc": 0.9566081430956647,
+    "delta_vs_v7_standalone": -0.005219671154814809,
+    "port_delta_v7": -0.000796749782312034,
+    "port_delta_route_ref": -0.0007581736649108217,
+    "spearman_vs_v7": 0.9180504900849343,
+    "spearman_vs_route_ref": 0.9176078064058159,
+    "logit_pearson_vs_v7": 0.98800337045219,
+    "paired_bootstrap": {
+      "n": 2000,
+      "seed": 7,
+      "ci_2.5": -0.0009613096417682182,
+      "ci_97.5": -0.0006346393515964694,
+      "p_delta_gt_0": 0.0
+    }
+  },
+  "frozen_decision": {
+    "rule": "PROMOTE iff ci_2.5 > 0 AND spearman_vs_v7 < 0.995 AND standalone >= 0.960457; CLOSE iff ci_97.5 <= 0; else AMBIGUOUS",
+    "decision": "CLOSE",
+    "ci_2.5": -0.0009613096417682182,
+    "ci_97.5": -0.0006346393515964694,
+    "spearman_vs_v7": 0.9180504900849343,
+    "standalone_auc": 0.9566081430956647,
+    "floor": 0.960457
+  }
+}
