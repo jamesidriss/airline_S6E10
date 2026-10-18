@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T18:26:34.097628+00:00",
+ "updated_utc": "2026-10-18T18:36:22.655877+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -1284,7 +1284,7 @@
    "title": "Supervised contrastive",
    "priority": "P3",
    "state": "PENDING",
-   "state_note": "queued next on GPU (prereg + runner committed pre-results)",
+   "state_note": "parity gate PASSED (ledger p20_obj37_41_parity_gate); arm=supcon deferred: ~42 min/arm x 5 exceeds remaining session GPU budget (~0.7h); runner+prereg committed pre-results (77b701a) - ready to run next grant",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1301,6 +1301,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T18:36:22.655877+00:00",
+     "event": "parity PASS; deferred on budget"
     }
    ]
   },
@@ -1311,7 +1315,7 @@
    "title": "Diff AUC surrogate",
    "priority": "P3",
    "state": "PENDING",
-   "state_note": "queued next on GPU (prereg + runner committed pre-results)",
+   "state_note": "parity gate PASSED (ledger p20_obj37_41_parity_gate); arm=auc_surrogate deferred: ~42 min/arm x 5 exceeds remaining session GPU budget (~0.7h); runner+prereg committed pre-results (77b701a) - ready to run next grant",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1328,6 +1332,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T18:36:22.655877+00:00",
+     "event": "parity PASS; deferred on budget"
     }
    ]
   },
@@ -1338,7 +1346,7 @@
    "title": "Hard-pair mining",
    "priority": "P3",
    "state": "PENDING",
-   "state_note": "queued next on GPU (prereg + runner committed pre-results)",
+   "state_note": "parity gate PASSED (ledger p20_obj37_41_parity_gate); arm=hard_mining deferred: ~42 min/arm x 5 exceeds remaining session GPU budget (~0.7h); runner+prereg committed pre-results (77b701a) - ready to run next grant",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1355,6 +1363,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T18:36:22.655877+00:00",
+     "event": "parity PASS; deferred on budget"
     }
    ]
   },
@@ -1365,7 +1377,7 @@
    "title": "Noise-robust loss",
    "priority": "P4",
    "state": "PENDING",
-   "state_note": "queued next on GPU (prereg + runner committed pre-results)",
+   "state_note": "parity gate PASSED (ledger p20_obj37_41_parity_gate); arm=gce deferred: ~42 min/arm x 5 exceeds remaining session GPU budget (~0.7h); runner+prereg committed pre-results (77b701a) - ready to run next grant",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1382,6 +1394,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T18:36:22.655877+00:00",
+     "event": "parity PASS; deferred on budget"
     }
    ]
   },
@@ -1392,7 +1408,7 @@
    "title": "EMA / SWA",
    "priority": "P3",
    "state": "PENDING",
-   "state_note": "queued next on GPU (prereg + runner committed pre-results)",
+   "state_note": "parity gate PASSED (ledger p20_obj37_41_parity_gate); arm=ema deferred: ~42 min/arm x 5 exceeds remaining session GPU budget (~0.7h); runner+prereg committed pre-results (77b701a) - ready to run next grant",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1409,6 +1425,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T18:36:22.655877+00:00",
+     "event": "parity PASS; deferred on budget"
     }
    ]
   },
