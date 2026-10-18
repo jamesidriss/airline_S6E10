@@ -1,0 +1,19 @@
+{
+  "prereg_id": "P20-FEAT51-PAIRED-INTEGRATION",
+  "date": "2026-10-18",
+  "scope": "F3 full 5-fold OOF + admission gate. Paired control/treatment: champion's static full view (237 features) vs same + 13 cross-fit residuals. Identical folds, identical LGBM recipe, identical inner ES. Measures true incremental portfolio value.",
+  "hypotheses": {
+    "H51_PAIRED_INTEGRATION": {
+      "item": 51,
+      "question": "Do the 13 cross-fit residual rating features provide incremental portfolio value when added to the champion's EXACT static full view (237 features) under IDENTICAL 5-fold CV, identical LGBM recipe, identical folds, identical inner ES splits?",
+      "method": "Control: champion's static full view (237 features from ViewBuilder 'full'). Treatment: same 237 features + 13 cross-fit residuals (from FEAT51, already computed and saved). Both use identical LGBM xt_xt_f10 recipe, identical 5 primary folds, identical inner 10% ES carved from FIT. Measure paired fold deltas (treatment - control) per fold. Admission gate: mean paired delta >= +1.5e-5, >= 2.5x paired SE, positive in >= 4/5 folds.",
+      "leakage": "Residuals are cross-fit (5-fold, trained on other 4 folds). Static view is label-free. No satisfaction label enters residuals. Fold-safe by construction.",
+      "decision_rule": "Admission if mean paired delta >= +1.5e-5, >= 2.5x paired SE, positive in >= 4/5 folds."
+    }
+  },
+  "non_goals": [
+    "No comparison to v7 blend via single LGBM AUC.",
+    "No public-LB consultation."
+  ],
+  "git_before": "cbbea8f"
+}
