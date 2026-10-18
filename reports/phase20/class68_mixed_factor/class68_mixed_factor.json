@@ -1,0 +1,16 @@
+{
+ "prereg": "configs/phase20/class68_mixed_factor_prereg.json",
+ "prereg_sha256": "a27674818508d36e42449f1ccd3e1ffe7d13d3fec772e4ea1770fe193937f7c2",
+ "method": "Factorization Machine: 8-dim embeddings for 4 categorical features + linear terms on 281 numeric features. Cross-fit 5-fold on rich view.",
+ "fold0_results": {
+  "auc": 0.958391,
+  "spearman_vs_champion_proxy": 0.942157,
+  "equal_blend_auc": 0.960829,
+  "blend_delta": 0.002438,
+  "champion_ref": 0.9618529228157235,
+  "port_delta_vs_champion": -0.00346241,
+  "promising": false
+ },
+ "n_cat_features": 4,
+ "embed_dim": 8
+}

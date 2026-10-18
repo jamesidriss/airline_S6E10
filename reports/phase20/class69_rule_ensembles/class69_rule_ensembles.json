@@ -1,0 +1,17 @@
+{
+ "prereg": "configs/phase20/class69_rule_ensembles_prereg.json",
+ "prereg_sha256": "65dfca8266ccf58ef62b53924788494c46ee75dbea63ae14eb69d79d581a59f4",
+ "method": "Conditional rule ensembles: 50 shallow DecisionTrees (max_depth=3) on random 30% feature subspaces, weighted by inner-val AUC. Cross-fit 5-fold on rich view.",
+ "fold0_results": {
+  "auc": 0.954065,
+  "spearman_vs_champion_proxy": 0.883995,
+  "equal_blend_auc": 0.96008,
+  "blend_delta": 0.00601521,
+  "champion_ref": 0.9618529228157235,
+  "port_delta_vs_champion": -0.00778833,
+  "promising": false
+ },
+ "n_trees": 50,
+ "max_depth": 3,
+ "subspace_frac": 0.3
+}
