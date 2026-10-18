@@ -92,3 +92,48 @@ def test_scheduler_live_gpu_pid_lock_on_windows():
             finally:
                 S.release_gpu_lock("J999")
             assert not lock.exists()
+
+
+def _write_budget(root: Path, **over) -> None:
+    doc = {"active_gpu_budget": {"cap_gpu_hours": 22, "consumed_gpu_hours_estimate": 11.8,
+                                 "remaining_gpu_hours": 10.2}}
+    doc["active_gpu_budget"].update(over)
+    target = root / "research" / "phase20_exhaustive"
+    target.mkdir(parents=True, exist_ok=True)
+    (target / "campaign_budget.json").write_text(json.dumps(doc), encoding="utf-8")
+
+
+def test_budget_check_blocks_exhausted_cap():
+    """22h ceiling from compute_budget_extension_22h.md: exhausted balance blocks GPU runs."""
+    with TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _write_budget(root, cap_gpu_hours=12.0, consumed_gpu_hours_estimate=12.0)
+        with patch.object(S, "ROOT", root):
+            ok, why = S.budget_check(True)
+            assert not ok and "exhausted" in why
+            # CPU jobs are never budget-gated
+            assert S.budget_check(False)[0]
+
+
+def test_budget_check_allows_within_cap_and_missing_file():
+    with TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _write_budget(root)  # 11.8 of 22 consumed
+        with patch.object(S, "ROOT", root):
+            ok, why = S.budget_check(True)
+            assert ok and "10.2" in why or ok and "remaining" in why
+    with TemporaryDirectory() as tmp:  # no budget file -> fail-open (sandboxed tests)
+        with patch.object(S, "ROOT", Path(tmp)):
+            assert S.budget_check(True)[0]
+
+
+def test_budget_charge_advances_consumed_estimate():
+    with TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _write_budget(root)
+        with patch.object(S, "ROOT", root):
+            S.budget_charge(1800.0)  # half an hour of GPU
+            doc = json.loads((root / "research" / "phase20_exhaustive" / "campaign_budget.json").read_text())
+            ext = doc["active_gpu_budget"]
+            assert abs(ext["consumed_gpu_hours_estimate"] - 12.3) < 1e-6
+            assert abs(ext["remaining_gpu_hours"] - 9.7) < 1e-6

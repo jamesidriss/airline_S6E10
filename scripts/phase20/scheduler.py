@@ -145,6 +145,53 @@ def gpu_busy() -> tuple[bool, str]:
     return False, ""
 
 
+def _budget_path() -> Path:
+    """Resolved lazily so sandboxed tests (patched ROOT) never see the real file."""
+    return ROOT / "research" / "phase20_exhaustive" / "campaign_budget.json"
+
+
+def budget_check(is_gpu: bool) -> tuple[bool, str]:
+    """Hard GPU ceiling guard (compute_budget_extension_22h.md sec.7).
+
+    Fail-open when no budget file exists (sandboxed test runs, fresh checkouts);
+    fail-closed whenever a cap is declared and the balance is exhausted.  Also
+    advances the consumed estimate by a finished GPU job's wall time.
+    """
+    path = _budget_path()
+    if not is_gpu or not path.is_file():
+        return True, "no active GPU budget file; run allowed"
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        ext = doc.get("active_gpu_budget") or {}
+        cap = ext.get("cap_gpu_hours")
+        used = ext.get("consumed_gpu_hours_estimate")
+    except Exception:
+        return True, "budget file unreadable; run allowed"
+    if cap is None or used is None:
+        return True, "budget file declares no active cap; run allowed"
+    remaining = float(cap) - float(used)
+    if remaining <= 0:
+        return False, f"GPU budget exhausted: {used:.2f}h consumed of {cap}h authorized"
+    return True, f"GPU budget OK: {remaining:.2f}h of {cap}h remaining"
+
+
+def budget_charge(seconds: float) -> None:
+    """Add a finished GPU job's wall time to the consumed estimate (append-only credit)."""
+    path = _budget_path()
+    if not path.is_file():
+        return
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        ext = doc["active_gpu_budget"]
+        ext["consumed_gpu_hours_estimate"] = round(
+            float(ext["consumed_gpu_hours_estimate"]) + seconds / 3600.0, 3)
+        ext["remaining_gpu_hours"] = round(
+            float(ext["cap_gpu_hours"]) - ext["consumed_gpu_hours_estimate"], 3)
+        path.write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    except Exception:
+        pass  # accounting is best-effort; it never gates a run
+
+
 def acquire_gpu_lock(job_id: str, pid: int) -> None:
     GPU_LOCK.parent.mkdir(parents=True, exist_ok=True)
     GPU_LOCK.write_text(json.dumps(
@@ -412,6 +459,11 @@ def cmd_run(args) -> int:
         raise SystemExit(f"REFUSING {args.job}: {why}")
     is_gpu = job["kind"] == "gpu"
     if is_gpu:
+        ok_budget, budget_note = budget_check(True)
+        if not ok_budget:
+            raise SystemExit(f"REFUSING GPU job {args.job}: {budget_note}")
+        runtime_append({"ts": utcnow(), "job": args.job, "event": "budget-check",
+                        "detail": budget_note})
         busy, reason = gpu_busy()
         if busy:
             raise SystemExit(f"REFUSING GPU job {args.job}: {reason}")
@@ -456,6 +508,7 @@ def cmd_run(args) -> int:
                            "state": job["state"]})
     if is_gpu:
         release_gpu_lock(args.job)
+        budget_charge(secs)
     save(doc)
     runtime_append({
         "ts": utcnow(), "job": args.job, "exp_row": job["exp_row"],

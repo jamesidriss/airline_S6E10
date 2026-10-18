@@ -1,5 +1,5 @@
 {
- "updated_utc": "2026-10-18",
+ "updated_utc": "2026-10-18T22:33:33.707592+00:00",
  "head_at_start": "5d7beb6e9c25af8d01a3edb4cd97dccef610ab45",
  "champion_a": {
   "name": "v7_sol_tabpfn_internal2_aux10",
@@ -50,7 +50,7 @@
   "MTL_BLOCK": "CLOSED (items 35+36): masked-rating CORAL aux head on PLR trunk -- both arms slightly worse than plain PLR (0.959963/-5.009e-4, 0.959813/-5.576e-4 vs 0.960197/-4.191e-4); corr unchanged ~0.993. Rating-coupling aux neither lifts nor decorrelates; distinct from (and now also negative alongside) the closed SSL32 pretraining branch.",
   "TABICL_FT_BLOCK": "Full-dose RESOURCE_BLOCKED; device logs demonstrated nvlddmkm GPU driver crash, not proven CUDA fragmentation. Recovered 100k FIT-subset fine-tune completed F2: standalone 0.957404, portfolio delta -8.169e-4, corr_route 0.9881; reduced-dose recipe NEGATIVE. Full-dose remains resource-blocked."
  },
- "gpu_hours_used": 9.1,
+ "gpu_hours_used": 11.8,
  "tabicl_ft": {
   "status": "CLOSED_NEGATIVE",
   "result": "reports/phase20/tabicl_ft/tabicl_ft_route_fold0_fb100k.json",
@@ -62,5 +62,29 @@
   "recovery_prereg_sha256": "a9383ab92ae9997b7b6b33520bd46daf670fb921eb50b12dbe95e02c30a4c393"
  },
  "test_suite": "231 passed, 0 failed on 2026-10-18; Phase20 scheduler integration tests included; source-file guard passes",
- "gpu_hours_note": "9.1/12 h: +1.0 h FTT-batch1024 attempt killed by 60-min shell timeout (no result), +0.69 h FTT bounded run, +0.01 h INET bounded, <0.01 h dcnv2full/factlog; rffsvm was CPU. S7 repair batch complete; remaining ~2.9 h reserved -- CPU-first from here, consolidated extension request before exceeding 12 h."
+ "gpu_hours_note": "11.8/22 h as of 2026-10-19 (cap extended from 12 h by explicit user authorization). Reconciliation: 9.1 documented at S7 close + 2.44 explicit post-S7 ledger entries (OBJ34 0.87, OBJ37-41 parity 0.70, FLM12 0.87) + ~0.26 unrecorded estimate. Prior note (12 h window) preserved in git history.",
+ "gpu_budget": {
+  "cap_hours": 22,
+  "previous_cap_hours": 12,
+  "consumed_hours": 11.8,
+  "remaining_hours": 10.2,
+  "policy_ref": "research/phase20_exhaustive/compute_budget_extension_22h.md",
+  "authorized_utc": "2026-10-19T00:00:00+00:00"
+ },
+ "endgame": {
+  "started_utc": "2026-10-18T22:33:33.707592+00:00",
+  "deadline_utc": "2026-10-31T23:59:00+00:00",
+  "queue": [
+   "OBJ37 supcon",
+   "OBJ38 auc_surrogate",
+   "OBJ39 hard_mining",
+   "OBJ40 gce",
+   "OBJ41 ema",
+   "v7 fold-0 clean-code reproduction",
+   "finalist certification / test inference / submission",
+   "final reports + handoff"
+  ],
+  "submission_policy": "research/submission_policy_amendment_20261017.md (PATH A / PATH B, standing authorization)",
+  "submissions_this_campaign": 0
+ }
 }
