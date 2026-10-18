@@ -1,0 +1,22 @@
+{
+ "prereg_id": "P20-ENDGAME-ROW13-INTERPRETATION-CONTROLS",
+ "date": "2026-10-19",
+ "why": "Both row-13 arms closed CLOSE, but each ran context-bounded (stratified 100k FIT rows) after the v2.6 full-context OOM, while the champion's TabPFN member uses all 559,708 rows. TabPFN's in-context performance scales with context size, so the observed 4.9-5.2e-3 standalone gaps are CONFOUNDED: checkpoint quality and context bound cannot be separated from these two runs alone. Two cheap controls resolve the confound; both are measurements, not candidate searches.",
+ "control_1": {
+  "name": "v3.5 champion checkpoint at the SAME 100k context bound",
+  "checkpoint": "artifacts/tabpfn35/tabpfn-v3.5-20260909.safetensors (sha pinned in research/raw/sol_tabpfn_provenance.json)",
+  "protocol": "identical to the row-13 arms (route view, n_estimators=1, fit_with_cache, int8 KV cache, autocast, batch 1024, stratified 100k context from FIT, seed 1201); icl_bf16 IS available for this checkpoint and is used (it is part of the champion's own recipe)",
+  "purpose": "if v3.5@100k lands near the v3/v2.6 numbers, the context bound explains the gap and the checkpoints are comparable; if it lands near the champion's full-context 0.961458, the checkpoints themselves are weaker",
+  "decision_rule": "NONE - this is an interpretive control; it cannot promote or close anything by itself"
+ },
+ "control_2": {
+  "name": "TabPFN-3 at FULL context (559,708 rows)",
+  "protocol": "identical to the row-13 arms except the context is the entire FIT population; batch 1024",
+  "purpose": "the 100k bound was triggered by the v2.6 OOM in the cache build; v3 is a different architecture (212 MB checkpoint, no icl_bf16) and may or may not share that wall. If it fits, the full-context number is the fair comparison against the champion's full-context member (0.961458 fold-0 route).",
+  "decision_rule": "NONE as a control; if it completes, its result is reported with the same frozen comparison metrics (standalone, port_delta_v7, CI) and the row-13 verdict for v3 is restated on the FULL-context evidence rather than the bounded one",
+  "oom_handling": "an OOM is recorded as a resource fact (RESOURCE_BLOCKED for the full-context configuration) and the bounded result stands"
+ },
+ "order": ["control_1 (fast, ~2 min)", "control_2 (5-15 min if it fits)"],
+ "non_goals": ["no candidate promotion from a control", "no threshold movement", "no public-LB consultation"],
+ "git_before": "dd87a2a"
+}
