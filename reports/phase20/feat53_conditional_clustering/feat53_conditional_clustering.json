@@ -1,0 +1,18 @@
+{
+ "prereg": "configs/phase20/feat53_conditional_clustering_prereg.json",
+ "prereg_sha256": "13d0c3e2d21ffe6045e6023a01af1259e137f15d3517e45ce9728330e2ee9922",
+ "method": "Conditional clustering: K-means (8 clusters) on 21 covariates, cross-fit 5-fold. Cluster distances added as features. LGBM on 21raw+8cluster vs 21raw.",
+ "fold0_results": {
+  "base_21raw_auc": 0.953423,
+  "augmented_21raw_8cluster_auc": 0.953465,
+  "augmentation_delta": 4.226e-05,
+  "spearman_aug_vs_champion": 0.909725,
+  "equal_blend_auc": 0.959884,
+  "blend_delta_vs_aug": 0.00641883,
+  "champion_ref": 0.9618529228157235,
+  "port_delta_vs_champion": -0.00838789,
+  "promising": false,
+  "decision_rule": "PROMISING if augmentation_delta >= +5e-5"
+ },
+ "n_clusters": 8
+}

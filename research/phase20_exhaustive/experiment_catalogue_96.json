@@ -782,12 +782,13 @@
    "requested_method": "label-free passenger clusters + context models",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P4",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "clusters fit without eval labels"
+   "next_action": "clusters fit without eval labels",
+   "phase20_finding": "K-means clustering (8 clusters, cross-fit): augmentation delta +4.23e-5 (0.953423 -> 0.953465). Below +5e-5 threshold. Decorrelated (Spearman 0.910). Blend with champion proxy +6.42e-3 but standalone below threshold. NEGATIVE."
   },
   {
    "experiment_number": 54,
