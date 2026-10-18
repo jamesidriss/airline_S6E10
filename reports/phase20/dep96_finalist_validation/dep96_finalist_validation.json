@@ -1,0 +1,47 @@
+{
+ "prereg": "configs/phase20/dep96_finalist_validation_prereg.json",
+ "prereg_sha256": "acd3986c07101d5c43c7164b72ff9893e7197917f7ce13b3fc517560e9fe592c",
+ "block10": {
+  "n_splits": 10,
+  "seed": 20261010,
+  "fold_counts": [
+   69964,
+   69964,
+   69964,
+   69964,
+   69964,
+   69963,
+   69963,
+   69963,
+   69963,
+   69963
+  ]
+ },
+ "champion_rich_view": "prod5_lgbm_full_primary recipe (xt_xt_f10) on 285-feature full view",
+ "block10_oof_auc": 0.96105,
+ "champion_primary_oof": 0.9618529228157235,
+ "delta_vs_primary": -0.0008034,
+ "per_fold_aucs": [
+  0.960313,
+  0.961463,
+  0.960478,
+  0.962049,
+  0.961183,
+  0.961007,
+  0.961103,
+  0.959694,
+  0.962286,
+  0.960983
+ ],
+ "mean_fold_auc": 0.961056,
+ "std_fold_auc": 0.000737,
+ "correlation_with_primary": {
+  "spearman": null,
+  "pearson": null,
+  "note": "primary OOF from store if available"
+ },
+ "artifact": {
+  "block10_folds": "data/cache/folds/block10_10f_seed20261010.npy",
+  "oof_predictions": "reports/phase20/dep96_finalist_validation/block10_oof.npy"
+ }
+}

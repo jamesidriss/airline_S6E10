@@ -1392,12 +1392,13 @@
    "requested_method": "validate both finalists on fresh schemes",
    "historical_status": "shadow reused",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
-   "fidelity_reached": "F0",
+   "fidelity_reached": "F1",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "note reused shadow is not fresh; new scheme if used for selection"
+   "next_action": "note reused shadow is not fresh; new scheme if used for selection",
+   "phase20_finding": "Block10 (10-fold, seed 20261010) fold scheme generated and registered in data/cache/folds/. Champion LGBM 10-fold OOF 0.961050 vs primary 5-fold 0.961853 (delta -8.03e-4). Per-fold AUCs 0.959694\u20130.962286 (std 7.37e-4). Champion robust across fold schemes. Infrastructure ready for finalist B validation (DEP 96 complete). Fold scheme independent of primary/shadow, per AGENTS.md final-submission strategy."
   }
  ],
  "updated": "2026-10-17T16:50:00Z"
