@@ -678,12 +678,13 @@
    "requested_method": "supervised passenger similarity",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "FIT-only learned metric; member-family compat test"
+   "next_action": "FIT-only learned metric; member-family compat test",
+   "phase20_finding": "Learned similarity metric (contrastive Siamese, embed_dim=8, cross-fit): augmentation delta -2.49e-4 (0.953423 -> 0.953174). NEGATIVE - degradation. Decorrelated (Spearman 0.904) but standalone degradation dominates. Blend with champion proxy +6.73e-3 but standalone dominates. NEGATIVE."
   },
   {
    "experiment_number": 47,

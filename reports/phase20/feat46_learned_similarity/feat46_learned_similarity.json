@@ -1,0 +1,19 @@
+{
+ "prereg": "configs/phase20/feat46_learned_similarity_prereg.json",
+ "prereg_sha256": "f416934a53c5c0c540715ed9902120d85e9af901278571896b89c427a3bd6d69",
+ "method": "Learned similarity metric: contrastive Siamese network (embed_dim=8) on 21 covariates, cross-fit 5-fold. Learned embeddings added to LGBM.",
+ "fold0_results": {
+  "base_21raw_auc": 0.953423,
+  "augmented_21raw_8emb_auc": 0.953174,
+  "augmentation_delta": -0.00024881,
+  "emb_only_auc": 0.0,
+  "spearman_aug_vs_champion": 0.904236,
+  "equal_blend_auc": 0.959901,
+  "blend_delta_vs_aug": 0.00672728,
+  "champion_ref": 0.9618529228157235,
+  "port_delta_vs_champion": -0.00867895,
+  "promising": false,
+  "decision_rule": "PROMISING if augmentation_delta >= +5e-5"
+ },
+ "embed_dim": 8
+}
