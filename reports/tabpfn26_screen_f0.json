@@ -1,5 +1,5 @@
 {
-  "git": "2f5b16d85660d3f7c86b4740bcbb636a362cbbe6",
+  "git": "bf8e728d0a6c88be222a454fb05d181f3da65435",
   "tag": "tabpfn26_screen",
   "fold": 0,
   "mode": "screen",
@@ -94,11 +94,39 @@
   "feature_fit_sha256": "157be074349b4d6c105a35200ed37da2ca3f14e601f9df30feba469fbc807dd0",
   "feature_apply_sha256": "c39a7ee7e2065404bb6d4ab1cccc75a5659d5283103376d12b14d537dd097445",
   "no_gradient_fitting": "pretrained inference only; no evaluation labels anywhere",
-  "utc": "2026-10-18T23:34:42.144551+00:00",
-  "fit_rows": 559708,
+  "utc": "2026-10-18T23:34:56.445812+00:00",
+  "fit_rows": 100000,
   "apply_rows": 139927,
-  "context_bound": null,
-  "status": "INVALID_RESOURCE_OR_IMPLEMENTATION",
-  "error": "OutOfMemoryError('CUDA out of memory. Tried to allocate 1.80 GiB. GPU 0 has a total capacity of 15.92 GiB of which 1.34 GiB is free. 13.53 GiB allowed; Of the allocated memory 12.71 GiB is allocated by PyTorch, and 15.14 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)')",
-  "seconds": 2.9070000000065193
+  "context_bound": 100000,
+  "status": "SCREEN_COMPLETE",
+  "fit_seconds": 41.54700000002049,
+  "predict_seconds": 74.06200000000536,
+  "total_seconds": 115.60900000002584,
+  "peak_gpu_gib": 7.59689998626709,
+  "prediction_sha256": "a7c5b2d8806a53cd7ce9d919edc1134c75ec153b81a948bc2c4aeebc7f093bde",
+  "metrics": {
+    "standalone_auc": 0.956950761709903,
+    "delta_vs_v7_standalone": -0.004877052540576465,
+    "port_delta_v7": -0.0010507779659619798,
+    "port_delta_route_ref": -0.0009988923788021298,
+    "spearman_vs_v7": 0.9226655600484163,
+    "spearman_vs_route_ref": 0.9222714471425807,
+    "logit_pearson_vs_v7": 0.9887681018049401,
+    "paired_bootstrap": {
+      "n": 2000,
+      "seed": 7,
+      "ci_2.5": -0.001289882054239927,
+      "ci_97.5": -0.0008181704622722719,
+      "p_delta_gt_0": 0.0
+    }
+  },
+  "frozen_decision": {
+    "rule": "PROMOTE iff ci_2.5 > 0 AND spearman_vs_v7 < 0.995 AND standalone >= 0.960457; CLOSE iff ci_97.5 <= 0; else AMBIGUOUS",
+    "decision": "CLOSE",
+    "ci_2.5": -0.001289882054239927,
+    "ci_97.5": -0.0008181704622722719,
+    "spearman_vs_v7": 0.9226655600484163,
+    "standalone_auc": 0.956950761709903,
+    "floor": 0.960457
+  }
 }
