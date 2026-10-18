@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-FEAT50-LEARNED-INTERACTIONS",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. New feature block: Learned feature interactions via factorization machine or neural interaction layer, replacing manual cross-terms.",
+  "hypotheses": {
+    "H50_LEARNED_INTERACTIONS": {
+      "item": 50,
+      "question": "Do learned feature interactions (factorization machine style) improve fold-0 OOF AUC when added to the rich view?",
+      "method": "Add a factorization machine interaction layer (rank 8) on top of the 285-feature rich view. Cross-fit 5-fold: train FM interaction layer on folds 1-4, predict interaction features for fold-0. LGBM on rich + FM features vs rich alone.",
+      "leakage": "FM trained on FIT only (folds 1-4), interaction features predicted for fold-0. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995."
+    }
+  },
+  "non_goals": ["No public-LB consultation."],
+  "git_before": "d88caaf"
+}
