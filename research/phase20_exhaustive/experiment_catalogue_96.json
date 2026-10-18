@@ -752,11 +752,11 @@
    "historical_equivalent": "-",
    "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
-   "fidelity_reached": "F2",
+   "fidelity_reached": "F3",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "distinct residual-feature (not group-bias); fold-0",
-   "phase20_finding": "Champion integration (full-5 OOF): 13 cross-fit residual rating features added to 285-feature rich view. 5-fold OOF 0.961079 vs champion 0.961853 (delta \u22127.74e-4). Marginal gain vs LGBM full (0.960904) = +1.75e-4 \u2014 below admission gate +1.5e-5 but negative vs champion. The residual signal (+3.94e-3 on 21raw, decorrelated Spearman 0.929, fold-0 blend +3.32e-3) is ALREADY CAPTURED by the existing rich-view blocks (TE on ratings, external, token, teacher). Fold-0 blend +3.32e-3 does not translate to full-5 OOF because the rich view already absorbs the signal. NEGATIVE for marginal champion upgrade. Recommendation: FEAT 51 is a PROMISING feature block for NEW pipelines with weaker base views, but redundant in the current rich-view champion."
+   "phase20_finding": "Paired control/treatment 5-fold CV (prereg 36beca0): champion static full (237) vs +13 cross-fit residuals. Mean paired delta +7.05e-5 (4/5 folds positive). Admission gate NOT passed: mean +7.05e-5 < 2.5*SE (t=1.54 < 2.5). The residual signal is real but inconsistent across folds. Fold-0 blend +3.32e-3 does not translate to full-5 OOF paired gain. FEAT 51 residuals are PROMISING for NEW pipelines but do not clear admission gate for champion upgrade. Status: PROMISING feature block, NEGATIVE for champion upgrade."
   },
   {
    "experiment_number": 52,
@@ -837,13 +837,13 @@
    "requested_method": "low-rank interaction matrices among ratings",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "PROMISING",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
    "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "low-rank cross-rating; fold-0",
-   "phase20_finding": "Cross-fit SVD rank-8 of 13 ratings: augmentation delta +3.19e-3 (0.953423 \u2192 0.956610). SVD features alone 0.925331. Decorrelated (Spearman 0.928). Blend with champion proxy +3.81e-3. PROMISING by +5e-5 bar, intermediate between FEAT 51 residuals (+3.94e-3) and FEAT 48 hierarchical (+3.94e-4). The SVD captures pairwise rating interactions effectively. PROMISING but FEAT 51 residuals remain the strongest feature block."
+   "phase20_finding": "SUPERVISED low-rank factorization (rank 8, cross-fit): augmentation delta -2.09e-3 (0.953423 -> 0.951334). Embeddings alone AUC 0.717. Decorrelated (Spearman 0.879). Blend with champion proxy +7.31e-3 but standalone degradation dominates. NEGATIVE - the supervised factorization objective does not extract LGBM-useful signal. The unsupervised SVD (FEAT57-LOWRANK, +3.19e-3) outperforms this supervised mechanism. Both mechanisms now measured; unsupervised SVD is the promising low-rank approach."
   },
   {
    "experiment_number": 58,

@@ -1,0 +1,55 @@
+{
+ "prereg": "configs/phase20/feat51_paired_integration_prereg.json",
+ "prereg_sha256": "36becae012fc27c6351d2e92aaf5c76f13a848123ba9d5a644c002a5e191d863",
+ "control": "champion static full view (237 features)",
+ "treatment": "champion static full view (237) + 13 cross-fit residuals",
+ "identical_conditions": {
+  "folds": "primary 5-fold (seed 20261010)",
+  "lgbm_recipe": "xt_xt_f10 (seed 1, 6000 est, ES 250)",
+  "inner_es": "10% carved from FIT only, seed 1 per fold",
+  "residuals": "cross-fit 13 residuals from FEAT51 (5-fold, HistGB teachers)"
+ },
+ "results": {
+  "control_oof_auc": 0.961007,
+  "treatment_oof_auc": 0.961079,
+  "per_fold_control": [
+   0.960953,
+   0.961137,
+   0.961011,
+   0.960359,
+   0.961614
+  ],
+  "per_fold_treatment": [
+   0.960982,
+   0.961137,
+   0.960984,
+   0.960494,
+   0.96183
+  ],
+  "paired_deltas_per_fold": [
+   2.876e-05,
+   2.4e-07,
+   -2.742e-05,
+   0.00013436,
+   0.00021635
+  ],
+  "mean_paired_delta": 7.046e-05,
+  "std_paired_delta": 0.000102,
+  "se_paired_delta": 4.562e-05,
+  "t_stat": 1.5446,
+  "positive_folds": 4,
+  "admission_gate": {
+   "required_gain": 1.5e-05,
+   "observed_mean_delta": 7.046e-05,
+   "se": 4.562e-05,
+   "t_stat": 1.5446,
+   "positive_folds": "4/5",
+   "passes": false
+  },
+  "blend_with_champion_proxy": {
+   "spearman_vs_champion_proxy": 0.979772,
+   "equal_blend_auc": 0.500785
+  }
+ },
+ "artifact": "reports/phase20/feat51_paired_integration/feat51_paired_integration.json"
+}

@@ -1,0 +1,20 @@
+{
+ "prereg": "configs/phase20/feat57_supervised_lowrank_prereg.json",
+ "prereg_sha256": "495cf0366b1d17168f3a0632ea2ea0ac5c834ef6389d54aa48db97b7d4b12bfd",
+ "method": "SUPERVISED low-rank factorization (rank 8) of 13 ratings with satisfaction supervision, cross-fit 5-fold, PyTorch/AdamW. Distinct from unsupervised SVD (FEAT57-LOWRANK).",
+ "fold0_results": {
+  "base_21raw_auc": 0.953423,
+  "augmented_21raw_8emb_auc": 0.951334,
+  "augmentation_delta": -0.00208896,
+  "emb_only_auc": 0.717451,
+  "spearman_aug_vs_champion": 0.878839,
+  "equal_blend_auc": 0.958635,
+  "blend_delta_vs_aug": 0.00730168,
+  "champion_ref": 0.9618529228157235,
+  "port_delta_vs_champion": -0.0105191,
+  "promising": false,
+  "decision_rule": "PROMISING if augmentation_delta >= +5e-5"
+ },
+ "rank": 8,
+ "note": "SUPERVISED mechanism (satisfaction-trained) vs unsupervised SVD (FEAT57-LOWRANK)"
+}
