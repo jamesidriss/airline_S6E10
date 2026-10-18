@@ -1,0 +1,13 @@
+{
+  "amendment_id": "P20-FINALIST-READINESS-H94-CHAMPION",
+  "amends": "configs/phase20/finalist_readiness_prereg.json (H94_STABILITY_AUDIT)",
+  "date": "2026-10-18",
+  "reason": "The original H94 execution used sol_route_aux10_primary_final as the champion reference because the true champion v7_sol_tabpfn_internal2_aux10 OOF was not in the prediction store (documented DOC_GAP in ledger p20_finalist_h94_stability). The champion OOF has now been archived bit-exactly (ledger p20_champion_v7_archive_and_phase17_audit; oof sha 1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552, AUC 0.9618529228157235), so the audit is completed as originally intended: same method, same variants, true champion reference.",
+  "change": "H94 champion reference upgraded from sol_route_aux10_primary_final to v7_sol_tabpfn_internal2_aux10. Variant list, per-fold equal-logit blend procedure, Spearman comparison, and the stability rule (every fold: blend_delta >= -5e-5 AND spearman > 0.98) are IDENTICAL to the original audit. No other change.",
+  "scope": "F1 on saved OOF arrays only; no training, no submission, no public-LB consultation.",
+  "non_goals": [
+    "No ensemble weight search (frozen equal-logit only).",
+    "No new variant construction; variant set copied verbatim from reports/phase20/finalist_readiness/finalist_readiness_audit.json h94_stability.variants keys."
+  ],
+  "git_before": "457c4b9"
+}
