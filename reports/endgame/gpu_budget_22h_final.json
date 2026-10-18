@@ -1,0 +1,33 @@
+{
+ "generated_utc": "2026-10-18T22:37:48.144113+00:00",
+ "cap_gpu_hours": 22,
+ "previous_cap_gpu_hours": 12,
+ "increment_gpu_hours": 10,
+ "consumed_at_amendment": 11.8,
+ "reconciliation": {
+  "s7_close_documented": 9.1,
+  "post_s7_ledger_entries": {
+   "p20_obj34_finetune_tabpfn35_blocked": 0.87,
+   "p20_obj37_41_parity_gate": 0.7,
+   "p20_flm12_tabpfn25_blocked": 0.87
+  },
+  "unrecorded_estimate": 0.26,
+  "method": "ledger gpu_hours fields for entries dated >= 2026-10-17 + documented S7 tally, cross-checked vs reports/**/total_seconds inside the window"
+ },
+ "authority": "direct user authorization in the active session (2026-10-19 UTC)",
+ "policy_ref": "research/phase20_exhaustive/compute_budget_extension_22h.md",
+ "no_paid_cloud": true,
+ "scheduler_enforcement": "scripts/phase20/scheduler.py budget_check() refuses GPU jobs at/exceeding the cap and charges each finished GPU job's wall time (budget_charge)",
+ "phase21_scheduled_runs": [],
+ "current_consumed_estimate": 11.8,
+ "remaining_gpu_hours": 10.2,
+ "hard_ceiling_respected": true,
+ "stop_conditions": [
+  "remaining balance <= 0",
+  "repeated GPU driver faults (nvlddmkm 153 precedent)",
+  "missing credentials",
+  "competition rule conflict",
+  "user-interaction-required Kaggle action",
+  "deadline 2026-10-31T23:59Z takes precedence"
+ ]
+}

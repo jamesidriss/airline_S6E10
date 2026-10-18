@@ -1,0 +1,80 @@
+{
+ "generated_utc": "2026-10-18T22:37:48.144113+00:00",
+ "competition": "playground-series-s6e10",
+ "deadline_utc": "2026-10-31T23:59:00+00:00",
+ "remote_reconciled_utc": "2026-10-19T00:00:00+00:00",
+ "remote_count": 7,
+ "local_ledger_count": 7,
+ "reconciliation": "remote refs 56788249,56793823,56805526,56845975,56918343,56951906,57090508 == local ledger, no unknown or duplicate uploads",
+ "daily_cap": 10,
+ "used_today": 0,
+ "remaining_today": 10,
+ "submissions_this_campaign": 0,
+ "current_champion_submission": {
+  "ref": 57090508,
+  "file": "v7_sol_tabpfn_internal2_aux10.csv",
+  "public": 0.96146,
+  "csv_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+  "test_pred_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af"
+ },
+ "history": [
+  {
+   "ref": 56788249,
+   "file": "v1_equal4.csv",
+   "ts": "2026-10-03T03:14:36.689328+00:00",
+   "status": "complete",
+   "public": 0.96093,
+   "private": null
+  },
+  {
+   "ref": 56793823,
+   "file": "v2_equal34.csv",
+   "ts": "2026-10-03T08:43:19.940504+00:00",
+   "status": "complete",
+   "public": 0.96092,
+   "private": null
+  },
+  {
+   "ref": 56805526,
+   "file": "v3_final.csv",
+   "ts": "2026-10-03T19:38:10.439547+00:00",
+   "status": "complete",
+   "public": 0.96098,
+   "private": null
+  },
+  {
+   "ref": 56845975,
+   "file": "v4_fulldata.csv",
+   "ts": "2026-10-05T07:23:06.395739+00:00",
+   "status": "complete",
+   "public": 0.961,
+   "private": null
+  },
+  {
+   "ref": 56918343,
+   "file": "v5_aux_cross.csv",
+   "ts": "2026-10-07T18:06:02.914504+00:00",
+   "status": "complete",
+   "public": 0.96103,
+   "private": null
+  },
+  {
+   "ref": 56951906,
+   "file": "v6_sol_tabpfn_route_aux10.csv",
+   "ts": "2026-10-08T11:39:16.891295+00:00",
+   "status": "complete",
+   "public": 0.96144,
+   "private": null
+  },
+  {
+   "ref": 57090508,
+   "file": "v7_sol_tabpfn_internal2_aux10.csv",
+   "ts": "2026-10-12T00:59:28.922443+00:00",
+   "status": "complete",
+   "public": 0.96146,
+   "private": null
+  }
+ ],
+ "policy_ref": "research/submission_policy_amendment_20261017.md",
+ "public_lb_use": "measurement only; never an optimization target"
+}
