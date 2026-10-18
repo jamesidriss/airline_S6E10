@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-FEAT58-RARE-COMBINATION",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. New feature block: Regularization of sparse passenger contexts - penalizes overfitting on rare categorical combinations.",
+  "hypotheses": {
+    "H58_RARE_COMBINATION": {
+      "item": 58,
+      "question": "Does regularizing sparse categorical combinations (via target encoding with adaptive shrinkage) improve fold-0 OOF AUC?",
+      "method": "For each categorical combination, compute target encoding with adaptive shrinkage based on count (James-Stein shrinkage). Cross-fit: compute on folds 1-4, apply to fold-0. Add to 21raw. LGBM fold-0.",
+      "leakage": "Shrinkage statistics computed on FIT only (folds 1-4). Applied to fold-0. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995."
+    }
+  },
+  "non_goals": ["No public-LB consultation."],
+  "git_before": "5de9d1e"
+}

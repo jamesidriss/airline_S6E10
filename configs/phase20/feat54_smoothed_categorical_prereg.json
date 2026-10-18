@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-FEAT54-SMOOTHED-CATEGORICAL",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. New feature block: Smoothed categorical model - generalizes rare categorical configurations via smoothing/regularization.",
+  "hypotheses": {
+    "H54_SMOOTHED_CATEGORICAL": {
+      "item": 54,
+      "question": "Does smoothing rare categorical configurations (Bayesian smoothing of categorical levels) improve fold-0 OOF AUC?",
+      "method": "For each categorical feature, compute smoothed target statistics with Bayesian shrinkage (prior from global mean). Cross-fit: compute statistics on folds 1-4, apply to fold-0. Add smoothed features to 21raw. LGBM fold-0.",
+      "leakage": "Smoothing statistics computed on FIT only (folds 1-4). Applied to fold-0. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995."
+    }
+  },
+  "non_goals": ["No public-LB consultation."],
+  "git_before": "5de9d1e"
+}

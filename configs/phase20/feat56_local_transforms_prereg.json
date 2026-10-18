@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-FEAT56-LOCAL-TRANSFORMS",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. New feature block: Local continuous transforms - context-sensitive numeric transforms (e.g., quantile transforms per segment).",
+  "hypotheses": {
+    "H56_LOCAL_TRANSFORMS": {
+      "item": 56,
+      "question": "Do context-sensitive numeric transforms (quantile transforms per customer segment) improve fold-0 OOF AUC?",
+      "method": "For each numeric feature, compute quantile transform conditioned on categorical segment (Customer Type x Class). Cross-fit: fit transforms on folds 1-4, apply to fold-0. Add transformed features to 21raw. LGBM fold-0.",
+      "leakage": "Transforms fit on FIT only (folds 1-4). Applied to fold-0. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995."
+    }
+  },
+  "non_goals": ["No public-LB consultation."],
+  "git_before": "5de9d1e"
+}
