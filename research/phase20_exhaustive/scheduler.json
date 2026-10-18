@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T11:22:27.136028+00:00",
+ "updated_utc": "2026-10-18T12:03:40.272894+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -335,7 +335,7 @@
    "family": "FLM",
    "title": "TabPFN-3 vs 2.6",
    "priority": "P1",
-   "state": "PENDING",
+   "state": "DONE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -345,14 +345,21 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "PARTIAL_VALID",
+    "report": "reports/phase20/flm13_checkpoint_verify/flm13_checkpoint_verify.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183179+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T12:03:40.272894+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "DONE",
+     "why": "verification portion complete; matched inference deferred with rationale (reserve preserved)"
     }
    ]
   },
@@ -1905,7 +1912,7 @@
    "family": "CLASS",
    "title": "Genuine EBM",
    "priority": "P3",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -1915,7 +1922,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -1923,6 +1930,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T11:51:54.009366+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "measured NEGATIVE this session (frozen rule)"
     }
    ]
   },
@@ -2167,7 +2181,7 @@
    "family": "CLASS",
    "title": "Hierarchical kernels",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -2177,7 +2191,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -2185,6 +2199,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T11:51:54.009366+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "measured NEGATIVE this session (frozen rule)"
     }
    ]
   },

@@ -1,0 +1,17 @@
+{
+ "status": "DONE",
+ "prereg": "configs/phase20/class61_genuine_ebm_prereg.json",
+ "prereg_sha256": "259dfa2ed06a766c36e66a2a33360df11970c042af1e26185a7b63a62226d619",
+ "protocol": "EBM (interpret 0.7.8) interactions=16, outer_bags=4, outer-FIT only; fold-0 evaluation; equal-logit blend with route reference.",
+ "metrics": {
+  "ebm_fold0_auc": 0.9542,
+  "portfolio_fold0_auc": 0.961727,
+  "equal_logit_blend_fold0_auc": 0.959281,
+  "port_delta": -0.00244666,
+  "candidate_spearman_vs_portfolio": 0.906886,
+  "promising_frozen_rule": false,
+  "eval_rows": 139927,
+  "fit_secs": 63.4
+ },
+ "eval_rows": 139927
+}

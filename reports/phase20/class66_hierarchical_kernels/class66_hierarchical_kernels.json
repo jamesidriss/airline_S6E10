@@ -1,0 +1,49 @@
+{
+ "status": "DONE",
+ "prereg": "configs/phase20/class66_hierarchical_kernels_prereg.json",
+ "prereg_sha256": "83982b504f9ee4a904fa3bddbec775eb8a2642d9bc5974d26f71ef4f59aa8c50",
+ "protocol": "per-segment (Type of Travel x Class) Nadaraya-Watson kernel regression, K=50, bandwidth = in-segment median kNN distance, outer-FIT only; equal-logit blend with route reference.",
+ "metrics": {
+  "kernel_fold0_auc": 0.950981,
+  "portfolio_fold0_auc": 0.961727,
+  "equal_logit_blend_fold0_auc": 0.958031,
+  "port_delta": -0.00369589,
+  "candidate_spearman_vs_portfolio": 0.869939,
+  "promising_frozen_rule": false,
+  "eval_rows": 139927,
+  "kernel_secs": 8.8,
+  "segments": {
+   "0": {
+    "fit_rows": 270704,
+    "eval_rows": 67568,
+    "bandwidth": 1.4773
+   },
+   "1": {
+    "fit_rows": 113111,
+    "eval_rows": 28501,
+    "bandwidth": 1.8504
+   },
+   "2": {
+    "fit_rows": 14057,
+    "eval_rows": 3500,
+    "bandwidth": 2.3752
+   },
+   "8": {
+    "fit_rows": 3166,
+    "eval_rows": 774,
+    "bandwidth": 2.9384
+   },
+   "9": {
+    "fit_rows": 148688,
+    "eval_rows": 37104,
+    "bandwidth": 1.8042
+   },
+   "10": {
+    "fit_rows": 9982,
+    "eval_rows": 2480,
+    "bandwidth": 2.5426
+   }
+  }
+ },
+ "eval_rows": 139927
+}

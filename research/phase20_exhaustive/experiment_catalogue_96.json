@@ -196,12 +196,13 @@
    "requested_method": "Compare TabPFN-3 vs TabPFN-2.6 checkpoints (matched protocol)",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "PARTIAL_VALID",
    "priority": "P1",
-   "fidelity_reached": "F0",
+   "fidelity_reached": "F1",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "verify exact checkpoints exist; pin revisions; matched inference vs our v3.5"
+   "next_action": "verify exact checkpoints exist; pin revisions; matched inference vs our v3.5",
+   "phase20_finding": "Checkpoints verified (CPU): v2.6 = Prior-Labs/tabpfn_2_6 @ 24148873a9a5 (1 clf ckpt), v3 = Prior-Labs/tabpfn_3 @ 24a16a89d245 (4 clf ckpts); both ungated, license:other (same posture as champion's v3.5). Matched GPU inference deferred behind champion-OOF reproduction (v3.5 already newest and already champion; v2.6/v3 only possible as diversity members)."
   },
   {
    "experiment_number": 14,
@@ -903,12 +904,13 @@
    "requested_method": "interpret EBM with real interactions",
    "historical_status": "H18-B boosted-stump NEGATIVE",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
    "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "real EBM distinct from failed stump; fold-0"
+   "next_action": "real EBM distinct from failed stump; fold-0",
+   "phase20_finding": "NEGATIVE. Genuine EBM with 16 real interactions: fold0 0.954200 vs portfolio 0.961727; equal-logit blend 0.959281; port_delta -2.447e-3 (need >= +5e-5), corr 0.9069. EBM decorrelates well (corr limb passes easily) but is far too weak standalone to add portfolio value; interactions did not close the gap (fit 63s, outer-FIT only). Frozen rule FAILS on the port limb."
   },
   {
    "experiment_number": 62,
@@ -977,12 +979,13 @@
    "requested_method": "context-conditioned kernels",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P4",
-   "fidelity_reached": "F0",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "resource-limited likely"
+   "next_action": "resource-limited likely",
+   "phase20_finding": "NEGATIVE. Per-segment kernel regression: fold0 0.950981 vs portfolio 0.961727; equal-logit blend 0.958031; port_delta -3.696e-3, corr 0.8699 (lowest correlation of any classical candidate measured - genuine diversity, but the kernel predictor is far too weak standalone). Frozen rule FAILS on the port limb. Local kernel smoothing does not add value on this dataset."
   },
   {
    "experiment_number": 67,
