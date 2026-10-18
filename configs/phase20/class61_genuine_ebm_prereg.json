@@ -1,0 +1,14 @@
+{
+  "prereg_id": "P20-CLASS61-GENUINE-EBM",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. Genuine EBM (ExplainableBoostingClassifier from interpret 0.7.8, interpretml lineage) with REAL pairwise interactions - distinct from the failed stump-based approaches.",
+  "protocol": {
+    "model": "ExplainableBoostingClassifier(max_bins=256, interactions=16, max_interaction_bins=16, learning_rate=0.01, max_leaves=11, min_samples_leaf=6, outer_bags=4, inner_bags=0, random_state=1) on the 21 raw covariates (categoricals as integer codes, EBM treats them as categorical via dtype hint when available; else numeric).",
+    "training": "outer-FIT (folds 1-4) only; EBM's own internal bagging provides the variance control; no fold-0 row seen during fit.",
+    "evaluation": "fold-0 AUC of EBM probability; equal-logit blend with route reference; port_delta and Spearman vs route reference.",
+    "cost_bound": "single CPU run; abort if projected > 90 min and record RESOURCE notes with partial-fold evidence."
+  },
+  "frozen_decision_rule": "PROMISING iff port_delta >= +5e-5 AND corr_vs_portfolio < 0.995.",
+  "non_goals": ["No public-LB consultation.", "No GPU."],
+  "git_before": "229cc69"
+}

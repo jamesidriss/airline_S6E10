@@ -1,0 +1,14 @@
+{
+  "prereg_id": "P20-CLASS66-HIERARCHICAL-KERNELS",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. Context-conditioned (hierarchical) kernel: a segment-local Nadaraya-Watson kernel regression predictor whose bandwidth is chosen per (Type of Travel x Class) segment, used as a standalone candidate and as an augmentation feature.",
+  "protocol": {
+    "kernel": "RBF kernel regression on the 21 standardized covariates, k-NN approximate (50 neighbors) Nadaraya-Watson weights; bandwidth h set per segment as the median k-NN distance within that segment (computed on outer-FIT rows only).",
+    "candidate": "kernel-regression probability on fold-0 rows; equal-logit blend with route reference; also appended to 21raw as one feature for an LGBM xt_xt_f10 contrast.",
+    "training": "all kernel statistics (standardization, neighbor structure, bandwidths) fitted on outer-FIT rows only; fold-0 rows only query.",
+    "cost_bound": "NearestNeighbors on 560k x 21 with n_jobs=8; chunked queries."
+  },
+  "frozen_decision_rule": "PROMISING iff port_delta >= +5e-5 AND corr_vs_portfolio < 0.995 (candidate = equal-logit blend of kernel predictor with route reference).",
+  "non_goals": ["No public-LB consultation.", "No GPU."],
+  "git_before": "229cc69"
+}
