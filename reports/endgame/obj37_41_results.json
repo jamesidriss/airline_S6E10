@@ -111,8 +111,53 @@
    "promotion": "close: frozen gate failed (screen is terminal)"
   },
   "auc_surrogate": {
-   "status": "PENDING",
-   "promotion": "not run"
+   "status": "DONE",
+   "git": "31f679cab620b8e95aa460596a77dc5420107da1",
+   "prereg_sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2",
+   "standalone_auc_recomputed": 0.9575147598157261,
+   "standalone_auc_reported": 0.9575147598157261,
+   "auc_delta_recompute": 0.0,
+   "delta_vs_control": -0.00014154398689236736,
+   "delta_vs_v7_standalone": -0.004313054434753383,
+   "blend_v7_auc": 0.9609988793007843,
+   "blend_delta_vs_v7": -0.0008289349496951592,
+   "spearman_vs_v7": 0.9343257535020519,
+   "logit_pearson_vs_v7": 0.9887535381891863,
+   "spearman_vs_route_ref": 0.9338367229648887,
+   "frozen_gate": {
+    "port_delta": -0.0007721840088198428,
+    "spearman_vs_route_ref": 0.9338367229648887,
+    "promising": false,
+    "rule": "port_delta >= +5e-5 AND spearman_vs_route_ref < 0.995"
+   },
+   "control_parity_ok": null,
+   "eval_rows": 139927,
+   "fit_rows": 559708,
+   "train_rows": 503737,
+   "val_rows": 55971,
+   "features": 22,
+   "arch_cfg": {
+    "d_token": 192,
+    "n_layers": 3,
+    "n_heads": 8,
+    "dropout": 0.1,
+    "head_hidden": 192
+   },
+   "train_cfg": {
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "batch_size": 4096,
+    "max_epochs": 100,
+    "es_patience": 15
+   },
+   "arm_params": "pure RankNet surrogate, 4096 sampled pos/neg pairs/step",
+   "prediction_sha256": "3c3e66abfe7ec0d981c9ca3f7aa646c20020ad7af6f3ce6f7f156bef0971df2d",
+   "prediction_sha256_matches_report": true,
+   "total_seconds": 257.2507269382477,
+   "peak_vram_gb": 10.49,
+   "parity_vs_reference": null,
+   "champion_admission_justified": false,
+   "promotion": "close: frozen gate failed (screen is terminal)"
   },
   "hard_mining": {
    "status": "PENDING",
@@ -128,6 +173,8 @@
   }
  },
  "cross_arm_spearman": {
-  "bce_control|supcon": 0.980214
+  "bce_control|supcon": 0.980214,
+  "bce_control|auc_surrogate": 0.972702,
+  "supcon|auc_surrogate": 0.97396
  }
 }
