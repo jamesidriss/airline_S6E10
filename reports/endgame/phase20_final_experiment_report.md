@@ -21,15 +21,18 @@ features only, preregistration before every predictive result, append-only ledge
 | fidelity | meaning | rows |
 |---|---|---|
 | F5 | certified end-to-end (full OOF + test + submission-grade hashes) | 2 |
-| F3 | full paired 5-fold CV against a frozen control | 4 |
+| F3 | full paired 5-fold CV against a frozen control | 2 |
 | F2 | fold-0 screens with a frozen decision rule | 59 |
-| F1 | audits / saved-array analyses (no new training) | 15 |
-| F0 | catalogued or conceptual only — **no model was trained** | 16 |
+| F1 | audits / saved-array analyses (no new training) | 10 |
+| F0 | catalogued, conceptual, license-, resource- or dependency-blocked — **no model was trained** | 23 |
 
-Terminal-status distribution: 61 COMPLETE_NEGATIVE · 8 DEPENDENCY_CLOSED ·
+F0 rows (never trained): 3, 7, 8, 12, 14, 33, 34, 43, 67, 70, 71, 73, 79, 81, 82, 83,
+86, 87, 89, 90, 92, 93, 95.
+
+Terminal-status distribution: **66 COMPLETE_NEGATIVE** · 8 DEPENDENCY_CLOSED ·
 5 CONCEPTUAL_CLOSED · 3 LICENSE_BLOCKED · 2 RESOURCE_BLOCKED · 2 NOT_WARRANTED ·
-2 HISTORICAL_EQUIVALENT · 1 LOW_VALUE_CLOSED · 1 COMPLETE_CERTIFIED ·
-**0 NOT_STARTED · 0 PROMISING**.
+2 HISTORICAL_EQUIVALENT · 6 PARTIAL_VALID · 1 LOW_VALUE_CLOSED · 1 COMPLETE_CERTIFIED ·
+**0 NOT_STARTED · 0 PROMISING** (96 total).
 
 Distinct model trainings actually executed in phase 20 exceed the F2 row count
 because several screens reused trained members across rules; the ledger (550 entries)
