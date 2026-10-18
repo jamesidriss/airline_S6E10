@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-FEAT46-LEARNED-SIMILARITY",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. New feature block: Learned passenger similarity metric via Siamese/triplet network or metric learning on covariates. Uses the learned metric to generate k-NN or kernel features.",
+  "hypotheses": {
+    "H46_LEARNED_SIMILARITY": {
+      "item": 46,
+      "question": "Does a learned passenger similarity metric (metric learning on covariates) produce features that improve fold-0 OOF AUC when added to 21raw?",
+      "method": "Train a Siamese network / metric learning model (e.g., LMNN, ITML, or simple contrastive loss) on FIT folds to learn a Mahalanobis distance. Use the learned metric to compute k-NN distances or kernel similarities as new features. Cross-fit 5-fold. LGBM on 21raw + learned similarity features vs 21raw.",
+      "leakage": "Metric learning trained on FIT only (folds 1-4). Similarities computed for fold-0 using FIT-trained metric. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995."
+    }
+  },
+  "non_goals": ["No public-LB consultation."],
+  "git_before": "7aa1a44"
+}
