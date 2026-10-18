@@ -1,0 +1,54 @@
+{
+ "experiment": "phase20_flm12_tabpfn25_screen",
+ "phase": "20",
+ "family": "FLM",
+ "experiment_number": 12,
+ "prereg_version": 2,
+ "amends": "configs/phase20/flm12_tabpfn25_prereg.json (sha256 f79158c23ecefa7745c96d0cf1e8568601e2169746b5bd9294c3990655b4205a, commit 9107b55)",
+ "amendment_reason": "Run v1 arm=real crashed BEFORE producing any predictive result (no fold-0 prediction, no metric): TabPFN fitted the eager KV-cache build at the full 559708-row context and died with torch.OutOfMemoryError inside tabpfn_v2_5.per_column_attention_between_cells -- 27.27 GiB already allocated by PyTorch (WDDM shared-memory oversubscription of the 15.92 GiB card) and a further 2.20 GiB allocation failed. v2.5's per-column between-cells cache layout at 560k context cannot fit 16 GB; the champion v3.5 architecture handles the same context but v2.5 does not. Full-context fit is therefore RESOURCE-infeasible on this hardware, not merely slow.",
+ "delta_from_v1": {
+  "fit_rows": "changed: all primary FIT rows (559708) -> stratified 50000-row context drawn from FIT ONLY via stratified_context(fit_idx=FIT, y, n=50000, seed=CONTEXT_SEED=20261023) -- the exact context-bound pattern of FLM9 (ctx20k/ctx50k), mitra, and kumo screens in this phase",
+  "unchanged": "hypothesis, frozen rule (PRIMARY arm: port_delta >= +5e-5 AND spearman < 0.995 vs route_ref), both arms (real=PRIMARY, default=descriptive), route view, eval=all fold-0 rows in batches of 8192, every estimator param (n_estimators=1, fit_with_cache, int8 kv cache, autocast, ignore_pretraining_limits, seed 1201, memory_saving_mode=auto), checkpoint sha-assertions, anti-leakage contract",
+  "why_this_answers_the_row": "the frozen rule asks whether the DEPLOYABLE candidate (the only form of v2.5_real that fits this GPU) adds portfolio-orthogonal fold-0 signal as an equal-logit member; a 50k-context screen answers that admission question. v2.5's own pretraining context is far below 560k anyway (ignore_pretraining_limits=True in both versions). If the 50k arm passes the frozen rule, a larger-context promotion test can be separately preregistered (FEAT49 future-direction pattern).",
+  "evidence_class": "resource/feasibility repair only; no result existed to bias"
+ },
+ "hypothesis": "TabPFN-2.5's real-data-pretrained checkpoint (the RealTabPFN lineage: continued pretraining of TabPFN v2 on real-world datasets) carries fold-0 signal on the champion route view that the v3.5-based champion portfolio does not already extract: its equal-logit blend with route_ref beats route_ref by >= +5e-5 AUC with Spearman < 0.995.",
+ "audit_resolution": "Catalogue row 12 said 'RealTabPFN / TabPFN-2.5 (exact project TBD)'. Audit: (a) Real-TabPFN (arXiv 2507.03971) = TabPFN v2 continued-pretrained on real-world data; (b) the official Prior-Labs/tabpfn_2_5 HF release contains tabpfn-v2.5-classifier-v2.5_real.ckpt -- the real-data-pretrained lineage within v2.5; (c) installed tabpfn 9.1.0 resolves repo Prior-Labs/tabpfn_2_5 natively (ModelVersion V2_5). Decision: screen v2.5_real as the PRIMARY decision arm and v2.5_default as a descriptive mechanism arm separating 'v2.5 architecture' from 'real-data pretraining'.",
+ "model_card": {
+  "repo_id": "Prior-Labs/tabpfn_2_5",
+  "primary_checkpoint": "tabpfn-v2.5-classifier-v2.5_real.ckpt",
+  "primary_sha256": "b403ee3947766675a0a7c2fd9c31ee41a9c8d080e8b5e30bb31707ed744be267",
+  "secondary_checkpoint": "tabpfn-v2.5-classifier-v2.5_default.ckpt",
+  "secondary_sha256": "5d7170e2d3af01f9c501bb09ec3bd12e9944f8604de18002c647873c6ec04a12",
+  "gated": false,
+  "license_tag": "license:other (Prior Labs terms; identical license family already used by champion v7 -- no new licensing exposure)",
+  "installed_client": "tabpfn 9.1.0"
+ },
+ "decision_rule": {
+  "frozen_rule": "PROMISING iff port_delta >= +5e-5 AND spearman_vs_route_ref < 0.995 (PRIMARY arm only)",
+  "port_delta": "AUC(equal-logit blend(candidate, route_ref)) - AUC(route_ref) on primary fold-0 (all 139927 rows)",
+  "route_ref": "sol_route_aux10_primary_final (champion-v7 proxy, fold-0 AUC 0.961727)",
+  "secondary_arm": "v2.5_default is descriptive/mechanism only; it cannot be declared PROMISING (it separates architecture from real-data pretraining)",
+  "also_reported": "standard screen_metrics table vs champion portfolio (fold-0 AUC 0.961828)"
+ },
+ "anti_leakage": [
+  "fit context drawn from FIT only (folds 1-4); fold-0 labels read only at final metric computation",
+  "route view is label-free (raw21 + coarse10, no target encoding)",
+  "TabPFN pretrained inference updates no weights; no evaluation targets used",
+  "checkpoints sha256-asserted before fit (local vendored copies)",
+  "champion fold-0 references hash-asserted via load_champion_fold0; route_ref from the OOF store",
+  "context subsample uses y of FIT only (label-stratified) with fixed CONTEXT_SEED=20261023; never touches fold-0 rows"
+ ],
+ "protocol": {
+  "recipe": "champion-fold-0 route run verbatim (scripts/run_sol_tabpfn.py params): n_estimators=1, auto_scale_n_estimators=False, random_state=1201, device=cuda, ignore_pretraining_limits=True, fit_mode=fit_with_cache, kv_cache_precision=int8, keep_cache_on_device=True, inference_precision=autocast, categorical_features_indices=cats, memory_saving_mode=auto, n_preprocessing_jobs=1, tuning_config=None; ONLY the checkpoint differs (v2.5 vs champion v3.5)",
+  "view": "route (22 features: raw21 + coarse10) via frames(tr, te, route=True)",
+  "fit_rows": "stratified 50000-row context drawn from FIT (folds 1-4) with CONTEXT_SEED=20261023",
+  "eval": "all primary fold-0 rows (139927), predict in batches of 8192",
+  "arms": ["v2.5_real (PRIMARY, decision-bearing)", "v2.5_default (descriptive/mechanism)"],
+  "run_order": "real first; default only if GPU budget remains after real completes"
+ },
+ "env": {
+  "gpu": "RTX 5070 Ti 16GB", "torch": "2.9.0+cu129",
+  "runner": "scripts/phase20/flm12_tabpfn25_screen.py"
+ }
+}

@@ -7,7 +7,9 @@ scripts/run_sol_tabpfn.py params verbatim (n_estimators=1, fit_with_cache,
 int8 kv cache, autocast, ignore_pretraining_limits, categorical_features_indices
 from frames()), ONLY the checkpoint differs (v2.5 vs champion v3.5).
 
-Fit on all primary FIT rows (folds 1-4), predict all fold-0 rows in batches,
+Fit on a stratified 50,000-row context drawn from the primary FIT rows
+(folds 1-4; prereg v2 — the full-FIT eager cache build is resource-infeasible
+for v2.5 on 16 GB, v1 crash evidence), predict all fold-0 rows in batches,
 score against the hash-asserted champion portfolio/route and the frozen-rule
 route_ref (sol_route_aux10_primary_final).
 
@@ -38,16 +40,29 @@ sys.path.insert(0, str(ROOT))
 
 from src.common import ARTIFACTS, REPORTS, arr_sha256, git_commit, load_cached_parquet, save_json  # noqa: E402
 from src.validation.folds import get_scheme  # noqa: E402
-from src.phase19.foundation_screen import _cl, logit, screen_metrics  # noqa: E402
+from src.phase19.foundation_screen import (  # noqa: E402
+    CONTEXT_SEED,
+    _cl,
+    logit,
+    screen_metrics,
+    stratified_context,
+)
 from scripts.phase19.foundation_screen_fold0 import load_champion_fold0  # noqa: E402
 
 OUT = REPORTS / "phase20" / "flm12_tabpfn25"
 ART = ARTIFACTS / "phase20" / "flm12_tabpfn25"
 VEND = ARTIFACTS / "tabpfn25"
-PREREG = "configs/phase20/flm12_tabpfn25_prereg.json"
-PREREG_SHA = "f79158c23ecefa7745c96d0cf1e8568601e2169746b5bd9294c3990655b4205a"  # pinned before the first run (preregister-before-result)
+PREREG = "configs/phase20/flm12_tabpfn25_prereg_v2.json"
+# v2 = feasibility amendment of the v1 prereg (f79158c2..., commit 9107b55); run v1
+# arm=real died in the eager KV-cache build at the full 559708-row context (OOM,
+# 27.27 GiB WDDM-oversubscribed) before any predictive result. See
+# "amendment_reason"/"delta_from_v1" inside the prereg file.
+PREREG_SHA = "19ee7f701baf933494a7864ab6195e4e6573f353464fc8ab90e25c306f8bc18e"  # pinned before the rerun (preregister-before-result)
 ROUTE_REF = "sol_route_aux10_primary_final"
 BATCH = 8192
+# v2: stratified context bound (FLM9 precedent); full 559708-row fit is
+# resource-infeasible for v2.5's per-column cache on 16 GB (v1 crash evidence).
+CTX_ROWS = 50000
 
 ARMS = {
     "real": {
@@ -136,7 +151,12 @@ def main() -> int:
     torch.cuda.reset_peak_memory_stats()
     t1 = time.time()
     model = TabPFNClassifier(**params)
-    model.fit(Xall[FIT], y[FIT])
+    # v2 (prereg flm12 v2): stratified context bound drawn from FIT ONLY; the
+    # full-FIT eager cache build is resource-infeasible for v2.5 on 16 GB.
+    ctx = stratified_context(FIT, y, CTX_ROWS, seed=CONTEXT_SEED)
+    log(f"context: stratified {len(ctx)} rows from {len(FIT)} FIT rows "
+        f"(seed={CONTEXT_SEED})")
+    model.fit(Xall[ctx], y[ctx])
     fit_s = time.time() - t1
     log(f"fit done in {fit_s:.1f}s")
 
@@ -176,9 +196,11 @@ def main() -> int:
         "recipe": "champion fold-0 route params verbatim (n_estimators=1, "
                   "fit_with_cache, int8 kv cache, autocast, "
                   "ignore_pretraining_limits, memory_saving_mode=auto); ONLY the "
-                  "checkpoint differs from champion v3.5",
+                  "checkpoint differs from champion v3.5. v2: fit context = "
+                  "stratified 50000-row subsample of FIT (prereg v2, v1 crash)",
         "params": {k: (str(v) if isinstance(v, Path) else v) for k, v in params.items()},
-        "fit_rows": int(len(FIT)), "eval_fold": 0, "eval_rows": int(len(EVAL)),
+        "fit_source_rows": int(len(FIT)), "context_rows": int(len(ctx)),
+        "context_seed": int(CONTEXT_SEED), "eval_fold": 0, "eval_rows": int(len(EVAL)),
         "fit_folds": [1, 2, 3, 4], "batch_size": BATCH,
         "features": list(names), "categorical_indices": [int(c) for c in cats],
         "label_free_category_maps": maps,
