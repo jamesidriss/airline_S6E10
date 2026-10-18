@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T18:36:22.655877+00:00",
+ "updated_utc": "2026-10-18T18:44:10.776605+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -317,7 +317,7 @@
    "title": "RealTabPFN-2.5",
    "priority": "P2",
    "state": "PENDING",
-   "state_note": "queued next on GPU (prereg + runner committed pre-results)",
+   "state_note": "v3 running (prereg c85b24fa, BATCH=512 chunk guard); default arm skipped on budget",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -334,6 +334,10 @@
      "ts": "2026-10-17T22:15:00.183179+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T18:44:10.776605+00:00",
+     "event": "v3 arm=real launched (chunk guard)"
     }
    ]
   },
