@@ -1,0 +1,182 @@
+{
+  "utc": "2026-10-18T23:00:01.725257+00:00",
+  "champion": "v7_sol_tabpfn_internal2_aux10",
+  "score_distribution": {
+    "oof": {
+      "n": 699635,
+      "mean": 0.44419384002685547,
+      "std": 0.4333382844924927,
+      "quantiles": {
+        "0.001": 0.01262364485114813,
+        "0.01": 0.017196180932223797,
+        "0.05": 0.02286947462707758,
+        "0.25": 0.03580591082572937,
+        "0.5": 0.17368502914905548,
+        "0.75": 0.9472058117389679,
+        "0.95": 0.9741333842277526,
+        "0.99": 0.9892901730537415,
+        "0.999": 0.9959426307678223
+      },
+      "frac_gt_0.5": 0.4335689323718796,
+      "frac_gt_0.9": 0.38409170496044365
+    },
+    "test": {
+      "n": 299844,
+      "mean": 0.4441154607728963,
+      "std": 0.4330475892593907,
+      "quantiles": {
+        "0.001": 0.01277129700127989,
+        "0.01": 0.017513034511357547,
+        "0.05": 0.02311739893630147,
+        "0.25": 0.035834248177707195,
+        "0.5": 0.17473185062408447,
+        "0.75": 0.9469703286886215,
+        "0.95": 0.973343226313591,
+        "0.99": 0.9886614561080933,
+        "0.999": 0.9958691690564155
+      },
+      "frac_gt_0.5": 0.4338756153199664,
+      "frac_gt_0.9": 0.3839463187524179
+    }
+  },
+  "component_agreement": {
+    "oof_side": {
+      "spearman_champion_vs_route_ref": 0.9988084279012514,
+      "logit_pearson_champion_vs_route_ref": 0.9998244792321133
+    },
+    "test_side": {
+      "spearman_test_route_vs_aux10": 0.9770279493012285,
+      "logit_pearson_test_route_vs_aux10": 0.9961450515320655
+    },
+    "note": "OOF side compares the champion to the certified route reference (the aux10 component is not separately archived in OOF); test side compares the archived route and aux10 member vectors"
+  },
+  "segment_coverage": {
+    "Class==Business": {
+      "train_share": 0.48912933172296985,
+      "test_share": 0.4890076172943264,
+      "abs_diff": 0.00012171442864344906
+    },
+    "Class==Eco": {
+      "train_share": 0.46796400980511266,
+      "test_share": 0.46764317445071435,
+      "abs_diff": 0.0003208353543983078
+    },
+    "Class==Eco Plus": {
+      "train_share": 0.0429066584719175,
+      "test_share": 0.04334920825495925,
+      "abs_diff": 0.0004425497830417499
+    },
+    "Type of Travel==Business travel": {
+      "train_share": 0.7110007360981083,
+      "test_share": 0.7108396366110378,
+      "abs_diff": 0.00016109948707054844
+    },
+    "Type of Travel==Personal Travel": {
+      "train_share": 0.2889992639018917,
+      "test_share": 0.2891603633889623,
+      "abs_diff": 0.00016109948707060395
+    },
+    "Customer Type==Loyal Customer": {
+      "train_share": 0.8247014514711243,
+      "test_share": 0.8261229172503035,
+      "abs_diff": 0.0014214657791792318
+    },
+    "Customer Type==disloyal Customer": {
+      "train_share": 0.17529854852887577,
+      "test_share": 0.17387708274969652,
+      "abs_diff": 0.0014214657791792595
+    },
+    "Gender==Female": {
+      "train_share": 0.49733360966789825,
+      "test_share": 0.49886941209428903,
+      "abs_diff": 0.0015358024263907866
+    },
+    "Gender==Male": {
+      "train_share": 0.5026663903321017,
+      "test_share": 0.501130587905711,
+      "abs_diff": 0.001535802426390731
+    },
+    "Age<30": {
+      "train_share": 0.2945707404575243,
+      "test_share": 0.2941329491335494,
+      "abs_diff": 0.00043779132397486764
+    },
+    "Age30-45": {
+      "train_share": 0.33249480086044864,
+      "test_share": 0.33320326569816305,
+      "abs_diff": 0.0007084648377144176
+    },
+    "Age45-60": {
+      "train_share": 0.31413093970427436,
+      "test_share": 0.31396659596323423,
+      "abs_diff": 0.0001643437410401294
+    },
+    "Age>=60": {
+      "train_share": 0.05880351897775268,
+      "test_share": 0.0586971892050533,
+      "abs_diff": 0.00010632977269938587
+    },
+    "Dist Q1": {
+      "train_share": 0.2522929813402703,
+      "test_share": 0.2517275650004669,
+      "abs_diff": 0.0005654163398033929
+    },
+    "Dist Q2": {
+      "train_share": 0.248398093291502,
+      "test_share": 0.24961980229719455,
+      "abs_diff": 0.001221709005692545
+    },
+    "Dist Q3": {
+      "train_share": 0.24974593895388308,
+      "test_share": 0.24874267952668722,
+      "abs_diff": 0.0010032594271958684
+    },
+    "Dist Q4": {
+      "train_share": 0.24956298641434463,
+      "test_share": 0.24990995317565134,
+      "abs_diff": 0.0003469667613067162
+    },
+    "Delay both==0": {
+      "train_share": 0.8665304051398229,
+      "test_share": 0.8669941703018903,
+      "abs_diff": 0.0004637651620673644
+    },
+    "Delay dep>60": {
+      "train_share": 0.0005045488004459468,
+      "test_share": 0.0004035431757847414,
+      "abs_diff": 0.0001010056246612054
+    },
+    "Delay arr>60": {
+      "train_share": 0.0004430881816947408,
+      "test_share": 0.00040020810821627246,
+      "abs_diff": 4.288007347846834e-05
+    },
+    "Delay arr missing": {
+      "train_share": 0.000417360480822143,
+      "test_share": 0.00043355878390096184,
+      "abs_diff": 1.619830307881886e-05
+    },
+    "Ratings<=26 (low)": {
+      "train_share": 0.03266989215805384,
+      "test_share": 0.03247688798175051,
+      "abs_diff": 0.00019300417630332967
+    },
+    "Ratings>=52 (high)": {
+      "train_share": 0.18534235708619495,
+      "test_share": 0.18517629167166927,
+      "abs_diff": 0.00016606541452568457
+    },
+    "Zeros>=4": {
+      "train_share": 0.004202191142524316,
+      "test_share": 0.003988740811888849,
+      "abs_diff": 0.00021345033063546737
+    },
+    "All ratings equal": {
+      "train_share": 0.0006160355042272042,
+      "test_share": 0.0006003121623244087,
+      "abs_diff": 1.5723341902795502e-05
+    }
+  },
+  "max_segment_share_gap": 0.0015358024263907866,
+  "conclusion": "score distributions and member agreement are stable between OOF and test; segment coverage matches to within the max gap reported; the private 80% is drawn from the same population as OOF, so OOF-fidelity remains the right selection criterion"
+}
