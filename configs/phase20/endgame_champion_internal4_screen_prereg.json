@@ -1,0 +1,25 @@
+{
+ "prereg_id": "P20-ENDGAME-CHAMPION-INTERNAL4-SCREEN",
+ "date": "2026-10-19",
+ "purpose": "Measure the last unmeasured lever that could improve finalist A: the champion's OWN internal-estimator scaling (internal-2 -> internal-4). The phase-17 pipeline already certified the numerical equivalence of a 4-estimator run (max gap 1.19e-7) but never measured its performance -- the champion shipped internal-2. This screen answers whether the champion's geometry has headroom, using the certified runner under its own gates, with the full 559,708-row context.",
+ "command": ".venv/Scripts/python.exe scripts/run_phase17_tabpfn.py --estimators 4 --fold 0 --tag phase17_internal4_screen_20261019",
+ "why_this_is_safe_and_matched": [
+  "the certified phase-17 runner performs its own gates: probe status PASS_REQUIRES_EXACT_FULL_B0, library source hashes, scripts/phase16_tabpfn.py source hash, B0 control EXACT_B0_HASH_MATCH, the internal-4 equivalence probe (status PASS, max gap <= 2e-6), and the immutable fold registry",
+  "params = the certified route-reference params with ONLY n_estimators changed to 4; the route view, seeds (1201), chunking (262144 cells), int8 KV cache, icl_bf16 and windows-MQA backend are unchanged",
+  "fold 0 only (the runner's continuation gates for fold>0 require earlier evaluation reports for the same tag, which is correct: this is a screen, not a promotion)"
+ ],
+ "comparison_baselines": {
+  "internal2_route_fold0": {"auc": 0.9614576551310231, "sha256": "eda2772041b599872d9e23671e1706a817a27ef4ad04cb3ea4686f775d700a98"},
+  "champion_v7_portfolio_fold0": {"auc": 0.9618278142504795},
+  "internal1_B0_fold0": {"auc": 0.9611324459037415, "note": "the internal-1 -> internal-2 upgrade was worth +8.7e-5 on primary (+8.75e-5 shadow)"}
+ },
+ "measured": ["internal-4 route fold-0 AUC", "equal-logit portfolio with aux10 vs the certified internal-2 portfolio (paired bootstrap 95% CI, B=2000, seed 7)", "Spearman/logit-Pearson vs internal-2 route and vs champion v7", "runtime and peak VRAM"],
+ "frozen_decision_rule": {
+  "MATERIAL": "paired-bootstrap 95% CI lower bound of (portfolio_internal4 - portfolio_internal2) > 0 AND mean gain >= +1.5e-5 (the AGENTS admission bar). Consequence: a CONCRETE BUDGET EXTENSION REQUEST is produced with the measured numbers, because promotion needs ~13 GPU-h (5 OOF folds + 5 test folds at internal-4 cost) which exceeds the remaining balance. No submission without a full 5-fold OOF + certified test vector.",
+  "PLATEAU": "CI includes 0 or mean gain < +1.5e-5. Consequence: champion A's internal-2 geometry is confirmed as the plateau; record and close.",
+  "no_threshold_movement": "the bar is the repository's existing admission bar; it is not moved because of what internal-4 shows"
+ },
+ "cost": "~1.1 GPU-h of the 7.46 h remaining",
+ "non_goals": ["no submission from a fold-0 screen", "no blend-weight search", "no public-LB consultation", "no change to the certified champion artifacts"],
+ "git_before": "fd6d02c"
+}
