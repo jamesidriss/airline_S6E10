@@ -1,0 +1,20 @@
+{
+  "prereg_id": "P20-FEAT48-HIERARCHICAL-RATINGS",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. New feature block: hierarchical Bayesian model across the 13 service ratings, capturing conditional shared structure (e.g. rating clusters, traveller-type specific effects).",
+  "hypotheses": {
+    "H48_HIERARCHICAL_SIGNAL": {
+      "item": 48,
+      "question": "Does a hierarchical (multi-level) model of the 13 service ratings, with shared priors across rating groups and traveller segments, produce features that improve fold-0 OOF AUC when added to the rich view?",
+      "method": "Fit a Bayesian hierarchical model (via sklearn's BayesianRidge or a custom PyMC3/numbyro if available — but constrained to sklearn for certification). Structure: 13 ratings as outcomes, with group-level effects for (a) rating cluster (WiFi/Entertainment vs Food/Comfort vs Service/Boarding), (b) traveller type (Business/Personal), (c) class (Eco/Business/First). Extract posterior means for each passenger-rating combination as new features (13 × passenger). Cross-fit: fit on folds 1-4, predict fold-0. Add to rich view, LGBM fold-0.",
+      "leakage": "Hierarchical model trained on FIT only (folds 1-4), predicts fold-0. Passenger-level predictions never see their own fold's labels. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995.",
+      "note": "Distinct from FEAT 51 (residuals) — this models SHARED STRUCTURE across ratings, not per-rating residuals."
+    }
+  },
+  "non_goals": [
+    "No public-LB consultation.",
+    "No new architecture training beyond the hierarchical model fit (sklearn)."
+  ],
+  "git_before": "d6bd70b"
+}
