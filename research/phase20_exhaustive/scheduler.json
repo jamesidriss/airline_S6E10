@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T11:05:11.091235+00:00",
+ "updated_utc": "2026-10-18T11:22:27.136028+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -2458,7 +2458,7 @@
    "family": "ENS",
    "title": "Feature-subspace ensemble",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -2468,7 +2468,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -2476,6 +2476,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T11:22:27.136028+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "measured NEGATIVE this session (frozen rule)"
     }
    ]
   },
@@ -2512,7 +2519,7 @@
    "family": "ENS",
    "title": "Cross-fold robust ensemble",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -2522,7 +2529,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -2530,6 +2537,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T11:22:27.136028+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "measured NEGATIVE this session (frozen rule)"
     }
    ]
   },
@@ -2681,7 +2695,7 @@
    "family": "GEN",
    "title": "Original conditional transfer",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -2691,7 +2705,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -2699,6 +2713,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T11:22:27.136028+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "measured NEGATIVE this session (frozen rule)"
     }
    ]
   },
@@ -2708,7 +2729,7 @@
    "family": "GEN",
    "title": "Source-trained specialists",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -2718,7 +2739,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -2726,6 +2747,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T11:22:27.136028+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "measured NEGATIVE this session (frozen rule)"
     }
    ]
   },

@@ -1,0 +1,19 @@
+{
+ "status": "DONE",
+ "prereg": "configs/phase20/gen84_original_transfer_prereg.json",
+ "prereg_sha256": "9d604575cbfbff9010a80496ee93d25f652e3f2d96e351ccea7a95504891fee3",
+ "protocol": "source LGBM on all 129,880 original rows (original labels only); kNN(20) distance gate on covariates (label-free); no competition label used in training or gating.",
+ "metrics": {
+  "source_model_fold0_auc": 0.949888,
+  "conditional_candidate_fold0_auc": 0.956732,
+  "equal_blend_contrast_auc": 0.954884,
+  "portfolio_fold0_auc": 0.961727,
+  "port_delta": -0.00499508,
+  "candidate_spearman_vs_portfolio": 0.898265,
+  "gate_weight_mean": 0.273161,
+  "gate_weight_zero_frac": 0.050005,
+  "promising_frozen_rule": false,
+  "eval_rows": 139927
+ },
+ "eval_rows": 139927
+}

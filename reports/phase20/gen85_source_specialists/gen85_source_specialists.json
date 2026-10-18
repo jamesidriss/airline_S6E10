@@ -1,0 +1,43 @@
+{
+ "status": "DONE",
+ "prereg": "configs/phase20/gen85_source_specialists_prereg.json",
+ "prereg_sha256": "d0ff0d4a2de79ac995e047b86f1d227ebd9d083795c9a39827f09d63772cbe14",
+ "protocol": "per-(Type of Travel x Class) LGBM trained on in-segment original rows (< 300 rows -> global source fallback); stitched onto fold-0; equal-logit blend with route reference. Zero competition labels.",
+ "metrics": {
+  "specialists_fold0_auc": 0.948785,
+  "candidate_fold0_auc": 0.954862,
+  "portfolio_fold0_auc": 0.961727,
+  "port_delta": -0.00686526,
+  "port_delta_vs_gen84_equal": -2.175e-05,
+  "candidate_spearman_vs_portfolio": 0.885992,
+  "promising_frozen_rule": false,
+  "eval_rows": 139927,
+  "segments": {
+   "0": {
+    "orig_rows": 59487,
+    "model": "specialist"
+   },
+   "1": {
+    "orig_rows": 25304,
+    "model": "specialist"
+   },
+   "2": {
+    "orig_rows": 4902,
+    "model": "specialist"
+   },
+   "8": {
+    "orig_rows": 2673,
+    "model": "specialist"
+   },
+   "9": {
+    "orig_rows": 33005,
+    "model": "specialist"
+   },
+   "10": {
+    "orig_rows": 4509,
+    "model": "specialist"
+   }
+  }
+ },
+ "eval_rows": 139927
+}

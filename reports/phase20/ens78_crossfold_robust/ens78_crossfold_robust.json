@@ -1,0 +1,119 @@
+{
+ "status": "DONE",
+ "prereg": "configs/phase20/ens78_crossfold_robust_prereg.json",
+ "prereg_sha256": "86c623ff8d2f9c88692bbd9ea9469b08f33f125905840bc3a8d8b08ce3739bf2",
+ "metrics": {
+  "pool_size": 92,
+  "n_selected": 8,
+  "selected_members": [
+   "xt_xt_f10",
+   "z5_rm_ens16_ogs",
+   "z3_cat_f10",
+   "abl_lgbm_full_ogm_ogs_primary",
+   "zoo_lgbm_d255",
+   "conf_det_raw_ext_shadow",
+   "z3_rm_bs1024_e8",
+   "z4_xt_f10_s3"
+  ],
+  "min_fold_auc_folds1_4": 0.960993,
+  "robust_blend_fold0_auc": 0.961448,
+  "fold0_greedy_cheat_auc_diagnostic_only": 0.96162,
+  "robustness_vs_peak_gap": 0.000172,
+  "portfolio_fold0_auc": 0.961727,
+  "port_delta": -0.00027895,
+  "candidate_spearman_vs_portfolio": 0.990631,
+  "promising_frozen_rule": false,
+  "eval_rows": 139927
+ },
+ "eval_rows": 139927,
+ "selection_trace": [
+  {
+   "step": 1,
+   "added": "xt_xt_f10",
+   "min_fold_auc_folds1_4": 0.960602,
+   "fold_aucs_folds1_4": [
+    0.961366,
+    0.961207,
+    0.960602,
+    0.961841
+   ]
+  },
+  {
+   "step": 2,
+   "added": "z5_rm_ens16_ogs",
+   "min_fold_auc_folds1_4": 0.960836,
+   "fold_aucs_folds1_4": [
+    0.961493,
+    0.961564,
+    0.960836,
+    0.96197
+   ]
+  },
+  {
+   "step": 3,
+   "added": "z3_cat_f10",
+   "min_fold_auc_folds1_4": 0.960907,
+   "fold_aucs_folds1_4": [
+    0.961542,
+    0.961562,
+    0.960907,
+    0.962006
+   ]
+  },
+  {
+   "step": 4,
+   "added": "abl_lgbm_full_ogm_ogs_primary",
+   "min_fold_auc_folds1_4": 0.960948,
+   "fold_aucs_folds1_4": [
+    0.961618,
+    0.961628,
+    0.960948,
+    0.962093
+   ]
+  },
+  {
+   "step": 5,
+   "added": "zoo_lgbm_d255",
+   "min_fold_auc_folds1_4": 0.960966,
+   "fold_aucs_folds1_4": [
+    0.961657,
+    0.961602,
+    0.960966,
+    0.96212
+   ]
+  },
+  {
+   "step": 6,
+   "added": "conf_det_raw_ext_shadow",
+   "min_fold_auc_folds1_4": 0.960975,
+   "fold_aucs_folds1_4": [
+    0.961632,
+    0.961598,
+    0.960975,
+    0.962104
+   ]
+  },
+  {
+   "step": 7,
+   "added": "z3_rm_bs1024_e8",
+   "min_fold_auc_folds1_4": 0.960984,
+   "fold_aucs_folds1_4": [
+    0.961627,
+    0.961624,
+    0.960984,
+    0.962103
+   ]
+  },
+  {
+   "step": 8,
+   "added": "z4_xt_f10_s3",
+   "min_fold_auc_folds1_4": 0.960993,
+   "fold_aucs_folds1_4": [
+    0.961639,
+    0.961627,
+    0.960993,
+    0.962105
+   ]
+  }
+ ]
+}
