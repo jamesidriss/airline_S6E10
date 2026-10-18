@@ -70,6 +70,11 @@ def log(msg: str) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--arm", required=True, choices=sorted(ARMS))
+    ap.add_argument("--col-pinned-off", action="store_true",
+                    help="resource guard (memory placement ONLY, numerics unchanged): route "
+                         "the COL output buffer to swappable CPU memory. The 50k-context arm "
+                         "OOMs registering a 9.6GB PINNED buffer against a near-full GPU; "
+                         "disk offload is forbidden by mission rules.")
     args = ap.parse_args()
     ctx_rows = ARMS[args.arm]
 
@@ -124,7 +129,10 @@ def main() -> int:
 
     from tabldm import TabLDMClassifier
 
-    clf = TabLDMClassifier(categorical_indices=[int(c) for c in cats], **ESTIMATOR)
+    clf_kwargs = dict(categorical_indices=[int(c) for c in cats], **ESTIMATOR)
+    if args.col_pinned_off:
+        clf_kwargs["inference_config"] = {"COL_CONFIG": {"max_pinned_memory_mb": 0.0}}
+    clf = TabLDMClassifier(**clf_kwargs)
     t1 = time.time()
     clf.fit(X_fit, y_fit)  # ICL: no weight updates; preprocessing fitted on FIT context only
     fit_s = time.time() - t1
@@ -172,6 +180,11 @@ def main() -> int:
         "recipe": "ICL fit on stratified FIT context (seed %d); no weight updates; "
                   "n_estimators=8, batch_size=4, kv_cache=False, enhance_candidates=False, "
                   "device=cuda:0, random_state=1201" % CONTEXT_SEED,
+        "col_pinned_off": bool(args.col_pinned_off),
+        "resource_guard_note": ("COL output buffer routed to swappable CPU memory "
+                                "(max_pinned_memory_mb=0); memory placement only, "
+                                "numerics unchanged; disk offload never used"
+                                if args.col_pinned_off else "library defaults"),
         "context_rows": int(len(ctx)), "context_seed": CONTEXT_SEED,
         "context_sha256": arr_sha256(ctx.astype("int64")),
         "eval_fold": 0, "eval_rows": int(len(EVAL)), "fit_folds": [1, 2, 3, 4],
