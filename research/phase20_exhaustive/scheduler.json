@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T18:44:10.776605+00:00",
+ "updated_utc": "2026-10-18T18:49:03.374111+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -316,8 +316,8 @@
    "family": "FLM",
    "title": "RealTabPFN-2.5",
    "priority": "P2",
-   "state": "PENDING",
-   "state_note": "v3 running (prereg c85b24fa, BATCH=512 chunk guard); default arm skipped on budget",
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "RESOURCE_BLOCKED: v2.5 not flash-eligible -> ~4.3h/arm at only workable batch; killed at 5.5% (ledger p20_flm12_tabpfn25_blocked); re-open with >=5h grant",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -326,7 +326,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "RESOURCE_BLOCKED",
     "report": null
    },
    "history": [
@@ -338,6 +338,10 @@
     {
      "ts": "2026-10-18T18:44:10.776605+00:00",
      "event": "v3 arm=real launched (chunk guard)"
+    },
+    {
+     "ts": "2026-10-18T18:49:03.374111+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: v3 terminated at measured 60 s/batch (4.3h/arm)"
     }
    ]
   },

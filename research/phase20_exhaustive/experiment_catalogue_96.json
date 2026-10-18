@@ -183,12 +183,13 @@
    "requested_method": "RealTabPFN / TabPFN-2.5 (exact project TBD)",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "PREPARED",
+   "status": "RESOURCE_BLOCKED",
    "priority": "P2",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "v3 running (chunk-guard BATCH=512); v1 eager-cache OOM 27.27GiB, v2 predict materialization 50.42GiB - both pre-result",
-   "next_action": "in-flight: prereg v3 (c85b24fa) arm=real running at 19s/batch (~85 min); default arm skipped (descriptive-only)"
+   "blocking_reason": "v2.5 predict materializes fp32 attention (not flash-eligible on this build); only workable config costs ~4.3h/arm",
+   "next_action": "closed for this budget: re-open with >=5h GPU grant or a v2.5 attention-backend fix",
+   "phase20_finding": "Three preregs, three distinct resource walls, no result ever produced: v1 eager KV-cache build OOM at full 559k context (27.27 GiB); v2 predict materialization 50.42 GiB at 8192x50000 (fit OK at 50k ctx, 13.6s); v3 chunk guard BATCH=512 runs but at measured 60 s/batch -> ~4.3h/arm, terminated at 5.5% with no predictions saved. v2.5 attention is not flash-eligible on this torch/CUDA build (champion v3.5 is), so inference cost scales as batch x context materialization."
   },
   {
    "experiment_number": 13,
@@ -1457,5 +1458,5 @@
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T18:44:10.776605+00:00"
+ "updated_utc": "2026-10-18T18:49:03.374111+00:00"
 }
