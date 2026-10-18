@@ -521,12 +521,13 @@
    "requested_method": "fine-tune our v3.5 ckpt",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "RESOURCE_BLOCKED",
    "priority": "P2",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "-",
-   "next_action": "verify license+16GB VRAM sufficiency for FT"
+   "blocking_reason": "official FT API inference path (fit_preprocessors) cannot run at any tested scale on 16GB; fit_mode not injectable",
+   "next_action": "closed: v1/v2 crashed pre-result; 6 probes (ctx 100k-509k, test 11k-140k, fp32/bf16, subsample on/off, outer autocast) all OOM; no fold-0 prediction ever produced",
+   "phase20_finding": "RESOURCE_BLOCKED: full fine-tuning of champion v3.5 via FinetunedTabPFNClassifier - inner-val eval and final inference both run the fit_preprocessors engine, which materializes fp32 attention (v1: exact 1519.05 GiB 50000x509708x16 alloc) or exceeds 16GB under every autocast variant (peaks 9.26-17.86 GiB across 6 probes). fit_mode cannot be passed (TypeError conflict in _create_estimator; eval clone takes eval_init_args only). Hypothesis unanswered; unanswerable via the only official fine-tuning API on this hardware."
   },
   {
    "experiment_number": 35,
@@ -664,12 +665,13 @@
    "requested_method": "joint training of truly distinct reps",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "DEPENDENCY_CLOSED",
    "priority": "P4",
    "fidelity_reached": "F1",
    "competition_eligibility": "OK",
-   "blocking_reason": "-",
-   "next_action": "needs 2 strong base candidates first"
+   "blocking_reason": "needs 2 strong base candidates; FLM 6/6 negative, no gate-passing distinct base in 96 rows",
+   "next_action": "closed by dependency audit: no operands exist (re-open if two distinct gate-passing bases ever exist)",
+   "phase20_finding": "co-regularization of distinct representations has no operands: the FLM class closed 6/6 negative and no non-champion base ever passed the admission gate."
   },
   {
    "experiment_number": 45,
@@ -728,7 +730,7 @@
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "hierarchical rating model; fold-0",
-   "phase20_finding": "Multi-output HistGB hierarchical features (13 columns): augmentation delta +3.94e-4 (0.953423 \u2192 0.953817). Hierarchical features alone weak (0.872). Decorrelated (Spearman 0.916). Blend with champion proxy +6.14e-3. PROMISING by +5e-5 bar but 10x weaker than FEAT 51 residuals (+3.94e-3). The multi-output shared-structure approach is dominated by the residual approach. PROMISING but not the primary lever."
+   "phase20_finding": "Multi-output HistGB hierarchical features (13 columns): augmentation delta +3.94e-4 (0.953423 → 0.953817). Hierarchical features alone weak (0.872). Decorrelated (Spearman 0.916). Blend with champion proxy +6.14e-3. PROMISING by +5e-5 bar but 10x weaker than FEAT 51 residuals (+3.94e-3). The multi-output shared-structure approach is dominated by the residual approach. PROMISING but not the primary lever."
   },
   {
    "experiment_number": 49,
@@ -788,7 +790,7 @@
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "supervised factorization; fold-0",
-   "phase20_finding": "Supervised low-rank factorization (rank 8): augmentation delta -2.89e-3 (0.953423 \u2192 0.950533). NEGATIVE \u2014 the embeddings degrade LGBM performance. Decorrelated (Spearman 0.885) and blend with champion proxy +8.08e-3, but standalone degradation dominates. The supervised factorization objective does not extract LGBM-useful signal from the ratings. CLOSED."
+   "phase20_finding": "Supervised low-rank factorization (rank 8): augmentation delta -2.89e-3 (0.953423 → 0.950533). NEGATIVE — the embeddings degrade LGBM performance. Decorrelated (Spearman 0.885) and blend with champion proxy +8.08e-3, but standalone degradation dominates. The supervised factorization objective does not extract LGBM-useful signal from the ratings. CLOSED."
   },
   {
    "experiment_number": 53,
@@ -834,7 +836,7 @@
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "leaf-embedding rep into a second family",
-   "phase20_finding": "LGBM leaf embeddings (6000 trees, xt_xt_f10) -> LogReg/MLP second family: best second family (MLP) AUC 0.958501 vs base rich LGBM 0.960905 (delta -2.40e-3). NEGATIVE \u2014 second family is weaker than the base LGBM. Decorrelated (Spearman 0.945) but standalone degradation dominates. Equal-logit blend with champion proxy +2.08e-3 doesn't compensate. The leaf embedding representation adds no value beyond the LGBM's own internal representation. CLOSED."
+   "phase20_finding": "LGBM leaf embeddings (6000 trees, xt_xt_f10) -> LogReg/MLP second family: best second family (MLP) AUC 0.958501 vs base rich LGBM 0.960905 (delta -2.40e-3). NEGATIVE — second family is weaker than the base LGBM. Decorrelated (Spearman 0.945) but standalone degradation dominates. Equal-logit blend with champion proxy +2.08e-3 doesn't compensate. The leaf embedding representation adds no value beyond the LGBM's own internal representation. CLOSED."
   },
   {
    "experiment_number": 56,
@@ -939,7 +941,7 @@
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "fold-0",
-   "phase20_finding": "GAM splines (SplineTransformer degree=3, n_knots=10, 2607 features) + LogisticRegression: fold-0 AUC 0.958893, port_delta \u22122.96e-3 vs champion 0.961853. Decorrelated (Spearman 0.948) but standalone degradation. Blend +2.06e-3 doesn't compensate. The 2607 spline features on the rich view don't extract sufficient new signal. NEGATIVE for fold-0 screen."
+   "phase20_finding": "GAM splines (SplineTransformer degree=3, n_knots=10, 2607 features) + LogisticRegression: fold-0 AUC 0.958893, port_delta −2.96e-3 vs champion 0.961853. Decorrelated (Spearman 0.948) but standalone degradation. Blend +2.06e-3 doesn't compensate. The 2607 spline features on the rich view don't extract sufficient new signal. NEGATIVE for fold-0 screen."
   },
   {
    "experiment_number": 63,
@@ -953,14 +955,14 @@
    "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "Nystr\u00f6m/RFF approx; no dense 700k^2 kernel",
-   "phase20_finding": "S7 relabel: measured as RBF KernelRidge on an 8000-row FIT SUBSAMPLE (40k-row kernel matrix was MemoryError), i.e. an exact method on a small subsample, not a Nystr\u00f6m/RFF approximation on full FIT. Fold-0 full view: AUC 0.955484 / corr 0.7633 (very decorrelated, far too weak). Negative applies to the 8k-subsample proxy; the RFF/Nystr\u00f6m approximation on full FIT is a DIFFERENT experiment (item 64 -- now measured separately). Fidelity corrected F1 -> F2."
+   "next_action": "Nyström/RFF approx; no dense 700k^2 kernel",
+   "phase20_finding": "S7 relabel: measured as RBF KernelRidge on an 8000-row FIT SUBSAMPLE (40k-row kernel matrix was MemoryError), i.e. an exact method on a small subsample, not a Nyström/RFF approximation on full FIT. Fold-0 full view: AUC 0.955484 / corr 0.7633 (very decorrelated, far too weak). Negative applies to the 8k-subsample proxy; the RFF/Nyström approximation on full FIT is a DIFFERENT experiment (item 64 -- now measured separately). Fidelity corrected F1 -> F2."
   },
   {
    "experiment_number": 64,
    "canonical_name": "Approx RBF SVM",
    "research_family": "CLASS",
-   "requested_method": "Nystr\u00f6m / random-Fourier SVM",
+   "requested_method": "Nyström / random-Fourier SVM",
    "historical_status": "none",
    "historical_equivalent": "-",
    "status": "COMPLETE_NEGATIVE",
@@ -1052,12 +1054,13 @@
    "requested_method": "fully nested stack with OOS base features",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "DEPENDENCY_CLOSED",
    "priority": "P4",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "blocked-on-base",
-   "next_action": "needs a strong FLM base first"
+   "blocking_reason": "needs a strong FLM base first; FLM family 6/6 negative",
+   "next_action": "closed by dependency audit: no FLM base exists",
+   "phase20_finding": "nested stack over v7+FLM has no FLM operand (family closed negative)."
   },
   {
    "experiment_number": 71,
@@ -1066,12 +1069,13 @@
    "requested_method": "learned routing over independent families",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "DEPENDENCY_CLOSED",
    "priority": "P4",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "blocked-on-base",
-   "next_action": "needs 2+ strong families"
+   "blocking_reason": "needs 2+ strong families; only TabPFN is strong",
+   "next_action": "closed by dependency audit: one strong family only",
+   "phase20_finding": "cross-family MoE requires >=2 strong families; only the TabPFN family qualifies."
   },
   {
    "experiment_number": 72,
@@ -1096,12 +1100,13 @@
    "requested_method": "target errors shared by TabPFN+aux10",
    "historical_status": "85% residual is shared",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "DEPENDENCY_CLOSED",
    "priority": "P4",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "hard",
-   "next_action": "needs a model right WHERE both halves fail (H19-A proxy inconclusive)"
+   "blocking_reason": "needs a model right where both halves fail; H19-A proxy inconclusive",
+   "next_action": "closed pending an operand; re-open if a gate-passing member concentrating on shared errors appears",
+   "phase20_finding": "shared-error specialist has no candidate model concentrated on the TabPFN+aux10 shared-error region."
   },
   {
    "experiment_number": 74,
@@ -1155,12 +1160,13 @@
    "requested_method": "2-slot selection under OOF resampling",
    "historical_status": "Champion B UNRESOLVED",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "DEPENDENCY_CLOSED",
    "priority": "P4",
    "fidelity_reached": "F2",
    "competition_eligibility": "OK",
-   "blocking_reason": "no-candidate",
-   "next_action": "optimize only with a real B candidate"
+   "blocking_reason": "no Champion-B candidate ever existed in 96 rows",
+   "next_action": "closed pending an operand; re-open if OBJ37-41/FLM12 unexpectedly pass the gate",
+   "phase20_finding": "champion-B selection requires a replacement-grade second base; none materialized."
   },
   {
    "experiment_number": 78,
@@ -1184,12 +1190,13 @@
    "requested_method": "advantage of learned combination",
    "historical_status": "fixed blend certified",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "LOW_VALUE_CLOSED",
    "priority": "P5",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "low-value",
-   "next_action": "do not do large in-sample weight search"
+   "blocking_reason": "low-value per its own frozen note (no large in-sample weight search)",
+   "next_action": "closed: equal-logit vs learned blending already settled at small scale in the ENS lab",
+   "phase20_finding": "fixed-vs-nested blending advantage question; own note forbids the only method that could answer it at scale."
   },
   {
    "experiment_number": 80,
@@ -1214,12 +1221,13 @@
    "requested_method": "conditional satisfaction structure",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "CONCEPTUAL_CLOSED",
    "priority": "P5",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "-",
-   "next_action": "conceptual; must yield actionable signal"
+   "blocking_reason": "conceptual; must yield actionable signal - none beyond supervised screens",
+   "next_action": "closed: no actionable signal surface beyond screens already run",
+   "phase20_finding": "conditional satisfaction generator adds no actionable signal beyond supervised screens."
   },
   {
    "experiment_number": 82,
@@ -1228,12 +1236,13 @@
    "requested_method": "decompose noise mechanisms",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "CONCEPTUAL_CLOSED",
    "priority": "P5",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "-",
-   "next_action": "identifiability assumptions"
+   "blocking_reason": "identifiability assumptions do not hold",
+   "next_action": "closed: noise-mechanism decomposition unidentifiable here",
+   "phase20_finding": "random-vs-feature noise decomposition requires identifiability that this data cannot support."
   },
   {
    "experiment_number": 83,
@@ -1242,12 +1251,13 @@
    "requested_method": "label-transition model",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "CONCEPTUAL_CLOSED",
    "priority": "P5",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
    "blocking_reason": "blocked-identifiability",
-   "next_action": "only under defensible identifiability"
+   "next_action": "closed: label-transition model unidentifiable under defensible assumptions",
+   "phase20_finding": "feature-dependent label-transition model unidentifiable."
   },
   {
    "experiment_number": 84,
@@ -1286,12 +1296,13 @@
    "requested_method": "joint ratings+satisfaction",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "CONCEPTUAL_CLOSED",
    "priority": "P5",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "-",
-   "next_action": "conceptual"
+   "blocking_reason": "conceptual; joint ratings+satisfaction model",
+   "next_action": "closed: no actionable signal beyond supervised screens",
+   "phase20_finding": "joint probabilistic ratings+satisfaction model adds no actionable signal."
   },
   {
    "experiment_number": 87,
@@ -1300,12 +1311,13 @@
    "requested_method": "causal hypothesis (not conclusion)",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "CONCEPTUAL_CLOSED",
    "priority": "P5",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "-",
-   "next_action": "treat as hypothesis; observational limits"
+   "blocking_reason": "causal hypothesis only; observational limits",
+   "next_action": "closed: observational data cannot test the mechanism",
+   "phase20_finding": "causal mechanism row is hypothesis-only; competition data is observational."
   },
   {
    "experiment_number": 88,
@@ -1328,12 +1340,13 @@
    "requested_method": "independent pseudo-test replication",
    "historical_status": "conditional",
    "historical_equivalent": "item 88",
-   "status": "NOT_STARTED",
+   "status": "NOT_WARRANTED",
    "priority": "P5",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "not-warranted",
-   "next_action": "frozen rule: only if first policy test positive; it was NEGATIVE"
+   "blocking_reason": "frozen rule: replicate only if first policy test positive; it was NEGATIVE",
+   "next_action": "closed by its own frozen rule",
+   "phase20_finding": "H19-B replication triggered only by a positive first policy test; test was negative."
   },
   {
    "experiment_number": 90,
@@ -1342,12 +1355,13 @@
    "requested_method": "vary FIT size + bag count",
    "historical_status": "none",
    "historical_equivalent": "item 88",
-   "status": "NOT_STARTED",
+   "status": "DEPENDENCY_CLOSED",
    "priority": "P5",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "blocked-on-arch",
-   "next_action": "only after a competitive new architecture"
+   "blocking_reason": "only after a competitive new architecture; none exists",
+   "next_action": "closed by dependency audit: no new architecture to sweep",
+   "phase20_finding": "FIT-size/bag-count sweep requires a competitive new architecture."
   },
   {
    "experiment_number": 91,
@@ -1372,12 +1386,13 @@
    "requested_method": "bag 2 new FLMs",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "DEPENDENCY_CLOSED",
    "priority": "P5",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "blocked-on-acc",
-   "next_action": "only if both FLMs accurate+eligible"
+   "blocking_reason": "only if both FLMs accurate+eligible; FLM family negative",
+   "next_action": "closed by dependency audit: no eligible FLMs",
+   "phase20_finding": "independent FLM bagging requires two accurate+eligible FLMs."
   },
   {
    "experiment_number": 93,
@@ -1386,12 +1401,13 @@
    "requested_method": "isolate bagging at fixed train size",
    "historical_status": "H19-B NEGATIVE",
    "historical_equivalent": "item 88",
-   "status": "NOT_STARTED",
+   "status": "NOT_WARRANTED",
    "priority": "P5",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "not-warranted",
-   "next_action": "H19-B already showed bagging hurts at matched roles"
+   "blocking_reason": "H19-B already showed bagging hurts at matched roles",
+   "next_action": "closed by prior evidence",
+   "phase20_finding": "matched-coverage bagging question answered negatively by H19-B."
   },
   {
    "experiment_number": 94,
@@ -1416,12 +1432,13 @@
    "requested_method": "2nd finalist w/ real justification",
    "historical_status": "Champion B UNRESOLVED",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "DEPENDENCY_CLOSED",
    "priority": "P3",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
-   "blocking_reason": "no-strong-candidate",
-   "next_action": "construct after a strong distinct base exists"
+   "blocking_reason": "no strong distinct base; re-open condition same as ENS77",
+   "next_action": "closed pending an operand; re-open if a gate-passing distinct base appears",
+   "phase20_finding": "second finalist requires a strong distinct base; none exists."
   },
   {
    "experiment_number": 96,
@@ -1436,9 +1453,9 @@
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "note reused shadow is not fresh; new scheme if used for selection",
-   "phase20_finding": "Block10 (10-fold, seed 20261010) fold scheme generated and registered in data/cache/folds/. Champion LGBM 10-fold OOF 0.961050 vs primary 5-fold 0.961853 (delta -8.03e-4). Per-fold AUCs 0.959694\u20130.962286 (std 7.37e-4). Champion robust across fold schemes. Infrastructure ready for finalist B validation (DEP 96 complete). Fold scheme independent of primary/shadow, per AGENTS.md final-submission strategy."
+   "phase20_finding": "Block10 (10-fold, seed 20261010) fold scheme generated and registered in data/cache/folds/. Champion LGBM 10-fold OOF 0.961050 vs primary 5-fold 0.961853 (delta -8.03e-4). Per-fold AUCs 0.959694–0.962286 (std 7.37e-4). Champion robust across fold schemes. Infrastructure ready for finalist B validation (DEP 96 complete). Fold scheme independent of primary/shadow, per AGENTS.md final-submission strategy."
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T15:27:25.950899+00:00"
+ "updated_utc": "2026-10-18T17:43:22.048481+00:00"
 }

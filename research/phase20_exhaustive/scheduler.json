@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T15:27:25.952399+00:00",
+ "updated_utc": "2026-10-18T17:44:26.897357+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -317,7 +317,7 @@
    "title": "RealTabPFN-2.5",
    "priority": "P2",
    "state": "PENDING",
-   "state_note": null,
+   "state_note": "queued next on GPU (prereg + runner committed pre-results)",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1198,8 +1198,8 @@
    "family": "OBJ",
    "title": "Fine-tune TabPFN 3.5",
    "priority": "P2",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "RESOURCE_BLOCKED: FT API inference path infeasible on 16GB (6 probes, no result ever produced); closed by audit",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1208,7 +1208,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "RESOURCE_BLOCKED",
     "report": null
    },
    "history": [
@@ -1216,6 +1216,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: RESOURCE_BLOCKED: FT API inference path infeasible on 16GB (6 probes, no result ever produced); closed by audit"
     }
    ]
   },
@@ -1280,7 +1284,7 @@
    "title": "Supervised contrastive",
    "priority": "P3",
    "state": "PENDING",
-   "state_note": null,
+   "state_note": "queued next on GPU (prereg + runner committed pre-results)",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1307,7 +1311,7 @@
    "title": "Diff AUC surrogate",
    "priority": "P3",
    "state": "PENDING",
-   "state_note": null,
+   "state_note": "queued next on GPU (prereg + runner committed pre-results)",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1334,7 +1338,7 @@
    "title": "Hard-pair mining",
    "priority": "P3",
    "state": "PENDING",
-   "state_note": null,
+   "state_note": "queued next on GPU (prereg + runner committed pre-results)",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1361,7 +1365,7 @@
    "title": "Noise-robust loss",
    "priority": "P4",
    "state": "PENDING",
-   "state_note": null,
+   "state_note": "queued next on GPU (prereg + runner committed pre-results)",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1388,7 +1392,7 @@
    "title": "EMA / SWA",
    "priority": "P3",
    "state": "PENDING",
-   "state_note": null,
+   "state_note": "queued next on GPU (prereg + runner committed pre-results)",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1468,8 +1472,8 @@
    "family": "OBJ",
    "title": "Cross-family co-regularization",
    "priority": "P4",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "no operands: FLM 6/6 negative, no gate-passing distinct base",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1478,7 +1482,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "DEPENDENCY_CLOSED",
     "report": null
    },
    "history": [
@@ -1486,6 +1490,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: no operands: FLM 6/6 negative, no gate-passing distinct base"
     }
    ]
   },
@@ -2417,7 +2425,7 @@
    "title": "Nested v7+FLM stack",
    "priority": "P4",
    "state": "DEPENDENCY_BLOCKED",
-   "state_note": "blocked-on-base",
+   "state_note": "no FLM base exists (family closed negative)",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -2426,7 +2434,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": "NOT_STARTED",
+    "verdict": "DEPENDENCY_CLOSED",
     "report": null
    },
    "history": [
@@ -2434,6 +2442,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: no FLM base exists (family closed negative)"
     }
    ]
   },
@@ -2444,7 +2456,7 @@
    "title": "Cross-family MoE",
    "priority": "P4",
    "state": "DEPENDENCY_BLOCKED",
-   "state_note": "blocked-on-base",
+   "state_note": "only one strong family (TabPFN)",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -2453,7 +2465,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": "NOT_STARTED",
+    "verdict": "DEPENDENCY_CLOSED",
     "report": null
    },
    "history": [
@@ -2461,6 +2473,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: only one strong family (TabPFN)"
     }
    ]
   },
@@ -2504,8 +2520,8 @@
    "family": "ENS",
    "title": "Shared-error specialist",
    "priority": "P4",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "no candidate model on shared-error region; re-open condition documented",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -2514,7 +2530,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "DEPENDENCY_CLOSED",
     "report": null
    },
    "history": [
@@ -2522,6 +2538,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: no candidate model on shared-error region; re-open condition documented"
     }
    ]
   },
@@ -2636,7 +2656,7 @@
    "title": "Champion B utility selection",
    "priority": "P4",
    "state": "DEPENDENCY_BLOCKED",
-   "state_note": "no-candidate",
+   "state_note": "no Champion-B candidate; re-open if a gate-passing distinct base appears",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -2645,7 +2665,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": "NOT_STARTED",
+    "verdict": "DEPENDENCY_CLOSED",
     "report": null
    },
    "history": [
@@ -2653,6 +2673,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: no Champion-B candidate; re-open if a gate-passing distinct base appears"
     }
    ]
   },
@@ -2696,8 +2720,8 @@
    "family": "ENS",
    "title": "Fixed vs nested blending",
    "priority": "P5",
-   "state": "PENDING",
-   "state_note": "low-value",
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "low-value per own frozen note; ENS lab already settled equal-logit vs learned at small scale",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -2706,7 +2730,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "CLOSED_AUDIT",
     "report": null
    },
    "history": [
@@ -2714,6 +2738,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: low-value per own frozen note; ENS lab already settled equal-logit vs learned at small scale"
     }
    ]
   },
@@ -2757,8 +2785,8 @@
    "family": "GEN",
    "title": "Generator conditional model",
    "priority": "P5",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "conceptual; no actionable signal beyond supervised screens",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -2767,7 +2795,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "CLOSED_AUDIT",
     "report": null
    },
    "history": [
@@ -2775,6 +2803,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: conceptual; no actionable signal beyond supervised screens"
     }
    ]
   },
@@ -2784,8 +2816,8 @@
    "family": "GEN",
    "title": "Random vs feature noise",
    "priority": "P5",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "conceptual; noise decomposition unidentifiable",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -2794,7 +2826,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "CLOSED_AUDIT",
     "report": null
    },
    "history": [
@@ -2802,6 +2834,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: conceptual; noise decomposition unidentifiable"
     }
    ]
   },
@@ -2812,7 +2848,7 @@
    "title": "Feature-dependent transition",
    "priority": "P5",
    "state": "DEPENDENCY_BLOCKED",
-   "state_note": "blocked-identifiability",
+   "state_note": "conceptual; label-transition unidentifiable",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -2821,7 +2857,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": "NOT_STARTED",
+    "verdict": "CLOSED_AUDIT",
     "report": null
    },
    "history": [
@@ -2829,6 +2865,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: conceptual; label-transition unidentifiable"
     }
    ]
   },
@@ -2906,8 +2946,8 @@
    "family": "GEN",
    "title": "Joint probabilistic model",
    "priority": "P5",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "conceptual; no actionable signal beyond supervised screens",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -2916,7 +2956,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "CLOSED_AUDIT",
     "report": null
    },
    "history": [
@@ -2924,6 +2964,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: conceptual; no actionable signal beyond supervised screens"
     }
    ]
   },
@@ -2933,8 +2977,8 @@
    "family": "GEN",
    "title": "Causal mechanism",
    "priority": "P5",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "DEPENDENCY_BLOCKED",
+   "state_note": "conceptual; observational data cannot test causal mechanism",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -2943,7 +2987,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "CLOSED_AUDIT",
     "report": null
    },
    "history": [
@@ -2951,6 +2995,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: conceptual; observational data cannot test causal mechanism"
     }
    ]
   },
@@ -2988,7 +3036,7 @@
    "title": "H19-B replication",
    "priority": "P5",
    "state": "DEPENDENCY_BLOCKED",
-   "state_note": "not-warranted",
+   "state_note": "frozen rule: only if first policy test positive; it was NEGATIVE",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -2997,7 +3045,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": "NOT_STARTED",
+    "verdict": "CLOSED_AUDIT",
     "report": null
    },
    "history": [
@@ -3005,6 +3053,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: frozen rule: only if first policy test positive; it was NEGATIVE"
     }
    ]
   },
@@ -3015,7 +3067,7 @@
    "title": "FIT size / bag count",
    "priority": "P5",
    "state": "DEPENDENCY_BLOCKED",
-   "state_note": "blocked-on-arch",
+   "state_note": "no competitive new architecture to sweep",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -3024,7 +3076,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": "NOT_STARTED",
+    "verdict": "DEPENDENCY_CLOSED",
     "report": null
    },
    "history": [
@@ -3032,6 +3084,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: no competitive new architecture to sweep"
     }
    ]
   },
@@ -3076,7 +3132,7 @@
    "title": "Independent FLM bagging",
    "priority": "P5",
    "state": "DEPENDENCY_BLOCKED",
-   "state_note": "blocked-on-acc",
+   "state_note": "no accurate+eligible FLMs",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -3085,7 +3141,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": "NOT_STARTED",
+    "verdict": "DEPENDENCY_CLOSED",
     "report": null
    },
    "history": [
@@ -3093,6 +3149,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: no accurate+eligible FLMs"
     }
    ]
   },
@@ -3103,7 +3163,7 @@
    "title": "Matched-coverage policies",
    "priority": "P5",
    "state": "DEPENDENCY_BLOCKED",
-   "state_note": "not-warranted",
+   "state_note": "H19-B already showed bagging hurts at matched roles",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -3112,7 +3172,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": "NOT_STARTED",
+    "verdict": "CLOSED_AUDIT",
     "report": null
    },
    "history": [
@@ -3120,6 +3180,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: H19-B already showed bagging hurts at matched roles"
     }
    ]
   },
@@ -3164,7 +3228,7 @@
    "title": "New nested Champion B",
    "priority": "P3",
    "state": "DEPENDENCY_BLOCKED",
-   "state_note": "no-strong-candidate",
+   "state_note": "no strong distinct base; re-open condition same as J077",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -3173,7 +3237,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": "NOT_STARTED",
+    "verdict": "DEPENDENCY_CLOSED",
     "report": null
    },
    "history": [
@@ -3181,6 +3245,10 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T17:44:26.897357+00:00",
+     "event": "state->DEPENDENCY_BLOCKED: no strong distinct base; re-open condition same as J077"
     }
    ]
   },
