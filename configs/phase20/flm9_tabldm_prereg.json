@@ -1,0 +1,59 @@
+{
+ "experiment": "phase20_flm9_xiaomi_tabldm",
+ "phase": "20",
+ "family": "FLM",
+ "experiment_number": 9,
+ "frozen_utc": "2026-10-18T00:00:00+00:00",
+ "hypothesis": "Xiaomi-TabLDM (Apache-2.0 tabular large-data foundation model, in-context learning, SCM-synthetic pretraining + test-time scaling) adds fold-0 signal on the champion route view that the champion portfolio does not already extract: its equal-logit blend with route_ref beats route_ref by >= +5e-5 AUC with Spearman < 0.995.",
+ "why_distinct": "First FLM-family screen of a post-TabPFN ICL architecture with a different pretraining distribution (structural causal models, not transformer-generated priors) and different inference mechanism (dual-stream feature grouping + Attention-Residual + sparse MoE, test-time ensemble scaling). Prior FLM screens: Mitra-v2 NEGATIVE, TabICL RESOURCE_BLOCKED, TabPFN v2.6/v3 deferred (champion is v3.5).",
+ "model_card": {
+  "project": "https://github.com/xiaomi-research/xiaomi-tabldm (official)",
+  "hf": "occams/Xiaomi-TabLDM",
+  "revision_pinned": "712e5635be9fd8728084cd5ae105ddecb31dc03c",
+  "checkpoint": "checkpoints/clf_default.ckpt",
+  "checkpoint_sha256": "7f8ec8b949c13e7187c0f11b189e03560eb28e02d286aa2cdad2d2a56b62bc9e",
+  "checkpoint_bytes": 561075091,
+  "install": "pip install git+https://github.com/xiaomi-research/xiaomi-tabldm (xiaomi_tabldm 0.1.0, import tabldm)",
+  "license": "LICENSE file = Apache-2.0 (Copyright 2026 Xiaomi Corporation). NOTE (recorded contradiction): the README News bullet says 'Usage is subject to Xiaomi-TabLDM Non-Commercial License' but links to that same Apache-2.0 LICENSE file; the README footer states Apache-2.0. We treat the LICENSE file as operative and record the contradiction; competition rules govern eligibility, and the champion already relies on pretrained checkpoints under nonstandard licenses (TabPFN 'other').",
+  "pretraining_coverage": "synthetic SCMs; context sizes hundreds to tens of thousands of rows; test-time compute scaling (n_estimators ensemble)",
+  "known_caveats": [
+   "complexity O(n^2 + n m^2); full-FIT (560k) context infeasible -> stratified subsampled context arms",
+   "library bug 1: kv_cache=True conflicts with default enhance_candidates=True",
+   "library bug 2: enhance_candidates=True gaussian-rank perturbation broadcast error (train-noise sized vs eval rows) -> enhance_candidates=False",
+   "library bug 3: torch.cuda.set_device('cuda') indexless rejection -> device='cuda:0'"
+  ]
+ },
+ "decision_rule": {
+  "frozen_rule": "PROMISING iff port_delta >= +5e-5 AND spearman_vs_route_ref < 0.995",
+  "port_delta": "AUC(equal-logit blend(candidate, route_ref)) - AUC(route_ref) on primary fold-0 (all 139927 rows)",
+  "route_ref": "sol_route_aux10_primary_final (champion-v7 proxy, fold-0 AUC 0.961727)",
+  "also_reported": "standard screen_metrics table vs champion portfolio (fold-0 AUC 0.961828) for comparability with the neural/FLM screen tables",
+  "descriptive_only": ["standalone AUC", "logit Pearson vs portfolio/route", "per-arm scaling behavior"]
+ },
+ "anti_leakage": [
+  "context rows drawn from FIT only (folds 1-4); fold-0 labels read only at final metric computation",
+  "route view is label-free (raw21 + coarse10, no target encoding)",
+  "TabLDM fit() updates no weights (in-context learning); its preprocessing is fitted on the FIT context only -> fold-safe",
+  "champion fold-0 references hash-asserted via load_champion_fold0; route_ref from the OOF store",
+  "checkpoint revision-pinned and sha256-asserted before fit",
+  "no disk offload (disk_offload_dir=None enforced; CPU offload allowed by the library's auto policy)"
+ ],
+ "protocol": {
+  "view": "route (22 features: raw21 + coarse10) built by frames(tr, te, route=True)",
+  "eval": "all primary fold-0 rows (139927)",
+  "arms": {
+   "A_ctx20k": "stratified 20000-row FIT context (phase-19 matched information budget, CONTEXT_SEED)",
+   "B_ctx50k": "stratified 50000-row FIT context (large-data regime; near the top of documented pretraining context coverage)"
+  },
+  "estimator": {
+   "n_estimators": 8, "batch_size": 4, "kv_cache": false, "enhance_candidates": false,
+   "device": "cuda:0", "random_state": 1201, "norm_methods": null,
+   "feat_shuffle_method": "latin", "class_shuffle_method": "shift"
+  },
+  "run_order": "A then B; each arm writes its own report; a crashed arm does not block the other"
+ },
+ "env": {
+  "gpu": "RTX 5070 Ti 16GB", "torch": "2.9.0+cu129",
+  "runner": "scripts/phase20/flm9_tabldm_screen.py"
+ }
+}
