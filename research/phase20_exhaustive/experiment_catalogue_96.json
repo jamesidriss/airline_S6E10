@@ -837,12 +837,13 @@
    "requested_method": "low-rank interaction matrices among ratings",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "PROMISING",
    "priority": "P3",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "low-rank cross-rating; fold-0"
+   "next_action": "low-rank cross-rating; fold-0",
+   "phase20_finding": "Cross-fit SVD rank-8 of 13 ratings: augmentation delta +3.19e-3 (0.953423 \u2192 0.956610). SVD features alone 0.925331. Decorrelated (Spearman 0.928). Blend with champion proxy +3.81e-3. PROMISING by +5e-5 bar, intermediate between FEAT 51 residuals (+3.94e-3) and FEAT 48 hierarchical (+3.94e-4). The SVD captures pairwise rating interactions effectively. PROMISING but FEAT 51 residuals remain the strongest feature block."
   },
   {
    "experiment_number": 58,

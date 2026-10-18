@@ -1,0 +1,19 @@
+{
+ "prereg": "configs/phase20/feat57_lowrank_interactions_prereg.json",
+ "prereg_sha256": "e815517dd97b9df2aea328cacc1c257a1a7ae5802f8f12a6ea5e9bf1df8a76cf",
+ "method": "Cross-fit SVD (rank 8) of 13 ratings, 5-fold. 8 latent dims added to 21raw.",
+ "fold0_results": {
+  "base_21raw_auc": 0.953423,
+  "augmented_21raw_8svd_auc": 0.95661,
+  "augmentation_delta": 0.00318731,
+  "svd_only_auc": 0.925331,
+  "spearman_aug_vs_champion": 0.928457,
+  "equal_blend_auc": 0.960425,
+  "blend_delta_vs_aug": 0.00381499,
+  "champion_ref": 0.961853,
+  "port_delta_vs_champion": -0.00524291,
+  "promising": true,
+  "decision_rule": "PROMISING if augmentation_delta >= +5e-5"
+ },
+ "rank": 8
+}
