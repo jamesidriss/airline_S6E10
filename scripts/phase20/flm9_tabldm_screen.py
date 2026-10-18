@@ -75,6 +75,10 @@ def main() -> int:
                          "the COL output buffer to swappable CPU memory. The 50k-context arm "
                          "OOMs registering a 9.6GB PINNED buffer against a near-full GPU; "
                          "disk offload is forbidden by mission rules.")
+    ap.add_argument("--member-batch", type=int, default=0,
+                    help="resource guard: ensemble members processed together (frozen 4; "
+                         "members are independent forwards and only averaged, so lowering "
+                         "cuts peak activation memory without changing results)")
     args = ap.parse_args()
     ctx_rows = ARMS[args.arm]
 
@@ -130,6 +134,8 @@ def main() -> int:
     from tabldm import TabLDMClassifier
 
     clf_kwargs = dict(categorical_indices=[int(c) for c in cats], **ESTIMATOR)
+    if args.member_batch:
+        clf_kwargs["batch_size"] = int(args.member_batch)
     if args.col_pinned_off:
         # use_async=False also required: the async D2H staging pool hardcodes
         # pin_memory=True (PinnedBufferPool) and OOMs independently of the
@@ -185,6 +191,7 @@ def main() -> int:
                   "n_estimators=8, batch_size=4, kv_cache=False, enhance_candidates=False, "
                   "device=cuda:0, random_state=1201" % CONTEXT_SEED,
         "col_pinned_off": bool(args.col_pinned_off),
+        "member_batch_override": int(args.member_batch) if args.member_batch else None,
         "resource_guard_note": ("COL output buffer routed to swappable CPU memory "
                                 "(max_pinned_memory_mb=0) and async D2H staging pool "
                                 "disabled (use_async=False; the pool hardcodes pinned "
