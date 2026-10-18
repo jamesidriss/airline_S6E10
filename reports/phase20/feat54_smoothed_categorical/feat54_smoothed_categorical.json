@@ -1,0 +1,18 @@
+{
+ "prereg": "configs/phase20/feat54_smoothed_categorical_prereg.json",
+ "prereg_sha256": "TODO",
+ "method": "Smoothed categorical: Bayesian shrinkage target encoding for 4 cat features, cross-fit 5-fold. LGBM on 21raw+4smooth vs 21raw.",
+ "fold0_results": {
+  "base_21raw_auc": 0.953423,
+  "augmented_21raw_4smooth_auc": 0.953508,
+  "augmentation_delta": 8.486e-05,
+  "spearman_aug_vs_champion": 0.911794,
+  "equal_blend_auc": 0.959908,
+  "blend_delta_vs_aug": 0.00640061,
+  "champion_ref": 0.9618529228157235,
+  "port_delta_vs_champion": -0.00834529,
+  "promising": true,
+  "decision_rule": "PROMISING if augmentation_delta >= +5e-5"
+ },
+ "n_smooth_features": 4
+}

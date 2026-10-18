@@ -797,12 +797,13 @@
    "requested_method": "generalize rare categorical configs",
    "historical_status": "conditional-density closed",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "PROMISING",
    "priority": "P4",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "distinct smoothing (not conditional-density)"
+   "next_action": "distinct smoothing (not conditional-density)",
+   "phase20_finding": "Smoothed categorical (Bayesian shrinkage, 4 features): augmentation delta +8.49e-5 (0.953423 -> 0.953508). PROMISING by +5e-5 threshold. Decorrelated (Spearman 0.912). Blend with champion proxy +6.40e-3. PROMISING as feature block for integration."
   },
   {
    "experiment_number": 55,
