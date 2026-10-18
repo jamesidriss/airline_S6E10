@@ -797,13 +797,14 @@
    "requested_method": "generalize rare categorical configs",
    "historical_status": "conditional-density closed",
    "historical_equivalent": "-",
-   "status": "PROMISING",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P4",
    "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "distinct smoothing (not conditional-density)",
-   "phase20_finding": "Smoothed categorical (Bayesian shrinkage, 4 features): augmentation delta +8.49e-5 (0.953423 -> 0.953508). PROMISING by +5e-5 threshold. Decorrelated (Spearman 0.912). Blend with champion proxy +6.40e-3. PROMISING as feature block for integration."
+   "phase20_finding": "v1 INVALID_PROTOCOL (eval-fold labels in FIT features; prereg sha was TODO; wrong decision rule) - superseded by strict v2 (prereg 4d200f7d): aug delta collapses to +6.11e-6; port_delta -1.912e-3 (need >= +5e-5), corr 0.9103 (need < 0.995). Frozen rule NEGATIVE -> COMPLETE_NEGATIVE.",
+   "v1_finding_invalidated": "Smoothed categorical (Bayesian shrinkage, 4 features): augmentation delta +8.49e-5 (0.953423 -> 0.953508). PROMISING by +5e-5 threshold. Decorrelated (Spearman 0.912). Blend with champion proxy +6.40e-3. PROMISING as feature block for integration."
   },
   {
    "experiment_number": 55,
@@ -1060,13 +1061,14 @@
    "requested_method": "feature-conditioned ensemble weights (no eval labels)",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P4",
    "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "CLOSED by direct fold-0 measurement",
-   "phase20_finding": "Covariate-gated blender (prereg P20-ENS72-COVARIATE-GATING): cross-fit L2 logistic gate on 21 raw covariates (ordinal-encoded, median-imputed), target = route-correct, trained folds 1-4, applied fold-0. Gated blend 0.961735 vs route 0.961727 (+7.99e-6) vs equal blend 0.961725 (+1.01e-5). NEGATIVE: far below the +1e-4 bar. Covariates cannot predict when route vs rich is correct -- errors concentrate on the same hard rows. Covariate gating closed; the +3.14e-3 oracle headroom (GEN 80) is not capturable this way."
+   "phase20_finding": "Covariate-gated blender (prereg P20-ENS72-COVARIATE-GATING): cross-fit L2 logistic gate on 21 raw covariates (ordinal-encoded, median-imputed), target = route-correct, trained folds 1-4, applied fold-0. Gated blend 0.961735 vs route 0.961727 (+7.99e-6) vs equal blend 0.961725 (+1.01e-5). NEGATIVE: far below the +1e-4 bar. Covariates cannot predict when route vs rich is correct -- errors concentrate on the same hard rows. Covariate gating closed; the +3.14e-3 oracle headroom (GEN 80) is not capturable this way.",
+   "status_correction_20261018": "ENS72 executed (ledger p20_ens72_covariate_gating): NEGATIVE_GATE_CANNOT_GENERALIZE; finding was recorded but status left NOT_STARTED."
   },
   {
    "experiment_number": 73,
@@ -1173,13 +1175,14 @@
    "requested_method": "achievable-AUC ceiling w/ assumptions",
    "historical_status": "prior ~3.8%-noise discussion",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "PARTIAL_VALID",
    "priority": "P5",
    "fidelity_reached": "F1",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "distinguish theory vs measurement; sensitivity analysis",
-   "phase20_finding": "AUC ceiling analysis (prereg P20-GEN80-AUC-CEILING): oracle (label-cheating) blend of route reference (0.961766) + 59-member rich blend (0.961509) = 0.964906, headroom +3.14e-3 >> stretch gap +0.97e-4 -> stretch THEORETICALLY reachable by a better blender. Real blenders (equal/softmax/family-balanced) all <= champion -> constraint is blender generalization, not headroom. Hardest decile AUC 0.557 (errors concentrate on few rows). Next lever: covariate-gated blender (ENS 72), fold-safe, could generalize."
+   "phase20_finding": "AUC ceiling analysis (prereg P20-GEN80-AUC-CEILING): oracle (label-cheating) blend of route reference (0.961766) + 59-member rich blend (0.961509) = 0.964906, headroom +3.14e-3 >> stretch gap +0.97e-4 -> stretch THEORETICALLY reachable by a better blender. Real blenders (equal/softmax/family-balanced) all <= champion -> constraint is blender generalization, not headroom. Hardest decile AUC 0.557 (errors concentrate on few rows). Next lever: covariate-gated blender (ENS 72), fold-safe, could generalize.",
+   "status_correction_20261018": "GEN80 executed (ledger p20_gen80_auc_ceiling): descriptive oracle analysis with appended correction_20261018; finding recorded but status left NOT_STARTED."
   },
   {
    "experiment_number": 81,
@@ -1328,13 +1331,14 @@
    "requested_method": "decompose seed vs subset variance",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "PARTIAL_VALID",
    "priority": "P4",
    "fidelity_reached": "F1",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "measure separately",
-   "phase20_finding": "Variance decomposition on saved multi-seed OOF arrays (prereg P20-FINALIST-READINESS): seed variance 1.8e-9..7.2e-9 vs subset (FIT-composition) variance 6.0e-7..6.3e-7 -> seed/subset ratio 0.003..0.012. The pipeline is seed-stable; fold-to-fold variation is data-composition noise (~8e-4 std), not a seed lottery. Descriptive, no go/no-go."
+   "phase20_finding": "Variance decomposition on saved multi-seed OOF arrays (prereg P20-FINALIST-READINESS): seed variance 1.8e-9..7.2e-9 vs subset (FIT-composition) variance 6.0e-7..6.3e-7 -> seed/subset ratio 0.003..0.012. The pipeline is seed-stable; fold-to-fold variation is data-composition noise (~8e-4 std), not a seed lottery. Descriptive, no go/no-go.",
+   "status_correction_20261018": "DEP91 executed (ledger p20_finalist_h91_variance): F1 descriptive variance decomposition; finding recorded but status left NOT_STARTED."
   },
   {
    "experiment_number": 92,
@@ -1371,13 +1375,14 @@
    "requested_method": "preprocessing/selection/inference diffs",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "PARTIAL_VALID",
    "priority": "P4",
    "fidelity_reached": "F1",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "audit before finalist lock",
-   "phase20_finding": "Stability audit (prereg P20-FINALIST-READINESS): equal-logit blend of the route+aux10 reference with any saved preprocessing/selection variant degrades on at least one fold (min delta -1.0e-4..-6.3e-4, min Spearman 0.95-0.98) -> NEGATIVE for blend augmentation. Documentation gap: champion v7_sol_tabpfn_internal2_aux10 OOF is not in the prediction store (only test pred archived); a true champion stability audit needs it archived first. DEP 96 deferred."
+   "phase20_finding": "Stability audit (prereg P20-FINALIST-READINESS): equal-logit blend of the route+aux10 reference with any saved preprocessing/selection variant degrades on at least one fold (min delta -1.0e-4..-6.3e-4, min Spearman 0.95-0.98) -> NEGATIVE for blend augmentation. Documentation gap: champion v7_sol_tabpfn_internal2_aux10 OOF is not in the prediction store (only test pred archived); a true champion stability audit needs it archived first. DEP 96 deferred.",
+   "status_correction_20261018": "DEP94 executed (ledger p20_finalist_h94_stability): audit with doc gap (champion v7 OOF not archived); finding recorded but status left NOT_STARTED."
   },
   {
    "experiment_number": 95,

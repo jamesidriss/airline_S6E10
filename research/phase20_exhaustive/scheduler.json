@@ -1417,7 +1417,7 @@
    "family": "FEAT",
    "title": "Learned similarity metric",
    "priority": "P3",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -1427,7 +1427,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -1435,6 +1435,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "catalogue status COMPLETE_NEGATIVE synced"
     }
    ]
   },
@@ -1525,7 +1532,7 @@
    "family": "FEAT",
    "title": "Learned interactions",
    "priority": "P3",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -1535,7 +1542,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -1543,6 +1550,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "catalogue status COMPLETE_NEGATIVE synced"
     }
    ]
   },
@@ -1552,7 +1566,7 @@
    "family": "FEAT",
    "title": "Observed-minus-predicted ratings",
    "priority": "P3",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -1562,7 +1576,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -1570,6 +1584,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "catalogue status COMPLETE_NEGATIVE synced"
     }
    ]
   },
@@ -1579,7 +1600,7 @@
    "family": "FEAT",
    "title": "Supervised rating factorization",
    "priority": "P3",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -1589,7 +1610,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -1597,6 +1618,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "catalogue status COMPLETE_NEGATIVE synced"
     }
    ]
   },
@@ -1606,7 +1634,7 @@
    "family": "FEAT",
    "title": "Conditional clustering",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -1616,7 +1644,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -1624,6 +1652,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "catalogue status COMPLETE_NEGATIVE synced"
     }
    ]
   },
@@ -1633,24 +1668,44 @@
    "family": "FEAT",
    "title": "Smoothed categorical model",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
-   "kind": "unknown",
-   "cmd": null,
-   "prereg": null,
-   "fingerprint": null,
+   "kind": "cpu",
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "scripts/phase20/feat54_strict_v2.py"
+   ],
+   "prereg": {
+    "path": "configs/phase20/feat54_strict_prereg.json",
+    "sha256": "4d200f7db408b058c490505e32b488d3f8e4502f342d508db73b1f7d80894fd6"
+   },
+   "fingerprint": "manual-run-20261018",
    "depends_on": [],
-   "attempts": 0,
+   "attempts": 1,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/feat54_smoothed_categorical/feat54_strict_v2.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "catalogue status COMPLETE_NEGATIVE synced"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "note": "strict v2 executed this session outside scheduler run(); cmd/prereg/report recorded, fingerprint pinned manual",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
     }
    ]
   },
@@ -1660,7 +1715,7 @@
    "family": "FEAT",
    "title": "LGBM leaf embeddings",
    "priority": "P3",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -1670,7 +1725,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -1678,6 +1733,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "catalogue status COMPLETE_NEGATIVE synced"
     }
    ]
   },
@@ -1714,7 +1776,7 @@
    "family": "FEAT",
    "title": "Low-rank rating interactions",
    "priority": "P3",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -1724,7 +1786,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -1732,6 +1794,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "catalogue status COMPLETE_NEGATIVE synced"
     }
    ]
   },
@@ -1849,7 +1918,7 @@
    "family": "CLASS",
    "title": "GAM splines+interactions",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -1859,7 +1928,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -1867,6 +1936,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "catalogue status COMPLETE_NEGATIVE synced"
     }
    ]
   },
@@ -2131,7 +2207,7 @@
    "family": "CLASS",
    "title": "Supervised mixed-factor",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -2141,7 +2217,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -2149,6 +2225,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "catalogue status COMPLETE_NEGATIVE synced"
     }
    ]
   },
@@ -2158,7 +2241,7 @@
    "family": "CLASS",
    "title": "Conditional rule ensembles",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -2168,7 +2251,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -2176,6 +2259,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "catalogue status COMPLETE_NEGATIVE synced"
     }
    ]
   },
@@ -2239,7 +2329,7 @@
    "family": "ENS",
    "title": "Covariate-only gating",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -2249,7 +2339,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -2257,6 +2347,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "catalogue status COMPLETE_NEGATIVE synced"
     }
    ]
   },
@@ -2455,7 +2552,7 @@
    "family": "GEN",
    "title": "AUC ceiling estimate",
    "priority": "P5",
-   "state": "PENDING",
+   "state": "DONE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -2465,7 +2562,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "PARTIAL_VALID",
     "report": null
    },
    "history": [
@@ -2473,6 +2570,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "DONE",
+     "why": "catalogue status PARTIAL_VALID synced"
     }
    ]
   },
@@ -2752,7 +2856,7 @@
    "family": "DEP",
    "title": "Seed vs subset variance",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "DONE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -2762,7 +2866,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "PARTIAL_VALID",
     "report": null
    },
    "history": [
@@ -2770,6 +2874,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "DONE",
+     "why": "catalogue status PARTIAL_VALID synced"
     }
    ]
   },
@@ -2833,7 +2944,7 @@
    "family": "DEP",
    "title": "OOF/test stability audit",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "DONE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -2843,7 +2954,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "PARTIAL_VALID",
     "report": null
    },
    "history": [
@@ -2851,6 +2962,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "DONE",
+     "why": "catalogue status PARTIAL_VALID synced"
     }
    ]
   },
@@ -2887,7 +3005,7 @@
    "family": "DEP",
    "title": "Independent finalist validation",
    "priority": "P3",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -2897,7 +3015,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -2905,6 +3023,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T10:22:03.718452+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "catalogue status COMPLETE_NEGATIVE synced"
     }
    ]
   }

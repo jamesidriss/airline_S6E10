@@ -1,0 +1,217 @@
+{
+ "date": "2026-10-18",
+ "issue": "Catalogue showed 52 NOT_STARTED / scheduler 56 PENDING / status report claimed 37 remaining - three different, partially stale views.",
+ "root_causes": [
+  "13 rows executed with measured results never synced to scheduler (stayed PENDING).",
+  "4 rows (72/80/91/94) executed with ledger findings but left NOT_STARTED in catalogue.",
+  "row 54 PROMISING from INVALID v1 run.",
+  "9 rows NOT_STARTED but DEPENDENCY_BLOCKED in scheduler (by design, counted as pending by naive NOT_STARTED/PENDING tallies).",
+  "'37 remaining' in an earlier status report was an undercount of the true executable slice and overcounted completed items; recomputed below."
+ ],
+ "counts": {
+  "total_rows": 96,
+  "catalogue_status": {
+   "COMPLETE_NEGATIVE": 35,
+   "PARTIAL_VALID": 6,
+   "LICENSE_BLOCKED": 3,
+   "NOT_STARTED": 48,
+   "HISTORICAL_EQUIVALENT": 2,
+   "PROMISING": 1,
+   "COMPLETE_CERTIFIED": 1
+  },
+  "scheduler_state": {
+   "CLOSED_NEGATIVE": 35,
+   "DONE": 8,
+   "LICENSE_BLOCKED": 3,
+   "PENDING": 40,
+   "DEPENDENCY_BLOCKED": 9,
+   "PROMOTED": 1
+  },
+  "executed_with_result": 45,
+  "dependency_blocked_not_started": 9,
+  "dependency_blocked_rows": [
+   70,
+   71,
+   77,
+   83,
+   89,
+   90,
+   92,
+   93,
+   95
+  ],
+  "license_blocked": 3,
+  "license_blocked_rows": [
+   3,
+   7,
+   8
+  ],
+  "promising_screen_passed_pending_integration": 1,
+  "promising_rows": [
+   48
+  ],
+  "truly_executable_not_started": 39,
+  "truly_executable_rows": [
+   9,
+   12,
+   13,
+   14,
+   16,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   33,
+   34,
+   37,
+   38,
+   39,
+   40,
+   41,
+   44,
+   49,
+   56,
+   58,
+   61,
+   66,
+   73,
+   74,
+   75,
+   76,
+   78,
+   79,
+   81,
+   82,
+   84,
+   85,
+   86,
+   87
+  ]
+ },
+ "reconciliations_applied": [
+  {
+   "catalogue_status_fixes": [
+    {
+     "row": 72,
+     "to": "COMPLETE_NEGATIVE",
+     "why": "ENS72 executed (ledger p20_ens72_covariate_gating): NEGATIVE_GATE_CANNOT_GENERALIZE; finding was recorded but status left NOT_STARTED."
+    },
+    {
+     "row": 80,
+     "to": "PARTIAL_VALID",
+     "why": "GEN80 executed (ledger p20_gen80_auc_ceiling): descriptive oracle analysis with appended correction_20261018; finding recorded but status left NOT_STARTED."
+    },
+    {
+     "row": 91,
+     "to": "PARTIAL_VALID",
+     "why": "DEP91 executed (ledger p20_finalist_h91_variance): F1 descriptive variance decomposition; finding recorded but status left NOT_STARTED."
+    },
+    {
+     "row": 94,
+     "to": "PARTIAL_VALID",
+     "why": "DEP94 executed (ledger p20_finalist_h94_stability): audit with doc gap (champion v7 OOF not archived); finding recorded but status left NOT_STARTED."
+    },
+    {
+     "row": 54,
+     "to": "COMPLETE_NEGATIVE",
+     "why": "FEAT54 v1 INVALID_PROTOCOL (correction_20261018_d) superseded by strict v2 (prereg 4d200f7d): port_delta -1.912e-3 < +5e-5 -> frozen rule NEGATIVE."
+    }
+   ]
+  },
+  {
+   "scheduler_synced": [
+    {
+     "row": 46,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    },
+    {
+     "row": 50,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    },
+    {
+     "row": 51,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    },
+    {
+     "row": 52,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    },
+    {
+     "row": 53,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    },
+    {
+     "row": 54,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    },
+    {
+     "row": 55,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    },
+    {
+     "row": 57,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    },
+    {
+     "row": 62,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    },
+    {
+     "row": 68,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    },
+    {
+     "row": 69,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    },
+    {
+     "row": 72,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    },
+    {
+     "row": 80,
+     "from": "PENDING",
+     "to": "DONE"
+    },
+    {
+     "row": 91,
+     "from": "PENDING",
+     "to": "DONE"
+    },
+    {
+     "row": 94,
+     "from": "PENDING",
+     "to": "DONE"
+    },
+    {
+     "row": 96,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    },
+    {
+     "row": 54,
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE"
+    }
+   ]
+  }
+ ],
+ "statement": "96 total = 45 executed-with-result + 9 dependency-blocked (not started by design) + 3 license-blocked + 39 truly executable NOT_STARTED."
+}

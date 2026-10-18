@@ -1,0 +1,28 @@
+{
+ "status": "DONE",
+ "prereg": "configs/phase20/feat54_strict_prereg.json",
+ "prereg_sha256": "4d200f7db408b058c490505e32b488d3f8e4502f342d508db73b1f7d80894fd6",
+ "supersedes": {
+  "report": "reports/phase20/feat54_smoothed_categorical/feat54_smoothed_categorical.json",
+  "note": "v1 INVALID_PROTOCOL (see correction_20261018_d in v1 report); preserved."
+ },
+ "protocol": "strict outer-FIT-only EVAL encodings + inner cross-fit within outer-FIT for FIT rows; ES labels used only as early-stopping metric",
+ "metrics": {
+  "control_fold0_auc": 0.953423,
+  "treatment_fold0_auc": 0.953429,
+  "augmentation_delta_descriptive_only": 6.11e-06,
+  "portfolio_ref": "sol_route_aux10_primary_final",
+  "portfolio_fold0_auc": 0.961727,
+  "candidate_spearman_vs_portfolio": 0.910322,
+  "equal_logit_blend_fold0_auc": 0.959815,
+  "port_delta": -0.00191203,
+  "port_delta_threshold": 5e-05,
+  "corr_threshold": 0.995,
+  "promising_frozen_rule": false,
+  "best_iter_control": 1283,
+  "best_iter_treatment": 1756,
+  "eval_rows": 139927
+ },
+ "eval_rows": 139927,
+ "n_smooth_features": 4
+}
