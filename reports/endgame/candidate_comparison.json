@@ -1,0 +1,57 @@
+{
+  "utc": "2026-10-18T22:35:51.777179+00:00",
+  "git": "72ba3541cf98443415d6652c008bba69ef3c3216",
+  "baseline": {
+    "exp_id": "v7_sol_tabpfn_internal2_aux10",
+    "oof_auc": 0.9618529228157235,
+    "oof_sha256": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+    "bootstrap_oof_auc": {
+      "n_boot": 1000,
+      "mean": 0.9618537455259623,
+      "se": 0.0002516710900211752,
+      "ci_2.5": 0.9613486296171959,
+      "ci_97.5": 0.9623250607330421
+    },
+    "per_fold_auc": [
+      0.9618278142504795,
+      0.9619889611452807,
+      0.9618912986763071,
+      0.9610994818114763,
+      0.9624956398713964
+    ]
+  },
+  "candidate": null,
+  "train_test_drift": {
+    "numeric_smd": {
+      "Age": -0.0006446379611867045,
+      "Flight Distance": -0.0004295453603386042,
+      "Departure Delay in Minutes": -0.003342362335593737,
+      "Arrival Delay in Minutes": -0.002498092651452611
+    },
+    "categorical_tv": {
+      "Gender": 0.0015358024263907588,
+      "Customer Type": 0.0014214657791792457,
+      "Type of Travel": 0.0001610994870705762,
+      "Class": 0.0004425497830417534,
+      "Inflight wifi service": 0.0008318289315380235,
+      "Seat comfort": 0.0015168641133873927,
+      "Cleanliness": 0.0029136482093345614,
+      "Food and drink": 0.0023638984142038627,
+      "Inflight entertainment": 0.0015155584206223928,
+      "On-board service": 0.0023486572695824368,
+      "Baggage handling": 0.001692665593261266,
+      "Leg room service": 0.0020487800644883973,
+      "Online boarding": 0.001400172356993629,
+      "Checkin service": 0.001342038940478968,
+      "Gate location": 0.0005182833002224212,
+      "Ease of Online booking": 0.0012246276968905252,
+      "Departure/Arrival time convenient": 0.001914119976423101
+    },
+    "max_abs_smd": 0.003342362335593737,
+    "max_tv": 0.0029136482093345614
+  },
+  "reference_noise_scale": {
+    "paired_public_lb_noise": 0.0002,
+    "subset_variance_h91": "6.0e-7..6.3e-7 per fold (data composition), seed variance 1.8e-9..7.2e-9"
+  }
+}
