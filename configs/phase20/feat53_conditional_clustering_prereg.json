@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-FEAT53-CONDITIONAL-CLUSTERING",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. Label-free passenger clustering on covariates + context-specific models per cluster.",
+  "hypotheses": {
+    "H53_CONDITIONAL_CLUSTERING": {
+      "item": 53,
+      "question": "Does label-free passenger clustering on covariates followed by cluster-specific models improve fold-0 OOF AUC?",
+      "method": "Cross-fit: K-means clustering on covariates (folds 1-4), assign cluster labels to fold-0. Train separate LGBM per cluster on folds 1-4, predict fold-0. Aggregate predictions. LGBM fold-0 vs single global LGBM.",
+      "leakage": "Clustering fit on FIT only (folds 1-4). Cluster assignment for fold-0. Per-cluster models trained on FIT only. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995."
+    }
+  },
+  "non_goals": ["No public-LB consultation."],
+  "git_before": "5de9d1e"
+}
