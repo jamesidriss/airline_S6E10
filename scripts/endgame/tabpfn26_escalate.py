@@ -115,7 +115,15 @@ def main() -> int:
                     "utc": datetime.now(timezone.utc).isoformat()}
         save_json({**contract, "status": "FITTING"}, out / "progress.json")
         start = time.monotonic()
-        model = create_model(matched_params(cats), True, 262144, None, None, True)
+        # Amendment A1: the v3.5-only icl_bf16 ICL switch does not exist on TabPFNV2p6;
+        # the plain classifier path is identical except for that switch.
+        from tabpfn import TabPFNClassifier
+        from tabpfn.base import initialize_tabpfn_model as _init
+
+        _ms, *_ = _init(matched_params(cats)["model_path"], "classifier",
+                        n_estimators_override=1, devices=[torch.device("cpu")])
+        model = (create_model(matched_params(cats), True, 262144, None, None, True)
+                 if hasattr(_ms[0], "enable_icl_bf16") else TabPFNClassifier(**matched_params(cats)))
         torch.cuda.reset_peak_memory_stats()
         model.fit(X[fi], y[fi])
         fit_seconds = time.monotonic() - start

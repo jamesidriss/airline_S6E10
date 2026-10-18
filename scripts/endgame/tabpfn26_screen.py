@@ -107,6 +107,7 @@ def main() -> int:
         "model_family": "TabPFN-2.6", "prereg": PREREG, "prereg_sha256": sha,
         "checkpoint_sha256": CKPT_SHA, "checkpoint_revision": "24148873a9a5",
         "matched_source": "reports/sol_tabpfn35_route/route_f0.json (certified v3.5 route contract)",
+        "amendment_a1": "configs/phase20/endgame_tabpfn26_screen_amendment_a1.json (icl_bf16 switch unavailable on TabPFNV2p6)",
         "params": matched_params(cats), "seed": 1201,
         "icl_bf16": True, "chunk_cells": 262144, "decoder_inplace_gelu": True,
         "windows_mqa": True, "reuse_query_output": True, "batch": args.batch,
@@ -137,7 +138,29 @@ def main() -> int:
     model = None
     try:
         params = matched_params(cats)
-        model = create_model(params, True, 262144, None, None, True)
+        # Amendment A1 (prereg 4ff41f64 -> endgame_tabpfn26_screen_amendment_a1.json):
+        # the v3.5-only icl_bf16 ICL switch does not exist on TabPFNV2p6 (introspected:
+        # no enable_*/precision setter). Use the plain classifier path -- identical for
+        # v3.5 except for that switch.  If a future checkpoint DOES expose it, the switch
+        # is enabled and the deviation is recorded instead of silently taken.
+        from tabpfn import TabPFNClassifier
+
+        def _has_icl_bf16(path: str) -> bool:
+            try:
+                from tabpfn.base import initialize_tabpfn_model as _init
+
+                ms, *_ = _init(path, "classifier", n_estimators_override=1,
+                               devices=[torch.device("cpu")])
+                return hasattr(ms[0], "enable_icl_bf16")
+            except Exception:
+                return False
+
+        use_icl_bf16 = _has_icl_bf16(params["model_path"])
+        if use_icl_bf16:
+            model = create_model(params, True, 262144, None, None, True)
+        else:
+            model = TabPFNClassifier(**params)
+        print(f"  model path={Path(params['model_path']).name} icl_bf16_available={use_icl_bf16}", flush=True)
         torch.cuda.reset_peak_memory_stats()
         model.fit(X[fit_idx], y[fit_idx])
         fit_seconds = time.monotonic() - start

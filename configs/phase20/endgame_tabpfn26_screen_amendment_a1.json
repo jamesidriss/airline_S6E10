@@ -1,0 +1,15 @@
+{
+ "prereg_id": "P20-ENDGAME-TABPFN26-SCREEN-A1",
+ "date": "2026-10-19",
+ "amends": "P20-ENDGAME-TABPFN26-SCREEN (4ff41f646f4b166b7342b55eeaa2d49cc1b239b9eeb941b7471e0c8425b33631)",
+ "amendment_reason": "The Step-0 probe crashed with an IMPLEMENTATION error before any fit or prediction: scripts/run_sol_tabpfn.py create_model(..., icl_bf16=True, ...) calls models[0].enable_icl_bf16(), which exists only on the v3.5 model class. The TabPFN-2.6 class TabPFNV2p6 exposes no precision-switch API at all (introspection: no enable_*/set_* precision members; only get_supported_kv_cache_precisions). This is an architecture capability difference, not a tuning choice, and no predictive result exists for this checkpoint.",
+ "delta": {
+  "icl_bf16": "v3.5-only ICL bf16 switch: DISABLED (unavailable on TabPFNV2p6); the model runs its ICL forward in its native precision under inference_precision='autocast'",
+  "unchanged": ["n_estimators=1", "fit_with_cache", "kv_cache_precision=int8", "keep_cache_on_device=True", "inference_precision=autocast", "memory_saving_mode=True", "random_state=1201", "ignore_pretraining_limits=True", "categorical_features_indices (route view)", "windows-MQA backend registration + reuse_query_output", "gpu_memory_fraction 0.85", "batch 1024", "eval = primary fold 0 (139,927 rows)"]
+ },
+ "consequence_disclosed": "Without the bf16 ICL switch the inference path carries more memory than the champion's, so the full 559,708-row context fit may hit the same wall that closed FLM12 (TabPFN-2.5). If it OOMs, the ALREADY-PREREGISTERED single amendment applies: context = stratified 100,000 rows from FIT, batch 1024, everything else identical. Any downstream claim about this candidate must disclose the context bound; it is NOT directly comparable to a full-context champion member.",
+ "decision_rule_unchanged": true,
+ "frozen_metrics_unchanged": ["standalone fold-0 AUC", "port_delta_v7 (equal-logit blend with the true v7)", "port_delta_route_ref", "Spearman/logit-Pearson vs v7 and route_ref", "paired-bootstrap 95% CI (B=2000, seed 7)"],
+ "scientific_claim_if_promoted": "A context-bounded TabPFN-2.6 member may only be promoted on the strength of its own 5-fold paired comparison against v7, with the context bound stated in every report. It is not a drop-in replacement for a full-context v3.5 member.",
+ "git_before": "0db9b81"
+}
