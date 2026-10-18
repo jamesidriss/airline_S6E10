@@ -828,12 +828,13 @@
    "requested_method": "context-sensitive numeric transforms",
    "historical_status": "generic local transforms partly absorbed",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P4",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "distinct local transform; redundancy vs existing blocks"
+   "next_action": "distinct local transform; redundancy vs existing blocks",
+   "phase20_finding": "Within-segment ECDF transforms (4 numerics, outer-FIT-only): aug delta +2.15e-4 descriptive but port_delta -1.875e-3 (need >= +5e-5), corr 0.9120. Frozen rule NEGATIVE."
   },
   {
    "experiment_number": 57,
@@ -857,12 +858,13 @@
    "requested_method": "regularize sparse passenger contexts",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P4",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "fold-0"
+   "next_action": "fold-0",
+   "phase20_finding": "Fold-0: control 0.953423, treatment 0.953466 (+4.34e-05 descriptive). FROZEN RULE: port_delta -1.858e-03 (need >= +5e-5), corr 0.911996 (need < 0.995) -> NEGATIVE."
   },
   {
    "experiment_number": 59,

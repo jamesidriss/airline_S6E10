@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-17T22:40:57.112350+00:00",
+ "updated_utc": "2026-10-18T11:05:11.091235+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -1749,7 +1749,7 @@
    "family": "FEAT",
    "title": "Local continuous transforms",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -1759,7 +1759,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -1767,6 +1767,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T11:05:11.091235+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "FEAT frozen-rule screen measured NEGATIVE this session"
     }
    ]
   },
@@ -1810,7 +1817,7 @@
    "family": "FEAT",
    "title": "Rare-combination regularizer",
    "priority": "P4",
-   "state": "PENDING",
+   "state": "CLOSED_NEGATIVE",
    "state_note": null,
    "kind": "unknown",
    "cmd": null,
@@ -1820,7 +1827,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
+    "verdict": "COMPLETE_NEGATIVE",
     "report": null
    },
    "history": [
@@ -1828,6 +1835,13 @@
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T11:05:11.091235+00:00",
+     "event": "reconcile",
+     "from": "PENDING",
+     "to": "CLOSED_NEGATIVE",
+     "why": "FEAT frozen-rule screen measured NEGATIVE this session"
     }
    ]
   },

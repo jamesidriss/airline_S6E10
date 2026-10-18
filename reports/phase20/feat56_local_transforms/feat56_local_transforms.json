@@ -1,0 +1,22 @@
+{
+ "status": "DONE",
+ "prereg": "configs/phase20/feat56_local_transforms_prereg.json",
+ "prereg_sha256": "c7dcfe1d19233e2c922e5c5645635b8db7dc6b9870878c6b6067367a62b6442d",
+ "method": "within-(Customer Type x Class) ECDF transform of 4 continuous covariates, fitted on outer-FIT rows only (label-free); added to 21raw.",
+ "metrics": {
+  "control_fold0_auc": 0.953423,
+  "treatment_fold0_auc": 0.953637,
+  "augmentation_delta_descriptive_only": 0.00021467,
+  "portfolio_ref": "sol_route_aux10_primary_final",
+  "portfolio_fold0_auc": 0.961727,
+  "candidate_spearman_vs_portfolio": 0.912004,
+  "equal_logit_blend_fold0_auc": 0.959852,
+  "port_delta": -0.00187519,
+  "promising_frozen_rule": false,
+  "best_iter_control": 1283,
+  "best_iter_treatment": 1731,
+  "eval_rows": 139927
+ },
+ "eval_rows": 139927,
+ "n_local_features": 4
+}

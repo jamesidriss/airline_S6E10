@@ -1,0 +1,22 @@
+{
+ "status": "DONE",
+ "prereg": "configs/phase20/feat58_rare_combination_prereg.json",
+ "prereg_sha256": "4a666be5b6a8aa3fcdb3830de35a7092e39cba3ebbf53ac1f0cab08532adaf8d",
+ "method": "adaptive-shrinkage target encoding (lam=40) of 4-way categorical combination keys, strict outer-FIT-only EVAL stats + inner cross-fit within outer-FIT, ES labels excluded from sources; added to 21raw.",
+ "metrics": {
+  "control_fold0_auc": 0.953423,
+  "treatment_fold0_auc": 0.953466,
+  "augmentation_delta_descriptive_only": 4.343e-05,
+  "portfolio_ref": "sol_route_aux10_primary_final",
+  "portfolio_fold0_auc": 0.961727,
+  "candidate_spearman_vs_portfolio": 0.911996,
+  "equal_logit_blend_fold0_auc": 0.959869,
+  "port_delta": -0.00185769,
+  "promising_frozen_rule": false,
+  "best_iter_control": 1283,
+  "best_iter_treatment": 1266,
+  "eval_rows": 139927
+ },
+ "eval_rows": 139927,
+ "n_combo_cells": 22
+}
