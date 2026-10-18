@@ -737,12 +737,13 @@
    "requested_method": "learned (not enumerated) feature interactions",
    "historical_status": "te_cond crosses exist",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "learned interaction rep vs manual crosses"
+   "next_action": "learned interaction rep vs manual crosses",
+   "phase20_finding": "FM interaction layer (rank 8) on rich view: augmentation delta -1.11e-4 (0.960953 -> 0.960843). High correlation with champion (Spearman 0.9799). Blend +6.94e-4 but standalone degradation. NEGATIVE."
   },
   {
    "experiment_number": 51,

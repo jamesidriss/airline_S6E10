@@ -1,0 +1,17 @@
+{
+ "prereg": "configs/phase20/feat50_learned_interactions_prereg.json",
+ "prereg_sha256": "7c5e79bb063c6ce33ce10fa5c67a604678ed2a4d16c3236a094d786f934ebe3a",
+ "method": "FM interaction layer (rank 8) on 285-feature rich view, cross-fit 5-fold. Interaction features added to LGBM.",
+ "fold0_results": {
+  "base_rich_auc": 0.960953,
+  "augmented_rich_fm_auc": 0.960843,
+  "augmentation_delta": -0.00011068,
+  "spearman_aug_vs_champion": 0.979942,
+  "equal_blend_auc": 0.961537,
+  "blend_delta_vs_aug": 0.00069448,
+  "champion_ref": 0.961853,
+  "port_delta_vs_champion": -0.00101029,
+  "promising": false
+ },
+ "rank": 8
+}
