@@ -212,12 +212,13 @@
    "requested_method": "Official documented fine-tune/adaptation of EXAONE or TabICL",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P2",
    "fidelity_reached": "F0",
    "competition_eligibility": "NC/OK",
    "blocking_reason": "-",
-   "next_action": "audit official adaptation; FIT-only model selection; separate from invented loops"
+   "next_action": "closed: TabICL adaptation tested NEGATIVE under row 31 ",
+   "phase20_finding": "TabICL official FT executed under row 31 (fb100k arm NEGATIVE: standalone 0.957404, portfolio_delta -8.169e-4; full dose RESOURCE_BLOCKED GPU driver crash); EXAONE LICENSE_BLOCKED."
   },
   {
    "experiment_number": 15,
@@ -505,12 +506,13 @@
    "requested_method": "parameter-efficient adaptation where supported",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
    "fidelity_reached": "F0",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "audit which FLMs support adapters; bounded test"
+   "next_action": "closed: no adapter surface exists in any screened FLM",
+   "phase20_finding": "Audit: tabpfn 9.1.0 finetuning = full FT only (no lora/adapter in source); tabicl no LoRA + no public finetune API; tabldm ICL-only (no weight updates); mitra full-FT 50-step (already NEGATIVE). Zero documented adapter targets -> bounded test not executable."
   },
   {
    "experiment_number": 34,
@@ -1437,5 +1439,5 @@
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T14:47:01.854660+00:00"
+ "updated_utc": "2026-10-18T15:01:35.770211+00:00"
 }

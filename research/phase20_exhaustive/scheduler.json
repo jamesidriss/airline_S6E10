@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T14:47:01.860162+00:00",
+ "updated_utc": "2026-10-18T15:01:35.771711+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -377,8 +377,8 @@
    "family": "FLM",
    "title": "EXAONE/TabICL adaptation",
    "priority": "P2",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "TabICL half tested NEGATIVE via row 31; EXAONE license-blocked",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -387,14 +387,19 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "ledger": "p20_row14_row33_audit_close"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183179+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T15:01:35.771711+00:00",
+     "event": "audit_close",
+     "from": "PENDING"
     }
    ]
   },
@@ -1161,8 +1166,8 @@
    "family": "OBJ",
    "title": "LoRA/adapters",
    "priority": "P3",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "audit: zero adapter/LoRA surfaces in tabpfn/tabicl/tabldm/mitra; bounded test has no valid target",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -1171,14 +1176,19 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "ledger": "p20_row14_row33_audit_close"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T15:01:35.771711+00:00",
+     "event": "audit_close",
+     "from": "PENDING"
     }
    ]
   },
