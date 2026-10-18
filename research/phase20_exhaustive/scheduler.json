@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T13:15:01.367962+00:00",
+ "updated_utc": "2026-10-18T13:43:44.642049+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -2505,23 +2505,31 @@
    "family": "ENS",
    "title": "Near-tie specialist",
    "priority": "P4",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "F2: specialist 0.961113, blend 0.961618, port_delta -1.092e-04, Spearman 0.982535; smallest |delta| of phase 20",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/ens74_near_tie_specialist_prereg.json",
+    "sha256": "febd665e1823126a245eca51f0c9e6396dfb9dd5a1b7338d33fa81b4a9d95474"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/ens74_near_tie_specialist/ens74_near_tie_specialist.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
+     "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T13:43:44.642049+00:00",
+     "event": "f2_screen_done",
      "from": "NOT_STARTED"
     }
    ]

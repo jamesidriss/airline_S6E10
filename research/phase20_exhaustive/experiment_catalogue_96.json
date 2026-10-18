@@ -1106,12 +1106,13 @@
    "requested_method": "target small-margin pairs",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P4",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "FIT-only margins"
+   "next_action": "closed: margin weighting yields strongest standalone member (0.961113) but blend still below portfolio; tie-subset mechanism falsified",
+   "phase20_finding": "F2 fold-0: specialist 0.961113, blend 0.961618, port_delta -1.092e-04, Spearman 0.982535. NEGATIVE; tie-subset blend 0.901327 vs port 0.901471 (mechanism falsified). Margins from standard OOF (second-order fold-0 influence) -- a future positive variant must use FIT-internal cross-fitted margins."
   },
   {
    "experiment_number": 75,
@@ -1434,5 +1435,5 @@
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T13:15:01.365962+00:00"
+ "updated_utc": "2026-10-18T13:43:44.641052+00:00"
 }

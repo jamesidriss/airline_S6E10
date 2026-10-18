@@ -1,0 +1,24 @@
+{
+ "status": "DONE",
+ "prereg": "configs/phase20/ens74_near_tie_specialist_prereg.json",
+ "prereg_sha256": "febd665e1823126a245eca51f0c9e6396dfb9dd5a1b7338d33fa81b4a9d95474",
+ "protocol": "portfolio-margin-weighted rich-view LGBM (tie rows 3x, tau = 30% FIT margin quantile, PORTFOLIO_REF OOF; fold-0 gated by predictions only); inner 10% ES from FIT-train; candidate = specialist proba on fold-0.",
+ "metrics": {
+  "specialist_fold0_auc": 0.961113,
+  "portfolio_fold0_auc": 0.961727,
+  "equal_logit_blend_fold0_auc": 0.961618,
+  "port_delta": -0.00010925,
+  "candidate_spearman_vs_portfolio": 0.982535,
+  "promising_frozen_rule": false,
+  "tau": 0.442901,
+  "fit_tie_fraction": 0.3,
+  "eval_tie_rows": 41647,
+  "eval_tie_fraction": 0.2976,
+  "tie_subset_portfolio_auc": 0.901471,
+  "tie_subset_blend_auc": 0.901327,
+  "best_iteration": 935,
+  "n_features": 285,
+  "eval_rows": 139927,
+  "fit_rows": 559708
+ }
+}
