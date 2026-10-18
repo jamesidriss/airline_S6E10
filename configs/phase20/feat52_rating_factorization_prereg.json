@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-FEAT52-RATING-FACTORIZATION",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. New feature block: supervised latent factorization of the 13 service ratings. Learn low-dimensional passenger embeddings that predict satisfaction, using the ratings as input features.",
+  "hypotheses": {
+    "H52_FACTORIZATION_SIGNAL": {
+      "item": 52,
+      "question": "Does a supervised low-rank factorization of the 13 service ratings (rating matrix factorization with satisfaction as supervision) produce features that improve fold-0 OOF AUC?",
+      "method": "Cross-fit low-rank matrix factorization of the 13 ratings: learn passenger embeddings (rank R=8) and rating embeddings, with satisfaction as the supervised target (binary logistic). Use a PyTorch model (like FactLog but on ratings only) trained on folds 1-4, predict fold-0 passenger embeddings (R dims). Add to rich view, LGBM fold-0.",
+      "leakage": "Factorization trained on FIT only (folds 1-4), predicting fold-0 passenger embeddings. Satisfaction label only used in FIT. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995."
+    }
+  },
+  "non_goals": ["No public-LB consultation."],
+  "git_before": "8f01e97"
+}
