@@ -61,8 +61,8 @@ def logit(p: np.ndarray, eps: float = 1e-7) -> np.ndarray:
     return np.log(p / (1.0 - p))
 
 
-def matched_params(cats: list[int]) -> dict:
-    return dict(model_path=str(CKPT.resolve()), n_estimators=1, auto_scale_n_estimators=False,
+def matched_params(cats: list[int], ckpt: Path | None = None) -> dict:
+    return dict(model_path=str((ckpt or CKPT).resolve()), n_estimators=1, auto_scale_n_estimators=False,
                 random_state=1201, device="cuda", ignore_pretraining_limits=True,
                 fit_mode="fit_with_cache", kv_cache_precision="int8", keep_cache_on_device=True,
                 inference_precision="autocast", categorical_features_indices=cats,
@@ -76,11 +76,21 @@ def main() -> int:
     ap.add_argument("--context", type=int, default=None, help="fit-context bound (preregistered amendment)")
     ap.add_argument("--batch", type=int, default=1024)
     ap.add_argument("--tag", default="tabpfn26_screen")
+    ap.add_argument("--checkpoint", default=None, help="override checkpoint path (checkpoint-arm comparison)")
+    ap.add_argument("--ckpt-sha", default=None, help="expected checkpoint sha256")
+    ap.add_argument("--prereg", default=None, help="prereg path to verify before the run")
+    ap.add_argument("--prereg-sha", default=None, help="expected prereg sha256")
+    ap.add_argument("--revision", default=None, help="human-readable checkpoint revision (recorded only)")
+    ap.add_argument("--family", default="TabPFN-2.6")
     args = ap.parse_args()
 
-    sha = hashlib.sha256((ROOT / PREREG).read_bytes()).hexdigest()
-    assert sha == PREREG_SHA, f"prereg sha mismatch {sha}"
-    assert file_sha256(CKPT) == CKPT_SHA, "checkpoint sha mismatch"
+    prereg_path = args.prereg or PREREG
+    prereg_sha = args.prereg_sha or PREREG_SHA
+    ckpt = Path(args.checkpoint) if args.checkpoint else CKPT
+    ckpt_sha = args.ckpt_sha or CKPT_SHA
+    sha = hashlib.sha256((ROOT / prereg_path).read_bytes()).hexdigest()
+    assert sha == prereg_sha, f"prereg sha mismatch {sha}"
+    assert file_sha256(ckpt) == ckpt_sha, "checkpoint sha mismatch"
 
     root = ARTIFACTS / args.tag
     root.mkdir(parents=True, exist_ok=True)
@@ -104,11 +114,11 @@ def main() -> int:
 
     contract = {
         "git": git_commit(), "tag": args.tag, "fold": args.fold, "mode": "probe" if args.probe else "screen",
-        "model_family": "TabPFN-2.6", "prereg": PREREG, "prereg_sha256": sha,
-        "checkpoint_sha256": CKPT_SHA, "checkpoint_revision": "24148873a9a5",
+        "model_family": args.family, "prereg": prereg_path, "prereg_sha256": sha,
+        "checkpoint_sha256": ckpt_sha, "checkpoint_revision": args.revision or "24148873a9a5",
         "matched_source": "reports/sol_tabpfn35_route/route_f0.json (certified v3.5 route contract)",
         "amendment_a1": "configs/phase20/endgame_tabpfn26_screen_amendment_a1.json (icl_bf16 switch unavailable on TabPFNV2p6)",
-        "params": matched_params(cats), "seed": 1201,
+        "params": matched_params(cats, ckpt), "seed": 1201,
         "icl_bf16": True, "chunk_cells": 262144, "decoder_inplace_gelu": True,
         "windows_mqa": True, "reuse_query_output": True, "batch": args.batch,
         "gpu_memory_fraction": 0.85, "backend_gate": {"fp16": gate, "bf16": gate_bf16},
@@ -137,7 +147,7 @@ def main() -> int:
     start = time.monotonic()
     model = None
     try:
-        params = matched_params(cats)
+        params = matched_params(cats, ckpt)
         # Amendment A1 (prereg 4ff41f64 -> endgame_tabpfn26_screen_amendment_a1.json):
         # the v3.5-only icl_bf16 ICL switch does not exist on TabPFNV2p6 (introspected:
         # no enable_*/precision setter). Use the plain classifier path -- identical for

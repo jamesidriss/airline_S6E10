@@ -1,0 +1,30 @@
+{
+ "prereg_id": "P20-ENDGAME-TABPFN3-SCREEN",
+ "date": "2026-10-19",
+ "purpose": "Second arm of catalogue row 13 ('TabPFN-3 vs 2.6, matched protocol'). The v2.6 arm closed CLOSE (standalone 0.956951, port_delta_v7 -1.051e-3, CI entirely below zero). Row 13's method requires the v3 checkpoint too; the champion itself uses v3.5, so v3 is the direct-predecessor arm and the only remaining structurally distinct TabPFN-class candidate in the endgame budget.",
+ "checkpoint": {
+  "repo": "Prior-Labs/tabpfn_3",
+  "revision": "24a16a89d245",
+  "file": "tabpfn-v3-classifier-v3_default.ckpt",
+  "sha256": "d0d865d54dfbc524f5703104be90620182dca7e5fb2c16de72e9959ea18f3988",
+  "note": "the repo ships 4 classifier checkpoints (binary / multiclass / ood / default); the DEFAULT one is used so the arm matches the v2.6 arm's single-checkpoint geometry",
+  "license": "TabPFN Non-Commercial License v1.0; 'Data Science Competitions' explicitly included (text verified in artifacts/tabpfn3/LICENSE); competition-eligible"
+ },
+ "matched_protocol": {
+  "identical_to": "the v2.6 arm (P20-ENDGAME-TABPFN26-SCREEN + amendment A1) with ONLY model_path differing",
+  "features": "champion route view, 22 columns (scripts.run_sol_tabpfn.frames)",
+  "fit_rows": "stratified 100,000 rows from the FIT rows of primary fold 0 -- THE SAME CONTEXT BOUND the v2.6 arm required after its full-context OOM, so the two arms are directly comparable; the bound is disclosed in every claim",
+  "params": "n_estimators=1, fit_mode=fit_with_cache, kv_cache_precision=int8, keep_cache_on_device=True, inference_precision=autocast, memory_saving_mode=True, random_state=1201, ignore_pretraining_limits=True, batch 1024, gpu_memory_fraction 0.85, categorical indices from the route view",
+  "icl_bf16": "used if and only if the checkpoint's model class exposes enable_icl_bf16 (recorded either way; never assumed)"
+ },
+ "measured": ["standalone fold-0 AUC", "port_delta_v7 vs the true v7 champion (0.9618278142504795)", "port_delta_route_ref", "Spearman + logit Pearson vs v7 and route_ref", "paired-bootstrap 95% CI (B=2000, seed 7)"],
+ "frozen_decision_rule": {
+  "PROMOTE_to_5fold_OOF": "paired-bootstrap 95% CI lower bound of port_delta_v7 > 0 AND spearman(v3, v7) < 0.995 AND standalone >= 0.960457",
+  "CLOSE": "paired-bootstrap 95% CI upper bound of port_delta_v7 <= 0",
+  "AMBIGUOUS": "CI straddles 0 without satisfying PROMOTE -- recorded, NOT promoted",
+  "note": "identical to the v2.6 arm's rule; the threshold is not moved between arms"
+ },
+ "secondary_observation_rule": "If the v3 arm screens CLOSE, the optional multi-checkpoint internal ensemble (the repo's 4 classifier checkpoints as 4 internal contexts) is NOT run: it would be a new experiment requiring its own prereg and would have to beat a closed decision, so it stays available but unbudgeted unless this arm shows the v3 family is competitive.",
+ "non_goals": ["no weight search", "no hyperparameter changes", "no public-LB consultation", "no change to the champion"],
+ "git_before": "bf8e728"
+}
