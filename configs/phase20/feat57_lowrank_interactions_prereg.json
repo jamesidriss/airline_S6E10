@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-FEAT57-LOWRANK-INTERACTIONS",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. New feature block: explicit low-rank pairwise interactions among the 13 service ratings (rank R=8). Captures rating × rating synergy beyond additive effects.",
+  "hypotheses": {
+    "H57_LOWRANK_INTERACTIONS": {
+      "item": 57,
+      "question": "Do explicit low-rank pairwise interaction features among the 13 service ratings improve fold-0 OOF AUC when added to the 21-raw base?",
+      "method": "For each of the 13 ratings, compute low-rank pairwise interactions via SVD: rating matrix R (n×13) → U (n×8) V^T (8×13). Use cross-fit SVD: fit SVD on folds 1-4, project fold-0. Add 8 latent dimensions as features. LGBM on 21raw+8lowrank vs 21raw, fold-0.",
+      "leakage": "SVD fit on FIT only (folds 1-4), project fold-0. No satisfaction label in SVD. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995."
+    }
+  },
+  "non_goals": ["No public-LB consultation."],
+  "git_before": "694a5b8"
+}
