@@ -749,13 +749,13 @@
    "requested_method": "residual service-rating info",
    "historical_status": "residual-group-bias closed",
    "historical_equivalent": "-",
-   "status": "PROMISING",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P3",
    "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
    "next_action": "distinct residual-feature (not group-bias); fold-0",
-   "phase20_finding": "Cross-fit residual service-rating features (13 columns, 5-fold HistGB teachers predicting each rating from the other 20 covariates). Augmentation delta +3.94e-3 (0.9534 \u2192 0.9574). Residuals alone AUC 0.9473. DECORRELATED with champion proxy (Spearman 0.9288). Equal-logit blend with champion proxy +3.32e-3. PROMISING as a strong decorrelated feature block for ensemble integration. The residuals capture rating-pattern INCONSISTENCY (observed minus cross-fit teacher prediction), a signal absent from absolute ratings. Recommended for champion feature upgrade (F3: full-5 OOF + admission gate)."
+   "phase20_finding": "Champion integration (full-5 OOF): 13 cross-fit residual rating features added to 285-feature rich view. 5-fold OOF 0.961079 vs champion 0.961853 (delta \u22127.74e-4). Marginal gain vs LGBM full (0.960904) = +1.75e-4 \u2014 below admission gate +1.5e-5 but negative vs champion. The residual signal (+3.94e-3 on 21raw, decorrelated Spearman 0.929, fold-0 blend +3.32e-3) is ALREADY CAPTURED by the existing rich-view blocks (TE on ratings, external, token, teacher). Fold-0 blend +3.32e-3 does not translate to full-5 OOF because the rich view already absorbs the signal. NEGATIVE for marginal champion upgrade. Recommendation: FEAT 51 is a PROMISING feature block for NEW pipelines with weaker base views, but redundant in the current rich-view champion."
   },
   {
    "experiment_number": 52,

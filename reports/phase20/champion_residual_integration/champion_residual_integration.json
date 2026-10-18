@@ -1,0 +1,21 @@
+{
+ "view": "full_residual (285 + 13 cross-fit residuals)",
+ "n_features": 250,
+ "oof_auc_5f": 0.961079,
+ "champion_oof": 0.9618529228157235,
+ "delta_vs_champion": -0.00077429,
+ "fold_aucs": [
+  0.960982,
+  0.961137,
+  0.960984,
+  0.960494,
+  0.96183
+ ],
+ "mean_fold_auc": 0.961085,
+ "std_fold_auc": 0.000431,
+ "admission_gate": {
+  "required_gain": 1.5e-05,
+  "observed_gain": -0.00077429,
+  "passes": false
+ }
+}
