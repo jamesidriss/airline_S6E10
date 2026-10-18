@@ -910,12 +910,13 @@
    "requested_method": "GAM, FIT-only interaction selection",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P4",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "fold-0"
+   "next_action": "fold-0",
+   "phase20_finding": "GAM splines (SplineTransformer degree=3, n_knots=10, 2607 features) + LogisticRegression: fold-0 AUC 0.958893, port_delta \u22122.96e-3 vs champion 0.961853. Decorrelated (Spearman 0.948) but standalone degradation. Blend +2.06e-3 doesn't compensate. The 2607 spline features on the rich view don't extract sufficient new signal. NEGATIVE for fold-0 screen."
   },
   {
    "experiment_number": 63,

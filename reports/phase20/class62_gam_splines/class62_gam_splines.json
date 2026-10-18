@@ -1,0 +1,15 @@
+{
+ "prereg": "configs/phase20/class62_gam_splines_prereg.json",
+ "prereg_sha256": "e9ec6d74fe322086211bae373e9fe8f8912079438335fd497b07891e66c10ca8",
+ "method": "GAM: SplineTransformer (degree=3, n_knots=10) -> LogisticRegression(C=1.0), cross-fit 5-fold",
+ "fold0_results": {
+  "auc": 0.958893,
+  "spearman_vs_champion_proxy": 0.94849,
+  "equal_blend_auc": 0.960954,
+  "blend_delta": 0.00206181,
+  "champion_ref": 0.9618529228157235,
+  "port_delta_vs_champion": -0.00296036,
+  "promising": false
+ },
+ "n_spline_features": 2607
+}
