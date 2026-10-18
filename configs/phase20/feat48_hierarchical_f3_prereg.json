@@ -1,0 +1,27 @@
+{
+ "prereg_id": "P20-FEAT48-F3",
+ "date": "2026-10-18",
+ "extends": "configs/phase20/feat48_hierarchical_ratings_prereg.json (sha 84795f40..., fold-0 screen: PROMISING, augmentation +3.94e-4)",
+ "reason": "Row 48 was left PROMISING at F2 (fold-0 screen only) while its dominant sibling FEAT51 received a full paired 5-fold F3 (prereg 36beca0) and FAILED the admission gate (mean +7.05e-5 < 2.5*SE, t=1.54). Row 48 is the catalogue's only non-dispositioned row; the F3 completes the mandate genuinely with a real number instead of a paper closure.",
+ "protocol": {
+  "mirror": "feat51_paired_integration_v2.py protocol, prereg 36beca0, verbatim except host view + feature block",
+  "control": "21raw numeric-encoded (the row-48 screen host)",
+  "treatment": "21raw + 13 cross-fit multi-output-HistGB hierarchical predictions (build_design reused from the screen; 5-fold cross-fit, HistGB random_state=1, max_iter=200; each fold's features predicted by models trained on the other 4 folds only -- fold-safe)",
+  "folds": "primary 5-fold (registry, seed 20261010)",
+  "lgbm_recipe": "LGBM_PARAMS identical to screen and FEAT51-F3 (lr .02, leaves 127, extra_trees, mcs 40, colsample .8, subsample .8, reg_lambda 1, max_bin 255, seed 1; n_estimators 6000, early_stopping_rounds 250)",
+  "inner_es": "10% stratified carved from FIT rows only, rng seed 1+k per fold (fold-0 identical to screen rng(1))"
+ },
+ "admission_gate": {
+  "rule": "mean paired fold delta >= +1.5e-5 AND mean >= 2.5 * paired SE AND positive in >= 4 of 5 folds (AGENTS.md, as applied to FEAT51-F3)",
+  "pass": "augmented view enters the admission queue (ENS-stage evaluation vs the current stack); status stays PROMISING with F3 gate passed",
+  "fail": "row 48 closes COMPLETE_NEGATIVE at F3 -- terminal, no retry"
+ },
+ "parity_check": "fold-0 control/treatment must reproduce the screen (0.953423 / 0.953817, tolerance 5e-6); mismatch voids the batch before any gate decision.",
+ "non_goals": [
+  "No hyperparameter tuning or second look; F3 is terminal either way.",
+  "No host-view swap to static-full (row 48's claim was defined on its own screen host 21raw).",
+  "Descriptive metrics (spearman/blend vs route_ref) never decide."
+ ],
+ "git_before": "cd0bd65",
+ "created_utc": "2026-10-18T21:20:00+00:00"
+}
