@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T17:44:26.897357+00:00",
+ "updated_utc": "2026-10-18T18:26:34.097628+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -3193,8 +3193,8 @@
    "family": "DEP",
    "title": "OOF/test stability audit",
    "priority": "P4",
-   "state": "DONE",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "true-champion completion after OOF archival: no variant stable; champion locked unblended",
    "kind": "unknown",
    "cmd": null,
    "prereg": null,
@@ -3203,7 +3203,7 @@
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": "PARTIAL_VALID",
+    "verdict": "NEGATIVE_BLEND_AUGMENTATION (champion)",
     "report": null
    },
    "history": [
@@ -3218,6 +3218,10 @@
      "from": "PENDING",
      "to": "DONE",
      "why": "catalogue status PARTIAL_VALID synced"
+    },
+    {
+     "ts": "2026-10-18T18:26:34.097628+00:00",
+     "event": "state->CLOSED_NEGATIVE: H94 champion completion (ledger p20_finalist_h94_champion_stability)"
     }
    ]
   },

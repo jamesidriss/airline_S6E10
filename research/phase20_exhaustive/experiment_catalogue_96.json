@@ -1416,13 +1416,13 @@
    "requested_method": "preprocessing/selection/inference diffs",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "PARTIAL_VALID",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P4",
    "fidelity_reached": "F1",
    "competition_eligibility": "OK",
    "blocking_reason": "-",
-   "next_action": "audit before finalist lock",
-   "phase20_finding": "Stability audit (prereg P20-FINALIST-READINESS): equal-logit blend of the route+aux10 reference with any saved preprocessing/selection variant degrades on at least one fold (min delta -1.0e-4..-6.3e-4, min Spearman 0.95-0.98) -> NEGATIVE for blend augmentation. Documentation gap: champion v7_sol_tabpfn_internal2_aux10 OOF is not in the prediction store (only test pred archived); a true champion stability audit needs it archived first. DEP 96 deferred.",
+   "next_action": "closed: champion locked unblended; second finalist must be a distinct model",
+   "phase20_finding": "Stability audit COMPLETE on both references: route-proxy run (ledger p20_finalist_h94_stability) and true-champion completion after OOF archival (ledger p20_finalist_h94_champion_stability, prereg amendment ee260bd4). No preprocessing/selection variant satisfies the stability rule against either reference (champion: min blend_delta -1.7e-4..-7.0e-4, min Spearman 0.953-0.985; all 9 variants flagged as finalist-risk). NEGATIVE for blend augmentation; champion must be locked UNBLENDED. DOC_GAP closed.",
    "status_correction_20261018": "DEP94 executed (ledger p20_finalist_h94_stability): audit with doc gap (champion v7 OOF not archived); finding recorded but status left NOT_STARTED."
   },
   {
@@ -1457,5 +1457,5 @@
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T17:43:22.048481+00:00"
+ "updated_utc": "2026-10-18T18:26:34.097628+00:00"
 }
