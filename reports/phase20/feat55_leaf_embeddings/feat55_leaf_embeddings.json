@@ -1,0 +1,20 @@
+{
+ "prereg": "configs/phase20/feat55_leaf_embeddings_prereg.json",
+ "prereg_sha256": "7dc3beb48a3069de4bcd845de2a70292c5805c8420ba723e6f9963cb16509456",
+ "method": "LGBM leaf embeddings (xt_xt_f10) -> LogReg/MLP second family, cross-fit",
+ "fold0_results": {
+  "base_rich_lgbm_auc": 0.960905,
+  "leaf_logreg_auc": 0.957962,
+  "leaf_mlp_auc": 0.958501,
+  "best_second_family": "mlp",
+  "best_second_auc": 0.958501,
+  "delta_vs_base": -0.00240433,
+  "spearman_vs_champion_proxy": 0.945036,
+  "equal_blend_auc": 0.960579,
+  "blend_delta_vs_second": 0.00207752,
+  "champion_ref": 0.9618529228157235,
+  "port_delta_vs_champion": -0.00335178,
+  "promising": false
+ },
+ "n_trees": 6000
+}
