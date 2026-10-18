@@ -16,7 +16,7 @@ Generated 2026-10-17 · 96 experiments · champion v7 0.961852923 · target 0.96
 | 10 | Causilo | FLM | 20k-fold0 screen -1.01e-3 | COMPLETE_NEGATIVE | P3 | F2 | OK | - | preserve neg; only clearly different mechanism |
 | 11 | TabFM | FLM | 2k-CPU-fold0 -1.59e-3 | PARTIAL_VALID | P2 | F2 | NC | non-commercial weights | preserve 2k neg; audit native context limit; G |
 | 12 | RealTabPFN-2.5 | FLM | none | RESOURCE_BLOCKED | P2 | F0 | OK | - | locate official repo+ckpt+license; feasibility |
-| 13 | TabPFN-3 vs 2.6 | FLM | none | PARTIAL_VALID | P1 | F0 | OK | - | verify exact checkpoints exist; pin revisions; |
+| 13 | TabPFN-3 vs 2.6 | FLM | none | COMPLETE_NEGATIVE | P1 | F0 | OK | - | verify exact checkpoints exist; pin revisions; |
 | 14 | EXAONE/TabICL adaptation | FLM | none | COMPLETE_NEGATIVE | P2 | F0 | NC/OK | - | audit official adaptation; FIT-only model sele |
 | 15 | FT-Transformer | NN | none (RealMLP/TabM ~1e-3 below) | COMPLETE_NEGATIVE | P2 | F1 | OK | - | canonical recipe; smoke; fold-0 OOF vs v7 delt |
 | 16 | SAINT | NN | none | COMPLETE_NEGATIVE | P3 | F1 | OK | - | canonical recipe; smoke; fold-0 |
@@ -40,11 +40,11 @@ Generated 2026-10-17 · 96 experiments · champion v7 0.961852923 · target 0.96
 | 34 | Fine-tune TabPFN 3.5 | OBJ | none | RESOURCE_BLOCKED | P2 | F0 | OK | - | verify license+16GB VRAM sufficiency for FT |
 | 35 | Multi-task | OBJ | prior conditional multi-task | COMPLETE_NEGATIVE | P2 | F1 | OK | - | audit prior conditional multi-task; true share |
 | 36 | Ordinal aux loss | OBJ | none | COMPLETE_NEGATIVE | P3 | F1 | OK | - | ordinal aux objective; smoke; fold-0 |
-| 37 | Supervised contrastive | OBJ | generic SSL32 closed | PREPARED | P3 | F1 | OK | - | distinct supervised-contrastive (not generic S |
-| 38 | Diff AUC surrogate | OBJ | none | PREPARED | P3 | F1 | OK | - | AUC surrogate vs standard BCE; fold-0 |
-| 39 | Hard-pair mining | OBJ | H19-A fixed reweight NEGATIVE/INC | PREPARED | P3 | F1 | OK | - | distinct mining (not fixed reweight); never ou |
-| 40 | Noise-robust loss | OBJ | none | PREPARED | P4 | F1 | OK | - | compare noise-robust losses; fold-0 |
-| 41 | EMA / SWA | OBJ | none | PREPARED | P3 | F1 | OK | - | EMA/SWA on a neural candidate to cut seed vari |
+| 37 | Supervised contrastive | OBJ | generic SSL32 closed | COMPLETE_NEGATIVE | P3 | F1 | OK | - | distinct supervised-contrastive (not generic S |
+| 38 | Diff AUC surrogate | OBJ | none | COMPLETE_NEGATIVE | P3 | F1 | OK | - | AUC surrogate vs standard BCE; fold-0 |
+| 39 | Hard-pair mining | OBJ | H19-A fixed reweight NEGATIVE/INC | COMPLETE_NEGATIVE | P3 | F1 | OK | - | distinct mining (not fixed reweight); never ou |
+| 40 | Noise-robust loss | OBJ | none | COMPLETE_NEGATIVE | P4 | F1 | OK | - | compare noise-robust losses; fold-0 |
+| 41 | EMA / SWA | OBJ | none | COMPLETE_NEGATIVE | P3 | F1 | OK | - | EMA/SWA on a neural candidate to cut seed vari |
 | 42 | Multi-seed ensemble | OBJ | none | COMPLETE_NEGATIVE | P3 | F2 | OK | - | only after one new architecture shows competit |
 | 43 | Nested distillation of v7 | OBJ | generic distillation closed | HISTORICAL_EQUIVALENT | P4 | F0 | OK | closed | do not reopen generic distillation; nested-onl |
 | 44 | Cross-family co-regularization | OBJ | none | DEPENDENCY_CLOSED | P4 | F1 | OK | - | needs 2 strong base candidates first |
