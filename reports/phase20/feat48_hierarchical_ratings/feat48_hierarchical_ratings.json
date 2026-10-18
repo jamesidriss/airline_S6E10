@@ -1,0 +1,20 @@
+{
+ "prereg": "configs/phase20/feat48_hierarchical_ratings_prereg.json",
+ "prereg_sha256": "84795f40f0fa7031e3eb04627b6b36780ec5c5be3e7d156c5aef986ac461a356",
+ "method": "cross-fit multi-output HistGB (13 ratings from 8 non-rating covariates), 5-fold",
+ "fold0_results": {
+  "base_21raw_auc": 0.953423,
+  "augmented_21raw_13hier_auc": 0.953817,
+  "augmentation_delta": 0.00039426,
+  "hier_only_auc": 0.872179,
+  "spearman_aug_vs_champion": 0.916087,
+  "equal_blend_auc": 0.959956,
+  "blend_delta_vs_aug": 0.00613878,
+  "champion_ref": 0.9618529228157235,
+  "port_delta_vs_champion": -0.00803589,
+  "promising": true,
+  "decision_rule": "PROMISING if augmentation_delta >= +5e-5"
+ },
+ "n_rating_cols": 13,
+ "n_models": 5
+}
