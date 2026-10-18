@@ -1,0 +1,89 @@
+{
+  "model": "trompt",
+  "arch_module": "src/phase20/neural_arch.py",
+  "status": "DONE",
+  "error": null,
+  "recipe": "Trompt (Wu et al. 2023, distilled): P=6 parallel learnable prompts each content-attending over feature tokens with per-prompt MLP heads, averaged logit",
+  "arch_cfg": {
+    "d_token": 64,
+    "n_prompts": 6,
+    "dropout": 0.1
+  },
+  "train_cfg": {
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "batch_size": 4096,
+    "max_epochs": 100,
+    "es_patience": 15
+  },
+  "utc": "2026-10-18T13:08:43.364501+00:00",
+  "git": "83497d7a734306daab9f009fa2f9ce2b5efd7a4c",
+  "eval_rows": 139927,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "view": "route",
+  "train_rows": 503737,
+  "val_rows": 55971,
+  "inner_es_seed": 1,
+  "scaler": "zero-mean/unit-var fit on FIT-train only",
+  "device": "cuda",
+  "seed": 1,
+  "tag": "trompt_route_fold0",
+  "n_params": 32710,
+  "best_inner_val_auc": 0.953165119813802,
+  "features": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "categorical_indices": [
+    13,
+    14,
+    15,
+    16,
+    18,
+    21
+  ],
+  "protocol": "train on FIT, inner 10% ES from FIT only, predict fold-0; champion hash-asserted",
+  "prediction_sha256": "66099b4a7cd4e701ff4a283dc4393ad47ec2957a3442a3a816804b9f15c42839",
+  "metrics": {
+    "standalone_auc": 0.9533640690755905,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.9595441205368455,
+    "portfolio_delta": -0.0022836937136340163,
+    "logit_pearson_vs_portfolio": 0.9706186904999371,
+    "logit_pearson_vs_route": 0.9686896365107766,
+    "pred_std": 0.42217193967805755,
+    "pred_mean": 0.4430005121492631
+  },
+  "fit_predict_seconds": 70.51583528518677,
+  "infer_chunk": 65536,
+  "prereg": {
+    "path": "configs/phase20/neural_batch2_prereg.json"
+  }
+}

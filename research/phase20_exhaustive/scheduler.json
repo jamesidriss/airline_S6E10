@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T12:03:40.272894+00:00",
+ "updated_utc": "2026-10-18T13:15:01.367962+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -490,24 +490,32 @@
    "family": "NN",
    "title": "SAINT",
    "priority": "P3",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "Batch-2 fold-0 route screen: saint best AUC 0.958077 port_delta -5.404e-04; all NEGATIVE",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/neural_batch2_prereg.json",
+    "sha256": "77b8e385aa5373de818a10e5d46b6e33ff436e8c178e2308200ab49a8fcf19a4"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/saint_route_fold0.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183179+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T13:15:01.367962+00:00",
+     "event": "batch2_screen_done",
+     "from": "PENDING"
     }
    ]
   },
@@ -605,24 +613,32 @@
    "family": "NN",
    "title": "AutoInt",
    "priority": "P3",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "Batch-2 fold-0 route screen: autoint best AUC 0.958145 port_delta -6.004e-04; all NEGATIVE",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/neural_batch2_prereg.json",
+    "sha256": "77b8e385aa5373de818a10e5d46b6e33ff436e8c178e2308200ab49a8fcf19a4"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/autoint_route_fold0.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183179+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T13:15:01.367962+00:00",
+     "event": "batch2_screen_done",
+     "from": "PENDING"
     }
    ]
   },
@@ -632,24 +648,32 @@
    "family": "NN",
    "title": "DeepFM & xDeepFM",
    "priority": "P3",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "Batch-2 fold-0 route screen: deepfm best AUC 0.957472 port_delta -9.474e-04; all NEGATIVE",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/neural_batch2_prereg.json",
+    "sha256": "77b8e385aa5373de818a10e5d46b6e33ff436e8c178e2308200ab49a8fcf19a4"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/deepfm_route_fold0.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183179+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T13:15:01.367962+00:00",
+     "event": "batch2_screen_done",
+     "from": "PENDING"
     }
    ]
   },
@@ -659,24 +683,32 @@
    "family": "NN",
    "title": "NODE",
    "priority": "P3",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "Batch-2 fold-0 route screen: node best AUC 0.934402 port_delta -4.667e-03; all NEGATIVE",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/neural_batch2_prereg.json",
+    "sha256": "77b8e385aa5373de818a10e5d46b6e33ff436e8c178e2308200ab49a8fcf19a4"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/node_route_fold0.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183179+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T13:15:01.367962+00:00",
+     "event": "batch2_screen_done",
+     "from": "PENDING"
     }
    ]
   },
@@ -686,24 +718,32 @@
    "family": "NN",
    "title": "GRANDE",
    "priority": "P3",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "Batch-2 fold-0 route screen: grande best AUC 0.956723 port_delta -1.441e-03; all NEGATIVE",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/neural_batch2_prereg.json",
+    "sha256": "77b8e385aa5373de818a10e5d46b6e33ff436e8c178e2308200ab49a8fcf19a4"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/grande_route_fold0.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T13:15:01.367962+00:00",
+     "event": "batch2_screen_done",
+     "from": "PENDING"
     }
    ]
   },
@@ -713,24 +753,32 @@
    "family": "NN",
    "title": "TabNet",
    "priority": "P4",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "Batch-2 fold-0 route screen: tabnet best AUC 0.956541 port_delta -9.445e-04; all NEGATIVE",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/neural_batch2_prereg.json",
+    "sha256": "77b8e385aa5373de818a10e5d46b6e33ff436e8c178e2308200ab49a8fcf19a4"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/tabnet_route_fold0.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T13:15:01.367962+00:00",
+     "event": "batch2_screen_done",
+     "from": "PENDING"
     }
    ]
   },
@@ -740,24 +788,32 @@
    "family": "NN",
    "title": "ExcelFormer",
    "priority": "P3",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "Batch-2 fold-0 route screen: excelformer best AUC 0.957988 port_delta -6.266e-04; all NEGATIVE",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/neural_batch2_prereg.json",
+    "sha256": "77b8e385aa5373de818a10e5d46b6e33ff436e8c178e2308200ab49a8fcf19a4"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/excelformer_route_fold0.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T13:15:01.367962+00:00",
+     "event": "batch2_screen_done",
+     "from": "PENDING"
     }
    ]
   },
@@ -767,24 +823,32 @@
    "family": "NN",
    "title": "AMFormer",
    "priority": "P3",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "Batch-2 fold-0 route screen: amformer best AUC 0.957812 port_delta -6.786e-04; all NEGATIVE",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/neural_batch2_prereg.json",
+    "sha256": "77b8e385aa5373de818a10e5d46b6e33ff436e8c178e2308200ab49a8fcf19a4"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/amformer_route_fold0.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T13:15:01.367962+00:00",
+     "event": "batch2_screen_done",
+     "from": "PENDING"
     }
    ]
   },
@@ -794,24 +858,32 @@
    "family": "NN",
    "title": "T2G-Former",
    "priority": "P3",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "Batch-2 fold-0 route screen: t2gformer best AUC 0.957312 port_delta -1.055e-03; all NEGATIVE",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/neural_batch2_prereg.json",
+    "sha256": "77b8e385aa5373de818a10e5d46b6e33ff436e8c178e2308200ab49a8fcf19a4"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/t2gformer_route_fold0.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T13:15:01.367962+00:00",
+     "event": "batch2_screen_done",
+     "from": "PENDING"
     }
    ]
   },
@@ -821,24 +893,32 @@
    "family": "NN",
    "title": "Trompt",
    "priority": "P3",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "Batch-2 fold-0 route screen: trompt best AUC 0.953364 port_delta -2.284e-03; all NEGATIVE",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/neural_batch2_prereg.json",
+    "sha256": "77b8e385aa5373de818a10e5d46b6e33ff436e8c178e2308200ab49a8fcf19a4"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/neural_screen/trompt_route_fold0.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183680+00:00",
      "event": "init",
      "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T13:15:01.367962+00:00",
+     "event": "batch2_screen_done",
+     "from": "PENDING"
     }
    ]
   },

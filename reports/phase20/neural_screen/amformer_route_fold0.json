@@ -1,0 +1,90 @@
+{
+  "model": "amformer",
+  "arch_module": "src/phase20/neural_arch.py",
+  "status": "DONE",
+  "error": null,
+  "recipe": "AMFormer (Zhao et al. 2024, distilled): attention with multi-head locality - each head's keys/values restricted to its contiguous feature slice, all queries attend, per-head outputs concatenated + FFN",
+  "arch_cfg": {
+    "d_token": 64,
+    "n_layers": 3,
+    "n_heads": 4,
+    "dropout": 0.1
+  },
+  "train_cfg": {
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "batch_size": 4096,
+    "max_epochs": 100,
+    "es_patience": 15
+  },
+  "utc": "2026-10-18T13:06:12.040928+00:00",
+  "git": "83497d7a734306daab9f009fa2f9ce2b5efd7a4c",
+  "eval_rows": 139927,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "view": "route",
+  "train_rows": 503737,
+  "val_rows": 55971,
+  "inner_es_seed": 1,
+  "scaler": "zero-mean/unit-var fit on FIT-train only",
+  "device": "cuda",
+  "seed": 1,
+  "tag": "amformer_route_fold0",
+  "n_params": 94337,
+  "best_inner_val_auc": 0.9570525027798066,
+  "features": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "categorical_indices": [
+    13,
+    14,
+    15,
+    16,
+    18,
+    21
+  ],
+  "protocol": "train on FIT, inner 10% ES from FIT only, predict fold-0; champion hash-asserted",
+  "prediction_sha256": "c389f1e1d653fcd4b86ad331f4ec5c47d4d9e4f8c5d4365994aad7367bf06547",
+  "metrics": {
+    "standalone_auc": 0.9578123739080947,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.9611492446383157,
+    "portfolio_delta": -0.0006785696121637264,
+    "logit_pearson_vs_portfolio": 0.9893666530168117,
+    "logit_pearson_vs_route": 0.9880900805953338,
+    "pred_std": 0.43610347102446756,
+    "pred_mean": 0.4446366614357146
+  },
+  "fit_predict_seconds": 59.18640470504761,
+  "infer_chunk": 65536,
+  "prereg": {
+    "path": "configs/phase20/neural_batch2_prereg.json"
+  }
+}

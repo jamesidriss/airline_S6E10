@@ -1,0 +1,90 @@
+{
+  "model": "tabnet",
+  "arch_module": "src/phase20/neural_arch.py",
+  "status": "DONE",
+  "error": null,
+  "recipe": "TabNet (Arik & Pfister 2019, compact adaptation): 5 steps of sparsemax attentive masking over hidden units with direction-aware arrow and D-matrix prior (relaxation 1.5), step logits summed; masks gate the hidden state (hidden-space variant)",
+  "arch_cfg": {
+    "d_hidden": 64,
+    "n_steps": 5,
+    "dropout": 0.1,
+    "relaxation": 1.5
+  },
+  "train_cfg": {
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "batch_size": 4096,
+    "max_epochs": 100,
+    "es_patience": 15
+  },
+  "utc": "2026-10-18T13:03:46.982003+00:00",
+  "git": "83497d7a734306daab9f009fa2f9ce2b5efd7a4c",
+  "eval_rows": 139927,
+  "eval_fold": 0,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "view": "route",
+  "train_rows": 503737,
+  "val_rows": 55971,
+  "inner_es_seed": 1,
+  "scaler": "zero-mean/unit-var fit on FIT-train only",
+  "device": "cuda",
+  "seed": 1,
+  "tag": "tabnet_route_fold0",
+  "n_params": 85041,
+  "best_inner_val_auc": 0.9561581472585566,
+  "features": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "categorical_indices": [
+    13,
+    14,
+    15,
+    16,
+    18,
+    21
+  ],
+  "protocol": "train on FIT, inner 10% ES from FIT only, predict fold-0; champion hash-asserted",
+  "prediction_sha256": "571249be8106af301bb69000155b24fd3e619c9d63d673fb00fd55acf2da6107",
+  "metrics": {
+    "standalone_auc": 0.9565407830266996,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.9608832752104421,
+    "portfolio_delta": -0.0009445390400373288,
+    "logit_pearson_vs_portfolio": 0.9866189642799045,
+    "logit_pearson_vs_route": 0.9853953168810092,
+    "pred_std": 0.433610416524581,
+    "pred_mean": 0.44448153413181185
+  },
+  "fit_predict_seconds": 54.40977764129639,
+  "infer_chunk": 65536,
+  "prereg": {
+    "path": "configs/phase20/neural_batch2_prereg.json"
+  }
+}
