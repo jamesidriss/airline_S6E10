@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-CLASS62-GAM-SPLINES",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. New model: Generalized Additive Model with splines (pyGAM or sklearn SplineTransformer + LinearRegression). Captures non-linear univariate effects and bivariate interactions.",
+  "hypotheses": {
+    "H62_GAM_SPLINES": {
+      "item": 62,
+      "question": "Does a GAM with spline basis (univariate + bivariate interactions) improve fold-0 OOF AUC on the rich view?",
+      "method": "Use sklearn SplineTransformer (degree=3, n_knots=10) on the 285-feature rich view, then LogisticRegression. Cross-fit 5-fold: fit on folds 1-4, predict fold-0. Measure fold-0 port_delta vs champion.",
+      "leakage": "SplineTransformer fit on FIT only (folds 1-4), transform fold-0. LogisticRegression fit on FIT. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995."
+    }
+  },
+  "non_goals": ["No public-LB consultation."],
+  "git_before": "19b17ad"
+}
