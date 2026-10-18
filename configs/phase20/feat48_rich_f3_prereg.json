@@ -1,0 +1,27 @@
+{
+ "prereg_id": "P20-FEAT48-RICH-F3",
+ "date": "2026-10-18",
+ "extends": "P20-FEAT48-F3 (df88f6f2...): the +13 hierarchical rating block passed the feature-level gate on the 21raw host (mean +2.87e-4, t=4.92, 5/5) but failed stack admission decisively (mean -1.90e-3, 0/5) because the weak host drags the champion. The block's only untested standard home is the rich host (static-full 237) -- the exact host FEAT51's F3 used, making the two rating-derived feature blocks directly comparable.",
+ "reason": "The decision-relevant question for row 48 is whether the shared-rating-structure features help the STRONG view (where a +2.9e-4-class gain would produce a member near the stack's level instead of 8e-3 below it). This is the last untested standard home of the feature block; running it completes row 48 genuinely either way.",
+ "protocol": {
+  "mirror": "feat51_paired_integration_v2.py protocol, prereg 36beca0, verbatim except the feature block",
+  "control": "champion static full view (237 features, ViewBuilder build_static)",
+  "treatment": "static full (237) + 13 cross-fit multi-output-HistGB hierarchical predictions (250 features; X_hier recomputed deterministically from the row-48 builder, saved + hashed for reuse; fold-safe cross-fit over the primary 5 folds)",
+  "folds": "primary 5-fold (registry, seed 20261010)",
+  "lgbm_recipe": "LGBM_PARAMS identical to FEAT51-F3 and the row-48 F3 (seed 1; n_estimators 6000, early_stopping_rounds 250)",
+  "inner_es": "10% stratified carved from FIT rows only, rng seed 1+k per fold"
+ },
+ "parity_check": "control fold-0 must reproduce FEAT51-F3's control arm fold-0 AUC 0.960953 (identical recipe/view/folds; tolerance 5e-6); mismatch voids the batch before any gate decision.",
+ "admission_gate": {
+  "rule": "mean paired fold delta >= +1.5e-5 AND mean >= 2.5 * paired SE AND positive in >= 4 of 5 folds (AGENTS.md, FEAT51-F3 application)",
+  "pass": "ENS-stage stack admission test immediately (frozen equal-logit blend vs champion v7, same three conditions); row dispositioned with both numbers",
+  "fail": "row 48 closes: feature block is host-limited to the weak view; terminal"
+ },
+ "non_goals": [
+  "No hyperparameter tuning or second look; terminal either way.",
+  "No ensemble weight search; equal-logit frozen.",
+  "No other hosts or feature blocks."
+ ],
+ "git_before": "629c9dd",
+ "created_utc": "2026-10-18T21:55:00+00:00"
+}

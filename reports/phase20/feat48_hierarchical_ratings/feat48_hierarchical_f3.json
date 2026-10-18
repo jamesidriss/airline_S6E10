@@ -1,0 +1,50 @@
+{
+ "prereg": "configs/phase20/feat48_hierarchical_f3_prereg.json",
+ "prereg_sha256": "df88f6f22d30d5322dd4287783d764412c44d3f3e5c66f4709d0e599b65a91a8",
+ "status": "COMPLETE_F3",
+ "protocol": "FEAT51-F3 mirror (prereg 36beca0); host=21raw; treatment=+13 cross-fit hierarchical",
+ "parity": {
+  "fold0_control": 0.9534227809948804,
+  "fold0_treatment": 0.9538170344997821,
+  "tol": 5e-06,
+  "ok": true
+ },
+ "results": {
+  "control_oof_auc": 0.95332589,
+  "treatment_oof_auc": 0.95360676,
+  "per_fold_control": [
+   0.953423,
+   0.953841,
+   0.95296,
+   0.952484,
+   0.953953
+  ],
+  "per_fold_treatment": [
+   0.953817,
+   0.954092,
+   0.953379,
+   0.952761,
+   0.954047
+  ],
+  "paired_deltas_per_fold": [
+   0.00039425,
+   0.00025102,
+   0.00041895,
+   0.00027703,
+   9.314e-05
+  ],
+  "mean_paired_delta": 0.00028688,
+  "se_paired_delta": 5.826e-05,
+  "t_stat": 4.9239,
+  "positive_folds": 5,
+  "admission_gate": {
+   "required_gain": 1.5e-05,
+   "passes": true
+  },
+  "descriptive_only": {
+   "spearman_vs_route_ref": 0.916365,
+   "equal_logit_blend_auc": 0.95991713,
+   "blend_delta_vs_treatment": 0.00631037
+  }
+ }
+}

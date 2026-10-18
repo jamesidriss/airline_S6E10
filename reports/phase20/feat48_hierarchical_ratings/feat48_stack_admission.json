@@ -1,0 +1,32 @@
+{
+ "test": "ENS-stage stack admission (AGENTS.md gate vs current stack, frozen equal-logit)",
+ "champion": "v7_sol_tabpfn_internal2_aux10",
+ "member": "feat48_f3_oof_treatment (21raw+13hier LGBM OOF)",
+ "champion_fold_auc": [
+  0.961828,
+  0.961989,
+  0.961891,
+  0.961099,
+  0.962496
+ ],
+ "blend_fold_auc": [
+  0.959987,
+  0.960237,
+  0.9598,
+  0.959129,
+  0.960632
+ ],
+ "paired_deltas": [
+  -0.00184053,
+  -0.0017523,
+  -0.00209115,
+  -0.00197034,
+  -0.00186373
+ ],
+ "mean_paired_delta": -0.00190361,
+ "se": 5.835e-05,
+ "t": -32.6251,
+ "positive_folds": 0,
+ "spearman_vs_champion": 0.916991,
+ "passes_stack_gate": false
+}
