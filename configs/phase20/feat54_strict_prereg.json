@@ -1,0 +1,32 @@
+{
+  "prereg_id": "P20-FEAT54-STRICT-V2",
+  "date": "2026-10-18",
+  "supersedes": {
+    "prereg": "configs/phase20/feat54_smoothed_categorical_prereg.json",
+    "sha256": "7771031c4b21d616ce16c391ce6831e656af37f7dc88c88b27440abefff1888e",
+    "reason": "v1 INVALID: encodings for outer-FIT rows were computed from folds including the outer evaluation fold's labels (contamination of training features by eval-fold labels); prereg_sha256 was 'TODO'; decision rule applied raw augmentation delta instead of the frozen operational port_delta rule. v1 result preserved as history, classified INVALID."
+  },
+  "scope": "F2 fold-0 screen, strict fold-safe re-measurement of smoothed categorical target statistics (Bayesian shrinkage) for 4 categorical features (Gender, Customer Type, Type of Travel, Class).",
+  "protocol": {
+    "outer_split": "primary fold-0 = EVAL (139927 rows); folds 1-4 = outer-FIT (559708 rows).",
+    "encodings_for_eval_rows": "Computed from outer-FIT rows ONLY (folds 1-4 statistics). Evaluation-fold labels never enter any eval encoding.",
+    "encodings_for_fit_rows": "Inner cross-fitted WITHIN outer-FIT only: split outer-FIT into 4 inner folds (inner fold id = primary fold id - 1, i.e. folds 1,2,3,4 -> inner 0,1,2,3). Each outer-FIT row receives a smoothed encoding computed from the other three outer-FIT inner folds. No outer-FIT row ever sees its own label; no encoding anywhere uses fold-0 labels.",
+    "early_stopping_isolation": "Inner 10% ES split carved from FIT rows only, stratified, seed 1. ES labels are used only as an eval_set metric for LightGBM early stopping; ES rows' features come from the inner cross-fit above (other inner folds only), so ES labels are not encoded into any feature. Control and treatment use the identical ES split.",
+    "model": "LGBM xt_xt_f10 recipe (lr 0.02, leaves 127, extra_trees, ES 250, 6000 cap, seed 1), identical for control and treatment.",
+    "control": "21raw (fold-0 screen baseline).",
+    "treatment": "21raw + 4 strictly fold-safe smoothed categorical encodings.",
+    "smoothing": "Bayesian shrinkage: smoothed = w*cat_mean + (1-w)*global_mean, w = count/(count+alpha), alpha = 10.0; global_mean and cat stats computed only from the permitted training rows described above."
+  },
+  "frozen_decision_rule": {
+    "source": "v1 prereg decision_rule text, applied literally as written:",
+    "text": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995",
+    "operationalization": {
+      "port_delta": "AUC(equal-logit blend(candidate_fold0, operational_portfolio_fold0)) - AUC(operational_portfolio_fold0), where operational_portfolio = sol_route_aux10_primary_final OOF (champion-v7 OOF is not archived in the store; route reference is the operational proxy used across Phase 20 screens).",
+      "corr_vs_portfolio": "Spearman(candidate_fold0, operational_portfolio_fold0).",
+      "promising": "port_delta >= +0.00005 AND corr_vs_portfolio < 0.995.",
+      "note": "Raw augmentation delta (treatment - control on 21raw) is reported for mechanism description ONLY and is NOT the decision rule."
+    }
+  },
+  "non_goals": ["No public-LB consultation.", "No champion overwrite.", "No GPU."],
+  "git_before": "6fe06d3"
+}

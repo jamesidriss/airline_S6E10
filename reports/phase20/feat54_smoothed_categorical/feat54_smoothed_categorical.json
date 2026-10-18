@@ -14,5 +14,16 @@
   "promising": true,
   "decision_rule": "PROMISING if augmentation_delta >= +5e-5"
  },
- "n_smooth_features": 4
+ "n_smooth_features": 4,
+ "status": "INVALID",
+ "correction_20261018_d": {
+  "classification": "INVALID_PROTOCOL (historical result preserved, not deleted)",
+  "defect_1_protocol": "build_smoothed_features() cross-fit encodings for every row k over folds != k. Consequently the outer-FIT rows (folds 1-4, used as LGBM training rows for the fold-0 screen) received encodings whose statistics were computed from folds {0,2,3,4}, {0,1,3,4}, ... i.e. INCLUDING the outer evaluation fold's (fold-0) satisfaction labels. The evaluation fold's labels leaked into the training features -> contaminated fold-0 evaluation.",
+  "defect_2_provenance": "prereg_sha256 was 'TODO'; corrected here to the verified value.",
+  "defect_3_decision_rule": "Report applied augmentation_delta >= +5e-5 (raw 21-model delta) instead of the frozen prereg rule: operational port_delta >= +5e-5 AND corr_vs_portfolio < 0.995.",
+  "prereg_sha256_verified_v1": "7771031c4b21d616ce16c391ce6831e656af37f7dc88c88b27440abefff1888e",
+  "reported_augmentation_delta": 8.486e-05,
+  "superseded_by": "configs/phase20/feat54_strict_prereg.json (strict outer-FIT-only, inner-cross-fitted re-measurement, not yet run at time of this note)",
+  "promoted": false
+ }
 }

@@ -52,5 +52,14 @@
    "blend_delta_vs_treatment": 0.00059667
   }
  },
- "artifact": "reports/phase20/feat51_paired_integration/feat51_paired_integration_v2.json"
+ "artifact": "reports/phase20/feat51_paired_integration/feat51_paired_integration_v2.json",
+ "correction_20261018_c": {
+  "issue": "The +0.00059667 blend delta is measured against the FEAT51 treatment standalone model (0.961079), NOT against champion A v7.",
+  "blend_auc": 0.961675,
+  "treatment_standalone_auc": 0.961079,
+  "champion_v7_oof": 0.9618529228157235,
+  "blend_minus_champion": -0.0001779228,
+  "correct_statement": "Equal-logit blend of FEAT51-treatment with the route reference reaches 0.961675, which is BELOW champion A v7 (0.9618529228) by -0.000178. The +5.97e-4 gain is relative to the weaker FEAT51 standalone model only. FEAT51 does NOT improve the champion portfolio and is NOT promoted on this basis.",
+  "promoted": false
+ }
 }

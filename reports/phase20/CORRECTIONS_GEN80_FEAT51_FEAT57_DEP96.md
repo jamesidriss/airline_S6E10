@@ -64,3 +64,8 @@
 | DEP96 | Clarification note | No (infrastructure ready) |
 
 All corrections are **append-only** — original reports and ledger entries are preserved. New correction documents and re-measurements are added.
+## FEAT51 blend correction (2026-10-18, append-only, c)
+
+- Corrected blend AUC: **0.961675** (FEAT51-treatment + route reference, equal logit).
+- Champion A v7 OOF: **0.9618529228**. Blend minus champion: **-0.000178**.
+- The reported +0.00059667 delta is vs the FEAT51 standalone model (0.961079), not vs v7. FEAT51 is NOT a champion improvement and is not promoted.
