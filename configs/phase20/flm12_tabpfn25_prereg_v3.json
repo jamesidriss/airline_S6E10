@@ -1,0 +1,16 @@
+{
+ "prereg_id": "P20-FLM12-TABPFN25-V3",
+ "date": "2026-10-18",
+ "amends": "configs/phase20/flm12_tabpfn25_prereg_v2.json",
+ "amendment_reason": "v2 (context-bounded) fit successfully (50k stratified context, 13.6s) but arm=real crashed BEFORE any predictive result at the first predict batch: v2.5's fit_with_cache predict path materialized fp32 math-backend attention (Tried to allocate 50.42 GiB at 8192 test x 50000 cache rows; 16GB GPU). The v3.5 champion route predict does not materialize (flash-eligible), so this is a v2.5-architecture attention-eligibility limit on this torch/CUDA build. Chunk size is a pure resource guard: in fit_with_cache mode the cache is built from train rows only and test rows are queries (no test-test attention), so per-row predictions are chunk-invariant.",
+ "delta_from_v2": {
+  "BATCH": {
+   "from": 8192,
+   "to": 512
+  }
+ },
+ "unchanged": "checkpoint arms+hashes, frozen rule (port_delta >= +5e-5 AND spearman < 0.995 vs route_ref sol_route_aux10_primary_final), stratified 50000-row context (CONTEXT_SEED=20261023), champion fold-0 route params verbatim, eval fold-0, scoring, primary-arm flag",
+ "scope_note": "F2 fold-0 screen only; descriptive metrics never decide.",
+ "git_before": "c7d4314",
+ "created_utc": "2026-10-18T18:33:52.128152+00:00"
+}

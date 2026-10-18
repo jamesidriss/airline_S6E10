@@ -8,10 +8,11 @@ int8 kv cache, autocast, ignore_pretraining_limits, categorical_features_indices
 from frames()), ONLY the checkpoint differs (v2.5 vs champion v3.5).
 
 Fit on a stratified 50,000-row context drawn from the primary FIT rows
-(folds 1-4; prereg v2 — the full-FIT eager cache build is resource-infeasible
-for v2.5 on 16 GB, v1 crash evidence), predict all fold-0 rows in batches,
-score against the hash-asserted champion portfolio/route and the frozen-rule
-route_ref (sol_route_aux10_primary_final).
+(folds 1-4; prereg v2 - the full-FIT eager cache build is resource-infeasible
+for v2.5 on 16 GB, v1 crash evidence), predict all fold-0 rows in batches of
+512 (prereg v3 - v2.5 cache-mode predict materializes attention at batch x
+context scale, v2 crash evidence), score against the hash-asserted champion
+portfolio/route and the frozen-rule route_ref (sol_route_aux10_primary_final).
 
 Checkpoints are vendored to artifacts/tabpfn25/ and sha256-asserted.
 
@@ -52,14 +53,19 @@ from scripts.phase19.foundation_screen_fold0 import load_champion_fold0  # noqa:
 OUT = REPORTS / "phase20" / "flm12_tabpfn25"
 ART = ARTIFACTS / "phase20" / "flm12_tabpfn25"
 VEND = ARTIFACTS / "tabpfn25"
-PREREG = "configs/phase20/flm12_tabpfn25_prereg_v2.json"
-# v2 = feasibility amendment of the v1 prereg (f79158c2..., commit 9107b55); run v1
-# arm=real died in the eager KV-cache build at the full 559708-row context (OOM,
-# 27.27 GiB WDDM-oversubscribed) before any predictive result. See
-# "amendment_reason"/"delta_from_v1" inside the prereg file.
-PREREG_SHA = "19ee7f701baf933494a7864ab6195e4e6573f353464fc8ab90e25c306f8bc18e"  # pinned before the rerun (preregister-before-result)
+PREREG = "configs/phase20/flm12_tabpfn25_prereg_v3.json"
+# v3 = chunk-guard amendment of v2 (19ee7f70..., commit 3cd7d36); run v2 arm=real
+# fit OK (50k context, 13.6s) but the first predict batch OOMed: v2.5 cache-mode
+# predict materialized fp32 math-backend attention (50.42 GiB at 8192x50000;
+# v2.5 attention not flash-eligible on this build). BATCH 8192 -> 512; chunking
+# is exact in fit_with_cache mode (no test-test attention). See "delta_from_v2"
+# inside the prereg file.
+PREREG_SHA = "c85b24fa22e08801792104df4f200ba2de70e3dfdbe6e6c44b79d5de1cdfe905"  # pinned before the rerun (preregister-before-result)
 ROUTE_REF = "sol_route_aux10_primary_final"
-BATCH = 8192
+# v3: v2.5 cache-mode predict materializes attention at batch x context scale
+# (50.42 GiB at 8192x50000; v2 crash evidence) -> small query batches. Chunking
+# is exact in fit_with_cache mode (test rows are queries only).
+BATCH = 512
 # v2: stratified context bound (FLM9 precedent); full 559708-row fit is
 # resource-infeasible for v2.5's per-column cache on 16 GB (v1 crash evidence).
 CTX_ROWS = 50000
@@ -197,8 +203,10 @@ def main() -> int:
                   "fit_with_cache, int8 kv cache, autocast, "
                   "ignore_pretraining_limits, memory_saving_mode=auto); ONLY the "
                   "checkpoint differs from champion v3.5. v2: fit context = "
-                  "stratified 50000-row subsample of FIT (prereg v2, v1 crash)",
+                  "stratified 50000-row subsample of FIT (prereg v2, v1 crash); "
+                  "v3: predict batch 512 (prereg v3, v2 materialization crash)",
         "params": {k: (str(v) if isinstance(v, Path) else v) for k, v in params.items()},
+        "predict_batch": int(BATCH),
         "fit_source_rows": int(len(FIT)), "context_rows": int(len(ctx)),
         "context_seed": int(CONTEXT_SEED), "eval_fold": 0, "eval_rows": int(len(EVAL)),
         "fit_folds": [1, 2, 3, 4], "batch_size": BATCH,
