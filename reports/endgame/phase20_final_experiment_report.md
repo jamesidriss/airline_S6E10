@@ -126,8 +126,60 @@ The endgame runs under a **user-authorized 22 h cap**
 (`research/phase20_exhaustive/compute_budget_extension_22h.md`), enforced by
 `scheduler.budget_check()` / `budget_charge()` with 3 regression tests.
 
-## 9. Sections completed by the endgame run
+## 9. Endgame execution (2026-10-19) — what the final run added
 
-* §10 champion clean-code reproduction — see `champion_reproducibility_report.md`
-* §11 Champion-B search — see `finalist_selection_report.md`
-* §12 submissions and final selection — see `kaggle_submission_status.json`
+**Compute.** The user authorized raising the local GPU ceiling from 12 h to **22 h**
+(`compute_budget_extension_22h.md`, prospective, with the scheduler enforcing the cap).
+Reconciled consumption: 11.8 h before the endgame, **14.54 h after it** (7.46 h unspent,
+deliberately — see §10).
+
+**Priority 2 — the five prepared objectives.** Executed through the durable scheduler
+(`J037`–`J041`, each with a DONE-manifest validator: report status, prediction SHA,
+row count). The BCE control's parity was re-verified independently before any variant
+was interpreted (recomputed AUC 0.9576563038026185, delta 0.0, prediction SHA
+`5fc5e356…`). Result: **0/5 pass the frozen gate**; see §4. The batch hypothesis is
+falsified: changing the training objective is worth at most +5.65e-4 of standalone AUC
+(EMA) against a family ceiling ≈3.6e-3 below the champion. Both "buy diversity" arms
+(hard mining ρ=0.891, GCE ρ=0.895) pay 2–3.6e-3 of standalone accuracy for it and still
+lose the blend.
+
+**Priority 4 — clean-code champion reproduction.** `JREP01` re-ran the certified
+phase-17 pipeline for fold 0 under a prereg with a bitwise acceptance criterion and a
+declared numerical-tolerance fallback. Outcome: **BITWISE_PARITY** — all four array
+hashes and both member-config hashes match, max |Δ| = 0.0, AUC identical
+(0.9614576551310231), 2021 s vs 2023 s. The fallback band was never invoked. The blend
+geometry was independently recomputed from the ten aux10 members (max |Δ| 2.98e-8,
+float32 artifact rounding).
+
+**Priority 5 — Champion-B search (catalogue row 13, both checkpoint arms).**
+
+| arm | context | standalone (fold 0) | blend Δ vs true v7 | 95 % CI | decision |
+|---|---|---|---|---|---|
+| TabPFN-2.6 | 100 k (full OOMed) | 0.956951 | −1.051e-3 | [−1.29e-3, −8.18e-4] | CLOSE |
+| TabPFN-3 | 100 k | 0.956608 | −7.967e-4 | [−9.6e-4, −6.3e-4] | CLOSE |
+| *control:* v3.5 (champion ckpt) | 100 k | 0.959544 | −5.281e-4 | [−7.0e-4, −3.5e-4] | interpretive |
+| *control:* TabPFN-3 | **full 559,708** | 0.957746 | −6.243e-4 | [−7.9e-4, −4.5e-4] | CLOSE |
+
+Two preregistered interpretation controls separate the context effect from the
+checkpoint effect: the 100 k bound costs the champion's *own* checkpoint 1.91e-3,
+while the checkpoint swap costs a further 2.94e-3 (v3) / 2.59e-3 (v2.6). The full-context
+v3 run confirms it directly: 3.71e-3 below the champion member at identical context.
+**Checkpoint quality dominates context size**, so both arms close on unconfounded
+evidence and row 13 is terminal.
+
+## 10. Submissions and final selection
+
+* Endgame submissions: **0**. No candidate cleared PATH A (≥ +3e-4) or PATH B (within
+  −2e-4 *and* structurally distinct). The only submission inside the PATH-B window is
+  v6 (OOF 0.961766), which fails the distinctness clause (same TabPFN + aux10 family,
+  logit corr ≈ 0.999+) and was already submitted (ref 56951906, public 0.96144 < v7's
+  0.96146).
+* **Finalist: Kaggle ref 57090508** (`v7_sol_tabpfn_internal2_aux10`), slot 2 empty.
+  Final selection is a Kaggle UI action — the API exposes no selection method.
+* Remaining budget unspent because every promotion path (TabPFN-3.5 internal-4,
+  seed-averaged route, aux10 upgrades) costs 5.6–11.2 GPU-h for gains that no measured
+  evidence supports, and H94 shows additive perturbations degrade the champion.
+
+See `finalist_selection_report.md`, `private_robustness_report.md`,
+`champion_reproducibility_report.md`, `kaggle_submission_status.json`,
+`gpu_budget_22h_final.json` and `FINAL_HANDOFF.md`.
