@@ -1,21 +1,29 @@
 {
- "generated_utc": "2026-10-18T22:37:48.144113+00:00",
+ "generated_utc": "2026-10-18T23:54:27.791968+00:00",
  "competition": "playground-series-s6e10",
  "deadline_utc": "2026-10-31T23:59:00+00:00",
- "remote_reconciled_utc": "2026-10-19T00:00:00+00:00",
- "remote_count": 7,
- "local_ledger_count": 7,
- "reconciliation": "remote refs 56788249,56793823,56805526,56845975,56918343,56951906,57090508 == local ledger, no unknown or duplicate uploads",
+ "remote_reconciled": "7 submissions; refs match the local ledger exactly; no unknown or duplicate uploads",
  "daily_cap": 10,
  "used_today": 0,
  "remaining_today": 10,
- "submissions_this_campaign": 0,
- "current_champion_submission": {
+ "submissions_this_endgame": 0,
+ "no_submission_rationale": "No candidate cleared PATH A (+3e-4 OOF) or PATH B (within -2e-4 with structural distinctness). The only submission within 2e-4 of champion A is v6 (OOF 0.961766, -8.7e-5) but it fails PATH B's distinctness test (same TabPFN+aux10 family, logit correlation ~0.999+) and was already submitted (ref 56951906, public 0.96144 < v7's 0.96146). Spending quota on an unvalidated candidate would be exactly the probing the policy forbids.",
+ "finalist_selection": {
+  "slot_1": {
+   "ref": 57090508,
+   "exp": "v7_sol_tabpfn_internal2_aux10",
+   "status": "recommended, awaiting UI selection"
+  },
+  "slot_2": null,
+  "api_note": "the Kaggle python API exposes competition_submit and competition_submissions but NO final-selection method; selecting submissions for private judging is a Kaggle web-UI action required before 2026-10-31T23:59Z"
+ },
+ "champion_submission": {
   "ref": 57090508,
   "file": "v7_sol_tabpfn_internal2_aux10.csv",
   "public": 0.96146,
   "csv_sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
-  "test_pred_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af"
+  "test_pred_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
+  "oof": 0.9618529228157235
  },
  "history": [
   {
@@ -23,56 +31,49 @@
    "file": "v1_equal4.csv",
    "ts": "2026-10-03T03:14:36.689328+00:00",
    "status": "complete",
-   "public": 0.96093,
-   "private": null
+   "public": 0.96093
   },
   {
    "ref": 56793823,
    "file": "v2_equal34.csv",
    "ts": "2026-10-03T08:43:19.940504+00:00",
    "status": "complete",
-   "public": 0.96092,
-   "private": null
+   "public": 0.96092
   },
   {
    "ref": 56805526,
    "file": "v3_final.csv",
    "ts": "2026-10-03T19:38:10.439547+00:00",
    "status": "complete",
-   "public": 0.96098,
-   "private": null
+   "public": 0.96098
   },
   {
    "ref": 56845975,
    "file": "v4_fulldata.csv",
    "ts": "2026-10-05T07:23:06.395739+00:00",
    "status": "complete",
-   "public": 0.961,
-   "private": null
+   "public": 0.961
   },
   {
    "ref": 56918343,
    "file": "v5_aux_cross.csv",
    "ts": "2026-10-07T18:06:02.914504+00:00",
    "status": "complete",
-   "public": 0.96103,
-   "private": null
+   "public": 0.96103
   },
   {
    "ref": 56951906,
    "file": "v6_sol_tabpfn_route_aux10.csv",
    "ts": "2026-10-08T11:39:16.891295+00:00",
    "status": "complete",
-   "public": 0.96144,
-   "private": null
+   "public": 0.96144
   },
   {
    "ref": 57090508,
    "file": "v7_sol_tabpfn_internal2_aux10.csv",
    "ts": "2026-10-12T00:59:28.922443+00:00",
    "status": "complete",
-   "public": 0.96146,
-   "private": null
+   "public": 0.96146
   }
  ],
  "policy_ref": "research/submission_policy_amendment_20261017.md",

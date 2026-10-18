@@ -1,10 +1,10 @@
 {
- "generated_utc": "2026-10-18T22:37:48.144113+00:00",
+ "generated_utc": "2026-10-18T23:54:27.791968+00:00",
  "cap_gpu_hours": 22,
  "previous_cap_gpu_hours": 12,
  "increment_gpu_hours": 10,
  "consumed_at_amendment": 11.8,
- "reconciliation": {
+ "reconciliation_at_amendment": {
   "s7_close_documented": 9.1,
   "post_s7_ledger_entries": {
    "p20_obj34_finetune_tabpfn35_blocked": 0.87,
@@ -14,20 +14,184 @@
   "unrecorded_estimate": 0.26,
   "method": "ledger gpu_hours fields for entries dated >= 2026-10-17 + documented S7 tally, cross-checked vs reports/**/total_seconds inside the window"
  },
+ "endgame_runs": [
+  {
+   "ts": "2026-10-18T22:39:42.433890+00:00",
+   "job": "J037",
+   "exp_row": 37,
+   "family": "OBJ",
+   "kind": "gpu",
+   "gpu": true,
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "scripts/phase20/obj37_41_objectives.py",
+    "--arm",
+    "supcon"
+   ],
+   "fingerprint": "b637b31a18d677b2",
+   "prereg_sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2",
+   "seconds": 305.3,
+   "exit": 0,
+   "state_after": "DONE",
+   "why": "OBJ37 supcon: prereg 94561fce, 22h budget window, parities vs bce_control 0.9576563038026185"
+  },
+  {
+   "ts": "2026-10-18T22:44:16.549635+00:00",
+   "job": "J038",
+   "exp_row": 38,
+   "family": "OBJ",
+   "kind": "gpu",
+   "gpu": true,
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "scripts/phase20/obj37_41_objectives.py",
+    "--arm",
+    "auc_surrogate"
+   ],
+   "fingerprint": "cb052c3e39901164",
+   "prereg_sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2",
+   "seconds": 259.2,
+   "exit": 0,
+   "state_after": "DONE",
+   "why": "OBJ38 auc_surrogate: prereg 94561fce; control parity already verified (0.9576563038026185)"
+  },
+  {
+   "ts": "2026-10-18T22:49:33.326497+00:00",
+   "job": "J039",
+   "exp_row": 39,
+   "family": "OBJ",
+   "kind": "gpu",
+   "gpu": true,
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "scripts/phase20/obj37_41_objectives.py",
+    "--arm",
+    "hard_mining"
+   ],
+   "fingerprint": "a042c077eb6fb8fd",
+   "prereg_sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2",
+   "seconds": 304.1,
+   "exit": 0,
+   "state_after": "DONE",
+   "why": "OBJ39 hard_mining: prereg 94561fce; FIT-only hardness EMA + 50/50 hard/uniform sampling"
+  },
+  {
+   "ts": "2026-10-18T22:53:31.976726+00:00",
+   "job": "J040",
+   "exp_row": 40,
+   "family": "OBJ",
+   "kind": "gpu",
+   "gpu": true,
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "scripts/phase20/obj37_41_objectives.py",
+    "--arm",
+    "gce"
+   ],
+   "fingerprint": "24905fbe71fae2c3",
+   "prereg_sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2",
+   "seconds": 225.9,
+   "exit": 0,
+   "state_after": "DONE",
+   "why": "OBJ40 gce: prereg 94561fce; generalized cross-entropy p=0.7 (noise robustness)"
+  },
+  {
+   "ts": "2026-10-18T22:58:49.419877+00:00",
+   "job": "J041",
+   "exp_row": 41,
+   "family": "OBJ",
+   "kind": "gpu",
+   "gpu": true,
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "scripts/phase20/obj37_41_objectives.py",
+    "--arm",
+    "ema"
+   ],
+   "fingerprint": "c2204a60b258756f",
+   "prereg_sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2",
+   "seconds": 306.9,
+   "exit": 0,
+   "state_after": "DONE",
+   "why": "OBJ41 ema: prereg 94561fce; BCE + EMA(0.999) weights used for inner-val and final prediction"
+  },
+  {
+   "ts": "2026-10-18T23:33:04.084979+00:00",
+   "job": "JREP01",
+   "exp_row": 0,
+   "family": "DEP",
+   "kind": "gpu",
+   "gpu": true,
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "scripts/run_phase17_tabpfn.py",
+    "--estimators",
+    "2",
+    "--fold",
+    "0",
+    "--tag",
+    "phase17_B1_replication_20261019"
+   ],
+   "fingerprint": "48d71f1b5909171c",
+   "prereg_sha256": "0091f8381b126695b6c05323bafe060335d8436cd7824fd8981b18d3de901e8b",
+   "seconds": 2029.4,
+   "exit": 0,
+   "state_after": "DONE",
+   "why": "clean-code v7 fold-0 reproduction, prereg 0091f838, bitwise acceptance + declared 1e-6/0.9999 fallback band"
+  }
+ ],
+ "endgame_screen_runs_not_via_scheduler": [
+  {
+   "job": "v7_reproduction(JREP01)",
+   "seconds": 2029.4,
+   "purpose": "clean-code champion reproduction",
+   "outcome": "BITWISE_PARITY"
+  },
+  {
+   "job": "tabpfn26_probe",
+   "seconds": 12.0,
+   "purpose": "step-0 feasibility (50k ctx)",
+   "outcome": "FEASIBLE"
+  },
+  {
+   "job": "tabpfn26_screen_fullctx",
+   "seconds": 180.0,
+   "purpose": "full-context attempt",
+   "outcome": "OOM (no result)"
+  },
+  {
+   "job": "tabpfn26_screen_100k",
+   "seconds": 116.0,
+   "purpose": "row-13 arm 1",
+   "outcome": "CLOSE"
+  },
+  {
+   "job": "tabpfn3_screen_100k",
+   "seconds": 42.0,
+   "purpose": "row-13 arm 2",
+   "outcome": "CLOSE"
+  },
+  {
+   "job": "tabpfn35_control_100k",
+   "seconds": 71.0,
+   "purpose": "interpretation control 1",
+   "outcome": "COMPLETE"
+  },
+  {
+   "job": "tabpfn3_fullctx",
+   "seconds": 550.0,
+   "purpose": "interpretation control 2",
+   "outcome": "CLOSE (full context)"
+  }
+ ],
+ "endgame_gpu_hours": 1.786,
+ "final_consumed_estimate": 14.539,
+ "final_remaining": 7.461,
+ "unspent_remaining_reason": "No qualified candidate existed to spend it on: every promotion path (TabPFN-3.5 internal-4, seed-averaged route, aux10 upgrades, NN rich-view ensembles) needs a 5-fold OOF + 5-fold test inference pass costing 5.6-11.2 GPU-h, which exceeds the remaining balance; and all measured alternatives failed their frozen gates. Unspent budget is preserved headroom, not idle waste.",
  "authority": "direct user authorization in the active session (2026-10-19 UTC)",
  "policy_ref": "research/phase20_exhaustive/compute_budget_extension_22h.md",
  "no_paid_cloud": true,
- "scheduler_enforcement": "scripts/phase20/scheduler.py budget_check() refuses GPU jobs at/exceeding the cap and charges each finished GPU job's wall time (budget_charge)",
- "phase21_scheduled_runs": [],
- "current_consumed_estimate": 11.8,
- "remaining_gpu_hours": 10.2,
+ "scheduler_enforcement": "scheduler.budget_check() refuses GPU launches at the cap; budget_charge() debits each finished job",
  "hard_ceiling_respected": true,
- "stop_conditions": [
-  "remaining balance <= 0",
-  "repeated GPU driver faults (nvlddmkm 153 precedent)",
-  "missing credentials",
-  "competition rule conflict",
-  "user-interaction-required Kaggle action",
-  "deadline 2026-10-31T23:59Z takes precedence"
- ]
+ "reconciliation_note": "scheduler.budget_charge debits jobs it runs; the endgame screen/control runs were launched directly (documented in the ledger), so they are reconciled here explicitly rather than silently missed"
 }

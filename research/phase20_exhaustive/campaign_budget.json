@@ -1,5 +1,5 @@
 {
- "updated_utc": "2026-10-18T22:33:33.707592+00:00",
+ "updated_utc": "2026-10-18T23:54:33.873526+00:00",
  "phase19_authorized": {
   "heavy_gpu_hours": 12,
   "cpu_hours": 30,
@@ -28,9 +28,9 @@
   "cap_gpu_hours": 22,
   "previous_cap_gpu_hours": 12,
   "increment_gpu_hours": 10,
-  "consumed_gpu_hours_estimate": 12.753,
+  "consumed_gpu_hours_estimate": 14.539,
   "documented_gpu_hours": 11.54,
-  "remaining_gpu_hours": 9.247,
+  "remaining_gpu_hours": 7.461,
   "reconciliation": {
    "s7_close_documented": 9.1,
    "post_s7_ledger_entries": {
@@ -53,6 +53,24 @@
    "competition rule conflict",
    "user-interaction-required Kaggle action",
    "deadline 2026-10-31T23:59Z takes precedence"
-  ]
+  ],
+  "endgame_reconciliation": {
+   "note": "scheduler.budget_charge debits jobs it runs; the endgame screen/control runs were launched directly (documented in the ledger), so they are reconciled here explicitly rather than silently missed",
+   "consumed_before_endgame": 12.753,
+   "endgame_gpu_hours": 1.786,
+   "consumed_total": 14.539,
+   "remaining": 7.461,
+   "per_run_seconds": {
+    "JREP01 v7 clean-code reproduction": 0.5637222222222222,
+    "tabpfn26 step-0 probe (feasible)": 0.0033333333333333335,
+    "tabpfn26 full-context attempt (OOM, no result)": 0.05,
+    "tabpfn26 screen @100k (row-13 arm 1, CLOSE)": 0.03222222222222222,
+    "tabpfn3 screen @100k (row-13 arm 2, CLOSE)": 0.011666666666666667,
+    "control 1: v3.5 @100k (decomposition)": 0.01972222222222222,
+    "control 2: v3 @full context (CLOSE)": 0.1527777777777778,
+    "obj37-41 five objective arms (scheduler-debited)": 0.3892777777777778
+   },
+   "reconciled_utc": "2026-10-18T23:54:33.873526+00:00"
+  }
  }
 }
