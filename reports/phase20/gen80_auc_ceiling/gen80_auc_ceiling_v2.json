@@ -1,0 +1,93 @@
+{
+ "prereg": "configs/phase20/gen80_auc_ceiling_prereg.json",
+ "prereg_sha256": "82af441ed577d5cdf2dade569516568de529108a29be6c63b16e688ac39fcc24",
+ "correction_20261018_v2": "HARD-ROW RECALCULATION 2026-10-18: Confidence now measured by ABSOLUTE logit (|logit| = distance from decision boundary), not signed logit. This correctly identifies hard rows as those near the decision boundary (|logit| small), regardless of which class they favor.",
+ "h80_oracle": {
+  "route_reference": {
+   "id": "sol_route_aux10_primary_final",
+   "oof_auc": 0.961766
+  },
+  "rich_blend": {
+   "id": "blend_v3_final",
+   "oof_auc": 0.961509,
+   "n_members": 59
+  },
+  "equal_logit_blend_auc": 0.961756,
+  "oracle_ceiling": 0.964906,
+  "headroom_oracle_minus_route": 0.00314,
+  "stretch_target": 0.96274,
+  "stretch_gap_vs_champion": 0.000887,
+  "stretch_reachable_by_blend": "false_oracle_is_not_achievable_by_deployable_blender",
+  "note": "Oracle is label-dependent upper bound; real blenders must generalize from covariates."
+ },
+ "h80_hard_rows_abs_logit": {
+  "confidence_metric": "absolute_logit (|logit| = distance from decision boundary)",
+  "route_reference": [
+   {
+    "top_frac": 0.5,
+    "n_rows": 349817,
+    "auc": 0.969684
+   },
+   {
+    "top_frac": 0.8,
+    "n_rows": 559708,
+    "auc": 0.968557
+   },
+   {
+    "top_frac": 0.9,
+    "n_rows": 629671,
+    "auc": 0.96649
+   },
+   {
+    "top_frac": 0.95,
+    "n_rows": 664653,
+    "auc": 0.964558
+   },
+   {
+    "top_frac": 1.0,
+    "n_rows": 699635,
+    "auc": 0.961766
+   },
+   {
+    "top_frac": "hardest_10pct",
+    "n_rows": 69964,
+    "auc": 0.725657
+   }
+  ],
+  "rich_blend": [
+   {
+    "top_frac": 0.5,
+    "n_rows": 349817,
+    "auc": 0.968717
+   },
+   {
+    "top_frac": 0.8,
+    "n_rows": 559708,
+    "auc": 0.968286
+   },
+   {
+    "top_frac": 0.9,
+    "n_rows": 629671,
+    "auc": 0.966253
+   },
+   {
+    "top_frac": 0.95,
+    "n_rows": 664653,
+    "auc": 0.964328
+   },
+   {
+    "top_frac": 1.0,
+    "n_rows": 699635,
+    "auc": 0.961509
+   },
+   {
+    "top_frac": "hardest_10pct",
+    "n_rows": 69964,
+    "auc": 0.726734
+   }
+  ]
+ },
+ "h80_hard_rows_signed_logit_original": {
+  "note": "Original analysis used signed logit (incorrectly treating high positive logits as 'easy' regardless of class). This is preserved for reference."
+ }
+}
