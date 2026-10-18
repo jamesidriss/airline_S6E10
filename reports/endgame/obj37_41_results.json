@@ -1,0 +1,133 @@
+{
+ "experiment": "OBJ37-41 objective variants (fold-0 screens)",
+ "prereg": "configs/phase20/obj37_41_objectives_prereg.json",
+ "prereg_sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2",
+ "eval_fold": 0,
+ "eval_rows": 139927,
+ "baseline": {
+  "control_reference_auc": 0.9576563038026185,
+  "true_champion": "v7_sol_tabpfn_internal2_aux10",
+  "true_champion_fold0_auc": 0.9618278142504795,
+  "route_ref_fold0_auc": 0.9617271804553859,
+  "note": "the frozen gate uses the route_ref proxy; champion-admission would use the true v7"
+ },
+ "arms": {
+  "bce_control": {
+   "status": "DONE",
+   "git": "c7d43142f75c9adba180e8f2734c03c52ae2a05d",
+   "prereg_sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2",
+   "standalone_auc_recomputed": 0.9576563038026185,
+   "standalone_auc_reported": 0.9576563038026185,
+   "auc_delta_recompute": 0.0,
+   "delta_vs_control": 0.0,
+   "delta_vs_v7_standalone": -0.0041715104478610154,
+   "blend_v7_auc": 0.9610805137571828,
+   "blend_delta_vs_v7": -0.0007473004932966321,
+   "spearman_vs_v7": 0.935767613047075,
+   "logit_pearson_vs_v7": 0.9897034105894652,
+   "spearman_vs_route_ref": 0.9352954707471655,
+   "frozen_gate": {
+    "port_delta": -0.0007017874393263623,
+    "spearman_vs_route_ref": 0.9352954707471655,
+    "promising": false,
+    "rule": "port_delta >= +5e-5 AND spearman_vs_route_ref < 0.995"
+   },
+   "control_parity_ok": true,
+   "eval_rows": 139927,
+   "fit_rows": 559708,
+   "train_rows": 503737,
+   "val_rows": 55971,
+   "features": 22,
+   "arch_cfg": {
+    "d_token": 192,
+    "n_layers": 3,
+    "n_heads": 8,
+    "dropout": 0.1,
+    "head_hidden": 192
+   },
+   "train_cfg": {
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "batch_size": 4096,
+    "max_epochs": 100,
+    "es_patience": 15
+   },
+   "arm_params": "plain BCE (batch-1 objective parity)",
+   "prediction_sha256": "5fc5e3564586df43d1d9672beb8c8a204050a6aa7d23df870a7930b472c86829",
+   "prediction_sha256_matches_report": true,
+   "total_seconds": 2513.103350162506,
+   "peak_vram_gb": 10.49,
+   "parity_vs_reference": true,
+   "champion_admission_justified": false,
+   "promotion": "close: frozen gate failed (screen is terminal)"
+  },
+  "supcon": {
+   "status": "DONE",
+   "git": "a5bc6889d1239133fab6d1f559082413f8078341",
+   "prereg_sha256": "94561fcea7ebb4315aac24a9928240ef6d464be9c13a4d35930be92c83a112b2",
+   "standalone_auc_recomputed": 0.9577783626810881,
+   "standalone_auc_reported": 0.9577783626810881,
+   "auc_delta_recompute": 0.0,
+   "delta_vs_control": 0.00012205887846961083,
+   "delta_vs_v7_standalone": -0.004049451569391405,
+   "blend_v7_auc": 0.9611213212079084,
+   "blend_delta_vs_v7": -0.000706493042571088,
+   "spearman_vs_v7": 0.9378320283614607,
+   "logit_pearson_vs_v7": 0.9897947480653377,
+   "spearman_vs_route_ref": 0.937651551597201,
+   "frozen_gate": {
+    "port_delta": -0.0006611072509574711,
+    "spearman_vs_route_ref": 0.937651551597201,
+    "promising": false,
+    "rule": "port_delta >= +5e-5 AND spearman_vs_route_ref < 0.995"
+   },
+   "control_parity_ok": null,
+   "eval_rows": 139927,
+   "fit_rows": 559708,
+   "train_rows": 503737,
+   "val_rows": 55971,
+   "features": 22,
+   "arch_cfg": {
+    "d_token": 192,
+    "n_layers": 3,
+    "n_heads": 8,
+    "dropout": 0.1,
+    "head_hidden": 192
+   },
+   "train_cfg": {
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "batch_size": 4096,
+    "max_epochs": 100,
+    "es_patience": 15
+   },
+   "arm_params": "BCE + 0.5*SupCon, proj 128-d, temp 0.1, FIT-train labels only",
+   "prediction_sha256": "0fea70374c02de05d8389fe3201d7aed7ab46c5296b286de2ca23fa7524b2cba",
+   "prediction_sha256_matches_report": true,
+   "total_seconds": 303.0786726474762,
+   "peak_vram_gb": 10.54,
+   "parity_vs_reference": null,
+   "champion_admission_justified": false,
+   "promotion": "close: frozen gate failed (screen is terminal)"
+  },
+  "auc_surrogate": {
+   "status": "PENDING",
+   "promotion": "not run"
+  },
+  "hard_mining": {
+   "status": "PENDING",
+   "promotion": "not run"
+  },
+  "gce": {
+   "status": "PENDING",
+   "promotion": "not run"
+  },
+  "ema": {
+   "status": "PENDING",
+   "promotion": "not run"
+  }
+ },
+ "cross_arm_spearman": {
+  "bce_control|supcon": 0.980214
+ }
+}
