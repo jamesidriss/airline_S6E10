@@ -1,0 +1,16 @@
+{
+  "prereg_id": "P20-CLASS69-RULE-ENSEMBLES",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. Conditional rule ensembles: learn decision rules (if-then) conditioned on feature subspaces, then ensemble them. Uses sklearn's DecisionTreeClassifier with rule extraction.",
+  "hypotheses": {
+    "H69_RULE_ENSEMBLES": {
+      "item": 69,
+      "question": "Does a conditional rule ensemble (decision rules conditioned on feature subspaces) improve fold-0 OOF AUC on the rich view?",
+      "method": "Train multiple shallow DecisionTrees (max_depth=3) on random feature subspaces of the rich view (folds 1-4). Extract decision rules from each tree. Combine rules via weighted voting (weights from fold-1-4 AUC). Predict fold-0. Measure fold-0 port_delta vs champion proxy.",
+      "leakage": "Trees trained on FIT only (folds 1-4). Rule extraction on FIT only. Fold-safe.",
+      "decision_rule": "PROMISING if fold-0 port_delta >= +5e-5 AND corr_vs_portfolio < 0.995."
+    }
+  },
+  "non_goals": ["No public-LB consultation."],
+  "git_before": "4a75088"
+}
