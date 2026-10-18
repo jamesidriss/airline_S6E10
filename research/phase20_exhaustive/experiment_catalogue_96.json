@@ -612,12 +612,13 @@
    "requested_method": "losses robust to label noise",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "PREPARED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P4",
-   "fidelity_reached": "F1",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK",
-   "blocking_reason": "parity gate PASSED; arm=gce deferred on budget",
-   "next_action": "ready: run arm=gce on next GPU grant"
+   "blocking_reason": "-",
+   "next_action": "closed: objective variant negative on the frozen fold-0 screen",
+   "phase20_finding": "gce: standalone 0.955504 (delta vs BCE control -2.15e-03); true v7 fold-0 0.961828 -> standalone delta -6.32e-03, equal-logit blend delta vs v7 -2.17e-03; frozen gate port_delta -2.12e-03 (need >= +5e-5), spearman vs route_ref 0.8949 (need < 0.995) -> FAIL. Weak-family ceiling stands: the objective cannot lift the fold-0 signal past the frozen screen; terminal."
   },
   {
    "experiment_number": 41,
@@ -1462,5 +1463,5 @@
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T22:49:40.560036+00:00"
+ "updated_utc": "2026-10-18T22:53:38.801413+00:00"
 }
