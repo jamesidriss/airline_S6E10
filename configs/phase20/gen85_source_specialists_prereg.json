@@ -1,0 +1,14 @@
+{
+  "prereg_id": "P20-GEN85-SOURCE-TRAINED-SPECIALISTS",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. Source-domain context specialists: one LGBM per (Type of Travel x Class) segment, trained ONLY on original-dataset rows of that segment, applied to competition fold-0 rows of the same segment. Zero competition labels.",
+  "protocol": {
+    "specialists": "one LGBM per joint segment (Type of Travel x Class, up to 6), trained on original rows in-segment; segments with < 300 original rows fall back to the global source model.",
+    "candidate": "stitched specialist prediction on fold-0 (each row scored by its segment's specialist); blended with route_ref by equal logit (no label-dependent gating).",
+    "evaluation": "fold-0 AUC; port_delta vs route_ref; Spearman vs route_ref.",
+    "contrast": "global source model (GEN84-style, equal blend) reported for comparison; incremental value of specialists = port_delta(specialists) - port_delta(global source)."
+  },
+  "frozen_decision_rule": "PROMISING iff port_delta >= +5e-5 AND corr_vs_portfolio < 0.995.",
+  "non_goals": ["No public-LB consultation.", "No competition label used anywhere."],
+  "git_before": "b09034a"
+}

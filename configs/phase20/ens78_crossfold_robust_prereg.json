@@ -1,0 +1,14 @@
+{
+  "prereg_id": "P20-ENS78-CROSS-FOLD-ROBUST-ENSEMBLE",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen (saved-OOF study, no new model training). Cross-fold robust ensemble: select member subsets that are robust ACROSS the 5 primary folds rather than best on fold-0.",
+  "protocol": {
+    "member_pool": "all single-model OOF entries in the store with family in (lgbm, xgb, cat, realmlp, tabm, lgbm_soft) that have a full 5-fold OOF (no blend entries, no duplicates).",
+    "selection": "greedy forward selection (max 8 members) maximizing the MINIMUM per-fold AUC of the equal-logit blend across folds 1-4 (robustness objective on TRAIN folds only); fold 0 is never used for selection.",
+    "evaluation": "fold-0 AUC of the selected robust blend; port_delta vs route_ref; Spearman vs route_ref; also report the fold-0 AUC of the same-size fold-0-greedy (cheating, diagnostic-only) subset for the robustness-vs-peak contrast.",
+    "folds": "primary fold registry (immutable, seed 20261010)."
+  },
+  "frozen_decision_rule": "PROMISING iff port_delta >= +5e-5 AND corr_vs_portfolio < 0.995.",
+  "non_goals": ["No public-LB consultation.", "No new model training; saved OOF only."],
+  "git_before": "b09034a"
+}

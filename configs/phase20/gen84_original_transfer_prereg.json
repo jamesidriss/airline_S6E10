@@ -1,0 +1,15 @@
+{
+  "prereg_id": "P20-GEN84-ORIGINAL-CONDITIONAL-TRANSFER",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. Original-dataset (arseniyshutko 129,880 rows) source-model prediction transferred CONDITIONALLY to competition fold-0 rows. Zero competition labels used for training or gating.",
+  "protocol": {
+    "source_train": "LGBM (xt_xt_f10-style, ES 250, seed 1) trained on ALL 129,880 original rows (21 covariates, original satisfaction labels only).",
+    "target_apply": "predict competition fold-0 rows (folds==0).",
+    "conditional_transfer": "per-row blend weight w = 1 - normalized k-NN distance to the original training set (20-NN on standardized 21 covariates, w = clip(1 - d20/d95, 0, 1)); candidate = w*logit(p_source) + (1-w)*logit(p_route_ref). No label enters w.",
+    "evaluation": "fold-0 AUC of candidate; port_delta = AUC(candidate) - AUC(route_ref on fold-0); corr = Spearman(candidate, route_ref).",
+    "control_context": "plain equal-logit blend (w=0.5 everywhere) reported as the append-style contrast."
+  },
+  "frozen_decision_rule": "PROMISING iff port_delta >= +5e-5 AND corr_vs_portfolio < 0.995 (same frozen F2 bar as the FEAT screens).",
+  "non_goals": ["No public-LB consultation.", "No competition label used anywhere in training or gating."],
+  "git_before": "b09034a"
+}

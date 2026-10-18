@@ -1,0 +1,15 @@
+{
+  "prereg_id": "P20-ENS76-FEATURE-SUBSPACE-ENSEMBLE",
+  "date": "2026-10-18",
+  "scope": "F2 fold-0 screen. Feature-subspace ensemble: 5 LGBM members each trained on a different deterministic 50% random subspace of the 237-feature static full view; equal-logit blend as candidate.",
+  "protocol": {
+    "members": "5 LGBM xt_xt_f10 (seed 1) members; subspace seeds 11,22,33,44,55 each selecting 118 of 237 static features (numpy default_rng(seed) choice, no replacement).",
+    "training": "each member trained on outer-FIT only with inner 10% ES (seed 1, identical split across members); predicts fold-0.",
+    "candidate": "equal-logit blend of the 5 member fold-0 predictions.",
+    "evaluation": "fold-0 AUC of blend; port_delta vs route_ref; Spearman vs route_ref; per-member AUCs reported.",
+    "single_member_contrast": "mean member AUC vs blend AUC quantifies the subspace-ensemble gain mechanism."
+  },
+  "frozen_decision_rule": "PROMISING iff port_delta >= +5e-5 AND corr_vs_portfolio < 0.995.",
+  "non_goals": ["No public-LB consultation.", "No GPU."],
+  "git_before": "b09034a"
+}
