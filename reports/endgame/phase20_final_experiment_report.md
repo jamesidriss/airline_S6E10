@@ -1,7 +1,7 @@
 # Phase 20 final experiment report — 96-item exhaustive campaign
 
 **Generated:** 2026-10-19 UTC · **Git:** see `reports/endgame/gpu_budget_22h_final.json`
-**Campaign state:** all 96 catalogue rows dispositioned · 550 append-only ledger entries
+**Campaign state:** all 96 catalogue rows dispositioned · 556 append-only ledger entries
 **Champion (immutable):** `v7_sol_tabpfn_internal2_aux10` — OOF **0.9618529228157235**, public
 0.96146, Kaggle ref 57090508, test-pred SHA `2b744d0d…`, CSV SHA `fa4947fe…`
 
@@ -35,7 +35,7 @@ Terminal-status distribution: **66 COMPLETE_NEGATIVE** · 8 DEPENDENCY_CLOSED ·
 **0 NOT_STARTED · 0 PROMISING** (96 total).
 
 Distinct model trainings actually executed in phase 20 exceed the F2 row count
-because several screens reused trained members across rules; the ledger (550 entries)
+because several screens reused trained members across rules; the ledger (556 entries)
 is the itemized record.
 
 ## 3. The structural finding (the campaign's main scientific result)
