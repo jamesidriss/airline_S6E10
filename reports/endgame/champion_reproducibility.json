@@ -1,0 +1,44 @@
+{
+ "prereg": "P20-ENDGAME-V7-REPRODUCTION",
+ "prereg_sha256": "0091f8381b126695b6c05323bafe060335d8436cd7824fd8981b18d3de901e8b",
+ "reproduction_report": "reports/phase17_B1_replication_20261019_f0.json",
+ "status": "COMPLETE_FROZEN_PRIMARY_FOLD",
+ "auc_reproduced": 0.9614576551310231,
+ "auc_certified": 0.9614576551310231,
+ "auc_delta": 0.0,
+ "seconds_reproduced": 2021.125,
+ "seconds_original": 2022.67,
+ "hash_comparison": {
+  "prediction.npy": {
+   "certified": "eda2772041b599872d9e23671e1706a817a27ef4ad04cb3ea4686f775d700a98",
+   "reproduced": "eda2772041b599872d9e23671e1706a817a27ef4ad04cb3ea4686f775d700a98",
+   "match": true
+  },
+  "member_0_raw_logits.npy": {
+   "certified": "455aaf4b15c2792798e7af8d10619d5f771ef3cba69e33a9506ae8186d210f07",
+   "reproduced": "455aaf4b15c2792798e7af8d10619d5f771ef3cba69e33a9506ae8186d210f07",
+   "match": true
+  },
+  "member_1_raw_logits.npy": {
+   "certified": "d93428a576ce77faf63c8215a434ad0af6fc7fa3018b63556c875186a500d185",
+   "reproduced": "d93428a576ce77faf63c8215a434ad0af6fc7fa3018b63556c875186a500d185",
+   "match": true
+  },
+  "apply_ids.npy": {
+   "certified": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+   "reproduced": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+   "match": true
+  }
+ },
+ "member_config_hashes_match": true,
+ "max_abs_delta_route": 0.0,
+ "portfolio_blend_geometry": {
+  "members": 10,
+  "rule": "equal-logit of route + mean aux10 logits",
+  "bitwise_identical": false,
+  "max_abs_delta": 2.9801448753197235e-08,
+  "note": "portfolio.npy is an assembly artifact (not a runner output); recomputing it from the certified members re-verifies the champion blend geometry"
+ },
+ "verdict": "BITWISE_PARITY",
+ "interpretation": "Champion v7 fold-0 route reproduces BITWISE from committed source, identical tabpfn library bytes and immutable data: every array hash matches, max|delta| = 0, AUC delta = 0. No numerical tolerance was required. The AGENTS.md finalist reproducibility requirement is satisfied at the strictest standard."
+}

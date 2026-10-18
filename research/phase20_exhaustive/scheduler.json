@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T22:59:10.765988+00:00",
+ "updated_utc": "2026-10-18T23:34:22.132382+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -3707,8 +3707,8 @@
    "family": "DEP",
    "title": "v7 clean-code fold-0 reproduction (prereg 0091f838)",
    "priority": "P1",
-   "state": "PENDING",
-   "state_note": "AGENTS.md finalist requirement: reproduce each finalist from clean code",
+   "state": "DONE",
+   "state_note": "BITWISE_PARITY: all array hashes match, max|delta|=0.0, AUC delta 0 (0.9614576551310231); report reports/endgame/champion_reproducibility_report.md",
    "kind": "gpu",
    "cmd": [
     "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
@@ -3726,11 +3726,11 @@
    },
    "fingerprint": "48d71f1b5909171c",
    "depends_on": [],
-   "attempts": 0,
+   "attempts": 1,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": "reports/phase17_B1_replication_20261019_f0.json"
+    "verdict": "BITWISE_PARITY",
+    "report": null
    },
    "history": [
     {
@@ -3742,6 +3742,35 @@
      "ts": "2026-10-18T22:59:10.765988+00:00",
      "event": "prereg",
      "sha256": "0091f8381b126695b6c05323bafe060335d8436cd7824fd8981b18d3de901e8b"
+    },
+    {
+     "ts": "2026-10-18T22:59:14.673283+00:00",
+     "event": "run-start",
+     "pid": 19616,
+     "cmd": [
+      "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+      "scripts/run_phase17_tabpfn.py",
+      "--estimators",
+      "2",
+      "--fold",
+      "0",
+      "--tag",
+      "phase17_B1_replication_20261019"
+     ],
+     "why": "clean-code v7 fold-0 reproduction, prereg 0091f838, bitwise acceptance + declared 1e-6/0.9999 fallback band",
+     "fingerprint": "48d71f1b5909171c"
+    },
+    {
+     "ts": "2026-10-18T23:33:04.077481+00:00",
+     "event": "run-end",
+     "exit": 0,
+     "seconds": 2029.4,
+     "state": "DONE"
+    },
+    {
+     "ts": "2026-10-18T23:34:21.749171+00:00",
+     "event": "validated",
+     "verdict": "BITWISE_PARITY"
     }
    ]
   }
