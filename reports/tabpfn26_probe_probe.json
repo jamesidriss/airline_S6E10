@@ -1,0 +1,108 @@
+{
+  "git": "15043e4297d8d25ea7ff42f156207d772ad928c0",
+  "tag": "tabpfn26_probe",
+  "fold": 0,
+  "mode": "probe",
+  "model_family": "TabPFN-2.6",
+  "prereg": "configs/phase20/endgame_tabpfn26_screen_prereg.json",
+  "prereg_sha256": "4ff41f646f4b166b7342b55eeaa2d49cc1b239b9eeb941b7471e0c8425b33631",
+  "checkpoint_sha256": "0578fa56f97e11024e31735aaec2c4e7332584b7730242fbaf6c0bbd0299206a",
+  "checkpoint_revision": "24148873a9a5",
+  "matched_source": "reports/sol_tabpfn35_route/route_f0.json (certified v3.5 route contract)",
+  "amendment_a1": "configs/phase20/endgame_tabpfn26_screen_amendment_a1.json (icl_bf16 switch unavailable on TabPFNV2p6)",
+  "params": {
+    "model_path": "C:\\Users\\James\\airline_S6E10\\artifacts\\tabpfn26\\tabpfn-v2.6-classifier-v2.6_default.ckpt",
+    "n_estimators": 1,
+    "auto_scale_n_estimators": false,
+    "random_state": 1201,
+    "device": "cuda",
+    "ignore_pretraining_limits": true,
+    "fit_mode": "fit_with_cache",
+    "kv_cache_precision": "int8",
+    "keep_cache_on_device": true,
+    "inference_precision": "autocast",
+    "categorical_features_indices": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      21
+    ],
+    "memory_saving_mode": true,
+    "n_preprocessing_jobs": 1,
+    "tuning_config": null
+  },
+  "seed": 1201,
+  "icl_bf16": true,
+  "chunk_cells": 262144,
+  "decoder_inplace_gelu": true,
+  "windows_mqa": true,
+  "reuse_query_output": true,
+  "batch": 1024,
+  "gpu_memory_fraction": 0.85,
+  "backend_gate": {
+    "fp16": 0.00048828125,
+    "bf16": 0.0078125
+  },
+  "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "fit_ids_sha256": "4f6cafdf586649e3589d97fa657ce942699627c12053770d519e4d9d1004c338",
+  "apply_ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+  "feature_names": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "label_free_category_maps": {
+    "Gender": [
+      "Female",
+      "Male"
+    ],
+    "Customer Type": [
+      "Loyal Customer",
+      "disloyal Customer"
+    ],
+    "Type of Travel": [
+      "Business travel",
+      "Personal Travel"
+    ],
+    "Class": [
+      "Business",
+      "Eco",
+      "Eco Plus"
+    ]
+  },
+  "feature_fit_sha256": "157be074349b4d6c105a35200ed37da2ca3f14e601f9df30feba469fbc807dd0",
+  "feature_apply_sha256": "c39a7ee7e2065404bb6d4ab1cccc75a5659d5283103376d12b14d537dd097445",
+  "no_gradient_fitting": "pretrained inference only; no evaluation labels anywhere",
+  "utc": "2026-10-18T23:34:21.211744+00:00",
+  "fit_rows": 50000,
+  "apply_rows": 4096,
+  "context_bound": null,
+  "status": "PROBE_COMPLETE",
+  "fit_seconds": 11.203999999997905,
+  "total_seconds": 12.25,
+  "peak_gpu_gib": 3.84230899810791,
+  "seconds_per_apply_row": 0.00299072265625,
+  "scientific_claim": "NONE - resource feasibility only",
+  "prediction_sha256": "aa1c01e83f7fe3e4acb02db20213e8e304f1152899f007307c2d96f3ebd301fd"
+}

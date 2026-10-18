@@ -28,9 +28,9 @@
   "cap_gpu_hours": 22,
   "previous_cap_gpu_hours": 12,
   "increment_gpu_hours": 10,
-  "consumed_gpu_hours_estimate": 11.8,
+  "consumed_gpu_hours_estimate": 12.753,
   "documented_gpu_hours": 11.54,
-  "remaining_gpu_hours": 10.2,
+  "remaining_gpu_hours": 9.247,
   "reconciliation": {
    "s7_close_documented": 9.1,
    "post_s7_ledger_entries": {
