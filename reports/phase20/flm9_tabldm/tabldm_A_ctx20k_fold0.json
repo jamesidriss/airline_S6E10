@@ -1,0 +1,102 @@
+{
+  "model": "xiaomi-tabldm",
+  "arm": "A_ctx20k",
+  "status": "DONE",
+  "utc": "2026-10-18T14:27:08.390189+00:00",
+  "git": "0d29fd5ac985fcb8be025eec8545db8c60557a08",
+  "prereg": "configs/phase20/flm9_tabldm_prereg.json",
+  "prereg_sha256": "4118475a6a894e32a1ffe76ae9b19c3b9ebb5330c835ed6054fd58091d00fae3",
+  "hf_repo": "occams/Xiaomi-TabLDM",
+  "hf_revision": "712e5635be9fd8728084cd5ae105ddecb31dc03c",
+  "checkpoint_sha256": "7f8ec8b949c13e7187c0f11b189e03560eb28e02d286aa2cdad2d2a56b62bc9e",
+  "install": "pip install git+https://github.com/xiaomi-research/xiaomi-tabldm (0.1.0)",
+  "license_note": "LICENSE file = Apache-2.0 (Xiaomi 2026); README News bullet says 'Non-Commercial License' but links to the same Apache file; contradiction recorded, LICENSE treated as operative",
+  "recipe": "ICL fit on stratified FIT context (seed 20261023); no weight updates; n_estimators=8, batch_size=4, kv_cache=False, enhance_candidates=False, device=cuda:0, random_state=1201",
+  "context_rows": 20000,
+  "context_seed": 20261023,
+  "context_sha256": "800a70a220761b670d8115a5adb4f6eb334d760caf26d16928e1de5ea399f648",
+  "eval_fold": 0,
+  "eval_rows": 139927,
+  "fit_folds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "features": [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Cleanliness",
+    "Gender",
+    "Customer Type",
+    "Type of Travel",
+    "Class",
+    "Age",
+    "Flight Distance",
+    "Departure Delay in Minutes",
+    "Arrival Delay in Minutes",
+    "Flight Distance coarse10"
+  ],
+  "categorical_indices": [
+    13,
+    14,
+    15,
+    16,
+    18,
+    21
+  ],
+  "label_free_category_maps": {
+    "Gender": [
+      "Female",
+      "Male"
+    ],
+    "Customer Type": [
+      "Loyal Customer",
+      "disloyal Customer"
+    ],
+    "Type of Travel": [
+      "Business travel",
+      "Personal Travel"
+    ],
+    "Class": [
+      "Business",
+      "Eco",
+      "Eco Plus"
+    ]
+  },
+  "route_ref": "sol_route_aux10_primary_final",
+  "route_ref_auc_fold0": 0.9617271804553859,
+  "prediction_sha256": "33e3790fdf55cb4d0287f35c53199f494c8081565b1b99d24456766dbb6cae5c",
+  "metrics": {
+    "standalone_auc": 0.9533514234393945,
+    "champion_portfolio_auc": 0.9618278142504795,
+    "champion_route_auc": 0.9614576551310231,
+    "equal_logit_blend_auc": 0.9589751971708804,
+    "portfolio_delta": -0.0028526170795990513,
+    "logit_pearson_vs_portfolio": 0.9691754157679491,
+    "logit_pearson_vs_route": 0.9672656612440065,
+    "pred_std": 0.43472071408504587,
+    "pred_mean": 0.4303055445383782
+  },
+  "frozen_rule": {
+    "port_delta": -0.0027954827996731213,
+    "route_ref_auc": 0.9617271804553859,
+    "blend_auc": 0.9589316976557127,
+    "spearman_vs_route_ref": 0.8857732487073489,
+    "promising": false
+  },
+  "peak_vram_gb": 16.54,
+  "fit_seconds": 2.0644164085388184,
+  "predict_seconds": 81.91770076751709,
+  "total_seconds": 87.09616780281067
+}

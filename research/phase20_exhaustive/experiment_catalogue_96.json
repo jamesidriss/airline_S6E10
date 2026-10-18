@@ -139,12 +139,13 @@
    "requested_method": "Xiaomi TabLDM released checkpoints (Apache-2.0 project)",
    "historical_status": "none",
    "historical_equivalent": "-",
-   "status": "NOT_STARTED",
+   "status": "COMPLETE_NEGATIVE",
    "priority": "P1",
-   "fidelity_reached": "F0",
+   "fidelity_reached": "F2",
    "competition_eligibility": "OK (GitHub project Apache-2.0; verify checkpoint terms)",
    "blocking_reason": "-",
-   "next_action": "verify checkpoint terms; inspect context-memory; chunk/cached pilot"
+   "next_action": "closed: both arms NEGATIVE; context scaling real but O(n^2) architecture cannot reach portfolio-strength context on 16GB without disk offload",
+   "phase20_finding": "F2 fold-0 (Apache-2.0, official repo, rev-pinned ckpt): arm A ctx20k AUC 0.953351 / port_delta -2.795e-3 / Spearman 0.8858; arm B ctx50k AUC 0.956457 / -9.853e-4 / 0.9160. Both NEGATIVE; most genuine decorrelation of the phase but 5e-3..8e-3 too weak standalone; scaling trend cannot be extrapolated (O(n^2), full-FIT infeasible)."
   },
   {
    "experiment_number": 10,
@@ -1436,5 +1437,5 @@
   }
  ],
  "updated": "2026-10-17T16:50:00Z",
- "updated_utc": "2026-10-18T13:57:07.544144+00:00"
+ "updated_utc": "2026-10-18T14:47:01.854660+00:00"
 }

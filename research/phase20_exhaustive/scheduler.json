@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T13:57:07.550144+00:00",
+ "updated_utc": "2026-10-18T14:47:01.860162+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -227,23 +227,31 @@
    "family": "FLM",
    "title": "Xiaomi-TabLDM",
    "priority": "P1",
-   "state": "PENDING",
-   "state_note": null,
+   "state": "CLOSED_NEGATIVE",
+   "state_note": "F2 both arms: best ctx50k AUC 0.956457 port_delta -9.853e-4; genuine decorrelation (Spearman 0.92) but unusable standalone; O(n^2) context scaling infeasible at this data size",
    "kind": "unknown",
    "cmd": null,
-   "prereg": null,
+   "prereg": {
+    "path": "configs/phase20/flm9_tabldm_prereg.json",
+    "sha256": "4118475a6a894e32a1ffe76ae9b19c3b9ebb5330c835ed6054fd58091d00fae3"
+   },
    "fingerprint": null,
    "depends_on": [],
    "attempts": 0,
    "expect": null,
    "result": {
-    "verdict": null,
-    "report": null
+    "verdict": "COMPLETE_NEGATIVE",
+    "report": "reports/phase20/flm9_tabldm/tabldm_B_ctx50k_fold0.json"
    },
    "history": [
     {
      "ts": "2026-10-17T22:15:00.183179+00:00",
      "event": "init",
+     "from": "NOT_STARTED"
+    },
+    {
+     "ts": "2026-10-18T14:47:01.860162+00:00",
+     "event": "f2_screen_done",
      "from": "NOT_STARTED"
     }
    ]
