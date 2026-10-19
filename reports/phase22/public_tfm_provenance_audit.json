@@ -1,0 +1,100 @@
+{
+  "utc": "2026-10-19T19:30:38.047947+00:00",
+  "dataset": {
+    "owner": "cdeotte",
+    "version": 1,
+    "license": "CC0-1.0",
+    "zip_sha256": "fa819741aff0bb89ae19c2913a510d901921feaf4a611e42cabbb20548221f29",
+    "pairs": 11,
+    "file_ids_present": false,
+    "training_context_manifests_present": false,
+    "producer_source_present": false
+  },
+  "alignment": {
+    "train_shape": 699635,
+    "test_shape": 299844,
+    "all_finite_probability_arrays": true,
+    "advertised_AUCs_reproduced_to_six_decimals": true,
+    "verdict": "Numeric consistency with advertised official ordering, NOT cryptographic row-ID provenance"
+  },
+  "folds": {
+    "declared_external_scheme": "StratifiedKFold5_seed42",
+    "local_scheme": "immutable_primary_seed20261010",
+    "contingency": [
+      [
+        27858,
+        27967,
+        28080,
+        27948,
+        28074
+      ],
+      [
+        28099,
+        28121,
+        27871,
+        28073,
+        27763
+      ],
+      [
+        27786,
+        27895,
+        27871,
+        28306,
+        28069
+      ],
+      [
+        28158,
+        28123,
+        27975,
+        27776,
+        27895
+      ],
+      [
+        28026,
+        27821,
+        28130,
+        27824,
+        28126
+      ]
+    ],
+    "best_label_permutation_match_fraction": 0.2012349296418847,
+    "reported_fold_assignment_sha256": "fbc70c6ec343b5a2da196bd9655b6adbdfca28b858102a346b79b7c9a42b92e4",
+    "source_producer_context_manifest_present": false,
+    "verdict": "INCOMPATIBLE_FOR_PRIMARY_OR_SHADOW_CERTIFICATION"
+  },
+  "reproducibility": {
+    "full_context_offline_patch_source_available": false,
+    "author_reports_custom_library_rewrites": true,
+    "public_starter": "research/raw/phase22/kumo_tabular_starter_v1.ipynb",
+    "starter_context_rows": 100000,
+    "starter_size": "small",
+    "starter_is_full_context8_large_producer": false,
+    "verdict": "Shared vectors reproducible as arithmetic inputs; producing the original models is NOT independently reproduced"
+  },
+  "licenses": {
+    "dataset_CC0_does_not_resolve_all_upstream_terms": true,
+    "tabpfn35": "Previously pinned non-commercial model license explicitly includes data science competitions; champion source manifest preserved",
+    "kumo": "Official NVIDIA model card declares OpenMDW-1.1; permissive use, full producer still absent",
+    "limix2": "Current LICENSE is custom Non-Commercial v1.0, despite model-card prose saying Apache2. Section5 explicitly includes non-commercial Kaggle; commercial and competing-foundation-model restrictions remain. Blanket LICENSE_BLOCKED from old catalogue is incomplete; no weights adopted.",
+    "causilo": "Custom v1.0 permits noncommercial evaluation; outputs are excluded from Derivative definition but commercial/production restrictions remain. No distillation or submitted incorporation.",
+    "exaone": "Model weights NC1.2, separate from MIT code; model-output restrictions require review for intended downstream use. Diagnostic only.",
+    "evidence_manifest": "reports/phase22/license_source_manifest.json",
+    "scope": "Source audit, not blanket legal certification of all11 producers or a finding that every NC model is banned.",
+    "tabfm": "Google source code Apache-2.0, pretrained weights separate tabfm-non-commercial-v1.0, noncommercial/nonproduction only. Exact producer checkpoint revision unprovided.",
+    "mitra2": "Official autogluon/mitra-classifier-2 model card declares Apache-2.0. Exact shared-vector producer revision and modified implementation unprovided.",
+    "tabicl2": "Official jingang/TabICL model card for TabICLv2 declares BSD-3-Clause. Exact shared-vector producer revision unprovided.",
+    "realmlp": "PyTabKit source license must be distinguished from the shared trained predictions; upstream producer configuration and exact revision unprovided. Dataset vectors CC0; no new weights adopted.",
+    "xgboost": "Official dmlc/xgboost Apache-2.0 source. Exact tuned producer configuration and training contexts unprovided.",
+    "additional_primary_sources": [
+      "https://github.com/google-research/tabfm",
+      "https://huggingface.co/autogluon/mitra-classifier-2",
+      "https://huggingface.co/jingang/TabICL",
+      "https://github.com/dholzmueller/pytabkit",
+      "https://github.com/dmlc/xgboost"
+    ],
+    "reviewed_date": "2026-10-19",
+    "all_exact_checkpoint_revisions_verified": false
+  },
+  "candidate_decision": "The two raw TabPFN35 mixtures numerically pass discovery. Both remain ineligible: unverified context and row manifests, mismatched primary scheme, absent matched shadow, no clean-code producer reproduction.",
+  "next_needed_for_raw8": "An own raw21 TabPFN3.5 eight-estimator five-primary run, frozen weight, matched shadow and full-test inference. GPU hard stop and unbounded remaining budget prevent execution. Raw1 replay is not equivalent to raw8."
+}

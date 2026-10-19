@@ -1,0 +1,45 @@
+{
+  "status": "PUBLISHED_PROTOCOL_REJECTED_AS_HONEST_OOF",
+  "notebook": "https://www.kaggle.com/code/jiatianzhang2/s6e10-15-fold-gpu-stacking-pipeline",
+  "version": 4,
+  "source_sha256": "78f1228ff8e7dc7aef57c6a51b4171bb366a818e882ff78cc670e869e4ab58db",
+  "code_cells_parse": true,
+  "nonempty_output_cells": 0,
+  "controlled_perturbation": {
+    "labels_changed": "Only public15fold0 evaluation labels, fixed original split",
+    "key": "Flight Distance",
+    "rows": 699635,
+    "outer_fit_rows": 652992,
+    "outer_eval_rows": 46643,
+    "FIT_TE_rows_changed": 652992,
+    "FIT_TE_maxabs_change": 0.13470813749709176,
+    "EVAL_TE_rows_changed_through_global_prior": 46643,
+    "EVAL_TE_maxabs_change": 0.007525352505234839,
+    "corrected_nested_FIT_rows_changed": 0,
+    "corrected_nested_EVAL_rows_changed": 0,
+    "fixed_fold_sha256": "bdcf5295d65b989bb8d8f66863b3af8e806a07d979ee64d4f415b0cdbee769e2"
+  },
+  "findings": [
+    {
+      "cell": 8,
+      "issue": "Global15fold TE prepared before outer model loop: FIT feature rows contain outer evaluation labels through other folds; global prior also includes held-out labels."
+    },
+    {
+      "cell": 10,
+      "issue": "All three tree learners select iterations using their outer evaluation fold."
+    },
+    {
+      "cell": 12,
+      "issue": "meta_clf.fit(S_oof,y) followed by predict_proba(S_oof) and scoring on y is in-sample meta evaluation."
+    },
+    {
+      "cell": 12,
+      "issue": "Published notebook stacks only three tree vectors; the 11-TFM fusion advertised in discussion is absent."
+    },
+    {
+      "cell": 6,
+      "issue": "Teacher source can be precomputed arrays without IDs/provenance, a local original-data model, or constant0.5 fallback; exact reported run path not established."
+    }
+  ],
+  "interpretation": "These prove evaluation protocol defects, not the numerical size of score inflation and not misconduct. The reported0.96238 remains unreproduced. No public code was executed as training code."
+}

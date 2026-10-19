@@ -1,0 +1,29 @@
+{
+  "utc": "2026-10-19T19:20:01.790767+00:00",
+  "status": "DRIVER_FAULT_CONFIRMED_GPU_HARD_STOP",
+  "job": "JINT04",
+  "start_utc": "2026-10-18T23:56:29.379198+00:00",
+  "first_recorded_absence_utc": "2026-10-19T09:26:44.035292+00:00",
+  "fault_utc": "2026-10-19T01:04:58.971025Z",
+  "fault_record_id": 87184,
+  "fault_kind": "nvlddmkm153 Error occurred on GPUID100",
+  "last_progress_seconds": 4101.484999999986,
+  "elapsed_upper_bound_seconds": 34214.656094,
+  "duration_interval_hours": [
+    1.139301388888885,
+    9.50407113722222
+  ],
+  "budget_total_interval_hours": [
+    15.678301388888885,
+    24.04307113722222
+  ],
+  "exact_process_exit_time_known": false,
+  "inference": "Driver failure is within seconds of last progress. It does not prove process termination time. Conservative elapsed interval spans start to verified absence; no upper bound charged as measured consumption.",
+  "duplicate_runtime_charge": false,
+  "new_GPU_spending": false,
+  "hard_constraint": "Repeated driver faults are an explicit existing stop condition; keep stop independent from unresolved runtime. CPU-only research can continue.",
+  "evidence": {
+    "reports/phase22/JINT04_nvlddmkm_event_87184.xml": "f2fbb6e8eac177ea0a6385328b49ee43097bc56f2defe6aeeb47e3a223cda833",
+    "reports/phase22/recent_driver_faults.json": "fec428542a77c7df1682be63e93eea0aff3de75ab6536c354fe32a709188a1c4"
+  }
+}

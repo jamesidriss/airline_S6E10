@@ -1,0 +1,36 @@
+{
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "packages": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.9.1",
+    "lightgbm": "4.7.0",
+    "catboost": "1.2.10",
+    "torch": "2.11.0+cu128",
+    "tabpfn": "9.1.0"
+  },
+  "CUDA_VISIBLE_DEVICES_for_runs": "-1",
+  "new_training_device": "CPU",
+  "new_training_threads": 6,
+  "QA_module_threads": 2,
+  "source_scope": "Exact package versions; model weights not newly downloaded; frozen producer source/config hashes in per-run reports",
+  "CUDA_only_tests_not_executed": [
+    "tests.test_tabr_retrieval.test_torch_exact_l2_index_is_fp32_exact_not_tf32",
+    "tests.test_tabr_retrieval.test_torch_exact_l2_index_device_placement_and_determinism"
+  ],
+  "QA_count_note": "Existing harness counts one stochastic protocol suite and each registered test function; early returns are counted as no-exception, not independent GPU passes. Stochastic suite itself contains69 checks.",
+  "pyflakes_available": true,
+  "legacy_aux_report_missing_marginal_fields": [],
+  "source_hashes": {
+    "scripts/phase22/audit_public_te.py": "73d86a5ff763a9ab6552659fd2aa8e5798a1cdcedfc6498974fd96b21ad06f87",
+    "scripts/phase22/compare.py": "4ec88c7f7a78cd91d9259a7b5a1a45c5876c9b11030d75e8baca0dfb6a9e7224",
+    "scripts/phase22/compare_cat.py": "3745275bb20c62d2e08dbb1309527bba68752bc8100ae4ddea297e9516c8a8e5",
+    "scripts/phase22/finalize_no_admission.py": "32bb1eec1aab9963fab9a280fafae52826ed5c380310196bbeefe5414a8ebcee",
+    "scripts/phase22/lean84.py": "9c61f9c614f10bc8ed94f5217c24c4421ace5b74e7f4c310264d35999a0f0aa9",
+    "scripts/phase22/lean84_cat.py": "f5bd0bed09bbe0ee2b48f8f56991bcc3dbc7eac29d7eefb522fa10afb6b8d915",
+    "scripts/phase22/raw_replay.py": "5124b6b624c2b815418770b9f9bb74da32b550dc42e913c5c5eec24158cccdf5",
+    "scripts/phase22/run_isolated_tests.py": "e91573e0a1d92e9b24f0e8f34d1665a58c5d7a64f71453823929742853f7da21"
+  }
+}

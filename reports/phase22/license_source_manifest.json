@@ -1,0 +1,23 @@
+[
+  {
+    "model": "limix2",
+    "source": "https://huggingface.co/stable-ai/LimiX-2/raw/main/LICENSE",
+    "sha256": "beaceacc2c15826b46375e647fdab6b7687eb34ee71867617b7221a14710c217",
+    "file": "research/raw/phase22/limix2_LICENSE.txt",
+    "bytes": 10348
+  },
+  {
+    "model": "causilo",
+    "source": "https://huggingface.co/nums-ai/causilo/raw/main/LICENSE",
+    "sha256": "7de09258938c40d8563b354229098fb5a13916b788e75fba0fa471a073ebea7b",
+    "file": "research/raw/phase22/causilo_LICENSE.txt",
+    "bytes": 7557
+  },
+  {
+    "model": "exaone",
+    "source": "https://huggingface.co/LG-AI-Research/EXAONE-Tabular/raw/main/LICENSE",
+    "sha256": "36c1a54bb636385c715524d2eeb7d69106c40f8775f7e35cc4b5970613d20ffb",
+    "file": "research/raw/phase22/exaone_LICENSE.txt",
+    "bytes": 12601
+  }
+]

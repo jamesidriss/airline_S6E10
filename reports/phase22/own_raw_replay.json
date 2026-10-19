@@ -1,0 +1,154 @@
+{
+  "status": "COMPLETE",
+  "git": "f4606d6e2a103d9c7ce1b99dfff36863fb65be1a",
+  "source_sha256": "5124b6b624c2b815418770b9f9bb74da32b550dc42e913c5c5eec24158cccdf5",
+  "prereg_sha256": "43cfe62ca785a2af7172da3163c79b7a8d47c1b78c07431cd82f83d729e76789",
+  "raw_context_proofs": [
+    {
+      "tag": "sol_tabpfn35_predict_guard",
+      "report_sha256": "64f760fca6c6974a7eb50cae771cc70101e008e5652e6b0dd9ac8c9c8e884e43",
+      "prediction_sha256": "ecaa1b1ad54cc0fa247054936370727249b40e81016209153fe610b999c6393d",
+      "auc": 0.9609722955394799
+    },
+    {
+      "tag": "sol_phase15_raw",
+      "report_sha256": "fed4e7201c2a764ec065bc8d11b30ebd257c550e0d836fff2fe247d729e83694",
+      "prediction_sha256": "e31151b05dafa7409038ba71da72299e2cd7f661ad10804c63df409701127c91",
+      "auc": 0.960916239722306
+    },
+    {
+      "tag": "sol_phase15_raw",
+      "report_sha256": "7970ef263f40978a762ab43b80637820d09b7b388a64fc6f207556731e45ca20",
+      "prediction_sha256": "d77121c155b5d05540fbef6ddb2c0e7ca1dad9d7f7739bcb9f1dbe960d734c42",
+      "auc": 0.9606098860868393
+    },
+    {
+      "tag": "sol_phase15_raw",
+      "report_sha256": "14016692cc0a4085a3d8d95c51f3cad12a365ec11dde47ba5057fe4a6497587d",
+      "prediction_sha256": "13d4de8544bd9c72b6f56bae9b034ea121007fe524b5dcf1b04f9704267d2a70",
+      "auc": 0.9601414134647154
+    },
+    {
+      "tag": "sol_phase15_raw",
+      "report_sha256": "ea9132f11b2165061826340f6561c7ec1bea3fdf3d2b5075e5ee940cc7013ef4",
+      "prediction_sha256": "560a5812cdf6b35c2e528642ccd6ecf03cf0488545a614fcc925842bc4033771",
+      "auc": 0.9612651697195912
+    }
+  ],
+  "raw_oof_sha256": "190475ed14e7d3c816cd2167e0a58633f66fb7f10b3199d91265fd6aa8cf10a1",
+  "champion_sha256": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+  "candidates": [
+    {
+      "name": "own_raw_w0.10",
+      "weight": 0.1,
+      "pooled": {
+        "candidate_auc": 0.9618587631328146,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 5.8403170908327695e-06,
+        "paired_se": 5.5571004330043375e-06,
+        "candidate_standalone_se": 0.0002423943149002425,
+        "ci95": [
+          -5.051399616327672e-06,
+          1.673203379799321e-05
+        ],
+        "one_sided_p": 0.1466373724039382,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        2.62660192733577e-05,
+        2.9605473007565664e-06,
+        -1.560345208317937e-05,
+        1.908598027222652e-05,
+        -4.130943298319423e-06
+      ],
+      "mean_fold_delta": 5.7156302929683985e-06,
+      "fold_se": 7.616211371005763e-06,
+      "fold_t": 0.7504558388081629,
+      "positive_folds": 3,
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -1.7818335965730236e-05,
+          8.528121843875969e-06,
+          2.9851158471727588e-05
+        ],
+        "private_quantiles": [
+          -6.500277292431633e-06,
+          5.3315622816074715e-06,
+          1.710465399676897e-05
+        ],
+        "private_p05": -6.500277292431633e-06,
+        "private_median": 5.3315622816074715e-06,
+        "private_worst_5pct_mean": -1.0741473818831615e-05,
+        "public_private_sign_disagreement_rate": 0.43,
+        "private_reversal_vs_full_oof_rate": 0.26,
+        "public_reversal_vs_full_oof_rate": 0.31
+      },
+      "logit_corr": 0.9999644883727825,
+      "spearman": 0.9998018892301583,
+      "prediction_sha256": "13ff0c3ced3935776cd45cdceb794fed8ceca105ed369481a59dbcb1270df3d9",
+      "primary_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "own_raw_w0.25",
+      "weight": 0.25,
+      "pooled": {
+        "candidate_auc": 0.9618263049763089,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -2.6617839414821987e-05,
+        "paired_se": 1.4153234138897049e-05,
+        "candidate_standalone_se": 0.00024256468024820086,
+        "ci95": [
+          -5.4357668591822966e-05,
+          1.1219897621789928e-06
+        ],
+        "one_sided_p": 0.9699929183676099,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        2.4923349675409767e-05,
+        -3.132537158301307e-05,
+        -7.92896728960546e-05,
+        6.641831741038828e-06,
+        -5.448083694792327e-05
+      ],
+      "mean_fold_delta": -2.670614000210847e-05,
+      "fold_se": 1.915135823666471e-05,
+      "fold_t": -1.3944775964234406,
+      "positive_folds": 2,
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -8.728297105805028e-05,
+          -2.040198031649787e-05,
+          3.1335714679936444e-05
+        ],
+        "private_quantiles": [
+          -5.84337912849564e-05,
+          -2.8274473342748685e-05,
+          2.6756601742783353e-06
+        ],
+        "private_p05": -5.84337912849564e-05,
+        "private_median": -2.8274473342748685e-05,
+        "private_worst_5pct_mean": -6.860394468357622e-05,
+        "public_private_sign_disagreement_rate": 0.36,
+        "private_reversal_vs_full_oof_rate": 0.1,
+        "public_reversal_vs_full_oof_rate": 0.34
+      },
+      "logit_corr": 0.999777267472533,
+      "spearman": 0.9987058523583483,
+      "prediction_sha256": "d0c1f73e7912ae6ae9f0bab4cfa4c4aad040fe484d21c45aacdc26e1ccd4ba0a",
+      "primary_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    }
+  ],
+  "GPU_hours": 0,
+  "CPU_wall_seconds": 22.04700000002049,
+  "new_submissions": 0,
+  "limitation": "Adaptive mechanism discovery after public-vector diagnostic; frozen primary and shadow remain necessary. Raw1 differs from public raw8, so a null result does not disprove raw8."
+}

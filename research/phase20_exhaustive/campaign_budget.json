@@ -87,7 +87,14 @@
     "seconds": 4101.484999999986
    },
    "recovery_report": "reports\\phase21\\interrupted_internal4_recovery_20261019.json",
-   "resolution": "Reconcile missing end-of-process timing before spending more GPU. CPU analysis allowed; no repeated inference."
+   "resolution": "Reconcile missing end-of-process timing before spending more GPU. CPU analysis allowed; no repeated inference.",
+   "elapsed_upper_bound_seconds": 34214.656094
+  },
+  "hardware_stop": {
+   "active": true,
+   "reason": "Repeated nvlddmkm153 driver faults; latest matches JINT04 interruption",
+   "report": "reports/phase22/JINT04_reconciliation.json",
+   "resolution": "Verify hardware/driver stability and reconcile interrupted runtime before any GPU research; do not bypass existing safety limits."
   }
  }
 }
