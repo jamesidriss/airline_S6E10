@@ -1,0 +1,9 @@
+{
+  "scope": "Correction to new closure auditor assumption; existing v6 certificate is not modified",
+  "working_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+  "historical_expected_sha256": "b12c6ff06e1a99e2aeb3f93929b6f495b277ffaa279b1544eae8830559666f56",
+  "baseline_git_blob_sha256": "6ce20a94698c9fd080ad215ff2866429e7928eb81ac5f1fdd5c3f2838b12351d",
+  "historical_raw_hash_matches": true,
+  "only_CRLF_vs_LF_difference": true,
+  "certificate_modified": false
+}

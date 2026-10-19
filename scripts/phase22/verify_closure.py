@@ -16,7 +16,14 @@ def main():
     for p in Path('reports/phase21').glob('*'):
         if p.is_file():assert p.read_bytes()==git('show',BASE+':'+p.as_posix());history[p.as_posix()]=file_sha256(p)
     for p in ['reports/v7_sol_tabpfn_internal2_aux10_test_certificate.json','reports/v7_sol_tabpfn_internal2_aux10_decision.json','reports/v7_sol_tabpfn_internal2_aux10_result.json','reports/sol_route_aux10_primary_final_test_certificate.json','submissions/manifest.csv','submissions/kaggle_submissions.csv']:
-        assert Path(p).read_bytes()==git('show',BASE+':'+p),p
+        raw=Path(p).read_bytes();committed=git('show',BASE+':'+p)
+        if p=='reports/sol_route_aux10_primary_final_test_certificate.json':
+            # This old certificate predates exact-byte Git attributes. Preserve its
+            # historical Windows bytes, checked against the pre-existing bank hash.
+            bank=json.loads(git('show',BASE+':reports/phase17_recovery_20261009.json'))['bank']
+            assert file_sha256(p)==bank['test_certificate_sha256']
+            assert raw.replace(b'\r\n',b'\n')==committed
+        else:assert raw==committed,p
         history[p]=file_sha256(p)
     prefix=git('show',BASE+':experiments/ledger.jsonl');ledger=Path('experiments/ledger.jsonl').read_bytes()
     assert ledger.startswith(prefix) and len(ledger.splitlines())==621
