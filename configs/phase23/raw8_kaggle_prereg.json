@@ -1,0 +1,109 @@
+{
+  "protocol": "phase23_raw8_native_tabpfn35_kaggle",
+  "declared_utc": "2026-10-19T22:46:36Z",
+  "author": "phase23-agent",
+  "scope": "Screen OUR OWN native TabPFN-3.5 raw-context 8-estimator member (Kaggle T4 execution of research/phase23/kaggle/raw8/main.py) against the protected champion v7 on the immutable primary folds. No public-leaderboard optimization anywhere in this protocol. This protocol authorizes zero submissions; any upload would require a separate decision under research/submission_policy_amendment_20261017.md.",
+  "champion": "v7_sol_tabpfn_internal2_aux10",
+  "hypothesis": "The external raw-context 8-estimator TabPFN-3.5 vector (tabpfn35) adds a small but consistent positive delta to v7 on our labels (+2.99e-5 pooled at w=0.10, 5/5 folds positive, paired SE 4.97e-6). If that effect is a property of the raw-context 8-estimator recipe (rather than of the producer's foreign fold assignment or an unaudited artefact), then OUR OWN raw8 member -- our immutable primary folds (seed 20261010), our pinned checkpoint, our route=False geometry, official n_estimators=8 -- reproduces a mean paired fold delta of the same order of magnitude on the primary endpoint.",
+  "external_reference": {
+    "name": "tabpfn35",
+    "source": "cdeotte/s6e10-tfm-oof-and-test-predictions version 1, licence CC0-1.0",
+    "why_ineligible": "produced with the producer's own fold assignment (reported StratifiedKFold(5, seed 42)) and unverifiable preprocessing/seed; retained as a diagnostic magnitude only, never certifiable.",
+    "standalone_oof_auc_on_our_labels_assuming_official_row_order": 0.9611450967635963,
+    "w0.10": {
+      "delta": 2.99448370622013e-05,
+      "mean_fold_delta": 2.9459176638324536e-05,
+      "fold_se": 2.0167258038759966e-06,
+      "positive_folds": 5,
+      "logit_corr_vs_v7": 0.9999680434522598
+    },
+    "w0.25": {
+      "delta": 4.223376716561145e-05,
+      "mean_fold_delta": 4.0584802573429e-05,
+      "fold_se": 5.091657877332164e-06,
+      "positive_folds": 5,
+      "logit_corr_vs_v7": 0.999799754605291
+    }
+  },
+  "member_recipe": {
+    "execution": "Kaggle script kernel jamesripoll/s6e10-phase23-raw8-tabpfn35, 2 x Tesla T4, free Kaggle quota, zero local GPU time",
+    "data": "21 raw columns (route=False geometry), the four meta columns coded to contiguous integers in columns [13,14,15,16], fillna -1, float32; outer context = every FIT row of the immutable primary fold (559,708 rows); prediction of the fold's val rows (139,927 per fold) and of the full test set (299,844 rows) for every member",
+    "model": "TabPFNClassifier(model_path=Prior-Labs/tabpfn_3_5@06bf2ba35c80a92a3b9abb436b99cf49e7a0365e (sha256 ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3), n_estimators=8, auto_scale_n_estimators=False, random_state=1201, device=cuda, ignore_pretraining_limits=True, fit_mode=fit_with_cache, kv_cache_precision=int8, keep_cache_on_device=True, inference_precision=autocast, categorical_features_indices=[13,14,15,16], memory_saving_mode=True, n_preprocessing_jobs=1)",
+    "library": "tabpfn==9.1.0 (pip, pinned)",
+    "aggregation": "official logits_to_probabilities over the 8 raw member logits with the recorded scalars (softmax_temperature, average_before_softmax, balance_probabilities) captured from the fitted classifier",
+    "port_equivalence_gate": "in-kernel probe step A: stock predict_proba vs ported prepare/engine vs ported+lean-patched must agree within 2e-6 absolute max difference; the probe must fail rather than proceed otherwise"
+  },
+  "inputs": {
+    "raw8_oof": "artifacts/phase23/raw8/raw8_oof.npy",
+    "raw8_test": "artifacts/phase23/raw8/raw8_test.npy",
+    "raw8_unit_metas": "artifacts/phase23/raw8/units/",
+    "aux10_oof": "artifacts/sol_route_aux10_primary_final/aux10_oof.npy",
+    "route2_oof": "artifacts/phase17_B1/primary/route_oof.npy",
+    "kernel_source": "research/phase23/kaggle/raw8/main.py",
+    "kernel_metadata": "research/phase23/kaggle/raw8/kernel-metadata.json",
+    "expected_data_hashes": "reports/phase23/raw8_expected_hashes.json"
+  },
+  "candidates": [
+    "raw8_w0.10",
+    "raw8_w0.25",
+    "raw8_w0.50",
+    "port_raw8"
+  ],
+  "candidate_definitions": {
+    "raw8_w<w>": "expit((1-w)*logit(v7_oof) + w*logit(raw8_oof)); w in {0.10, 0.25, 0.50}",
+    "port_raw8": "expit((logit(raw8_oof) + logit(aux10_oof))/2) -- the certified portfolio composition used by evaluate_phase16_fold.py with the route member replaced by raw8; the evaluator first checks that the same composition on (route2_oof, aux10_oof) reproduces v7_oof within 1e-5; if that check fails the candidate is dropped and the failure is reported"
+  },
+  "simulations": {
+    "repeats": 100,
+    "seed": 20261022,
+    "population": 299844,
+    "public_rows": 59969,
+    "private_rows": 239875
+  },
+  "gates": {
+    "primary_endpoint": "raw8_w0.10",
+    "numerical_gate": {
+      "mean_fold_delta_min": 1.5e-05,
+      "fold_se_multiple": 2.5,
+      "positive_folds": 5,
+      "holm_alpha": 0.05,
+      "private80_p05_min": 0.0
+    },
+    "reproduction_target": {
+      "mean_fold_delta": 2.9459176638324536e-05,
+      "note": "same order of magnitude required; exact equality not required (different seeds, different preprocessing pipeline)"
+    }
+  },
+  "decision_rules": {
+    "pass": "candidate(s) meeting the numerical gate are recorded as NOMINATE_MATCHED_SHADOW: a matched shadow-fold (seed 777001) confirmation of our own raw8 would then require its own prereg + Kaggle run and a resource decision; still zero submissions by this protocol.",
+    "fail": "record NO_ADMISSION with the numbers in experiments/ledger.jsonl; the raw-context-8 hypothesis is closed at the certified-evidence level (the external diagnostic remains ineligible).",
+    "partial": "if any fold has fewer than 8 val members or any fold is missing, record OUTCOME_PARTIAL and do not compute the gate; no promotion decision is possible from incomplete evidence."
+  },
+  "protected_files": {
+    "submissions/v6_sol_tabpfn_route_aux10.csv": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d",
+    "submissions/v7_sol_tabpfn_internal2_aux10.csv": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+    "data/cache/folds/primary_5f_seed20261010.npy": "baa2e0ba8b305106a2c5e018001e2e403d46adbd8dc8c10a4389ecb0661f573e",
+    "reports/phase17_B1_primary.json": "c63f5a172c7bdbaa160ce7aa022a1214daf03d5e0daac0540f7b9f2aa116f449",
+    "reports/phase17_B1_shadow_confirmation.json": "281aae9c80184dc6d7fb729461d1142ab840ff1cd7d80a6d321a6beb24bbd486"
+  },
+  "cost": {
+    "kaggle_gpu_hours_estimate": 19,
+    "local_gpu_hours": 0.0,
+    "submissions": 0,
+    "note": "Kaggle free-tier session <= 12 h; the local 22 h GPU budget and the submission budget are untouched by this protocol"
+  },
+  "known_deviations": [
+    "Environment: Linux/Kaggle image with tabpfn==9.1.0 installed from pip; the certified local route runs used Windows + tabpfn 9.1.0. Numerics may differ within float tolerance; no bitwise cross-platform claim is made (this member is new, so no historical bitwise obligation attaches to it).",
+    "Precision: T4 (sm_75) does not support bf16, so the kernel falls back to fp16 autocast -- the same regime as the public producer's T4 runs for the tabpfn35 reference.",
+    "Memory: the stock fit_with_cache KV-build path is unchunked and OOMs on a 16 GB card, so a third-party lean KV-build patch (hemingweb public notebook, ported) is used; its equivalence is validated in-kernel at the 2e-6 gate.",
+    "Prediction batch 32768 with OOM fallbacks (the certified local runs used 1024).",
+    "Test predictions may be skipped for units that run out of session time; val (OOF) evidence is always prioritised for durability.",
+    "Model random_state is ours (1201); the external producer's seed is unknown. Member identity is defined by the recipe above, not by matching the external vector numerically."
+  ],
+  "stop_rules": [
+    "Never bypass the local GPU hardware stop; this protocol runs only on Kaggle.",
+    "Never alter src/submission guards, never upload without a committed SUBMISSION_DECISION under PATH A/B.",
+    "If the probe's equivalence gate fails, stop and report instead of running production.",
+    "If the Kaggle session dies mid-run, record the partial units; no gate computation from incomplete folds."
+  ]
+}
