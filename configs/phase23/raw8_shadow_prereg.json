@@ -1,69 +1,86 @@
 {
   "protocol": "phase23_raw8_shadow_confirmation",
   "declared_utc": "2026-10-19T23:41:25Z",
+  "amended_utc": "2026-10-20T00:05:00Z",
   "author": "phase23-agent",
   "scope": "Matched shadow-fold confirmation of the native raw8 member, activated ONLY if the primary protocol (configs/phase23/raw8_kaggle_prereg.json) nominates at least one candidate. Frozen before any shadow data exists. No submission is authorized by this protocol.",
+  "amendment": {
+    "reason": "The phase-17 shadow confirmation already produced CERTIFIED shadow arms for the predeclared shadow folds 2 and 3: the route2 member set (n_estimators=2, full context, same checkpoint/seeds, shadow FIT rows) with its composed portfolio, and the auxiliary10 member-mean logits. Reusing them removes the route-arm GPU rerun and the aux10 CPU refits from this protocol and makes the comparison exactly matched (same FIT rows, same fold geometry, same aggregation). The fold set {2,3} was predeclared by phase 17 before any of its results existed; no raw8 shadow data exists at amendment time.",
+    "changes": [
+      "predeclared shadow folds: {2,4} -> {2,3} (certified shadow-arm coverage)",
+      "arm_R: rerun -> reuse certified artifacts/phase17_shadow_B1/f{2,3} + artifacts/phase17_shadow_aux10",
+      "composition formula: fixed to the reconstructed certified formula (max deviation 1.8e-7 on both folds)",
+      "port validity gate: route-repro kernel run replaced by an in-evaluator reuse-reconstruction gate (the port's environment equivalence is separately certified by the Kaggle probe and the local CPU dry-run)",
+      "cost: 8.4 GPU-h -> 7.4 GPU-h, CPU refits -> 0"
+    ]
+  },
   "parent_protocol": {
     "path": "configs/phase23/raw8_kaggle_prereg.json",
     "sha256": "b9aec0ce67aa0cef33f6f8e9a546d85af8f5a9aa7aebc6667e038a65a87f8fe0"
   },
   "activation": "primary numerical_gate_pass == true for at least one candidate; otherwise this protocol is void and recorded as NOT_ACTIVATED.",
-  "question": "Is the primary marginal of replacing the certified route member with our native raw8 member inside the certified 50/50 logit composition (with the auxiliary10 arm) reproducible on an independent fold geometry (seed 777001), with all arms retrained on the shadow FIT rows?",
+  "question": "Is the primary marginal of replacing the certified route member with our native raw8 member inside the certified 50/50 logit composition (with the auxiliary10 arm) reproducible on an independent fold geometry (seed 777001), with every arm evaluated on shadow FIT/apply rows only?",
   "why_not_a_standalone_ab": "The member-level A/B (raw8 vs route2 standalone) is NOT the right endpoint: the certified route2 standalone OOF (0.9615159787) is ~3.7e-4 ABOVE the external raw8 standalone (0.9611450968 on our labels), while raw8 still adds +2.99e-5 pooled at w=0.10 inside the composition (external diagnostic). The claimed mechanism is complementarity inside the composition, so the confirmatory endpoint is the portfolio comparison with a common auxiliary arm.",
   "design": {
     "folds": {
       "scheme": "immutable shadow StratifiedKFold(5, shuffle=True, random_state=777001)",
       "fold_hash_sha256": "5d181e32357e67b2ad8381c33549ef905bb45b969de7b8e09a3e4e7cb24af758",
-      "predeclared_folds": [2, 4],
-      "note": "Two predeclared folds only (phase-17 precedent); folds fixed here, before any shadow result exists."
+      "predeclared_folds": [2, 3],
+      "row_alignment": "apply rows = np.flatnonzero(shadow_folds == f); verified identical to the certified artifacts' apply_ids and aux member id files for both folds"
     },
     "arm_W": {
-      "member": "native raw8 (our folds/protocol): raw 21-column geometry, n_estimators=8, full context, official aggregation",
+      "member": "native raw8 (our protocol): raw 21-column geometry, n_estimators=8, full context (559,708 shadow FIT rows), official aggregation",
       "kernel_id": "jamesripoll/s6e10-phase23-raw8-shadow-tabpfn35",
-      "main_sha256": "0f1c7897246aa6cc00a2d0fb48609d7e173c3d02540c814e212ded95741ca97a",
-      "meta_sha256": "c14f87a69a886fd7d533188a6e23663cbb65416e12ee1c3e9f61678accf98345"
+      "main_sha256": "069c44891c37cae46dca799ec4b6195f4110f7290a9eb68342054379f15b8982",
+      "meta_sha256": "c14f87a69a886fd7d533188a6e23663cbb65416e12ee1c3e9f61678accf98345",
+      "generator_sha256": "f8a2e2005c08bc926abea807dcd5e5e6f9bd4c6bb9d0aed874a97a08202cf422"
     },
     "arm_R": {
-      "member": "certified route2 control: route geometry (21 raw + Flight Distance coarse10; categorical [13,14,15,16,18,21]), n_estimators=2, full context, official aggregation, same seeds",
-      "kernel_id": "jamesripoll/s6e10-phase23-raw8-shadow-route-tabpfn35",
-      "main_sha256": "5daf3c2964445ed9ffa6fd4246afcd71125272a3204e282ea72a0fd5453c8f5a",
-      "meta_sha256": "a91409a76357f0b3aff6fea150561e1e0d90e261f7861ead28fb1dc76b5fe3fb"
+      "member": "certified route2 control: route geometry (21 raw + Flight Distance coarse10; categorical [13,14,15,16,18,21]), n_estimators=2, full context, same checkpoint/seeds, shadow FIT rows",
+      "source": "artifacts/phase17_shadow_B1/f{2,3} (member_0/1_raw_logits.npy, portfolio.npy, apply_ids.npy, configuration.json)",
+      "portfolio_sha256": {
+        "f2": "c28a4c49a84c3489",
+        "f3": "1bd2b1d7d8b7de63"
+      },
+      "note": "portfolio_sha256 values are the first 16 hex chars of arr_sha256(portfolio.npy); the evaluator re-verifies them in full"
     },
     "arm_A": {
-      "member": "auxiliary10 member-mean, refit on the shadow FIT rows of each fold with the ten certified member definitions read from artifacts/predictions/index.json (entries sol_clean_aux10_primary_*): 3 x xgb (hist), 6 x lgbm extra_trees, 1 x catboost",
-      "execution": "Kaggle CPU script kernel (free tier) or local CPU; the primary aux10 used device='cuda' for the three xgb members, the shadow refits use tree_method='hist' on CPU (documented deviation; the auxiliary arm is COMMON to both portfolios so its device quirks cancel in the W-vs-R contrast)",
-      "gate": "each shadow aux10 member must be fitted on shadow FIT rows only; no primary prediction may enter the shadow evaluation"
+      "member": "certified auxiliary10 member-mean logits on the same shadow folds",
+      "source": "artifacts/phase17_shadow_aux10/aux10_mean_logits_f{2,3}.npy",
+      "sha256_prefix": {
+        "f2": "5d2f41ebfc095342",
+        "f3": "d9d5f6b094298b8e"
+      }
     },
-    "port_validity_gate": {
-      "run": "raw8 route repro kernel (route geometry, n_estimators=2, PRIMARY fold 0 only)",
-      "kernel_id": "jamesripoll/s6e10-phase23-raw8-route-repro-tabpfn35",
-      "main_sha256": "059ddfc282f1b0b4ace8815dedeb3095994b2edfb51f986eee582322afcc9767",
-      "compare_to": "artifacts/phase17_B1/primary/route_oof.npy slice on rows with folds==0",
-      "accept": "abs(AUC_repro - AUC_certified) <= 2e-5 AND spearman(repro, certified) >= 0.9999",
-      "on_failure": "OUTCOME_INVALID: the portability of the certified route arm is not established; no shadow statistic is computed. Only the raw8 arm results are archived as diagnostics."
+    "composition": {
+      "formula": "portfolio = expit(0.5 * logit(member_probability_mean) + 0.5 * aux10_mean_logits)",
+      "member_probability_mean": "mean over members of softmax(member raw logits) (official aggregation; verified against the certified route portfolio at max|delta| = 1.8e-7 on both folds)",
+      "candidate_W_portfolio": "same formula with arm W's official aggregate in place of arm R's",
+      "reuse_validity_gate": "the evaluator must re-derive the certified route portfolio from arm R's raw member logits + arm A and match portfolio.npy within 2e-6 on BOTH folds; on failure the protocol reports OUTCOME_INVALID and computes no gate"
     }
   },
   "statistics": {
     "endpoint_E1_member_ab": "pooled paired AUC delta of arm_W vs arm_R over the two shadow folds (diagnostic, recorded, not gating)",
-    "endpoint_E2_portfolio": "pooled paired AUC delta of expit((logit(W)+logit(A))/2) vs expit((logit(R)+logit(A))/2) over the two shadow folds, where A is the shadow aux10 member-mean (official logit aggregation identical to the certified composition)",
-    "confirmatory_rule": "E2 mean-over-rows paired delta >= +1.0e-5 AND >= 2.5 x paired row-level SE AND both per-fold deltas > 0",
-    "secondary_report": "the same contrast with the primary-passing fixed blend weight w* applied as expit((1-w*)*logit(R)+w*)*logit(W)) is NOT used here; the composition analogue replaces R by W at the certified 50/50 weight, matching the certified composition formula",
+    "endpoint_E2_portfolio": "pooled paired AUC delta of portfolio_W vs portfolio_R over the two shadow folds (279,854 rows), row-level paired SE from the placement covariance, plus the two per-fold AUC deltas",
+    "confirmatory_rule": "E2 pooled delta >= +1.0e-5 AND >= 2.5 x pooled paired row-level SE AND both per-fold deltas > 0",
+    "secondary_report": "the fixed-weight analogue expit((1-w*)*logit(R)+w* *logit(W)) with w* the primary-passing weight is reported as context only and never gates",
     "decision": {
       "confirmed": "record SHADOW_CONFIRMED in the ledger; the member becomes eligible for a submission decision under PATH A/B (separate committed decision)",
       "not_confirmed": "record SHADOW_NOT_CONFIRMED; the primary marginal is classified as fold-specific and no submission may rest on it"
     }
   },
   "cost": {
-    "kaggle_gpu_hours_estimate": 8.4,
-    "cpu_refit_hours_estimate": "2-4 h wall on a free Kaggle CPU kernel (parallel with the GPU arms) or local CPU",
+    "kaggle_gpu_hours_estimate": 7.4,
+    "cpu_refit_hours_estimate": 0,
     "local_gpu_hours": 0.0,
     "submissions": 0
   },
   "inputs": {
     "primary_raw8_oof": "artifacts/phase23/raw8/raw8_oof.npy",
-    "certified_route_oof": "artifacts/phase17_B1/primary/route_oof.npy",
-    "aux10_member_index": "artifacts/predictions/index.json",
-    "store_member_prefix": "sol_clean_aux10_primary_"
+    "shadow_raw8_oof": "artifacts/phase23/raw8_shadow/shadow_raw8_oof.npy",
+    "shadow_raw8_units": "artifacts/phase23/raw8_shadow/units",
+    "certified_route_shadow": "artifacts/phase17_shadow_B1/f{2,3}",
+    "certified_aux10_shadow": "artifacts/phase17_shadow_aux10"
   },
   "protected_files": {
     "submissions/v6_sol_tabpfn_route_aux10.csv": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d",
@@ -73,10 +90,9 @@
     "reports/phase17_B1_shadow_confirmation.json": "281aae9c80184dc6d7fb729461d1142ab840ff1cd7d80a6d321a6beb24bbd486"
   },
   "known_deviations": [
-    "Two shadow folds (2 and 4) rather than five; SE is over folds plus a pooled row-level paired SE, mirroring the phase-17 shadow confirmation scope.",
-    "The shadow aux10 refits run on CPU (device deviation for the three xgb members); the arm is common to both portfolios.",
-    "The shadow arms run on Kaggle T4 (fp16 autocast) while the certified primary route/raw members ran locally on the RTX 5070 Ti (bf16 where native); the port validity gate bounds this risk for the route arm.",
-    "The generator script scripts/phase23/make_shadow_kernel.py (sha256 f8a2e2005c08bc926abea807dcd5e5e6f9bd4c6bb9d0aed874a97a08202cf422) produced the three kernel variants; each variant's gen manifest records its hashes."
+    "Two shadow folds (2 and 3) rather than five; SE is pooled row-level plus the two per-fold deltas, mirroring the phase-17 shadow confirmation scope.",
+    "The shadow arms run on Kaggle T4 (fp16 autocast) while the certified route/aux shadow arms were produced locally (RTX 5070 Ti); the reuse validity gate and the Kaggle probe bound this risk. The raw8 arm itself is new on both geometries, so no bitwise cross-platform obligation attaches to it.",
+    "The certified route shadow arm used the same checkpoint otherwise, but was produced before this protocol existed; its member logits are reused unmodified and hash-checked."
   ],
   "stop_rules": [
     "Never run without the activation condition being met.",

@@ -46,7 +46,7 @@ os.environ.setdefault('PYTORCH_CUDA_ALLOC_CONF', 'expandable_segments:True')
 PROBE = False                     # production (generated variant)
 TAG = 'shadow_'                           # generated variant
 ROUTE_GEOMETRY = False           # True = 21 raw + Flight Distance coarse10 (route view)
-RUN_FOLDS = (2, 4)               # generated variant
+RUN_FOLDS = (2, 3)               # generated variant
 LIMIT_H = 10.6                    # internal wall-clock stop (session limit 12 h)
 MIN_TAIL_S = 900.0                # never start a unit with less than this left
 
