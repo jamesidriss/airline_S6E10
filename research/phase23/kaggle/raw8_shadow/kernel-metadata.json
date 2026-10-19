@@ -1,0 +1,16 @@
+{
+  "id": "jamesripoll/s6e10-phase23-raw8-shadow-tabpfn35",
+  "title": "s6e10 phase23 raw8 shadow tabpfn35",
+  "code_file": "main.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [
+    "playground-series-s6e10"
+  ],
+  "kernel_sources": [],
+  "model_sources": []
+}

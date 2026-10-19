@@ -1,0 +1,23 @@
+{
+ "generated_utc": "2026-10-19T23:39:18Z",
+ "variant": "raw8_shadow",
+ "spec": {
+  "tag": "shadow_",
+  "fold_seed": 777001,
+  "folds_sha": "5d181e32357e67b2ad8381c33549ef905bb45b969de7b8e09a3e4e7cb24af758",
+  "route": false,
+  "n_est": 8,
+  "run_folds": [
+   2,
+   4
+  ],
+  "kernel_id": "jamesripoll/s6e10-phase23-raw8-shadow-tabpfn35",
+  "title": "s6e10 phase23 raw8 shadow tabpfn35"
+ },
+ "source_main": "research/phase23/kaggle/raw8/main.py",
+ "source_main_sha256": "fa5146ede78823b5f2a61f4ecde8bd1b0f60fa6232a76d889ebfc385cca0d4d9",
+ "variant_main_sha256": "66256e65be7d55071c2dd10eeebc014359e9c6610000f5b4212d99a631729329",
+ "primary_fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+ "shadow_fold_sha256": "5d181e32357e67b2ad8381c33549ef905bb45b969de7b8e09a3e4e7cb24af758",
+ "note": "Generated file; push with: python -m kaggle kernels push -p research/phase23/kaggle/raw8_shadow -t 39600"
+}

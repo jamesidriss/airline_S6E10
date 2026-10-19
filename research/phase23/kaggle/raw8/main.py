@@ -44,6 +44,9 @@ os.environ.setdefault('PYTORCH_CUDA_ALLOC_CONF', 'expandable_segments:True')
 
 # ------------------------------------------------------------------ constants
 PROBE = True                      # flipped to False for the production push
+TAG = ''                          # output prefix; the shadow variant sets 'shadow_'
+ROUTE_GEOMETRY = False            # True = 21 raw + Flight Distance coarse10 (route view)
+RUN_FOLDS = (0, 1, 2, 3, 4)       # production folds (the reproduction probe uses (0,))
 LIMIT_H = 10.6                    # internal wall-clock stop (session limit 12 h)
 MIN_TAIL_S = 900.0                # never start a unit with less than this left
 
@@ -56,13 +59,16 @@ RAW21 = ['Inflight wifi service', 'Departure/Arrival time convenient',
          'Departure Delay in Minutes', 'Arrival Delay in Minutes']
 META4 = ['Gender', 'Customer Type', 'Type of Travel', 'Class']
 TARGET = 'satisfaction'
+CAT_IDX = ([RAW21.index(c) for c in META4]
+           + ([RAW21.index('Flight Distance'), len(RAW21)] if ROUTE_GEOMETRY else []))
 
 CKPT_REPO = 'Prior-Labs/tabpfn_3_5'
 CKPT_FILE = 'tabpfn-v3.5-20260909.safetensors'
 CKPT_REV = '06bf2ba35c80a92a3b9abb436b99cf49e7a0365e'
 CKPT_SHA = 'ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3'
 
-FOLD_SEED = 20261010              # immutable primary folds
+FOLD_SEED = 20261010              # immutable primary folds (shadow variant: 777001)
+EXPECT_FOLDS_SHA = 'b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b'
 MODEL_SEED = 1201                 # certified model random_state
 N_EST = 8                         # the hypothesis: eight internal estimators
 CHUNK_CELLS = 262144              # certified stock attribute (stages 0-2)
@@ -71,8 +77,8 @@ BATCH = 32768                     # prediction batch (fallback halves to 1024)
 LEAN_CHUNK = 16384                # KV-build row chunk of the lean patch
 
 WORK = Path('/kaggle/working')
-UNITS = WORK / 'units'
-DATA_NPZ = WORK / 'raw8_data.npz'
+UNITS = WORK / f'{TAG}units'
+DATA_NPZ = WORK / f'{TAG}raw8_data.npz'
 
 EXPECT = {
     'n_train': 699635,
@@ -83,6 +89,11 @@ EXPECT = {
     'folds_sha': 'b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b',
     'X_round6_sha': 'b2a49d79991068a745195550ca39c5f1889e4e57287f3a867cf492a6b3587790',
     'XT_round6_sha': 'a7004d08ddb9634f4403516868bc690a83d94474251a21ff47e45e1df6e4450d',
+}
+
+EXPECT_ROUTE = {
+    'X_round6_sha': 'dbc3646d9c0bb56308cee4af8cba2aa09538772363f1f0ae1cbf56eccfa36e60',
+    'XT_round6_sha': '08a9c55cfe2faa5c3d4257d62d6afc297da7a13f428baea668a799dac57fc0e8',
 }
 
 
@@ -225,7 +236,7 @@ def build_dataset():
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=FOLD_SEED)
     for k, (_, va) in enumerate(skf.split(np.zeros(len(y), dtype=np.int8), y)):
         folds[va] = k
-    if (folds < 0).any() or arr_sha256(folds) != EXPECT['folds_sha']:
+    if (folds < 0).any() or arr_sha256(folds) != EXPECT_FOLDS_SHA:
         raise SystemExit('fold reconstruction mismatch')
     log('folds:', [int((folds == k).sum()) for k in range(5)])
 
@@ -233,14 +244,18 @@ def build_dataset():
     for c in META4:
         levels = sorted(cov[c].unique().tolist())
         cov[c] = pd.Categorical(cov[c], categories=levels).codes
+    if ROUTE_GEOMETRY:
+        cov['Flight Distance coarse10'] = cov['Flight Distance'] // 10
     cov = cov.fillna(-1)
     X = cov.iloc[:len(tr)].to_numpy(dtype='float32')
     XT = cov.iloc[len(tr):].to_numpy(dtype='float32')
-    if arr_sha256(round6(X)) != EXPECT['X_round6_sha']:
+    expect = EXPECT_ROUTE if ROUTE_GEOMETRY else EXPECT
+    if arr_sha256(round6(X)) != expect['X_round6_sha']:
         raise SystemExit('X content hash mismatch')
-    if arr_sha256(round6(XT)) != EXPECT['XT_round6_sha']:
+    if arr_sha256(round6(XT)) != expect['XT_round6_sha']:
         raise SystemExit('XT content hash mismatch')
-    log('dataset ok:', X.shape, XT.shape, 'pos_rate', float(y.mean()))
+    log('dataset ok:', X.shape, XT.shape, 'pos_rate', float(y.mean()),
+        'route_geometry', ROUTE_GEOMETRY)
     return X, y, folds, XT, ids, idt
 
 
@@ -336,7 +351,7 @@ def make_params(ckpt: Path, clf_device: str = 'cuda') -> dict:
                 device=clf_device, ignore_pretraining_limits=True,
                 fit_mode='fit_with_cache', kv_cache_precision='int8',
                 keep_cache_on_device=True, inference_precision='autocast',
-                categorical_features_indices=[RAW21.index(c) for c in META4],
+                categorical_features_indices=list(CAT_IDX),
                 memory_saving_mode=True, n_preprocessing_jobs=1)
 
 
@@ -560,6 +575,7 @@ def run_unit(fold: int, member: int, gpu: int, deadline_ts: float, ckpt: Path):
             meta = dict(
                 fold=fold, member=member, gpu=gpu, variant=vi, variant_kwargs=variant,
                 device_name=torch.cuda.get_device_name(gpu), bf16=bf16,
+                route_geometry=ROUTE_GEOMETRY, n_estimators=N_EST,
                 chunk_cells=CHUNK_CELLS, col_chunk=COL_CHUNK,
                 lean_chunk=LEAN_CHUNK, batch_last=BATCH,
                 t_prep=t_prep, t_fit=t_fit, t_val=t_val, t_test=None,
@@ -626,6 +642,8 @@ def probe(ckpt: Path):
     summary = {'mode': 'probe', 'utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
                'gpu_count': torch.cuda.device_count(),
                'gpu_name': torch.cuda.get_device_name(0),
+               'route_geometry': ROUTE_GEOMETRY, 'n_estimators': N_EST,
+               'fold_seed': FOLD_SEED, 'tag': TAG,
                'bf16_supported_with_emulation': bool(torch.cuda.is_bf16_supported()),
                'native_bf16_supported': native_bf16_supported()}
     bf16 = native_bf16_supported()
@@ -666,8 +684,8 @@ def probe(ckpt: Path):
                         'gate': 2e-6, 'pass': bool(d_stock_a <= 2e-6 and d_a_b <= 2e-6)}
     log('A equivalence: stock-vs-port', d_stock_a, 'port-vs-lean', d_a_b)
     if not summary['equiv']['pass']:
-        (WORK / 'probe_summary.json').write_text(json.dumps(summary, indent=1),
-                                                 encoding='utf-8')
+        (WORK / f'{TAG}probe_summary.json').write_text(json.dumps(summary, indent=1),
+                                                     encoding='utf-8')
         raise SystemExit('equivalence gate failed')
 
     # --- B. full-context member-0 feasibility (fold 0 against 4/5 context)
@@ -709,7 +727,7 @@ def probe(ckpt: Path):
         json.dumps({k: (round(v, 3) if isinstance(v, float) else v)
                     for k, v in summary['full_context'].items()
                     if k != 'peak_fit_bytes'}, indent=1))
-    (WORK / 'probe_summary.json').write_text(json.dumps(summary, indent=1), encoding='utf-8')
+    (WORK / f'{TAG}probe_summary.json').write_text(json.dumps(summary, indent=1), encoding='utf-8')
     log('PROBE COMPLETE')
     return 0
 
@@ -760,16 +778,18 @@ def assemble():
                         'n_test_members': len(tst)}
         log(f'fold {f}: members={len(ms)} auc={fold_info[f]["oof_auc_fold"]:.9f} '
             f'test_members={len(tst)}')
-    result = {'fold_info': fold_info}
+    result = {'fold_info': fold_info, 'run_folds': list(RUN_FOLDS),
+              'route_geometry': ROUTE_GEOMETRY, 'n_estimators': N_EST,
+              'fold_seed': FOLD_SEED, 'tag': TAG}
     if not np.isnan(oof).any():
         result['oof_auc_full'] = float(roc_auc_score(y, oof))
         log('FULL OOF AUC:', result['oof_auc_full'])
-    np.save(WORK / 'raw8_oof.npy', oof)
+    np.save(WORK / f'{TAG}raw8_oof.npy', oof)
     if test_stack:
         pt = np.mean(np.stack(test_stack, 0), axis=0).astype(np.float32)
-        np.save(WORK / 'raw8_test.npy', pt)
+        np.save(WORK / f'{TAG}raw8_test.npy', pt)
         result['test_folds'] = len(test_stack)
-    (WORK / 'raw8_result.json').write_text(json.dumps(result, indent=1), encoding='utf-8')
+    (WORK / f'{TAG}raw8_result.json').write_text(json.dumps(result, indent=1), encoding='utf-8')
     log('ASSEMBLY COMPLETE', json.dumps(result)[:500])
     return 0
 
@@ -793,7 +813,7 @@ def production(ckpt: Path, limit_h: float):
     UNITS.mkdir(parents=True, exist_ok=True)
     start = time.time()
     deadline = start + limit_h * 3600
-    queue = [(f, m) for f in range(5) for m in range(8)]
+    queue = [(f, m) for f in RUN_FOLDS for m in range(N_EST)]
     pending = [u for u in queue if not unit_done(*u)]
     retried = set()
     log(f'production: {len(pending)}/{len(queue)} units pending, deadline in {limit_h:.1f} h')

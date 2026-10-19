@@ -1,0 +1,23 @@
+{
+ "generated_utc": "2026-10-19T23:39:18Z",
+ "variant": "raw8_shadow_route",
+ "spec": {
+  "tag": "shadowR_",
+  "fold_seed": 777001,
+  "folds_sha": "5d181e32357e67b2ad8381c33549ef905bb45b969de7b8e09a3e4e7cb24af758",
+  "route": true,
+  "n_est": 2,
+  "run_folds": [
+   2,
+   4
+  ],
+  "kernel_id": "jamesripoll/s6e10-phase23-raw8-shadow-route-tabpfn35",
+  "title": "s6e10 phase23 raw8 shadow route tabpfn35"
+ },
+ "source_main": "research/phase23/kaggle/raw8/main.py",
+ "source_main_sha256": "fa5146ede78823b5f2a61f4ecde8bd1b0f60fa6232a76d889ebfc385cca0d4d9",
+ "variant_main_sha256": "e58aa6804da56099c5045f4e7a18ebb0b035c2f940f69c92a65b1c9084c952c8",
+ "primary_fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+ "shadow_fold_sha256": "5d181e32357e67b2ad8381c33549ef905bb45b969de7b8e09a3e4e7cb24af758",
+ "note": "Generated file; push with: python -m kaggle kernels push -p research/phase23/kaggle/raw8_shadow_route -t 39600"
+}
