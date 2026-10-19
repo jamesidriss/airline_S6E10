@@ -37,6 +37,7 @@ sys.path.insert(0, str(ROOT))
 from src.common import arr_sha256, git_commit, load_cached_parquet, save_json  # noqa: E402
 from src.submission.store import load_oof  # noqa: E402
 from scripts.phase18.build_error_atlas import segment_masks  # noqa: E402
+from src.validation.paired_auc import categorical_total_variation  # noqa: E402
 
 BASELINE = "v7_sol_tabpfn_internal2_aux10"
 FOLDS = ROOT / "data" / "cache" / "folds" / "primary_5f_seed20261010.npy"
@@ -112,12 +113,7 @@ def drift(train, test) -> dict:
         pooled = np.sqrt(0.5 * (va + vb))
         out["numeric_smd"][c] = float((b[fb].mean() - a[fa].mean()) / pooled) if pooled > 0 else 0.0
     for c in cat_cols:
-        pa = train[c].astype("category").cat.codes
-        pb = test[c].astype("category").cat.codes
-        cats = set(pa.unique()) | set(pb.unique())
-        ta = np.array([(pa == k).mean() for k in cats])
-        tb = np.array([(pb == k).mean() for k in cats])
-        out["categorical_tv"][c] = float(0.5 * np.abs(ta - tb).sum())
+        out["categorical_tv"][c] = categorical_total_variation(train[c], test[c])
     out["max_abs_smd"] = float(max(abs(v) for v in out["numeric_smd"].values()))
     out["max_tv"] = float(max(out["categorical_tv"].values()))
     return out

@@ -40,13 +40,14 @@ def main() -> int:
     import tests.test_phase12_lgb_cat as P12
     import tests.test_phase13_aux as P13
     import tests.test_residual_nested as RN
+    import tests.test_paired_auc as PA
 
     # NOTE: test_stochastic_protocol.py has its own __main__ runner with per-assertion reporting, so
     # it is invoked as a subprocess rather than imported here -- importing it would only pick up its
     # module-level helpers. It is registered explicitly so the aggregate count stays honest; a test
     # file that silently stops being run is worse than no test file.
     mods = (T, TR, TW, TN, TI, TE, TV, TS, TP, TM, TQ, TC, TK, T15, T16, T17, T18, T19, T19B,
-            T20C, T20X, T20S, NB, NC, P11R, P12, P13, RN)
+            T20C, T20X, T20S, NB, NC, P11R, P12, P13, RN, PA)
     fns = [(mod.__name__, getattr(mod, n)) for mod in mods
            for n in sorted(dir(mod)) if n.startswith("test_")]
     ok = fail = 0
