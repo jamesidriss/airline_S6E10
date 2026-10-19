@@ -1,0 +1,52 @@
+{
+  "utc": "2026-10-19T19:27:17.532136+00:00",
+  "source": "Published 15fold pipeline claims strongest single-tree CatBoost gain. This is an independent primary5 CPU adaptation, not reproduction of claimed score.",
+  "adaptive_origin": "Chosen after lean84 LGBM negative; source claim drives CatBoost choice, not public leaderboard score. All primary reused discovery; mandatory independent matched shadow.",
+  "feature_protocol": "configs/phase22/private_breakthrough_20261019.json",
+  "feature_protocol_sha256": "536355875e034df2c45112583a375f1afceb195976e4c6d10339dfb4a5172fef",
+  "feature_code": "scripts/phase22/lean84.py",
+  "feature_code_sha256": "9c61f9c614f10bc8ed94f5217c24c4421ace5b74e7f4c310264d35999a0f0aa9",
+  "seed": 20261019,
+  "params": {
+    "iterations": 1500,
+    "learning_rate": 0.03,
+    "depth": 7,
+    "l2_leaf_reg": 5.0,
+    "min_data_in_leaf": 100,
+    "eval_metric": "AUC",
+    "loss_function": "Logloss",
+    "task_type": "CPU",
+    "thread_count": 6,
+    "verbose": false,
+    "allow_writing_files": false,
+    "bootstrap_type": "Bayesian",
+    "max_ctr_complexity": 1,
+    "random_seed": 20261019
+  },
+  "primary_folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "inner_ES_fraction": 0.1,
+  "inner_ES_patience": 50,
+  "refit": "Fixed selected iteration count on complete outer FIT, rebuilt nested TE; same exact model for eval/test",
+  "portfolio_weights": [
+    0.1,
+    0.25,
+    1.0
+  ],
+  "eligible_family_total": 8,
+  "alpha_per_comparison": 0.00625,
+  "gate": "mean paired >=15e-6, >=2.5*foldSE,5/5positive, one-sided row paired p<=.05/8, conditional privateP05>=0; mandatory shadow before submission",
+  "simulation": "Same100 20/80 draws as original phase22 prereg",
+  "resources": {
+    "GPU_hours": 0,
+    "CPU_threads": 6,
+    "wall_limit_hours": 2.5,
+    "no_paid_compute": true
+  },
+  "promotion": "Only primary-passing fixed weight; no tuning. Reproduce fresh exact models and run matched shadow2/3 against frozen v7; certify 299844 full test rows and PATH A/B before upload."
+}
