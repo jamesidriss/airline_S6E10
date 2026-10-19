@@ -1,0 +1,24 @@
+{
+  "purpose": "Distinguish source-driven replication from a claim of new fundamental signal",
+  "public_search_date": "2026-10-19",
+  "queries": [
+    "site:kaggle.com S6E10 0.961492",
+    "site:kaggle.com S6E10 TFM predictions features",
+    "site:kaggle.com S6E10 0.96238"
+  ],
+  "new_verified_FE_prediction_release_found": false,
+  "search_limit": "Search result absence is not proof that no newer release exists. Source dataset version1 and discussion snapshots are separately preserved.",
+  "raw8_lead": "Positive fixed-weight external diagnostic, unlike equal9TFM which loses. Own raw1 is a weaker mechanistic proxy; no claim it reproduces raw8.",
+  "lean84_scope": "Source-driven clean CPU adaptation of the compact public recipe with nested TE and original-only cached LGBM teacher, evaluated with two tree learners; not a claim of discovering an entirely new covariate.",
+  "not_repeated": {
+    "noise_ceiling": "New search returned Dariush Afshar label-noise notebook; campaign GEN80/GEN82 already records the identification limitation. No duplicate noise-ceiling experiment or asserted 3.8% Bayes limit.",
+    "prior_primary_selection": "Ninety-six historical hypotheses and selected v7 reuse the same primary labels; local eight-arm correction does not remove this accumulated adaptation."
+  },
+  "outstanding_raw8_requirements": [
+    "Verified own primary5 production contexts",
+    "Frozen weight chosen before matched shadow2/3",
+    "Full test model-context parity and certificates",
+    "Hardware fault resolution and defensible remaining authorized compute"
+  ],
+  "additional_GPU_spending": 0
+}

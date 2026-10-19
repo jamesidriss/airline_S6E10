@@ -1,0 +1,1547 @@
+{
+  "mode": "Exact tests/run_tests.py registration, module-isolated, CUDA hidden",
+  "passed": 247,
+  "failed": 0,
+  "registered_modules": [
+    "tests.test_pipeline",
+    "tests.test_tabr_retrieval",
+    "tests.test_tabr_wiring",
+    "tests.test_no_undefined_names",
+    "tests.test_index_space",
+    "tests.test_te_all21",
+    "tests.test_view_composition",
+    "tests.test_sol_contracts",
+    "tests.test_private_sim",
+    "tests.test_masked_encoder",
+    "tests.test_sol_research",
+    "tests.test_multitask",
+    "tests.test_kaggle_io",
+    "tests.test_sol_phase15",
+    "tests.test_sol_phase16",
+    "tests.test_sol_phase17",
+    "tests.phase18.test_phase18",
+    "tests.phase19.test_h19a",
+    "tests.phase19.test_h19b",
+    "tests.phase20.test_h19c",
+    "tests.phase20.test_runner_exit_codes",
+    "tests.phase20.test_scheduler_contracts",
+    "tests.test_native_block",
+    "tests.test_native_cat",
+    "tests.test_phase11r_protocol",
+    "tests.test_phase12_lgb_cat",
+    "tests.test_phase13_aux",
+    "tests.test_residual_nested",
+    "tests.test_paired_auc",
+    "tests.test_phase22"
+  ],
+  "seconds": 715.6720000000205,
+  "results": [
+    {
+      "module": "tests.test_stochastic_protocol",
+      "passed": 1,
+      "failed": 0,
+      "stdout": "==============================================================================\nPHASE 9 STOCHASTIC-BOOSTING PROTOCOL TESTS\n==============================================================================\n\nround selection\n  PASS  tolerance picks the argmax when the argmax is uniquely best\n  PASS  selection never exceeds the argmax round\n  PASS  exactly flat curve resolves to the cheapest round\n  PASS  differences inside tolerance do not buy extra rounds\n  PASS  a difference outside tolerance IS honoured\n\ntolerance is pre-declared and bounded\n  PASS  default tolerance is 1e-5\n  PASS  tolerance is below the +1.5e-5 admission gate\n  PASS  tolerance gap to the gate is under 2x, so no admissible delta is discarded\n  PASS  round grid brackets the champion's measured peak (~797-900)\n  PASS  round grid is strictly increasing\n  PASS  round grid does not start at the boundary\n\nsnapshot mode guard\n  PASS  truncation probe ran\n  PASS  GBDT control truncation error is exactly 0 (measurement is sound)\n  PASS  DART truncation error exceeds the gate, so snapshot mode is refused\n  PASS  at least one DART arm exists\n  PASS  no DART arm sets num_estimators, which lgb.train ignores\n\ninner split containment\n  PASS  inner-train and inner-val are disjoint\n  PASS  inner-train union inner-val equals outer-fit\n  PASS  NEITHER inner split touches an eval row\n  PASS  eval rows are left unobserved by the selection stage\n\ninner split determinism\n  PASS  same seed gives the identical split\n  PASS  inner-val keeps the outer-fit positive rate within 2 points\n\nfit / eval disjointness\n  PASS  fold 0: fit and eval are disjoint\n  PASS  fold 0: fit + eval covers every row\n  PASS  fold 1: fit and eval are disjoint\n  PASS  fold 1: fit + eval covers every row\n  PASS  fold 2: fit and eval are disjoint\n  PASS  fold 2: fit + eval covers every row\n  PASS  fold 3: fit and eval are disjoint\n  PASS  fold 3: fit + eval covers every row\n  PASS  fold 4: fit and eval are disjoint\n  PASS  fold 4: fit + eval covers every row\n\nchampion configuration\n  PASS  learning_rate is the champion's 0.02, not gbdt.py's generic 0.03\n  PASS  num_leaves is the champion's 127, not gbdt.py's generic 63\n  PASS  ES rounds match run_views._fit_lgbm_es (6000, not gbdt.py's 4000)\n  PASS  ES patience matches run_views._fit_lgbm_es (300, not gbdt.py's 200)\n  PASS  recorded fold-0 control is the 0.961299 this harness must reproduce\n\nper-mode round grid\n  PASS  DART arms exist\n  PASS  dart005: uses the shorter DART grid\n  PASS  dart010: uses the shorter DART grid\n  PASS  dart005_xt: uses the shorter DART grid\n  PASS  ctl_es: uses the default grid\n  PASS  ctl_fixed: uses the default grid\n  PASS  ctl_det: uses the default grid\n  PASS  rf: uses the default grid\n  PASS  rf_xt: uses the default grid\n  PASS  DART grid is strictly increasing\n  PASS  DART grid brackets the probe's ~700 peak\n  PASS  DART grid stops well short of the wasteful 3600 tail\n  PASS  DART grid total cost is below the GBDT grid's\n\nRF configuration\n  PASS  RF arms exist\n  PASS  rf: bagging is set explicitly and is a real fraction\n  PASS  rf_xt: bagging is set explicitly and is a real fraction\n  PASS  extra_trees control arm exists for GBDT (ctl_det)\n  PASS  matched extra_trees arm exists for GBDT (ctl_fixed)\n  PASS  both ctl_es and ctl_fixed exist as separate controls\n\nparameter assembly\n  PASS  boosting_type is set for DART\n  PASS  n_estimators is not injected (lgb.train takes it from num_boost_round)\n  PASS  no boosting_type leaks into the GBDT control\n  PASS  extra_trees reaches the params dict\n  PASS  seeds are derived and distinct\n  PASS  ctl_es: no unrecognised mode keys\n  PASS  ctl_fixed: no unrecognised mode keys\n  PASS  ctl_det: no unrecognised mode keys\n  PASS  dart005: no unrecognised mode keys\n  PASS  dart010: no unrecognised mode keys\n  PASS  dart005_xt: no unrecognised mode keys\n  PASS  rf: no unrecognised mode keys\n  PASS  rf_xt: no unrecognised mode keys\n\n==============================================================================\n69/69 passed\n==============================================================================\n",
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_pipeline",
+      "passed": 20,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_admission_gate_logic",
+          "pass": true,
+          "seconds": 1.077999999979511
+        },
+        {
+          "name": "test_blocked_id_scheme_is_contiguous",
+          "pass": true,
+          "seconds": 0.125
+        },
+        {
+          "name": "test_crossfit_prior_never_sees_own_label",
+          "pass": true,
+          "seconds": 0.031000000017229468
+        },
+        {
+          "name": "test_crossfit_row_never_sees_own_label",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_external_features_use_no_competition_label",
+          "pass": true,
+          "seconds": 16.51600000000326
+        },
+        {
+          "name": "test_fold_determinism",
+          "pass": true,
+          "seconds": 0.10899999999674037
+        },
+        {
+          "name": "test_fold_no_row_overlap",
+          "pass": true,
+          "seconds": 0.07800000000861473
+        },
+        {
+          "name": "test_fold_safe_te_never_sees_apply_rows",
+          "pass": true,
+          "seconds": 0.0159999999741558
+        },
+        {
+          "name": "test_inner_early_stopping_split_is_disjoint_from_eval",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_no_secret_shaped_material_in_repository",
+          "pass": true,
+          "seconds": 92.54700000002049
+        },
+        {
+          "name": "test_no_source_files_missing_from_git",
+          "pass": true,
+          "seconds": 0.0779999999795109
+        },
+        {
+          "name": "test_oof_coverage_and_store_integrity",
+          "pass": true,
+          "seconds": 0.9840000000258442
+        },
+        {
+          "name": "test_original_overlap_audit_is_small",
+          "pass": true,
+          "seconds": 3.7189999999827705
+        },
+        {
+          "name": "test_sample_submission_schema",
+          "pass": true,
+          "seconds": 0.14100000000325963
+        },
+        {
+          "name": "test_schema",
+          "pass": true,
+          "seconds": 0.23399999999674037
+        },
+        {
+          "name": "test_secret_scan_detectors_are_self_exempt_and_working",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_submission_preflight_rejects_bad_input",
+          "pass": true,
+          "seconds": 0.7030000000086147
+        },
+        {
+          "name": "test_transforms_are_invertible_shape_wise",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_twin_vocabulary_is_label_free",
+          "pass": true,
+          "seconds": 1.875
+        },
+        {
+          "name": "test_verify_kaggle_facts_never_persists_non_json_bodies",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_tabr_retrieval",
+      "passed": 7,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_faiss_gpu_shim_is_scoped_additive_and_idempotent",
+          "pass": true,
+          "seconds": 4.73499999998603
+        },
+        {
+          "name": "test_shim_reset_clears_database_so_batches_cannot_leak_into_each_other",
+          "pass": true,
+          "seconds": 0.14000000001396984
+        },
+        {
+          "name": "test_torch_exact_l2_index_depends_on_no_labels",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_torch_exact_l2_index_device_placement_and_determinism",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_torch_exact_l2_index_is_fp32_exact_not_tf32",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_torch_exact_l2_index_matches_float64_reference",
+          "pass": true,
+          "seconds": 0.030999999988125637
+        },
+        {
+          "name": "test_torch_exact_l2_index_topk_overlap_is_complete",
+          "pass": true,
+          "seconds": 0.03200000000651926
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_tabr_wiring",
+      "passed": 12,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_assert_effective_config_rejects_a_mismatched_model",
+          "pass": true,
+          "seconds": 3.5780000000086147
+        },
+        {
+          "name": "test_d_main_flag_reaches_the_parameter_dict",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_d_main_reaches_the_instantiated_pytabkit_model",
+          "pass": true,
+          "seconds": 3.265999999974156
+        },
+        {
+          "name": "test_installed_index_registry_points_at_the_most_recent_index",
+          "pass": true,
+          "seconds": 0.015000000013969839
+        },
+        {
+          "name": "test_memory_efficient_actually_suppresses_candidate_autograd",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_production_config_uses_memory_efficient_true",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_query_chunk_reconfiguration_keeps_retrieval_exact",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_query_chunk_reconfiguration_takes_effect_on_new_indexes",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_retrieval_width_assertion_rejects_mismatch",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_runner_source_does_not_use_static_tr_for_validation",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_static_view_is_narrower_than_assembled_view",
+          "pass": true,
+          "seconds": 1.687999999994645
+        },
+        {
+          "name": "test_width_assertion_accepts_real_frames_and_rejects_static",
+          "pass": true,
+          "seconds": 0.0
+        }
+      ],
+      "exit_code": 0,
+      "stderr": "W1019 21:40:06.189000 46584 .venv\\Lib\\site-packages\\torch\\utils\\flop_counter.py:29] triton not found; flop counting will not work for triton kernels\n"
+    },
+    {
+      "module": "tests.test_no_undefined_names",
+      "passed": 5,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_critical_files_have_no_undefined_names",
+          "pass": true,
+          "seconds": 0.5629999999946449
+        },
+        {
+          "name": "test_prediction_is_persisted_before_diagnostics",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_run_tabr_imports_every_name_it_calls",
+          "pass": true,
+          "seconds": 4.062000000005355
+        },
+        {
+          "name": "test_static_guard_reads_file_contents_and_detects_missing_imports",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_static_guard_rejects_unterminated_literal_before_expensive_runs",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_index_space",
+      "passed": 5,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_assemble_returns_local_indexed_matrix",
+          "pass": true,
+          "seconds": 12.812999999994645
+        },
+        {
+          "name": "test_early_stopping_holdout_is_about_ten_percent",
+          "pass": true,
+          "seconds": 0.28099999998812564
+        },
+        {
+          "name": "test_fit_and_eval_row_sets_are_disjoint",
+          "pass": true,
+          "seconds": 0.1720000000204891
+        },
+        {
+          "name": "test_global_local_index_pairing_is_detectable",
+          "pass": true,
+          "seconds": 10.59299999999348
+        },
+        {
+          "name": "test_inner_es_split_returns_train_first",
+          "pass": true,
+          "seconds": 0.21900000001187436
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_te_all21",
+      "passed": 7,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_apply_transform_uses_only_fit_labels",
+          "pass": true,
+          "seconds": 0.35899999999674037
+        },
+        {
+          "name": "test_exact_values_survive_without_float32_aliasing",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_inner_split_is_deterministic_and_independent_of_the_target",
+          "pass": true,
+          "seconds": 0.17199999999138527
+        },
+        {
+          "name": "test_nan_sentinel_is_stable_and_collision_free",
+          "pass": true,
+          "seconds": 0.14000000001396984
+        },
+        {
+          "name": "test_one_fit_row_target_cannot_materially_move_its_own_encoding",
+          "pass": true,
+          "seconds": 0.09400000001187436
+        },
+        {
+          "name": "test_randomising_outer_val_labels_changes_nothing",
+          "pass": true,
+          "seconds": 0.1409999999741558
+        },
+        {
+          "name": "test_unseen_category_maps_to_prior",
+          "pass": true,
+          "seconds": 0.015000000013969839
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_view_composition",
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_conditional_and_all21_blocks_are_mutually_exclusive_by_default",
+          "pass": true,
+          "seconds": 13.76600000000326
+        },
+        {
+          "name": "test_view_composition_matches_declared_blocks",
+          "pass": true,
+          "seconds": 225.125
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_sol_contracts",
+      "passed": 31,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_all_neural_entry_points_isolate_outer_labels_and_respect_no_twin",
+          "pass": true,
+          "seconds": 1.2190000000118744
+        },
+        {
+          "name": "test_array_hash_buffer_path_preserves_historical_digests",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_aux_distribution_arithmetic_and_invalid_inputs",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_aux_fit_and_apply_rows_are_actually_unseen",
+          "pass": true,
+          "seconds": 0.030999999988125637
+        },
+        {
+          "name": "test_banked_predictions_cannot_be_replaced_or_lose_test_sidecar",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_banked_submission_cannot_be_overwritten",
+          "pass": true,
+          "seconds": 0.0629999999946449
+        },
+        {
+          "name": "test_block10_auxiliary_confirmation_excludes_outer_labels_and_primary_arrays",
+          "pass": true,
+          "seconds": 0.26500000001396984
+        },
+        {
+          "name": "test_certified_submission_refuses_unbound_decision_before_loading_data",
+          "pass": true,
+          "seconds": 0.0159999999741558
+        },
+        {
+          "name": "test_clean_classical_role_plan_is_frozen_and_retains_original_schemes",
+          "pass": true,
+          "seconds": 0.015000000013969839
+        },
+        {
+          "name": "test_clean_portfolio_refuses_missing_test_predictions_before_loading_data",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_clean_replay_resume_rejects_misaligned_ids_before_writing",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_fixed_foundation_confirmation_excludes_outer_labels",
+          "pass": true,
+          "seconds": 2.4530000000086147
+        },
+        {
+          "name": "test_fixed_vector_bootstrap_matches_sklearn_with_ties",
+          "pass": true,
+          "seconds": 0.09399999998277053
+        },
+        {
+          "name": "test_fold_registry_rejects_changed_bytes_ids_and_force",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_foundation_reader_rejects_ambiguous_completed_vectors_before_scoring",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_foundation_test_certificate_rejects_partial_primary_before_array_load",
+          "pass": true,
+          "seconds": 0.015000000013969839
+        },
+        {
+          "name": "test_full_context_probe_uses_every_training_row_and_reports_no_auc",
+          "pass": true,
+          "seconds": 0.15599999998812564
+        },
+        {
+          "name": "test_full_refit_preserves_early_stop_estimator_configuration",
+          "pass": true,
+          "seconds": 0.40700000000651926
+        },
+        {
+          "name": "test_generic_gbdt_validation_never_receives_outer_rows",
+          "pass": true,
+          "seconds": 0.046999999991385266
+        },
+        {
+          "name": "test_native39_crosses_preserve_literal_identity_and_ignore_target",
+          "pass": true,
+          "seconds": 0.10899999999674037
+        },
+        {
+          "name": "test_native_cat_zero_based_first_tree_is_preserved",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_neural_twins_preserve_values_across_split_vocabularies",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_partial_shadow_scope_requires_predeclaration_and_never_becomes_full_oof",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_prediction_store_preserves_unindexed_test_only_artifact",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_primary_context_test_fallback_excludes_held_fold_labels",
+          "pass": true,
+          "seconds": 0.39000000001396984
+        },
+        {
+          "name": "test_shadow_auxiliary_features_never_reuse_primary_fold_arrays",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_small_policy_audit_contexts_exclude_every_outer_query_row",
+          "pass": true,
+          "seconds": 0.1409999999741558
+        },
+        {
+          "name": "test_static_cache_aliases_only_identical_ordered_label_free_blocks",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_v5_iterations_require_exact_five_treatment_folds",
+          "pass": true,
+          "seconds": 0.21900000001187436
+        },
+        {
+          "name": "test_v5_refit_preserves_all_six_xt_configs_and_seeds",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_zero_based_best_iteration_zero_refits_one_tree",
+          "pass": true,
+          "seconds": 0.015000000013969839
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_private_sim",
+      "passed": 3,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_private_sim_preserves_existing_report_before_loading_data",
+          "pass": true,
+          "seconds": 0.015000000013969839
+        },
+        {
+          "name": "test_private_split_definitions_are_deterministic_and_disjoint",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_ranked_auc_matches_sklearn_with_ties_and_bootstrap_weights",
+          "pass": true,
+          "seconds": 0.0159999999741558
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_masked_encoder",
+      "passed": 3,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_masked_loss_has_finite_gradient_and_no_loss_from_unmasked_targets",
+          "pass": true,
+          "seconds": 0.1879999999946449
+        },
+        {
+          "name": "test_masking_hides_rating_and_both_numeric_categorical_twins",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_ssl_preprocessing_refuses_label_or_id_columns",
+          "pass": true,
+          "seconds": 0.015000000013969839
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_sol_research",
+      "passed": 11,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_decoder_activation_reuse_preserves_matrix_shapes_and_gradients",
+          "pass": true,
+          "seconds": 0.0629999999946449
+        },
+        {
+          "name": "test_decoder_projection_chunks_keep_every_context_row",
+          "pass": true,
+          "seconds": 1.577999999979511
+        },
+        {
+          "name": "test_explicit_head_expansion_matches_grouped_attention",
+          "pass": true,
+          "seconds": 0.015000000013969839
+        },
+        {
+          "name": "test_foundation_frame_ignores_targets_ids_and_poisoned_te",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_head_views_preserve_all_keys_and_alias_guard",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_invalid_grouped_head_geometry_is_rejected",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_opt_in_query_reuse_preserves_keys_values_and_refuses_aliases",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_query_activation_reuse_preserves_cpu_outputs_and_gradients",
+          "pass": true,
+          "seconds": 0.030999999988125637
+        },
+        {
+          "name": "test_query_chunks_preserve_full_context_for_mha_and_mqa",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_resource_guard_rejects_insufficient_disk_before_fit",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_scaling_reuse_preserves_cpu_and_gradient_paths",
+          "pass": true,
+          "seconds": 0.0
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_multitask",
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_auxiliary_loss_trains_shared_encoder_without_satisfaction_head",
+          "pass": true,
+          "seconds": 0.030999999988125637
+        },
+        {
+          "name": "test_multitask_normalization_excludes_application_rows",
+          "pass": true,
+          "seconds": 0.0
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_kaggle_io",
+      "passed": 6,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_ambiguous_upload_still_consumes_budget_and_is_never_retried",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_poll_ignores_old_complete_submission_and_persists_exact_score",
+          "pass": true,
+          "seconds": 0.046999999991385266
+        },
+        {
+          "name": "test_poll_rejects_ref_filename_disagreement",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_remote_zero_quota_does_not_upload_or_reserve",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_submission_cap_refuses_before_any_api_access",
+          "pass": true,
+          "seconds": 0.09299999999348074
+        },
+        {
+          "name": "test_submit_preserves_numeric_ref_and_reserves_before_upload",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_sol_phase15",
+      "passed": 6,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_auxiliary_cache_rejects_fit_apply_overlap",
+          "pass": true,
+          "seconds": 0.0629999999946449
+        },
+        {
+          "name": "test_auxiliary_cache_rejects_raw_covariate_drift",
+          "pass": true,
+          "seconds": 0.015000000013969839
+        },
+        {
+          "name": "test_certificate_rejects_apply_labels_in_fit_context",
+          "pass": true,
+          "seconds": 0.030999999988125637
+        },
+        {
+          "name": "test_certificate_rejects_apply_row_order_drift",
+          "pass": true,
+          "seconds": 0.046999999991385266
+        },
+        {
+          "name": "test_certificate_rejects_inference_recipe_drift",
+          "pass": true,
+          "seconds": 0.0470000000204891
+        },
+        {
+          "name": "test_full_admission_uses_four_of_five_and_not_partial_replication_rule",
+          "pass": true,
+          "seconds": 0.0
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_sol_phase16",
+      "passed": 5,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_exact_error_pairs_counts_ties_and_region_exclusion",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_rank_geometry_cannot_use_other_applied_folds",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_rescue_damage_matches_all_pairs_with_dual_ties",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_sequential_cache_release_and_official_probability_order",
+          "pass": true,
+          "seconds": 1.1719999999913853
+        },
+        {
+          "name": "test_symmetric_noise_ceiling_matches_explicit_pair_confusion",
+          "pass": true,
+          "seconds": 0.0
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_sol_phase17",
+      "passed": 16,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_attention_diagnostic_preserves_actual_strides_dtype_and_shape",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_completed_fold_staging_rejects_failed_or_mismatched_report",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_four_estimator_gate_checks_every_configuration_and_class_column",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_full_primary_assembly_rejects_missing_fold_and_swapped_ids",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_internal_equivalence_rejects_class_order_and_row_order_drift",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_internal_equivalence_rejects_nonfinite_badshape_and_denormalized_outputs",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_official_zero_budget_produces_separate_member_caches_in_order",
+          "pass": true,
+          "seconds": 1.4060000000172295
+        },
+        {
+          "name": "test_oof_stress_rejects_changed_or_truncated_banked_partitions",
+          "pass": true,
+          "seconds": 0.0159999999741558
+        },
+        {
+          "name": "test_resource_diagnostics_preserve_original_disk_preflight",
+          "pass": true,
+          "seconds": 0.015000000013969839
+        },
+        {
+          "name": "test_resume_rejects_missing_noncontiguous_and_tampered_member_contributions",
+          "pass": true,
+          "seconds": 0.03200000000651926
+        },
+        {
+          "name": "test_resume_skips_completed_fit_and_preserves_official_member_aggregation",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_resume_worker_guard_skips_own_launcher_but_blocks_separate_worker",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_saved_official_member_replay_rejects_tampering_and_wrong_aggregation",
+          "pass": true,
+          "seconds": 0.030999999988125637
+        },
+        {
+          "name": "test_secret_scan_checks_untruncated_contents_without_returning_secret_values",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_submission_boundary_rejects_partial_certificate_even_with_valid_vectors",
+          "pass": true,
+          "seconds": 0.046999999991385266
+        },
+        {
+          "name": "test_supported_auto_memory_retains_fit_saving_without_splitting_small_query",
+          "pass": true,
+          "seconds": 0.0
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.phase18.test_phase18",
+      "passed": 5,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_atlas_pair_credit_arithmetic_exact",
+          "pass": true,
+          "seconds": 1.5310000000172295
+        },
+        {
+          "name": "test_atomic_write_no_partial_state",
+          "pass": true,
+          "seconds": 0.0159999999741558
+        },
+        {
+          "name": "test_fingerprint_deterministic_and_sensitive",
+          "pass": true,
+          "seconds": 2.172000000020489
+        },
+        {
+          "name": "test_probe_contract_values_match_prereg",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_registry_duplicate_protection_and_statuses",
+          "pass": true,
+          "seconds": 0.125
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.phase19.test_h19a",
+      "passed": 12,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_arithmetic_consistency_stretch_gap",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_champion_artifacts_unchanged",
+          "pass": true,
+          "seconds": 0.40600000001722947
+        },
+        {
+          "name": "test_difficulty_index_provenance_fold0_safe",
+          "pass": true,
+          "seconds": 1.0309999999881256
+        },
+        {
+          "name": "test_fit_partition_excludes_eval_fold",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_fold_registry_immutable_and_hash_checked",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_inner_es_split_carves_from_fit_only",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_member_uses_certified_rich_view_and_champion_params",
+          "pass": true,
+          "seconds": 0.07800000000861473
+        },
+        {
+          "name": "test_prereg_committed_before_results_and_hash_frozen",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_sample_rescue_damage_directional",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_sample_tie_aware_credit_half",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_tie_aware_auc_identity_exact",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_weight_function_frozen_contract",
+          "pass": true,
+          "seconds": 0.0
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.phase19.test_h19b",
+      "passed": 7,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_exact_pair_flips_identity_and_bruteforce",
+          "pass": true,
+          "seconds": 0.09400000001187436
+        },
+        {
+          "name": "test_fit_ids_manifest_proves_fold_safety",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_inner_partitions_deterministic_and_disjoint",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_mean_prob_equal_average_no_logit_mixing",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_pair_credit_semantics_correct_tie_half_wrong_zero",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_partition_seed_is_frozen_constant",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_stratification_preserves_class_balance",
+          "pass": true,
+          "seconds": 0.0
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.phase20.test_h19c",
+      "passed": 7,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_apply_excludes_self_label",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_crossfit_determinism",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_crossfit_no_own_label",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_key_encoding_unique_per_key",
+          "pass": true,
+          "seconds": 0.030999999988125637
+        },
+        {
+          "name": "test_min_count_falls_back_to_prior",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_neighbor_arithmetic",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_segment_flags_match_atlas_definition",
+          "pass": true,
+          "seconds": 0.031000000017229468
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.phase20.test_runner_exit_codes",
+      "passed": 3,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_screen_runners_exit_nonzero_on_failed",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_screen_runners_set_failed_status",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_tabicl_recover_requires_verified_manifest_for_done",
+          "pass": true,
+          "seconds": 0.0
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.phase20.test_scheduler_contracts",
+      "passed": 10,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_budget_charge_advances_consumed_estimate",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_budget_check_allows_within_cap_and_missing_file",
+          "pass": true,
+          "seconds": 0.015000000013969839
+        },
+        {
+          "name": "test_budget_check_blocks_corrupt_existing_budget",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_budget_check_blocks_exhausted_cap",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_budget_check_blocks_hardware_stop_after_accounting_resolved",
+          "pass": true,
+          "seconds": 0.0159999999741558
+        },
+        {
+          "name": "test_budget_check_blocks_unresolved_interrupted_runtime",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_fingerprint_tracks_actual_python_runner_bytes",
+          "pass": true,
+          "seconds": 0.015000000013969839
+        },
+        {
+          "name": "test_scheduler_live_gpu_pid_lock_on_windows",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_scheduler_no_timeout_means_no_timeout",
+          "pass": true,
+          "seconds": 0.0629999999946449
+        },
+        {
+          "name": "test_scheduler_rejects_invalid_report_manifest",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_native_block",
+      "passed": 7,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_alpha0_reconstruction_tolerance",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_frame_schema_consistency",
+          "pass": true,
+          "seconds": 12.14100000000326
+        },
+        {
+          "name": "test_harness_refuses_when_guard_fails",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_inventory_is_complete_and_self_consistent",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_mixing_is_in_logit_space",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_slot_mapping_is_one_to_one",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_weights_and_untouched_slots",
+          "pass": true,
+          "seconds": 0.0
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_native_cat",
+      "passed": 11,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_arms_differ_only_in_the_intended_mechanism",
+          "pass": true,
+          "seconds": 6.155999999988126
+        },
+        {
+          "name": "test_c0_is_the_current_control",
+          "pass": true,
+          "seconds": 0.125
+        },
+        {
+          "name": "test_cardinalities_are_measured_values",
+          "pass": true,
+          "seconds": 6.344000000011874
+        },
+        {
+          "name": "test_cat_features_resolution_rule",
+          "pass": true,
+          "seconds": 8.875
+        },
+        {
+          "name": "test_eval_labels_cannot_alter_the_frame",
+          "pass": true,
+          "seconds": 13.35899999999674
+        },
+        {
+          "name": "test_no_target_in_twins",
+          "pass": true,
+          "seconds": 18.280999999988126
+        },
+        {
+          "name": "test_numeric_columns_remain_present",
+          "pass": true,
+          "seconds": 6.110000000015134
+        },
+        {
+          "name": "test_schemas_match_across_row_sets",
+          "pass": true,
+          "seconds": 14.639999999984866
+        },
+        {
+          "name": "test_sentinel_does_not_collide",
+          "pass": true,
+          "seconds": 7.187999999994645
+        },
+        {
+          "name": "test_twins_are_not_ordinal_encoded",
+          "pass": true,
+          "seconds": 0.14000000001396984
+        },
+        {
+          "name": "test_twins_preserve_exact_identity",
+          "pass": true,
+          "seconds": 0.6879999999946449
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_phase11r_protocol",
+      "passed": 9,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_alpha0_control_is_exact",
+          "pass": true,
+          "seconds": 1.0159999999741558
+        },
+        {
+          "name": "test_authoritative_geometry",
+          "pass": true,
+          "seconds": 1.0780000000086147
+        },
+        {
+          "name": "test_es_carve_is_disjoint_from_its_own_training_rows",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_exactness_requires_full_match",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_native_category_safety",
+          "pass": true,
+          "seconds": 85.81200000000536
+        },
+        {
+          "name": "test_no_false_geometry_claims_in_source",
+          "pass": true,
+          "seconds": 0.125
+        },
+        {
+          "name": "test_partial_vector_splice_is_safe",
+          "pass": true,
+          "seconds": 0.8910000000032596
+        },
+        {
+          "name": "test_swap_isolation_and_weights",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_withdrawn_claim_is_not_asserted",
+          "pass": true,
+          "seconds": 0.0
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_phase12_lgb_cat",
+      "passed": 7,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_cat_params_are_pinned",
+          "pass": true,
+          "seconds": 1.0780000000086147
+        },
+        {
+          "name": "test_category_code_safety",
+          "pass": true,
+          "seconds": 11.437000000005355
+        },
+        {
+          "name": "test_champion_config_provenance",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_detector_and_extra_trees_interaction",
+          "pass": true,
+          "seconds": 0.4379999999946449
+        },
+        {
+          "name": "test_handling_only_may_change",
+          "pass": true,
+          "seconds": 30.405999999988126
+        },
+        {
+          "name": "test_inner_es_carve_is_clean",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_no_prior_lgbm_native_categorical",
+          "pass": true,
+          "seconds": 0.031000000017229468
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_phase13_aux",
+      "passed": 6,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_aux_columns_are_additive_and_informative",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_aux_path_cannot_reach_the_label",
+          "pass": true,
+          "seconds": 1.360000000015134
+        },
+        {
+          "name": "test_cross_fitted_and_val_unseen",
+          "pass": true,
+          "seconds": 7.889999999984866
+        },
+        {
+          "name": "test_expected_value_formula",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_marginal_is_measured_not_inferred",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_rating_names_resolve_against_the_view",
+          "pass": true,
+          "seconds": 10.062000000005355
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_residual_nested",
+      "passed": 11,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_constants_are_predeclared_and_bounded",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_empty_group_falls_back_to_zero",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_index_space_alignment",
+          "pass": true,
+          "seconds": 0.14100000000325963
+        },
+        {
+          "name": "test_inner_folds_partition_cleanly",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_logit_offset_matches_brute_force",
+          "pass": true,
+          "seconds": 0.5310000000172295
+        },
+        {
+          "name": "test_min_group_size_is_enforced",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_nesting_on_real_fold_scheme",
+          "pass": true,
+          "seconds": 0.9059999999881256
+        },
+        {
+          "name": "test_probability_semantics_is_its_own_scale",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_qbin_handles_degenerate_columns",
+          "pass": true,
+          "seconds": 0.01600000000325963
+        },
+        {
+          "name": "test_semantics_do_not_mix_scales",
+          "pass": true,
+          "seconds": 0.014999999984866008
+        },
+        {
+          "name": "test_shrinkage_is_monotone_and_pulls_to_zero",
+          "pass": true,
+          "seconds": 0.0
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_paired_auc",
+      "passed": 8,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_category_drift_aligns_values_not_codes",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_category_drift_handles_order_and_missing_values",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_holm_matches_hand_computed_stepdown",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_identical_predictions_have_zero_paired_uncertainty",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_invalid_auc_inputs_rejected",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_paired_variance_matches_direct_covariance",
+          "pass": true,
+          "seconds": 0.0159999999741558
+        },
+        {
+          "name": "test_placements_equal_brute_pair_matrix_with_ties",
+          "pass": true,
+          "seconds": 0.0
+        },
+        {
+          "name": "test_target_private_four_times_public_halves_standard_error",
+          "pass": true,
+          "seconds": 0.0
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "module": "tests.test_phase22",
+      "passed": 2,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "test_p22_encoding_excludes_apply_labels_and_own_label",
+          "pass": true,
+          "seconds": 0.030999999988125637
+        },
+        {
+          "name": "test_p22_static_ignores_target_and_id",
+          "pass": true,
+          "seconds": 0.07800000000861473
+        }
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    }
+  ]
+}

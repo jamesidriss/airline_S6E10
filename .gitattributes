@@ -62,6 +62,6 @@ research/phase20_exhaustive/runtime_ledger.jsonl -text
 configs/phase22/** -text
 scripts/phase22/** -text
 reports/phase22/** -text
-research/raw/phase22/** -text
+research/raw/phase22/** -text -whitespace
 tests/test_phase22.py -text
 tests/test_tabr_retrieval.py -text
