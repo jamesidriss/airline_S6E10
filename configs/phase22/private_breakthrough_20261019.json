@@ -1,0 +1,140 @@
+{
+  "utc": "2026-10-19T19:15:44.581300+00:00",
+  "baseline_commit": "a919a8949f9c0f4c7df21c1b31462d2b18e551bc",
+  "champion": "v7_sol_tabpfn_internal2_aux10",
+  "protected_files": {
+    "submissions/v6_sol_tabpfn_route_aux10.csv": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d",
+    "submissions/v7_sol_tabpfn_internal2_aux10.csv": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+    "data/cache/folds/primary_5f_seed20261010.npy": "baa2e0ba8b305106a2c5e018001e2e403d46adbd8dc8c10a4389ecb0661f573e",
+    "reports/phase17_B1_primary.json": "c63f5a172c7bdbaa160ce7aa022a1214daf03d5e0daac0540f7b9f2aa116f449",
+    "reports/phase17_B1_shadow_confirmation.json": "281aae9c80184dc6d7fb729461d1142ab840ff1cd7d80a6d321a6beb24bbd486"
+  },
+  "scope": "Public TFM diagnostic plus one fresh CPU lean84 native categorical recipe; no public leaderboard optimization",
+  "external": {
+    "source": "cdeotte/s6e10-tfm-oof-and-test-predictions",
+    "version": 1,
+    "license": "CC0-1.0",
+    "directory": "artifacts/phase22/shared_tfm_v1",
+    "file_sha256": {
+      "oof_causilo.npy": "7ec5e7aa6cd8a9cce957069bfea454ce11bfd5b7c634000e6a4efaea22038ab3",
+      "oof_exaone.npy": "591b5cbb8e7e9053062ceeab5a5a7aa5bc7854c02cb2853804385301e7b72d73",
+      "oof_kumolarge.npy": "94bce98307807b60a88862e4ac9a6044f4d4fecf5f792e775e8a8ea4b727a118",
+      "oof_kumosmall.npy": "2193c207e5f8dce99374baf8d37a0953be0b9b3204ab26e5d452df72e2608803",
+      "oof_limix2.npy": "2634847729c54bc4807f6475cd186fe0cd3c0dbc19d5793b2bbcbf421b8688a3",
+      "oof_mitra2.npy": "d9f62d11790ce2084f2dd03994fddc49b1cb182c6878aebcdad48b3b4c745897",
+      "oof_realmlp.npy": "d2ef10c8d4e246315fbbb91c57651efa98bf03cf7cb7e7bfd5d4ac51428a381b",
+      "oof_tabfm.npy": "f18a495a22acf272a468135b22aed2245f7cc609e3720f766662e15b2979feed",
+      "oof_tabicl2.npy": "9b27d7d1769a4bd7afab9ba68112cef013339b54fe0f4ae0ce3985a9849c9a1f",
+      "oof_tabpfn35.npy": "f75c9d1de9ea23c310a36c175e4552916928f16b3530ed5f51b8c783c3e75e95",
+      "oof_xgboost.npy": "be0862fe5eb2872fda139fb5e75435d7119b693f2a2bfc0d2403e794e2b429a1",
+      "test_causilo.npy": "27535186bf54c7cec97755c77c4f5eeea9b48ea1439d9f2e00d9bd88e881926c",
+      "test_exaone.npy": "721e718aeb6679723d2d2940fe37e93b19f13f1d8f7f1c5e0f10b7119ea02711",
+      "test_kumolarge.npy": "55d0c7ac1a76c7949225ae3e712b34eb4af6665640cae715bf9ff6c2aa32538b",
+      "test_kumosmall.npy": "b43763fcd351ce92a041bbe07de7bb15715d9d9fa17d9a916427a9c238b758bb",
+      "test_limix2.npy": "5fc5a2895e0374b21f795e47aebab2dc1ef37264ab9e604d0c7b9522c36bfc67",
+      "test_mitra2.npy": "12c5e84a96c5bfd4cd854cd21359f20e350e5e341b87e7769f86664f0c346d68",
+      "test_realmlp.npy": "c8979d754bcf841aa331d1f9e0fc75724aa177c6ad34dd9b0a8701f925ba3135",
+      "test_tabfm.npy": "b833ee3affefc4ac07ad074037f02d1dc16ae31f98280ffefa169e355818599c",
+      "test_tabicl2.npy": "642768a3ea98a1ac936b074e0dc6ce084baa05448b10abfbd70b4b97133fb7df",
+      "test_tabpfn35.npy": "fd49136b12455998ee503833135c84b13337df2bdc10ffe91607e07b207d95a0",
+      "test_xgboost.npy": "cdb3ec0954daa41bb25edd3e577ef4554a4709c725e21d45560447caff70e00a"
+    },
+    "models": [
+      "causilo",
+      "exaone",
+      "kumolarge",
+      "kumosmall",
+      "limix2",
+      "mitra2",
+      "realmlp",
+      "tabfm",
+      "tabicl2",
+      "tabpfn35",
+      "xgboost"
+    ],
+    "weights": [
+      0.1,
+      0.25
+    ],
+    "equal_tfm9_weights": [
+      0.1,
+      0.25
+    ],
+    "eligibility": "DIAGNOSTIC ONLY: seed42 folds incompatible with immutable primary; no IDs, producer code or full-context fit manifests in dataset. No imported vector may be submitted or used as training feature."
+  },
+  "fresh_CPU": {
+    "name": "p22_lean84_innerte",
+    "hypothesis": "The published lean84 native-category representation may complement v7 after removing outer-fold TE and early-stop leakage. Exact combination not in prior catalogue; components alone are not claimed novel.",
+    "source_notebook": "jiatianzhang2/s6e10-15-fold-gpu-stacking-pipeline version4",
+    "static": "19 retained raw +5 delay +5 zero-aware aggregates +3 numeric category twins +38 rating-background native categories +5 rating gaps +1 original-only teacher",
+    "dynamic": "8 TE means smoothed20, inner5 cross-fitting, every table and prior fitted on FIT only; no TE counts",
+    "teacher_cache": "artifacts/features/static_core3.npz",
+    "teacher_cache_sha256": "9ffe088accccfd0ded3048cedd66368ca87e4411213c51773ce65a8923703421",
+    "teacher_names_sha256": "a1180a6a230dfac31829c0460f2d4edd6a42d0653fead455f5ed4b8bca3892f0",
+    "provenance": "Static label-free features and original-label-only teach_lgbm; te_* competition-dependent nested within FIT",
+    "primary_folds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "seed": 20261019,
+    "inner_ES_fraction": 0.1,
+    "inner_ES_patience": 50,
+    "max_iterations": 1500,
+    "refit": "After inner selection, recompute outer-FIT crossfitted TE and train all outer-FIT at fixed selected iterations; same model predicts eval and test",
+    "model_params": {
+      "objective": "binary",
+      "metric": "auc",
+      "boosting_type": "gbdt",
+      "learning_rate": 0.03,
+      "num_leaves": 127,
+      "min_data_in_leaf": 160,
+      "feature_fraction": 0.7,
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "lambda_l2": 5.0,
+      "cat_smooth": 40.0,
+      "num_threads": 6,
+      "verbosity": -1,
+      "deterministic": true,
+      "force_col_wise": true,
+      "device_type": "cpu"
+    },
+    "portfolio_weights": [
+      0.1,
+      0.25,
+      1.0
+    ],
+    "no_tuning_after_results": true,
+    "wall_limit_hours": 2.5
+  },
+  "multiplicity": {
+    "fresh_family_comparisons": 3,
+    "external_diagnostic_comparisons": 24,
+    "adjustment": "Holm one-sided within each separate family; no inference laundering across diagnostic and eligible families; prior adaptive selection remains limitation"
+  },
+  "gate": {
+    "mean_fold_delta_min": 1.5e-05,
+    "t_min": 2.5,
+    "positive_folds": 5,
+    "holm_alpha": 0.05,
+    "private_p05_min": 0,
+    "shadow_confirmation": "Only passing eligible candidates, frozen primary-selected weight, matched v7 shadow folds2/3, both positive; no weight adjustment from shadow; full block10 if feasible before finalist selection"
+  },
+  "simulations": {
+    "repeats": 100,
+    "seed": 20261022,
+    "population": 299844,
+    "public_rows": 59969,
+    "private_rows": 239875
+  },
+  "resources": {
+    "GPU_hours": 0,
+    "GPU_hold": "unresolved JINT04 duration plus repeated nvlddmkm153 faults",
+    "CPU_threads": 6,
+    "paid_compute": false
+  },
+  "submission": "Only after all frozen primary, independent shadow, robustness, provenance and full-test certification gates pass under PATH A/B; external vectors remain ineligible"
+}
