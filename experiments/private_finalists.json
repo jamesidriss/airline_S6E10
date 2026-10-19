@@ -377,7 +377,7 @@
     "receipt": "reports\\v7_sol_tabpfn_internal2_aux10_result.json",
     "private_leaderboard_unknown": true,
     "outstanding_required_work": [],
-    "stop_status": "COMPLETE — CERTIFIED AND SUBMITTED",
+    "stop_status": "COMPLETE \u2014 CERTIFIED AND SUBMITTED",
     "closing_proof": "reports\\phase17_rescue_final_proof_20261011.json",
     "integrity_report": "reports\\phase17_rescue_post_result_integrity_20261011.json",
     "unicode_scan_report": "reports\\phase17_rescue_post_result_unicode_scan_20261011.json"
@@ -394,5 +394,18 @@
     "new_submissions": 0,
     "Kaggle_final_selection_modified": false,
     "GPU_accounting_hold": true
+  },
+  "phase22_reassessment": {
+    "utc": "2026-10-19T20:27:34.982733+00:00",
+    "decision": "KEEP_CERTIFIED_V7_NO_NEW_ADMISSION",
+    "report": "reports/phase22/final_report_20261019.md",
+    "completion": "reports\\phase22\\completion_20261019.json",
+    "fresh_five_fold_models": 2,
+    "fixed_comparisons": 32,
+    "new_submissions": 0,
+    "GPU_hours_new": 0,
+    "private_B": null,
+    "Kaggle_final_selection_modified": false,
+    "hardware_stop": true
   }
 }

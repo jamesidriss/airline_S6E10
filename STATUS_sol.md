@@ -1,3 +1,5 @@
+Phase22 — 2026-10-19 : deux recettes CPU entraînées sur cinq folds, 32 comparaisons fixes, aucune admission. V7 reste A ; v6 préservé ; aucun B qualifié. Piste publique raw8 positive mais non certifiable sans reproduction. GPU arrêté pour incidents pilote répétés et durée JINT04 inconnue ; 0 GPU nouveau. Rapport : reports/phase22/final_report_20261019.md. Les statuts ci-dessous sont historiques.
+
 Phase21 — 2026-10-19 : revue des 558 entrées historiques et du catalogue de 96 pistes ; 24 comparaisons supplémentaires sur prédictions sauvegardées, aucune admission. V7 reste A (ref 57090508, OOF 0.961852923), v6 préservé ; aucune nouvelle soumission. Incertitude AUC appariée et dérive catégorielle corrigées ; 244 tests passent, 0 échec. JINT04 interrompu réconcilié partiellement : au moins 15.678301 h / 22 h comptabilisées ; nouveaux calculs GPU suspendus jusqu’à réconciliation de la durée manquante. Rapport : reports/phase21/reassessment_20261019.md. Les statuts ci-dessous sont historiques.
 
 # SOL campaign — audit and continuation

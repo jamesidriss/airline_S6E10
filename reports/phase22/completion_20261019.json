@@ -1,0 +1,92 @@
+{
+  "utc": "2026-10-19T20:27:34.982733+00:00",
+  "status": "NO_QUALIFIED_CHALLENGER_GPU_HARD_CONSTRAINT",
+  "champion_ref": 57090508,
+  "champion_OOF": 0.9618529228157235,
+  "target": 0.96274,
+  "training": [
+    {
+      "name": "lean84",
+      "report": "reports\\phase22\\lean84_primary.json",
+      "OOF_AUC": 0.960535788858931,
+      "CPU_wall_seconds": 412.3429999999935,
+      "GPU_hours": 0,
+      "complete_primary_contexts": 5,
+      "full_test_rows": 299844,
+      "integrity": "PASS",
+      "submission_certified": false
+    },
+    {
+      "name": "lean84_cat",
+      "report": "reports\\phase22\\lean84_cat_primary.json",
+      "OOF_AUC": 0.9608088869342322,
+      "CPU_wall_seconds": 3402.8589999999967,
+      "GPU_hours": 0,
+      "complete_primary_contexts": 5,
+      "full_test_rows": 299844,
+      "integrity": "PASS",
+      "submission_certified": false
+    }
+  ],
+  "comparisons": 32,
+  "eligible_comparisons": 8,
+  "external_diagnostics": 24,
+  "new_GPU_hours": 0,
+  "new_submissions": 0,
+  "paid_compute": false,
+  "budget_extension": false,
+  "shadow_triggered": false,
+  "private_B": null,
+  "protected_files": {
+    "submissions/v6_sol_tabpfn_route_aux10.csv": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d",
+    "submissions/v7_sol_tabpfn_internal2_aux10.csv": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+    "data/cache/folds/primary_5f_seed20261010.npy": "baa2e0ba8b305106a2c5e018001e2e403d46adbd8dc8c10a4389ecb0661f573e",
+    "reports/phase17_B1_primary.json": "c63f5a172c7bdbaa160ce7aa022a1214daf03d5e0daac0540f7b9f2aa116f449",
+    "reports/phase17_B1_shadow_confirmation.json": "281aae9c80184dc6d7fb729461d1142ab840ff1cd7d80a6d321a6beb24bbd486"
+  },
+  "ledger_baseline_rows": 584,
+  "ledger_baseline_sha256": "34ab769ac670316669250bac7ecfe063ef8ba5d4a913763d5818e68890c0e20d",
+  "ledger_appended_rows": 37,
+  "ledger_current_sha256": "940c0ab3d487c2ac0a04ff6cdfdc912769af0730333883ee3383d49c2a267c9c",
+  "QA_registered_checks": 247,
+  "QA_failures": 0,
+  "QA_CUDA_hidden": true,
+  "initial_QA_failure_preserved": true,
+  "historical_campaign_selection_corrected": false,
+  "private_score_unknown": true,
+  "prereg_commits": [
+    "80d9eea",
+    "1d7a1eb",
+    "479b642"
+  ],
+  "JINT04": {
+    "utc": "2026-10-19T19:20:01.790767+00:00",
+    "status": "DRIVER_FAULT_CONFIRMED_GPU_HARD_STOP",
+    "job": "JINT04",
+    "start_utc": "2026-10-18T23:56:29.379198+00:00",
+    "first_recorded_absence_utc": "2026-10-19T09:26:44.035292+00:00",
+    "fault_utc": "2026-10-19T01:04:58.971025Z",
+    "fault_record_id": 87184,
+    "fault_kind": "nvlddmkm153 Error occurred on GPUID100",
+    "last_progress_seconds": 4101.484999999986,
+    "elapsed_upper_bound_seconds": 34214.656094,
+    "duration_interval_hours": [
+      1.139301388888885,
+      9.50407113722222
+    ],
+    "budget_total_interval_hours": [
+      15.678301388888885,
+      24.04307113722222
+    ],
+    "exact_process_exit_time_known": false,
+    "inference": "Driver failure is within seconds of last progress. It does not prove process termination time. Conservative elapsed interval spans start to verified absence; no upper bound charged as measured consumption.",
+    "duplicate_runtime_charge": false,
+    "new_GPU_spending": false,
+    "hard_constraint": "Repeated driver faults are an explicit existing stop condition; keep stop independent from unresolved runtime. CPU-only research can continue.",
+    "evidence": {
+      "reports/phase22/JINT04_nvlddmkm_event_87184.xml": "f2fbb6e8eac177ea0a6385328b49ee43097bc56f2defe6aeeb47e3a223cda833",
+      "reports/phase22/recent_driver_faults.json": "fec428542a77c7df1682be63e93eea0aff3de75ab6536c354fe32a709188a1c4"
+    }
+  },
+  "report": "reports/phase22/final_report_20261019.md"
+}

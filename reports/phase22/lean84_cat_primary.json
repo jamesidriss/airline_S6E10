@@ -1,0 +1,77 @@
+{
+  "status": "COMPLETE_FIVE_FOLD_PRIMARY",
+  "run_git": "8b31b8c3fa4ac0d1239dd0d7ec9ba83bc5107383",
+  "source_sha256": "f5bd0bed09bbe0ee2b48f8f56991bcc3dbc7eac29d7eefb522fa10afb6b8d915",
+  "prereg_sha256": "b3640e52bb09d7b923b0df326759b8799cdae8fe1e3cb4babbadd5d09c48ca03",
+  "feature_source_sha256": "9c61f9c614f10bc8ed94f5217c24c4421ace5b74e7f4c310264d35999a0f0aa9",
+  "oof_auc": 0.9608088869342322,
+  "oof_sha256": "d1e05cf03aa2bfbe3eec5a4b330ed736458c9f59edaba0b9d5e52a701bfeaf19",
+  "test_sha256": "15873775f87fb2d2dd7b4fa796145e71a56bdf93b58aa24290031892baf0a9bc",
+  "folds": [
+    {
+      "fold": 0,
+      "iterations": 1336,
+      "auc": 0.9607099759546157,
+      "seconds": 701.9839999999967,
+      "fit_ids_sha256": "4f6cafdf586649e3589d97fa657ce942699627c12053770d519e4d9d1004c338",
+      "eval_ids_sha256": "b8b6784bc1d8d4b97f9c8b10750fea82a946c55a13aad77fbd445f460ec287e4",
+      "inner_fit_ids_sha256": "065a9b57846bb8f0406bcb9923b565fe5f448c331735006c12b8ce64175816be",
+      "inner_ES_ids_sha256": "6666039e5406f6536f40ed0723848e07de3687ac7c5edccd315cb138d803bb75",
+      "prediction_sha256": "f28ba7626fae498239879cf93a8b43ec3202a640cde3e8545dead7b4062fce89",
+      "model_sha256": "bea3f7571235821e489d161280823092fb67132fd74e0568969cc8632144025c"
+    },
+    {
+      "fold": 1,
+      "iterations": 1286,
+      "auc": 0.9610651298819269,
+      "seconds": 627.5149999999849,
+      "fit_ids_sha256": "ced415bb6d81f93d93ae77b5d52005e3cae1370a8d0922cd99264905334f6a70",
+      "eval_ids_sha256": "2d0d8882d4ebd7f52b328d670a425eea2103354e2ed7d1fadf6d4a008431784e",
+      "inner_fit_ids_sha256": "68902c81e11d7258188f8488c6890135fc6fd2e9c563a7c170f1e88377ac6284",
+      "inner_ES_ids_sha256": "51046cf820118a8dea9565ba685e5f66a848d8e4f79b22b5414395bc6eb7d4ae",
+      "prediction_sha256": "73856bf81eb6544542c6b88ff8a28b58d71d421121e938471c20e9df2d5cca7f",
+      "model_sha256": "ed440bede3b84f02ce68bd8cc15053423221d52bbbbb71337a067162b142f333"
+    },
+    {
+      "fold": 2,
+      "iterations": 1438,
+      "auc": 0.9609141416591841,
+      "seconds": 684.4070000000065,
+      "fit_ids_sha256": "2483e17d0b36dc4114f6a6453f06339a7d4c51a656f1fb484fafab31a2aba05a",
+      "eval_ids_sha256": "4f5bf9d9f2eb987d420afadff4b46ea3aea9890160f4f1c946e630a1a7e7b808",
+      "inner_fit_ids_sha256": "d2939ce3d4947ef6b3ee4b4c93a99ef237d0e370efbd4c959bf362cde6f3cb80",
+      "inner_ES_ids_sha256": "689abcbcb3a7cd02e54c2af776bc76be979744abea4fa97e63bf9440efc17432",
+      "prediction_sha256": "942c154d5f716fc216c8a0ea447b42a91ab210c6263f066454e8741b37dcbc09",
+      "model_sha256": "c9f7493f73eadab9f0c5107407c0903a762384457fd354dc72144f13b2b0d469"
+    },
+    {
+      "fold": 3,
+      "iterations": 1299,
+      "auc": 0.9599937928205546,
+      "seconds": 615.2039999999979,
+      "fit_ids_sha256": "2fe5a7e80b9d32c84fe5822f124861e757aae8ba985be09a03150b1c50410715",
+      "eval_ids_sha256": "03c776639effb9e12822d4d118cbdffdad05efe3e4a2580fcdb8ef1dd747c45e",
+      "inner_fit_ids_sha256": "880ba286d9a0c803871741b247017fe0634aaeb3bd4f3860878dee151bd93d9d",
+      "inner_ES_ids_sha256": "062abccdc0b6da54ade8bce2ea3ebbe9f1fcb3ef368207b0656ec12a39d0620b",
+      "prediction_sha256": "7757166e413bda2736bc27bd541f1b4f03f36903aff327028628d430f6edf7b1",
+      "model_sha256": "48468dac1f61c5e785549732bfa31cfc2b84e0f74695784e550fa8919b2a0978"
+    },
+    {
+      "fold": 4,
+      "iterations": 1146,
+      "auc": 0.9613925198127785,
+      "seconds": 544.2339999999967,
+      "fit_ids_sha256": "63673335b4576ca8afbf352783e0eb5f54eaa5826239aba0758e72eaa5a28bb7",
+      "eval_ids_sha256": "3ddf6cd49a08b55bc014113100cce4b75563e67b8e592d043533a441ebc20b35",
+      "inner_fit_ids_sha256": "bcbf77d00f53550bb85f356007e12c562dd4d5f7f289849deb6f51b891eb1756",
+      "inner_ES_ids_sha256": "57f88b98e3df13357ba3c179fec99fe726291d6c4e7c0a9b0ec50db21cdfe3fb",
+      "prediction_sha256": "14ff524f4074f8c3ea51cf5770a28f3253cec58d34548fa541492f691d88737e",
+      "model_sha256": "482d30681954038508dabb5f5da9094a32e2381e953d025f44a9ec739abf8f00"
+    }
+  ],
+  "train_ids_sha256": "b8941ff79489583c5aae1e1343c3629ac6d1629bd5d4ddc1c545f7818ea38876",
+  "test_ids_sha256": "858650e1798a294a5ee43a52429349a4560264bf7769e20c97ba5c2320593f71",
+  "CPU_wall_seconds": 3402.8589999999967,
+  "GPU_hours": 0,
+  "verdict": "AWAITING_FROZEN_PAIRED_COMPARISON"
+}

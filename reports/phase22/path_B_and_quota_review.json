@@ -1,0 +1,102 @@
+{
+  "utc": "2026-10-19T20:27:18.685434+00:00",
+  "policy": "research/submission_policy_amendment_20261017.md",
+  "scope": "Descriptive PATH-B review of already preregistered eight candidates, no new weights or candidate selection by public scores",
+  "candidates": [
+    {
+      "candidate": "lean84_w0.10",
+      "oof_delta": -9.528262948310662e-06,
+      "within_PATH_B_window": true,
+      "logit_corr": 0.9999607574546299,
+      "numeric_decorrelation_pass": false,
+      "structurally_distinct_portfolio_demonstrated": false,
+      "structure_reason": "75-90 percent frozen v7 plus one existing broad learner family; no demonstrated distinct portfolio method or favorable private-tail mechanism.",
+      "private_p05": -2.6544602120254225e-05,
+      "eligible": false
+    },
+    {
+      "candidate": "lean84_w0.25",
+      "oof_delta": -8.119166911646492e-05,
+      "within_PATH_B_window": true,
+      "logit_corr": 0.9997544141014147,
+      "numeric_decorrelation_pass": false,
+      "structurally_distinct_portfolio_demonstrated": false,
+      "structure_reason": "75-90 percent frozen v7 plus one existing broad learner family; no demonstrated distinct portfolio method or favorable private-tail mechanism.",
+      "private_p05": -0.000122500420166205,
+      "eligible": false
+    },
+    {
+      "candidate": "lean84_w1.00",
+      "oof_delta": -0.001317133956792782,
+      "within_PATH_B_window": false,
+      "logit_corr": 0.9960606634474733,
+      "numeric_decorrelation_pass": false,
+      "structurally_distinct_portfolio_demonstrated": true,
+      "structure_reason": "Pure compact tree family differs from foundation-led v7, but fails OOF window.",
+      "private_p05": -0.001455533872163761,
+      "eligible": false
+    },
+    {
+      "candidate": "own_raw_w0.10",
+      "oof_delta": 5.8403170908327695e-06,
+      "within_PATH_B_window": true,
+      "logit_corr": 0.9999644883727825,
+      "numeric_decorrelation_pass": false,
+      "structurally_distinct_portfolio_demonstrated": false,
+      "structure_reason": "75-90 percent frozen v7 plus one existing broad learner family; no demonstrated distinct portfolio method or favorable private-tail mechanism.",
+      "private_p05": -6.500277292431633e-06,
+      "eligible": false
+    },
+    {
+      "candidate": "own_raw_w0.25",
+      "oof_delta": -2.6617839414821987e-05,
+      "within_PATH_B_window": true,
+      "logit_corr": 0.999777267472533,
+      "numeric_decorrelation_pass": false,
+      "structurally_distinct_portfolio_demonstrated": false,
+      "structure_reason": "75-90 percent frozen v7 plus one existing broad learner family; no demonstrated distinct portfolio method or favorable private-tail mechanism.",
+      "private_p05": -5.84337912849564e-05,
+      "eligible": false
+    },
+    {
+      "candidate": "lean84_cat_w0.10",
+      "oof_delta": -1.300203613074924e-05,
+      "within_PATH_B_window": true,
+      "logit_corr": 0.9999700604031125,
+      "numeric_decorrelation_pass": false,
+      "structurally_distinct_portfolio_demonstrated": false,
+      "structure_reason": "75-90 percent frozen v7 plus one existing broad learner family; no demonstrated distinct portfolio method or favorable private-tail mechanism.",
+      "private_p05": -2.368294431969731e-05,
+      "eligible": false
+    },
+    {
+      "candidate": "lean84_cat_w0.25",
+      "oof_delta": -7.110723594461188e-05,
+      "within_PATH_B_window": true,
+      "logit_corr": 0.9998123829153415,
+      "numeric_decorrelation_pass": false,
+      "structurally_distinct_portfolio_demonstrated": false,
+      "structure_reason": "75-90 percent frozen v7 plus one existing broad learner family; no demonstrated distinct portfolio method or favorable private-tail mechanism.",
+      "private_p05": -9.700989085160705e-05,
+      "eligible": false
+    },
+    {
+      "candidate": "lean84_cat_w1.00",
+      "oof_delta": -0.0010440358814914896,
+      "within_PATH_B_window": false,
+      "logit_corr": 0.9969674479520763,
+      "numeric_decorrelation_pass": false,
+      "structurally_distinct_portfolio_demonstrated": true,
+      "structure_reason": "Pure compact tree family differs from foundation-led v7, but fails OOF window.",
+      "private_p05": -0.0011489678421790495,
+      "eligible": false
+    }
+  ],
+  "qualifying_B": [],
+  "quota_source": "Unchanged local submission guard ledger, not a fresh server quota endpoint",
+  "used_today": 10,
+  "remaining_today": 0,
+  "v6_role": "Preserved clean fallback; existing matched complementarity audit rejects a credible B claim",
+  "v6_report": "reports/phase17_rescue_v6_complementarity_20261011.json",
+  "final_selection_modified": false
+}
