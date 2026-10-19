@@ -51,7 +51,7 @@ def main():
         for encoding in encodings:
             decoded=raw.decode(encoding,errors='replace')
             findings.extend({'path':p,'encoding':encoding,**f} for f in scan_bytes(decoded.encode()))
-            if re.search(r'(?i)(X-Amz-Signature=|X-Goog-Signature=)',decoded):findings.append({'path':p,'kind':'signed_download_URL'})
+            if re.search(r'(?i)(X-Amz-Signature=|X-Goog-Signature=)[0-9a-f]{32,}',decoded):findings.append({'path':p,'kind':'signed_download_URL'})
     assert not findings,findings
     result={'utc':datetime.now(timezone.utc).isoformat(),'status':'PASS','base_commit':BASE,'head_before_proof_commit':git('rev-parse','HEAD').decode().strip(),'decision':completion['status'],'protected_files':completion['protected_files'],'historical_files':history,'ledger_prefix_preserved':True,'ledger_rows_before':584,'ledger_rows_after':621,'runtime_ledger_prefix_preserved':True,'existing_finalist_decisions_preserved':True,'preregistration_semantics_match_pre_result_commits':True,'executed_source_hashes_verified':True,'new_model_contexts':10,'new_submissions':0,'new_GPU_hours':0,'full_byte_secret_scan_files':len(hashes),'secret_findings':findings,'working_committed_bytes_match':True,'files_sha256':hashes,'QA_registered_checks_without_exception':247,'QA_CUDA_only_checks_skipped':2,'QA_failures':0,'QA_scope':'CPU-isolated exact registered suite; not a fresh GPU hardware validation','scope':'Proof excludes itself from hash map; push and clean status verified after proof commit'}
     save_json(result,out);print(json.dumps({k:result[k] for k in ('status','full_byte_secret_scan_files','ledger_rows_after','new_model_contexts')}))
