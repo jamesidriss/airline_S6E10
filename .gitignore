@@ -69,6 +69,8 @@ reports/**/*.npy
 /submissions/v7_sol_tabpfn_internal2_aux10.csv
 !STATUS.md
 !research/**
+# research/ is un-ignored wholesale above; keep Python build caches out of it anyway.
+research/**/__pycache__/
 
 # ---- cross-competition historical clones (read-only external repos, own .git) ----
 /research/cross_competition/raw/
