@@ -290,7 +290,12 @@ def test_shim_reset_clears_database_so_batches_cannot_leak_into_each_other():
     assert int(i.max()) < 300, "returned an index from the pre-reset database"
     # each query row is itself in the new database, so its nearest neighbour (column 0) is itself
     # at distance 0 -- which is what proves reset() really swapped the whole database
-    assert float(d[:, 0].max()) < 1e-6, "each query must retrieve itself after reset"
+    # Norm expansion subtracts quantities around 1e5 for these scaled vectors.
+    # CPU/GPU kernels can round that cancellation differently; bound fp32 error
+    # relative to the squared norm while requiring the exact self index below.
+    scale = float(q.square().sum(dim=1).max())
+    tolerance = 8 * torch.finfo(torch.float32).eps * scale
+    assert float(d[:, 0].max()) <= tolerance, "self distance exceeds fp32 cancellation bound"
     assert torch.equal(i[:, 0], torch.arange(8, device=d.device)), \
         "the nearest neighbour of a database row must be that row"
 
