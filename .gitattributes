@@ -64,3 +64,4 @@ scripts/phase22/** -text
 reports/phase22/** -text
 research/raw/phase22/** -text
 tests/test_phase22.py -text
+tests/test_tabr_retrieval.py -text
