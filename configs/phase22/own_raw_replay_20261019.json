@@ -1,0 +1,31 @@
+{
+  "utc": "2026-10-19T19:22:01.830575+00:00",
+  "hypothesis": "Public raw TabPFN8 diagnostic suggests representation diversity; test our independently generated full-primary raw TabPFN1 against current v7 internal2. Old phase15 raw-route experiment used v6 and a different construction; no claim that the raw family is untried.",
+  "adaptive_origin": "Public diagnostic selected this mechanism; confirmation must use separate matched shadow, not adaptive discovery folds.",
+  "primary_report": "reports/sol_phase15_raw_primary.json",
+  "primary_report_sha256": "e09d8444969ce69bfcf835ab8f902841d81b1972c3d6cf13c7ec3aecef48741f",
+  "raw_oof_path": "artifacts/sol_phase15_raw_primary/raw_oof.npy",
+  "raw_oof_file_sha256": "ec8bca18e575a377fe055d03f275e76fb07db08ba77d13452b434d0fc6b6a987",
+  "baseline": "v7_sol_tabpfn_internal2_aux10",
+  "weights": [
+    0.1,
+    0.25
+  ],
+  "comparison": "Fixed logit mixture of v7 and own raw; no retuning",
+  "five_fold_verification": "Use historical verify_raw on each fold: source, checkpoint, exact fit/apply IDs, features and prediction hashes",
+  "resource": "CPU only; zero new inference",
+  "multiplicity": "Fresh eligible family now5 total: lean84 weights0.10/0.25/1 and ownraw0.10/0.25. Use Bonferroni alpha0.05/5=0.01 for every new eligible result (conservative to original within-family Holm). Added before any fresh lean84 outcome inspected.",
+  "primary_gate": {
+    "mean_delta_min": 1.5e-05,
+    "fold_t_min": 2.5,
+    "positive_folds": 5,
+    "paired_one_sided_p_max": 0.01,
+    "private_p05_min": 0
+  },
+  "simulation": {
+    "repeats": 100,
+    "seed": 20261022,
+    "population": 299844
+  },
+  "promotion": "No submission until matched shadow confirmation, clean replay and full-test certification. Missing raw shadow/test contexts require GPU, currently hardware and accounting blocked. Never substitute public vectors."
+}
