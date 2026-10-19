@@ -167,6 +167,8 @@ def budget_check(is_gpu: bool) -> tuple[bool, str]:
         used = ext.get("consumed_gpu_hours_estimate")
     except Exception:
         return False, "GPU budget file unreadable; refusing unaccounted compute"
+    if ext.get("hardware_stop"):
+        return False, "GPU hardware stop active; repeated driver faults require resolution before GPU compute"
     if ext.get("unresolved_gpu_runtime"):
         return False, "GPU runtime accounting unresolved; reconcile interrupted job before new GPU compute"
     if cap is None or used is None:

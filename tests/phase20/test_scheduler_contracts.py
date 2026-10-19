@@ -157,3 +157,13 @@ def test_budget_check_blocks_corrupt_existing_budget():
         with patch.object(S, 'ROOT', root):
             ok, why = S.budget_check(True)
             assert not ok and 'unreadable' in why
+
+
+def test_budget_check_blocks_hardware_stop_after_accounting_resolved():
+    with TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _write_budget(root, hardware_stop={"reason": "repeated driver faults"})
+        with patch.object(S, 'ROOT', root):
+            ok, why = S.budget_check(True)
+            assert not ok and 'hardware stop' in why
+            assert S.budget_check(False)[0]
