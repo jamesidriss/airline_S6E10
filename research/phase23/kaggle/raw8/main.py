@@ -618,7 +618,7 @@ def probe(ckpt: Path):
     prep_a = prepare(clf_a, Xc, yc)
     build_member_engine(clf_a, prep_a, 0)
     lg_a = predict_raw(clf_a, Xq, 4096, label='A2')
-    p_a = probabilities(clf_a, lg_a)[0][:, 1]
+    p_a = probabilities(clf_a, lg_a)[:, 1]
     release(clf_a)
     log('A2 ported-no-patch ok')
 
@@ -627,7 +627,7 @@ def probe(ckpt: Path):
     prep_b = prepare(clf_b, Xc, yc)
     build_member_engine(clf_b, prep_b, 0)
     lg_b = predict_raw(clf_b, Xq, 4096, label='A3')
-    p_b = probabilities(clf_b, lg_b)[0][:, 1]
+    p_b = probabilities(clf_b, lg_b)[:, 1]
     release(clf_b)
     log('A3 ported-patched ok')
 
@@ -720,12 +720,12 @@ def assemble():
             continue
         vals = [np.load(unit_paths(f, m)[0]) for m in ms]
         stacked = np.stack(vals, 0)
-        p = probabilities(agg, stacked)[0][:, 1]
+        p = probabilities(agg, stacked)[:, 1]
         rows = np.flatnonzero(folds == f)
         oof[rows] = p
         tst = [np.load(unit_paths(f, m)[1]) for m in ms if unit_paths(f, m)[1].exists()]
         if tst:
-            test_stack.append(probabilities(agg, np.stack(tst, 0))[0][:, 1])
+            test_stack.append(probabilities(agg, np.stack(tst, 0))[:, 1])
         fold_info[f] = {'members': ms, 'n_members': len(ms),
                         'oof_auc_fold': float(roc_auc_score(y[rows], p)),
                         'n_test_members': len(tst)}

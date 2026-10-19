@@ -1,0 +1,28 @@
+{
+ "purpose": "local CPU dry-run of the raw8 kernel port/patch equivalence logic",
+ "cuda_visible_devices": "",
+ "gqa_is_supported_pinned_false": true,
+ "gqa_note": "T4 compute capability 7.5 < 8 -> the stock check returns False on Kaggle too",
+ "n_context": 4096,
+ "n_query": 256,
+ "ckpt_sha256": "ece4d67eadfea42eb0e610df5189bea60cb7f31073d81e9c7a019b76eacf0be3",
+ "n_estimators": 1,
+ "variant": "exact",
+ "variant_override": {},
+ "stock_vs_port": 0.0,
+ "port_vs_lean": 0.0,
+ "gate": 2e-06,
+ "pass_": true,
+ "members": 1,
+ "member0_manifest": {
+  "index": 0,
+  "config_sha256": "f6d0f81c08f90360435aea009f5e73467c3984a9c16545d948cae051c4c17d59",
+  "pipeline_seed": 826233175,
+  "prepared_x_sha256": "812bb06f398e3aa85e6b71f5ec7c24e6c59506caa8d84a5f7389d9ad68220fe1",
+  "prepared_shape": [
+   4096,
+   21
+  ]
+ },
+ "cpu_wall_seconds": 32.6
+}
