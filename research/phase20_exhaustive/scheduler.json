@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T23:54:04.817553+00:00",
+ "updated_utc": "2026-10-18T23:56:29.379198+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -3775,6 +3775,67 @@
      "ts": "2026-10-18T23:34:21.749171+00:00",
      "event": "validated",
      "verdict": "BITWISE_PARITY"
+    }
+   ]
+  },
+  "JINT04": {
+   "id": "JINT04",
+   "exp_row": 0,
+   "family": "DEP",
+   "title": "champion internal-4 screen (prereg fbc01570)",
+   "priority": "P1",
+   "state": "RUNNING",
+   "state_note": "last unmeasured lever on the champion's own geometry",
+   "kind": "gpu",
+   "cmd": [
+    "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+    "scripts/run_phase17_tabpfn.py",
+    "--estimators",
+    "4",
+    "--fold",
+    "0",
+    "--tag",
+    "phase17_internal4_screen_20261019"
+   ],
+   "prereg": {
+    "path": "configs/phase20/endgame_champion_internal4_screen_prereg.json",
+    "sha256": "fbc01570c5b4b0a10b5c043bf724aaf70fedb01e0108e9d0cebd35df948aa8ef"
+   },
+   "fingerprint": "e9a77b05c2be0d69",
+   "depends_on": [],
+   "attempts": 1,
+   "expect": null,
+   "result": {
+    "verdict": null,
+    "report": "reports/phase17_internal4_screen_20261019_f0.json"
+   },
+   "history": [
+    {
+     "ts": "2026-10-18T23:56:20.956778+00:00",
+     "event": "init",
+     "from": "endgame-queue"
+    },
+    {
+     "ts": "2026-10-18T23:56:20.957278+00:00",
+     "event": "prereg",
+     "sha256": "fbc01570c5b4b0a10b5c043bf724aaf70fedb01e0108e9d0cebd35df948aa8ef"
+    },
+    {
+     "ts": "2026-10-18T23:56:29.379198+00:00",
+     "event": "run-start",
+     "pid": 39588,
+     "cmd": [
+      "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
+      "scripts/run_phase17_tabpfn.py",
+      "--estimators",
+      "4",
+      "--fold",
+      "0",
+      "--tag",
+      "phase17_internal4_screen_20261019"
+     ],
+     "why": "champion internal-4 screen, prereg fbc01570: last unmeasured lever on the champion's own geometry (internal-2 -> internal-4), certified runner under its own gates",
+     "fingerprint": "e9a77b05c2be0d69"
     }
    ]
   }
