@@ -33,7 +33,9 @@ def main():
     started = time.monotonic()
     assert file_sha256(PREREG) == PREREG_SHA
     frozen = subprocess.check_output(['git', 'show', '4704803:configs/phase21/private_reassessment_20261019.json'])
-    assert frozen == PREREG.read_bytes(), 'Preregistration must precede predictive results'
+    # Git may normalize Windows line endings; the raw local hash is checked
+    # above and the pre-result committed protocol must contain identical data.
+    assert json.loads(frozen) == json.loads(PREREG.read_text()), 'Preregistration must precede predictive results'
     spec = json.loads(frozen)
     out = ROOT / spec['output']; assert not out.exists()
     for p, h in spec['protected_files'].items():

@@ -1,0 +1,105 @@
+{
+  "utc": "2026-10-19T09:41:21.753875+00:00",
+  "status": "COMPLETE_REASSESSMENT_NO_NEW_ADMISSION",
+  "decision": "KEEP_CERTIFIED_V7_NO_NEW_ADMISSION",
+  "historical_ledger_rows_reviewed": 558,
+  "catalogue_rows_reviewed": 96,
+  "new_saved_array_comparisons": 24,
+  "new_model_training_runs": 0,
+  "new_submissions": 0,
+  "new_ledger_rows": 26,
+  "ledger_rows_after": 584,
+  "ledger_prefix_unchanged": true,
+  "best_exploratory_candidate": "legacy_tabm_w0.05",
+  "best_exploratory_pooled_delta": 3.725503674112396e-06,
+  "nominations": [],
+  "champion_ref": 57090508,
+  "conditional_v7_vs_v6": {
+    "candidate_auc": 0.9618529228157238,
+    "baseline_auc": 0.9617656138245796,
+    "delta": 8.73089911441749e-05,
+    "paired_se": 1.33830962402089e-05,
+    "candidate_standalone_se": 0.00024241123724056903,
+    "ci95": [
+      6.107860451173204e-05,
+      0.00011353937777661775
+    ],
+    "one_sided_p": 3.4268107694533006e-11,
+    "positive_rows": 310339,
+    "negative_rows": 389296,
+    "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+  },
+  "runtime_recovery": {
+    "utc": "2026-10-19T09:28:28.001772+00:00",
+    "status": "INTERRUPTED_PARTIAL_NOT_A_MODEL_RESULT",
+    "scheduler_job": "JINT04",
+    "scheduler_state": "FAILED",
+    "process_verified_absent_on_actual_host": true,
+    "partial_files_preserved": true,
+    "last_progress": {
+      "status": "PREDICTING",
+      "member": 3,
+      "completed_rows": 118784,
+      "fit_seconds": 775.375,
+      "member_seconds": 974.234999999986,
+      "seconds": 4101.484999999986
+    },
+    "observed_seconds": 4101.484999999986,
+    "previous_accounted_GPU_hours": 14.539,
+    "minimum_accounted_GPU_hours_after": 15.678301388888885,
+    "nominal_remaining_upper_bound_hours": 6.321698611111115,
+    "GPU_spending_held": true,
+    "completed_raw_members": {
+      "0": {
+        "array_sha256": "455aaf4b15c2792798e7af8d10619d5f771ef3cba69e33a9506ae8186d210f07",
+        "old_array_sha256": "455aaf4b15c2792798e7af8d10619d5f771ef3cba69e33a9506ae8186d210f07",
+        "bitwise_equal": true
+      },
+      "1": {
+        "array_sha256": "4e4b2a0b510a14bad48b9b7708b2df123a277f3ed0617a97d4bc483c448969fb",
+        "old_array_sha256": "4e4b2a0b510a14bad48b9b7708b2df123a277f3ed0617a97d4bc483c448969fb",
+        "bitwise_equal": true
+      },
+      "2": {
+        "array_sha256": "67bc6139d6814051b91f993c0ce81e8fb94a8da5474fcc75d6be7e52fd0c47c2",
+        "old_array_sha256": "67bc6139d6814051b91f993c0ce81e8fb94a8da5474fcc75d6be7e52fd0c47c2",
+        "bitwise_equal": true
+      }
+    },
+    "historical_complete_evidence": "reports/phase18/tabpfn_internal4_fold0_audit.json",
+    "historical_portfolio_gain_over_v7": 3.818388033316467e-06,
+    "evidence_sha256": {
+      "artifacts\\phase17_internal4_screen_20261019\\f0\\progress.json": "8ac88fd9f03eb70326a9a0b5ddce353d2af02ed6a0015bb6ed20511ed497698b",
+      "artifacts\\phase17_internal4_screen_20261019\\f0\\resources.json": "e5de6f0ca5302090424b21cbbc20418332fdd89ed3cc6e7674ae7e7b6142f20b",
+      "artifacts\\phase17_internal4_screen_20261019\\f0\\configuration.json": "041426b9f1da52f16b1690f15e8d022c247377e38f8721d3e1aa29cf1bfe302e",
+      "reports\\phase18\\tabpfn_internal4_fold0_audit.json": "024541f0aea428cadd9e2e859afa5c5a85393cfc0f3e9d42bb38e86c655f8160"
+    }
+  },
+  "research_GPU_hours": 0,
+  "research_CPU_wall_seconds": 117.20300000000861,
+  "protected_files_after": {
+    "submissions/v6_sol_tabpfn_route_aux10.csv": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d",
+    "submissions/v7_sol_tabpfn_internal2_aux10.csv": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+    "data/cache/folds/primary_5f_seed20261010.npy": "baa2e0ba8b305106a2c5e018001e2e403d46adbd8dc8c10a4389ecb0661f573e",
+    "reports/phase17_B1_primary.json": "c63f5a172c7bdbaa160ce7aa022a1214daf03d5e0daac0540f7b9f2aa116f449",
+    "reports/phase17_B1_shadow_confirmation.json": "281aae9c80184dc6d7fb729461d1142ab840ff1cd7d80a6d321a6beb24bbd486"
+  },
+  "rule": "Final rank depends solely on private;20/80 is row allocation, not score weighting",
+  "full_tests": {
+    "passed": 244,
+    "failed": 0,
+    "exit_code": 0,
+    "log": "reports/phase21/full_tests_20261019.log",
+    "log_sha256": "c01d8c5bce5b7fbdd16c8acaebda39c71f5b3d5d56a51a85b4daa7c9b78e6f01",
+    "scope": "Full actual-host tests/run_tests.py suite"
+  },
+  "source_sha256": {
+    "src/validation/paired_auc.py": "50bb0a44bbb81a6ba3b4485e90e0cb6229dde7bd5e49af369b57d23d151b7ce0",
+    "scripts/phase21/private_reassessment.py": "8f81c40eeb4784a9313fd5d8506d02fc834ea3b290594a60ed67d59495df6b15",
+    "scripts/endgame/finalist_compare.py": "d2fb61512b6b871084c682a539326a20977869f3bed494a6893eb1dd2255a0d7",
+    "scripts/phase20/scheduler.py": "b57fe57f8f3236d4eab3d8fe8a2a915cf642f504191bdc8399f00a3caba21dd2",
+    "tests/test_paired_auc.py": "9ec138254ac0b3e6e73be14eb016d35e25b91a24f4fcdbce8c803438174cf53c",
+    "tests/phase20/test_scheduler_contracts.py": "158044b490167c15fe7a33bde0ee9504131c9dfb0b755471eb9f0eb90042a747",
+    "tests/run_tests.py": "686f7a747f125e0a3367894a7db68b8c9b9fc91a15b6aa4518c78a631d22316a"
+  }
+}

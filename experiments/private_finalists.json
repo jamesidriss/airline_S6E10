@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-12T01:17:06.740201+00:00",
+  "updated_utc": "2026-10-19T09:41:21.753875+00:00",
   "BEST_A": {
     "name": "v7_sol_tabpfn_internal2_aux10",
     "ref": 57090508,
@@ -377,9 +377,22 @@
     "receipt": "reports\\v7_sol_tabpfn_internal2_aux10_result.json",
     "private_leaderboard_unknown": true,
     "outstanding_required_work": [],
-    "stop_status": "COMPLETE \u2014 CERTIFIED AND SUBMITTED",
+    "stop_status": "COMPLETE — CERTIFIED AND SUBMITTED",
     "closing_proof": "reports\\phase17_rescue_final_proof_20261011.json",
     "integrity_report": "reports\\phase17_rescue_post_result_integrity_20261011.json",
     "unicode_scan_report": "reports\\phase17_rescue_post_result_unicode_scan_20261011.json"
+  },
+  "phase21_reassessment": {
+    "utc": "2026-10-19T09:41:21.753875+00:00",
+    "decision": "KEEP_CERTIFIED_V7_NO_NEW_ADMISSION",
+    "report": "reports/phase21/reassessment_20261019.md",
+    "completion": "reports/phase21/reassessment_completion_20261019.json",
+    "saved_array_comparisons": 24,
+    "nominations": [],
+    "full_tests_passed": 244,
+    "full_tests_failed": 0,
+    "new_submissions": 0,
+    "Kaggle_final_selection_modified": false,
+    "GPU_accounting_hold": true
   }
 }

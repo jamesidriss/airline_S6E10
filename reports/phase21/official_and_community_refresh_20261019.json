@@ -1,0 +1,32 @@
+{
+  "checked_utc": "2026-10-19 09:31:40 UTC",
+  "official_source": "https://www.kaggle.com/competitions/playground-series-s6e10/rules",
+  "competition_metadata": {
+    "title": "Predicting Airline Satisfaction",
+    "deadline": "2026-10-31T23:59:00Z",
+    "team_count": 2320,
+    "max_daily_submissions": 10
+  },
+  "rules_verified_via_authenticated_Kaggle_pages": {
+    "final_ranking_uses_private_only": true,
+    "max_selected_final_submissions": 2
+  },
+  "split": {
+    "public_fraction": 0.2,
+    "private_fraction": 0.8,
+    "authority": "Current explicit user instruction and previously verified official metadata; current Evaluation page specifies ROC-AUC but does not repeat split percentage.",
+    "test_rows": 299844,
+    "approx_public_rows": 59969,
+    "approx_private_rows": 239875,
+    "warning": "20/80 describes disjoint row allocation, not a weighted average of two leaderboard scores."
+  },
+  "community_source": "https://www.kaggle.com/competitions/playground-series-s6e10/discussion/750479",
+  "community_refresh": {
+    "published": "2026-10-18",
+    "author_reported_tree_public_auc": 0.96114,
+    "author_reported_TFM_ensemble_OOF_auc": 0.96238,
+    "interpretation": "The0.96238 figure is reported OOF, not a verified private score. Shared foundation-model predictions are used by that author; neither provenance nor CV protocol has been independently certified here.",
+    "admission": "No external prediction imported or candidate admitted from this report."
+  },
+  "paired_inference_primary_source": "https://pubmed.ncbi.nlm.nih.gov/3203132/"
+}

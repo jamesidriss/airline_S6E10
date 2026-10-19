@@ -47,3 +47,15 @@ src/models/resource_guard.py -text
 submissions/manifest.csv -text
 submissions/kaggle_submissions.csv -text
 .gitignore -text
+# Preserve exact new reassessment source, protocol and evidence bytes.
+configs/phase21/** -text
+scripts/phase21/** -text
+reports/phase21/** -text
+src/validation/paired_auc.py -text
+tests/test_paired_auc.py -text
+scripts/endgame/finalist_compare.py -text
+scripts/phase20/scheduler.py -text
+tests/phase20/test_scheduler_contracts.py -text
+research/phase20_exhaustive/scheduler.json -text
+research/phase20_exhaustive/campaign_budget.json -text
+research/phase20_exhaustive/runtime_ledger.jsonl -text

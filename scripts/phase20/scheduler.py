@@ -166,7 +166,9 @@ def budget_check(is_gpu: bool) -> tuple[bool, str]:
         cap = ext.get("cap_gpu_hours")
         used = ext.get("consumed_gpu_hours_estimate")
     except Exception:
-        return True, "budget file unreadable; run allowed"
+        return False, "GPU budget file unreadable; refusing unaccounted compute"
+    if ext.get("unresolved_gpu_runtime"):
+        return False, "GPU runtime accounting unresolved; reconcile interrupted job before new GPU compute"
     if cap is None or used is None:
         return True, "budget file declares no active cap; run allowed"
     remaining = float(cap) - float(used)

@@ -137,3 +137,23 @@ def test_budget_charge_advances_consumed_estimate():
             ext = doc["active_gpu_budget"]
             assert abs(ext["consumed_gpu_hours_estimate"] - 12.3) < 1e-6
             assert abs(ext["remaining_gpu_hours"] - 9.7) < 1e-6
+
+
+def test_budget_check_blocks_unresolved_interrupted_runtime():
+    with TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _write_budget(root, unresolved_gpu_runtime={"job": "JINT04", "unknown_tail": True})
+        with patch.object(S, "ROOT", root):
+            ok, why = S.budget_check(True)
+            assert not ok and "unresolved" in why
+            assert S.budget_check(False)[0]
+
+
+def test_budget_check_blocks_corrupt_existing_budget():
+    with TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _write_budget(root)
+        (root / 'research/phase20_exhaustive/campaign_budget.json').write_text('{broken', encoding='utf-8')
+        with patch.object(S, 'ROOT', root):
+            ok, why = S.budget_check(True)
+            assert not ok and 'unreadable' in why

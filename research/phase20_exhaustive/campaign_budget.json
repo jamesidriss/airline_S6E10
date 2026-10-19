@@ -28,9 +28,9 @@
   "cap_gpu_hours": 22,
   "previous_cap_gpu_hours": 12,
   "increment_gpu_hours": 10,
-  "consumed_gpu_hours_estimate": 14.539,
+  "consumed_gpu_hours_estimate": 15.679,
   "documented_gpu_hours": 11.54,
-  "remaining_gpu_hours": 7.461,
+  "remaining_gpu_hours": 6.321,
   "reconciliation": {
    "s7_close_documented": 9.1,
    "post_s7_ledger_entries": {
@@ -71,6 +71,23 @@
     "obj37-41 five objective arms (scheduler-debited)": 0.3892777777777778
    },
    "reconciled_utc": "2026-10-18T23:54:33.873526+00:00"
+  },
+  "consumed_gpu_hours_lower_bound": 15.678301388888885,
+  "remaining_balance_status": "NOT_SPENDABLE_UNTIL_INTERRUPTED_RUNTIME_RECONCILED",
+  "unresolved_gpu_runtime": {
+   "job": "JINT04",
+   "known_elapsed_seconds_charged": 4101.484999999986,
+   "unknown_tail": true,
+   "last_progress": {
+    "status": "PREDICTING",
+    "member": 3,
+    "completed_rows": 118784,
+    "fit_seconds": 775.375,
+    "member_seconds": 974.234999999986,
+    "seconds": 4101.484999999986
+   },
+   "recovery_report": "reports\\phase21\\interrupted_internal4_recovery_20261019.json",
+   "resolution": "Reconcile missing end-of-process timing before spending more GPU. CPU analysis allowed; no repeated inference."
   }
  }
 }

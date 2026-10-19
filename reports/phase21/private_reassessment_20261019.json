@@ -1,0 +1,3616 @@
+{
+  "utc": "2026-10-19T09:29:09.263047+00:00",
+  "status": "COMPLETE_DISCOVERY_ONLY",
+  "git": "0c8eeff9a05befd464ef9a5a72a74fccd9d75da9",
+  "prereg_sha256": "e819d73b7e37ff6d2f2c115ac8b39234b9f68fb715fa062dd1eed160932aa3ae",
+  "source_sha256": {
+    "C:\\Users\\James\\airline_S6E10\\scripts\\phase21\\private_reassessment.py": "8f81c40eeb4784a9313fd5d8506d02fc834ea3b290594a60ed67d59495df6b15",
+    "src/validation/paired_auc.py": "50bb0a44bbb81a6ba3b4485e90e0cb6229dde7bd5e49af369b57d23d151b7ce0",
+    "scripts/endgame/finalist_compare.py": "d2fb61512b6b871084c682a539326a20977869f3bed494a6893eb1dd2255a0d7",
+    "scripts/private_lb_simulator.py": "b4ca3aa7c274b05eb431b0a711d07113416d527b06196991615eb1ca7abb6509"
+  },
+  "baseline_auc": 0.9618529228157235,
+  "baseline_sha256": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+  "baseline_member_replay_maxabs": 0.0,
+  "primary_folds_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b",
+  "v7_vs_v6_paired": {
+    "candidate_auc": 0.9618529228157238,
+    "baseline_auc": 0.9617656138245796,
+    "delta": 8.73089911441749e-05,
+    "paired_se": 1.33830962402089e-05,
+    "candidate_standalone_se": 0.00024241123724056903,
+    "ci95": [
+      6.107860451173204e-05,
+      0.00011353937777661775
+    ],
+    "one_sided_p": 3.4268107694533006e-11,
+    "positive_rows": 310339,
+    "negative_rows": 389296,
+    "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+  },
+  "corrected_label_aligned_covariate_drift": {
+    "numeric_smd": {
+      "Age": -0.0006446379611867045,
+      "Flight Distance": -0.0004295453603386042,
+      "Departure Delay in Minutes": -0.003342362335593737,
+      "Arrival Delay in Minutes": -0.002498092651452611
+    },
+    "categorical_tv": {
+      "Gender": 0.0015358024263907588,
+      "Customer Type": 0.0014214657791792457,
+      "Type of Travel": 0.0001610994870705762,
+      "Class": 0.0004425497830417534,
+      "Inflight wifi service": 0.0008318289315380235,
+      "Seat comfort": 0.0015168641133873927,
+      "Cleanliness": 0.0029136482093345614,
+      "Food and drink": 0.0023638984142038627,
+      "Inflight entertainment": 0.0015155584206223928,
+      "On-board service": 0.0023486572695824368,
+      "Baggage handling": 0.001692665593261266,
+      "Leg room service": 0.0020487800644883973,
+      "Online boarding": 0.001400172356993629,
+      "Checkin service": 0.001342038940478968,
+      "Gate location": 0.0005182833002224212,
+      "Ease of Online booking": 0.0012246276968905252,
+      "Departure/Arrival time convenient": 0.001914119976423101
+    },
+    "max_abs_smd": 0.003342362335593737,
+    "max_tv": 0.0029136482093345614
+  },
+  "simulation": {
+    "population": 299844,
+    "public_rows": 59969,
+    "private_rows": 239875,
+    "seed": 20261019,
+    "repeats": 100,
+    "mask_sha256": [
+      "d864b3567675b7486b0ba27b8cf5d275432b5e2576e967ae0089ef6607805691",
+      "4af23992721c5d1b69bbfe35dc12d93951fccd8bb2c9b18aa27d7243e0d4b674",
+      "d4695fb93de390595cee2b59f19c16b89ee40a6bec1bae2576b11284f31986a3",
+      "6852665f33b90135d9cefb1636154ae1ca50d327e19d9415e1a4a43c7f1349f8",
+      "1cba76d5eb65326bcb4866b06ca82789a7e975c91a79bf387d45bddf6e736c36",
+      "905dfc7186109bf2b9761ecc41fda71b56254332ffab2fc9a90fb802b54cd51a",
+      "be7dc62768b842a55419983c3c6a7d0a2821545504ff2d169ff86ef7f5d3b98c",
+      "5f03e2591125c84f48a741d4e6dca78c6f132e4f5efa8892557ccfccdc7509bf",
+      "eeb64eed3c6ae45da9cebb827bcc3128df311836f86e0273a4157554c8fc2929",
+      "27e00e84f2a536cb519caa91bfd8d62f18aafa65bd3106feea42367a0decf6c8",
+      "c212610684fba3c74426980f1be084101b0e34078575d6dde5411a1618841c45",
+      "9257a4c29800418a865cbd5aca63362acc7a8e06d983aedb1cf37640405270ce",
+      "79ee9322e26d3486cce4980539c2335e724de1455c0a505479c7a2960953589b",
+      "1edd0c931b5e5e1d87daf0448e9c8c9d48fe07eb8d27cdb77125d58f73e6c14a",
+      "4880faeb74fc7aa5dff2d9ff56257730c295e4b4bf7f0d0d30eb6e4b66fc96a8",
+      "821a5e09aa61933f054364c946cc30097eb1351473228b79bad7ac75678b4679",
+      "fea8bc8b8bed76fe10f8cf33d7619bd1fb8dceb334effd74fd0f2518adac666a",
+      "dc8a65ee49a7c979bfb7bd4cf256a3549e0597a8250cdddf9107d583d6a699e0",
+      "1e34af23eb53faf75971d3b01480fc94b83f95bcd02fc6603acadb2cf0a88bb3",
+      "0a30816fa021721bf4e303003ef3a536840c6421c2d119268db54502a233b394",
+      "b2af3aebc3716565aca271efd1c92ab95cb69a0fce3a306b17a790d5898b2094",
+      "a0fd0efcbf2362207e326d9c24fbca793b26f75e4cab96b16af25b379f33aa53",
+      "400ce83b43c6f17c14a59fd9ff470049bdab06394d614d501952c4772c59c96c",
+      "03ba8b30a9e0213e77d6f210fc58d16811fbb7c58dd261ccfa7bd0578595bd5a",
+      "83349487440fd7ced5306d138beaa7b2dae2678122894fe9fab53d74c08e0116",
+      "b5f49c1c20689fa929e203cc23a81242552f1143b9c075d00e6b29e5a6ddd490",
+      "1795b824dc3f33889813265bad4898e9db0db6263c5cef8ec3d584d7c36771e6",
+      "1e52a3fc8c7934a41c8fcdab2fe562157c514e7dfd2f460c4027622079321bc2",
+      "b1bdb6309aee74b22a354ffe84f33b6c77ff979f69531379d53342e122056211",
+      "5103b12dac64f2833af403ca4654ef9cb22c9a3f41642cb990e14e48c9f78b00",
+      "c508568fd070474472c68e86133f73f44dc6842ddf04e57a02fa19e1d8285649",
+      "c3192718c5ea15aacf1135a0710b71a4dc982ee4ddbf051b506e93d28d8f6dea",
+      "1f10fcb80e4823c0bf7cb9ec5cf385dd5f2ec1832a02557b6e85d98098c42470",
+      "d50bacf729315642c4569cda459a8536c0bb6d76a19e11a4b6565d454cb3f50c",
+      "a1fa9134d10a7d20ade901cc7b84be823ff00e937813d1db4e04366c2b1d37dc",
+      "f624edb95715fd00074247f1a309412c855693a8ce8c9b0a917b3c6241c8669d",
+      "83d2edae46bf6db63ba6880b5cb60f145b0fb5cfc0f2aa9374e87e4744157013",
+      "d4d7e73951e3dc1464d16eb40eb078f1994facfcc52ab05a84f2ddf5d469d52b",
+      "3b1576e7d72607721fe2b67597d5ec39e5004b86c92e7272ee23ea23980972b4",
+      "2079c0e4e18561f920a58ca4ef19435f16d307ad2cc19c9fe0fb23a1aaafc7a9",
+      "bb5249b5265712ce094646a0f9851bfabe4614ff513aca02732f206251da1371",
+      "49dc3dc55230ed3ce0fdca857bd7e3102853bea9e6ca4bd50d600cb4f74225a4",
+      "5bdc10c506a54541a1a110fdb9168cddb59934c0a0362a86265e2067ff2c68d3",
+      "5880ea5a265f287b257d6f22c19f8299b1006539222736b6420a171fb4077cc8",
+      "92845b192a91d0a455df1b367d449c0f3d589c6f652603e8071f58141a44df01",
+      "2a37eaf5f257208838d20729282cb91599ded8806ca9d59d2e0c457357f2d4be",
+      "d3415b677be3d7339608da5932b175640f501943175115c1652e0516e077b98d",
+      "d31a186858356a0eace692d639643dea4360ad3089fb82ec3af27e7c5a00c53f",
+      "808c12179f382a90858174731d9a673b6ef4ebfc8cd5183d6d2f94f1d74bf674",
+      "dd9c7252950fdaba696459ba05c9e8c3697f7599b800af7e21fd1a4f7523f2c6",
+      "07dbf4b58fb88925a2bde72263f018279a040abdd47e2cc78153f238c40497a5",
+      "4f8a7a66692d4c35b58e90846941008edabd06c532eb7f932b1201b7eaaba9d1",
+      "886d094e0440cf1baea73c27a2422f0f2d37d9a7f193ca847e14d6f63963f740",
+      "46bc40ace624dbb4d493ff911d787da4cb96dba07b95978c027324f1cda2a791",
+      "f99f1f8da7d5126f432006f8f0d4e338044ed492ff94f2df384fb8eb8f330685",
+      "07c94568e2e77ce2d393ac7f657f7c5697991d18c9e96b8a40d13a88d24a2864",
+      "e26fe38667ebcb5ccf1ffe79886a9a1893233cd149370c4448fc8a7520a1348c",
+      "6dce229eb16f60736a04689812e2bb0f4ee8f21cff202841d9668dc3e9cd9809",
+      "5b7a14c9e280bfd162fd0b41bf1be0d05018712f41b88d65cd9780af4a3a6616",
+      "64d960cf715c895fbe2b19e07911224bfc7a37436835c62524cd440174b80073",
+      "d7a0651cef6bfa97492563bef7dc355f08a94e145658121d3366e5122f947cbc",
+      "f2a0d9f50220ec2d4f66ea1b367914faffb6e91aacf74e1728cad5c4ed320add",
+      "b83fa6ace605d20877e975b4fead96b9807a4cf30aa59d98a8fb29f2bf8a73bb",
+      "6caedbe0f29be9c4b787372c52c49d7e05f0ecc440f1d0ace7d41717d5a97f6d",
+      "cf8b797f5af557d231b8f23b0e466d735c22354e6ffe10a2375947bd8fabee9d",
+      "f6156d51defa1ea2586044ce12c805a126e03398a78825b029b0ffc080242c09",
+      "26fe7e6dd7ab36c25cae0cafd4cc01ffd6bfa81d0c83908911ced1725874ebb8",
+      "68b22fa1e855f0a15c1f1d11bd0cdf78102cc6e11366f31bcaac3feca5c1fa3c",
+      "cd26950c7bfaa5abc9cb310283256a766b711936b4040a870de6baa8af7f124b",
+      "28e4b89d3f505cac3eefc847644944718e30d20728ca01e9f07486d71e2adb2e",
+      "41aba4446c6829ef076dde7ade71f1960d345fdfb0ed28563ffb4c334830b5c2",
+      "79d35fcd030c156221c6da7a32686ba76d2671d412906fea98b453880f8d950b",
+      "d47c666bb9d1cf877a3996419094c16b27fb4b4c0d33f6ad41e340a8d991b008",
+      "37b39412ef2f0f4803fa044db564bc5fce7e12ad2a004777cbbdd792c8839611",
+      "a5ea1305e47c8368a9db3b2d0c96003073ad49ed5bc4123dfa6c07abb2711e85",
+      "431116ae87c975cd69639ac2ac60a7f5720e29c9057e38d0e9f1d4f13ced71d4",
+      "d63a06e172c0cb09d89aeba8629f8f4cc8cd29ce2c5832798e0827ef01467850",
+      "390ba6133d77bcb81358e7cc74a38dd7d2539a2cf8e4648b629a1a94756b2738",
+      "fb49b6021c286b5e5495f104d6264e5260d76375cd7c55f56c6958bc242693a4",
+      "2ca36da1ee5647dd4799a0a6085eba6f44a9a1a3bc1c6478fae879f0dbcf2a3f",
+      "51495fcc4d7016dc527c4753f76ff036a4b63279edd6930dd425638eae56b7e7",
+      "3e8b6f1806d2e2477685d72042afb8634dd9ad6a8c27da446f0fba3997f41587",
+      "6e2bb96c19e870a07b3f5670e971eb4c59b8ace14b51ad5ccb763fc67f4584dc",
+      "e48074f953f20169207e92c6377d11ad5ae4250c155f84e91a196509c26f86ec",
+      "5a976ba8c9f59d2ad07a285dc8901468f320d918a5ee2022405c7bc5751f6bb5",
+      "39b1f62cadb1e73f96da691ebaa5eeafc22b352b931e0c70b87f82c4dffcaff8",
+      "4567aece0d61dc6ae636a1087315b67ebc3dc17e7d8da0d93a38e22b514fd0ad",
+      "7ba88e9376ed8422ac306b46d03e3b252cb2171f9406a33d29bd9e888fb7f43b",
+      "a26cb22ea9553b2c18969bccdacd92c04f8fe7e4dcf5bd07e0cdd62b8b44d5c9",
+      "c5ecf0ca372101bce3536dbe10da0572ce28116ea8a8373c5bd54ab5df7c87ba",
+      "edc3bb0eb53cacdb857c5a7d2145309a2a299a28e0dd3cd6f981c371eddfb871",
+      "1d4baf9555198e9ed6f35559854d241abcadb23d12890e705e34c6b4734ddbed",
+      "68af19ed7397ec76c21fa6e87e4959b930d0d68aeea59a7644e340c0555e73b2",
+      "8a57e4c86d354f559baf85e64f38fe91cc9f6853c709764b4983945cb024682c",
+      "2c658fff9e2dc45653aaa97c22ee2d984ba12ef40453bfac7e73ddbded099d05",
+      "9145d4c3c6608c6b004bf11bb4c58b25514d492cb2d0ab6fa04a6c22c760fd07",
+      "d7f8280351c8b36cc88f6641ce566b37eab39a4b317ae7039baf229dd73bbc26",
+      "632a77953a1e99a075664cbe591f6db31862f16ff8f858ec1be816a796caa847",
+      "15c6e4433b0c102924fb8cac102d05c149dafe17978aa7fc65e634a65ef40b80",
+      "c29e168d3eec473a2e4e5584743cf637ebbe0d41b831e7a7a91ecb431f794eae"
+    ],
+    "limitation": "Conditional finite OOF resampling; not private labels, refit uncertainty or protection against adaptive reuse"
+  },
+  "candidates": [
+    {
+      "name": "aux_prod5_xgb_full_primary_w0.05",
+      "prediction_sha256": "24f1a91216bdbe359149de075334feabd7a80f03a54a66bb2bf4a6e7a0251244",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618481075269851,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -4.815288738635459e-06,
+        "paired_se": 2.6578335284248343e-06,
+        "candidate_standalone_se": 0.000242421376098838,
+        "ci95": [
+          -1.0024546731251148e-05,
+          3.9396925398022985e-07
+        ],
+        "one_sided_p": 0.9649863860932204,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -8.847734298100818e-06,
+        -7.752631902002705e-07,
+        -4.547493358986188e-06,
+        -9.324679001498914e-06,
+        -1.203401330140963e-06
+      ],
+      "mean_fold_delta": -4.93971423578543e-06,
+      "fold_se": 1.8159991830968175e-06,
+      "positive_folds": 0,
+      "fold_t": -2.720108181635716,
+      "correlation": {
+        "spearman": 0.9999521255474509,
+        "logit": 0.9999934201309099
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -2.042327316011949e-05,
+          -3.0314136994502583e-06,
+          9.367189441356059e-06
+        ],
+        "private_quantiles": [
+          -1.1599844238474599e-05,
+          -3.9601334466121685e-06,
+          1.7974806378107104e-06
+        ],
+        "private_p05": -1.1599844238474599e-05,
+        "private_median": -3.9601334466121685e-06,
+        "private_worst_5pct_mean": -1.3531184723825085e-05,
+        "public_private_sign_disagreement_rate": 0.45,
+        "private_reversal_vs_full_oof_rate": 0.17,
+        "public_reversal_vs_full_oof_rate": 0.34
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -6.649876900355345e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -7.2640982325955505e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -1.8741093143703758e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -6.969458123506911e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -1.2263916139176878e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -7.423380446125449e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": 5.735112060811787e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -4.15825453392582e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -5.26493761487945e-06
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618481075269851,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -4.815288738635459e-06,
+        "paired_se": 9.07818805098616e-06,
+        "candidate_standalone_se": 0.000828022755199861,
+        "ci95": [
+          -2.26082103634502e-05,
+          1.2977632886179283e-05
+        ],
+        "one_sided_p": 0.7020910021414546,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618481075269851,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -4.815288738635459e-06,
+        "paired_se": 4.539113573692187e-06,
+        "candidate_standalone_se": 0.0004140131981307785,
+        "ci95": [
+          -1.3711787864809042e-05,
+          4.081210387538124e-06
+        ],
+        "one_sided_p": 0.8556194655814722,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_prod5_xgb_full_primary_w0.10",
+      "prediction_sha256": "88093d48065db32b9643a3f9a7c3293cdef8267422da660c4918f8910021c70c",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618387081442545,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.4214671469225948e-05,
+        "paired_se": 5.293027243328799e-06,
+        "candidate_standalone_se": 0.0002424551993514326,
+        "ci95": [
+          -2.4588814235339718e-05,
+          -3.840528703112176e-06
+        ],
+        "one_sided_p": 0.9963794364933323,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -2.2956370271609572e-05,
+        -6.013178445396505e-06,
+        -1.391479993739786e-05,
+        -2.2269287702436635e-05,
+        -7.489416961048434e-06
+      ],
+      "mean_fold_delta": -1.45286106635778e-05,
+      "fold_se": 3.5593876613992953e-06,
+      "positive_folds": 0,
+      "fold_t": -4.08177249731382,
+      "correlation": {
+        "spearman": 0.9998101673062019,
+        "logit": 0.9999736980343499
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -4.584647777748918e-05,
+          -1.0748661247894642e-05,
+          1.5398049409653947e-05
+        ],
+        "private_quantiles": [
+          -2.8516492059904584e-05,
+          -1.2899250483200397e-05,
+          -1.1388120989219747e-06
+        ],
+        "private_p05": -2.8516492059904584e-05,
+        "private_median": -1.2899250483200397e-05,
+        "private_worst_5pct_mean": -3.161254102008737e-05,
+        "public_private_sign_disagreement_rate": 0.23,
+        "private_reversal_vs_full_oof_rate": 0.05,
+        "public_reversal_vs_full_oof_rate": 0.2
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -2.130565159097486e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -2.6051653518766038e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -4.435099797006625e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -1.922546513943857e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -4.495757066402817e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -1.924701100242121e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": 1.1448279879644474e-07
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -1.3063479161634639e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -1.488897056545202e-05
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618387081442545,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.4214671469225948e-05,
+        "paired_se": 1.8079046858851632e-05,
+        "candidate_standalone_se": 0.00082813828377749,
+        "ci95": [
+          -4.964895218738714e-05,
+          2.1219609248935245e-05
+        ],
+        "one_sided_p": 0.7841398188265962,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618387081442545,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.4214671469225948e-05,
+        "paired_se": 9.039562315964294e-06,
+        "candidate_standalone_se": 0.00041407096231335167,
+        "ci95": [
+          -3.1931888044521446e-05,
+          3.5025451060695506e-06
+        ],
+        "one_sided_p": 0.9420821642129851,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xgb_lossguide_w0.05",
+      "prediction_sha256": "4918644cdccce57137004d0a55d1873a2ad638003f7c18d81ca3ac5556c8061a",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618503030928124,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -2.6197229113789078e-06,
+        "paired_se": 2.4684905086644152e-06,
+        "candidate_standalone_se": 0.00024240812990366668,
+        "ci95": [
+          -7.45787540454012e-06,
+          2.2184295817823047e-06
+        ],
+        "one_sided_p": 0.8557152870343486,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        1.8529606093942164e-06,
+        -5.217429186576972e-06,
+        -2.3678998228859882e-06,
+        -9.35923630929203e-06,
+        1.544421945887109e-06
+      ],
+      "mean_fold_delta": -2.709436552694733e-06,
+      "fold_se": 2.1158602409286362e-06,
+      "positive_folds": 2,
+      "fold_t": -1.2805366348325447,
+      "correlation": {
+        "spearman": 0.9999593503412207,
+        "logit": 0.9999942883384956
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -1.595135352684407e-05,
+          -2.572885268448122e-06,
+          1.1820429207631818e-05
+        ],
+        "private_quantiles": [
+          -7.458369267315801e-06,
+          -2.283091816934757e-06,
+          3.2931032881433603e-06
+        ],
+        "private_p05": -7.458369267315801e-06,
+        "private_median": -2.283091816934757e-06,
+        "private_worst_5pct_mean": -1.0133881573026748e-05,
+        "public_private_sign_disagreement_rate": 0.52,
+        "private_reversal_vs_full_oof_rate": 0.25,
+        "public_reversal_vs_full_oof_rate": 0.41
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": 4.483325049209341e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -1.753714948815599e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -1.8024584178544245e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -2.0725310198033142e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -2.2459354175330404e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -2.2311657043028177e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -9.799768964091626e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -3.296790359819113e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -1.8428940166126395e-06
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618503030928124,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -2.6197229113789078e-06,
+        "paired_se": 8.431460757157216e-06,
+        "candidate_standalone_se": 0.0008279775104222127,
+        "ci95": [
+          -1.9145082332469866e-05,
+          1.390563650971205e-05
+        ],
+        "one_sided_p": 0.6219887196807574,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618503030928124,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -2.6197229113789078e-06,
+        "paired_se": 4.215748901683847e-06,
+        "candidate_standalone_se": 0.00041399057595359036,
+        "ci95": [
+          -1.0882438926543539e-05,
+          5.642993103785723e-06
+        ],
+        "one_sided_p": 0.7328361753087395,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xgb_lossguide_w0.10",
+      "prediction_sha256": "579ed0cf0411f9d19ca39d6958e3a16229e77cd79ebe3157c1278ac1858e366b",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618437068227431,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -9.215992980649013e-06,
+        "paired_se": 4.928592442862876e-06,
+        "candidate_standalone_se": 0.00024242439492915409,
+        "ci95": [
+          -1.8875856663136534e-05,
+          4.4387070183850885e-07
+        ],
+        "one_sided_p": 0.9692514003199555,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -6.492449506900755e-07,
+        -1.4300517430121396e-05,
+        -9.516089237937564e-06,
+        -2.2357543341233743e-05,
+        -1.160359893059848e-06
+      ],
+      "mean_fold_delta": -9.596750970608525e-06,
+      "fold_se": 4.100001863028737e-06,
+      "positive_folds": 0,
+      "fold_t": -2.340669904847129,
+      "correlation": {
+        "spearman": 0.9998376528735364,
+        "logit": 0.9999771536182998
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -3.600833907968504e-05,
+          -9.028897980378758e-06,
+          1.9185725203779698e-05
+        ],
+        "private_quantiles": [
+          -1.8958960201215234e-05,
+          -8.611288738746836e-06,
+          2.439989246644232e-06
+        ],
+        "private_p05": -1.8958960201215234e-05,
+        "private_median": -8.611288738746836e-06,
+        "private_worst_5pct_mean": -2.443218064087649e-05,
+        "public_private_sign_disagreement_rate": 0.35,
+        "private_reversal_vs_full_oof_rate": 0.13,
+        "public_reversal_vs_full_oof_rate": 0.32
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": 1.7037800955632676e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -4.3876331798697876e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -4.49314609290985e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -8.81872655722482e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -2.0102960633039402e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -8.43163528929658e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -2.669436612123821e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -1.0588323658966559e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -7.762625679363921e-06
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618437068227431,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -9.215992980649013e-06,
+        "paired_se": 1.6834269300606495e-05,
+        "candidate_standalone_se": 0.0008280330659537671,
+        "ci95": [
+          -4.2210554515886026e-05,
+          2.3778568554588e-05
+        ],
+        "one_sided_p": 0.7079666677564018,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618437068227431,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -9.215992980649013e-06,
+        "paired_se": 8.417171589065165e-06,
+        "candidate_standalone_se": 0.0004140183537644972,
+        "ci95": [
+          -2.571334614691051e-05,
+          7.281360185612486e-06
+        ],
+        "one_sided_p": 0.8632206033310093,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xt_d127_bin63_w0.05",
+      "prediction_sha256": "2c33a9b257f1beabcbadab0d2ea63968b607b0b7e2ec91443b8a1f66802754f0",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618456263230963,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -7.296492627428819e-06,
+        "paired_se": 2.179782697456252e-06,
+        "candidate_standalone_se": 0.00024243724604578745,
+        "ci95": [
+          -1.1568788208566641e-05,
+          -3.0241970462909968e-06
+        ],
+        "one_sided_p": 0.9995920573412425,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -3.5904539094078203e-06,
+        -3.479941564354938e-06,
+        -8.125105876333194e-06,
+        -1.4426020466196121e-05,
+        -7.399712812494741e-06
+      ],
+      "mean_fold_delta": -7.404246925757363e-06,
+      "fold_se": 1.9971248280853976e-06,
+      "positive_folds": 0,
+      "fold_t": -3.7074532456019096,
+      "correlation": {
+        "spearman": 0.9999681681072559,
+        "logit": 0.999995388961798
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -2.136156653532173e-05,
+          -7.460944801473968e-06,
+          2.210653440992692e-06
+        ],
+        "private_quantiles": [
+          -1.2914206340042256e-05,
+          -7.030379329087122e-06,
+          -1.2991122677996627e-06
+        ],
+        "private_p05": -1.2914206340042256e-05,
+        "private_median": -7.030379329087122e-06,
+        "private_worst_5pct_mean": -1.4083262857034206e-05,
+        "public_private_sign_disagreement_rate": 0.12,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.12
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -6.796390930929874e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -8.808988624431358e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -4.974748954311714e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -9.483822281719512e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": 6.789483381952621e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -7.395539089571912e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -9.628976362252573e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -3.840794407627968e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -1.0879486525450233e-05
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618456263230963,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -7.296492627428819e-06,
+        "paired_se": 7.445345357624813e-06,
+        "candidate_standalone_se": 0.000828076960598645,
+        "ci95": [
+          -2.188910138083594e-05,
+          7.296116125978302e-06
+        ],
+        "one_sided_p": 0.8364587366050302,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618456263230963,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -7.296492627428819e-06,
+        "paired_se": 3.722686579595924e-06,
+        "candidate_standalone_se": 0.0004140403012182088,
+        "ci95": [
+          -1.4592824249167433e-05,
+          -1.6100569020597715e-10
+        ],
+        "one_sided_p": 0.975002527634217,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xt_d127_bin63_w0.10",
+      "prediction_sha256": "2c62ecdbf930401ba6e04f666ab18f60ca199b88ca67c05f0b1435d1bddb5d00",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618352034515735,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.7719364150292627e-05,
+        "paired_se": 4.3468581412992935e-06,
+        "candidate_standalone_se": 0.00024247845245208,
+        "ci95": [
+          -2.623904955314396e-05,
+          -9.199678747441291e-06
+        ],
+        "one_sided_p": 0.9999771270358502,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -1.0805091426258073e-05,
+        -9.678839671622974e-06,
+        -1.9052768009619747e-05,
+        -3.129640138510581e-05,
+        -1.7828570216038564e-05
+      ],
+      "mean_fold_delta": -1.7732334141729035e-05,
+      "fold_se": 3.863820596141807e-06,
+      "positive_folds": 0,
+      "fold_t": -4.58932647117093,
+      "correlation": {
+        "spearman": 0.9998733719100873,
+        "logit": 0.9999815485325942
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -4.562017090132819e-05,
+          -1.7681509729916556e-05,
+          2.883828380983971e-07
+        ],
+        "private_quantiles": [
+          -2.8724363682930408e-05,
+          -1.7282904362425633e-05,
+          -5.901580049605393e-06
+        ],
+        "private_p05": -2.8724363682930408e-05,
+        "private_median": -1.7282904362425633e-05,
+        "private_worst_5pct_mean": -3.1209528559816845e-05,
+        "public_private_sign_disagreement_rate": 0.07,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.07
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -1.9444342661434355e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -2.494377478656773e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -0.00010280845514454295
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -2.268344378764109e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -1.1770127938959263e-07
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -1.8019137482339076e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -2.390640979454961e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -1.0779249366321686e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -2.46954889783213e-05
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618352034515735,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.7719364150292627e-05,
+        "paired_se": 1.4847287394293189e-05,
+        "candidate_standalone_se": 0.0008282177069006667,
+        "ci95": [
+          -4.681951271122282e-05,
+          1.1380784410637569e-05
+        ],
+        "one_sided_p": 0.8836516818036153,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618352034515735,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.7719364150292627e-05,
+        "paired_se": 7.42367139840964e-06,
+        "candidate_standalone_se": 0.0004141106745334104,
+        "ci95": [
+          -3.226949272423562e-05,
+          -3.1692355763496344e-06
+        ],
+        "one_sided_p": 0.9915038302860445,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xt_d127_cs05_w0.05",
+      "prediction_sha256": "4ba8455f573cdca3b01792596fc10cc41bc78b51c40201d61f735b620788f3fa",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618461121867425,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -6.810628981224198e-06,
+        "paired_se": 2.168908453002269e-06,
+        "candidate_standalone_se": 0.0002424445827181048,
+        "ci95": [
+          -1.106161143487313e-05,
+          -2.5596465275752666e-06
+        ],
+        "one_sided_p": 0.9991556016951619,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        1.510593838904839e-08,
+        -6.381617284390018e-06,
+        -1.1462265750550316e-05,
+        -1.218445139949953e-05,
+        -3.7112892877777526e-06
+      ],
+      "mean_fold_delta": -6.744903556765714e-06,
+      "fold_se": 2.3116520891347913e-06,
+      "positive_folds": 1,
+      "fold_t": -2.917784898717266,
+      "correlation": {
+        "spearman": 0.9999681542463551,
+        "logit": 0.9999956094110111
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -1.8921310897168643e-05,
+          -6.946367747784343e-06,
+          1.756124459501016e-06
+        ],
+        "private_quantiles": [
+          -1.128299694752588e-05,
+          -6.754340262482561e-06,
+          -2.7327515524644416e-06
+        ],
+        "private_p05": -1.128299694752588e-05,
+        "private_median": -6.754340262482561e-06,
+        "private_worst_5pct_mean": -1.25533927732846e-05,
+        "public_private_sign_disagreement_rate": 0.12,
+        "private_reversal_vs_full_oof_rate": 0.01,
+        "public_reversal_vs_full_oof_rate": 0.11
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": 9.223933620239322e-07
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -1.5492845863329663e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -3.643614366288794e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -5.514278893281599e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -1.5901512481653057e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -6.315620090124874e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -8.449989855829898e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -7.082504881905649e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -6.721553306943129e-06
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618461121867425,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -6.810628981224198e-06,
+        "paired_se": 7.408202090063931e-06,
+        "candidate_standalone_se": 0.0008281020187418484,
+        "ci95": [
+          -2.1330438267943856e-05,
+          7.70918030549546e-06
+        ],
+        "one_sided_p": 0.8210401475641642,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618461121867425,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -6.810628981224198e-06,
+        "paired_se": 3.7041152786892455e-06,
+        "candidate_standalone_se": 0.0004140528309704323,
+        "ci95": [
+          -1.4070561522039664e-05,
+          4.4930355959126793e-07
+        ],
+        "one_sided_p": 0.9670177998130902,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xt_d127_cs05_w0.10",
+      "prediction_sha256": "df58bcd147c157da46a7903eb71944a8e7f23f175cab5809c2fb9c89caf3854d",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618363797872302,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.654302849352085e-05,
+        "paired_se": 4.3200715583896325e-06,
+        "candidate_standalone_se": 0.0002424920604323582,
+        "ci95": [
+          -2.5010213158600355e-05,
+          -8.075843828441346e-06
+        ],
+        "one_sided_p": 0.9999357566485211,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -2.9833193483375098e-06,
+        -1.5874944224059107e-05,
+        -2.5748091151855945e-05,
+        -2.6988843343955793e-05,
+        -1.0347430454360484e-05
+      ],
+      "mean_fold_delta": -1.6388525704513768e-05,
+      "fold_se": 4.563038212804635e-06,
+      "positive_folds": 0,
+      "fold_t": -3.591581954874906,
+      "correlation": {
+        "spearman": 0.9998735932878355,
+        "logit": 0.9999824350200148
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -4.073326613896477e-05,
+          -1.6856271214782392e-05,
+          1.5404640051397328e-06
+        ],
+        "private_quantiles": [
+          -2.5386199186711034e-05,
+          -1.638616907184698e-05,
+          -8.187231402256856e-06
+        ],
+        "private_p05": -2.5386199186711034e-05,
+        "private_median": -1.638616907184698e-05,
+        "private_worst_5pct_mean": -2.807741725452395e-05,
+        "public_private_sign_disagreement_rate": 0.08,
+        "private_reversal_vs_full_oof_rate": 0.01,
+        "public_reversal_vs_full_oof_rate": 0.07
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -3.914048287367855e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -3.679873601669659e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -7.204694155571456e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -1.469758642314023e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -4.2037186022469974e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -1.5623242750062438e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -2.1928320932618206e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -1.7197842816174536e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -1.6191842909019094e-05
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618363797872302,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.654302849352085e-05,
+        "paired_se": 1.4755792610611e-05,
+        "candidate_standalone_se": 0.0008282641843029663,
+        "ci95": [
+          -4.546385057366067e-05,
+          1.2377793586618972e-05
+        ],
+        "one_sided_p": 0.8688818127086679,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618363797872302,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.654302849352085e-05,
+        "paired_se": 7.37792461547116e-06,
+        "candidate_standalone_se": 0.0004141339145823425,
+        "ci95": [
+          -3.1003495020495855e-05,
+          -2.0825619665458497e-06
+        ],
+        "one_sided_p": 0.9875268520218938,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xt_d127_s1_w0.05",
+      "prediction_sha256": "b2e01c3cbacf54d8a9cc0838e16b541afc99028ee66eb0bf4f3a667b4e673f85",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618465664314662,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -6.35638425761087e-06,
+        "paired_se": 2.0424473397951035e-06,
+        "candidate_standalone_se": 0.0002424418156037367,
+        "ci95": [
+          -1.0359507483928914e-05,
+          -2.353261031292825e-06
+        ],
+        "one_sided_p": 0.999071321409116,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -1.1438092319959736e-06,
+        -1.451510382555199e-06,
+        -8.7464131574011e-06,
+        -1.1454919736086921e-05,
+        -8.769382385920288e-06
+      ],
+      "mean_fold_delta": -6.313206978791897e-06,
+      "fold_se": 2.106528742685143e-06,
+      "positive_folds": 0,
+      "fold_t": -2.996971677084548,
+      "correlation": {
+        "spearman": 0.9999724647060928,
+        "logit": 0.9999960611159119
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -1.9295315751904905e-05,
+          -7.131976000829265e-06,
+          3.414994700778883e-06
+        ],
+        "private_quantiles": [
+          -1.1166768675113792e-05,
+          -5.798985617810892e-06,
+          -1.029813546732373e-06
+        ],
+        "private_p05": -1.1166768675113792e-05,
+        "private_median": -5.798985617810892e-06,
+        "private_worst_5pct_mean": -1.1585050332962865e-05,
+        "public_private_sign_disagreement_rate": 0.17,
+        "private_reversal_vs_full_oof_rate": 0.02,
+        "public_reversal_vs_full_oof_rate": 0.15
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": 2.5206970707403187e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -1.8479125645898264e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -4.3830999902350065e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -4.270382589321997e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -2.2650740633123334e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -6.202584422410062e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -9.864359620914698e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -4.302589671101309e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -8.35761521533751e-06
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618465664314662,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -6.35638425761087e-06,
+        "paired_se": 6.976257200485136e-06,
+        "candidate_standalone_se": 0.0008280925670150356,
+        "ci95": [
+          -2.002959711744996e-05,
+          7.316828602228219e-06
+        ],
+        "one_sided_p": 0.8188906008792542,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618465664314662,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -6.35638425761087e-06,
+        "paired_se": 3.4881418741555057e-06,
+        "candidate_standalone_se": 0.00041404810522490147,
+        "ci95": [
+          -1.3193016703921707e-05,
+          4.802481886999668e-07
+        ],
+        "one_sided_p": 0.9657940287774012,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xt_d127_s1_w0.10",
+      "prediction_sha256": "2044ae59c91da99903f7aed24b5b0e275a94fbeb88c45ca548bf54f254d792c8",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618374677347552,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.545508096856274e-05,
+        "paired_se": 4.0769660752918824e-06,
+        "candidate_standalone_se": 0.0002424854063071943,
+        "ci95": [
+          -2.3445787642326446e-05,
+          -7.464374294799036e-06
+        ],
+        "one_sided_p": 0.9999249273290091,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -5.663071416028842e-06,
+        -5.567865116851145e-06,
+        -2.0024407755947493e-05,
+        -2.5577063519022225e-05,
+        -1.998002127423515e-05
+      ],
+      "mean_fold_delta": -1.536248581641697e-05,
+      "fold_se": 4.107346965352846e-06,
+      "positive_folds": 0,
+      "fold_t": -3.740245454305622,
+      "correlation": {
+        "spearman": 0.9998901373565448,
+        "logit": 0.9999842360939944
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -4.155230832406653e-05,
+          -1.6598841862169866e-05,
+          4.4328264230564225e-06
+        ],
+        "private_quantiles": [
+          -2.526399983772687e-05,
+          -1.4457592321714952e-05,
+          -4.786293147268641e-06
+        ],
+        "private_p05": -2.526399983772687e-05,
+        "private_median": -1.4457592321714952e-05,
+        "private_worst_5pct_mean": -2.593725808255343e-05,
+        "public_private_sign_disagreement_rate": 0.14,
+        "private_reversal_vs_full_oof_rate": 0.01,
+        "public_reversal_vs_full_oof_rate": 0.13
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -6.050212996155935e-07
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -4.2144337011551514e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -9.245384246214794e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -1.2060464031238283e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -5.317228421164444e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -1.5216923564431717e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -2.5049581609870586e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -1.1466732909082289e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -1.94499306399587e-05
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618374677347552,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.545508096856274e-05,
+        "paired_se": 1.3925433226633903e-05,
+        "candidate_standalone_se": 0.000828241455709604,
+        "ci95": [
+          -4.274842856188259e-05,
+          1.1838266624757108e-05
+        ],
+        "one_sided_p": 0.8664672198572758,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618374677347552,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.545508096856274e-05,
+        "paired_se": 6.962743082493449e-06,
+        "candidate_standalone_se": 0.00041412255050453904,
+        "ci95": [
+          -2.91018066438553e-05,
+          -1.8083552932701822e-06
+        ],
+        "one_sided_p": 0.9867798459402677,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xt_d127_ss06_w0.05",
+      "prediction_sha256": "a7deaaf2375285723840e48074940715e87e277778275f27e8b632db19f12dc1",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618462113849038,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -6.711430819983377e-06,
+        "paired_se": 2.193555545522849e-06,
+        "candidate_standalone_se": 0.00024244043404804497,
+        "ci95": [
+          -1.1010720687296273e-05,
+          -2.412140952670482e-06
+        ],
+        "one_sided_p": 0.9988918837684427,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -6.26555003713225e-06,
+        -7.92014172568134e-06,
+        -3.3419192640993245e-06,
+        -6.83934641199091e-06,
+        -9.21666154918288e-06
+      ],
+      "mean_fold_delta": -6.716723797617341e-06,
+      "fold_se": 9.824918111223177e-07,
+      "positive_folds": 0,
+      "fold_t": -6.836417079084566,
+      "correlation": {
+        "spearman": 0.9999676008721295,
+        "logit": 0.9999955605842173
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -1.831516898302965e-05,
+          -8.061425523120391e-06,
+          3.766749097222632e-06
+        ],
+        "private_quantiles": [
+          -1.202549820425447e-05,
+          -6.439309643557767e-06,
+          -4.670149370944464e-07
+        ],
+        "private_p05": -1.202549820425447e-05,
+        "private_median": -6.439309643557767e-06,
+        "private_worst_5pct_mean": -1.3285715738442505e-05,
+        "public_private_sign_disagreement_rate": 0.2,
+        "private_reversal_vs_full_oof_rate": 0.03,
+        "public_reversal_vs_full_oof_rate": 0.17
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -1.481555363280762e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -1.5201203784731554e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -2.227828930068121e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -7.736098101229771e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": 5.280539051799593e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -6.01334851191293e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -1.1768541865797566e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -2.8624595412862774e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -1.0685268921228896e-05
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618462113849038,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -6.711430819983377e-06,
+        "paired_se": 7.4923865706506355e-06,
+        "candidate_standalone_se": 0.0008280878488046025,
+        "ci95": [
+          -2.1396238656710188e-05,
+          7.973377016743433e-06
+        ],
+        "one_sided_p": 0.8148113260036701,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618462113849038,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -6.711430819983377e-06,
+        "paired_se": 3.746208192427933e-06,
+        "candidate_standalone_se": 0.00041404574576869434,
+        "ci95": [
+          -1.4053863955731022e-05,
+          6.310023157642681e-07
+        ],
+        "one_sided_p": 0.9633955677793593,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xt_d127_ss06_w0.10",
+      "prediction_sha256": "e73ea91e0819a73c86fbcbfdb71858a8741e0e8995f1393556d2b5dd1f85e449",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618363037652427,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.6619050481114783e-05,
+        "paired_se": 4.371805148350928e-06,
+        "candidate_standalone_se": 0.00024248498799217056,
+        "ci95": [
+          -2.518763111930939e-05,
+          -8.050469842920176e-06
+        ],
+        "one_sided_p": 0.9999280642718845,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -1.5226682338220776e-05,
+        -1.8523751502019792e-05,
+        -1.009187192246852e-05,
+        -1.701781853324924e-05,
+        -2.1370280380961226e-05
+      ],
+      "mean_fold_delta": -1.6446080935383912e-05,
+      "fold_se": 1.8808807001333233e-06,
+      "positive_folds": 0,
+      "fold_t": -8.74381928328477,
+      "correlation": {
+        "spearman": 0.999871169224963,
+        "logit": 0.9999822357074853
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -3.962322175805055e-05,
+          -1.9659265652727242e-05,
+          5.208128150335777e-06
+        ],
+        "private_quantiles": [
+          -2.7010747449013328e-05,
+          -1.6283153918605908e-05,
+          -4.680961385300501e-06
+        ],
+        "private_p05": -2.7010747449013328e-05,
+        "private_median": -1.6283153918605908e-05,
+        "private_worst_5pct_mean": -2.9858776689795084e-05,
+        "public_private_sign_disagreement_rate": 0.13,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.13
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -9.259871026290334e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -3.718070320202216e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -4.738935877168782e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -1.9344679390354003e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -7.801714384525482e-07
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -1.524598455759918e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -2.8809296085952063e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -8.785602457983543e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -2.450752960558855e-05
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618363037652427,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.6619050481114783e-05,
+        "paired_se": 1.4932493739521441e-05,
+        "candidate_standalone_se": 0.0008282400282253476,
+        "ci95": [
+          -4.588620040994664e-05,
+          1.2648099447717071e-05
+        ],
+        "one_sided_p": 0.8671340638304394,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618363037652427,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.6619050481114783e-05,
+        "paired_se": 7.466276518659777e-06,
+        "candidate_standalone_se": 0.0004141218360931724,
+        "ci95": [
+          -3.125268355630504e-05,
+          -1.985417405924522e-06
+        ],
+        "one_sided_p": 0.9869889566969228,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xt_d255_w0.05",
+      "prediction_sha256": "ef6da7b98c52c9c319df763b9fea2a4cacb91bf3be101de88ef8ea9401910d4f",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618463119074178,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -6.610908306003971e-06,
+        "paired_se": 2.330533900954472e-06,
+        "candidate_standalone_se": 0.00024244088957890914,
+        "ci95": [
+          -1.1178670816624373e-05,
+          -2.043145795383568e-06
+        ],
+        "one_sided_p": 0.9977205200131409,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -1.9724630664352816e-06,
+        -5.598697684683351e-06,
+        -6.324401143453784e-06,
+        -1.1411257509141848e-05,
+        -9.334611640987589e-06
+      ],
+      "mean_fold_delta": -6.928286208940371e-06,
+      "fold_se": 1.6214206671818708e-06,
+      "positive_folds": 0,
+      "fold_t": -4.272972677091973,
+      "correlation": {
+        "spearman": 0.999964161324983,
+        "logit": 0.9999952564263048
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -1.9806456658916227e-05,
+          -7.768789749285077e-06,
+          6.277473908244954e-06
+        ],
+        "private_quantiles": [
+          -1.11022328150856e-05,
+          -5.858467539032741e-06,
+          -1.6656099754874809e-06
+        ],
+        "private_p05": -1.11022328150856e-05,
+        "private_median": -5.858467539032741e-06,
+        "private_worst_5pct_mean": -1.2428584598911386e-05,
+        "public_private_sign_disagreement_rate": 0.17,
+        "private_reversal_vs_full_oof_rate": 0.02,
+        "public_reversal_vs_full_oof_rate": 0.15
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": 3.7965499063430386e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -2.7435022153965427e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -7.497646555276738e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -3.738202851599759e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -4.716617597155803e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -5.607329729429011e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -1.0857440967737553e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -3.5297767656539136e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -9.439145503997715e-06
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618463119074178,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -6.610908306003971e-06,
+        "paired_se": 7.960253349550193e-06,
+        "candidate_standalone_se": 0.0008280894043486823,
+        "ci95": [
+          -2.2212718178936677e-05,
+          8.990901566928735e-06
+        ],
+        "one_sided_p": 0.7968690116129101,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618463119074178,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -6.610908306003971e-06,
+        "paired_se": 3.980143204659785e-06,
+        "candidate_standalone_se": 0.0004140465237362946,
+        "ci95": [
+          -1.4411845640448984e-05,
+          1.1900290284410419e-06
+        ],
+        "one_sided_p": 0.9516405124468239,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xt_d255_w0.10",
+      "prediction_sha256": "ecccba68c5aa574e9c8b8e530cfbed1d48b7496bf49088b5cf016cf3cb36f5a1",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618363101759377,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.6612639786028893e-05,
+        "paired_se": 4.63597783972331e-06,
+        "candidate_standalone_se": 0.0002424870936655935,
+        "ci95": [
+          -2.5698989385012384e-05,
+          -7.526290187045402e-06
+        ],
+        "one_sided_p": 0.9998304354387323,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -7.526999350360164e-06,
+        -1.440067154312441e-05,
+        -1.580634693376659e-05,
+        -2.539858640637771e-05,
+        -2.1837114427936122e-05
+      ],
+      "mean_fold_delta": -1.6993943732312998e-05,
+      "fold_se": 3.0971987633971535e-06,
+      "positive_folds": 0,
+      "fold_t": -5.486875409207913,
+      "correlation": {
+        "spearman": 0.9998579969451403,
+        "logit": 0.9999810279766773
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -4.2486348763576266e-05,
+          -1.8189608802121615e-05,
+          1.0170712635976234e-05
+        ],
+        "private_quantiles": [
+          -2.5614089407371977e-05,
+          -1.5122948395951408e-05,
+          -6.8114404423058616e-06
+        ],
+        "private_p05": -2.5614089407371977e-05,
+        "private_median": -1.5122948395951408e-05,
+        "private_worst_5pct_mean": -2.818346019419771e-05,
+        "public_private_sign_disagreement_rate": 0.13,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.13
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": 1.3277767050290379e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -6.243290762875109e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -1.8855976437692767e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -1.156270917623825e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -0.0001091967002518901
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -1.45686297052805e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -2.8586748150205565e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -1.0780105008878493e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -2.2096214943201353e-05
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618363101759377,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.6612639786028893e-05,
+        "paired_se": 1.5834808665228297e-05,
+        "candidate_standalone_se": 0.0008282472196366396,
+        "ci95": [
+          -4.764829447195912e-05,
+          1.4423014899901334e-05
+        ],
+        "one_sided_p": 0.8529389217875569,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618363101759377,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.6612639786028893e-05,
+        "paired_se": 7.917437153608555e-06,
+        "candidate_standalone_se": 0.0004141254322157212,
+        "ci95": [
+          -3.213053145696098e-05,
+          -1.0947481150968049e-06
+        ],
+        "one_sided_p": 0.9820577823026096,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xt_d63_w0.05",
+      "prediction_sha256": "6ac5f81156b1682a0c235dcb6285d56a14a4c3eb1621d8aa69f8fa3605cfd28e",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618474940205635,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -5.428795160300481e-06,
+        "paired_se": 2.284175448712523e-06,
+        "candidate_standalone_se": 0.00024243542510636785,
+        "ci95": [
+          -9.905696774147644e-06,
+          -9.518935464533196e-07
+        ],
+        "one_sided_p": 0.9912658076664181,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -1.7706022059638116e-06,
+        -5.193942631542825e-08,
+        -9.656698163218458e-06,
+        -1.1484821119012167e-05,
+        -4.950592970454082e-06
+      ],
+      "mean_fold_delta": -5.58293077699279e-06,
+      "fold_se": 2.2017431262823025e-06,
+      "positive_folds": 0,
+      "fold_t": -2.5356867067502584,
+      "correlation": {
+        "spearman": 0.9999648245866838,
+        "logit": 0.9999952562721104
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -1.7429488083781086e-05,
+          -6.1625319839886394e-06,
+          4.788608434103112e-06
+        ],
+        "private_quantiles": [
+          -1.1474939245320614e-05,
+          -5.0446267044756965e-06,
+          3.5839133762372e-07
+        ],
+        "private_p05": -1.1474939245320614e-05,
+        "private_median": -5.0446267044756965e-06,
+        "private_worst_5pct_mean": -1.2263746271057308e-05,
+        "public_private_sign_disagreement_rate": 0.22,
+        "private_reversal_vs_full_oof_rate": 0.07,
+        "public_reversal_vs_full_oof_rate": 0.19
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -3.625327571588066e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -9.829384765791538e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -4.2503795532389255e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -4.768711469593789e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -2.327824863701533e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -5.473710443348878e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -3.677734027096591e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -9.180875715220083e-07
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -9.834002344444315e-06
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618474940205635,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -5.428795160300481e-06,
+        "paired_se": 7.801910993925804e-06,
+        "candidate_standalone_se": 0.0008280707399625619,
+        "ci95": [
+          -2.0720259718982152e-05,
+          9.86266939838119e-06
+        ],
+        "one_sided_p": 0.7567320065345109,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618474940205635,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -5.428795160300481e-06,
+        "paired_se": 3.900971095552366e-06,
+        "candidate_standalone_se": 0.0004140371913749629,
+        "ci95": [
+          -1.3074558012314877e-05,
+          2.216967691713914e-06
+        ],
+        "one_sided_p": 0.9179861341686877,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_xt_xt_d63_w0.10",
+      "prediction_sha256": "9c54f7757507dc781878ac0915c107a553afac039998c583762cccb2a632f6c9",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.961838756272062,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.4166543661819908e-05,
+        "paired_se": 4.5514035471897316e-06,
+        "candidate_standalone_se": 0.00024247623182330652,
+        "ci95": [
+          -2.3087130693419633e-05,
+          -5.245956630220185e-06
+        ],
+        "one_sided_p": 0.9990726571205835,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -7.889438404351523e-06,
+        -3.2884278627909325e-06,
+        -2.2509326485620207e-05,
+        -2.6052795555231434e-05,
+        -1.2796032971440496e-05
+      ],
+      "mean_fold_delta": -1.4507204255886919e-05,
+      "fold_se": 4.300688982127406e-06,
+      "positive_folds": 0,
+      "fold_t": -3.373227944679388,
+      "correlation": {
+        "spearman": 0.9998603323608328,
+        "logit": 0.9999810254905085
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -3.762921455115476e-05,
+          -1.5419849225817295e-05,
+          5.51532530003173e-06
+        ],
+        "private_quantiles": [
+          -2.6130407974189752e-05,
+          -1.3333597012665788e-05,
+          -2.5177188623104474e-06
+        ],
+        "private_p05": -2.6130407974189752e-05,
+        "private_median": -1.3333597012665788e-05,
+        "private_worst_5pct_mean": -2.782216781469504e-05,
+        "public_private_sign_disagreement_rate": 0.13,
+        "private_reversal_vs_full_oof_rate": 0.01,
+        "public_reversal_vs_full_oof_rate": 0.12
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -1.3355192121089488e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -2.726326734203699e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -9.349988508644547e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -1.3467707984715638e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -5.94661685973108e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -1.4367726139496995e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -1.2567437199906273e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -5.373602358971219e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -2.3040358253956228e-05
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.961838756272062,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.4166543661819908e-05,
+        "paired_se": 1.5545936153987982e-05,
+        "candidate_standalone_se": 0.0008282101200752148,
+        "ci95": [
+          -4.463601862959548e-05,
+          1.630293130595566e-05
+        ],
+        "one_sided_p": 0.8189234086719079,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.961838756272062,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.4166543661819908e-05,
+        "paired_se": 7.77299908864339e-06,
+        "candidate_standalone_se": 0.0004141068820928408,
+        "ci95": [
+          -2.9401341927423616e-05,
+          1.0682546037837979e-06
+        ],
+        "one_sided_p": 0.965812888426622,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_z3_cat_d8_s2_w0.05",
+      "prediction_sha256": "e7884ecd714ece67a71aaadadba59c710a511dc43dd7fdc6b8344e1f5e511212",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618536301690934,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 7.073533696555501e-07,
+        "paired_se": 2.5007023216306595e-06,
+        "candidate_standalone_se": 0.0002423959729156111,
+        "ci95": [
+          -4.1939331167962415e-06,
+          5.608639856107342e-06
+        ],
+        "one_sided_p": 0.38864135703382335,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -4.5541300004448004e-06,
+        6.110228608635637e-06,
+        1.288449554015525e-05,
+        -9.987579209780328e-06,
+        -1.5670807792522723e-06
+      ],
+      "mean_fold_delta": 5.771868318626972e-07,
+      "fold_se": 4.028814816301321e-06,
+      "positive_folds": 2,
+      "fold_t": 0.1432646716665392,
+      "correlation": {
+        "spearman": 0.9999571047482471,
+        "logit": 0.9999939547371375
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -1.0154320526151173e-05,
+          2.3405228877226847e-07,
+          1.3379538533625499e-05
+        ],
+        "private_quantiles": [
+          -5.237579437955553e-06,
+          1.044216656531649e-06,
+          6.2905925182599186e-06
+        ],
+        "private_p05": -5.237579437955553e-06,
+        "private_median": 1.044216656531649e-06,
+        "private_worst_5pct_mean": -7.796029069395694e-06,
+        "public_private_sign_disagreement_rate": 0.5,
+        "private_reversal_vs_full_oof_rate": 0.37,
+        "public_reversal_vs_full_oof_rate": 0.47
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": 2.037095764961805e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": 6.210528264993798e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -6.357883349239479e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -2.2688060947739785e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": 5.632068896455067e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": 1.4991314851720006e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -9.301054566646094e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": 4.037877385121291e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -2.49358671711164e-06
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618536301690934,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 7.073533696555501e-07,
+        "paired_se": 8.541490213804892e-06,
+        "candidate_standalone_se": 0.0008279359872796246,
+        "ci95": [
+          -1.6033659823703366e-05,
+          1.7448366563014466e-05
+        ],
+        "one_sided_p": 0.4669997930054711,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618536301690934,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 7.073533696555501e-07,
+        "paired_se": 4.270761017988892e-06,
+        "candidate_standalone_se": 0.00041396981394853307,
+        "ci95": [
+          -7.663184412180296e-06,
+          9.077891151491396e-06
+        ],
+        "one_sided_p": 0.4342252457334126,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_z3_cat_d8_s2_w0.10",
+      "prediction_sha256": "0db6a5d60a264fd31e804acfcbeffc1fabef2ced17815f2ffb825efaf2339a42",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618501889460193,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -2.733869704507619e-06,
+        "paired_se": 4.99026873095366e-06,
+        "candidate_standalone_se": 0.00024240115224644906,
+        "ci95": [
+          -1.2514616690353193e-05,
+          7.0468772813379554e-06
+        ],
+        "one_sided_p": 0.7080991756263417,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -1.3162652453768686e-05,
+        7.654236694354388e-06,
+        1.992270166817356e-05,
+        -2.2745330133799868e-05,
+        -6.740020019102566e-06
+      ],
+      "mean_fold_delta": -3.0142128488286344e-06,
+      "fold_se": 7.570030772771598e-06,
+      "positive_folds": 2,
+      "fold_t": -0.3981770932385586,
+      "correlation": {
+        "spearman": 0.9998294442317731,
+        "logit": 0.9999758275951995
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -2.444607151809719e-05,
+          -3.8076448762303094e-06,
+          2.3421564658337996e-05
+        ],
+        "private_quantiles": [
+          -1.4907100667971295e-05,
+          -1.9793449835825427e-06,
+          8.485153267412392e-06
+        ],
+        "private_p05": -1.4907100667971295e-05,
+        "private_median": -1.9793449835825427e-06,
+        "private_worst_5pct_mean": -1.972241655670004e-05,
+        "public_private_sign_disagreement_rate": 0.54,
+        "private_reversal_vs_full_oof_rate": 0.42,
+        "public_reversal_vs_full_oof_rate": 0.44
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -3.3157130165939463e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": 2.870472361471421e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -1.9917135284708287e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -9.393675343360997e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": 9.534778664843646e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -1.1799472139362166e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -2.580624459147529e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": 3.7982136126268884e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -8.824531591233864e-06
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618501889460193,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -2.733869704507619e-06,
+        "paired_se": 1.704494419106335e-05,
+        "candidate_standalone_se": 0.0008279536788507458,
+        "ci95": [
+          -3.6141346437486986e-05,
+          3.067360702847175e-05
+        ],
+        "one_sided_p": 0.5637137854903036,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618501889460193,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -2.733869704507619e-06,
+        "paired_se": 8.522503850672924e-06,
+        "candidate_standalone_se": 0.00041397865933558105,
+        "ci95": [
+          -1.9437670309930477e-05,
+          1.3969930900915239e-05
+        ],
+        "one_sided_p": 0.6258123717437706,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_zoo_xgb_d6_w0.05",
+      "prediction_sha256": "de196e480a6883811ed4e0c15e735967258c50004f25374199a368e8d1796e70",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618476076914173,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -5.315124306459751e-06,
+        "paired_se": 2.7562530909295217e-06,
+        "candidate_standalone_se": 0.00024243072534422538,
+        "ci95": [
+          -1.0717281096958816e-05,
+          8.703248403931405e-08
+        ],
+        "one_sided_p": 0.973096534015531,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -6.422713874854047e-06,
+        -1.6749947667760168e-06,
+        -7.1225300970478855e-06,
+        -8.804767413272963e-06,
+        -3.142749153028923e-06
+      ],
+      "mean_fold_delta": -5.433551060995967e-06,
+      "fold_se": 1.3147378398138574e-06,
+      "positive_folds": 0,
+      "fold_t": -4.132801914155948,
+      "correlation": {
+        "spearman": 0.999948478597784,
+        "logit": 0.9999930162060549
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -1.977206702660217e-05,
+          -4.927490724893069e-06,
+          9.622928885594238e-06
+        ],
+        "private_quantiles": [
+          -1.0645616211951703e-05,
+          -5.1688363629232015e-06,
+          1.3722685175909791e-06
+        ],
+        "private_p05": -1.0645616211951703e-05,
+        "private_median": -5.1688363629232015e-06,
+        "private_worst_5pct_mean": -1.2249170647837814e-05,
+        "public_private_sign_disagreement_rate": 0.28,
+        "private_reversal_vs_full_oof_rate": 0.11,
+        "public_reversal_vs_full_oof_rate": 0.25
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -4.321767454573688e-06
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -2.1157577732799915e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -5.432770508018159e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -5.740569670842355e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -2.343704089546872e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -4.651345020811881e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -1.5669237871551722e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -5.891551255188254e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -4.467168298605273e-06
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618476076914173,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -5.315124306459751e-06,
+        "paired_se": 9.414355214295737e-06,
+        "candidate_standalone_se": 0.000828054688049109,
+        "ci95": [
+          -2.3766921464146257e-05,
+          1.3136672851226756e-05
+        ],
+        "one_sided_p": 0.7138190947488708,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618476076914173,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -5.315124306459751e-06,
+        "paired_se": 4.707196923210555e-06,
+        "candidate_standalone_se": 0.00041402916500388176,
+        "ci95": [
+          -1.4541060744090193e-05,
+          3.9108121311706915e-06
+        ],
+        "one_sided_p": 0.8705824009696028,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "aux_zoo_xgb_d6_w0.10",
+      "prediction_sha256": "378a83f42ad5ff01b43a498398470e9730220fbcbb71744b1cb56c4126817443",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618374050680376,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.551774768615566e-05,
+        "paired_se": 5.485931813720637e-06,
+        "candidate_standalone_se": 0.00024247435455542875,
+        "ci95": [
+          -2.6269976462690604e-05,
+          -4.765518909620713e-06
+        ],
+        "one_sided_p": 0.9976627161423385,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -1.745946417675004e-05,
+        -8.950032263088659e-06,
+        -1.8122203865322817e-05,
+        -2.2387341259033633e-05,
+        -1.2177519245093471e-05
+      ],
+      "mean_fold_delta": -1.5819312161857722e-05,
+      "fold_se": 2.362012669604252e-06,
+      "positive_folds": 0,
+      "fold_t": -6.697386667493278,
+      "correlation": {
+        "spearman": 0.999795879113187,
+        "logit": 0.9999720873209128
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -4.3329556636245714e-05,
+          -1.4669248323717632e-05,
+          1.42156206265398e-05
+        ],
+        "private_quantiles": [
+          -2.595993303451394e-05,
+          -1.5120624745901257e-05,
+          -1.7885997176614324e-06
+        ],
+        "private_p05": -2.595993303451394e-05,
+        "private_median": -1.5120624745901257e-05,
+        "private_worst_5pct_mean": -2.9272231080557098e-05,
+        "public_private_sign_disagreement_rate": 0.18,
+        "private_reversal_vs_full_oof_rate": 0.01,
+        "public_reversal_vs_full_oof_rate": 0.17
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -1.832863306838739e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -5.298191182279144e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -1.1772514389551958e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -1.742926493364383e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -6.655276065248295e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -1.4274372881151187e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -4.263500896395378e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -1.658788719038906e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -1.3903127496495138e-05
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618374050680376,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.551774768615566e-05,
+        "paired_se": 1.8737942138531653e-05,
+        "candidate_standalone_se": 0.0008282037095710129,
+        "ci95": [
+          -5.224343942207314e-05,
+          2.120794404976182e-05
+        ],
+        "one_sided_p": 0.796206026818963,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618374050680376,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.551774768615566e-05,
+        "paired_se": 9.369009485793017e-06,
+        "candidate_standalone_se": 0.0004141036760453883,
+        "ci95": [
+          -3.3880668849124104e-05,
+          2.8451734768127868e-06
+        ],
+        "one_sided_p": 0.951167917989846,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "route_weight_0.40",
+      "prediction_sha256": "ad0bebedcfc5368e97ffaea1033668c835a6afb5367bba3664b7613220398dbe",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.9618242010101689,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -2.8721805554909885e-05,
+        "paired_se": 6.724666308856345e-06,
+        "candidate_standalone_se": 0.00024252169586746214,
+        "ci95": [
+          -4.190190932831823e-05,
+          -1.5541701781501545e-05
+        ],
+        "one_sided_p": 0.9999902749822742,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -2.2153272373870436e-05,
+        -1.8100062356807278e-05,
+        -2.8070362912857583e-05,
+        -5.0949887142159866e-05,
+        -2.6065418284426656e-05
+      ],
+      "mean_fold_delta": -2.9067800614024365e-05,
+      "fold_se": 5.7312166060458225e-06,
+      "positive_folds": 0,
+      "fold_t": -5.071837728722543,
+      "correlation": {
+        "spearman": 0.9996998206272111,
+        "logit": 0.9999524700253472
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -6.912228785168062e-05,
+          -3.0039526908276493e-05,
+          4.124587163317759e-06
+        ],
+        "private_quantiles": [
+          -4.59631274956851e-05,
+          -2.600373911937348e-05,
+          -1.193389358112862e-05
+        ],
+        "private_p05": -4.59631274956851e-05,
+        "private_median": -2.600373911937348e-05,
+        "private_worst_5pct_mean": -4.746943189495312e-05,
+        "public_private_sign_disagreement_rate": 0.08,
+        "private_reversal_vs_full_oof_rate": 0.0,
+        "public_reversal_vs_full_oof_rate": 0.08
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -2.164235313373286e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": -6.779074816021247e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -0.00011045726392855393
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -3.2121984619881694e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -4.860101724757371e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -2.8450213555242243e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -4.721038750243878e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -2.092361203487325e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -3.60886733870025e-05
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618242010101689,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -2.8721805554909885e-05,
+        "paired_se": 2.2969017706543466e-05,
+        "candidate_standalone_se": 0.0008283654093812735,
+        "ci95": [
+          -7.374025301999787e-05,
+          1.6296641910178103e-05
+        ],
+        "one_sided_p": 0.8944339638474339,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618242010101689,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -2.8721805554909885e-05,
+        "paired_se": 1.1484550749412293e-05,
+        "candidate_standalone_se": 0.0004141845267059273,
+        "ci95": [
+          -5.123111140238047e-05,
+          -6.212499707439301e-06
+        ],
+        "one_sided_p": 0.993806233398346,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "route_weight_0.60",
+      "prediction_sha256": "e372a3934a06cc2236e899ea48fc24f6fe28fd2dfca3739cde103312061c3001",
+      "certified_source_members": true,
+      "pooled": {
+        "candidate_auc": 0.96185081951176,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -2.103303963774117e-06,
+        "paired_se": 6.844469406206089e-06,
+        "candidate_standalone_se": 0.00024244632825682724,
+        "ci95": [
+          -1.55182174932243e-05,
+          1.1311609565676066e-05
+        ],
+        "one_sided_p": 0.6206923996053562,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        -9.124297127405256e-06,
+        -1.1766659759104847e-05,
+        -3.913873743766061e-06,
+        2.2158580160414054e-05,
+        -5.337345113209935e-06
+      ],
+      "mean_fold_delta": -1.596719116614409e-06,
+      "fold_se": 6.0982286589387834e-06,
+      "positive_folds": 1,
+      "fold_t": -0.26183326436504445,
+      "correlation": {
+        "spearman": 0.9996908963881463,
+        "logit": 0.9999524586868597
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -3.6147559352028845e-05,
+          -1.447969695145268e-06,
+          4.0322759266564474e-05
+        ],
+        "private_quantiles": [
+          -1.9541747482526574e-05,
+          -4.0442953481156785e-06,
+          1.448836132143527e-05
+        ],
+        "private_p05": -1.9541747482526574e-05,
+        "private_median": -4.0442953481156785e-06,
+        "private_worst_5pct_mean": -2.379670459418115e-05,
+        "public_private_sign_disagreement_rate": 0.47,
+        "private_reversal_vs_full_oof_rate": 0.34,
+        "public_reversal_vs_full_oof_rate": 0.47
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": -4.0987991154706194e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": 1.0363978306560107e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": 6.256302331220098e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -6.578829710335299e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": -5.1578650677175375e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -3.768069871346036e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": -5.396632176801752e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": -1.1276931280890246e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": 6.532025290995058e-06
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.96185081951176,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -2.103303963774117e-06,
+        "paired_se": 2.337822038214449e-05,
+        "candidate_standalone_se": 0.0008281079831748383,
+        "ci95": [
+          -4.792377393541754e-05,
+          4.3717166007869305e-05
+        ],
+        "one_sided_p": 0.5358438859119358,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.96185081951176,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -2.103303963774117e-06,
+        "paired_se": 1.1689153432185737e-05,
+        "candidate_standalone_se": 0.0004140558120398236,
+        "ci95": [
+          -2.501362370062092e-05,
+          2.0807015773072687e-05
+        ],
+        "one_sided_p": 0.5713987432381655,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "legacy_tabm_w0.05",
+      "prediction_sha256": "0ba7c8ce0eabd69cdfcf170562ea8f56d6d157c0cd6fb9a961bdfab6247edf02",
+      "certified_source_members": false,
+      "pooled": {
+        "candidate_auc": 0.9618566483193979,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 3.725503674112396e-06,
+        "paired_se": 3.230188948756229e-06,
+        "candidate_standalone_se": 0.00024237898112739812,
+        "ci95": [
+          -2.605550328709111e-06,
+          1.0056557676933902e-05
+        ],
+        "one_sided_p": 0.12438558452985804,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        4.003694440757322e-06,
+        9.450595897630976e-06,
+        8.517238196947829e-07,
+        -4.542113180017182e-07,
+        1.5692742371897772e-05
+      ],
+      "mean_fold_delta": 5.908909042395827e-06,
+      "fold_se": 2.982961667336061e-06,
+      "positive_folds": 4,
+      "fold_t": 1.980886682889488,
+      "correlation": {
+        "spearman": 0.9999292673112506,
+        "logit": 0.9999906681141443
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -1.1893461407952444e-05,
+          2.7306100358615026e-06,
+          2.039184086711776e-05
+        ],
+        "private_quantiles": [
+          -3.1663481767474353e-06,
+          4.336459137999071e-06,
+          1.0098783894879613e-05
+        ],
+        "private_p05": -3.1663481767474353e-06,
+        "private_median": 4.336459137999071e-06,
+        "private_worst_5pct_mean": -5.74422493109239e-06,
+        "public_private_sign_disagreement_rate": 0.44,
+        "private_reversal_vs_full_oof_rate": 0.2,
+        "public_reversal_vs_full_oof_rate": 0.4
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": 1.3249672874748875e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": 1.747618589342803e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -1.3764832567209062e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": 3.25053919580931e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": 5.755230400805722e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": 2.713498883033516e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": 8.681439709334882e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": 1.1952066728326827e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -4.501269942558395e-06
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.9618566483193979,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 3.725503674112396e-06,
+        "paired_se": 1.10331499798432e-05,
+        "candidate_standalone_se": 0.0008278779487412025,
+        "ci95": [
+          -1.78990729224091e-05,
+          2.5350080270633893e-05
+        ],
+        "one_sided_p": 0.36780799436492273,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.9618566483193979,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 3.725503674112396e-06,
+        "paired_se": 5.516596250115933e-06,
+        "candidate_standalone_se": 0.00041394079495564717,
+        "ci95": [
+          -7.086826293363548e-06,
+          1.453783364158834e-05
+        ],
+        "one_sided_p": 0.24973417345848808,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    },
+    {
+      "name": "legacy_tabm_w0.10",
+      "prediction_sha256": "c83347d9bbbc485077b5bf4a190c138ac9df9ce0f3924f7be4113985fe7b5f24",
+      "certified_source_members": false,
+      "pooled": {
+        "candidate_auc": 0.961853674228655,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 7.514129312102824e-07,
+        "paired_se": 6.446035736510676e-06,
+        "candidate_standalone_se": 0.0002423795312010396,
+        "ci95": [
+          -1.1882584955408765e-05,
+          1.338541081782933e-05
+        ],
+        "one_sided_p": 0.45360049548482845,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "paired_fold_deltas": [
+        9.5839935931874e-07,
+        1.2702707547829206e-05,
+        -3.4462119766764943e-06,
+        -6.488910481938781e-06,
+        2.601213381314693e-05
+      ],
+      "mean_fold_delta": 5.947623652335921e-06,
+      "fold_se": 5.983392075455012e-06,
+      "positive_folds": 3,
+      "fold_t": 0.9940220492543318,
+      "correlation": {
+        "spearman": 0.9997178404958798,
+        "logit": 0.9999626123291933
+      },
+      "private80": {
+        "simulations": 100,
+        "public_quantiles": [
+          -3.174624971735152e-05,
+          -1.4693751992922444e-06,
+          3.489361928601942e-05
+        ],
+        "private_quantiles": [
+          -1.2782117395426785e-05,
+          2.179865422724525e-06,
+          1.3232794607981322e-05
+        ],
+        "private_p05": -1.2782117395426785e-05,
+        "private_median": 2.179865422724525e-06,
+        "private_worst_5pct_mean": -1.82122059608103e-05,
+        "public_private_sign_disagreement_rate": 0.53,
+        "private_reversal_vs_full_oof_rate": 0.37,
+        "public_reversal_vs_full_oof_rate": 0.52
+      },
+      "segments": [
+        {
+          "column": "Class",
+          "value": "Business",
+          "rows": 342212,
+          "delta": 1.3643527104201247e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco",
+          "rows": 327404,
+          "delta": 2.1052237456631318e-05
+        },
+        {
+          "column": "Class",
+          "value": "Eco Plus",
+          "rows": 30019,
+          "delta": -4.000357226574547e-05
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Business travel",
+          "rows": 497441,
+          "delta": -1.5502095436215058e-06
+        },
+        {
+          "column": "Type of Travel",
+          "value": "Personal Travel",
+          "rows": 202194,
+          "delta": 9.014594726852732e-05
+        },
+        {
+          "column": "Customer Type",
+          "value": "Loyal Customer",
+          "rows": 576990,
+          "delta": -1.4464467943398063e-06
+        },
+        {
+          "column": "Customer Type",
+          "value": "disloyal Customer",
+          "rows": 122645,
+          "delta": 5.891413169090143e-06
+        },
+        {
+          "column": "Gender",
+          "value": "Female",
+          "rows": 347952,
+          "delta": 1.6812719827119516e-05
+        },
+        {
+          "column": "Gender",
+          "value": "Male",
+          "rows": 351683,
+          "delta": -1.5187813385941773e-05
+        }
+      ],
+      "public_size_IID_projection": {
+        "candidate_auc": 0.961853674228655,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 7.514129312102824e-07,
+        "paired_se": 2.2017312116626065e-05,
+        "candidate_standalone_se": 0.0008278798276690549,
+        "ci95": [
+          -4.240172585375415e-05,
+          4.390455171617472e-05
+        ],
+        "one_sided_p": 0.48638742983313654,
+        "positive_rows": 26601,
+        "negative_rows": 33368,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "private_size_IID_projection": {
+        "candidate_auc": 0.961853674228655,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 7.514129312102824e-07,
+        "paired_se": 1.1008698604890649e-05,
+        "candidate_standalone_se": 0.0004139417343848076,
+        "ci95": [
+          -2.0825239851031727e-05,
+          2.2328065713452292e-05
+        ],
+        "one_sided_p": 0.47279080899044784,
+        "positive_rows": 106402,
+        "negative_rows": 133473,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "within_study_Holm_p": 1.0,
+      "numerical_discovery_gate_pass": false,
+      "verdict": "NO_ADMISSION"
+    }
+  ],
+  "nominations": [],
+  "protected_files_after": {
+    "submissions/v6_sol_tabpfn_route_aux10.csv": "828a962205c9529aebbdccac6217ad0dfce36ae34e3108aca45a6b0ff462fd7d",
+    "submissions/v7_sol_tabpfn_internal2_aux10.csv": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+    "data/cache/folds/primary_5f_seed20261010.npy": "baa2e0ba8b305106a2c5e018001e2e403d46adbd8dc8c10a4389ecb0661f573e",
+    "reports/phase17_B1_primary.json": "c63f5a172c7bdbaa160ce7aa022a1214daf03d5e0daac0540f7b9f2aa116f449",
+    "reports/phase17_B1_shadow_confirmation.json": "281aae9c80184dc6d7fb729461d1142ab840ff1cd7d80a6d321a6beb24bbd486"
+  },
+  "GPU_hours": 0,
+  "CPU_wall_seconds": 117.20300000000861,
+  "new_submissions": 0,
+  "selection_note": "Holm covers these24 comparisons only. Independent matched confirmation remains mandatory."
+}

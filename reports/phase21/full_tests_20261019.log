@@ -1,0 +1,1047 @@
+W1019 11:30:40.655000 3860 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+  PASS  tests.test_stochastic_protocol  (69/69 passed)
+  PASS  tests.test_pipeline.test_admission_gate_logic  (0.0s)
+  PASS  tests.test_pipeline.test_blocked_id_scheme_is_contiguous  (0.1s)
+  PASS  tests.test_pipeline.test_crossfit_prior_never_sees_own_label  (0.0s)
+  PASS  tests.test_pipeline.test_crossfit_row_never_sees_own_label  (0.0s)
+  PASS  tests.test_pipeline.test_external_features_use_no_competition_label  (16.2s)
+  PASS  tests.test_pipeline.test_fold_determinism  (0.1s)
+  PASS  tests.test_pipeline.test_fold_no_row_overlap  (0.0s)
+  PASS  tests.test_pipeline.test_fold_safe_te_never_sees_apply_rows  (0.0s)
+  PASS  tests.test_pipeline.test_inner_early_stopping_split_is_disjoint_from_eval  (0.0s)
+  PASS  tests.test_pipeline.test_no_secret_shaped_material_in_repository  (76.1s)
+  PASS  tests.test_pipeline.test_no_source_files_missing_from_git  (0.1s)
+  PASS  tests.test_pipeline.test_oof_coverage_and_store_integrity  (0.9s)
+{'n_original': 129880, 'n_original_rows_exactly_matching_a_competition_row': 21, 'n_competition_rows_matching_some_original_row': 21}
+  PASS  tests.test_pipeline.test_original_overlap_audit_is_small  (2.8s)
+  PASS  tests.test_pipeline.test_sample_submission_schema  (0.1s)
+  PASS  tests.test_pipeline.test_schema  (0.1s)
+  PASS  tests.test_pipeline.test_secret_scan_detectors_are_self_exempt_and_working  (0.0s)
+[submission] wrote C:\Users\James\AppData\Local\Temp\tmp69mlhxu5\pytest_ok.csv  rows=299844  sha16=469048eb2dd51855
+  PASS  tests.test_pipeline.test_submission_preflight_rejects_bad_input  (0.6s)
+  PASS  tests.test_pipeline.test_transforms_are_invertible_shape_wise  (0.0s)
+  PASS  tests.test_pipeline.test_twin_vocabulary_is_label_free  (1.5s)
+  PASS  tests.test_pipeline.test_verify_kaggle_facts_never_persists_non_json_bodies  (0.0s)
+  [shim] faiss gpu mode: shim | repeat call: shim-already-installed
+  PASS  tests.test_tabr_retrieval.test_faiss_gpu_shim_is_scoped_additive_and_idempotent  (0.2s)
+  PASS  tests.test_tabr_retrieval.test_shim_reset_clears_database_so_batches_cannot_leak_into_each_other  (0.7s)
+  PASS  tests.test_tabr_retrieval.test_torch_exact_l2_index_depends_on_no_labels  (0.0s)
+  [device/memory] peak extra 222 MiB vs full matrix 586 MiB
+  PASS  tests.test_tabr_retrieval.test_torch_exact_l2_index_device_placement_and_determinism  (0.1s)
+  [fp32 guard] guarded rel err 3.548e-07 vs naive TF32-path 2.006e+00
+  PASS  tests.test_tabr_retrieval.test_torch_exact_l2_index_is_fp32_exact_not_tf32  (0.4s)
+  [l2 vs float64] relative error 2.421e-07
+  PASS  tests.test_tabr_retrieval.test_torch_exact_l2_index_matches_float64_reference  (0.0s)
+  [top-k set overlap] 4800/4800 exact
+  PASS  tests.test_tabr_retrieval.test_torch_exact_l2_index_topk_overlap_is_complete  (0.0s)
+  [d_main guard] correctly rejected 128 vs 265
+  PASS  tests.test_tabr_wiring.test_assert_effective_config_rejects_a_mismatched_model  (0.0s)
+  [d_main] 64 -> 64, 128 -> 128
+  PASS  tests.test_tabr_wiring.test_d_main_flag_reaches_the_parameter_dict  (0.0s)
+  [d_main effective] 64 -> 64, 128 -> 128
+  PASS  tests.test_tabr_wiring.test_d_main_reaches_the_instantiated_pytabkit_model  (2.7s)
+  [registry] find_torch_index tracks the newest index
+  PASS  tests.test_tabr_wiring.test_installed_index_registry_points_at_the_most_recent_index  (0.0s)
+  [autograd] candidate encoding is grad-free only when memory_efficient=True
+  PASS  tests.test_tabr_wiring.test_memory_efficient_actually_suppresses_candidate_autograd  (0.0s)
+  [memory_efficient] production default True; False leaves cand_bs unset
+  PASS  tests.test_tabr_wiring.test_production_config_uses_memory_efficient_true  (0.0s)
+  [query_chunk] retrieval stays exact across a chunk change
+  PASS  tests.test_tabr_wiring.test_query_chunk_reconfiguration_keeps_retrieval_exact  (0.0s)
+  [query_chunk] 128 -> 32 honoured by new and live indexes
+  PASS  tests.test_tabr_wiring.test_query_chunk_reconfiguration_takes_effect_on_new_indexes  (0.0s)
+  PASS  tests.test_tabr_wiring.test_retrieval_width_assertion_rejects_mismatch  (0.0s)
+  [source guard] no _twin_frame(vb.static_*) call sites
+  PASS  tests.test_tabr_wiring.test_runner_source_does_not_use_static_tr_for_validation  (0.0s)
+    [cache] view full: (699635, 237)
+  [width] static=237 assembled=285 (gap 48)
+  PASS  tests.test_tabr_wiring.test_static_view_is_narrower_than_assembled_view  (2.2s)
+  [width guard] accepts assemble() output, rejects static-width mismatches
+  PASS  tests.test_tabr_wiring.test_width_assertion_accepts_real_frames_and_rejects_static  (0.0s)
+  [clean] 105 critical files, 0 undefined names
+  PASS  tests.test_no_undefined_names.test_critical_files_have_no_undefined_names  (0.5s)
+  [ordering] prediction is persisted before diagnostics
+  PASS  tests.test_no_undefined_names.test_prediction_is_persisted_before_diagnostics  (0.0s)
+  [imports] all 19 fold-completion helpers resolve
+  PASS  tests.test_no_undefined_names.test_run_tabr_imports_every_name_it_calls  (0.0s)
+  PASS  tests.test_no_undefined_names.test_static_guard_reads_file_contents_and_detects_missing_imports  (0.0s)
+  PASS  tests.test_no_undefined_names.test_static_guard_rejects_unterminated_literal_before_expensive_runs  (0.0s)
+    [cache] view full: (699635, 237)
+  PASS  tests.test_index_space.test_assemble_returns_local_indexed_matrix  (8.8s)
+  PASS  tests.test_index_space.test_early_stopping_holdout_is_about_ten_percent  (0.1s)
+  PASS  tests.test_index_space.test_fit_and_eval_row_sets_are_disjoint  (0.1s)
+  PASS  tests.test_index_space.test_global_local_index_pairing_is_detectable  (5.2s)
+  PASS  tests.test_index_space.test_inner_es_split_returns_train_first  (0.1s)
+  PASS  tests.test_te_all21.test_apply_transform_uses_only_fit_labels  (0.2s)
+  PASS  tests.test_te_all21.test_exact_values_survive_without_float32_aliasing  (0.0s)
+  PASS  tests.test_te_all21.test_inner_split_is_deterministic_and_independent_of_the_target  (0.1s)
+  PASS  tests.test_te_all21.test_nan_sentinel_is_stable_and_collision_free  (0.1s)
+  PASS  tests.test_te_all21.test_one_fit_row_target_cannot_materially_move_its_own_encoding  (0.1s)
+  PASS  tests.test_te_all21.test_randomising_outer_val_labels_changes_nothing  (0.1s)
+  PASS  tests.test_te_all21.test_unseen_category_maps_to_prior  (0.0s)
+    [cache] view full: (699635, 237)
+    [cache] view core3: (699635, 225)
+  PASS  tests.test_view_composition.test_conditional_and_all21_blocks_are_mutually_exclusive_by_default  (10.4s)
+    [cache] view full: (699635, 237)
+  full             static=237  te=48  tec=0   all21=0   total=285
+    [cache] view full_te21: (699635, 237)
+  full_te21        static=237  te=48  tec=0   all21=21  total=306
+    [cache] view full_all21te: (699635, 237)
+  full_all21te     static=237  te=0   tec=0   all21=21  total=258
+    [cache] view full_tec: (699635, 237)
+  full_tec         static=237  te=48  tec=72  all21=0   total=357
+    [cache] view full_tec_swap: (699635, 237)
+  full_tec_swap    static=237  te=0   tec=72  all21=0   total=309
+    [cache] view core3: (699635, 225)
+  core3            static=225  te=0   tec=0   all21=0   total=225
+    [cache] view core3_te: (699635, 225)
+  core3_te         static=225  te=48  tec=0   all21=0   total=273
+    [cache] view core3_tec: (699635, 225)
+  core3_tec        static=225  te=48  tec=72  all21=0   total=345
+    [cache] view core3_tec_swap: (699635, 225)
+  core3_tec_swap   static=225  te=0   tec=72  all21=0   total=297
+  PASS  tests.test_view_composition.test_view_composition_matches_declared_blocks  (181.8s)
+    realmlp fold0 auc=0.500000
+    realmlp fold1 auc=0.500000
+    realmlp fold2 auc=0.500000
+    realmlp fold3 auc=0.500000
+    realmlp fold4 auc=0.500000
+    realmlp fold0 auc=0.500000
+    realmlp fold1 auc=0.500000
+    realmlp fold2 auc=0.500000
+    realmlp fold3 auc=0.500000
+    realmlp fold4 auc=0.500000
+    realmlp fold0 auc=0.500000 cols=3 ncat=1
+    realmlp fold1 auc=0.500000 cols=3 ncat=1
+    realmlp fold2 auc=0.500000 cols=3 ncat=1
+    realmlp fold3 auc=0.500000 cols=3 ncat=1
+    realmlp fold4 auc=0.500000 cols=3 ncat=1
+    realmlp fold0 auc=0.500000 cols=3 ncat=1
+    realmlp fold1 auc=0.500000 cols=3 ncat=1
+    realmlp fold2 auc=0.500000 cols=3 ncat=1
+    realmlp fold3 auc=0.500000 cols=3 ncat=1
+    realmlp fold4 auc=0.500000 cols=3 ncat=1
+    realmlp fold0 auc=0.500000 cols=2 ncat=0
+    realmlp fold1 auc=0.500000 cols=2 ncat=0
+    realmlp fold2 auc=0.500000 cols=2 ncat=0
+    realmlp fold3 auc=0.500000 cols=2 ncat=0
+    realmlp fold4 auc=0.500000 cols=2 ncat=0
+    realmlp fold0 auc=0.500000 cols=2 ncat=0
+    realmlp fold1 auc=0.500000 cols=2 ncat=0
+    realmlp fold2 auc=0.500000 cols=2 ncat=0
+    realmlp fold3 auc=0.500000 cols=2 ncat=0
+    realmlp fold4 auc=0.500000 cols=2 ncat=0
+    tabm fold0 auc=0.500000
+    tabm fold1 auc=0.500000
+    tabm fold2 auc=0.500000
+    tabm fold3 auc=0.500000
+    tabm fold4 auc=0.500000
+    tabm fold0 auc=0.500000
+    tabm fold1 auc=0.500000
+    tabm fold2 auc=0.500000
+    tabm fold3 auc=0.500000
+    tabm fold4 auc=0.500000
+    tabm fold0 auc=0.500000
+    tabm fold1 auc=0.500000
+    tabm fold2 auc=0.500000
+    tabm fold3 auc=0.500000
+    tabm fold4 auc=0.500000
+    tabm fold0 auc=0.500000
+    tabm fold1 auc=0.500000
+    tabm fold2 auc=0.500000
+    tabm fold3 auc=0.500000
+    tabm fold4 auc=0.500000
+  PASS  tests.test_sol_contracts.test_all_neural_entry_points_isolate_outer_labels_and_respect_no_twin  (0.1s)
+  PASS  tests.test_sol_contracts.test_array_hash_buffer_path_preserves_historical_digests  (0.0s)
+  PASS  tests.test_sol_contracts.test_aux_distribution_arithmetic_and_invalid_inputs  (0.0s)
+  PASS  tests.test_sol_contracts.test_aux_fit_and_apply_rows_are_actually_unseen  (0.0s)
+  PASS  tests.test_sol_contracts.test_banked_predictions_cannot_be_replaced_or_lose_test_sidecar  (0.0s)
+[submission] wrote C:\Users\James\AppData\Local\Temp\tmpgwg5uky7\banked.csv  rows=3  sha16=9ac922a3ec843387
+  PASS  tests.test_sol_contracts.test_banked_submission_cannot_be_overwritten  (0.0s)
+  PASS  tests.test_sol_contracts.test_block10_auxiliary_confirmation_excludes_outer_labels_and_primary_arrays  (0.6s)
+  PASS  tests.test_sol_contracts.test_certified_submission_refuses_unbound_decision_before_loading_data  (0.0s)
+  PASS  tests.test_sol_contracts.test_clean_classical_role_plan_is_frozen_and_retains_original_schemes  (0.0s)
+  PASS  tests.test_sol_contracts.test_clean_portfolio_refuses_missing_test_predictions_before_loading_data  (0.0s)
+  PASS  tests.test_sol_contracts.test_clean_replay_resume_rejects_misaligned_ids_before_writing  (0.0s)
+  PASS  tests.test_sol_contracts.test_fixed_foundation_confirmation_excludes_outer_labels  (0.6s)
+  PASS  tests.test_sol_contracts.test_fixed_vector_bootstrap_matches_sklearn_with_ties  (0.0s)
+  PASS  tests.test_sol_contracts.test_fold_registry_rejects_changed_bytes_ids_and_force  (0.0s)
+  PASS  tests.test_sol_contracts.test_foundation_reader_rejects_ambiguous_completed_vectors_before_scoring  (0.0s)
+  PASS  tests.test_sol_contracts.test_foundation_test_certificate_rejects_partial_primary_before_array_load  (0.0s)
+  PASS  tests.test_sol_contracts.test_full_context_probe_uses_every_training_row_and_reports_no_auc  (0.2s)
+  PASS  tests.test_sol_contracts.test_full_refit_preserves_early_stop_estimator_configuration  (0.9s)
+    lgbm fold0 best_iter=3 auc=0.500000
+    lgbm fold1 best_iter=3 auc=0.500000
+    lgbm fold2 best_iter=3 auc=0.500000
+    lgbm fold3 best_iter=3 auc=0.500000
+    lgbm fold4 best_iter=3 auc=0.500000
+    xgb fold0 best_iter=3 auc=0.500000
+    xgb fold1 best_iter=3 auc=0.500000
+    xgb fold2 best_iter=3 auc=0.500000
+    xgb fold3 best_iter=3 auc=0.500000
+    xgb fold4 best_iter=3 auc=0.500000
+    cat fold0 best_iter=3 auc=0.500000
+    cat fold1 best_iter=3 auc=0.500000
+    cat fold2 best_iter=3 auc=0.500000
+    cat fold3 best_iter=3 auc=0.500000
+    cat fold4 best_iter=3 auc=0.500000
+worker successful
+  PASS  tests.test_sol_contracts.test_generic_gbdt_validation_never_receives_outer_rows  (0.0s)
+  PASS  tests.test_sol_contracts.test_native39_crosses_preserve_literal_identity_and_ignore_target  (0.1s)
+  PASS  tests.test_sol_contracts.test_native_cat_zero_based_first_tree_is_preserved  (0.0s)
+  PASS  tests.test_sol_contracts.test_neural_twins_preserve_values_across_split_vocabularies  (0.0s)
+  PASS  tests.test_sol_contracts.test_partial_shadow_scope_requires_predeclaration_and_never_becomes_full_oof  (0.0s)
+  PASS  tests.test_sol_contracts.test_prediction_store_preserves_unindexed_test_only_artifact  (0.0s)
+  PASS  tests.test_sol_contracts.test_primary_context_test_fallback_excludes_held_fold_labels  (0.3s)
+  PASS  tests.test_sol_contracts.test_shadow_auxiliary_features_never_reuse_primary_fold_arrays  (0.0s)
+  PASS  tests.test_sol_contracts.test_small_policy_audit_contexts_exclude_every_outer_query_row  (0.1s)
+  PASS  tests.test_sol_contracts.test_static_cache_aliases_only_identical_ordered_label_free_blocks  (0.0s)
+  PASS  tests.test_sol_contracts.test_v5_iterations_require_exact_five_treatment_folds  (0.2s)
+  PASS  tests.test_sol_contracts.test_v5_refit_preserves_all_six_xt_configs_and_seeds  (0.0s)
+  PASS  tests.test_sol_contracts.test_zero_based_best_iteration_zero_refits_one_tree  (0.0s)
+  PASS  tests.test_private_sim.test_private_sim_preserves_existing_report_before_loading_data  (0.0s)
+  PASS  tests.test_private_sim.test_private_split_definitions_are_deterministic_and_disjoint  (0.0s)
+  PASS  tests.test_private_sim.test_ranked_auc_matches_sklearn_with_ties_and_bootstrap_weights  (0.0s)
+  PASS  tests.test_masked_encoder.test_masked_loss_has_finite_gradient_and_no_loss_from_unmasked_targets  (0.1s)
+  PASS  tests.test_masked_encoder.test_masking_hides_rating_and_both_numeric_categorical_twins  (0.0s)
+  PASS  tests.test_masked_encoder.test_ssl_preprocessing_refuses_label_or_id_columns  (0.0s)
+  PASS  tests.test_sol_research.test_decoder_activation_reuse_preserves_matrix_shapes_and_gradients  (0.0s)
+  PASS  tests.test_sol_research.test_decoder_projection_chunks_keep_every_context_row  (0.8s)
+  PASS  tests.test_sol_research.test_explicit_head_expansion_matches_grouped_attention  (0.0s)
+  PASS  tests.test_sol_research.test_foundation_frame_ignores_targets_ids_and_poisoned_te  (0.0s)
+  PASS  tests.test_sol_research.test_head_views_preserve_all_keys_and_alias_guard  (0.0s)
+  PASS  tests.test_sol_research.test_invalid_grouped_head_geometry_is_rejected  (0.0s)
+  PASS  tests.test_sol_research.test_opt_in_query_reuse_preserves_keys_values_and_refuses_aliases  (0.0s)
+  PASS  tests.test_sol_research.test_query_activation_reuse_preserves_cpu_outputs_and_gradients  (0.0s)
+  PASS  tests.test_sol_research.test_query_chunks_preserve_full_context_for_mha_and_mqa  (0.0s)
+  PASS  tests.test_sol_research.test_resource_guard_rejects_insufficient_disk_before_fit  (0.0s)
+  PASS  tests.test_sol_research.test_scaling_reuse_preserves_cpu_and_gradient_paths  (0.0s)
+  PASS  tests.test_multitask.test_auxiliary_loss_trains_shared_encoder_without_satisfaction_head  (0.0s)
+  PASS  tests.test_multitask.test_multitask_normalization_excludes_application_rows  (0.0s)
+  PASS  tests.test_kaggle_io.test_ambiguous_upload_still_consumes_budget_and_is_never_retried  (0.0s)
+{"ref": "200", "status": "pending"}
+{"ref": "200", "status": "complete", "publicScore": 0.9617}
+  PASS  tests.test_kaggle_io.test_poll_ignores_old_complete_submission_and_persists_exact_score  (0.0s)
+  PASS  tests.test_kaggle_io.test_poll_rejects_ref_filename_disagreement  (0.0s)
+  PASS  tests.test_kaggle_io.test_remote_zero_quota_does_not_upload_or_reserve  (0.0s)
+  PASS  tests.test_kaggle_io.test_submission_cap_refuses_before_any_api_access  (0.1s)
+{"ref": "56999999", "status": "submitted", "file": "new.csv"}
+  PASS  tests.test_kaggle_io.test_submit_preserves_numeric_ref_and_reserves_before_upload  (0.0s)
+  PASS  tests.test_sol_phase15.test_auxiliary_cache_rejects_fit_apply_overlap  (0.0s)
+  PASS  tests.test_sol_phase15.test_auxiliary_cache_rejects_raw_covariate_drift  (0.0s)
+  PASS  tests.test_sol_phase15.test_certificate_rejects_apply_labels_in_fit_context  (0.0s)
+  PASS  tests.test_sol_phase15.test_certificate_rejects_apply_row_order_drift  (0.0s)
+  PASS  tests.test_sol_phase15.test_certificate_rejects_inference_recipe_drift  (0.0s)
+  PASS  tests.test_sol_phase15.test_full_admission_uses_four_of_five_and_not_partial_replication_rule  (0.0s)
+  PASS  tests.test_sol_phase16.test_exact_error_pairs_counts_ties_and_region_exclusion  (0.0s)
+  PASS  tests.test_sol_phase16.test_rank_geometry_cannot_use_other_applied_folds  (0.0s)
+  PASS  tests.test_sol_phase16.test_rescue_damage_matches_all_pairs_with_dual_ties  (0.0s)
+  PASS  tests.test_sol_phase16.test_sequential_cache_release_and_official_probability_order  (0.0s)
+  PASS  tests.test_sol_phase16.test_symmetric_noise_ceiling_matches_explicit_pair_confusion  (0.0s)
+  PASS  tests.test_sol_phase17.test_attention_diagnostic_preserves_actual_strides_dtype_and_shape  (0.0s)
+  PASS  tests.test_sol_phase17.test_completed_fold_staging_rejects_failed_or_mismatched_report  (0.0s)
+  PASS  tests.test_sol_phase17.test_four_estimator_gate_checks_every_configuration_and_class_column  (0.0s)
+  PASS  tests.test_sol_phase17.test_full_primary_assembly_rejects_missing_fold_and_swapped_ids  (0.0s)
+  PASS  tests.test_sol_phase17.test_internal_equivalence_rejects_class_order_and_row_order_drift  (0.0s)
+  PASS  tests.test_sol_phase17.test_internal_equivalence_rejects_nonfinite_badshape_and_denormalized_outputs  (0.0s)
+  PASS  tests.test_sol_phase17.test_official_zero_budget_produces_separate_member_caches_in_order  (0.0s)
+  PASS  tests.test_sol_phase17.test_oof_stress_rejects_changed_or_truncated_banked_partitions  (0.0s)
+  PASS  tests.test_sol_phase17.test_resource_diagnostics_preserve_original_disk_preflight  (0.0s)
+  PASS  tests.test_sol_phase17.test_resume_rejects_missing_noncontiguous_and_tampered_member_contributions  (0.0s)
+  PASS  tests.test_sol_phase17.test_resume_skips_completed_fit_and_preserves_official_member_aggregation  (0.0s)
+  PASS  tests.test_sol_phase17.test_resume_worker_guard_skips_own_launcher_but_blocks_separate_worker  (0.0s)
+  PASS  tests.test_sol_phase17.test_saved_official_member_replay_rejects_tampering_and_wrong_aggregation  (0.0s)
+  PASS  tests.test_sol_phase17.test_secret_scan_checks_untruncated_contents_without_returning_secret_values  (0.0s)
+  PASS  tests.test_sol_phase17.test_submission_boundary_rejects_partial_certificate_even_with_valid_vectors  (0.0s)
+  PASS  tests.test_sol_phase17.test_supported_auto_memory_retains_fit_saving_without_splitting_small_query  (0.0s)
+  PASS  tests.phase18.test_phase18.test_atlas_pair_credit_arithmetic_exact  (0.0s)
+  PASS  tests.phase18.test_phase18.test_atomic_write_no_partial_state  (0.0s)
+  PASS  tests.phase18.test_phase18.test_fingerprint_deterministic_and_sensitive  (0.0s)
+  PASS  tests.phase18.test_phase18.test_probe_contract_values_match_prereg  (0.0s)
+  PASS  tests.phase18.test_phase18.test_registry_duplicate_protection_and_statuses  (0.1s)
+  PASS  tests.phase19.test_h19a.test_arithmetic_consistency_stretch_gap  (0.0s)
+  PASS  tests.phase19.test_h19a.test_champion_artifacts_unchanged  (0.1s)
+  PASS  tests.phase19.test_h19a.test_difficulty_index_provenance_fold0_safe  (0.0s)
+  PASS  tests.phase19.test_h19a.test_fit_partition_excludes_eval_fold  (0.0s)
+  PASS  tests.phase19.test_h19a.test_fold_registry_immutable_and_hash_checked  (0.0s)
+  PASS  tests.phase19.test_h19a.test_inner_es_split_carves_from_fit_only  (0.0s)
+  PASS  tests.phase19.test_h19a.test_member_uses_certified_rich_view_and_champion_params  (0.0s)
+  PASS  tests.phase19.test_h19a.test_prereg_committed_before_results_and_hash_frozen  (0.0s)
+  PASS  tests.phase19.test_h19a.test_sample_rescue_damage_directional  (0.0s)
+  PASS  tests.phase19.test_h19a.test_sample_tie_aware_credit_half  (0.0s)
+  PASS  tests.phase19.test_h19a.test_tie_aware_auc_identity_exact  (0.0s)
+  PASS  tests.phase19.test_h19a.test_weight_function_frozen_contract  (0.0s)
+  PASS  tests.phase19.test_h19b.test_exact_pair_flips_identity_and_bruteforce  (0.1s)
+  PASS  tests.phase19.test_h19b.test_fit_ids_manifest_proves_fold_safety  (0.0s)
+  PASS  tests.phase19.test_h19b.test_inner_partitions_deterministic_and_disjoint  (0.0s)
+  PASS  tests.phase19.test_h19b.test_mean_prob_equal_average_no_logit_mixing  (0.0s)
+  PASS  tests.phase19.test_h19b.test_pair_credit_semantics_correct_tie_half_wrong_zero  (0.0s)
+  PASS  tests.phase19.test_h19b.test_partition_seed_is_frozen_constant  (0.0s)
+  PASS  tests.phase19.test_h19b.test_stratification_preserves_class_balance  (0.0s)
+  PASS  tests.phase20.test_h19c.test_apply_excludes_self_label  (0.0s)
+  PASS  tests.phase20.test_h19c.test_crossfit_determinism  (0.0s)
+  PASS  tests.phase20.test_h19c.test_crossfit_no_own_label  (0.0s)
+  PASS  tests.phase20.test_h19c.test_key_encoding_unique_per_key  (0.1s)
+  PASS  tests.phase20.test_h19c.test_min_count_falls_back_to_prior  (0.0s)
+  PASS  tests.phase20.test_h19c.test_neighbor_arithmetic  (0.0s)
+  PASS  tests.phase20.test_h19c.test_segment_flags_match_atlas_definition  (0.0s)
+  PASS  tests.phase20.test_runner_exit_codes.test_screen_runners_exit_nonzero_on_failed  (0.0s)
+  PASS  tests.phase20.test_runner_exit_codes.test_screen_runners_set_failed_status  (0.0s)
+  PASS  tests.phase20.test_runner_exit_codes.test_tabicl_recover_requires_verified_manifest_for_done  (0.0s)
+  PASS  tests.phase20.test_scheduler_contracts.test_budget_charge_advances_consumed_estimate  (0.0s)
+  PASS  tests.phase20.test_scheduler_contracts.test_budget_check_allows_within_cap_and_missing_file  (0.0s)
+  PASS  tests.phase20.test_scheduler_contracts.test_budget_check_blocks_corrupt_existing_budget  (0.0s)
+  PASS  tests.phase20.test_scheduler_contracts.test_budget_check_blocks_exhausted_cap  (0.0s)
+  PASS  tests.phase20.test_scheduler_contracts.test_budget_check_blocks_unresolved_interrupted_runtime  (0.0s)
+  PASS  tests.phase20.test_scheduler_contracts.test_fingerprint_tracks_actual_python_runner_bytes  (0.0s)
+  PASS  tests.phase20.test_scheduler_contracts.test_scheduler_live_gpu_pid_lock_on_windows  (0.0s)
+J001: DONE (0.0s, exit=0) no manifest declared
+  PASS  tests.phase20.test_scheduler_contracts.test_scheduler_no_timeout_means_no_timeout  (0.1s)
+  PASS  tests.phase20.test_scheduler_contracts.test_scheduler_rejects_invalid_report_manifest  (0.0s)
+
+6. alpha=0 reconstruction tolerance
+  PASS  the two averaging conventions genuinely differ
+  PASS  but they agree to ~1e-3 or better on a well-behaved blend
+  PASS  tests.test_native_block.test_alpha0_reconstruction_tolerance  (0.0s)
+
+10. OOF / schema consistency of the frame builder
+  PASS  train and apply frames have identical column lists
+  PASS  row counts match the requested index sets
+  PASS  exactly 17 twin columns
+  PASS  every twin holds strings
+  PASS  all twins are prefixed ncat__
+  PASS  no twin collides with a raw column name
+  PASS  META4 twins present
+  PASS  SERVICE13 twins present
+  PASS  Age twin is NOT included (separate arm C4)
+  PASS  Flight Distance twin is NOT included (separate arm C5)
+  PASS  tests.test_native_block.test_frame_schema_consistency  (11.0s)
+
+11. the harness refuses to report when the guard fails
+  PASS  the script raises SystemExit on a failed reconstruction guard
+  PASS  the abort message reports the measured probability difference
+  PASS  the abort message reports the float32 storage comparison
+  PASS  the abort message reports the logit correlation
+  PASS  the stop is still raised, not merely warned about
+  PASS  the guard is evaluated BEFORE any candidate is scored
+  PASS  the guard is evaluated before single-slot swaps are computed
+  PASS  alphas are predeclared and include 0 and 1
+  PASS  tests.test_native_block.test_harness_refuses_when_guard_fails  (0.0s)
+
+9. inventory completeness
+  PASS  slot 0 z3_cat_f10: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  slot 1 z3_cat_d10: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  slot 2 z3_cat_d8_s2: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  slot 3 prod5_cat_full_primary: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  slot 4 z3_cat_d6: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  slot 5 z3_cat_core3: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  slot 6 z3_cat_ogs: view/scheme/seed/depth/lr/Plain all recovered
+  PASS  every slot records that the original had NO categorical treatment
+  PASS  every slot records the original's discarded-carve OOF policy
+  PASS  inventory carries a config hash per slot
+  PASS  inventory carries an overall hash
+  PASS  inventory warns that native-original is not a causal estimate
+  PASS  inventory records the block10 mixing caveat
+  PASS  slot 0 is the only block10 member
+  PASS  no slot uses Ordered boosting
+  PASS  tests.test_native_block.test_inventory_is_complete_and_self_consistent  (0.0s)
+
+5. slot mixing is in logit space
+  PASS  logit-space and probability-space mixes differ
+  PASS  logit mix equals the arithmetic mean of logits
+  PASS  at alpha=0 the logit mix returns the original logit exactly
+  PASS  at alpha=1 the logit mix returns the native logit exactly
+  PASS  tests.test_native_block.test_mixing_is_in_logit_space  (0.0s)
+
+1/8. slot mapping is one-to-one and free of duplicates
+  PASS  seven slots
+  PASS  slot indices are 0..6 with no gaps
+  PASS  every slot's exp_id is distinct
+  PASS  every slot's exp_id is in the v3 manifest
+  PASS  every v3 CatBoost member is claimed by exactly one slot
+  PASS  no two slots would be filled by the same native id
+  PASS  tests.test_native_block.test_slot_mapping_is_one_to_one  (0.0s)
+
+2/3/4. block weight is fixed and non-CatBoost slots are untouched
+  PASS  weight per slot is exactly 1/59
+  PASS  CatBoost block weight is 7/59
+  PASS  inventory records the same block weight
+  PASS  non-CatBoost count is 52
+  PASS  alpha=0.00: total weight sums to exactly 1
+  PASS  alpha=0.25: total weight sums to exactly 1
+  PASS  alpha=0.50: total weight sums to exactly 1
+  PASS  alpha=0.75: total weight sums to exactly 1
+  PASS  alpha=1.00: total weight sums to exactly 1
+  PASS  alpha=0 gives every slot weight 1
+  PASS  alpha=1 gives every slot weight 1
+  PASS  tests.test_native_block.test_weights_and_untouched_slots  (0.0s)
+
+8. arms differ only in the intended mechanism
+  PASS  C0 declares no categorical features
+  PASS  C2 declares exactly the twin columns
+  PASS  C0 and C2 share an identical numeric block
+  PASS  C2 differs from C0 ONLY by appended twin columns
+  PASS  C0 numeric values are unchanged between arms
+  PASS  C1 uses the same frame as C0, so only boosting_type can differ
+  PASS  Age twin is NOT built in this experiment
+  PASS  Flight Distance twin is NOT built in this experiment
+  PASS  tests.test_native_cat.test_arms_differ_only_in_the_intended_mechanism  (5.6s)
+
+9. C0 reproduces the existing numeric control
+  PASS  C0 carries no categorical columns
+  PASS  C0 has exactly the 21 raw numeric columns
+  PASS  C0 numeric block is byte-identical to the raw float32 matrix
+  PASS  C0 numeric block is float32 throughout
+  PASS  tests.test_native_cat.test_c0_is_the_current_control  (0.1s)
+
+6. cardinalities match the measured values
+  PASS  Gender: cardinality 2 == expected 2
+  PASS  Customer Type: cardinality 2 == expected 2
+  PASS  Type of Travel: cardinality 2 == expected 2
+  PASS  Class: cardinality 3 == expected 3
+  PASS  Inflight wifi service: cardinality 6 == expected 6
+  PASS  Departure/Arrival time convenient: cardinality 6 == expected 6
+  PASS  Ease of Online booking: cardinality 6 == expected 6
+  PASS  Gate location: cardinality 6 == expected 6
+  PASS  Food and drink: cardinality 6 == expected 6
+  PASS  Online boarding: cardinality 6 == expected 6
+  PASS  Seat comfort: cardinality 6 == expected 6
+  PASS  Inflight entertainment: cardinality 6 == expected 6
+  PASS  On-board service: cardinality 6 == expected 6
+  PASS  Leg room service: cardinality 6 == expected 6
+  PASS  Baggage handling: cardinality 5 == expected 5
+  PASS  Checkin service: cardinality 6 == expected 6
+  PASS  Cleanliness: cardinality 6 == expected 6
+  PASS  Customer Type is 2 (no 'Neutral Customer' in this data)
+  PASS  Class is 3 (Business/Eco/Plus, no 'First')
+  PASS  Baggage handling is 5 (one rating level unobserved)
+  PASS  no twin is a single level (would waste a CTR slot)
+  PASS  no META4 twin exceeds 4 levels
+  PASS  tests.test_native_cat.test_cardinalities_are_measured_values  (5.6s)
+
+11. how CatBoost resolves cat_features (measured, not assumed)
+  PASS  twin names ARE in the frame
+  PASS  source names are NOT in the frame (they are renamed)
+  PASS  twin columns occupy indices 21..37
+  PASS  positional indices and TWIN NAMES give the SAME resolved cat indices
+  PASS  a name that is not in the frame RAISES rather than being silently reinterpreted
+  PASS  cat_indices raises on a name absent from the frame
+  PASS  cat_indices raises when a declared categorical column holds floats
+  PASS  tests.test_native_cat.test_cat_features_resolution_rule  (6.0s)
+
+7. outer-validation labels cannot alter the training frame
+  PASS  perturbing validation-fold labels leaves the FIT frame identical
+  PASS  FIT and VAL row sets are disjoint
+  PASS  twins are built from tr/te by column name only, so no fold statistic enters them
+  PASS  tests.test_native_cat.test_eval_labels_cannot_alter_the_frame  (11.9s)
+
+3. no target anywhere in the twins
+  PASS  no twin column name mentions the target
+  PASS  verify_no_target passes on the CatBoost twin columns
+  PASS  verify_no_target RAISES when the raw frame (which contains the target) is passed
+  PASS  verify_no_target RAISES on a target-named column
+  PASS  flipping every label leaves all twins bit-identical
+  PASS  tests.test_native_cat.test_no_target_in_twins  (16.5s)
+
+2. original numeric columns remain alongside the twins
+  PASS  'Inflight wifi service' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Inflight wifi service' is NOT converted to a string by the twin builder
+  PASS  'Departure/Arrival time convenient' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Departure/Arrival time convenient' is NOT converted to a string by the twin builder
+  PASS  'Ease of Online booking' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Ease of Online booking' is NOT converted to a string by the twin builder
+  PASS  'Gate location' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Gate location' is NOT converted to a string by the twin builder
+  PASS  'Food and drink' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Food and drink' is NOT converted to a string by the twin builder
+  PASS  'Online boarding' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Online boarding' is NOT converted to a string by the twin builder
+  PASS  'Seat comfort' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Seat comfort' is NOT converted to a string by the twin builder
+  PASS  'Inflight entertainment' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Inflight entertainment' is NOT converted to a string by the twin builder
+  PASS  'On-board service' is both a numeric raw column and a categorical twin
+  PASS  numeric 'On-board service' is NOT converted to a string by the twin builder
+  PASS  'Leg room service' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Leg room service' is NOT converted to a string by the twin builder
+  PASS  'Baggage handling' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Baggage handling' is NOT converted to a string by the twin builder
+  PASS  'Checkin service' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Checkin service' is NOT converted to a string by the twin builder
+  PASS  'Cleanliness' is both a numeric raw column and a categorical twin
+  PASS  numeric 'Cleanliness' is NOT converted to a string by the twin builder
+  PASS  META4 numeric twins exist too
+  PASS  twin columns are named distinctly from numeric columns
+  PASS  tests.test_native_cat.test_numeric_columns_remain_present  (5.5s)
+
+4. train / apply / test schemas match exactly
+  PASS  val columns are identical to fit columns and in the same order
+  PASS  val rows match the requested index count
+  PASS  test columns are identical to fit columns and in the same order
+  PASS  test rows match the requested index count
+  PASS  every declared cat_feature name resolves in every frame
+  PASS  attach returns one cat name per twin column
+  PASS  attach keeps every numeric column and appends every twin
+  PASS  attach preserves float dtype for the numeric block
+  PASS  attach preserves STRING dtype for the twin block (object or pandas str)
+  PASS  twin VALUES are python strings, which is what CatBoost requires
+  PASS  cat_indices returns one index per twin
+  PASS  cat_indices point at the twin columns, not at column 0
+  PASS  cat_indices are strictly increasing (twins are appended last)
+  PASS  tests.test_native_cat.test_schemas_match_across_row_sets  (13.3s)
+
+5. missing sentinel cannot collide with a real level
+  PASS  no real level equals the sentinel
+  PASS  sentinel is delimited so it cannot be a rating or a word
+  PASS  NaN becomes the sentinel
+  PASS  non-missing values are untouched by the sentinel logic
+  PASS  NaN in a numeric column becomes the sentinel
+  PASS  tests.test_native_cat.test_sentinel_does_not_collide  (6.3s)
+
+1b. twins are NOT ordinal codes
+  PASS  twin values are the original words, not 0/1 codes
+  PASS  tests.test_native_cat.test_twins_are_not_ordinal_encoded  (0.1s)
+
+1. categorical identity is preserved exactly
+  PASS  twin holds strings, never numeric
+  PASS  twin has the same length as the source
+  PASS  every Gender value round-trips exactly
+  PASS  rating levels are plain integers with no decimal tail
+  PASS  rating level count matches the measured cardinality
+  PASS  tests.test_native_cat.test_twins_preserve_exact_identity  (0.6s)
+
+14. alpha=0 reproduces the v3 control bit-exactly
+  PASS  alpha=0 mean over the unmutated member logits, cast to float32, is bit-exact
+  PASS  the blend divides by 59 in both the reconstruction and the store
+  PASS  alpha=0 AUC equals the stored v3 AUC to float64 round-off
+  PASS  tests.test_phase11r_protocol.test_alpha0_control_is_exact  (0.8s)
+
+1/2/12. authoritative v3 geometry
+  PASS  reproduce_finalist averages member LOGITS
+  PASS  reproduce_finalist takes the mean over members
+  PASS  reproduce_finalist stores expit(oof)
+  PASS  reproduce_finalist declares equal_logit in the manifest
+  PASS  store dtype is float32
+  PASS  float32(expit(mean(logits))) reproduces the store BIT-EXACTLY
+  PASS  mean(probabilities) does NOT reproduce the store
+  PASS  float64 expit(mean(logits)) is within float32 eps of the store
+  PASS  the two geometries differ enough that the distinction matters
+  PASS  tests.test_phase11r_protocol.test_authoritative_geometry  (0.9s)
+
+12. the ES carve must be disjoint from the ES model's own training rows
+  PASS  inner-train and ES are disjoint
+  PASS  inner-train + ES partition the outer fit exactly
+  PASS  ES is roughly 10% of the fit rows, matching the declared policy
+  PASS  the fixed ES model's row POSITIONS exclude every ES position
+  PASS  the fixed ES model trains on strictly fewer rows than the outer fit
+  PASS  the buggy call shape trained on every ES row
+  PASS  the harness now trains the ES model on the inner-train carve
+  PASS  the harness refuses to run if the carve sets overlap
+  PASS  the harness refuses to run if the carve does not partition the fit
+  PASS  the contamination is recorded in the corrections record
+  PASS  the arms trained before the fix are named
+  PASS  tests.test_phase11r_protocol.test_es_carve_is_disjoint_from_its_own_training_rows  (0.0s)
+
+3/4. a counterpart is EXACT only on a full match; C2 is never one
+  PASS  ND6 matches z3_cat_d6 on view/seed/depth/lr/l2/scheme
+  PASS  ND10 matches z3_cat_d10 on view/seed/depth/lr/l2/scheme
+  PASS  NCORE3 matches z3_cat_core3 on view/seed/depth/lr/l2/scheme
+  PASS  no slot is an EXACT match for C2 (seed 4 / primary / depth 8 / lr 0.04 / l2 3.0)
+  PASS  z3_cat_d8_s2 has seed 3 != C2's 4, so a C2 swap is approximate
+  PASS  prod5_cat_full_primary has seed 1 != C2's 4, so a C2 swap is approximate
+  PASS  the Phase 11R report labels the C2 swap as a diagnostic, not an exact replacement
+  PASS  tests.test_phase11r_protocol.test_exactness_requires_full_match  (0.0s)
+
+9/10. native category schema and target safety
+  PASS  extra=none: fit and apply schemas identical
+  PASS  extra=none: every twin holds strings
+  PASS  extra=none: row counts match
+  PASS  extra=none: no twin named after the target
+  PASS  extra=none: flipping every label leaves the twins identical
+  PASS  extra=['Age']: fit and apply schemas identical
+  PASS  extra=['Age']: every twin holds strings
+  PASS  extra=['Age']: row counts match
+  PASS  extra=['Age']: no twin named after the target
+  PASS  extra=['Age']: flipping every label leaves the twins identical
+  PASS  extra=['Flight Distance']: fit and apply schemas identical
+  PASS  extra=['Flight Distance']: every twin holds strings
+  PASS  extra=['Flight Distance']: row counts match
+  PASS  extra=['Flight Distance']: no twin named after the target
+  PASS  extra=['Flight Distance']: flipping every label leaves the twins identical
+  PASS  Age has many levels (expect ~75)
+  PASS  Flight Distance has many levels (expect ~3474)
+  PASS  a 200-row sample under-reports Flight Distance badly (why the full column is used)
+  PASS  tests.test_phase11r_protocol.test_native_category_safety  (77.0s)
+
+2. no source file asserts the wrong geometry
+  PASS  every mention of the wrong geometry is quoted, corrected or disproved in context
+  PASS  Phase 11R states the authoritative geometry explicitly
+  PASS  Phase 11R records that the wrong geometry does NOT reproduce the store
+  PASS  Phase 11R records that the float32 cast is bit-exact
+  PASS  tests.test_phase11r_protocol.test_no_false_geometry_claims_in_source  (0.1s)
+
+13. partial-vector splice: shape, weight conservation, and no silent broadcast
+  PASS  stacking a raw partial vector against full members raises (the original crash)
+  PASS  splice leaves every out-of-fold row byte-identical
+  PASS  splice writes the native logit inside the fold
+  PASS  member count is unchanged after the swap
+  PASS  out-of-fold blend logits are bit-identical to the control
+  PASS  in-fold blend logits move by the full native-original difference
+  PASS  a native logit identical to the original changes ZERO fold rows
+  PASS  so demanding n_changed == n_fold would false-alarm (the check that fired)
+  PASS  the other 58 columns are the original array objects, not copies
+  PASS  fancy-indexing the plain list raises (the original TypeError)
+  PASS  alpha=0.0: out-of-fold rows untouched by the mix
+  PASS  alpha=0.0: in-fold rows equal the exact logit mix
+  PASS  alpha=0.0: the mix coefficients sum to 1
+  PASS  alpha=0.25: out-of-fold rows untouched by the mix
+  PASS  alpha=0.25: in-fold rows equal the exact logit mix
+  PASS  alpha=0.25: the mix coefficients sum to 1
+  PASS  alpha=0.5: out-of-fold rows untouched by the mix
+  PASS  alpha=0.5: in-fold rows equal the exact logit mix
+  PASS  alpha=0.5: the mix coefficients sum to 1
+  PASS  alpha=1.0: out-of-fold rows untouched by the mix
+  PASS  alpha=1.0: in-fold rows equal the exact logit mix
+  PASS  alpha=1.0: the mix coefficients sum to 1
+  PASS  tests.test_phase11r_protocol.test_partial_vector_splice_is_safe  (0.7s)
+
+5/6/7/8. swap isolation and exact per-slot weight
+  PASS  single-slot swap changes exactly one component
+  PASS  the other 58 components are byte-identical
+  PASS  replacing one column keeps the member count at 59
+  PASS  blend is a mean over 59 columns, so each slot's weight is 1/59 of the total
+  PASS  the mean divides by the member count, not by the number of CHANGED columns
+  PASS  mini-block mixing keeps total weight exactly 1
+  PASS  z3_cat_d10: 50/50 mix still contributes exactly 1/59
+  PASS  z3_cat_d6: 50/50 mix still contributes exactly 1/59
+  PASS  z3_cat_core3: 50/50 mix still contributes exactly 1/59
+  PASS  slot mixing is in LOGIT space, not probability space
+  PASS  alpha=1 returns the native logit exactly
+  PASS  tests.test_phase11r_protocol.test_swap_isolation_and_weights  (0.0s)
+
+11. the withdrawn structural-cap claim is not asserted as valid
+  PASS  the cap is explicitly recorded as WITHDRAWN in the corrections record
+  PASS  the withdrawal states AUC is a nonlinear functional
+  PASS  the withdrawal states the VALID Phase 11 conclusion
+  PASS  the previous swaps are relabelled as approximate diagnostics
+  PASS  the v3 geometry correction is recorded
+  PASS  tests.test_phase11r_protocol.test_withdrawn_claim_is_not_asserted  (0.0s)
+
+12. categorical hyperparameters are pinned, not library-implicit
+  PASS  cat_smooth is pinned to 10
+  PASS  cat_l2 is pinned to 10
+  PASS  max_cat_threshold is pinned to 32
+  PASS  max_cat_to_onehot is pinned to 4
+  PASS  min_data_per_group is pinned to 100
+  PASS  fit_arm actually applies CAT_PARAMS
+  PASS  the audit also pins them
+  PASS  the fitted model echoes the pinned categorical params back into the run record
+  PASS  tests.test_phase12_lgb_cat.test_cat_params_are_pinned  (0.0s)
+
+5/6/7. category codes are safe and zero is a real level
+    [cache] view full: (699635, 237)
+  PASS  the audited column set is exactly 17
+  PASS  Baggage handling [fit]: no NaN
+  PASS  Baggage handling [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Baggage handling [fit]: all codes integral
+  PASS  Baggage handling [val]: no NaN
+  PASS  Baggage handling [val]: all codes non-negative (LightGBM requirement)
+  PASS  Baggage handling [val]: all codes integral
+  PASS  Baggage handling: no apply-row code absent from fit rows
+  PASS  Checkin service [fit]: no NaN
+  PASS  Checkin service [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Checkin service [fit]: all codes integral
+  PASS  Checkin service [val]: no NaN
+  PASS  Checkin service [val]: all codes non-negative (LightGBM requirement)
+  PASS  Checkin service [val]: all codes integral
+  PASS  Checkin service: no apply-row code absent from fit rows
+  PASS  Class [fit]: no NaN
+  PASS  Class [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Class [fit]: all codes integral
+  PASS  Class [val]: no NaN
+  PASS  Class [val]: all codes non-negative (LightGBM requirement)
+  PASS  Class [val]: all codes integral
+  PASS  Class: no apply-row code absent from fit rows
+  PASS  Cleanliness [fit]: no NaN
+  PASS  Cleanliness [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Cleanliness [fit]: all codes integral
+  PASS  Cleanliness [val]: no NaN
+  PASS  Cleanliness [val]: all codes non-negative (LightGBM requirement)
+  PASS  Cleanliness [val]: all codes integral
+  PASS  Cleanliness: no apply-row code absent from fit rows
+  PASS  Customer Type [fit]: no NaN
+  PASS  Customer Type [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Customer Type [fit]: all codes integral
+  PASS  Customer Type [val]: no NaN
+  PASS  Customer Type [val]: all codes non-negative (LightGBM requirement)
+  PASS  Customer Type [val]: all codes integral
+  PASS  Customer Type: no apply-row code absent from fit rows
+  PASS  Departure/Arrival time convenient [fit]: no NaN
+  PASS  Departure/Arrival time convenient [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Departure/Arrival time convenient [fit]: all codes integral
+  PASS  Departure/Arrival time convenient [val]: no NaN
+  PASS  Departure/Arrival time convenient [val]: all codes non-negative (LightGBM requirement)
+  PASS  Departure/Arrival time convenient [val]: all codes integral
+  PASS  Departure/Arrival time convenient: no apply-row code absent from fit rows
+  PASS  Ease of Online booking [fit]: no NaN
+  PASS  Ease of Online booking [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Ease of Online booking [fit]: all codes integral
+  PASS  Ease of Online booking [val]: no NaN
+  PASS  Ease of Online booking [val]: all codes non-negative (LightGBM requirement)
+  PASS  Ease of Online booking [val]: all codes integral
+  PASS  Ease of Online booking: no apply-row code absent from fit rows
+  PASS  Food and drink [fit]: no NaN
+  PASS  Food and drink [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Food and drink [fit]: all codes integral
+  PASS  Food and drink [val]: no NaN
+  PASS  Food and drink [val]: all codes non-negative (LightGBM requirement)
+  PASS  Food and drink [val]: all codes integral
+  PASS  Food and drink: no apply-row code absent from fit rows
+  PASS  Gate location [fit]: no NaN
+  PASS  Gate location [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Gate location [fit]: all codes integral
+  PASS  Gate location [val]: no NaN
+  PASS  Gate location [val]: all codes non-negative (LightGBM requirement)
+  PASS  Gate location [val]: all codes integral
+  PASS  Gate location: no apply-row code absent from fit rows
+  PASS  Gender [fit]: no NaN
+  PASS  Gender [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Gender [fit]: all codes integral
+  PASS  Gender [val]: no NaN
+  PASS  Gender [val]: all codes non-negative (LightGBM requirement)
+  PASS  Gender [val]: all codes integral
+  PASS  Gender: no apply-row code absent from fit rows
+  PASS  Inflight entertainment [fit]: no NaN
+  PASS  Inflight entertainment [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Inflight entertainment [fit]: all codes integral
+  PASS  Inflight entertainment [val]: no NaN
+  PASS  Inflight entertainment [val]: all codes non-negative (LightGBM requirement)
+  PASS  Inflight entertainment [val]: all codes integral
+  PASS  Inflight entertainment: no apply-row code absent from fit rows
+  PASS  Inflight wifi service [fit]: no NaN
+  PASS  Inflight wifi service [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Inflight wifi service [fit]: all codes integral
+  PASS  Inflight wifi service [val]: no NaN
+  PASS  Inflight wifi service [val]: all codes non-negative (LightGBM requirement)
+  PASS  Inflight wifi service [val]: all codes integral
+  PASS  Inflight wifi service: no apply-row code absent from fit rows
+  PASS  Leg room service [fit]: no NaN
+  PASS  Leg room service [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Leg room service [fit]: all codes integral
+  PASS  Leg room service [val]: no NaN
+  PASS  Leg room service [val]: all codes non-negative (LightGBM requirement)
+  PASS  Leg room service [val]: all codes integral
+  PASS  Leg room service: no apply-row code absent from fit rows
+  PASS  On-board service [fit]: no NaN
+  PASS  On-board service [fit]: all codes non-negative (LightGBM requirement)
+  PASS  On-board service [fit]: all codes integral
+  PASS  On-board service [val]: no NaN
+  PASS  On-board service [val]: all codes non-negative (LightGBM requirement)
+  PASS  On-board service [val]: all codes integral
+  PASS  On-board service: no apply-row code absent from fit rows
+  PASS  Online boarding [fit]: no NaN
+  PASS  Online boarding [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Online boarding [fit]: all codes integral
+  PASS  Online boarding [val]: no NaN
+  PASS  Online boarding [val]: all codes non-negative (LightGBM requirement)
+  PASS  Online boarding [val]: all codes integral
+  PASS  Online boarding: no apply-row code absent from fit rows
+  PASS  Seat comfort [fit]: no NaN
+  PASS  Seat comfort [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Seat comfort [fit]: all codes integral
+  PASS  Seat comfort [val]: no NaN
+  PASS  Seat comfort [val]: all codes non-negative (LightGBM requirement)
+  PASS  Seat comfort [val]: all codes integral
+  PASS  Seat comfort: no apply-row code absent from fit rows
+  PASS  Type of Travel [fit]: no NaN
+  PASS  Type of Travel [fit]: all codes non-negative (LightGBM requirement)
+  PASS  Type of Travel [fit]: all codes integral
+  PASS  Type of Travel [val]: no NaN
+  PASS  Type of Travel [val]: all codes non-negative (LightGBM requirement)
+  PASS  Type of Travel [val]: all codes integral
+  PASS  Type of Travel: no apply-row code absent from fit rows
+  PASS  survey columns expose level 0 as a present code
+  PASS  Online boarding: level 0 present, so it is distinct from missingness
+  PASS  Inflight wifi service: level 0 present, so it is distinct from missingness
+  PASS  Gate location: level 0 present, so it is distinct from missingness
+  PASS  Baggage handling: max code 5 is a plausible level count, not a sentinel
+  PASS  Checkin service: max code 5 is a plausible level count, not a sentinel
+  PASS  Class: max code 2 is a plausible level count, not a sentinel
+  PASS  Cleanliness: max code 5 is a plausible level count, not a sentinel
+  PASS  Customer Type: max code 1 is a plausible level count, not a sentinel
+  PASS  Departure/Arrival time convenient: max code 5 is a plausible level count, not a sentinel
+  PASS  Ease of Online booking: max code 5 is a plausible level count, not a sentinel
+  PASS  Food and drink: max code 5 is a plausible level count, not a sentinel
+  PASS  Gate location: max code 5 is a plausible level count, not a sentinel
+  PASS  Gender: max code 1 is a plausible level count, not a sentinel
+  PASS  Inflight entertainment: max code 5 is a plausible level count, not a sentinel
+  PASS  Inflight wifi service: max code 5 is a plausible level count, not a sentinel
+  PASS  Leg room service: max code 5 is a plausible level count, not a sentinel
+  PASS  On-board service: max code 5 is a plausible level count, not a sentinel
+  PASS  Online boarding: max code 5 is a plausible level count, not a sentinel
+  PASS  Seat comfort: max code 5 is a plausible level count, not a sentinel
+  PASS  Type of Travel: max code 1 is a plausible level count, not a sentinel
+  PASS  tests.test_phase12_lgb_cat.test_category_code_safety  (9.2s)
+
+1. champion configuration provenance
+  PASS  the champion member is the extra_trees member recorded in the ledger
+  PASS  the champion view is 'full'
+  PASS  the champion seed is 1
+  PASS  learning_rate appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  num_leaves appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  min_child_samples appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  colsample_bytree appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  subsample appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  subsample_freq appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  reg_lambda appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  max_bin appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  n_estimators appears verbatim in _fit_lgbm_es and in CHAMPION_PARAMS
+  PASS  extra_trees=True is the champion lever
+  PASS  learning_rate is 0.02, matching run_xt_zoo.py:36
+  PASS  num_leaves is 127, matching run_xt_zoo.py:36
+  PASS  run_xt_zoo.py registers xt_d127_s1 with extra_trees=True, seed 1, full, primary
+  PASS  the champion is NOT taken from src/models/gbdt.py defaults
+  PASS  no CODE line computes CHAMPION_SEED + k
+  PASS  no CODE line adds the fold index to any seed
+  PASS  the runner states the champion seed is fixed on every fold
+  PASS  the inner ES split also uses the fixed seed
+  PASS  run_xt_zoo passes the entry seed straight through, with no + k
+  PASS  the reproduction check runs on EVERY fold, not just the first
+  PASS  run_xt_zoo seeds the target-encoding cross-fit with the FOLD INDEX
+  PASS  the runner passes inner_seed=k to vb.assemble
+  PASS  no code line passes a constant inner_seed=0
+  PASS  fit_arm accepts a categorical index list
+  PASS  the champion params do not silently include a categorical declaration
+  PASS  tests.test_phase12_lgb_cat.test_champion_config_provenance  (0.0s)
+
+9/10/11. the treatment is observable and extra_trees does not break it
+  PASS  the detector finds ZERO categorical splits when none is declared
+  PASS  the detector finds categorical splits when one IS declared
+  PASS  undeclared splits are all numerical
+  PASS  extra_trees=True and False give the SAME number of categorical splits
+  PASS  extra_trees does not destroy the categorical search
+  PASS  the declared feature actually receives the splits
+  PASS  no CODE line counts '||' as a split detector
+  PASS  the audit's census keys on decision_type
+  PASS  run_phase12's census keys on decision_type too
+  PASS  detector is exact on ground truth: 0 declared -> 0 found
+  PASS  detector is exact on ground truth: 1 declared -> >0 found
+  PASS  LightGBM exposes its internal missing marker (-1) for a declared categorical
+  PASS  the missing marker means NaN is routed as MISSING, not as a category code
+  PASS  tests.test_phase12_lgb_cat.test_detector_and_extra_trees_interaction  (0.1s)
+
+3/4. declaring a categorical changes HANDLING only
+    [cache] view full: (699635, 237)
+  PASS  the full view has exactly 285 features
+  PASS  the matrix shape matches the declared width
+  PASS  the view carries exactly 48 te_ columns
+  PASS  re-assembly is bit-identical, so the matrix is a fixed input to every arm
+  PASS  te_ columns are byte-identical across assemblies
+  PASS  te_ for fold 0 and fold 1 genuinely differ, so a cross-fold reference is invalid
+  PASS  the runner keys its te_ reference by fold
+  PASS  the runner aborts if one fold's features differ between arms
+  PASS  L0: every declared categorical is an existing view column
+  PASS  L0: no duplicate positions
+  PASS  L0: declaring it would not change the column count
+  PASS  L1: every declared categorical is an existing view column
+  PASS  L1: no duplicate positions
+  PASS  L1: declaring it would not change the column count
+  PASS  L2: every declared categorical is an existing view column
+  PASS  L2: no duplicate positions
+  PASS  L2: declaring it would not change the column count
+  PASS  L3: every declared categorical is an existing view column
+  PASS  L3: no duplicate positions
+  PASS  L3: declaring it would not change the column count
+  PASS  Age, Flight Distance and the delays are NOT categorical in any arm
+  PASS  L0 declares nothing, which is what makes it a clean control
+  PASS  L1 is META4 only
+  PASS  L2 is META4 plus the three irregular surveys
+  PASS  L3 adds all 13 survey ratings on top of META4
+  PASS  tests.test_phase12_lgb_cat.test_handling_only_may_change  (24.8s)
+
+8. inner ES carve is disjoint and partitioning
+  PASS  inner-train and ES are disjoint
+  PASS  inner-train + ES partition the fit rows exactly
+  PASS  ES is ~10% of fit rows
+  PASS  the runner trains on the 90% inner-train rows, not the whole fit frame
+  PASS  the runner aborts if the carve overlaps
+  PASS  the runner aborts if the carve does not partition
+  PASS  tests.test_phase12_lgb_cat.test_inner_es_carve_is_clean  (0.0s)
+
+2. native LightGBM categoricals were never tested before (so this is not a re-run)
+  PASS  no prior lgbm ledger entry declares native categoricals
+  PASS  the feature layer never emits a lightgbm categorical flag
+  PASS  the notebook audit recorded that it used no native categoricals
+  PASS  tests.test_phase12_lgb_cat.test_no_prior_lgbm_native_categorical  (0.0s)
+
+6/7. the aux columns are additive, smooth and informative
+  PASS  f0: 13 aux columns added to 285, not replacing any
+  PASS  f0: the te_ block hash is unchanged
+  PASS  f0: the label-free structural proof held
+  PASS  f1: 13 aux columns added to 285, not replacing any
+  PASS  f1: the te_ block hash is unchanged
+  PASS  f1: the label-free structural proof held
+  PASS  f2: 13 aux columns added to 285, not replacing any
+  PASS  f2: the te_ block hash is unchanged
+  PASS  f2: the label-free structural proof held
+  PASS  f3: 13 aux columns added to 285, not replacing any
+  PASS  f3: the te_ block hash is unchanged
+  PASS  f3: the label-free structural proof held
+  PASS  f4: 13 aux columns added to 285, not replacing any
+  PASS  f4: the te_ block hash is unchanged
+  PASS  f4: the label-free structural proof held
+  PASS  every aux feature correlates strongly with the rating it smooths
+  PASS  no aux feature is IDENTICAL to its rating, or cross-fitting was skipped
+  PASS  every aux feature differs numerically from its rating
+  PASS  tests.test_phase13_aux.test_aux_columns_are_additive_and_informative  (0.0s)
+
+1. the aux path cannot reach the competition label
+  PASS  build_aux takes no label argument
+  PASS  build_aux takes the view matrices and names, nothing else
+  PASS  build_aux never references the target column or the y array
+  PASS  the runner records a structural label-free proof rather than a flip test
+  PASS  no label-flip test remains in the aux path
+  PASS  tests.test_phase13_aux.test_aux_path_cannot_reach_the_label  (0.0s)
+
+2/3. fit rows are cross-fitted and val rows are unseen
+  PASS  an inner StratifiedKFold cross-fit is used for the fit rows
+  PASS  the validation rows are predicted by a model fitted on ALL fit rows
+  PASS  both sides therefore come from out-of-sample predictions
+  PASS  the inner cross-fit produces disjoint train/apply splits for every rating
+  PASS  in-sample aux accuracy exceeds cross-fitted accuracy, so memorisation is real
+  PASS  neither accuracy is perfect, so the demo is not trivially satisfied
+  PASS  cross-fitted accuracy is well above the 1/6 chance rate, so the mechanism carries signal
+  PASS  tests.test_phase13_aux.test_cross_fitted_and_val_unseen  (2.2s)
+
+4. the feature is sum_k k * P(k) over a 6-class multiclass model
+  PASS  there are 13 ratings
+  PASS  the model is 6-class, matching the 0..5 rating scale
+  PASS  the expected value is the probability vector dotted with 0..5
+  PASS  objective is multiclass
+  PASS  the prediction shape is asserted rather than assumed
+  PASS  expected value of [0.1,0,0.4,0,0.5,0] is 0*0.1+2*0.4+4*0.5 = 2.8
+  PASS  expected value of a point mass on 3 is 3
+  PASS  tests.test_phase13_aux.test_expected_value_formula  (0.0s)
+
+8. the ensemble marginal is measured from real vectors
+  PASS  the marginal is computed by splicing into the exact v3 slot
+  PASS  the splice is asserted to leave out-of-fold rows untouched
+  PASS  the v3 geometry is reconstructed as expit(mean(logits))
+  PASS  the marginal is read on the fold's own rows
+  PASS  no weight-times-AUC approximation appears
+  PASS  the run record stores a measured marginal per fold
+  PASS  the run record stores the split census on the aux columns
+  PASS  tests.test_phase13_aux.test_marginal_is_measured_not_inferred  (0.0s)
+
+5. the rating names are the VIEW's spellings
+    [cache] view full: (699635, 237)
+  PASS  every declared rating exists in the full view
+  PASS  three raw-dataset spellings do NOT exist in the view, so they must not be used
+  PASS  none of the raw-only spellings appears in RATINGS
+  PASS  the 13 ratings occupy the first 13 positions of the view, as the audit recorded
+  PASS  tests.test_phase13_aux.test_rating_names_resolve_against_the_view  (9.0s)
+
+pre-declared constants
+  PASS  PRIOR_N is fixed at 50
+  PASS  LAMBDA is fixed at 50 and matches PRIOR_N nominally
+  PASS  MIN_N is fixed at 200
+  PASS  ROUNDS is fixed at 900
+  PASS  shrinkage constants are below the +1.5e-5 admission gate in effect
+  PASS  champion uses the champion learning rate 0.02, not the generic 0.03
+  PASS  champion uses num_leaves 127
+  PASS  champion has extra_trees True
+  PASS  tests.test_residual_nested.test_constants_are_predeclared_and_bounded  (0.0s)
+
+unseen groups
+  PASS  an unseen group gets exactly zero offset
+  PASS  apply_table with an empty table returns zeros
+  PASS  tests.test_residual_nested.test_empty_group_falls_back_to_zero  (0.0s)
+
+global vs local index discipline
+  PASS  assembled matrix would be LOCAL to meta_fit, not length n
+  PASS  labels for assembled rows must be gathered as y[meta_fit]
+  PASS  local->global map is a bijection onto META_FIT
+  PASS  reading y at local indices differs from y[meta_fit] (so the bug would be visible)
+  PASS  tests.test_residual_nested.test_index_space_alignment  (0.1s)
+
+inner fold construction
+  PASS  every row gets exactly one inner fold
+  PASS  all 5 inner folds are non-empty
+  PASS  inner folds are balanced within 1 row
+  PASS  inner folds are deterministic for a fixed seed
+  PASS  a different seed gives a different partition
+  PASS  inner fold 0: complement and fold are disjoint and cover everything
+  PASS  inner fold 1: complement and fold are disjoint and cover everything
+  PASS  inner fold 2: complement and fold are disjoint and cover everything
+  PASS  inner fold 3: complement and fold are disjoint and cover everything
+  PASS  inner fold 4: complement and fold are disjoint and cover everything
+  PASS  tests.test_residual_nested.test_inner_folds_partition_cleanly  (0.0s)
+
+logit-offset semantics -- Newton step vs numerical minimiser
+  PASS  group 0: Newton step -0.48608 matches numerical optimum -0.48610
+  PASS  group 1: Newton step -0.01500 matches numerical optimum -0.01500
+  PASS  group 2: Newton step +0.49435 matches numerical optimum +0.49435
+  PASS  perfectly calibrated group gets ~zero offset (got +3.65e-03)
+  PASS  tests.test_residual_nested.test_logit_offset_matches_brute_force  (0.5s)
+
+minimum group size
+  PASS  fixture sizes put 'big' above MIN_N and 'tiny' below it
+  PASS  group at or above MIN_N is kept
+  PASS  group below MIN_N is dropped
+  PASS  tests.test_residual_nested.test_min_group_size_is_enforced  (0.0s)
+
+nesting on the real primary fold scheme
+  PASS  fold 0: META_FIT and META_VAL are disjoint
+  PASS  fold 0: they partition all rows
+  PASS  fold 0: no inner-fit set touches META_VAL
+  PASS  fold 1: META_FIT and META_VAL are disjoint
+  PASS  fold 1: they partition all rows
+  PASS  fold 1: no inner-fit set touches META_VAL
+  PASS  fold 2: META_FIT and META_VAL are disjoint
+  PASS  fold 2: they partition all rows
+  PASS  fold 2: no inner-fit set touches META_VAL
+  PASS  fold 3: META_FIT and META_VAL are disjoint
+  PASS  fold 3: they partition all rows
+  PASS  fold 3: no inner-fit set touches META_VAL
+  PASS  fold 4: META_FIT and META_VAL are disjoint
+  PASS  fold 4: they partition all rows
+  PASS  fold 4: no inner-fit set touches META_VAL
+  PASS  tests.test_residual_nested.test_nesting_on_real_fold_scheme  (0.7s)
+
+probability semantics
+  PASS  returns one bias per sufficiently sized group
+  PASS  biases are finite
+  PASS  group with y << p gets a negative bias
+  PASS  group with y >> p gets a positive bias
+  PASS  tests.test_residual_nested.test_probability_semantics_is_its_own_scale  (0.0s)
+
+quantile binning robustness
+  PASS  constant column bins without raising
+  PASS  two-valued column bins without raising
+  PASS  continuous column produces multiple bins
+  PASS  tests.test_residual_nested.test_qbin_handles_degenerate_columns  (0.0s)
+
+the two semantics stay separate
+  PASS  both semantics produce estimates for the same groups
+  PASS  the two are numerically distinct (no accidental sharing of one number)
+  PASS  apply_table on probability semantics returns a bounded additive offset
+  PASS  both semantics agree on SIGN for a moderately under-performing group
+  PASS  probability semantics can saturate at extreme groups (documented limitation)
+  PASS  tests.test_residual_nested.test_semantics_do_not_mix_scales  (0.0s)
+
+shrinkage behaviour
+  PASS  probability bias is monotone non-increasing in shrinkage
+  PASS  larger shrinkage drives the estimate toward zero
+  PASS  logit offset is monotone non-increasing in LAMBDA
+  PASS  larger LAMBDA drives the offset toward zero
+  PASS  tests.test_residual_nested.test_shrinkage_is_monotone_and_pulls_to_zero  (0.0s)
+  PASS  tests.test_paired_auc.test_category_drift_aligns_values_not_codes  (0.0s)
+  PASS  tests.test_paired_auc.test_category_drift_handles_order_and_missing_values  (0.0s)
+  PASS  tests.test_paired_auc.test_holm_matches_hand_computed_stepdown  (0.0s)
+  PASS  tests.test_paired_auc.test_identical_predictions_have_zero_paired_uncertainty  (0.0s)
+  PASS  tests.test_paired_auc.test_invalid_auc_inputs_rejected  (0.0s)
+  PASS  tests.test_paired_auc.test_paired_variance_matches_direct_covariance  (0.0s)
+  PASS  tests.test_paired_auc.test_placements_equal_brute_pair_matrix_with_ties  (0.0s)
+  PASS  tests.test_paired_auc.test_target_private_four_times_public_halves_standard_error  (0.0s)
+
+244 passed, 0 failed

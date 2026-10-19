@@ -1,7 +1,7 @@
 {
  "schema": "p20-scheduler-v1",
  "created_utc": "2026-10-17T22:15:00.183179+00:00",
- "updated_utc": "2026-10-18T23:56:29.379198+00:00",
+ "updated_utc": "2026-10-19T09:26:44.035292+00:00",
  "ranking_rule": "expected private benefit / (GPU-h + wall-days risk); deadline 2026-10-31T23:59Z",
  "gpu_lock": null,
  "jobs": {
@@ -3784,8 +3784,8 @@
    "family": "DEP",
    "title": "champion internal-4 screen (prereg fbc01570)",
    "priority": "P1",
-   "state": "RUNNING",
-   "state_note": "last unmeasured lever on the champion's own geometry",
+   "state": "FAILED",
+   "state_note": "process died (resume)",
    "kind": "gpu",
    "cmd": [
     "C:\\Users\\James\\airline_S6E10\\.venv\\Scripts\\python.exe",
@@ -3836,6 +3836,11 @@
      ],
      "why": "champion internal-4 screen, prereg fbc01570: last unmeasured lever on the champion's own geometry (internal-2 -> internal-4), certified runner under its own gates",
      "fingerprint": "e9a77b05c2be0d69"
+    },
+    {
+     "ts": "2026-10-19T09:26:44.035292+00:00",
+     "event": "resume->FAILED",
+     "pid": 39588
     }
    ]
   }
