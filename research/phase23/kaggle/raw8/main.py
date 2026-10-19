@@ -126,15 +126,40 @@ def pip_install():
 
 
 def download_checkpoint() -> Path:
+    """Download + verify, then materialize a REAL file with the .safetensors suffix.
+
+    tabpfn's loader calls path.resolve(), so a huggingface_hub symlink resolves to
+    the extension-less blob and the checkpoint would be mis-detected as a torch
+    pickle.  Copying the verified bytes to <WORK>/ckpt/<name>.safetensors fixes it.
+    """
+    import shutil
     from huggingface_hub import hf_hub_download
-    cache = str(WORK / 'hf')
-    p = Path(hf_hub_download(CKPT_REPO, CKPT_FILE, revision=CKPT_REV,
-                             cache_dir=cache))
-    sha = file_sha256(p)
-    log('checkpoint:', p, 'sha256:', sha[:16], '...')
+    dest = WORK / 'ckpt' / CKPT_FILE
+    if dest.exists() and file_sha256(dest) == CKPT_SHA:
+        log('checkpoint cached:', dest)
+        return dest
+    src = Path(hf_hub_download(CKPT_REPO, CKPT_FILE, revision=CKPT_REV,
+                               cache_dir=str(WORK / 'hf')))
+    sha = file_sha256(src)
+    log('checkpoint download:', src, 'sha256:', sha[:16], '...')
     if sha != CKPT_SHA:
         raise SystemExit(f'checkpoint sha mismatch: {sha}')
-    return p
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(src, dest)
+    if file_sha256(dest) != CKPT_SHA:
+        raise SystemExit('checkpoint copy corrupted')
+    log('checkpoint materialized:', dest)
+    return dest
+
+
+def native_bf16_supported() -> bool:
+    """True only for NATIVE bf16 (sm_80+). T4 (sm_75) emulates bf16 in torch and
+    must use the fp16 autocast regime instead, matching the public producer."""
+    import torch
+    try:
+        return bool(torch.cuda.is_bf16_supported(including_emulation=False))
+    except TypeError:
+        return False
 
 
 def gpu_report():
@@ -146,7 +171,8 @@ def gpu_report():
     for i in range(torch.cuda.device_count()):
         log(' gpu', i, torch.cuda.get_device_name(i),
             round(torch.cuda.get_device_properties(i).total_memory / 2 ** 30, 1), 'GiB')
-    log('bf16_supported:', torch.cuda.is_bf16_supported())
+    log('bf16_supported:', bool(torch.cuda.is_bf16_supported()),
+        'native_bf16:', native_bf16_supported())
     import tabpfn
     log('tabpfn', tabpfn.__version__)
     return torch
@@ -489,6 +515,8 @@ def unit_done(fold, member):
 # ------------------------------------------------------------------ unit runner
 def run_unit(fold: int, member: int, gpu: int, deadline_ts: float, ckpt: Path):
     import torch
+    if file_sha256(ckpt) != CKPT_SHA:
+        raise SystemExit('unit: checkpoint sha mismatch')
     torch.cuda.set_device(gpu)
     X, y, folds, XT, ids, idt = ensure_data_npz()
     fit_rows = np.flatnonzero(folds != fold)
@@ -496,7 +524,7 @@ def run_unit(fold: int, member: int, gpu: int, deadline_ts: float, ckpt: Path):
     Xf, yf = X[fit_rows], y[fit_rows]
     Xv = X[val_rows]
     apply_lean_patch()
-    bf16 = bool(torch.cuda.is_bf16_supported())
+    bf16 = native_bf16_supported()
     variants = [
         dict(memory_saving_mode=True, keep_cache_on_device=True),
         dict(memory_saving_mode='auto', keep_cache_on_device=True),
@@ -598,8 +626,9 @@ def probe(ckpt: Path):
     summary = {'mode': 'probe', 'utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
                'gpu_count': torch.cuda.device_count(),
                'gpu_name': torch.cuda.get_device_name(0),
-               'bf16_supported': bool(torch.cuda.is_bf16_supported())}
-    bf16 = bool(torch.cuda.is_bf16_supported())
+               'bf16_supported_with_emulation': bool(torch.cuda.is_bf16_supported()),
+               'native_bf16_supported': native_bf16_supported()}
+    bf16 = native_bf16_supported()
 
     # --- A. small-context equivalence: stock vs ported (no patch) vs ported (patch)
     Xc, yc = X[:30000], y[:30000]
