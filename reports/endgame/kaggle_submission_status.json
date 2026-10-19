@@ -4,9 +4,9 @@
  "deadline_utc": "2026-10-31T23:59:00+00:00",
  "remote_reconciled": "7 submissions; refs match the local ledger exactly; no unknown or duplicate uploads",
  "daily_cap": 10,
- "used_today": 0,
- "remaining_today": 10,
- "submissions_this_endgame": 0,
+ "used_today": 10,
+ "remaining_today": 0,
+ "submissions_this_endgame": 10,
  "no_submission_rationale": "No candidate cleared PATH A (+3e-4 OOF) or PATH B (within -2e-4 with structural distinctness). The only submission within 2e-4 of champion A is v6 (OOF 0.961766, -8.7e-5) but it fails PATH B's distinctness test (same TabPFN+aux10 family, logit correlation ~0.999+) and was already submitted (ref 56951906, public 0.96144 < v7's 0.96146). Spending quota on an unvalidated candidate would be exactly the probing the policy forbids.",
  "finalist_selection": {
   "slot_1": {
@@ -77,5 +77,63 @@
   }
  ],
  "policy_ref": "research/submission_policy_amendment_20261017.md",
- "public_lb_use": "measurement only; never an optimization target"
+ "public_lb_use": "measurement only; never an optimization target",
+ "inventory_batch_2026_10_19": {
+  "authority": "user instruction: submit all predictions with OOF > 0.9610000, immediately",
+  "filter": "primary-5-fold OOF > 0.9610000 recomputed from stored arrays; deduplicated vs existing submissions",
+  "uploaded": [
+   {
+    "ref": "57385968",
+    "exp_id": "cand_family_balanced",
+    "oof": 0.961502
+   },
+   {
+    "ref": "57385972",
+    "exp_id": "z4_xt_f10_s4",
+    "oof": 0.96126
+   },
+   {
+    "ref": "57385975",
+    "exp_id": "sol_clean_aux10_primary_xt_xt_d127_s1",
+    "oof": 0.96125
+   },
+   {
+    "ref": "57385982",
+    "exp_id": "xt_xt_f10",
+    "oof": 0.961242
+   },
+   {
+    "ref": "57385988",
+    "exp_id": "sol_clean_aux10_primary_xt_xt_d127_cs05",
+    "oof": 0.961223
+   },
+   {
+    "ref": "57385994",
+    "exp_id": "sol_clean_aux10_primary_xt_xt_d63",
+    "oof": 0.961201
+   },
+   {
+    "ref": "57385997",
+    "exp_id": "z4_xt_f10_s3",
+    "oof": 0.961196
+   },
+   {
+    "ref": "57386003",
+    "exp_id": "sol_clean_aux10_primary_xt_xt_d127_ss06",
+    "oof": 0.961194
+   },
+   {
+    "ref": "57386008",
+    "exp_id": "xt_xt_d127_s2",
+    "oof": 0.961189
+   },
+   {
+    "ref": "57386012",
+    "exp_id": "sol_clean_aux10_primary_xt_xt_d255",
+    "oof": 0.961185
+   }
+  ],
+  "still_unuploaded_above_threshold": 23,
+  "caveat": "these are all BELOW champion A on OOF; they exist so the strongest OOF-qualified alternatives are on the board and selectable. Public scores must not drive selection."
+ }
 }
