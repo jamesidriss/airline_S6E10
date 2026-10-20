@@ -4,10 +4,17 @@ Updated 2026-10-20 ~00:40 UTC. Analysis only: **zero submissions**, nothing here
 champion. Selection is a Kaggle web-UI action the user must perform before the deadline
 (2026-10-31 23:59 UTC); this report supplies the refs and the evidence behind them.
 
+This also **executes phase-20 catalogue item #77** ("Champion B utility selection — 2-slot
+selection under OOF resampling"), which had been `DEPENDENCY_CLOSED` only because no B
+operand existed. The submitted candidate set now supplies the operands; the resampling
+experiment is below and in `finalist_B_private_sim.json`. Ledger
+`phase23_20261020_catalogue_77_champion_b_executed`.
+
 ## Question
 
-The rules allow **up to 2** final submissions to be chosen for private judging (re-check the
-Rules page near the deadline — AGENTS.md requirement). Finalist A is fixed: the champion
+The rules allow **up to 2** final submissions to be chosen for private judging (confirmed on
+the official Rules page 2026-10-20; AGENTS.md still requires a last re-check near the
+deadline). Finalist A is fixed: the champion
 `v7_sol_tabpfn_internal2_aux10` (ref **57090508**, OOF `0.9618529228157235`). What should the
 second slot be — or should it stay empty?
 
