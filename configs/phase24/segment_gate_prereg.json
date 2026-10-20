@@ -1,0 +1,59 @@
+{
+  "protocol": "phase24_segment_gate_lab_v1",
+  "hypothesis_id": "H24-C2",
+  "created_utc": "2026-10-20T13:10:00Z",
+  "status": "FROZEN_BEFORE_RESULTS",
+  "question": "Is the champion measurably worse on a covariate-defined slice (sparse rating-key rows), and does a smoother family repair that slice when gated in?",
+  "why_new": {
+    "measured_motivation": "reports/phase19/shared_error_atlas.json: rows whose (13 ratings + Class + Type of Travel + Customer Type) key occurs exactly once (254,260 rows, 36.3%) have port AUC 0.950323 versus 0.961853 pooled. Sparse-key rows cannot use any key-level lookup and must be ranked by a smooth function of the remaining covariates.",
+    "prior_attempts": [
+      "ENS72 covariate gating over hundreds of covariates: +1.01e-5 over the equal blend, could not generalise",
+      "ENS74 near-tie specialist: port delta -1.09e-4",
+      "ENS75 hard-pair corrector: port delta -1.31e-4",
+      "feat48/feat51 hierarchical rating blocks: absorbed on the rich view"
+    ],
+    "material_difference": "The gate variable is label-free (a train-set frequency of a feature key), the gate has exactly one fitted parameter per segment, and the composition outside the segment is left at the champion. Selection risk is therefore O(1 parameter x 5 folds), not O(285 covariates)."
+  },
+  "frozen_family": {
+    "segments": {
+      "S1_unique_key": "train frequency of the 16-column rating key == 1",
+      "S2_sparse_key": "train frequency of the 16-column rating key <= 3"
+    },
+    "vectors": "for each of 8 name-defined families (lgbm, xgb, cat, realmlp, tabm, tabpfn, blend, histgb) take the stored OOF vector with the best standalone pooled AUC whose name starts with a declared prefix for that family; the rule is deterministic and does not depend on the segment result",
+    "n_tests": 16,
+    "weight_grid": [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5],
+    "fitting": "per fold, the gate weight is chosen to maximise AUC on the FIT rows that fall inside the segment; it is applied only to eval-fold rows inside the segment; rows outside the segment keep the champion logit exactly"
+  },
+  "statistics": [
+    "pooled OOF AUC per test",
+    "mean paired per-fold delta vs the champion and its paired fold SE over 5 folds",
+    "folds positive",
+    "conditional paired DeLong p (pooled)",
+    "Holm adjustment over the 16 frozen tests"
+  ],
+  "promotion_gate": {
+    "mean_paired_fold_delta_min": 1.5e-05,
+    "delta_over_fold_se_min": 2.5,
+    "folds_positive": "5/5",
+    "holm_adjusted_p_max": 0.05
+  },
+  "failure_conditions": [
+    "gate weight fitted on eval-fold rows (leakage; the implementation asserts FIT/eval disjointness by construction)",
+    "champion vector hash mismatch against the certified OOF",
+    "any segment definition using the target"
+  ],
+  "leakage_analysis": {
+    "segment_definition": "label-free: hash frequency over the 16 feature columns of the TRAIN rows only, computed without the target",
+    "gate_weight": "labels of FIT rows only",
+    "outside_segment": "champion logit bit-preserved",
+    "multiple_testing_disclosure": "Holm covers the 16 frozen tests only; it does not cover the ~600 historical experiments or prior use of the primary folds."
+  },
+  "budget": {
+    "gpu_hours": 0,
+    "cpu_minutes_estimate": 10,
+    "submissions": 0,
+    "new_model_fits": 0
+  },
+  "artifacts_out": ["reports/phase24/segment_gate_lab.json"],
+  "expected_outcome": "Given the 7% parent-improvement conversion ratio measured on the internal2->internal4 route audit (route +5.34e-5 -> portfolio +3.818e-6), a segment-local repair of a 36%-row slice would need a very large slice-local gain to reach the gate. A null result is the expected and still informative outcome."
+}
