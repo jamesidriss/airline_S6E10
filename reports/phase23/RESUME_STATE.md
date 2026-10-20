@@ -1,8 +1,14 @@
 # Phase 23 — RESUME STATE
 
-Updated 2026-10-20 ~00:15 UTC (working session 2026-10-19/20).
+Updated 2026-10-20 ~01:10 UTC. **Terminal status: CLOSED — RESOURCE_BLOCKED_HARDWARE.**
 
-## What this phase is doing
+The raw8 protocol cannot execute on the available accelerator: the full-context int8 KV
+cache (≈12.4 GiB) plus the build activation (2.14 GiB) exceeds a Tesla T4's 14.56 GiB by
+~0.3–1 GiB, and the only device that fits it (local RTX 5070 Ti, 15.9 GiB) is under the
+hardware stop. Measured, not estimated — see `reports/phase23/raw8_probe_resource_report.md`.
+Champion untouched, zero submissions spent, 1.43 GPU-h used in total.
+
+## What this phase did
 
 Certify or kill the **native raw-context 8-estimator TabPFN-3.5 lead** — the strongest
 unresolved Phase-22 signal — using **our own folds and our own checkpoint**, executed on
@@ -40,18 +46,24 @@ delta of the same order at w=0.10.
 1. `raw8_expected_hashes.json` — data/fold reference hashes the kernel asserts
    (ids `b8941ff7…`, y `5ab86061…`, folds `b41f1d7c…`, X-round6 `b2a49d79…`, XT `a7004d08…`;
    139 927 rows/fold; pos-rate 0.44357272).
-2. Kaggle kernel **probe v2 RUNNING** (PROBE=True) on
-   `jamesripoll/s6e10-phase23-raw8-tabpfn35`. Probe v1 died ~36 s in at `create_model`:
-   the HF cache symlink resolved to an extension-less blob, so `Checkpoint.is_safetensors`
-   was False and `torch.load` hit a safetensors file. Fixed in `d27dc44` (verified real copy
-   of the checkpoint materialized at `<WORK>/ckpt/<name>.safetensors`, sha asserted; bf16 gate
-   `torch.cuda.is_bf16_supported(including_emulation=False)` so T4 stays in fp16 autocast).
-   The probe checks T4×2, internet/pip `tabpfn==9.1.0`, checkpoint sha, raw data hashes, then
-   **stock vs ported vs lean-patched equivalence ≤ 2e-6**, then full-context (559 708 rows)
-   member-0 fit + 8 192-row predict to measure per-unit timing/memory.
-3. If probe passes → flip `PROBE=False` → production push: 40 units (5 folds × 8 members),
-   2 GPU workers, deadline-aware, durable per-unit val/test logits, then in-kernel assembly
-   of `raw8_oof.npy` / `raw8_test.npy` + fold AUCs.
+2. **Probe v2 (Kaggle T4) COMPLETE — split result.**
+   * **Port equivalence PASS on the target hardware**: stock `predict_proba` vs ported
+     `prepare`+engine `max|Δ| = 1.19e-7`; ported vs ported+lean-patch `max|Δ| = 0.0`
+     (gate 2e-6). Checkpoint sha, data and fold hashes OK; fp16 autocast (no native bf16).
+     `prepare` on 559,708 rows took 6 s for 8 members.
+   * **Full-context member OOM**: `build_member_engine → _build_cache →
+     mlp_classification(train_emb)` tried to allocate 2.14 GiB with 1.82 GiB free on a
+     14.56 GiB T4 (12.74 GiB in use; 12.41 GiB allocated). The int8 KV cache for 559,708
+     rows is ≈12.4 GiB, so the frozen recipe is ~0.3–1 GiB short on a T4.
+   * Escapes ruled out with code evidence: `keep_cache_on_device=False` offloads only
+     *after* the build; tabpfn's multi-device path parallelises **ensemble members**, not a
+     single member's cache; fp8 is the same 1 byte; row-chunking the context pass is not
+     decomposable; Kaggle exposes T4×2 only; the local GPU is stopped.
+3. **Cost arithmetic (had it fit)**: certified local member = 788.3 s fit + 225.2 s val +
+   ≈482 s test ≈ 1,495 s/unit → 40 units ≥ 16.6 GPU-h at 5070-Ti speed, ≥ 25 GPU-h at any
+   plausible T4 factor, against 28.57 GPU-h remaining. Even a full PASS (+2.99e-5 expected)
+   is 10× below the +3e-4 submission threshold. → `NO_ADMISSION_RESOURCE_BLOCKED`, H23-01
+   remains **open, not refuted**; H23-02 never activated.
 4. Local CPU **port equivalence dry-run PASS**: stock vs ported vs lean-patched
    `max|Δp| = 0.0` exactly (4 096-row context, 4 000-row query, 32.8 s); re-run after the
    kernel parameterization: 0.0 again. The dry-run caught a real indexing bug
@@ -63,15 +75,22 @@ delta of the same order at w=0.10.
    `max|Δ| = 1.5e-7 / 1.7e-7` on the two folds:
    `portfolio = expit(0.5·logit(prob_mean_members) + 0.5·aux10_mean_logits)`.
    Shadow prereg amended `{2,4} → {2,3}` **before any raw8 shadow data existed**; cost
-   drops from ≈8.4 to ≈7.4 GPU-h and the aux10 CPU refits (2–4 h) are no longer needed.
+   drops from ≈8.4 to ≈7.4 GPU-h and the aux10 CPU refits (2–4 h) are no longer needed
+   (moot now that the primary is blocked, retained for the record).
+6. **Id / generator-batch structure closed negative** (new, cheap, fold-safe): `AUC(id) =
+   0.500073`; positive-rate homogeneity across 10/50/100/400 contiguous id blocks gives
+   χ² p = 0.975/0.981/0.999/1.000 and `sd(block rate)/binomial sd` = 0.70/1.05/1.05/1.00;
+   a fold-safe shrunk block target encoding scores AUC 0.5002–0.5006 alone. No id or
+   generator-batch leakage exists to exploit. Ledger
+   `phase23_20261020_id_generator_batch_structure`.
 
 ## Budgets
 
 | resource | state |
 |---|---|
 | local GPU | **blocked** (driver 610.88 vs phase-17 stable 591.86; 6 `nvlddmkm` 153 faults Oct 17–19). Budget 15.678–24.043 h of 22 h cap → do not use. |
-| Kaggle GPU | free 30 h/week; raw8 ≈ 19 GPU-h over one ≤ 12 h session (internal stop 10.6 h). |
-| submissions | 10/10 used 2026-10-19 (inventory batch, final for that batch). Nothing in this phase submits. |
+| Kaggle GPU | free 30 h/week; **1.43 h used, 28.57 h remaining**, refresh 2026-10-24. Not spent on raw8 (hardware-blocked). |
+| submissions | 10/10 used 2026-10-19 (inventory batch). Nothing in this phase submits. |
 | local CPU | Track-C experiments while Kaggle runs. |
 
 ## Resume checklist
@@ -104,9 +123,12 @@ git log --oneline -3
 
 ## Decision tree
 
-- **Gate PASS** → record `NOMINATE_MATCHED_SHADOW`; next step is the matched shadow
-  (seed 777001, folds 2–3) — only the raw8 arm needs GPU (≈7.4 h); the route and aux10 arms
-  are the certified phase-17 shadow artifacts. Still zero submissions.
+- **TERMINAL (actual outcome)** → `NO_ADMISSION_RESOURCE_BLOCKED`: the frozen member is not
+  executable on T4 and the local device is stopped. H23-01 stays open (not refuted). No
+  shadow run, no submission. See `reports/phase23/raw8_probe_resource_report.md`.
+- *(historical, only reachable with a ≥16 GB accelerator)* **Gate PASS** → record
+  `NOMINATE_MATCHED_SHADOW`; the matched shadow (seed 777001, folds 2–3) needs only the
+  raw8 arm (≈7.4 h). Still zero submissions.
 - **Shadow E2 confirmed** (≥1e-5, ≥2.5×SE, both folds > 0) → eligible for a submission
   decision under PATH A/B; an OOF gain ≳ +0.0003 over v7 is still required before a
   submission is even arguable.

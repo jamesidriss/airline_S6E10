@@ -29,6 +29,11 @@ same 0.961508578580, and the training-fraction effect is estimated, not measured
 ² v1's OOF vector in the store is not the submitted blend's OOF (0.961273); treat its OOF
 correlation as unreliable and use the test correlation.
 
+The ten `endgame_*` submissions of 2026-10-19 were checked too: their OOF values are
+0.961184–0.961502 (best: `endgame_01_cand_family_balanced` 0.9615021), i.e. all below v6 and
+v7. The table above is the complete alternative set — no submitted candidate has a higher
+OOF than v6.
+
 ## Blend scan: does adding a classical ensemble to v7 help?
 
 Logit blend `expit((1−w)·logit(v7) + w·logit(cand))`, primary OOF, paired deltas vs v7
@@ -46,33 +51,45 @@ Logit blend `expit((1−w)·logit(v7) + w·logit(cand))`, primary OOF, paired de
 below the predeclared admission threshold and below the measurement noise floor of the public
 board (±2e-4 paired). It is not a candidate and it is not a reason to spend a submission.
 
-## Expected value of the second slot
+## Expected value of the second slot (measured, not assumed)
 
 Under the competition's IID random test split, the private score of candidate *i* is
 `OOF_i + b_i + ε_i`, where `b_i` is a family-specific OOF→test bias (unknown) and `ε_i` the
-split noise. Because the private score is the **max** over the selected submissions, the second
-slot is worth
-
+split noise. Because the private score is the **max** over the selected submissions,
+selecting B alongside A can never lower the score — it is free insurance whose value is
 `E[max(0, (OOF_B − OOF_A) + (b_B − b_A) + (ε_B − ε_A))]`.
 
-With `OOF_B − OOF_A = −3.4e-4` (classical) or `−8.7e-5` (v6) and a paired split-noise of a few
-e-5, the slot's expected value is ≈ 0 unless the OOF→test bias differs between families by more
-than ~1e-4. The second slot is therefore a **hedge against systematic OOF bias**, not an
-expected-value play — and the one family whose bias could plausibly differ from TabPFN's is the
-classical GBDT ensemble.
+Simulation: 200 random private subsets of 239,875 rows (the prereg's private size), scoring
+each candidate against v7 on the same subset (`finalist_B_private_sim.json`):
+
+| candidate | mean Δ vs v7 on the subset | sd | P(beats v7) | best of 200 |
+|---|---|---|---|---|
+| v6 | −9.08e-5 | 2.00e-5 | **0.000** | −2.10e-5 |
+| v4 | −3.50e-4 | 4.73e-5 | **0.000** | −2.28e-4 |
+| v3 | −3.42e-4 | 4.77e-5 | **0.000** | −2.30e-4 |
+
+**Sampling noise alone never flips the ranking** — the margin is larger than any 80 %-subset
+fluctuation. The slot can only pay if the OOF→test bias differs between families. Under a
+bias-difference model with sd `σ_b`, `P(B wins) = Φ((OOF_B − OOF_A)/√(2σ_b² + 2·(paired sd)²))`:
+v6 needs `σ_b ≈ 1.2e-4` to reach a 25 % chance; v4 needs `σ_b ≈ 4.6e-4` for the same.
+Family-level biases of ~1e-4 are plausible; ~5e-4 are not. **v6 is the better hedge.**
 
 ## Recommendation
 
 1. **Finalist A = v7**, ref **57090508** (unchanged; protected).
-2. **Finalist B (recommended) = `v4_fulldata`, ref 56845975.** Rationale: largest training
-   fraction of any submitted candidate (32 of 59 members refit on 100 % of labels), classical
-   methodology (GBDT/RealMLP/TabM, no TabPFN), ρ_test = 0.9987 vs v7 — the most methodologically
-   independent candidate we have. Its OOF deficit (+3.4e-4) is real but the slot is a free hedge
-   against family-specific OOF bias.
-3. **Acceptable alternative: v6**, ref 56951906 (smallest OOF deficit, +8.7e-5, ρ_test 0.9999).
-   It hedges almost nothing (nearly identical to A) but never hurts.
-4. **Do not** spend a submission on any new blend: no blend passes the gate, and the public board
-   cannot resolve differences this small (AGENTS.md: submit only on an OOF gain ≳ +3e-4).
+2. **Finalist B = v6 `sol_route_aux10_primary_final`, ref 56951906.** Highest OOF of every
+   other submitted candidate (0.9617656, −8.7e-5 vs v7, ρ_test = 0.99990), so it is the
+   closest alternative and the most likely to win under any plausible family bias. Selecting
+   it costs nothing (max-of-two), so it is pure insurance.
+3. **v4_fulldata (ref 56845975) is the alternative if methodological independence is
+   preferred**: classical 59-member GBDT ensemble with 32 members refit on 100 % of labels,
+   ρ_test 0.99866. It is *quantitatively dominated* as a hedge (−3.5e-4, P(win) ≈ 0.01 under
+   a 1e-4 bias model), but it is the only candidate whose failure mode is genuinely
+   independent of TabPFN. Choose it only if the goal is insurance against a TabPFN-specific
+   collapse rather than expected score.
+4. **Do not** spend a submission on any new blend: no blend passes the gate, and the public
+   board cannot resolve differences this small (AGENTS.md: submit only on an OOF gain
+   ≳ +3e-4).
 
 If the raw8 campaign (phase 23) certifies a candidate with a genuine OOF gain ≳ +3e-4 over v7,
 that candidate displaces this recommendation and becomes Finalist B — a separate committed
@@ -81,6 +98,7 @@ that candidate displaces this recommendation and becomes Finalist B — a separa
 ## What the user must do (UI, no API)
 
 1. Re-check the competition Rules page for the current two-selection rule.
-2. In *My Submissions*, select the two finalists (A = 57090508, B = 56845975 as recommended) for
-   private judging before 2026-10-31 23:59 UTC.
+2. In *My Submissions*, select the two finalists for private judging before 2026-10-31
+   23:59 UTC: **A = 57090508 (v7)** and **B = 56951906 (v6)** — or 56845975 (v4) if
+   insurance against a TabPFN-specific collapse is preferred over expected score.
 3. No other action is needed; nothing in this report authorizes an upload.
