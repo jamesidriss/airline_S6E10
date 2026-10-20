@@ -97,8 +97,22 @@ that candidate displaces this recommendation and becomes Finalist B — a separa
 
 ## What the user must do (UI, no API)
 
-1. Re-check the competition Rules page for the current two-selection rule.
+1. ~~Re-check the competition Rules page~~ **verified 2026-10-20** on
+   `kaggle.com/competitions/playground-series-s6e10/rules`: *"You may select up to two (2)
+   Final Submissions for judging"*, max 10 submissions/day, and *"the Private Leaderboard
+   determines the final standing"*. A Final Submission is the one selected by the user (or
+   auto-selected by Kaggle if none is chosen), so an unselected slot is not lost — but
+   selecting a second candidate is free.
 2. In *My Submissions*, select the two finalists for private judging before 2026-10-31
    23:59 UTC: **A = 57090508 (v7)** and **B = 56951906 (v6)** — or 56845975 (v4) if
    insurance against a TabPFN-specific collapse is preferred over expected score.
 3. No other action is needed; nothing in this report authorizes an upload.
+
+## Integrity check (2026-10-20)
+
+- Protected files from the prereg: 5/5 sha256 **OK** (v6/v7 CSVs, primary folds, phase-17
+  primary and shadow reports) — no drift.
+- Submission CSVs vs stored test vectors: v7 and v6 match **exactly** (`max|Δ| = 0.0`),
+  v4 to 3e-8 (CSV precision); 299,844 rows, ids in the official test order, refs
+  57090508 / 56951906 / 56845975 as recorded.
+- `tests/run_tests.py`: **247 passed, 0 failed**.
