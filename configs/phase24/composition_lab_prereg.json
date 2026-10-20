@@ -1,0 +1,122 @@
+{
+  "protocol": "phase24_composition_geometry_lab_v1",
+  "hypothesis_id": "H24-C1",
+  "created_utc": "2026-10-20T12:00:00Z",
+  "status": "FROZEN_BEFORE_RESULTS",
+  "authority": {
+    "amendment": "research/submission_policy_amendment_20261017.md",
+    "admission_gate_agents_md": {
+      "mean_paired_fold_gain_min": 1.5e-05,
+      "se_multiple_min": 2.5,
+      "folds_positive_min": "4/5 (this lab requires 5/5, stricter)"
+    },
+    "path_a_alternative": ">= +1.5e-5 with 5/5 folds positive and t >= 2.5"
+  },
+  "question": "Does any low-variance composition rule over the two certified v7 parents beat the deployed 50/50 logit mean on net pairs, fold by fold?",
+  "why_new": {
+    "measured_motivation": "phase19 shared-error atlas: 14.9% of the champion's failing pairs are aggregation losses (one parent orders the pair correctly); pooled aggregation_loss_auc_mass = 0.005599748393447816. Composition has therefore more recoverable mass than any single stored model can supply (best stored blend gain <= +1.5e-5 at w=0.10 over ~1600 scanned comparisons, i.e. at the noise level).",
+    "prior_attempts": [
+      "equal / softmax / family-balanced global weights: <= champion (phase 20/21)",
+      "covariate gating ENS72: +1.01e-5 over equal blend, gate could not generalise",
+      "near-tie specialist ENS74: port_delta -1.09e-4",
+      "hard-pair corrector ENS75: port_delta -1.31e-4",
+      "nested stacks with 285 features: no admission"
+    ],
+    "material_difference": "Every prior corrector had hundreds of inputs and therefore hundreds of effective degrees of freedom against ~4.8e9 pairs per fold but only 5 fold-level units of evidence. This lab restricts the combiner to (i) zero-parameter nonlinearities of the two parent scores, or (ii) at most 5 fitted parameters, all fitted on FIT rows only. It is a variance-reduction hypothesis, not a capacity hypothesis."
+  },
+  "parents": {
+    "route": {
+      "path": "artifacts/phase17_B1/primary/route_oof.npy",
+      "sha256_float32": "bcb2811329d3686882450e93435647f8f7ab65abfc48c1a1b51db1e9d1ef95e0",
+      "pooled_oof_auc": 0.9615159787196581
+    },
+    "aux10": {
+      "path": "artifacts/sol_route_aux10_primary_final/aux10_oof.npy",
+      "sha256_float32": "e875bb6314af700148c6b203fb4af1cfe9da261fbf68a37ff26f6ade8a382fae",
+      "pooled_oof_auc": 0.9614187095444636
+    },
+    "champion_control": {
+      "path": "artifacts/phase17_B1/primary/portfolio_oof.npy",
+      "sha256_float32": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+      "composition": "sigmoid(0.5*logit(route)+0.5*logit(aux10))",
+      "identity_max_abs_error_float32": 5.586324780537666e-08
+    },
+    "test_side": {
+      "route": "artifacts/v7_sol_tabpfn_internal2_aux10_test/route.npy",
+      "aux10": "artifacts/v7_sol_tabpfn_internal2_aux10_test/aux10.npy",
+      "champion_candidate_sha256": "2b744d0df36a0b1143a92e1db18661ccd94fa881490784308624aaa0a0fc95af",
+      "note": "test-side parents are the certified full-data-context route and the full-data-refit aux10; recomposition costs 0 model fits"
+    }
+  },
+  "rules": {
+    "C0_control": "sigmoid(0.5*logit(r)+0.5*logit(a)) -- deployed champion",
+    "C1_nested_weight": "per fold k, w_k on a fixed grid 0.30..0.70 step 0.025 maximising AUC on the FIT rows of fold k (FIT rows scored by their own outer-OOF values); apply w_k to the eval fold",
+    "C2_block_rank": "within the evaluated block, u_p = (rank(p)-0.5)/n for each parent; score = u_r + u_a (0 fitted parameters)",
+    "C3_fit_cdf": "per fold k, map each parent through the empirical CDF of the FIT rows of fold k; score = u_r + u_a",
+    "C4_confidence_logistic": "logistic regression (L2=1.0, lbfgs, max_iter=1000) on [z_r, z_a, |z_r-z_a|, min(z_r,z_a), max(z_r,z_a)] fitted on FIT rows of fold k",
+    "C5_platt_average": "two independent Platt scalings (logistic on z_p alone, FIT rows only), then average the calibrated logits",
+    "C6_probability_mean": "0.5*r + 0.5*a (0 fitted parameters)",
+    "C7_geometric_mean": "sqrt(r*a) (0 fitted parameters)"
+  },
+  "design": {
+    "discovery": {
+      "scheme": "primary",
+      "folds": [0, 1, 2, 3, 4],
+      "fold_file": "data/cache/folds/primary_5f_seed20261010.npy",
+      "fold_sha256": "b41f1d7ccf2fc504a1631bd8b84ba59b62b825895871949159a89f3f00a9f23b"
+    },
+    "confirmation_sensitivity": {
+      "scheme": "shadow",
+      "folds": [2, 3],
+      "fold_sha256": "5d181e32357e67b2ad8381c33549ef905bb45b969de7b8e09a3e4e7cb24af758",
+      "parents": {
+        "route_prob": "mean_m expit(member_m_raw_logits[:,1]-member_m_raw_logits[:,0]); m in {0,1}",
+        "aux10_logit": "artifacts/phase17_shadow_aux10/aux10_mean_logits_f{f}.npy",
+        "control": "expit(0.5*logit(route_prob)+0.5*aux10_logit)",
+        "reuse_gate_max_abs_vs_certified_portfolio": 2e-06
+      },
+      "fitting_for_two_fold_arms": "leave-one-shadow-fold-out: parameters for fold f are fitted on the rows of the other shadow fold only",
+      "role": "sensitivity only: different fitted models and different partitions, but only 279,854 rows and the same underlying data"
+    }
+  },
+  "statistics": [
+    "pooled OOF AUC per rule",
+    "mean paired per-fold delta vs C0 and its paired fold SE (sd/sqrt(5))",
+    "per-fold deltas and count positive",
+    "conditional paired DeLong delta/SE/p (src.validation.paired_auc.paired_auc, pooled)",
+    "Holm adjustment over the 7 non-control rules",
+    "logit correlation with C0"
+  ],
+  "promotion_gate": {
+    "mean_paired_fold_delta_min": 1.5e-05,
+    "delta_over_fold_se_min": 2.5,
+    "folds_positive": "5/5",
+    "holm_adjusted_p_max": 0.05,
+    "shadow_sensitivity": "mean delta > 0 and both shadow folds > 0 (sensitivity, not independent proof)",
+    "action_on_pass": "freeze the rule, build the test composition from the certified parents, certify, and only then open a separate SUBMISSION_DECISION under PATH A; zero submissions before that",
+    "action_on_fail": "record NO_ADMISSION in the ledger; the two-parent composition geometry is then closed as a measured negative and v7 stays unchanged"
+  },
+  "failure_conditions": [
+    "any rule reaching the gate through a rule fitted on eval-fold labels (would be leakage; the implementation asserts FIT/eval disjointness)",
+    "C0 identity replication error > 1e-6 against the certified portfolio",
+    "test-side recomposition error > 1e-6 against the certified candidate SHA",
+    "shadow reuse gate > 2e-6"
+  ],
+  "multiple_testing_disclosure": "7 rules are tested in one frozen family. Holm covers these 7. It does not cover the ~600 historical experiments, nor the fact that the primary folds have already been used for selection many times. A pass is therefore evidence for a small effect, not proof.",
+  "leakage_analysis": {
+    "C2_C6_C7": "no labels used at all",
+    "C3": "CDF from FIT rows only; no labels",
+    "C1_C4_C5": "labels used, FIT rows only, never the eval fold; FIT rows are scored by outer-OOF values produced by models that never saw them",
+    "known_limitation": "stacking features for FIT rows come from other fold models than for eval rows (standard stacking distribution mismatch, unchanged from the project's earlier nested stacks)"
+  },
+  "budget": {
+    "gpu_hours": 0,
+    "cpu_minutes_estimate": 25,
+    "submissions": 0,
+    "new_model_fits": 0
+  },
+  "artifacts_out": [
+    "reports/phase24/composition_lab.json",
+    "reports/phase24/composition_lab_shadow.json (only if the discovery gate passes)"
+  ]
+}
