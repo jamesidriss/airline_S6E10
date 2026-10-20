@@ -1,8 +1,16 @@
 {
-  "protocol": "phase24_segment_gate_lab_v1",
+  "protocol": "phase24_segment_gate_lab_v1_1",
   "hypothesis_id": "H24-C2",
   "created_utc": "2026-10-20T13:10:00Z",
   "status": "FROZEN_BEFORE_RESULTS",
+  "amendments": [
+    {
+      "utc": "2026-10-20T13:26:00Z",
+      "reason": "The v1 selector named two families (tabpfn, histgb) that have zero vectors in the stored OOF inventory, so the lab aborted on its first assertion before computing any statistic. No result existed or was inspected. The two empty families are replaced by two populated, structurally distinct families (conf, resid); the family count stays at 8 and the test count stays at 16.",
+      "changed": "frozen_family.vectors family list: tabpfn->conf, histgb->resid",
+      "result_leakage": "none: the abort happened before any AUC, weight or segment statistic was computed"
+    }
+  ],
   "question": "Is the champion measurably worse on a covariate-defined slice (sparse rating-key rows), and does a smoother family repair that slice when gated in?",
   "why_new": {
     "measured_motivation": "reports/phase19/shared_error_atlas.json: rows whose (13 ratings + Class + Type of Travel + Customer Type) key occurs exactly once (254,260 rows, 36.3%) have port AUC 0.950323 versus 0.961853 pooled. Sparse-key rows cannot use any key-level lookup and must be ranked by a smooth function of the remaining covariates.",
@@ -19,7 +27,7 @@
       "S1_unique_key": "train frequency of the 16-column rating key == 1",
       "S2_sparse_key": "train frequency of the 16-column rating key <= 3"
     },
-    "vectors": "for each of 8 name-defined families (lgbm, xgb, cat, realmlp, tabm, tabpfn, blend, histgb) take the stored OOF vector with the best standalone pooled AUC whose name starts with a declared prefix for that family; the rule is deterministic and does not depend on the segment result",
+    "vectors": "for each of 8 name-defined families (lgbm, xgb, cat, realmlp, tabm, blend, conf, resid) take the stored OOF vector with the best standalone pooled AUC whose name starts with a declared prefix for that family; the rule is deterministic and does not depend on the segment result",
     "n_tests": 16,
     "weight_grid": [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5],
     "fitting": "per fold, the gate weight is chosen to maximise AUC on the FIT rows that fall inside the segment; it is applied only to eval-fold rows inside the segment; rows outside the segment keep the champion logit exactly"

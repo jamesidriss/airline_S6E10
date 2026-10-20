@@ -1,0 +1,38 @@
+{
+  "status": "COMPLETE",
+  "utc": "2026-10-20T07:57:11Z",
+  "source": "C:\\Users\\James\\airline_S6E10\\data\\original\\arseniyshutko__binary-aviation-satisfaction-129k\\data.csv",
+  "n_rows": 129880,
+  "pos_rate": 0.43446258084385586,
+  "n_features": 21,
+  "cv5_auc_full": 0.9888061518961919,
+  "cv5_folds_full": [
+    0.9894935840777558,
+    0.9886607671420722,
+    0.9887278551461132,
+    0.9887253158096195,
+    0.9884232373053985
+  ],
+  "best_iters_full": [
+    3197,
+    2891,
+    2264,
+    2573,
+    2696
+  ],
+  "cv5_auc_half": 0.9878729802976574,
+  "cv5_folds_half": [
+    0.9878399490338882,
+    0.9879648156153495,
+    0.9879665290355832,
+    0.9875665540080796,
+    0.9880270537953864
+  ],
+  "half_n": 64940,
+  "source_doubling_gain": 0.0009331715985345657,
+  "rating_profile_lookup_auc": 0.9609418752102352,
+  "rating_profile_pure_fraction": 0.9733215275639051,
+  "rating_profile_n_groups": 97867,
+  "cpu_seconds": 87.88230013847351,
+  "reading": "This is the AUC the SOURCE distribution supports at 130k rows with a strong GBDT and at 65k rows to expose its own data limitation. It is a reference anchor for the synthetic competition distribution, not a competition score and not a Bayes ceiling."
+}

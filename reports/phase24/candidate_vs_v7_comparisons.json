@@ -1,0 +1,77 @@
+{
+  "phase": 24,
+  "created_utc": "2026-10-20T08:20:00Z",
+  "champion": {
+    "name": "v7_sol_tabpfn_internal2_aux10",
+    "pooled_oof_auc": 0.9618529228157235,
+    "per_fold_auc": [0.961827814, 0.961988961, 0.961891299, 0.961099482, 0.962495640],
+    "public_lb": 0.96146,
+    "kaggle_ref": 57090508,
+    "gate_reference": "PATH A alternative: mean paired fold delta >= +1.5e-5 with 5/5 folds positive and t >= 2.5"
+  },
+  "decision": "NONE ADMITTED — no candidate in any Phase-24 family met the gate; v7 remains the certified champion and no upload was made",
+  "composition_family": {
+    "source": "reports/phase24/composition_lab.json",
+    "prereg_sha256": "7f9c296ff8732ea5f9c460c5f974ce1dff5d9f7d322d0ac9a7e9e70639db32a9",
+    "control_pooled_auc": 0.961852923051624,
+    "identity_max_abs_vs_certified": 5.586324780537666e-08,
+    "candidates": [
+      {"id": "C1_nested_weight", "description": "per-fold weight on a 17-point grid fitted on FIT rows", "delta": 1.694e-06, "t": 0.95, "folds_positive": 3, "holm_adjusted_p": 1.0, "passes": false},
+      {"id": "C2_block_rank", "description": "within-block rank average", "delta": -1.0355e-05, "t": -1.48, "folds_positive": 2, "holm_adjusted_p": 1.0, "passes": false},
+      {"id": "C3_fit_cdf", "description": "FIT-row empirical-CDF quantile average", "delta": -1.1039e-05, "t": -1.55, "folds_positive": 2, "holm_adjusted_p": 1.0, "passes": false},
+      {"id": "C4_confidence_logistic", "description": "5-feature L2 logistic on FIT rows", "delta": -9.38e-07, "t": -0.17, "folds_positive": 2, "holm_adjusted_p": 1.0, "passes": false},
+      {"id": "C5_platt_average", "description": "two FIT-row Platt scalings averaged", "delta": 1.02e-07, "t": 1.52, "folds_positive": 4, "holm_adjusted_p": 1.0, "passes": false},
+      {"id": "C6_probability_mean", "description": "arithmetic mean of probabilities", "delta": -1.0068e-05, "t": -1.77, "folds_positive": 2, "holm_adjusted_p": 1.0, "passes": false},
+      {"id": "C7_geometric_mean", "description": "geometric mean of probabilities", "delta": -6.18e-06, "t": -1.95, "folds_positive": 1, "holm_adjusted_p": 1.0, "passes": false}
+    ],
+    "any_pass": false,
+    "reading": "The deployed 50/50 logit mean is indistinguishable from the best fitted alternative (+1.7e-6, t 0.95) and strictly better than every label-free nonlinearity. The 0.0056 aggregation-loss mass is not recoverable by reparameterising the two parent scores."
+  },
+  "segment_family": {
+    "source": "reports/phase24/segment_gate_lab.json",
+    "prereg_sha256": "f2ab010904607a2aff01addb34e9f62a5f9b5ad46dffca14a745307918974835",
+    "segment_sizes": {"S1_unique_key": 304464, "S2_sparse_key": 431005},
+    "top_tests": [
+      {"family": "tabm", "segment": "S2_sparse_key", "vector": "z5_tabm_e25", "delta": 2.799e-06, "t": 0.85, "folds_positive": 3},
+      {"family": "cat", "segment": "S2_sparse_key", "vector": "z3_cat_f10", "delta": 2.502e-06, "t": 1.70, "folds_positive": 4},
+      {"family": "xgb", "segment": "S1_unique_key", "vector": "prod5_xgb_full_primary", "delta": 0.0, "t": null, "folds_positive": 0}
+    ],
+    "tests_with_zero_gate_weight": 11,
+    "any_pass": false,
+    "reading": "In 11 of 16 frozen tests the FIT-optimal gate weight inside the slice is exactly zero, i.e. the candidate harms the slice on FIT rows. The champion's weak slices are not a composition problem."
+  },
+  "store_family": {
+    "source": "reports/phase24/oof_inventory.json, reports/phase24/frontier.json",
+    "n_vectors": 133,
+    "vectors_with_positive_mean_paired_delta": 0,
+    "best_hindsight_blend": {"vector": "z5_rm_ens16_ogs", "weight": 0.10, "delta": 1.5367545388778048e-05},
+    "frontier_envelope_best_delta_by_corr_floor": {
+      "0.990": 1.5367545388778048e-05,
+      "0.992": 1.5367545388778048e-05,
+      "0.994": 1.5367545388778048e-05,
+      "0.995": 1.5367545388778048e-05,
+      "0.996": 1.5367545388778048e-05,
+      "0.997": 1.3141192498178356e-05,
+      "0.998": 4.329603052410924e-06
+    },
+    "selection_note": "the +1.5368e-5 is a maximum over ~930 comparisons and is therefore itself noise-inflated; it is an upper bound, not an expectation"
+  },
+  "parent_family": {
+    "source": "scripts/phase24/parent_member_diagnostics.py stdout",
+    "aux10_mean_auc": 0.9614187093375335,
+    "aux10_reconstruction_max_abs": 2.980223934301307e-08,
+    "leave_one_out_range": {"min": -1.974191984188689e-05, "member_min": "z3_cat_d8_s2", "max": 2.3791583687593487e-06, "member_max": "zoo_xgb_d6"},
+    "route_seed_pair_fold0": {"seed_1201": 0.9614576551, "seed_1202": 0.9611372, "logit_corr": 0.9973, "two_seed_average": 0.9615469, "gain": 8.93e-05},
+    "measured_parent_to_portfolio_conversion": 0.071,
+    "implied_portfolio_gain_from_seed_averaging": 6.3e-06
+  },
+  "submitted_candidates_still_held": [
+    {"name": "v6_private_hedge", "pooled_oof_auc": 0.9617656138245796, "delta_vs_v7": -8.7308990125228e-05, "public_lb": 0.96144, "kaggle_ref": 56951906, "test_logit_corr_with_v7": 0.99990},
+    {"name": "v4_fulldata", "pooled_oof_auc": 0.96150857858, "delta_vs_v7": -3.4434e-04, "public_lb": 0.96100, "kaggle_ref": 56845975, "test_logit_corr_with_v7": 0.9987}
+  ],
+  "explanatory_measurements": {
+    "source_anchor": {"cv5_auc_130k": 0.9888061518961919, "cv5_auc_65k": 0.9878729802976574, "doubling_gain": 0.0009331715985345657, "no_delay_arm": 0.9884781698085249, "delay_contribution": 0.00032798208766704473},
+    "determinism": {"source_loo_profile_auc": 0.9709949084975641, "synthetic_loo_profile_auc": 0.9252854476040077, "source_pure_group_row_share": 0.2678318447797967, "synthetic_pure_group_row_share": 0.30821213918686174, "source_mean_group_size": 1.245086949019307, "synthetic_mean_group_size": 1.8119062911128836},
+    "duplicates": {"train_unique_feature_vectors": 699635, "test_unique_feature_vectors": 299844, "cross_split_exact_matches": 0}
+  }
+}

@@ -54,7 +54,14 @@ def logit(p):
 def source_anchor():
     og = pd.read_csv(ORIG)
     tgt = "satisfaction"
-    y = (og[tgt].astype(str).str.lower().str.strip() == "satisfied").to_numpy().astype("int8")
+    col = og[tgt]
+    if col.dtype == bool:
+        y = col.to_numpy().astype("int8")
+    elif pd.api.types.is_numeric_dtype(col):
+        y = col.to_numpy().astype("int8")
+    else:
+        y = (col.astype(str).str.lower().str.strip() == "satisfied").to_numpy().astype("int8")
+    assert 0.3 < y.mean() < 0.7, f"target parse failed: pos_rate={y.mean()}"
     feats = [c for c in og.columns if c != tgt]
     X = og[feats].copy()
     # ordinal-encode strings deterministically (sorted category order)

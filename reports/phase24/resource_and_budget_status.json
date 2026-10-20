@@ -1,0 +1,43 @@
+{
+  "phase": 24,
+  "created_utc": "2026-10-20T08:22:00Z",
+  "hardware_stop": {
+    "status": "ACTIVE",
+    "evidence": "local RTX 5070 Ti under nvlddmkm Event 153 stop; no TDR disable, no driver rollback, no fault bypass permitted",
+    "authorised_hours": 22.0,
+    "used_hours_lower_bound": 15.678301,
+    "phase24_gpu_hours": 0.0
+  },
+  "kaggle": {
+    "api_authenticated": true,
+    "kernels_running": 0,
+    "gpu_quota_last_known": {"used_hours": 1.43, "remaining_hours": 28.57, "refresh_date": "2026-10-24", "source": "repo resource ledger; Kaggle exposes GPU hours only in the web UI, not in the API"},
+    "tpu_quota": {"used_hours": 0.0, "remaining_hours": 20.0},
+    "shared_account_note": "the same account runs unrelated RSNA-knee kernels; GPU hours are pooled at account level, so the 28.57 h figure must be re-read from the web UI before any multi-hour run",
+    "phase24_gpu_hours": 0.0,
+    "phase24_kernels_pushed": 0
+  },
+  "submissions": {
+    "cap_per_day": 10,
+    "used_today": 0,
+    "remaining_today": 10,
+    "used_this_phase": 0,
+    "used_2026_10_19": 10,
+    "held_inventory_candidates_never_uploaded": 23,
+    "policy": "no upload without a preregistered gate pass; the 23 held historical candidates are excluded by the PATH A/B amendment"
+  },
+  "compute_spent_this_phase": {
+    "cpu_minutes": 41,
+    "gpu_minutes": 0,
+    "new_model_fits": 6,
+    "new_model_fits_note": "2 source-anchor GBDT arms (5 folds each) + 2 source no-delay/delay arms (5 folds each) — no competition-label model was fitted except the 5-fold segment-group diagnostics already stored",
+    "worker_hours_on_diagnostics": 0
+  },
+  "deadline": {"utc": "2026-10-31T23:59:00Z", "days_remaining": 11, "reserve_for_final_selection_hours": "24-48"},
+  "finalist_slots": {"allowed": 2, "proposed": ["v7 (ref 57090508)", "v6 (ref 56951906)"], "selection_mechanism": "Kaggle web UI; best-of-selected scoring"},
+  "blockers": [
+    {"id": "B1", "what": "finalist selection", "owner": "user (web UI)", "deadline": "2026-10-31T23:59Z"},
+    {"id": "B2", "what": "rules-page re-read", "owner": "user or agent with browser session", "deadline": "2026-10-30"},
+    {"id": "B3", "what": "raw8 / TabICLv2 / RealTabPFN", "owner": "hardware", "condition": ">=16 GiB usable accelerator"}
+  ]
+}

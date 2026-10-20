@@ -1,0 +1,23 @@
+{
+  "status": "COMPLETE",
+  "key": "13 rating columns + Class + Type of Travel + Customer Type",
+  "source": {
+    "n_rows": 129880,
+    "n_keys": 104314,
+    "mean_group_size": 1.245086949019307,
+    "share_rows_group_size_ge2": 0.2777486910994764,
+    "share_rows_in_pure_groups_ge2": 0.2678318447797967,
+    "loo_groupmean_auc_nonsingleton": 0.9709949084975641,
+    "loo_groupmean_rows": 36074
+  },
+  "synthetic": {
+    "n_rows": 699635,
+    "n_keys": 386132,
+    "mean_group_size": 1.8119062911128836,
+    "share_rows_group_size_ge2": 0.5648245156402981,
+    "share_rows_in_pure_groups_ge2": 0.30821213918686174,
+    "loo_groupmean_auc_nonsingleton": 0.9252854476040077,
+    "loo_groupmean_rows": 395171
+  },
+  "reading": "A pure group with >=2 rows means two distinct passengers share the exact same 16 rating/categorical profile and nevertheless received the same label. The share of rows in pure groups, and the leave-one-out group-mean AUC, measure how much of the label is a function of the discrete profile alone. The source population is almost deterministic there; the synthetic population is not, which is the mechanism behind the two CV ceilings."
+}

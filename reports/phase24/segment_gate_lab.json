@@ -1,0 +1,755 @@
+{
+  "status": "COMPLETE",
+  "utc": "2026-10-20T07:55:00Z",
+  "prereg_sha256": "fa3740cfcb5f19b9ccae260af00f523bad705ed62c1e409e9d7db22e75dda7bc",
+  "source_sha256": "edafe993ebf1bef09ab84348e907c4d77459ada526bdb078ed2b1d473294085a",
+  "champion_auc": 0.9618529228157235,
+  "champion_sha256": "bd4d288b3e980b41f74c95a319eaa2be5dd5ea0e18fedd49718e0d0868b0fe5c",
+  "segment_sizes": {
+    "S1_unique_key": 304464,
+    "S2_sparse_key": 431005
+  },
+  "family_representatives": {
+    "lgbm": {
+      "vector": "xt_xt_f10",
+      "auc": 0.961242028518536
+    },
+    "xgb": {
+      "vector": "prod5_xgb_full_primary",
+      "auc": 0.960945666717591
+    },
+    "cat": {
+      "vector": "z3_cat_f10",
+      "auc": 0.961071917569463
+    },
+    "realmlp": {
+      "vector": "z5_rm_ens32",
+      "auc": 0.9610165587710415
+    },
+    "tabm": {
+      "vector": "z5_tabm_e25",
+      "auc": 0.9606925706732934
+    },
+    "blend": {
+      "vector": "blend_v3_final",
+      "auc": 0.9615085785798723
+    },
+    "conf": {
+      "vector": "conf_xt_full_shadow",
+      "auc": 0.9611425442929741
+    },
+    "resid": {
+      "vector": "resid_xt_single_full",
+      "auc": 0.9608962007054621
+    }
+  },
+  "n_tests": 16,
+  "tests": [
+    {
+      "family": "tabm",
+      "vector": "z5_tabm_e25",
+      "vector_standalone_auc": 0.9606925706732934,
+      "segment": "S2_sparse_key",
+      "segment_rows": 431005,
+      "weights_per_fold": [
+        0.05,
+        0.05,
+        0.05,
+        0.05,
+        0.05
+      ],
+      "pooled_auc": 0.961854665523259,
+      "mean_fold_delta": 2.798588693475601e-06,
+      "fold_se": 3.3082811408230724e-06,
+      "t": 0.8459343611828999,
+      "folds_positive": 3,
+      "per_fold_deltas": [
+        8.403247237054323e-06,
+        8.378181248325234e-06,
+        -2.81962798087676e-06,
+        -7.37684704910091e-06,
+        7.407990011976118e-06
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.961854665523259,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 1.7427075352793864e-06,
+        "paired_se": 2.763911426242575e-06,
+        "candidate_standalone_se": 0.0002423919974435034,
+        "ci95": [
+          -3.6744593166147947e-06,
+          7.159874387173567e-06
+        ],
+        "one_sided_p": 0.2641764887532362,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "268ce8a1228403e181aebc847e575de347d14d0fd4d8342373351d987ce744f2",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "cat",
+      "vector": "z3_cat_f10",
+      "vector_standalone_auc": 0.961071917569463,
+      "segment": "S2_sparse_key",
+      "segment_rows": 431005,
+      "weights_per_fold": [
+        0.05,
+        0.05,
+        0.05,
+        0.05,
+        0.05
+      ],
+      "pooled_auc": 0.9618553694167575,
+      "mean_fold_delta": 2.5017678390915065e-06,
+      "fold_se": 1.470687291741506e-06,
+      "t": 1.7010875480735623,
+      "folds_positive": 4,
+      "per_fold_deltas": [
+        7.663677052516249e-06,
+        2.531581441145292e-06,
+        1.3450449051211066e-06,
+        2.372866142463792e-06,
+        -1.4043303457889067e-06
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.9618553694167574,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 2.4466010336565702e-06,
+        "paired_se": 2.284491795078721e-06,
+        "candidate_standalone_se": 0.0002423942085498664,
+        "ci95": [
+          -2.0309206076749804e-06,
+          6.924122674988121e-06
+        ],
+        "one_sided_p": 0.1420935403959404,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "b0947f65baeb7177cbf7bd850a60c93ff938a570c889bf85bf068a189edeaa11",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "lgbm",
+      "vector": "xt_xt_f10",
+      "vector_standalone_auc": 0.961242028518536,
+      "segment": "S1_unique_key",
+      "segment_rows": 304464,
+      "weights_per_fold": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_auc": 0.9618529228157235,
+      "mean_fold_delta": 0.0,
+      "fold_se": 0.0,
+      "t": NaN,
+      "folds_positive": 0,
+      "per_fold_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.9618529228157238,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 0.0,
+        "paired_se": 0.0,
+        "candidate_standalone_se": 0.00024241123724056903,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "one_sided_p": 1.0,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "xgb",
+      "vector": "prod5_xgb_full_primary",
+      "vector_standalone_auc": 0.960945666717591,
+      "segment": "S1_unique_key",
+      "segment_rows": 304464,
+      "weights_per_fold": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_auc": 0.9618529228157235,
+      "mean_fold_delta": 0.0,
+      "fold_se": 0.0,
+      "t": NaN,
+      "folds_positive": 0,
+      "per_fold_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.9618529228157238,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 0.0,
+        "paired_se": 0.0,
+        "candidate_standalone_se": 0.00024241123724056903,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "one_sided_p": 1.0,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "xgb",
+      "vector": "prod5_xgb_full_primary",
+      "vector_standalone_auc": 0.960945666717591,
+      "segment": "S2_sparse_key",
+      "segment_rows": 431005,
+      "weights_per_fold": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_auc": 0.9618529228157235,
+      "mean_fold_delta": 0.0,
+      "fold_se": 0.0,
+      "t": NaN,
+      "folds_positive": 0,
+      "per_fold_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.9618529228157238,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 0.0,
+        "paired_se": 0.0,
+        "candidate_standalone_se": 0.00024241123724056903,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "one_sided_p": 1.0,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "realmlp",
+      "vector": "z5_rm_ens32",
+      "vector_standalone_auc": 0.9610165587710415,
+      "segment": "S1_unique_key",
+      "segment_rows": 304464,
+      "weights_per_fold": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_auc": 0.9618529228157235,
+      "mean_fold_delta": 0.0,
+      "fold_se": 0.0,
+      "t": NaN,
+      "folds_positive": 0,
+      "per_fold_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.9618529228157238,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 0.0,
+        "paired_se": 0.0,
+        "candidate_standalone_se": 0.00024241123724056903,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "one_sided_p": 1.0,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "blend",
+      "vector": "blend_v3_final",
+      "vector_standalone_auc": 0.9615085785798723,
+      "segment": "S1_unique_key",
+      "segment_rows": 304464,
+      "weights_per_fold": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_auc": 0.9618529228157235,
+      "mean_fold_delta": 0.0,
+      "fold_se": 0.0,
+      "t": NaN,
+      "folds_positive": 0,
+      "per_fold_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.9618529228157238,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 0.0,
+        "paired_se": 0.0,
+        "candidate_standalone_se": 0.00024241123724056903,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "one_sided_p": 1.0,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "blend",
+      "vector": "blend_v3_final",
+      "vector_standalone_auc": 0.9615085785798723,
+      "segment": "S2_sparse_key",
+      "segment_rows": 431005,
+      "weights_per_fold": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_auc": 0.9618529228157235,
+      "mean_fold_delta": 0.0,
+      "fold_se": 0.0,
+      "t": NaN,
+      "folds_positive": 0,
+      "per_fold_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.9618529228157238,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 0.0,
+        "paired_se": 0.0,
+        "candidate_standalone_se": 0.00024241123724056903,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "one_sided_p": 1.0,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "resid",
+      "vector": "resid_xt_single_full",
+      "vector_standalone_auc": 0.9608962007054621,
+      "segment": "S1_unique_key",
+      "segment_rows": 304464,
+      "weights_per_fold": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_auc": 0.9618529228157235,
+      "mean_fold_delta": 0.0,
+      "fold_se": 0.0,
+      "t": NaN,
+      "folds_positive": 0,
+      "per_fold_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.9618529228157238,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 0.0,
+        "paired_se": 0.0,
+        "candidate_standalone_se": 0.00024241123724056903,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "one_sided_p": 1.0,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "resid",
+      "vector": "resid_xt_single_full",
+      "vector_standalone_auc": 0.9608962007054621,
+      "segment": "S2_sparse_key",
+      "segment_rows": 431005,
+      "weights_per_fold": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_auc": 0.9618529228157235,
+      "mean_fold_delta": 0.0,
+      "fold_se": 0.0,
+      "t": NaN,
+      "folds_positive": 0,
+      "per_fold_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.9618529228157238,
+        "baseline_auc": 0.9618529228157238,
+        "delta": 0.0,
+        "paired_se": 0.0,
+        "candidate_standalone_se": 0.00024241123724056903,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "one_sided_p": 1.0,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "1981745c3d4f5b743c3f02c23f92a1e8975692ca473bc13e3156165bda1a7552",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "cat",
+      "vector": "z3_cat_f10",
+      "vector_standalone_auc": 0.961071917569463,
+      "segment": "S1_unique_key",
+      "segment_rows": 304464,
+      "weights_per_fold": [
+        0.0,
+        0.05,
+        0.05,
+        0.0,
+        0.05
+      ],
+      "pooled_auc": 0.961852888461185,
+      "mean_fold_delta": -3.905389614589083e-07,
+      "fold_se": 6.008173378425689e-07,
+      "t": -0.6500128023290176,
+      "folds_positive": 2,
+      "per_fold_deltas": [
+        0.0,
+        1.327455856348081e-07,
+        -2.7442020013035417e-06,
+        0.0,
+        6.587616083741921e-07
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.961852888461185,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -3.435453876932115e-08,
+        "paired_se": 1.546683284135424e-06,
+        "candidate_standalone_se": 0.0002424118681009593,
+        "ci95": [
+          -3.0657980711648833e-06,
+          2.997088993626241e-06
+        ],
+        "one_sided_p": 0.5088604766748325,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "7055d38944a9a0e036f148dc8c4ffd5f592652f80d5060ab3ee8e919b7a04481",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "realmlp",
+      "vector": "z5_rm_ens32",
+      "vector_standalone_auc": 0.9610165587710415,
+      "segment": "S2_sparse_key",
+      "segment_rows": 431005,
+      "weights_per_fold": [
+        0.0,
+        0.0,
+        0.0,
+        0.05,
+        0.0
+      ],
+      "pooled_auc": 0.9618522010641558,
+      "mean_fold_delta": -5.518408850546664e-07,
+      "fold_se": 5.518408850546663e-07,
+      "t": -1.0000000000000002,
+      "folds_positive": 0,
+      "per_fold_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        -2.7592044252733317e-06,
+        0.0
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.961852201064156,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -7.217515677337971e-07,
+        "paired_se": 1.163650507575543e-06,
+        "candidate_standalone_se": 0.00024241946641956393,
+        "ci95": [
+          -3.0024646531736147e-06,
+          1.5589615177060205e-06
+        ],
+        "one_sided_p": 0.7324526438900306,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "d61f76db3ebf726fd4989869088e82bb4ae29d0941b05fd46ae890f18562b710",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "lgbm",
+      "vector": "xt_xt_f10",
+      "vector_standalone_auc": 0.961242028518536,
+      "segment": "S2_sparse_key",
+      "segment_rows": 431005,
+      "weights_per_fold": [
+        0.0,
+        0.0,
+        0.05,
+        0.0,
+        0.0
+      ],
+      "pooled_auc": 0.9618521103211595,
+      "mean_fold_delta": -9.021319642865677e-07,
+      "fold_se": 9.021319642865676e-07,
+      "t": -1.0000000000000002,
+      "folds_positive": 0,
+      "per_fold_deltas": [
+        0.0,
+        0.0,
+        -4.510659821432839e-06,
+        0.0,
+        0.0
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.9618521103211592,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -8.124945645171522e-07,
+        "paired_se": 8.640482435198219e-07,
+        "candidate_standalone_se": 0.0002424138216438112,
+        "ci95": [
+          -2.5059980027210973e-06,
+          8.81008873686793e-07
+        ],
+        "one_sided_p": 0.8264770526373156,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "c7da54277ea54df154be8d95e4f00411207b5106ddb4aecd581b4f7d658a99e3",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "tabm",
+      "vector": "z5_tabm_e25",
+      "vector_standalone_auc": 0.9606925706732934,
+      "segment": "S1_unique_key",
+      "segment_rows": 304464,
+      "weights_per_fold": [
+        0.0,
+        0.0,
+        0.0,
+        0.05,
+        0.0
+      ],
+      "pooled_auc": 0.9618519177768207,
+      "mean_fold_delta": -1.4457163429071329e-06,
+      "fold_se": 1.4457163429071329e-06,
+      "t": -1.0,
+      "folds_positive": 0,
+      "per_fold_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        -7.2285817145356646e-06,
+        0.0
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.9618519177768208,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -1.0050389029903073e-06,
+        "paired_se": 1.0224395462958987e-06,
+        "candidate_standalone_se": 0.00024241518528477375,
+        "ci95": [
+          -3.008983590099742e-06,
+          9.989057841191272e-07
+        ],
+        "one_sided_p": 0.8371916664908376,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "b3287bff6d205c11e8b46108a661e19efab7524bd76224b643552cecac393470",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "conf",
+      "vector": "conf_xt_full_shadow",
+      "vector_standalone_auc": 0.9611425442929741,
+      "segment": "S1_unique_key",
+      "segment_rows": 304464,
+      "weights_per_fold": [
+        0.0,
+        0.05,
+        0.1,
+        0.1,
+        0.05
+      ],
+      "pooled_auc": 0.9618490339283036,
+      "mean_fold_delta": -4.1450559233213726e-06,
+      "fold_se": 4.674823678026998e-06,
+      "t": -0.8866764200764011,
+      "folds_positive": 2,
+      "per_fold_deltas": [
+        0.0,
+        3.6290346188128098e-06,
+        -2.0735108790859158e-05,
+        -7.864477559627048e-06,
+        4.245272115066534e-06
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.9618490339283035,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -3.888887420311349e-06,
+        "paired_se": 2.7154596744649797e-06,
+        "candidate_standalone_se": 0.0002424257209973412,
+        "ci95": [
+          -9.211090583733569e-06,
+          1.433315743110871e-06
+        ],
+        "one_sided_p": 0.923946487396745,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "48ff8fa177d9d2383fa47b4fe5b262091c075e151e2387388a16b4239d90f486",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    },
+    {
+      "family": "conf",
+      "vector": "conf_xt_full_shadow",
+      "vector_standalone_auc": 0.9611425442929741,
+      "segment": "S2_sparse_key",
+      "segment_rows": 431005,
+      "weights_per_fold": [
+        0.0,
+        0.05,
+        0.1,
+        0.05,
+        0.0
+      ],
+      "pooled_auc": 0.961847699191778,
+      "mean_fold_delta": -5.546096082365004e-06,
+      "fold_se": 5.8765466581700936e-06,
+      "t": -0.9437678971976394,
+      "folds_positive": 1,
+      "per_fold_deltas": [
+        0.0,
+        1.6142608160185645e-06,
+        -2.9013032461278065e-05,
+        -3.317087665655194e-07,
+        0.0
+      ],
+      "pooled_delong": {
+        "candidate_auc": 0.9618476991917779,
+        "baseline_auc": 0.9618529228157238,
+        "delta": -5.223623945838085e-06,
+        "paired_se": 2.464989344042348e-06,
+        "candidate_standalone_se": 0.00024243522659563537,
+        "ci95": [
+          -1.0054914282436098e-05,
+          -3.9233360924007104e-07
+        ],
+        "one_sided_p": 0.9829601060769179,
+        "positive_rows": 310339,
+        "negative_rows": 389296,
+        "scope": "Conditional IID row uncertainty; excludes refitting and model-selection uncertainty"
+      },
+      "vector_sha256": "77a15e943a309249a18a276a944fd753d123e6a394ae34d407f178a5c339ac85",
+      "holm_adjusted_p": 1.0,
+      "passes": false
+    }
+  ],
+  "any_pass": false,
+  "reading": "Segment gating is a one-parameter composition per segment on a label-free covariate. A pass would mean the champion is measurably worse on a covariate-defined slice and that a smoother family repairs it. A failure closes the segment axis with a measured number rather than an assumption."
+}

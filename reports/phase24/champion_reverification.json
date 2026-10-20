@@ -1,0 +1,38 @@
+{
+ "utc": "2026-10-20T08:04:54.273957+00:00",
+ "champion_oof": {
+  "path": "artifacts\\predictions\\v7_sol_tabpfn_internal2_aux10_oof.npy",
+  "sha256": "bd4d288b3e980b41f74c95a319eaa2be5dd5ea0e18fedd49718e0d0868b0fe5c",
+  "auc": 0.9618529228157235,
+  "rows": 699635
+ },
+ "champion_portfolio_oof": {
+  "path": "artifacts\\phase17_B1\\primary\\portfolio_oof.npy",
+  "sha256": "bd4d288b3e980b41f74c95a319eaa2be5dd5ea0e18fedd49718e0d0868b0fe5c",
+  "bit_equal_to_store_vector": true
+ },
+ "test_candidate": {
+  "path": "artifacts\\v7_sol_tabpfn_internal2_aux10_test\\candidate.npy",
+  "sha256": "e5b3b819a4986cf3ba8239a67cddc03c6f187c196d7ddddb6367a0dced67d6b9",
+  "rows": 299844
+ },
+ "recomposition_max_abs_vs_candidate": 5.163307981170817e-08,
+ "csv": {
+  "path": "submissions\\v7_sol_tabpfn_internal2_aux10.csv",
+  "sha256": "fa4947fe9fc381fe85b105c1c489375327f7bb2321e4ff7f0d9ffc7cd7c9c0bd",
+  "rows": 299844,
+  "columns": [
+   "id",
+   "satisfaction"
+  ],
+  "id_matches_test_ids": true,
+  "id_matches_sample_submission": true,
+  "prob_min": 0.008388603106141,
+  "prob_max": 0.9969484806060792,
+  "prob_mean": 0.4441154607728963,
+  "corr_with_candidate": 1.0,
+  "max_abs_vs_candidate": 1.1102230246251565e-16
+ },
+ "n_train": 699635,
+ "n_test": 299844
+}

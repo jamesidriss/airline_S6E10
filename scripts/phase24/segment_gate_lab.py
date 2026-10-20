@@ -55,11 +55,11 @@ FAMILIES = {
     "lgbm": ("z4_lgb", "xt_xt", "prod5_lgbm", "view_lgbm"),
     "xgb": ("z4_xgb", "prod5_xgb", "xt_xgb", "zoo_xgb"),
     "cat": ("z3_cat", "prod5_cat", "zoo_cat"),
-    "realmlp": ("z3_rm", "z5_rm"),
+    "realmlp": ("z3_rm", "z5_rm", "nn_realmlp"),
     "tabm": ("z5_tabm",),
-    "tabpfn": ("sol_tabpfn", "conf_tabpfn", "external_tabpfn"),
     "blend": ("blend_v4", "blend_v3", "cand_"),
-    "histgb": ("z4_hgb", "conf_histgb", "histgb"),
+    "conf": ("conf_",),
+    "resid": ("resid_",),
 }
 
 

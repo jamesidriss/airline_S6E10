@@ -1,0 +1,110 @@
+{
+  "phase": 24,
+  "created_utc": "2026-10-20T08:13:00Z",
+  "principle": "cheapest decisive test first; a hypothesis may only be escalated after its preregistered gate is met on the primary folds; nothing runs twice",
+  "deadline_utc": "2026-10-31T23:59:00Z",
+  "days_remaining_at_creation": 11,
+  "items": [
+    {
+      "seq": 1,
+      "id": "H24-C1",
+      "action": "composition geometry lab (7 rules) on the two certified parents",
+      "prereg": "configs/phase24/composition_lab_prereg.json (sha 7f9c296ff8732ea5f9c460c5f974ce1dff5d9f7d322d0ac9a7e9e70639db32a9)",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\phase24\\composition_lab.py --mode discovery",
+      "status": "DONE",
+      "outcome": "NO_ADMISSION (best +1.694e-6, t 0.95, 3/5, Holm 1.0)",
+      "escalation": "none — frozen protocol forbids the shadow arm"
+    },
+    {
+      "seq": 2,
+      "id": "H24-C2",
+      "action": "segment-gated composition (8 families x 2 label-free segments)",
+      "prereg": "configs/phase24/segment_gate_prereg.json (sha f2ab010904607a2aff01addb34e9f62a5f9b5ad46dffca14a745307918974835)",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\phase24\\segment_gate_lab.py",
+      "status": "DONE",
+      "outcome": "NO_ADMISSION (best +2.799e-6, t 0.85, 3/5; zero gate weight in 11/16)",
+      "escalation": "none"
+    },
+    {
+      "seq": 3,
+      "id": "H24-C3",
+      "action": "aux10 leave-one-out reweighting + route seed-pair probe",
+      "prereg": "none (descriptive)",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\phase24\\parent_member_diagnostics.py",
+      "status": "DONE",
+      "outcome": "aux10 mean optimal to 2.4e-6; seed averaging real at parent (+8.93e-5 fold 0) but converts at 7.1%",
+      "escalation": "blocked by dilution arithmetic"
+    },
+    {
+      "seq": 4,
+      "id": "H24-C5",
+      "action": "133-vector inventory + (AUC, rho) frontier",
+      "prereg": "none (descriptive census)",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\phase24\\inventory_oof.py ; .\\.venv\\Scripts\\python.exe scripts\\phase24\\source_anchor_and_frontier.py frontier",
+      "status": "DONE",
+      "outcome": "0 vectors with positive mean paired delta; hindsight blend ceiling +1.5368e-5",
+      "escalation": "none"
+    },
+    {
+      "seq": 5,
+      "id": "H24-C4",
+      "action": "duplicate and key-structure audit",
+      "prereg": "none (structural census)",
+      "command": "pandas hash audit (recorded in reports/phase24/experiment_results.jsonl)",
+      "status": "DONE",
+      "outcome": "0 exact duplicates anywhere; rating-key median 1, p90 3",
+      "escalation": "none"
+    },
+    {
+      "seq": 6,
+      "id": "H24-C6",
+      "action": "source anchor + determinism comparison",
+      "prereg": "none (explanatory measurement)",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\phase24\\source_anchor_and_frontier.py source ; .\\.venv\\Scripts\\python.exe scripts\\phase24\\determinism_compare.py ; .\\.venv\\Scripts\\python.exe scripts\\phase24\\generator_fidelity_delays.py",
+      "status": "DONE",
+      "outcome": "source 0.988806 at 130k vs synthetic plateau 0.961853; LOO profile AUC 0.9710 vs 0.9253; delays contribute only 3.28e-4 to the source model",
+      "escalation": "none — explanatory, closes the ceiling question with a measurement"
+    },
+    {
+      "seq": 7,
+      "id": "H24-C7",
+      "action": "rich-view TabPFN third parent",
+      "status": "NOT EXECUTED",
+      "reason": "structurally increases correlation with the aux10 parent; native39 already measured standalone-yes / portfolio-no"
+    },
+    {
+      "seq": 8,
+      "id": "H24-C8",
+      "action": "support-restricted original-row augmentation",
+      "status": "NOT EXECUTED",
+      "reason": "source label function transfers at 0.9499 and delays explain only 3.28e-4 of the source model; the mechanism cannot close a 0.027 gap"
+    },
+    {
+      "seq": 9,
+      "id": "H24-C9",
+      "action": "raw8 native TabPFN",
+      "status": "RESOURCE_BLOCKED_HARDWARE",
+      "reason": "T4 OOM measured; local GPU under hardware stop"
+    },
+    {
+      "seq": 10,
+      "id": "H24-CERT",
+      "action": "re-verify champion artifacts, commit SUBMISSION_DECISION, finalist A/B",
+      "prereg": "report-only",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\phase24\\certify_champion_now.py",
+      "status": "DONE",
+      "outcome": "OOF 0.9618529228157235 (sha bd4d288b...), test candidate sha 2b744d0d..., CSV sha fa4947fe..., ids identical to sample_submission, 299,844 rows",
+      "escalation": "no upload — no candidate met PATH A or PATH B"
+    },
+    {
+      "seq": 11,
+      "id": "H24-CONFIRM",
+      "action": "independent confirmation on shadow folds 2-3",
+      "status": "NOT OPENED",
+      "reason": "gate condition (a discovery pass) was never met; the frozen protocol explicitly forbids opening the confirmation arm without it"
+    }
+  ],
+  "submission_budget": {"used_today": 0, "remaining_today": 10, "used_this_phase": 0},
+  "gpu_budget": {"used_this_phase_hours": 0.0, "planned_hours": 0.0, "last_known_remaining_hours": 28.57, "last_known_refresh": "2026-10-24"},
+  "next_command_if_resumed": ".\\.venv\\Scripts\\python.exe tests\\run_tests.py"
+}
