@@ -1,0 +1,23 @@
+{
+ "utc": "2026-10-20T00:01:37Z",
+ "variant": "raw8_shadow",
+ "kernel_id": "jamesripoll/s6e10-phase23-raw8-shadow-tabpfn35",
+ "kernel_dir": "research/phase23/kaggle/raw8_shadow",
+ "main_sha256": "069c44891c37cae46dca799ec4b6195f4110f7290a9eb68342054379f15b8982",
+ "meta_sha256": "c14f87a69a886fd7d533188a6e23663cbb65416e12ee1c3e9f61678accf98345",
+ "prereg_sha256": "05b7235ed55e6d8a9d891c3b9d6ab73695c38573156bb06a826d9aa896d3df29",
+ "constants": {
+  "PROBE": false,
+  "TAG": "shadow_",
+  "ROUTE_GEOMETRY": false,
+  "RUN_FOLDS": [
+   2,
+   3
+  ],
+  "FOLD_SEED": 777001,
+  "EXPECT_FOLDS_SHA": "5d181e32357e67b2ad8381c33549ef905bb45b969de7b8e09a3e4e7cb24af758",
+  "N_EST": 8
+ },
+ "timeout_s": 39600,
+ "pushed": false
+}
