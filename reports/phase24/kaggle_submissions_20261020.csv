@@ -1,0 +1,36 @@
+ref,fileName,date,description,status,publicScore,privateScore
+
+57386012,endgame_10_sol_clean_aux10_primary_xt_xt_d255.csv,2026-10-19 06:34:24.263000,sol_clean_aux10_primary_xt_xt_d255 | OOF(primary5)=0.961185 | OOF>0.9610000 inventory batch | csv_sha16=9fa777f956a4e29c | public not consulted,SubmissionStatus.COMPLETE,0.96093,
+
+57386008,endgame_09_xt_xt_d127_s2.csv,2026-10-19 06:34:17.210000,xt_xt_d127_s2 | OOF(primary5)=0.961189 | OOF>0.9610000 inventory batch | csv_sha16=2ce85cd7c73cb84a | public not consulted,SubmissionStatus.COMPLETE,0.96075,
+
+57386003,endgame_08_sol_clean_aux10_primary_xt_xt_d127_ss06.csv,2026-10-19 06:34:10.093000,sol_clean_aux10_primary_xt_xt_d127_ss06 | OOF(primary5)=0.961194 | OOF>0.9610000 inventory batch | csv_sha16=8be79701d41f24cd | public not consulted,SubmissionStatus.COMPLETE,0.96109,
+
+57385997,endgame_07_z4_xt_f10_s3.csv,2026-10-19 06:34:03.080000,z4_xt_f10_s3 | OOF(primary5)=0.961196 | OOF>0.9610000 inventory batch | csv_sha16=ccc1d784ad8fb97c | public not consulted,SubmissionStatus.COMPLETE,0.96090,
+
+57385994,endgame_06_sol_clean_aux10_primary_xt_xt_d63.csv,2026-10-19 06:33:55.987000,sol_clean_aux10_primary_xt_xt_d63 | OOF(primary5)=0.961201 | OOF>0.9610000 inventory batch | csv_sha16=e77c82eb482732e8 | public not consulted,SubmissionStatus.COMPLETE,0.96095,
+
+57385988,endgame_05_sol_clean_aux10_primary_xt_xt_d127_cs05.csv,2026-10-19 06:33:49.160000,sol_clean_aux10_primary_xt_xt_d127_cs05 | OOF(primary5)=0.961223 | OOF>0.9610000 inventory batch | csv_sha16=55bbc7f28bfd5473 | public not consulted,SubmissionStatus.COMPLETE,0.96100,
+
+57385982,endgame_04_xt_xt_f10.csv,2026-10-19 06:33:41.787000,xt_xt_f10 | OOF(primary5)=0.961242 | OOF>0.9610000 inventory batch | csv_sha16=7fe635baaaa4bb57 | public not consulted,SubmissionStatus.COMPLETE,0.96086,
+
+57385975,endgame_03_sol_clean_aux10_primary_xt_xt_d127_s1.csv,2026-10-19 06:33:34.903000,sol_clean_aux10_primary_xt_xt_d127_s1 | OOF(primary5)=0.961250 | OOF>0.9610000 inventory batch | csv_sha16=6fa7a0b6c391ccff | public not consulted,SubmissionStatus.COMPLETE,0.96094,
+
+57385972,endgame_02_z4_xt_f10_s4.csv,2026-10-19 06:33:28.073000,z4_xt_f10_s4 | OOF(primary5)=0.961260 | OOF>0.9610000 inventory batch | csv_sha16=82a246c123799ab0 | public not consulted,SubmissionStatus.COMPLETE,0.96085,
+
+57385968,endgame_01_cand_family_balanced.csv,2026-10-19 06:33:20.650000,cand_family_balanced | OOF(primary5)=0.961502 | OOF>0.9610000 inventory batch | csv_sha16=f52e06b4e5d0171d | public not consulted,SubmissionStatus.COMPLETE,0.96101,
+
+57090508,v7_sol_tabpfn_internal2_aux10.csv,2026-10-12 00:59:31.250000,"Frozen v7 internal2 + unchanged auxiliary10; primary +87.309micro, matched shadow +87.513micro; pre-result 78e9086f847f; private-first, no public tuning",SubmissionStatus.COMPLETE,0.96146,
+
+56951906,v6_sol_tabpfn_route_aux10.csv,2026-10-08 11:39:18.930000,"v6 frozen route aux10: primary5, predeclared partial shadow and seed check, certified five-context test inference",SubmissionStatus.COMPLETE,0.96144,
+
+56918343,v5_aux_cross.csv,2026-10-07 18:05:59.993000,"v5_aux_cross | exp=blend_v5_aux_cross | OOF(primary5)=0.961523 | +1.491e-5 vs v3_final, 5/5 folds positive, paired t +3.97. v3_final with 10 of 59 slots replaced by counterparts trained with the VALIDATED Phase-13 auxiliary expected-rating features (13 extra columns: each rating predicted from the other columns with NO satisfaction label, feature = sum_k k*P(k)). 6 extra_trees LightGBM + 3 XGBoost + 1 native-cat CatBoost. Slot selection was structural (every slot with a trained counterpart), not by measured gain. Member count stays 59, equal-logit expit(mean(logits)) geometry unchanged. Test models refit on 100pct of labels at the median cross-validated iteration count, mirroring the OOF aux construction exactly. MISSES the predeclared +1.5e-5 admission gate by 0.6 percent -- the gate was NOT moved; submitted only as a transfer sanity check. EXPECTED PUBLIC MOVEMENT: UNKNOWN, likely below public resolution (~+/-2e-4 paired). This is not LB hill-climbing and will not be retuned toward its public score. sha16=9f88dc476d28f367",SubmissionStatus.COMPLETE,0.96103,
+
+56845975,v4_fulldata.csv,2026-10-05 07:23:04.763000,"v4_fulldata | 32 of 59 finalist members refit on 100pct of the 699,635 labels instead of the K-fold outer-fit subset (80pct at K=5, 90pct at K=10). Same 59 members, same equal weights, same OOF (0.961509, v3's, UNCHANGED -- this is NOT an OOF gain). Iteration count = median of 3 independent 5pct early-stopping holdouts on 95pct of labels, no size correction. Evidence: run_fullfit measured +2.2e-5 mean / +4.0e-5 best fold, 2/2 folds for the analogous 72->80pct member substitution; the training-fraction law predicted the already-measured 5->10 fold gain to 7.4pct. Expected gain is single-digit e-5, below the public noise floor; submitted as a complementary finalist and as the only available measurement of whether the training-fraction effect transfers to the test distribution. v3_final remains banked. sha16=9dd695800ca04b7d",SubmissionStatus.COMPLETE,0.96100,
+
+56805526,v3_final.csv,2026-10-03 19:38:08.657000,"v3_final | exp=blend_v3_final | OOF(primary5)=0.961509 | equal-logit blend of 59 members: 23 extra_trees LGBM, 9 det LGBM, 8 XGB, 7 CatBoost, 7 RealMLP, 3 TabM, 2 econf. Members span 3 fold assignments (primary/shadow/10-fold). Key findings: extra_trees=True +2.3e-4 (needs rich view), 10-fold +1.1e-4, RealMLP n_ens32 +2e-4, original-data target stats +1.0e-3. Banked as a finalist candidate, not LB hill-climbing.",SubmissionStatus.COMPLETE,0.96098,
+
+56793823,v2_equal34.csv,2026-10-03 08:43:18.273000,"v2_equal34 | exp=blend_v2_equal34 | OOF(primary5)=0.961438 | 34-member quality-weighted logit blend. Adds the two measured levers over v1: LightGBM extra_trees=True (+2.3e-4 single) and 10-fold members (+1.1e-4, decorrelated). Probes whether extra_trees transfers to the LB.",SubmissionStatus.COMPLETE,0.96092,
+
+56788249,v1_equal4.csv,2026-10-03 03:14:34.997000,v1_equal4 | exp=blend_v1_equal4 | OOF(primary5)=0.961273 | equal-logit blend of xgb+cat+lgbm+realmlp on full view (raw+cat twins+route-profile counts+orig-data TE+GPT2 tokens+orig teacher) | honest inner early stopping,SubmissionStatus.COMPLETE,0.96093,
+

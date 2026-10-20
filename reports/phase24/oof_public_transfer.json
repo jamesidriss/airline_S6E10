@@ -1,0 +1,161 @@
+{
+ "n_submissions": 17,
+ "all_complete": true,
+ "common_shift_mean": -0.0003689026851483117,
+ "shift_sd": 0.00012128507134703416,
+ "model_specific_resid_sd_public": 0.00012128507134703416,
+ "paired_pair_sd_public": 0.00017152299281236418,
+ "paired_pair_sd_private_if_sampling_dominated": 8.576167516888564e-05,
+ "oof_on_public_regression": {
+  "slope": 0.7242249007661141,
+  "intercept": 0.26475335073580675,
+  "pearson_r": 0.8188125152553734
+ },
+ "v7_vs_v6": {
+  "delta_oof": 8.730899114406387e-05,
+  "delta_public": 2.0000000000020002e-05,
+  "public_minus_oof_advantage_for_v6": 6.730899114404387e-05,
+  "p_v6_beats_v7_oof_only": 0.1543289877754574,
+  "p_v6_beats_v7_half_shrunk": 0.2657810516427117,
+  "p_v6_beats_v7_public_differential_real": 0.40780134466965057
+ },
+ "rows": [
+  {
+   "ref": 57386012,
+   "file": "endgame_10_sol_clean_aux10_primary_xt_xt_d255",
+   "oof": 0.9611845310849024,
+   "public": 0.96093,
+   "shift": -0.0002545310849024762,
+   "shift_minus_common": 0.00011437160024583545
+  },
+  {
+   "ref": 57386008,
+   "file": "endgame_09_xt_xt_d127_s2",
+   "oof": 0.9611885263840676,
+   "public": 0.96075,
+   "shift": -0.0004385263840676057,
+   "shift_minus_common": -6.962369891929402e-05
+  },
+  {
+   "ref": 57386003,
+   "file": "endgame_08_sol_clean_aux10_primary_xt_xt_d127_ss06",
+   "oof": 0.9611935607042004,
+   "public": 0.96109,
+   "shift": -0.00010356070420036723,
+   "shift_minus_common": 0.00026534198094794445
+  },
+  {
+   "ref": 57385997,
+   "file": "endgame_07_z4_xt_f10_s3",
+   "oof": 0.9611962074811554,
+   "public": 0.9609,
+   "shift": -0.0002962074811554416,
+   "shift_minus_common": 7.269520399287008e-05
+  },
+  {
+   "ref": 57385994,
+   "file": "endgame_06_sol_clean_aux10_primary_xt_xt_d63",
+   "oof": 0.9612008975316464,
+   "public": 0.96095,
+   "shift": -0.00025089753164642126,
+   "shift_minus_common": 0.00011800515350189042
+  },
+  {
+   "ref": 57385988,
+   "file": "endgame_05_sol_clean_aux10_primary_xt_xt_d127_cs05",
+   "oof": 0.961223160936394,
+   "public": 0.961,
+   "shift": -0.00022316093639407342,
+   "shift_minus_common": 0.00014574174875423826
+  },
+  {
+   "ref": 57385982,
+   "file": "endgame_04_xt_xt_f10",
+   "oof": 0.961242028518536,
+   "public": 0.96086,
+   "shift": -0.00038202851853597064,
+   "shift_minus_common": -1.3125833387658966e-05
+  },
+  {
+   "ref": 57385975,
+   "file": "endgame_03_sol_clean_aux10_primary_xt_xt_d127_s1",
+   "oof": 0.961249609904276,
+   "public": 0.96094,
+   "shift": -0.0003096099042759759,
+   "shift_minus_common": 5.9292780872335774e-05
+  },
+  {
+   "ref": 57385972,
+   "file": "endgame_02_z4_xt_f10_s4",
+   "oof": 0.9612602127843108,
+   "public": 0.96085,
+   "shift": -0.0004102127843108594,
+   "shift_minus_common": -4.1310099162547716e-05
+  },
+  {
+   "ref": 56788249,
+   "file": "v1_equal4",
+   "oof": 0.961273,
+   "public": 0.96093,
+   "shift": -0.00034300000000009323,
+   "shift_minus_common": 2.5902685148218444e-05
+  },
+  {
+   "ref": 56793823,
+   "file": "v2_equal34",
+   "oof": 0.961438,
+   "public": 0.96092,
+   "shift": -0.0005180000000000184,
+   "shift_minus_common": -0.00014909731485170677
+  },
+  {
+   "ref": 57385968,
+   "file": "endgame_01_cand_family_balanced",
+   "oof": 0.9615020736777288,
+   "public": 0.96101,
+   "shift": -0.0004920736777287438,
+   "shift_minus_common": -0.0001231709925804321
+  },
+  {
+   "ref": 56805526,
+   "file": "v3_final",
+   "oof": 0.961509,
+   "public": 0.96098,
+   "shift": -0.0005290000000000017,
+   "shift_minus_common": -0.00016009731485169002
+  },
+  {
+   "ref": 56845975,
+   "file": "v4_fulldata",
+   "oof": 0.961509,
+   "public": 0.961,
+   "shift": -0.0005089999999999817,
+   "shift_minus_common": -0.00014009731485167002
+  },
+  {
+   "ref": 56918343,
+   "file": "v5_aux_cross",
+   "oof": 0.961523,
+   "public": 0.96103,
+   "shift": -0.0004929999999999657,
+   "shift_minus_common": -0.00012409731485165401
+  },
+  {
+   "ref": 56951906,
+   "file": "v6_sol_tabpfn_route_aux10",
+   "oof": 0.9617656138245796,
+   "public": 0.96144,
+   "shift": -0.0003256138245796292,
+   "shift_minus_common": 4.32888605686825e-05
+  },
+  {
+   "ref": 57090508,
+   "file": "v7_sol_tabpfn_internal2_aux10",
+   "oof": 0.9618529228157237,
+   "public": 0.96146,
+   "shift": -0.00039292281572367305,
+   "shift_minus_common": -2.4020130575361372e-05
+  }
+ ],
+ "reading": "The common component is the public split being harder than the OOF contexts; it cancels in paired model comparisons. The model-specific residual sd measures how far a submission moves relative to the cohort once the split is fixed. The probability of v6 beating v7 on private is reported under three transfer models: OOF only, half-shrunk public differential, and the public differential taken at face value."
+}

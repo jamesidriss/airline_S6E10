@@ -42,6 +42,7 @@
 | doublons exacts train↔test | 0 |
 | augmentation par lignes d'origine | fonction source transférée à `0,9499` seulement ; retards ne pèsent que `3,28e-4` |
 | structure id/générateur | `AUC(id) = 0,500073` (phase 23) |
+| transfert OOF→public (17 soumissions) | décalage commun `−3,69e-4` ; résidu `1,21e-4` ; pente `0,724`, `r 0,819` |
 
 ## Ce qui n'est pas fermé, et pourquoi
 
@@ -62,7 +63,9 @@
 
 ## État git attendu
 
-- HEAD : commit de clôture Phase 24 (message `phase24: close — plateau measured, no upload`).
-- Branche `main`, poussée sur l'origine ; pas de force push.
-- Arbre de travail propre après commit ; `reports/phase24/_*.py` et `_source_anchor.*` sont des
-  utilitaires de session, conservés pour reproductibilité.
+- Branche `main` en phase avec `origin/main`.
+- Commit de clôture : `a81c739` — `phase24: close on a measured plateau; generator determinism
+  mechanism; composition/segment/member/store axes falsified; no upload; finalists A=57090508
+  B=56951906`, suivi du commit de mesure du transfert OOF→public.
+- Pas de force push ; arbre de travail propre ; `reports/phase24/oof_public_transfer.py` et
+  `_append_ledger.py` conservés pour reproductibilité.

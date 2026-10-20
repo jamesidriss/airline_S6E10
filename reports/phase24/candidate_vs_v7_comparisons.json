@@ -69,6 +69,25 @@
     {"name": "v6_private_hedge", "pooled_oof_auc": 0.9617656138245796, "delta_vs_v7": -8.7308990125228e-05, "public_lb": 0.96144, "kaggle_ref": 56951906, "test_logit_corr_with_v7": 0.99990},
     {"name": "v4_fulldata", "pooled_oof_auc": 0.96150857858, "delta_vs_v7": -3.4434e-04, "public_lb": 0.96100, "kaggle_ref": 56845975, "test_logit_corr_with_v7": 0.9987}
   ],
+  "transfer_measurement": {
+    "source": "reports/phase24/oof_public_transfer.json",
+    "script": "reports/phase24/oof_public_transfer.py",
+    "remote_list": "reports/phase24/kaggle_submissions_20261020.csv",
+    "n_submissions": 17,
+    "all_complete": true,
+    "common_shift_mean": -0.0003689026851483117,
+    "shift_sd": 0.00012128507134703416,
+    "model_specific_resid_sd_public": 0.00012128507134703416,
+    "paired_pair_sd_public": 0.00017152299281236418,
+    "paired_pair_sd_private_if_sampling_dominated": 8.576167516888564e-05,
+    "oof_on_public_regression": {"slope": 0.7242249007661141, "intercept": 0.26475335073580675, "pearson_r": 0.8188125152553734},
+    "p_v6_beats_v7": {
+      "oof_only": 0.1543289877754574,
+      "half_shrunk_public_differential": 0.2657810516427117,
+      "public_differential_real": 0.40780134466965057
+    },
+    "reading": "Across all 17 submissions the public score carries only about two thirds of the OOF variance (slope 0.724, r 0.819) once the common -3.69e-4 split offset is removed. The residual spread (1.21e-4 per submission, 1.72e-4 paired) is the same size as the entire band separating the public top (0.96159) from v7 (0.96146). This is why the second final slot is worth occupying: v6 wins with probability 15% to 41% depending on how much of its +6.73e-5 public transfer advantage is real."
+  },
   "explanatory_measurements": {
     "source_anchor": {"cv5_auc_130k": 0.9888061518961919, "cv5_auc_65k": 0.9878729802976574, "doubling_gain": 0.0009331715985345657, "no_delay_arm": 0.9884781698085249, "delay_contribution": 0.00032798208766704473},
     "determinism": {"source_loo_profile_auc": 0.9709949084975641, "synthetic_loo_profile_auc": 0.9252854476040077, "source_pure_group_row_share": 0.2678318447797967, "synthetic_pure_group_row_share": 0.30821213918686174, "source_mean_group_size": 1.245086949019307, "synthetic_mean_group_size": 1.8119062911128836},

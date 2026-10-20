@@ -21,6 +21,7 @@ soumission.
 | E4 | gate de segment (8 familles × 2 segments, 16 tests gelés) | meilleur `+2,799e-6` (t 0,85) ; poids nul dans 11/16 | falsifié |
 | E5 | audit de doublons et de structure de clefs | 0 doublon exact train↔test ; clef de profil médiane 1, p90 3 | fermé |
 | E6 | ancre source + écart de déterminisme | source `0,988806` à 130k ; LOO de profil `0,9710` (source) vs `0,9253` (synthétique) | **mécanisme identifié** |
+| E7 | transfert OOF → public sur les 17 soumissions | décalage commun `−3,69e-4` ; dispersion résiduelle `1,21e-4` ; pente `0,724`, `r 0,819` | `P(v6 > v7)` entre 15 % et 41 % |
 
 ## 2. Le résultat scientifique central
 
@@ -101,6 +102,12 @@ levier non testé (raw8) est chiffré à `≈+3e-5` au portefeuille pour `≥25 
 4. **L'absence totale de fuite par doublon est établie** : 0 correspondance exacte
    train↔test sur 21 colonnes, 0 doublon interne à chaque split.
 5. **La structure id/générateur reste fermée** (`AUC(id) = 0,500073`), confirmée et non rouverte.
+6. **Le pouvoir de résolution de la place publique est chiffré.** Sur les 17 soumissions, après
+   retrait du décalage commun de `−3,69e-4`, la pente OOF→public est de `0,724` avec `r = 0,819` :
+   l'OOF n'explique qu'environ deux tiers de la variance des scores publics. La dispersion
+   résiduelle par soumission (`1,21e-4`, soit `1,72e-4` appariée) est du même ordre que la bande
+   entière qui sépare le top public (`0,96159`) de v7 (`0,96146`), soit `1,3e-4`. Dans cette
+   bande, le classement public est dominé par le bruit d'échantillonnage.
 
 ## 5. Décision de soumission
 
@@ -118,10 +125,12 @@ re-certifié pièce par pièce :
   `1,11e-16` avec le vecteur certifié ;
 - recomposition depuis les deux parents test : `5,163e-8`.
 
-Finalistes : **A = 57090508 (v7)**, **B = 56951906 (v6)**. Le slot B est gratuit sous la règle
-du maximum ; `P(v6 > v7)` est estimé entre 7 % et 37 % selon le modèle de transfert retenu. v4
-(`56845975`) reste la couverture de queue si l'utilisateur craint une défaillance structurelle
-de la famille TabPFN plutôt qu'un écart de score.
+Finalistes : **A = 57090508 (v7)**, **B = 56951906 (v6)**. Les 17 soumissions ont été
+revérifiées `complete` via l'API le 2026-10-20 ; le slot B est gratuit sous la règle du maximum
+et `P(v6 > v7)` vaut **15,4 %** (OOF seul), **26,6 %** (rétraction à mi-vie de l'avantage public
+de `6,73e-5` de v6) ou **40,8 %** (avantage public pris au réel). v4 (`56845975`) reste la
+couverture de queue si l'utilisateur craint une défaillance structurelle de la famille TabPFN
+plutôt qu'un écart de score : `P(v4 > v7) ≤ 3e-5`.
 
 ## 6. Conditions exactes de réouverture
 
@@ -152,6 +161,8 @@ rouvriraient le programme, dans l'ordre de rentabilité :
 | `submission_certification.md` | re-certification du champion, décision |
 | `private_finalist_decision.md` | A/B, arithmétique de transfert, action UI |
 | `champion_reverification.json` | sortie brute de la vérification du jour |
+| `oof_public_transfer.json` | table de transfert OOF→public sur les 17 soumissions |
+| `kaggle_submissions_20261020.csv` | liste distante brute (17 lignes, toutes `COMPLETE`) |
 
 ## 8. Intégrité
 
