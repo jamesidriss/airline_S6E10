@@ -1,0 +1,77 @@
+{
+  "candidate_id": "H24-X1",
+  "frozen_utc": "2026-10-23T00:00:00Z",
+  "git_head_at_freeze": "6aecf1f",
+  "status": "FROZEN_BEFORE_PUBLIC_MEASUREMENT",
+  "spec": "sigmoid(0.15*logit(v7_oof) + 0.85*logit(nj05_oof)); identical transform applied to the certified test vectors",
+  "what_is_new": "a diverse external model pool (11 TFM architectures, 8 TabPFN/TabICL variants, 7 public blends) that our 133-vector store did not contain; our own 11-TFM reproduction is weak (0.961236), so the gain is not 'a better TFM' but the specific honest public blend vector, which sits +3.747e-4 over v7 on our own folds",
+  "sequence_honesty_note": "The external-OOF probe was exploratory: 27 vectors were measured, and the best (nj05) was chosen on its primary-fold OOF. This prereg therefore cannot claim a pre-registered discovery. It freezes (a) the fixed-weight deployment, (b) the shadow confirmation, and (c) the public-score accept/reject rule BEFORE the public score exists. The only unspent out-of-sample evidence is the public submission.",
+  "inputs": {
+    "v7_oof_sha256": "bd4d288b3e980b41f74c95a319eaa2be5dd5ea0e18fedd49718e0d0868b0fe5c",
+    "v7_test_sha256": "e5b3b819a4986cf3ba8239a67cddc03c6f187c196d7ddddb6367a0dced67d6b9",
+    "nj05_oof_sha256": "4aa93222e885c8d3604f03f4b2297b66c31029a2d7e2d82d137738fbb06bee7a",
+    "nj05_sub_sha256": "a6d49839ad00a20931dd884c7be5ddc7a9dad2d0e83c1298692b246b0f566794"
+  },
+  "provenance": {
+    "nj05": "kaggle dataset najiama/s6e10-oof (datasetId 12333973), file 05_blend_oof.csv + 05_submission.csv",
+    "author_grant": "description states: 'You are completely free to use, reproduce, and include these OOF and submission CSV files in your own pipelines and ensembles. I only ask that you comply with standard Kaggle rules and kindly provide credit or a link back to this notebook if you use them in a public blend.'",
+    "licence_field": "unknown (metadata omission); the explicit author grant above is the operative permission",
+    "members_cited_by_author": [
+      "yekenot RealMLP-PyTabKit",
+      "ektarr XGBoost baseline",
+      "goodpjw2008 auxiliary-task features (LB 0.96129)",
+      "evgendvorkin LightGBM (CV 0.96047)",
+      "kospintr LGBM/CatB/XGB/HGBC baseline",
+      "goodpjw2008 TabPFN + route categories (LB 0.96160)",
+      "cdeotte stacking TFMs with public OOF"
+    ],
+    "fold_structure": "nj05 OOF uses StratifiedKFold(5, shuffle, random_state=42); each row's value is out-of-sample for that row, so its AUC on our labels and its paired delta on our folds are honest; the weight is fixed, not fitted on eval rows"
+  },
+  "primary": {
+    "fold_mean_auc": 0.9622492361853887,
+    "pooled_auc": 0.9622466203116198,
+    "delta_vs_v7": 0.0003885970344008616,
+    "per_fold_delta": [0.0004546255254244125, 0.0002963668839770506, 0.00044515347514040293, 0.0003865340384848759, 0.00036030524897689986],
+    "t": 13.380233881242239,
+    "folds_positive": 5
+  },
+  "shadow": {
+    "fold_mean_auc": 0.9622471388063026,
+    "delta_vs_v7": 0.0003943654993847634,
+    "per_fold_delta": [0.0003626080126839515, 0.0004065616536557126, 0.0003099583558122676, 0.0005485611482283215, 0.0003441383265436748],
+    "t": 9.484089834136618,
+    "folds_positive": 5
+  },
+  "gates": {
+    "path_a_alternative": {"min_delta": 1.5e-05, "min_t": 2.5, "min_folds_positive": 5, "passed": true},
+    "routine_bar": {"min_delta": 3e-04, "passed": true},
+    "multiplicity": "27 external vectors were screened; Holm over 27 tests leaves the candidate p-value at the numerical floor (t=13.38), so the family-wise correction does not change the verdict. Selection bias from choosing the best of 27 is acknowledged and is the reason the public measurement below is mandatory before promotion."
+  },
+  "public_validation_rule": {
+    "predicted_public": 0.9618776,
+    "prediction_basis": "candidate OOF 0.9622466 minus the measured common OOF->public offset 3.689e-4 (17 submissions)",
+    "one_sigma_residual": 1.213e-04,
+    "accept_if_public_ge": 0.9617,
+    "borderline_band": [0.96155, 0.9617],
+    "reject_if_public_lt": 0.96155,
+    "upper_sanity_bound": 0.9625,
+    "actions": {
+      "accept": "promote candidate X to finalist A; v7 becomes finalist B (replacing v6)",
+      "borderline": "keep candidate X as finalist B ahead of v6; v7 stays A",
+      "reject": "do not select; keep v7 A / v6 B; record as measured negative (public-side mismatch or inflation)",
+      "above_upper_bound": "treat as public-specific fitting; do not promote without a private-side argument"
+    }
+  },
+  "budget": {"submissions": 1, "gpu_hours": 0.0, "note": "0/10 used today at freeze time"},
+  "fallback_ladder": [
+    "candidate X (0.85 nj05 + 0.15 v7) if public >= 0.96170",
+    "v7 + v6 unchanged if public < 0.96155",
+    "v7 + candidate X if borderline"
+  ],
+  "risks": [
+    "nj05 may contain a public-specific component: the OOF->public drop of blend 06 is -3.4e-4, indistinguishable from our own honest models (-3.3e-4 to -5.3e-4), which argues against substantial in-sample inflation",
+    "the author's blend weights are unknown and could have been fitted on the public board; the fixed 0.85 deployment does not depend on those weights, only on the published vector",
+    "the 0.96238 antecedent was rejected for in-sample meta scoring; this candidate is not that notebook, but the failure mode is the one the public measurement is designed to detect",
+    "using a public prediction dataset is permitted by the competition's public-data regime and by the author's explicit grant; attribution is recorded in the final report"
+  ]
+}

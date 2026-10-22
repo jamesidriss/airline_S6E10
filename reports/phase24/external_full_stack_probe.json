@@ -1,0 +1,68 @@
+{
+ "members": [
+  "v7",
+  "tfm_causilo",
+  "tfm_exaone",
+  "tfm_kumolarge",
+  "tfm_kumosmall",
+  "tfm_limix2",
+  "tfm_mitra2",
+  "tfm_realmlp",
+  "tfm_tabfm",
+  "tfm_tabicl2",
+  "tfm_tabpfn35",
+  "tfm_xgboost",
+  "gp_tabicl_full_raw",
+  "gp_tabpfn_catfd",
+  "gp_tabpfn_catfd10",
+  "gp_tabpfn_catfd_s1",
+  "gp_tabpfn_full_raw",
+  "gp_tabpfn_full_raw_s1",
+  "gp_tabpfn_te",
+  "gp_tabpfn_te4",
+  "nj_01_blend",
+  "nj_02_blend",
+  "nj_03_blend",
+  "nj_04_blend",
+  "nj_05_blend",
+  "nj_06_blend",
+  "nj_07_XGBoost"
+ ],
+ "n_members": 27,
+ "champion_auc": 0.9618529228157235,
+ "full_stack": {
+  "pooled_auc": 0.9621961469181392,
+  "fold_auc": [
+   0.9622405195555456,
+   0.9622471362034345,
+   0.9622562057377643,
+   0.9614180070686835,
+   0.962847794975969
+  ],
+  "delta_vs_v7": 0.0003412935572914,
+  "per_fold_delta": [
+   0.0004127053050660967,
+   0.00025817505815384223,
+   0.0003649070614571981,
+   0.0003185252572072139,
+   0.00035215510457253796
+  ],
+  "t": 13.283682046576468,
+  "folds_positive": 5,
+  "n_folds_fitting": 5
+ },
+ "v7_nj05_085": {
+  "pooled_auc": 0.9622466203116198,
+  "delta_vs_v7": 0.0003885970344008616,
+  "per_fold_delta": [
+   0.0004546255254244125,
+   0.0002963668839770506,
+   0.00044515347514040293,
+   0.0003865340384848759,
+   0.00036030524897689986
+  ],
+  "t": 13.380233881242239,
+  "folds_positive": 5
+ },
+ "note": "all fitted weights estimated on FIT rows only; eval folds untouched"
+}

@@ -84,3 +84,7 @@ Thumbs.db
 
 # transient session logs
 logs_*.txt
+
+# ---- Phase24 external public prediction pool (bulk, re-downloadable) ----
+/data/external/
+

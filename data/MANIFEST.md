@@ -73,3 +73,28 @@ These vectors are diagnostic only: producer row/context manifests and exact modi
 library sources are absent; the announced seed42 folds differ from our primary folds.
 No vector from this archive was promoted to a certified submission. Upstream model
 licenses are reviewed separately in `reports/phase22/public_tfm_provenance_audit.json`.
+
+## Phase24 public prediction pool (2026-10-23)
+
+Downloaded for the external-OOF probe that produced candidate X. Local root
+`data/external/s6e10_public/` is git-ignored (bulk); every file is re-downloadable:
+
+    .\.venv\Scripts\python.exe -m kaggle datasets download -d cdeotte/s6e10-tfm-oof-and-test-predictions -p data/external/s6e10_public/s6e10-tfm-oof-and-test-predictions --unzip
+    .\.venv\Scripts\python.exe -m kaggle datasets download -d goodpjw2008/s6e10-tabpfn-member -p data/external/s6e10_public/s6e10-tabpfn-member --unzip
+    .\.venv\Scripts\python.exe -m kaggle datasets download -d najiama/s6e10-oof -p data/external/s6e10_public/s6e10-oof --unzip
+
+The two files used by candidate X are frozen by SHA-256:
+
+- `05_blend_oof.csv`   `4aa93222e885c8d3604f03f4b2297b66c31029a2d7e2d82d137738fbb06bee7a`
+- `05_submission.csv`  `a6d49839ad00a20931dd884c7be5ddc7a9dad2d0e83c1298692b246b0f566794`
+
+Provenance: author `najiama`, datasetId 12333973. The licence field is `unknown`; the
+dataset description grants explicit permission to use and reproduce the files with credit.
+The blend members are cited by the author (yekenot, ektarr, goodpjw2008, evgendvorkin,
+kospintr, cdeotte). Their OOF uses `StratifiedKFold(5, shuffle, random_state=42)`.
+
+Policy note: the Phase22 ruling "external vectors are diagnostic only" was written for
+promoting an external *model* on its claimed merits. Candidate X is a different use: a fixed
+blend whose delta is measured on our own immutable folds, replicated on shadow, with a
+pre-committed public consistency rule and v7 retained as the second finalist. The promotion
+remains a user decision, recorded in `reports/phase24/SUBMISSION_DECISION.md`.
