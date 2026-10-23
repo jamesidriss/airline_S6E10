@@ -1,8 +1,34 @@
 # Phase 24 — état de reprise
 
-**Dernière mise à jour** : 2026-10-20T08:30Z
-**Échéance** : 2026-10-31T23:59Z — **11 jours**
-**Phase** : 24 — **fermée sur plateau mesuré**, aucun envoi
+**Dernière mise à jour** : 2026-10-23T00:00Z
+**Échéance** : 2026-10-31T23:59Z — **8 jours**
+**Phase** : 24 — **clôturée par décision utilisateur**, aucun envoi
+
+## Addendum 2026-10-23 — sonde externe, candidat X non déployé
+
+La sonde du 22–23/10 a mesuré 27 vecteurs OOF publics sur nos folds immuables :
+
+| vecteur | OOF | Δ vs v7 | t | folds |
+|---|---|---|---|---|
+| 11 TFM Deotte, individuellement | 0,9571–0,9611 | `−4,8e-3` à `−7,2e-4` | — | 0/5 |
+| stack nested des 11 TFM | 0,961236 | `−6,2e-4` | −28,1 | 0/5 |
+| v7 + stack TFM | 0,961933 | `+8,2e-5` | 5,9 | 5/5 |
+| nj05 (blend public najiama) | 0,962234 | `+3,75e-4` | 11,4 | 5/5 |
+| **candidat X = 0,15 v7 + 0,85 nj05** | **0,962247** | **`+3,886e-4`** | **13,4** | **5/5** |
+| candidat X, shadow (777001) | 0,962247 | `+3,944e-4` | 9,5 | 5/5 |
+
+Le côté test du candidat X est certifié : 299 844 lignes, ids exacts, distribution identique à
+l'OOF, SHA `7032b4d928911cdb…`. La règle d'acceptation publique (`≥ 0,96170`) avait été gelée
+**avant** tout score ; le score public n'a jamais été dépensé.
+
+**Décision utilisateur : arrêt.** Aucun envoi. Les finalistes restent **A = v7 (57090508)** et
+**B = v6 (56951906)**. Le candidat X reste local dans `artifacts/phase24_candidateX/` et
+`reports/phase24/candidate_x_certification.json` ; il ne peut devenir finaliste que via un
+nouvel envoi, non effectué.
+
+Correction de lecture : notre plafond de modélisation propre est 0,96185 ; la frontière honnête
+publique est ~0,9622 ; le 0,96370 public est de la sélection de surface, pas de la qualité de
+modèle.
 
 ## Où en est le programme
 

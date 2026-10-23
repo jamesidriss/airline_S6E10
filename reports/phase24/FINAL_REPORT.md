@@ -172,4 +172,34 @@ rouvriraient le programme, dans l'ordre de rentabilité :
 - Tous les résultats négatifs sont conservés, y compris ceux qui contredisent des rapports
   antérieurs (l'hypothèse « retards détruits par le générateur » est explicitement réfutée
   ci-dessus).
-- Tests du dépôt : exécutés avant commit, `15/15`.
+- Tests du dépôt : exécutés avant commit, `247/247` cas, 0 échec.
+
+## 9. Addendum 2026-10-23 — sonde externe et arrêt
+
+Après la clôture, une dernière sonde a été exécutée sur 27 vecteurs OOF publics téléchargeables,
+mesurés sur nos folds immuables. Elle révise une conclusion du §3.
+
+| mesure | résultat |
+|---|---|
+| 11 TFM de Deotte, individuellement | `0,9571–0,9611`, tous **sous** v7 (`−4,8e-3` à `−7,2e-4`), 0/5 folds |
+| stack nested des 11 TFM | `0,961236` (`−6,2e-4`) |
+| v7 + stack TFM | `0,961933` (`+8,2e-5`, t 5,9, 5/5) |
+| nj05, blend public najiama | `0,962234` (`+3,75e-4`, t 11,4, 5/5) |
+| **candidat X = 0,15 v7 + 0,85 nj05** | **`0,962247`** (`+3,886e-4`, t 13,4, 5/5) |
+| candidat X, shadow | `+3,944e-4`, t 9,5, 5/5 |
+
+Deux corrections en découlent :
+
+1. **Le plafond de `0,9618–0,9620` du §3 était celui de nos modèles, pas de la distribution.**
+   Notre store plafonne à `0,96185` ; la frontière honnête publique est `~0,9622`. L'objectif
+   `0,962740` reste hors d'atteinte de tout modèle honnête publié, mais l'écart n'est pas
+   `1e-3` : il est d'environ `5e-4` au-dessus de la frontière honnête.
+2. **Le `0,96370` public n'est pas de la qualité de modèle.** Les deux premiers ont 128 et 133
+   soumissions ; les notebooks publics sont des blends de rang sur les 20 % publics et écrivent
+   eux-mêmes que « une partie du gain est du bruit public » et qu'« aucune amélioration CV
+   indépendante n'est revendiquée ». Notre mesure OOF→public (pente `0,724`, `r 0,819`) montre
+   que la bande du haut est dominée par le bruit d'échantillonnage.
+
+Le candidat X a été certifié mais **non envoyé** : la règle de la Phase 22 (« les vecteurs
+externes sont diagnostic seulement ») n'a pas été levée, et l'utilisateur a clôturé le
+programme. Les finalistes restent **A = v7 (57090508)**, **B = v6 (56951906)**.
