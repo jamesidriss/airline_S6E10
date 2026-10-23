@@ -16,3 +16,4 @@ ts,file,description,ref,status,publicScore,privateScore
 2026-10-19T06:34:07.974720+00:00,endgame_08_sol_clean_aux10_primary_xt_xt_d127_ss06.csv,sol_clean_aux10_primary_xt_xt_d127_ss06 | OOF(primary5)=0.961194 | OOF>0.9610000 inventory batch | csv_sha16=8be79701d41f24cd | public not consulted,57386003,submitted,,
 2026-10-19T06:34:15.245138+00:00,endgame_09_xt_xt_d127_s2.csv,xt_xt_d127_s2 | OOF(primary5)=0.961189 | OOF>0.9610000 inventory batch | csv_sha16=2ce85cd7c73cb84a | public not consulted,57386008,submitted,,
 2026-10-19T06:34:22.360523+00:00,endgame_10_sol_clean_aux10_primary_xt_xt_d255.csv,sol_clean_aux10_primary_xt_xt_d255 | OOF(primary5)=0.961185 | OOF>0.9610000 inventory batch | csv_sha16=9fa777f956a4e29c | public not consulted,57386012,submitted,,
+2026-10-23T19:50:20.418792+00:00,candidate_x.csv,candidateX 0.85nj05+0.15v7 OOF 0.9622466 +3.886e-4 5/5 primary+shadow,57570936,complete,0.96184,
