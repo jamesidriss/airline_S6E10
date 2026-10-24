@@ -61,7 +61,9 @@ Conséquence : l'erreur restante n'est plus de l'erreur d'estimation *séparable
 résidu **partagé** par tous les estimateurs entraînés sur les mêmes 700 000 lignes, plus le
 bruit de Bernoulli des étiquettes. C'est exactement pourquoi un membre à `0,9612` et `ρ 0,98`
 (valeur isolée honorable, +5e-4 de marge d'estimation) apporte **zéro** en blend : son erreur
-recouvre celle qu'on a déjà. Aucun membre n'a jamais dépassé `ρ = 0,98` avec X en restant fort.
+recouvre celle qu'on a déjà. Aucun membre à `ρ < 0,98` avec X n'a jamais dépassé `0,9614`
+d'AUC, et tous les membres à `0,9622` sont à `ρ ≥ 0,999` de X : il n'existe pas, dans les 368
+vecteurs mesurés, de membre à la fois **fort** et **décorrélé**.
 
 
 ## 4. Sélection gloutonne (Caruana) sur 368 vecteurs — 2,3e-5 sous X
