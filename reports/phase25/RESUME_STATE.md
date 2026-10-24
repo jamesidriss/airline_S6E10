@@ -48,13 +48,15 @@ réellement positifs** (`full_tec` `+1,24e-4`, `t 3,76`, 5/5 ; `full_enrich` `+6
 | courbe d'apprentissage (fold 0) | `+4,5e-4` puis `+5,0e-4` par doublement : base encore limitée par les données |
 | glouton Caruana, 368 candidats | `0,962226`, **−2,31e-5 vs X, 0/5** ; `+3,65e-4 vs v7, 5/5` |
 | second slot (bootstrap privé 239 875) | `E[max] ≤ 2e-6` pour tout candidat, `0` pour v7 ; `P(v7 > X) = 0,00` |
+| TabPFN raw8 : gain réel de la moyenne d'unités | `+1,54e-4` (route, 5/5) et `+2,41e-4` (raw, fold 0) pour 1→2 unités ; `V = 3,1–4,8e-4` |
+| TabPFN raw8 : propagation vers X | membre 2-unités ajouté à v7 : `+3,8e-6` au mieux ⇒ **`+5,7e-7` sur X** |
 
 ## Ce qui n'est pas fermé
 
 | mécanisme | blocage | condition de réouverture |
 |---|---|---|
-| TabPFN natif 16 Gio (raw8, H23-01) | T4 Kaggle 14,56 Gio ; **local 15,9 Gio disponible** | essai local, non lancé ; espérance bornée à `+3e-5` pour ≥25 h |
-| TabICLv2 vue riche / RealTabPFN-2.5 / fine-tune TabPFN 3.5 | mêmes limites mémoire | idem |
+| TabPFN natif 16 Gio (raw8, H23-01) | **mesuré le 2026-10-24 : ≤ 1e-6 sur X** | fermé |
+| TabICLv2 vue riche / RealTabPFN-2.5 / fine-tune TabPFN 3.5 | mêmes limites mémoire, même dilution (`1/400`) | idem, aucune réouverture prévue |
 | écran `full_tec`, `full_all21te` | terminé | verdict : `reports/p25a_screen.json` |
 
 ## Lecture honnête de la probabilité de victoire

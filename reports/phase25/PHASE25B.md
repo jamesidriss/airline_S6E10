@@ -117,7 +117,106 @@ externe sur 59 969 lignes jamais vues. Un défaut qui ne se verrait ni dans l'OO
 public devrait être spécifique aux 239 875 lignes privées — c'est-à-dire ne pas exister.
 
 
-## 6. Ce qui est fermé, définitivement
+## 6. TabPFN natif raw8 — lancé, mesuré, et fermé par la structure
+
+Demandé le 2026-10-24. Le protocole phase 23 (`configs/phase23/raw8_kaggle_prereg.json`) demande
+8 unités (`n_estimators=8`) sur 559 708 lignes de contexte, soit ~19 h de GPU. Sur une carte de
+15,9 Gio les 8 caches ne peuvent pas coexister : la recette est réalisée en **8 unités
+séquentielles**, un processus chacune, agrégées en logit moyen — exactement la géométrie du
+kernel Kaggle (son répertoire `units/`). J'ai lancé la première unité de mesure (fold 0, raw,
+graine 1202).
+
+### 6.1 Le fait déjà mesuré : la moyenne d'unités vaut +1,54e-4
+
+Le membre TabPFN de v7 est lui-même un **2 unités**. Les artefacts certifiés
+`artifacts/phase17_B1/f{0..4}/member_{0,1}_raw_logits.npy` permettent de mesurer directement ce
+que la moyenne apporte, sans un seul GPU :
+
+| fold | unité 0 | unité 1 | moyenne des 2 | gain vs meilleure unité |
+|---|---|---|---|---|
+| 0 | 0,961132 | 0,961330 | 0,961458 | +1,27e-4 |
+| 1 | 0,961379 | 0,961432 | 0,961616 | +1,84e-4 |
+| 2 | 0,961200 | 0,961417 | 0,961530 | +1,13e-4 |
+| 3 | 0,960608 | 0,960687 | 0,960886 | +1,99e-4 |
+| 4 | 0,961819 | 0,961988 | 0,962135 | +1,47e-4 |
+
+**+1,54e-4 en moyenne, 5/5 folds**, écart entre unités `1,43e-4`. La loi de réduction de
+variance `gain(n) = V·(1 − 1/n)` donne `V = 3,08e-4`, donc :
+
+| étape | gain sur le membre |
+|---|---|
+| 1 → 2 unités (déjà fait dans v7) | +1,54e-4 |
+| 2 → 8 unités | **+1,16e-4** |
+| 1 → 8 unités | +2,70e-4 |
+
+### 6.2 Pourquoi cela ne peut pas déplacer X
+
+Vérifié numériquement sur les 5 folds : **`v7` est exactement le blend équipondéré de 60
+membres** (`max|v7 − portfolio| = 0,0` sur les 5 folds), et `X = 0,85·nj05 + 0,15·v7`. Le
+membre TabPFN y porte donc le poids `1/60`, et v7 le poids `0,15` dans X :
+
+```
+gain sur X = gain du membre × (1/60) × 0,15 = gain du membre / 400
+```
+
+| scénario | gain sur le membre | gain sur X |
+|---|---|---|
+| 2 → 8 unités (le protocole complet) | +1,16e-4 | **+2,9e-7** |
+| 1 → 8 unités (borne haute absolue) | +2,70e-4 | **+6,8e-7** |
+| membre neuf ajouté à v7 à w=0,10 (référence externe `tabpfn35`) | +2,99e-5 sur v7 | **+4,5e-6** |
+
+La barre de soumission est `+3e-4` : le protocole complet en vaut **1/1000**, sa borne haute
+absolue **1/440**, et le meilleur scénario jamais mesuré pour un TabPFN raw8 **1/67**. Ce n'est
+pas un problème de bruit de mesure : c'est un facteur de dilution structurel. Les 40 unités
+(~17 h) sont donc arrêtées après la mesure de la loi, pas après une intuition.
+
+### 6.3 Note d'exécution
+
+Deux échecs avant la bonne configuration, tous deux dus à la mémoire, aucun aux données :
+
+1. `fit` OOM à `11,99 Gio alloués + 1,07 Gio demandés` avec `--gpu-fraction 0.85` (plafond
+   13,53 Gio) : le plafond, pas la carte, était la contrainte.
+2. Relance avec `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` et `--gpu-fraction 0.95`
+   (15,1 Gio autorisés ; 14,7 Gio réellement libres, ~1,2 Gio pris par le bureau).
+
+<!-- SECTION_RAW_PROBE -->
+
+### 6.4 La mesure directe (fold 0, raw, 818 s de fit, 13,80 Gio de pic)
+
+Une unité raw de plus (graine 1202) : AUC `0,960990` contre `0,960972` pour l'unité 1201 — les
+deux unités sont à `1,7e-5` l'une de l'autre, donc *a priori* indiscernables. Pourtant :
+
+| agrégat | AUC fold 0 | gain |
+|---|---|---|
+| unité 1201 seule | 0,960972 | — |
+| unité 1202 seule | 0,960990 | — |
+| **moyenne logit des 2** | **0,961213** | **+2,41e-4** (bootstrap : sd 0,60e-4, `P>0 = 1,00`) |
+
+Deux unités de qualité quasi identique se moyennent en `+2,41e-4` : les erreurs des unités sont
+fortement décorrélées même quand leurs AUC ne diffèrent pas. La loi de variance donne alors
+`V = 4,82e-4`, donc **2 → 8 unités = +1,81e-4 sur le membre**.
+
+Et voici le chiffre qui tranche, mesuré et non extrapolé — le membre 2-unités ajouté à v7 :
+
+| poids dans v7 | Δ AUC de v7 (fold 0) |
+|---|---|
+| 0,05 | **+3,78e-6** |
+| 0,10 | +1,46e-6 |
+| 0,15 | +0,44e-6 |
+| 0,25 | −0,82e-6 |
+| 0,50 | −3,44e-6 |
+
+Le membre est déjà dans v7 sous forme de sa version route (`ρ logit 0,9947`) : il n'apporte que
+**+3,8e-6 à v7**, soit `0,15 × 3,8e-6 =` **+5,7e-7 sur X**. Même en supposant que les 8 unités
+ajoutent leurs `+1,81e-4` au membre (elles ne les ajouteront pas toutes, la dérivée diminue),
+X gagne **moins de 1e-6**.
+
+Conclusion chiffrée : le protocole complet (40 unités, ~17 h) vaut **≤ 1e-6 sur X**, contre une
+barre de soumission de `3e-4` — un facteur **1/300**. La dilution structurelle (`1/400` par
+construction) et la mesure directe (`+5,7e-7`) donnent le même ordre. L'axe est fermé.
+
+
+## 7. Ce qui est fermé, définitivement
 
 | axe | mesure | verdict |
 |---|---|---|

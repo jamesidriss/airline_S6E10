@@ -66,6 +66,8 @@ def main():
     ap.add_argument('--host-reserve-gib', type=float, default=8)
     ap.add_argument('--prediction-host-reserve-gib', type=float, default=2)
     ap.add_argument('--tag', default='sol_tabpfn35')
+    ap.add_argument('--seed', type=int, default=1201)
+    ap.add_argument('--n-estimators', type=int, default=1)
     args = ap.parse_args()
     if not 0 < args.gpu_fraction <= 1:
         raise ValueError('gpu-fraction must be in (0, 1]')
@@ -104,18 +106,18 @@ def main():
             eval_idx = va
             if args.timing:
                 # Independent fixed, label-agnostic subset; report NO AUC.
-                fit_idx = np.sort(np.random.default_rng(1201).choice(fi, min(args.probe_rows, len(fi)), replace=False))
+                fit_idx = np.sort(np.random.default_rng(args.seed).choice(fi, min(args.probe_rows, len(fi)), replace=False))
                 eval_idx = va[:min(args.batch_size, 1024)]
             path = records / (f'timing_{arm}_{len(fit_idx)}.json' if args.timing else f'{arm}_f{k}.json')
             if path.exists():
                 raise RuntimeError(f'Preserve existing result: {path}')
-            params = dict(model_path=str(checkpoint.resolve()), n_estimators=1, auto_scale_n_estimators=False,
-                          random_state=1201, device='cuda', ignore_pretraining_limits=True,
+            params = dict(model_path=str(checkpoint.resolve()), n_estimators=args.n_estimators, auto_scale_n_estimators=False,
+                          random_state=args.seed, device='cuda', ignore_pretraining_limits=True,
                           fit_mode='fit_with_cache', kv_cache_precision='int8', keep_cache_on_device=True,
                           inference_precision={'autocast': 'autocast', 'fp16': torch.float16, 'bf16': torch.bfloat16}[args.precision], categorical_features_indices=cats,
                           memory_saving_mode=True if args.memory_saving == 'on' else 'auto', n_preprocessing_jobs=1, tuning_config=None)
             contract = {'git': git_commit(), 'arm': arm, 'fold': k, 'model_family': 'TabPFN-3.5',
-                        'library_version': tabpfn.__version__, 'params': params, 'seed': 1201,
+                        'library_version': tabpfn.__version__, 'params': params, 'seed': args.seed,
                         'train_rows': len(fit_idx), 'validation_rows': len(eval_idx), 'full_intended_population': not args.timing,
                         'fit_ids_sha256': arr_sha256(ids[fit_idx]), 'validation_ids_sha256': arr_sha256(ids[eval_idx]),
                         'fold_sha256': arr_sha256(folds), 'feature_names': names, 'label_free_category_maps': maps,
