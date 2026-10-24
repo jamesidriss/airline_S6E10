@@ -41,12 +41,19 @@ réellement positifs** (`full_tec` `+1,24e-4`, `t 3,76`, 5/5 ; `full_enrich` `+6
 | équipondération top-288 | `0,961765` (monotone décroissant avec k) |
 | `full_enrich` vs `full` (`extra_trees`) | `+6,61e-5`, SE `2,47e-5`, `t 2,68`, **5/5** → porte franchie |
 | `full_enrich` déterministe | `−1,10e-4`, 1/5 → mécanisme `extra_trees` confirmé |
+| `full_tec` vs `full` | `+1,244e-4`, SE `0,331e-4`, `t 3,76`, **5/5** → porte franchie ; 357 colonnes |
+| X + membre `full_tec` (ρ 0,980) | `−0,03e-4`, 1/5, poids **−0,052** → aucun apport |
+| validation adversariale train vs test | AUC **0,49979** → aucun décalage de distribution |
+| fuite d'id (flux contigu) | id seul `0,50007` ; GBDT 9 features d'id `0,5016` (contigu `0,5014`) → rien à récolter |
+| courbe d'apprentissage (fold 0) | `+4,5e-4` puis `+5,0e-4` par doublement : base encore limitée par les données |
+| glouton Caruana, 368 candidats | `0,962226`, **−2,31e-5 vs X, 0/5** ; `+3,65e-4 vs v7, 5/5` |
+| second slot (bootstrap privé 239 875) | `E[max] ≤ 2e-6` pour tout candidat, `0` pour v7 ; `P(v7 > X) = 0,00` |
 
 ## Ce qui n'est pas fermé
 
 | mécanisme | blocage | condition de réouverture |
 |---|---|---|
-| TabPFN natif 16 Gio (raw8, H23-01) | T4 Kaggle 14,56 Gio ; **local 15,9 Gio disponible** | essai local, non lancé |
+| TabPFN natif 16 Gio (raw8, H23-01) | T4 Kaggle 14,56 Gio ; **local 15,9 Gio disponible** | essai local, non lancé ; espérance bornée à `+3e-5` pour ≥25 h |
 | TabICLv2 vue riche / RealTabPFN-2.5 / fine-tune TabPFN 3.5 | mêmes limites mémoire | idem |
 | écran `full_tec`, `full_all21te` | terminé | verdict : `reports/p25a_screen.json` |
 
@@ -61,3 +68,11 @@ niveau, avec un léger avantage mesuré pour nous (`+3,8e-4` public sur v7).
 Estimation : **~10–20 % de victoire**, **~40–55 % de top-10**. Ce n'est pas un plafond de
 méthode mais la conséquence du lissage de la fonction d'étiquetage par le générateur
 (source `0,9888` → synthétique `0,9253` sur profil 16 clés).
+
+**Addendum 2026-10-24 (Phase 25b)** : la courbe d'apprentissage explique *pourquoi* cette
+frontière est solide. Un LGBM unique gagne encore `5e-4` par doublement de données à 560 000
+lignes, donc l'estimateur de base n'est pas au plafond de Bayes — mais X est `1,08e-3`
+au-dessus de ce même modèle sur le même fold, soit `2,2` doublements, donc un ensemble
+équivalent à ~2,6 millions de lignes. Le reste de l'erreur est **partagé** par tous les
+estimateurs entraînés sur les mêmes 700 000 lignes, ce qui est exactement pourquoi un membre
+à `0,9612` et `ρ 0,98` n'ajoute rien. Détail : `PHASE25B.md`.

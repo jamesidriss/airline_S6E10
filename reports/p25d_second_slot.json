@@ -1,0 +1,42 @@
+{
+  "private_rows": 239875,
+  "x_oof": 0.9622466202992038,
+  "candidates": {
+    "v7_internal": {
+      "oof_auc": 0.9618529228157235,
+      "delta_vs_x_pooled": -0.000393697483480282,
+      "spearman_vs_x": 0.9919732647169814,
+      "priv_delta_mean": -0.0003923166305945264,
+      "priv_delta_sd": 4.798663779386681e-05,
+      "p_beats_x_on_private": 0.0,
+      "expected_gain_if_max": 0.0
+    },
+    "najiama_05": {
+      "oof_auc": 0.962233919271904,
+      "delta_vs_x_pooled": -1.2701027299777401e-05,
+      "spearman_vs_x": 0.9998006143967852,
+      "priv_delta_mean": -1.2085197230372046e-05,
+      "priv_delta_sd": 7.769612160453169e-06,
+      "p_beats_x_on_private": 0.055,
+      "expected_gain_if_max": 1.9201997036616402e-07
+    },
+    "najiama_06": {
+      "oof_auc": 0.9622105702124171,
+      "delta_vs_x_pooled": -3.605008678675414e-05,
+      "spearman_vs_x": 0.9993945918030712,
+      "priv_delta_mean": -3.621773905430337e-05,
+      "priv_delta_sd": 1.2275757032788265e-05,
+      "p_beats_x_on_private": 0.0,
+      "expected_gain_if_max": 0.0
+    },
+    "goodpjw200_stack245": {
+      "oof_auc": 0.9622243416395678,
+      "delta_vs_x_pooled": -2.2278659635999176e-05,
+      "spearman_vs_x": 0.9994633310897754,
+      "priv_delta_mean": -2.2442914404037508e-05,
+      "priv_delta_sd": 1.296964161314238e-05,
+      "p_beats_x_on_private": 0.045,
+      "expected_gain_if_max": 1.7400613697676758e-07
+    }
+  }
+}

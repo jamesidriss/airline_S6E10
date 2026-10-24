@@ -1,0 +1,57 @@
+{
+ "tag": "store60",
+ "scheme": "primary",
+ "topk": 60,
+ "C": 0.1,
+ "kind": "logit",
+ "n_members": 80,
+ "pooled_auc": 0.9617860020492671,
+ "fold_aucs": [
+  0.9617366312890973,
+  0.9619339849179478,
+  0.9618171950827049,
+  0.9610260982307582,
+  0.9624360454841147
+ ],
+ "v7_pooled": 0.9618529228157235,
+ "x_pooled": 0.9622466202992038,
+ "delta_vs_v7": -6.69207664564242e-05,
+ "delta_vs_x": -0.0004606182499367062,
+ "top5_per_fold": [
+  [
+   "sol_route_aux10_primary_final",
+   "cand_family_balanced",
+   "blend_v3_final",
+   "blend_v3_verify",
+   "blend_v4_fulldata"
+  ],
+  [
+   "sol_route_aux10_primary_final",
+   "blend_v3_final",
+   "blend_v3_verify",
+   "blend_v4_fulldata",
+   "cand_equal_all"
+  ],
+  [
+   "sol_route_aux10_primary_final",
+   "blend_v3_final",
+   "blend_v3_verify",
+   "blend_v4_fulldata",
+   "cand_equal_all"
+  ],
+  [
+   "sol_route_aux10_primary_final",
+   "blend_v3_final",
+   "blend_v3_verify",
+   "blend_v4_fulldata",
+   "cand_equal_all"
+  ],
+  [
+   "sol_route_aux10_primary_final",
+   "blend_v3_final",
+   "blend_v3_verify",
+   "blend_v4_fulldata",
+   "cand_equal_all"
+  ]
+ ]
+}

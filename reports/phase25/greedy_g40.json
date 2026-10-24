@@ -1,0 +1,167 @@
+{
+ "tag": "g40",
+ "scheme": "primary",
+ "rounds": 40,
+ "n_candidates": 368,
+ "headline": "mean_of_fold_aucs",
+ "mean_fold_auc": 0.962226113473758,
+ "fold_aucs": [
+  0.9622457556255415,
+  0.9622700179004287,
+  0.9623160006402016,
+  0.9614640717527309,
+  0.9628347214498871
+ ],
+ "pooled_auc_not_comparable": 0.9617926873489514,
+ "v7_mean_fold_auc": 0.9618606391509879,
+ "v7_pooled": 0.9618529228157235,
+ "x_mean_fold_auc": 0.9622492360405381,
+ "x_pooled": 0.9622466202992038,
+ "delta_vs_v7_mean_fold": 0.0003654743227701207,
+ "delta_vs_x_mean_fold": -2.3122566780164888e-05,
+ "paired_vs_x": {
+  "per_fold": [
+   3.668466768902423e-05,
+   1.5309611504088494e-05,
+   2.0451511245744847e-05,
+   2.194430416035953e-05,
+   2.1222739301385296e-05
+  ],
+  "mean": 2.312256678012048e-05,
+  "t": 6.4490500647602955,
+  "pos": 5
+ },
+ "paths": [
+  [
+   [
+    "najiama_05_blend_satisfaction",
+    0.35
+   ],
+   [
+    "goodpjw200_stack245",
+    0.35
+   ],
+   [
+    "goodpjw200_tabpfn_ne4",
+    0.125
+   ],
+   [
+    "own__ogm_lgbm_full_ogm_primary",
+    0.075
+   ],
+   [
+    "cdeotte_sa_cat_ctr_auxall_k10",
+    0.05
+   ],
+   [
+    "cdeotte_gp_realmlp_fa_auxogev",
+    0.025
+   ]
+  ],
+  [
+   [
+    "goodpjw200_stack245",
+    0.65
+   ],
+   [
+    "najiama_05_blend_satisfaction",
+    0.25
+   ],
+   [
+    "own__sol_clean_aux10_primary_prod5_xgb_full_primary",
+    0.05
+   ],
+   [
+    "own__sol_route_aux10_primary_final",
+    0.025
+   ],
+   [
+    "goodpjw200_tabpfn_ne4",
+    0.025
+   ],
+   [
+    "najiama_04_blend_satisfaction",
+    0.0
+   ]
+  ],
+  [
+   [
+    "najiama_05_blend_satisfaction",
+    0.575
+   ],
+   [
+    "najiama_06_blend_satisfaction",
+    0.225
+   ],
+   [
+    "own__sol_route_aux10_primary_final",
+    0.075
+   ],
+   [
+    "megayak_predictions_cat_ctr",
+    0.05
+   ],
+   [
+    "sachith7_rmlp_raw_aux_k10_oof",
+    0.025
+   ],
+   [
+    "goodpjw200_stack182_lr_lgb_lgb",
+    0.025
+   ]
+  ],
+  [
+   [
+    "najiama_05_blend_satisfaction",
+    0.575
+   ],
+   [
+    "goodpjw200_stack245",
+    0.175
+   ],
+   [
+    "cdeotte_ar_xgb_5f",
+    0.075
+   ],
+   [
+    "goodpjw200_series_members_p1_p8_cat_ctr4",
+    0.05
+   ],
+   [
+    "cdeotte_mi_cat_ctr",
+    0.025
+   ],
+   [
+    "sachith7_cat_ctr_auxall_k10_oof",
+    0.025
+   ]
+  ],
+  [
+   [
+    "najiama_05_blend_satisfaction",
+    0.45
+   ],
+   [
+    "goodpjw200_stack245",
+    0.425
+   ],
+   [
+    "own__z3_cat_f10",
+    0.05
+   ],
+   [
+    "own__sol_route_aux10_primary_final",
+    0.025
+   ],
+   [
+    "goodpjw200_xgb_d10_k10",
+    0.025
+   ],
+   [
+    "goodpjw200_series_members_p1_p8_tabpfn_catfd",
+    0.025
+   ]
+  ]
+ ],
+ "note": "Each fold has its own greedy weights, so fold predictions are not on a common scale; the pooled AUC mixes offsets and is reported only to document that it is not comparable."
+}

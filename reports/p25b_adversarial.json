@@ -1,0 +1,14 @@
+{
+ "adversarial_auc": 0.4997895300438321,
+ "id_alone_auc": 0.5000725368375143,
+ "schemes": {
+  "primary": 0.5016377829638967,
+  "blocked": 0.5013704593191362
+ },
+ "verdict": "NO_COVARIATE_SHIFT_NO_ID_LEAK",
+ "null_sd_auc": 0.000695,
+ "z": {
+  "primary": 2.36,
+  "blocked": 1.97
+ }
+}
